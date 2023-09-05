@@ -1,7 +1,7 @@
 #pragma once
 
 #include "pch.h"
-#include "Game2/Core.h"
+#include "Core.h"
 
 namespace Engine {
 	struct WindowProps {

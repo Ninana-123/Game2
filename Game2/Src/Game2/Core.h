@@ -1,4 +1,25 @@
+//Core.h
+
 #pragma once
+#define GAME2_API __declspec(dllexport)
 
+#include "System.h"
+#include "Game2.h"
+#include <vector>
 
-		#define GAME2_API __declspec(dllexport)
+namespace Engine
+{
+
+	class CoreEngine
+	{
+	public:
+		CoreEngine();
+		~CoreEngine();
+		void Initialize();
+		void AddSystem(ISystem* system);
+
+	private:
+		std::vector<ISystem*> Systems; //container to store systems
+		bool GameActive;
+	};
+}
