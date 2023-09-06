@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\log.h" />
     <ClInclude Include="Src\Game2\Application.h" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
+    <ClCompile Include="Src\Game2\Collision.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\log.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">

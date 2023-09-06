@@ -58,6 +58,9 @@
     <ClInclude Include="Src\Game2\Main.h">
       <Filter>Driver</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Collision.h">
+      <Filter>Components\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -74,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\pch.cpp">
       <Filter>Base\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Collision.cpp">
+      <Filter>Components\Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
