@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\log.h" />
-    <ClInclude Include="Src\Game2.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
-    <ClInclude Include="Src\Game2\EntryPoint.h" />
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\Window.h" />

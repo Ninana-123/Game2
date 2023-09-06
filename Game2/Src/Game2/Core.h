@@ -4,8 +4,6 @@
 #define GAME2_API __declspec(dllexport)
 
 #include "System.h"
-#include "Game2.h"
-#include <vector>
 
 namespace Engine
 {

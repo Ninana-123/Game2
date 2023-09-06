@@ -29,6 +29,9 @@
     <Filter Include="Components\Collision">
       <UniqueIdentifier>{6e372a0b-db17-48e0-b9e8-464493dd0328}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Driver">
+      <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\log.h">
@@ -40,8 +43,6 @@
     <ClInclude Include="Src\Game2\Application.h">
       <Filter>Base\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\EntryPoint.h" />
-    <ClInclude Include="Src\Game2.h" />
     <ClInclude Include="Src\Game2\pch.h">
       <Filter>Base\Precompiled</Filter>
     </ClInclude>
@@ -53,6 +54,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Window.h">
       <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Main.h">
+      <Filter>Driver</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
