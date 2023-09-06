@@ -1,5 +1,5 @@
 
-#include "Game2.h"
+#include "Game2\Main.h"
 
 
 class Sandbox : public Engine::Application
