@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		Graphics.cpp
+\author 	DigiPen
+\par    	email: k.junlinwayne@digipen.edu
+\date   	August 29, 2023
+\brief		This file contains 
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 
 #include <GL/glew.h>
@@ -5,6 +18,29 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+
+#define ASSERT(x) if(!(x)) __debugbreak(); 
+#define GLCall(x) GLClearError();\
+            x;\
+            ASSERT(GLLogCall(#x, __FILE__, __LINE__))
+
+//-----------functions to deal with errors in OpenGL--------------------
+static void GLClearError()
+{
+    while (glGetError());
+}
+
+static bool GLLogCall(const char* function, const char* file, int line)
+{
+    while (GLenum error = glGetError())
+    {
+        std::cout << "[OpenGL Error] (" << error << "):" << function << " " <<
+            file << ":" << line << std::endl;
+        return false; //GL call was not successful
+    }
+    return true;
+}
+//-----------------------------------------------------------------------
 
 struct ShaderProgramSource
 {
@@ -121,7 +157,7 @@ int main(void)
        -0.5f, -0.5f, //0
         0.5f, -0.5f, //1
         0.5f, -0.5f, //2
-       -0.5f,  0.5f //3
+       -0.5f,  0.5f  //3
     };
 
     unsigned int indices[] = { //tells opengl how to render square w/o providing duplicate/redundant vertices
@@ -132,12 +168,10 @@ int main(void)
     //number of buffers to be generated
     unsigned int buffer;
     glGenBuffers(1, &buffer);
-
     //binding it to buffer object
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
-
     //stores the position into the buffer data
-    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
 
     glEnableVertexAttribArray(0);
@@ -148,12 +182,10 @@ int main(void)
     //number of buffers to be generated
     unsigned int ibo{};
     glGenBuffers(1, &ibo);
-
     //binding it to buffer object
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
     //stores the position into the buffer data
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * 2 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
     ShaderProgramSource source = ParseShader("Resource/Shaders/Basic.shader");
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
@@ -166,7 +198,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
 
         //draw the current done buffer
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
