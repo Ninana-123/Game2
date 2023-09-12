@@ -17,12 +17,24 @@ namespace Engine
 
 	CoreEngine::~CoreEngine()
 	{
-		//Nothing for the destructor to do
+		
 	}
 
 	void CoreEngine::Initialize()
 	{
-		
+		//Iterate and Initialize all systems in Systems container
+		for (unsigned i = 0; i < Systems.size(); i++)
+		{
+			Systems[i]->Initialize();
+		}
+	}
+
+	void CoreEngine::Update()
+	{
+		while (GameActive)
+		{
+			//game loop
+		}
 	}
 
 	void CoreEngine::AddSystem(ISystem* system)
@@ -31,4 +43,13 @@ namespace Engine
 		//every frame
 		Systems.push_back(system);
 	}
+
+	void CoreEngine::ClearSystems()
+	{
+		for (unsigned i = 0; i < Systems.size(); i++)
+		{
+			delete Systems[Systems.size() - i - 1];
+		}
+	}
+
 }

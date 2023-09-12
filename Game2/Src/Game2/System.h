@@ -14,11 +14,11 @@ namespace Engine
 		///See Message.h for details.
 		//virtual void SendMessage(Message* message) { UNREFERENCED_PARAMETER(message); };
 
-		///All systems are updated every game frame.
-		//virtual void Update(float timeslice) = 0;
-
 		///All systems provide a string name for debugging.
 		//virtual std::string GetName() = 0;
+
+		///All systems are updated every game frame.
+		virtual void Update(float timeslice) = 0;
 
 		///Initialize the system.
 		virtual void Initialize() {};

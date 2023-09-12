@@ -14,8 +14,9 @@ namespace Engine
 		CoreEngine();
 		~CoreEngine();
 		void Initialize();
+		void Update();
 		void AddSystem(ISystem* system);
-
+		void ClearSystems();
 	private:
 		std::vector<ISystem*> Systems; //container to store systems
 		bool GameActive;

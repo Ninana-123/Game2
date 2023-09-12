@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Graphics.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -179,4 +180,34 @@ int main(void)
 
     glfwTerminate();
     return 0;
+}
+
+namespace Engine
+{
+    Graphics::Graphics()
+    {
+        //constructor
+        //initialize buffers;
+        //unsigned int id{};
+        //
+    }
+
+    Graphics::~Graphics()
+    {
+        //destructor
+        //free everything here, assign everything to null and release all textures
+    }
+
+    void Graphics::Initialize()
+    {
+        //initialize default window width, height
+        //
+    }
+
+    void Graphics::Update()
+    {
+        //polling events and update all object/entity graphics
+    }
+
+
 }
