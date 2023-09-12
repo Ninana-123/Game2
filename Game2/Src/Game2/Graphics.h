@@ -1,10 +1,14 @@
 /******************************************************************************/
 /*!
 \file		Graphics.h
-\author 	DigiPen
+\authors 	Tristan Tham Rui Hong
+			Wayne Kwok Jun Lin
+
 \par    	email: k.junlinwayne@digipen.edu
+				   t.tham@digipen.edu
+
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains the interface for the graphics component
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
@@ -32,8 +36,8 @@ namespace Engine
 		//void CreateBuffer(...)
 		//void Draw();
 	public:
-		int ScreenWidth;
-		int SceenHeight;
+		int ScreenWidth{};
+		int SceenHeight{};
 	};
 
 }

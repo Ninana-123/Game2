@@ -1,8 +1,12 @@
 /******************************************************************************/
 /*!
 \file		Graphics.cpp
-\author 	DigiPen
+\author 	Wayne Kwok Jun Lin
+            Tristan Tham Rui Hong
+
 \par    	email: k.junlinwayne@digipen.edu
+                   t.tham@digipen.edu
+
 \date   	August 29, 2023
 \brief		This file contains 
 
