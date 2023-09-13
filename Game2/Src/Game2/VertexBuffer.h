@@ -1,34 +1,29 @@
 /******************************************************************************/
 /*!
-\file		BasicShader
-\author 	DigiPen
+\file		VertexBuffer.h
+\author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains the declaration of VertexBuffer Class, which
+			represents a Vertex Buffer Object that stores data that can be used
+			for rendering 3D object.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#shader vertex
-#version 450 core
+#pragma once
 
-layoyt(location = 0) in vec4 position
-
-void main()
+class VertexBuffer
 {
-gl_position = position;
-};
+private:
+	unsigned int m_RendererID; //internal render id
+public:
+	VertexBuffer(const void* data, unsigned int size);
+	~VertexBuffer();
 
-#shader fragment
-#version 450 core
+	void Bind() const;
+	void Unbind() const;
 
-layout(location = 0) out vec4 color;
-
-uniform vec4 u_Color;
-
-void main()
-{
-	color = u_Color;
 };

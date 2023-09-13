@@ -1,34 +1,29 @@
 /******************************************************************************/
 /*!
-\file		BasicShader
-\author 	DigiPen
+\file		IndexBuffer.h
+\author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#shader vertex
-#version 450 core
+#pragma once
 
-layoyt(location = 0) in vec4 position
-
-void main()
+class IndexBuffer
 {
-gl_position = position;
-};
+private:
+	unsigned int m_RendererID; //internal render id
+	unsigned int m_Count;
+public:
+	IndexBuffer(const unsigned int* data, unsigned int count);
+	~IndexBuffer();
 
-#shader fragment
-#version 450 core
+	void Bind() const;
+	void Unbind() const;
 
-layout(location = 0) out vec4 color;
-
-uniform vec4 u_Color;
-
-void main()
-{
-	color = u_Color;
+	inline unsigned int GetCount() const { return m_Count; }
 };

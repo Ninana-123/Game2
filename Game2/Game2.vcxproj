@@ -21,12 +21,18 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
+    <ClInclude Include="Src\Game2\IndexBuffer.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\log.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\pch.h" />
+    <ClInclude Include="Src\Game2\Renderer.h" />
+    <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\System.h" />
+    <ClInclude Include="Src\Game2\VertexArray.h" />
+    <ClInclude Include="Src\Game2\VertexBuffer.h" />
+    <ClInclude Include="Src\Game2\VertexBufferLayout.h" />
     <ClInclude Include="Src\Game2\Window.h" />
     <ClInclude Include="Src\Game2\WindowsWindow.h" />
   </ItemGroup>
@@ -35,11 +41,16 @@
     <ClCompile Include="Src\Game2\Collision.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
+    <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\log.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Renderer.cpp" />
+    <ClCompile Include="Src\Game2\Shader.cpp" />
+    <ClCompile Include="Src\Game2\VertexArray.cpp" />
+    <ClCompile Include="Src\Game2\VertexBuffer.cpp" />
     <ClCompile Include="Src\Game2\WindowsWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

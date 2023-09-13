@@ -17,9 +17,6 @@
     <Filter Include="Base\Window">
       <UniqueIdentifier>{ad856644-b48a-495c-b57c-4a22ac42e103}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Precompiled">
-      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{9f7ed829-1b51-4d75-bdf6-050a2aada3c6}</UniqueIdentifier>
     </Filter>
@@ -31,6 +28,9 @@
     </Filter>
     <Filter Include="Driver">
       <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Window\Precompiled">
+      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,7 +44,7 @@
       <Filter>Base\Core</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\pch.h">
-      <Filter>Base\Precompiled</Filter>
+      <Filter>Base\Window\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\System.h">
       <Filter>Base\Engine</Filter>
@@ -64,6 +64,24 @@
     <ClInclude Include="Src\Game2\Graphics.h">
       <Filter>Components\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Renderer.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexBuffer.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\IndexBuffer.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexArray.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexBufferLayout.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Shader.h">
+      <Filter>Components\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -79,12 +97,27 @@
       <Filter>Base\Core</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\pch.cpp">
-      <Filter>Base\Precompiled</Filter>
+      <Filter>Base\Window\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Collision.cpp">
       <Filter>Components\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Graphics.cpp">
+      <Filter>Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Renderer.cpp">
+      <Filter>Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\VertexBuffer.cpp">
+      <Filter>Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\IndexBuffer.cpp">
+      <Filter>Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\VertexArray.cpp">
+      <Filter>Components\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Shader.cpp">
       <Filter>Components\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
