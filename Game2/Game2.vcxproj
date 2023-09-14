@@ -29,7 +29,9 @@
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
+    <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\System.h" />
+    <ClInclude Include="Src\Game2\texture.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
     <ClInclude Include="Src\Game2\VertexBuffer.h" />
     <ClInclude Include="Src\Game2\VertexBufferLayout.h" />
@@ -49,6 +51,22 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
+    <ClCompile Include="Src\Game2\stb_image.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\texture.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Src\Game2\VertexArray.cpp" />
     <ClCompile Include="Src\Game2\VertexBuffer.cpp" />
     <ClCompile Include="Src\Game2\WindowsWindow.cpp" />
