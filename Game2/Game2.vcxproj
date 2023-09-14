@@ -22,8 +22,8 @@
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
+    <ClInclude Include="Src\Game2\logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
-    <ClInclude Include="Src\Game2\log.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\pch.h" />
@@ -42,7 +42,7 @@
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
-    <ClCompile Include="Src\Game2\log.cpp" />
+    <ClCompile Include="Src\Game2\logger.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -170,7 +170,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src\Game2;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
