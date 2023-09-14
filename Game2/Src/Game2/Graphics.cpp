@@ -23,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "texture.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -63,10 +64,10 @@ int main(void)
     {
         //3 vertices (point on geometry) 
         float positions[] = {
-           -0.5f, -0.5f, //0
-            0.5f, -0.5f, //1
-            0.5f, -0.5f, //2
-           -0.5f,  0.5f  //3
+           -0.5f, -0.5f, 0.0f, 0.0f,//0
+            0.5f, -0.5f, 1.0f, 0.0f,//1
+            0.5f, -0.5f, 1.0f, 1.0f,//2
+           -0.5f,  0.5f, 0.0f, 1.0f,//3
         };
 
         unsigned int indices[] = { //tells opengl how to render square w/o providing duplicate/redundant vertices
@@ -79,8 +80,9 @@ int main(void)
         GLCall(glBindVertexArray(vao));
 
         VertexArray va;
-        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
         VertexBufferLayout layout;
+        layout.Push<float>(2);
         layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
@@ -93,6 +95,10 @@ int main(void)
         shader.Bind();
         //retrieving the location of u_Color variable
         shader.SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
+
+        Texture texture("Resource/Shaders/Red-Circle");
+        texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();
         vb.Unbind();
