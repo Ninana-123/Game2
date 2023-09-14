@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
+    <ClInclude Include="Src\Game2\Event.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
-    <ClInclude Include="Src\Game2\logger.h" />
+    <ClInclude Include="Src\Game2\InputEvent.h" />
+    <ClInclude Include="Src\Game2\Logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
@@ -42,7 +45,7 @@
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
-    <ClCompile Include="Src\Game2\logger.cpp" />
+    <ClCompile Include="Src\Game2\Logger.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

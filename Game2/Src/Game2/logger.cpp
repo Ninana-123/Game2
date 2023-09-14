@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Game2/logger.h"
 
-#include <iostream>
-#include <ctime>
 
 namespace Engine {
     void Logger::LogInternal(LogLevel level, const std::string& message) {
@@ -11,11 +9,11 @@ namespace Engine {
         case LogLevel::Debug:
             levelStr = "[DEBUG]";
             break;
-        case LogLevel::Info:
-            levelStr = "[INFO]";
+        case LogLevel::App:
+            levelStr = "[APP]";
             break;
-        case LogLevel::Warning:
-            levelStr = "[WARNING]";
+        case LogLevel::Event:
+            levelStr = "[EVENT]";
             break;
         case LogLevel::Error:
             levelStr = "[ERROR]";

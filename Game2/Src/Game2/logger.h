@@ -7,8 +7,8 @@
 namespace Engine {
     enum class LogLevel {
         Debug,
-        Info,
-        Warning,
+        App,
+        Event,
         Error
     };
 

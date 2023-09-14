@@ -2,6 +2,9 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Logger.h"
+
+Engine::Logger logger;
 
 namespace Engine
 {

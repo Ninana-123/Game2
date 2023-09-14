@@ -41,6 +41,9 @@
     <Filter Include="Base\Log">
       <UniqueIdentifier>{47224339-ad97-471c-8471-0cf4dbd3a96c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Events">
+      <UniqueIdentifier>{01eeac50-a442-489c-a37b-88650f7cc2e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -88,8 +91,17 @@
     <ClInclude Include="Src\Game2\VertexBufferLayout.h">
       <Filter>Components\Graphics\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\logger.h">
+    <ClInclude Include="Src\Game2\Logger.h">
       <Filter>Base\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\AppEvent.h">
+      <Filter>Base\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Event.h">
+      <Filter>Base\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\InputEvent.h">
+      <Filter>Base\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +138,7 @@
     <ClCompile Include="Src\Game2\VertexBuffer.cpp">
       <Filter>Components\Graphics\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\logger.cpp">
+    <ClCompile Include="Src\Game2\Logger.cpp">
       <Filter>Base\Log</Filter>
     </ClCompile>
   </ItemGroup>

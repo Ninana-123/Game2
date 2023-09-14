@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Application.h"
+#include "AppEvent.h"
 #include <GLFW/glfw3.h>
 
 double fps = 0.00;
@@ -19,6 +20,10 @@ namespace Engine
 	}
 	void Application::Run()
 	{
+		WindowResizeEvent event(logger, 800, 600);
+
+		logger.Log(Engine::LogLevel::App, "Application Running.");
+		
 		while (m_Running) {
 			m_Window->OnUpdate();
 			//calculate fps
