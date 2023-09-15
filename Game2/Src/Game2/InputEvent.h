@@ -27,7 +27,10 @@ namespace Engine {
 			ss << "KeyPressedEvent: " << m_KeyCode << " ( " << m_RepeatCount << " repeats)";
 			return ss.str();
 		}
-
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
+        }
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
 		int m_RepeatCount;
@@ -42,6 +45,10 @@ namespace Engine {
 			ss << "KeyReleasedEvent: " << m_KeyCode;
 			return ss.str();
 		}
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
+        }
 		
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
@@ -58,6 +65,10 @@ namespace Engine {
             std::stringstream ss;
             ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
             return ss.str();
+        }
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
         }
 
         EVENT_CLASS_TYPE(MouseMoved)
@@ -78,6 +89,10 @@ namespace Engine {
             std::stringstream ss;
             ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
             return ss.str();
+        }
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
         }
 
         EVENT_CLASS_TYPE(MouseScrolled)
@@ -109,7 +124,10 @@ namespace Engine {
             ss << "MouseButtonPressedEvent: " << GetMouseButton();
             return ss.str();
         }
-
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
+        }
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
@@ -122,7 +140,10 @@ namespace Engine {
             ss << "MouseButtonReleasedEvent: " << GetMouseButton();
             return ss.str();
         }
-
+        void LogEventInfo() const
+        {
+            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
+        }
         EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 }

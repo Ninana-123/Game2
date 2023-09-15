@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Application.h"
-#include "AppEvent.h"
 #include <GLFW/glfw3.h>
 
 double fps = 0.00;
@@ -12,16 +11,22 @@ namespace Engine
 	Application::Application()
 	{
 		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	}
 
 	Application::~Application()
 	{
 
 	}
+
+	void Application::OnEvent(Event& e) {
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+		logger.Log(Engine::LogLevel::Event, e.ToString());
+	}
+
 	void Application::Run()
 	{
-		WindowResizeEvent event(logger, 800, 600);
-
 		logger.Log(Engine::LogLevel::App, "Application Running.");
 		
 		while (m_Running) {
@@ -42,5 +47,10 @@ namespace Engine
 			std::string title_str = "Game2 | FPS: " + fps_str;
 			glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
 		}
+	}
+
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
+		m_Running = false;
+		return true;
 	}
 }

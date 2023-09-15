@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
 #include "pch.h"
+#include "Core.h"
 #include <string>
 
 namespace Engine {
@@ -9,6 +9,7 @@ namespace Engine {
         Debug,
         App,
         Event,
+        Info,
         Error
     };
 

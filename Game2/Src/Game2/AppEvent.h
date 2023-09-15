@@ -13,7 +13,6 @@ namespace Engine {
 		inline unsigned int GetHeight() const { return m_Height; }
 		void LogEventInfo() const
 		{
-			m_Logger.Log(LogLevel::Event, "Event Type: WindowResizeEvent");
 		}
 		std::string ToString() const override {
 			std::stringstream ss;
@@ -29,6 +28,10 @@ namespace Engine {
 	class GAME2_API WindowCloseEvent : public Event {
 	public:
 		WindowCloseEvent(Logger& logger): Event(logger) {}
+		void LogEventInfo() const
+		{
+			m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
+		}
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};

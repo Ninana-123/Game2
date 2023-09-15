@@ -15,6 +15,9 @@ namespace Engine {
         case LogLevel::Event:
             levelStr = "[EVENT]";
             break;
+        case LogLevel::Info:
+            levelStr = "[INFO]";
+            break;
         case LogLevel::Error:
             levelStr = "[ERROR]";
             break;
