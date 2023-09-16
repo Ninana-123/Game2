@@ -7,8 +7,9 @@ namespace Engine
 {
 	///System is a pure virtual base class (which is to say, an interface) that is
 	///the base class for all systems used by the game. 
-	class ISystem
+	class System
 	{
+		std::vector<System> all_systems;
 	public:
 		///Systems can receive all message send to the Core. 
 		///See Message.h for details.
@@ -24,6 +25,6 @@ namespace Engine
 		virtual void Initialize() {};
 
 		///All systems need a virtual destructor to have their destructor called 
-		virtual ~ISystem() {}
+		virtual ~System() {}
 	};
 }

@@ -21,7 +21,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 namespace Engine
 {
 
-	class Graphics : public ISystem
+	class Graphics : public System
 	{
 	public:
 		Graphics();
