@@ -42,7 +42,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -52,51 +52,45 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-    glfwSwapInterval(1);
+    glfwSwapInterval(3);
 
-    //testing
     if (glewInit() != GLEW_OK)
+    {
         std::cout << "Error!" << std::endl;
-    else
-    {
-    std::cout << glGetString(GL_VERSION) << std::endl;
     }
+
+    std::cout << glGetString(GL_VERSION) << std::endl;
     {
-        //3 vertices (point on geometry) 
         float positions[] = {
-           -0.5f, -0.5f, 0.0f, 0.0f,//0
-            0.5f, -0.5f, 1.0f, 0.0f,//1
-            0.5f, -0.5f, 1.0f, 1.0f,//2
-           -0.5f,  0.5f, 0.0f, 1.0f,//3
+           -0.5f,  -0.5f, 0.0f, 0.0f, //0
+            0.5f,  -0.5f, 1.0f, 0.0f, //1
+            0.5f,   0.5f, 1.0f, 1.0f, //2
+           -0.5f,   0.5f, 0.0f, 1.0f  //3
         };
 
-        unsigned int indices[] = { //tells opengl how to render square w/o providing duplicate/redundant vertices
+        unsigned int indices[] = {
             0,1,2,
             2,3,0
         };
 
-        unsigned int vao{};
-        GLCall(glGenVertexArrays(1, &vao));
-        GLCall(glBindVertexArray(vao));
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-        VertexArray va;
+        VertexArray va{};
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-        VertexBufferLayout layout;
+
+        VertexBufferLayout layout{};
         layout.Push<float>(2);
         layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
-        // type of data, already floats(the intended space) hence false,
-        // the amount of bytes between each vertex, 
         IndexBuffer ib(indices, 6);
 
-        //binding shader with shader id
-        Shader shader("Resource/Shaders/Basic.shader");
+        Shader shader("Game2/Resource/Shaders/Basic.shader");
         shader.Bind();
-        //retrieving the location of u_Color variable
-        shader.SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
+        shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-        Texture texture("Resource/Shaders/Red-Circle");
+        Texture texture("Game2/Resource/Texture/Red-Circle.png");
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
 
@@ -104,7 +98,7 @@ int main(void)
         vb.Unbind();
         ib.Unbind();
         shader.Unbind();
-        
+
         Renderer renderer;
 
         float r = 0.0f;
@@ -112,12 +106,11 @@ int main(void)
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
-            /* Render here */
             renderer.Clear();
+
             shader.Bind();
             shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
 
-            //drawn together in 1 call
             renderer.Draw(va, ib, shader);
 
             if (r > 1.0f)
@@ -128,7 +121,7 @@ int main(void)
             r += increment;
 
             /* Swap front and back buffers */
-            GLCall(glfwSwapBuffers(window));
+            glfwSwapBuffers(window);
 
             /* Poll for and process events */
             glfwPollEvents();
