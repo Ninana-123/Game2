@@ -10,5 +10,3 @@ typedef size_t ComponentIndex;
 constexpr ComponentIndex INVALID_INDEX;
 
 enum class ComponentType {Position, Health};
-
-EntityID EntityManager::nextEntityID = 1;

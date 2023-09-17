@@ -47,6 +47,18 @@
     <Filter Include="Components">
       <UniqueIdentifier>{e49c78f9-4b7f-4d4b-9412-bbeb276543d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Engine\EntityManager">
+      <UniqueIdentifier>{37481db5-2278-4d92-a062-8206f0c05bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\Entity">
+      <UniqueIdentifier>{9e30e515-4fc3-499a-af41-c75a909e2623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\System">
+      <UniqueIdentifier>{9328deda-c9f9-4a88-ac42-fe26d028823b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\Component">
+      <UniqueIdentifier>{f4049d17-9dcc-49fa-bd43-3e209d45e88e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -57,9 +69,6 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\pch.h">
       <Filter>Base\Window\Precompiled</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\System.h">
-      <Filter>Base\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\WindowsWindow.h">
       <Filter>Base\Window</Filter>
@@ -108,17 +117,23 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\texture.h" />
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="Src\Game2\EngineTypes.h">
       <Filter>Base\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Base\Engine</Filter>
+    <ClInclude Include="PositionComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Base\Engine</Filter>
+    <ClInclude Include="Src\Game2\EntityManager.h">
+      <Filter>Base\Engine\EntityManager</Filter>
     </ClInclude>
-    <ClInclude Include="EngineTypes.h">
-      <Filter>Base\Engine</Filter>
+    <ClInclude Include="Src\Game2\Entity.h">
+      <Filter>Base\Engine\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\System.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Component.h">
+      <Filter>Base\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\texture.cpp">
       <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EntityManager.cpp">
+      <Filter>Base\Engine\EntityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Entity.cpp">
+      <Filter>Base\Engine\Entity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

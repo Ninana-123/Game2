@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="EngineTypes.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
+    <ClInclude Include="Src\Game2\Component.h" />
+    <ClInclude Include="Src\Game2\EngineTypes.h" />
+    <ClInclude Include="Src\Game2\Entity.h" />
+    <ClInclude Include="Src\Game2\EntityManager.h" />
     <ClInclude Include="Src\Game2\Event.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
@@ -49,6 +50,8 @@
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\Collision.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
+    <ClCompile Include="Src\Game2\Entity.cpp" />
+    <ClCompile Include="Src\Game2\EntityManager.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />

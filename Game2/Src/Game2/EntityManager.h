@@ -10,6 +10,9 @@ namespace Engine
 		~EntityManager();
 
 		EntityID CreateEntity();
+		Entity* GetEntity(EntityID id);
+		EntityID CloneEntity(EntityID sourceEntityID);
+		//std::vector<EntityID> CloneEntity(EntityID sourceEntityID, int num) possible overload specify number of clones
 		void DestroyEntity(EntityID entity);
 
 		void Update();

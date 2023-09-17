@@ -13,6 +13,7 @@ namespace Engine
 
         void AddComponent(std::unique_ptr<Component> component);
         Component* GetComponent(ComponentType type) const;
+        std::unordered_map<ComponentType, std::unique_ptr<Component>> GetComponents() const;
         EntityID GetID() const { return id; }
 
         void Update();

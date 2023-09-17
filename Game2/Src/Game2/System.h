@@ -19,7 +19,7 @@ namespace Engine
 		//virtual std::string GetName() = 0;
 
 		///All systems are updated every game frame.
-		virtual void Update(float timeslice) = 0;
+		virtual void Update(Entity& entity) = 0;
 
 		///Initialize the system.
 		virtual void Initialize() {};

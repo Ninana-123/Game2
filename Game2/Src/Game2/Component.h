@@ -7,6 +7,6 @@ namespace Engine
 	{
 	public:
 		virtual ComponentType GetType() const = 0;
-
+		virtual Component* Clone() const = 0;
 	};
 }

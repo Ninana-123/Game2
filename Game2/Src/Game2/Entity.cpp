@@ -19,9 +19,17 @@ namespace Engine
 		else return nullptr;
 	}
 
+	std::unordered_map<ComponentType, std::unique_ptr<Component>> Entity::GetComponents() const
+	{
+		return components;
+	}
+
 	void Entity::Update()
 	{
-		
+		for (auto& system : systems) 
+		{
+			system->Update(*this);
+		}
 	}
 
 
