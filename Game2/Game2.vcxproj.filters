@@ -103,6 +103,8 @@
     <ClInclude Include="Src\Game2\InputEvent.h">
       <Filter>Base\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\stb_image.h" />
+    <ClInclude Include="Src\Game2\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -140,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Logger.cpp">
       <Filter>Base\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\stb_image.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Texture.cpp">
+      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

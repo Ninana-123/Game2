@@ -4,7 +4,7 @@
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains VertexBufferLayout class, which is used for the 
+\brief		This file contains VertexBufferLayout class, which is used for the
 			layout of vertex data in OpenGL buffers.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
@@ -21,15 +21,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 struct VertexBufferElement
 {
-	unsigned int  count;	//no. of elements
 	unsigned int  type;		//data type
+	unsigned int  count;	//no. of elements
 	unsigned char normalized;
 
 	static unsigned int GetSizeOfType(unsigned int type)
 	{
 		switch (type)
 		{
-	//data types and the size of the respective types in bytes
+			//data types and the size of the respective types in bytes
 		case GL_FLOAT:			return 4;
 		case GL_UNSIGNED_INT:	return 4;
 		case GL_UNSIGNED_BYTE:	return 1; //char
@@ -46,7 +46,7 @@ private:
 	unsigned int m_Stride;							//the size of vertex buffer
 public:
 	VertexBufferLayout()
-		: m_Stride(0){}
+		: m_Stride(0) {}
 
 	template<typename T>
 	void Push(unsigned int count)
@@ -57,7 +57,7 @@ public:
 	template<>
 	void Push<float>(unsigned int count)
 	{
-		m_Elements.push_back({GL_FLOAT, count, GL_FALSE});
+		m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
 		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
 	}
 
