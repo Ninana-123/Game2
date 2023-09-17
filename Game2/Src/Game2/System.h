@@ -1,5 +1,6 @@
 //System.h 
 #include "pch.h"
+#include "Entity.h"
 
 #pragma once
 
