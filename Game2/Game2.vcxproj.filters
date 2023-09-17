@@ -107,19 +107,7 @@
       <Filter>Base\Events</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\stb_image.h" />
-    <ClInclude Include="Src\Game2\texture.h" />
-    <ClInclude Include="Entity.h">
-      <Filter>Base\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityManager.h">
-      <Filter>Base\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Base\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineTypes.h">
-      <Filter>Base\Engine</Filter>
-    </ClInclude>
+    <ClInclude Include="Src\Game2\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -161,7 +149,7 @@
     <ClCompile Include="Src\Game2\stb_image.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\texture.cpp">
+    <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>

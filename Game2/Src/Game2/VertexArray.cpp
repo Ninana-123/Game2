@@ -15,8 +15,8 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #include "pch.h"
 #include "VertexArray.h"
-#include "Renderer.h"
 #include "VertexBufferLayout.h"
+#include "Renderer.h"
 
 VertexArray::VertexArray()
 {

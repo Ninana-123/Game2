@@ -38,7 +38,7 @@
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\System.h" />
-    <ClInclude Include="Src\Game2\texture.h" />
+    <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
     <ClInclude Include="Src\Game2\VertexBuffer.h" />
     <ClInclude Include="Src\Game2\VertexBufferLayout.h" />
@@ -66,7 +66,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Src\Game2\texture.cpp">
+    <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
