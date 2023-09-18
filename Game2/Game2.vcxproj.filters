@@ -17,47 +17,8 @@
     <Filter Include="Driver">
       <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Window\Precompiled">
-      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Log">
-      <UniqueIdentifier>{47224339-ad97-471c-8471-0cf4dbd3a96c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Events">
-      <UniqueIdentifier>{01eeac50-a442-489c-a37b-88650f7cc2e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems">
-      <UniqueIdentifier>{9f7ed829-1b51-4d75-bdf6-050a2aada3c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Graphics">
-      <UniqueIdentifier>{deed45ec-f2d9-4a53-9111-eb557eebccbe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Graphics\Rendering">
-      <UniqueIdentifier>{31ffb793-5e50-46f0-8a27-40e80492e280}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Graphics\Vertex">
-      <UniqueIdentifier>{3a5f4260-059b-425f-a763-6d8921ae41dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Graphics\System">
-      <UniqueIdentifier>{401611d1-6698-4ef1-bda5-c71d25108e94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Collision">
-      <UniqueIdentifier>{6e372a0b-db17-48e0-b9e8-464493dd0328}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{e49c78f9-4b7f-4d4b-9412-bbeb276543d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Engine\EntityManager">
-      <UniqueIdentifier>{37481db5-2278-4d92-a062-8206f0c05bc2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Engine\Entity">
-      <UniqueIdentifier>{9e30e515-4fc3-499a-af41-c75a909e2623}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Engine\System">
-      <UniqueIdentifier>{9328deda-c9f9-4a88-ac42-fe26d028823b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Engine\Component">
-      <UniqueIdentifier>{f4049d17-9dcc-49fa-bd43-3e209d45e88e}</UniqueIdentifier>
+    <Filter Include="Components\Physics">
+      <UniqueIdentifier>{9cb46411-9dcb-462d-aa6d-3fac6151e334}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

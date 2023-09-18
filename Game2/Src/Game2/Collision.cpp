@@ -68,6 +68,7 @@ bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
 
 	glm::vec2 relVelocity = { 0, 0 }; 
 	glm::vec2 tFirst = { 0, 0 };
+	// Need to add dt when the global variable is created
 	glm::vec2 tLast = { 0, 0 };
 	glm::vec2 tTemp = { 0, 0 };
 	relVelocity.x = vel2.x - vel1.x;
