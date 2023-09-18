@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include <GLFW/glfw3.h>
+#include "Input.h"
 
 // Global variables
 double fps = 0.00;  // Frames per second
@@ -10,6 +11,9 @@ double delta = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
+    // Create a logger instance
+    Engine::Logger logger;
+
     Application::Application()
     {
         // Create a window and set its event callback
@@ -38,6 +42,9 @@ namespace Engine
         {
             m_Window->OnUpdate();
 
+            float xPos = Input::GetMouseX();
+            
+            logger.Log(LogLevel::App, std::to_string(xPos));
             // Calculate delta time (time between frames)
             double currentTime = glfwGetTime();
             delta = currentTime - previousTime;

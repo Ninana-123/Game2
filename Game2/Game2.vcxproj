@@ -51,6 +51,7 @@
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
+    <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -6,8 +6,6 @@
 #include "Event.h"
 #include "AppEvent.h"
 
-// Create a logger instance
-Engine::Logger logger;
 
 namespace Engine
 {

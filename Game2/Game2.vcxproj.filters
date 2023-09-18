@@ -64,9 +64,6 @@
     <ClInclude Include="Src\Game2\System.h">
       <Filter>Base\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\WindowsWindow.h">
-      <Filter>Base\Window</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Window.h">
       <Filter>Base\Window</Filter>
     </ClInclude>
@@ -121,6 +118,9 @@
     <ClInclude Include="Src\Game2\MouseButtonCodes.h">
       <Filter>Base\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\WindowsWindow.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -164,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Input.cpp">
+      <Filter>Base\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
