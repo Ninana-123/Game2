@@ -16,6 +16,7 @@ namespace Engine
 
     Application::Application()
     {
+        logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
         // Create a window and set its event callback
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -42,9 +43,6 @@ namespace Engine
         {
             m_Window->OnUpdate();
 
-            float xPos = Input::GetMouseX();
-            
-            logger.Log(LogLevel::App, std::to_string(xPos));
             // Calculate delta time (time between frames)
             double currentTime = glfwGetTime();
             delta = currentTime - previousTime;
