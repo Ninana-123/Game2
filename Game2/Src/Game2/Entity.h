@@ -1,10 +1,12 @@
 #pragma once
 #include "Game2/pch.h"
 #include "Game2/Component.h"
-#include "Game2/System.h"
+
 
 namespace Engine
 {
+    class System;
+
     class Entity 
     {
     public:
@@ -13,7 +15,7 @@ namespace Engine
 
         void AddComponent(std::unique_ptr<Component> component);
         Component* GetComponent(ComponentType type) const;
-        std::unordered_map<ComponentType, std::unique_ptr<Component>> GetComponents() const;
+        std::unordered_map<ComponentType, Component*> GetComponents() const;
         EntityID GetID() const { return id; }
 
         void Update();

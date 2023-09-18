@@ -1,6 +1,5 @@
 //System.h 
 #include "pch.h"
-#include "Entity.h"
 
 #pragma once
 
@@ -8,9 +7,10 @@ namespace Engine
 {
 	///System is a pure virtual base class (which is to say, an interface) that is
 	///the base class for all systems used by the game. 
+	class Entity;
+
 	class System
 	{
-		std::vector<System> all_systems;
 	public:
 		///Systems can receive all message send to the Core. 
 		///See Message.h for details.
@@ -27,5 +27,8 @@ namespace Engine
 
 		///All systems need a virtual destructor to have their destructor called 
 		virtual ~System() {}
+
+	private:
+		std::vector<System> all_systems;
 	};
 }
