@@ -62,6 +62,9 @@
     <Filter Include="Base\Math">
       <UniqueIdentifier>{52b38f07-a2cf-4c4b-9cd4-cabf09bb0199}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Input">
+      <UniqueIdentifier>{3be70421-1fec-4319-a60e-07b2bde27077}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -138,6 +141,15 @@
     <ClInclude Include="Src\Game2\Component.h">
       <Filter>Base\Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\KeyCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Input.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -189,7 +201,7 @@
       <Filter>Base\Engine\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Input.cpp">
-      <Filter>Base</Filter>
+      <Filter>Base\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
