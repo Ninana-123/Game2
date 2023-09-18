@@ -59,6 +59,9 @@
     <Filter Include="Base\Engine\Component">
       <UniqueIdentifier>{f4049d17-9dcc-49fa-bd43-3e209d45e88e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{52b38f07-a2cf-4c4b-9cd4-cabf09bb0199}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -184,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Entity.cpp">
       <Filter>Base\Engine\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Input.cpp">
+      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
