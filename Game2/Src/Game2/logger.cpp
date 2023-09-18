@@ -25,7 +25,7 @@ namespace Engine {
 
         std::time_t now = std::time(nullptr);
         struct tm timeInfo;
-        localtime_s(&timeInfo, &now); // Use localtime_s instead of localtime
+        localtime_s(&timeInfo, &now); 
 
         char timestamp[64];
         std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeInfo);
