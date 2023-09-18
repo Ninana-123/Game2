@@ -1,21 +1,30 @@
 #pragma once
 #include <map>
 
-namespace Engine
-{
-	using MouseCode = unsigned int;
+#define LEFT_MOUSE_BUTTON         0
+#define RIGHT_MOUSEBUTTON         1
+#define MOUSE_BUTTON_3         2
+#define MOUSE_BUTTON_4         3
+#define MOUSE_BUTTON_5         4
+#define MOUSE_BUTTON_6         5
+#define MOUSE_BUTTON_7         6
+#define MOUSE_BUTTON_8         7
 
-	namespace Mouse
-	{
-		const std::map<MouseCode, std::string> mouseMap = {
-			{0, "Left Mouse Button"},
-			{1, "Right Mouse Button"},
-			{2, "Button2"},
-			{3, "Button3"},
-			{4, "Button4"},
-			{5, "Button5"},
-			{6, "Button6"},
-			{7, "Button7"}
-		};
-	}
+
+namespace Engine {
+    using MouseCode = unsigned int;
+
+    namespace Mouse {
+
+        const std::map<MouseCode, std::string> mouseMap = {
+            {0, "Left Mouse Button"},
+            {1, "Right Mouse Button"},
+            {2, "Button2"},
+            {3, "Button3"},
+            {4, "Button4"},
+            {5, "Button5"},
+            {6, "Button6"},
+            {7, "Button7"}
+        };
+    }
 }
