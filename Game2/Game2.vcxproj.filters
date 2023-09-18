@@ -32,6 +32,9 @@
     <Filter Include="Driver">
       <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Physics">
+      <UniqueIdentifier>{9cb46411-9dcb-462d-aa6d-3fac6151e334}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\log.h">
