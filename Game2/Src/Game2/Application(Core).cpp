@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include <GLFW/glfw3.h>
+#include "Input.h"
 
 // Global variables
 double fps = 0.00;  // Frames per second
@@ -10,8 +11,12 @@ double delta = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
+    // Create a logger instance
+    Engine::Logger logger;
+
     Application::Application()
     {
+        logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
         // Create a window and set its event callback
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
