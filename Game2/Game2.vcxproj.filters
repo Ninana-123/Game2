@@ -47,6 +47,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{e49c78f9-4b7f-4d4b-9412-bbeb276543d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Input">
+      <UniqueIdentifier>{7f40e481-1883-4364-8ff6-bc6873da78c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -108,6 +111,16 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Src\Game2\Input.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\KeyCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">

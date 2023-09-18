@@ -20,19 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
-    <ClInclude Include="EngineTypes.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\Event.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
+    <ClInclude Include="Src\Game2\Input.h" />
     <ClInclude Include="Src\Game2\InputEvent.h" />
+    <ClInclude Include="Src\Game2\KeyCodes.h" />
     <ClInclude Include="Src\Game2\Logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
