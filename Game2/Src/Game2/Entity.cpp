@@ -19,9 +19,13 @@ namespace Engine
 		else return nullptr;
 	}
 
-	std::unordered_map<ComponentType, std::unique_ptr<Component>> Entity::GetComponents() const
+	std::unordered_map<ComponentType, Component*> Entity::GetComponents() const
 	{
-		return components;
+		std::unordered_map<ComponentType, Component*> result;
+		for (const auto& pair : components) {
+			result[pair.first] = pair.second.get(); // Store raw pointers
+		}
+		return result;
 	}
 
 	void Entity::Update()

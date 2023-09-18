@@ -17,3 +17,6 @@
 #include <ctime>
 // Windows API Headers
 #include <Windows.h>
+
+#include "Entity.h"
+#include "System.h"

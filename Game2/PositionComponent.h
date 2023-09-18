@@ -14,7 +14,7 @@ namespace Engine
 		ComponentType GetType() const override { return ComponentType::Position; }
 		Component* Clone() const override 
 		{ 
-			PositionComponent* cloneComponent = new PositionComponent;
+			PositionComponent* cloneComponent = new PositionComponent();
 			cloneComponent->position = position;
 			return cloneComponent;
 		}
