@@ -19,8 +19,12 @@ private:
 	unsigned int m_RendererID; //internal render id
 	unsigned int m_Count;
 public:
+	IndexBuffer() // Default constructor
+		: m_RendererID(0), m_Count(0) {}
+
 	IndexBuffer(const unsigned int* data, unsigned int count);
 	~IndexBuffer();
+	void SetData(const unsigned int* data, unsigned int count);
 
 	void Bind() const;
 	void Unbind() const;

@@ -5,9 +5,9 @@
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
 \brief		This file contains the declaration of the Shader class. The Shader
-            class is responsible for handling OpenGL shaders, including vertex
-            and fragment shaders. It provides functions to load, compile, and use
-            shaders, as well as set uniform values.
+			class is responsible for handling OpenGL shaders, including vertex
+			and fragment shaders. It provides functions to load, compile, and use
+			shaders, as well as set uniform values.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
@@ -16,7 +16,8 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #pragma once
 #include <string>
-#include"pch.h"
+#include <unordered_map>
+#include "glm/glm.hpp"
 
 struct ShaderProgramSource
 {
@@ -43,6 +44,8 @@ public:
 	void SetUniform1i(const std::string& name, int  value);
 	void SetUniform1f(const std::string& name, float  value);
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
+	void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+
 private:
 	ShaderProgramSource ParseShader(const std::string& filepath);
 	unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
