@@ -16,16 +16,16 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Renderer.h"
 
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
-    :m_Count(count)
+    : m_RendererID(0), // Initialize m_RendererID here
+    m_Count(count)
 {
     ASSERT(sizeof(unsigned int) == sizeof(GLuint));
 
     GLCall(glGenBuffers(1, &m_RendererID));
-    //binding it to buffer object
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-    //stores the position into the buffer data
     GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
 }
+
 
 IndexBuffer::~IndexBuffer()
 {
@@ -42,4 +42,11 @@ void IndexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
+}
+
+void IndexBuffer::SetData(const unsigned int* data, unsigned int count)
+{
+    m_Count = count;
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
+    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
 }

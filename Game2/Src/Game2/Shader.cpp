@@ -13,10 +13,6 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #include"pch.h"
 #include "Shader.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
 #include "Renderer.h"
 
 Shader::Shader(const std::string filepath)
@@ -114,8 +110,19 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 
 void Shader::Bind() const
 {
+    if (m_RendererID == 0) {
+        std::cerr << "Attempting to use an invalid shader program!" << std::endl;
+        return;
+    }
+
     GLCall(glUseProgram(m_RendererID));
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(m_RendererID)" << std::endl;
+        __debugbreak();  // This will trigger a debugger break to help you pinpoint the issue.
+    }
 }
+
 void Shader::Unbind() const
 {
     GLCall(glUseProgram(0));
@@ -156,7 +163,8 @@ int Shader::GetUniformLocation(const std::string& name)
     if (location == -1)
     {
         std::cout << "Warning: Uniform '" << name << "' doesn't exist" << std::endl;
-        m_UniformLocationCache[name] = location;
-        return location;
+        
     }
+    m_UniformLocationCache[name] = location;
+    return location;
 }

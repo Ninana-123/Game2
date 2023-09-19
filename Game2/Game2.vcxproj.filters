@@ -38,9 +38,6 @@
     <Filter Include="Systems\Graphics\Vertex">
       <UniqueIdentifier>{3a5f4260-059b-425f-a763-6d8921ae41dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\Graphics\System">
-      <UniqueIdentifier>{401611d1-6698-4ef1-bda5-c71d25108e94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Systems\Collision">
       <UniqueIdentifier>{6e372a0b-db17-48e0-b9e8-464493dd0328}</UniqueIdentifier>
     </Filter>
@@ -67,6 +64,9 @@
     </Filter>
     <Filter Include="Systems\Graphics\Texture">
       <UniqueIdentifier>{82e1bcb8-ddf6-43f7-a458-b8250507c453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Graphics">
+      <UniqueIdentifier>{401611d1-6698-4ef1-bda5-c71d25108e94}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,9 @@
     <ClInclude Include="Src\Game2\Texture.h">
       <Filter>Systems\Graphics\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Graphics.h">
+      <Filter>Systems\Graphics\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -197,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Systems\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Graphics.cpp">
+      <Filter>Systems\Graphics\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

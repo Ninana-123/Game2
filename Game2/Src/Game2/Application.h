@@ -37,8 +37,9 @@ namespace Engine
 
         void UpdateDeltaTime();
         void UpdateWindowTitle();
-
-
+        void SetupScene();
+        void renderScene();
+        void InitializeGLEW();
     private:
         // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);

@@ -24,7 +24,7 @@ class VertexArray
 private:
 	unsigned int m_RendererID; //identifier for vao
 public:
-	VertexArray(unsigned int RendererID);
+	VertexArray();
 	~VertexArray();
 
 	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
