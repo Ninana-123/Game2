@@ -35,6 +35,10 @@ namespace Engine
             return instance;
         }
 
+        void UpdateDeltaTime();
+        void UpdateWindowTitle();
+
+
     private:
         // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);

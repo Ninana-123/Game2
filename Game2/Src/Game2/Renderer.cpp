@@ -10,9 +10,10 @@ Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
-/******************************************************************************/
-#include "pch.h"
+ /******************************************************************************/
+#include"pch.h"
 #include "Renderer.h"
+#include <iostream>
 
 void GLClearError()
 {
@@ -37,7 +38,7 @@ void Renderer::Clear() const
 
 }
 
-void Renderer::Draw(VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
     shader.Bind();
     va.Bind();

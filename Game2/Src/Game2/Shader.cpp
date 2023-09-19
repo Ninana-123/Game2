@@ -11,8 +11,12 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#include "pch.h"
+#include"pch.h"
 #include "Shader.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "Renderer.h"
 
 Shader::Shader(const std::string filepath)
@@ -23,6 +27,8 @@ Shader::Shader(const std::string filepath)
     m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
 
 }
+
+
 Shader::~Shader()
 {
     GLCall(glDeleteProgram(m_RendererID));
@@ -127,6 +133,10 @@ void Shader::SetUniform1f(const std::string& name, float  value)
     GLCall(glUniform1f(GetUniformLocation(name), value));
 }
 
+void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
+{
+    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+}
 
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
@@ -137,10 +147,16 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
 int Shader::GetUniformLocation(const std::string& name)
 {
     if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+    {
         return m_UniformLocationCache[name];
+    }
+
     GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
+
     if (location == -1)
+    {
         std::cout << "Warning: Uniform '" << name << "' doesn't exist" << std::endl;
-    m_UniformLocationCache[name] = location;
-    return location;
+        m_UniformLocationCache[name] = location;
+        return location;
+    }
 }
