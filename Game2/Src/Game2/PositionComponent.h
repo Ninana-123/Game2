@@ -2,15 +2,22 @@
 
 #include "Game2/Component.h"
 #include "Game2/EngineTypes.h"
-#include "glm/vec2.hpp"
+
 
 namespace Engine
 {
 	class PositionComponent : public Component
 	{
 	public:
-		glm::vec2 position;
+		int x = 0, y = 0;
 
-		PositionComponent() : position(0.0, 0.0) { }
+		ComponentType GetType() const override { return ComponentType::Position; }
+		Component* Clone() const override 
+		{ 
+			PositionComponent* cloneComponent = new PositionComponent();
+			cloneComponent->x = x;
+			cloneComponent->y = y;
+			return cloneComponent;
+		}
 	};
 }

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\Component.h" />
@@ -38,10 +37,12 @@
     <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
+    <ClInclude Include="Src\Game2\PositionComponent.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\System.h" />
+    <ClInclude Include="Src\Game2\TestSystem.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
     <ClInclude Include="Src\Game2\VertexBuffer.h" />
@@ -73,6 +74,8 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Src\Game2\System.cpp" />
+    <ClCompile Include="Src\Game2\TestSystem.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>

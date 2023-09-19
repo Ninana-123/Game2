@@ -4,11 +4,15 @@
 
 namespace Engine
 {
-	EntityID EntityManager::nextEntityID = 1;
+	EntityID EntityManager::nextEntityID = 0;
 
 	Engine::EntityManager::~EntityManager()
 	{
-
+		for (auto& pair : entities) 
+		{
+			// Call a function to destroy the entity and its associated components
+			DestroyEntity(pair.first);
+		}
 	}
 
 	EntityID Engine::EntityManager::CreateEntity()

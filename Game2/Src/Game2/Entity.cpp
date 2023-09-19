@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Entity.h"
+#include "Component.h"
 
 namespace Engine 
 {
@@ -28,6 +29,10 @@ namespace Engine
 		return result;
 	}
 
+	bool Entity::HasComponent(ComponentType type) const 
+	{
+		return components.find(type) != components.end();
+	}
 
 }
 

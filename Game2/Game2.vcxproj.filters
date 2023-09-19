@@ -126,9 +126,6 @@
     <ClInclude Include="Src\Game2\EngineTypes.h">
       <Filter>Base\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="PositionComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\EntityManager.h">
       <Filter>Base\Engine\EntityManager</Filter>
     </ClInclude>
@@ -149,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Input.h">
       <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TestSystem.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PositionComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +194,6 @@
     <ClCompile Include="Src\Game2\stb_image.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\texture.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityManager.cpp">
       <Filter>Base\Engine\EntityManager</Filter>
     </ClCompile>
@@ -202,6 +202,15 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Input.cpp">
       <Filter>Base\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Texture.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\TestSystem.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\System.cpp">
+      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

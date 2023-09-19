@@ -1,7 +1,12 @@
 #include "pch.h"
-#include "Application.h"
+
 #include <GLFW/glfw3.h>
+#include "Application.h"
 #include "Input.h"
+#include "EntityManager.h"
+#include "PositionComponent.h"
+#include "Entity.h"
+#include "System.h"
 
 // Global variables
 double fps = 0.00;  // Frames per second
@@ -13,14 +18,21 @@ namespace Engine
 {
     // Create a logger instance
     Engine::Logger logger;
-
+    Engine::EntityManager EM;
+    EntityID entity1 = EM.CreateEntity();
+    Entity* targetEntity = EM.GetEntity(entity1);
+    PositionComponent* position;
     Application::Application()
     {
         logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
         // Create a window and set its event callback
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
-    }
+
+        std::unique_ptr<Component> positionComponent = std::make_unique<PositionComponent>();
+        targetEntity->AddComponent(std::move(positionComponent));
+        position = dynamic_cast<PositionComponent*>(targetEntity->GetComponent(ComponentType::Position));
+    }   
 
     Application::~Application()
     {
@@ -42,7 +54,7 @@ namespace Engine
         while (m_Running)
         {
             m_Window->OnUpdate();
-
+            
             // Calculate delta time (time between frames)
             double currentTime = glfwGetTime();
             delta = currentTime - previousTime;
@@ -56,6 +68,15 @@ namespace Engine
                 previousTime = currentTime;
             }
 
+            if (Input::IsKeyPressed(GLFW_KEY_1))
+            {
+                // Clone entity1 and store its ID
+                EM.CloneEntity(entity1);
+            }
+            
+            std::cout << "EntityID: " << targetEntity->id << std::endl;
+            std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
+            std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             // Update the window title with FPS
             std::stringstream ss;
             ss << std::fixed << std::setprecision(2) << fps;

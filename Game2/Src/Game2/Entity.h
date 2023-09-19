@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game2/Component.h"
+#include "Component.h"
 
 
 namespace Engine
@@ -17,12 +17,12 @@ namespace Engine
         Component* GetComponent(ComponentType type) const;
         std::unordered_map<ComponentType, Component*> GetComponents() const;
         EntityID GetID() const { return id; }
+        bool HasComponent(ComponentType type) const;
 
-    private:
         EntityID id;
+    private:
+       
         std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
     
     };
-
-  
 }
