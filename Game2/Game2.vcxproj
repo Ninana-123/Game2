@@ -27,7 +27,6 @@
     <ClInclude Include="Src\Game2\Entity.h" />
     <ClInclude Include="Src\Game2\EntityManager.h" />
     <ClInclude Include="Src\Game2\Event.h" />
-    <ClInclude Include="Src\Game2\Graphics.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
     <ClInclude Include="Src\Game2\Input.h" />
     <ClInclude Include="Src\Game2\InputEvent.h" />
@@ -40,7 +39,6 @@
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
-    <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
@@ -55,7 +53,6 @@
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
-    <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
@@ -65,14 +62,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
-    <ClCompile Include="Src\Game2\stb_image.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </PrecompiledHeaderFile>
-    </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>
@@ -140,7 +129,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Game2\vendor\stb-master\;$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

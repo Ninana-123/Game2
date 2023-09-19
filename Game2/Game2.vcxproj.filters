@@ -65,6 +65,9 @@
     <Filter Include="Base\Input">
       <UniqueIdentifier>{3be70421-1fec-4319-a60e-07b2bde27077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\Graphics\Texture">
+      <UniqueIdentifier>{82e1bcb8-ddf6-43f7-a458-b8250507c453}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Core.h">
@@ -87,9 +90,6 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Collision.h">
       <Filter>Systems\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\Graphics.h">
-      <Filter>Systems\Graphics\System</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Renderer.h">
       <Filter>Systems\Graphics\Rendering</Filter>
@@ -121,7 +121,6 @@
     <ClInclude Include="Src\Game2\InputEvent.h">
       <Filter>Base\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\stb_image.h" />
     <ClInclude Include="Src\Game2\EngineTypes.h">
       <Filter>Base\Engine</Filter>
     </ClInclude>
@@ -150,7 +149,7 @@
       <Filter>Base\Input</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Texture.h">
-      <Filter>Systems\Graphics</Filter>
+      <Filter>Systems\Graphics\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,9 +167,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Collision.cpp">
       <Filter>Systems\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Graphics.cpp">
-      <Filter>Systems\Graphics\System</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Renderer.cpp">
       <Filter>Systems\Graphics\Rendering</Filter>
@@ -190,9 +186,6 @@
     <ClCompile Include="Src\Game2\Logger.cpp">
       <Filter>Base\Log</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\stb_image.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityManager.cpp">
       <Filter>Base\Engine\EntityManager</Filter>
     </ClCompile>
@@ -203,7 +196,7 @@
       <Filter>Base\Input</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
-      <Filter>Systems\Graphics</Filter>
+      <Filter>Systems\Graphics\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
