@@ -12,20 +12,20 @@ namespace Engine
 	class System
 	{
 	public:
-		///Systems can receive all message send to the Core. 
-		///See Message.h for details.
-		//virtual void SendMessage(Message* message) { UNREFERENCED_PARAMETER(message); };
-
-		///All systems provide a string name for debugging.
-		//virtual std::string GetName() = 0;
-
-		///All systems are updated every game frame.
-		virtual void Update(Entity& entity) = 0;
-
-		///Initialize the system.
+		///Initialize systems
 		virtual void Initialize() {};
 
-		///All systems need a virtual destructor to have their destructor called 
+		//Update all systems
+		static void UpdateSystems(std::vector<System*>& systems, Entity& entity) 
+		{
+			for (auto& system : systems) {
+				system->Update(entity);
+			}
+		}
+
+		//Update function for child class systems
+		virtual void Update(Entity& entity) = 0;
+
 		virtual ~System() {}
 
 	private:

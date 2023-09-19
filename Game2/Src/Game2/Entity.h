@@ -1,5 +1,5 @@
 #pragma once
-#include "Game2/pch.h"
+
 #include "Game2/Component.h"
 
 
@@ -18,12 +18,10 @@ namespace Engine
         std::unordered_map<ComponentType, Component*> GetComponents() const;
         EntityID GetID() const { return id; }
 
-        void Update();
-
     private:
         EntityID id;
         std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
-        static std::vector<System*> systems;
+    
     };
 
   

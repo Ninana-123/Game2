@@ -28,14 +28,6 @@ namespace Engine
 		return result;
 	}
 
-	void Entity::Update()
-	{
-		for (auto& system : systems) 
-		{
-			system->Update(*this);
-		}
-	}
-
 
 }
 
