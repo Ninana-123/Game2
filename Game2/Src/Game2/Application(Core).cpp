@@ -21,6 +21,11 @@ namespace Engine
 {
     // Create a logger instance
     Engine::Logger logger;
+    Engine::EntityManager EM;
+    EntityID entity1 = EM.CreateEntity();
+    EntityID entity2;
+    Entity* targetEntity = EM.GetEntity(entity1);
+    PositionComponent* position;
     Application::Application()
     {
         logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
@@ -60,6 +65,16 @@ namespace Engine
             UpdateDeltaTime();
             UpdateWindowTitle();
 
+            if (Input::IsKeyPressed(GLFW_KEY_1))
+            {
+                // Clone entity1 and store its ID
+                entity2 = EM.CloneEntity(entity1);
+                targetEntity = EM.GetEntity(entity2);
+            }
+
+            std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << std::endl;
+            //std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
+            std::cout << "Number of entities: " << EM.entities.size() << std::endl;
         }
     }
 
@@ -86,24 +101,8 @@ namespace Engine
         }
     }
 
-            if (Input::IsKeyPressed(GLFW_KEY_1))
-            {
-                // Clone entity1 and store its ID
-                EM.CloneEntity(entity1);
-            }
-            
-            std::cout << "EntityID: " << targetEntity->id << std::endl;
-            std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
-            std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            // Update the window title with FPS
-            std::stringstream ss;
-            ss << std::fixed << std::setprecision(2) << fps;
-            std::string fps_str = ss.str();
-            std::string title_str = "Game2 | FPS: " + fps_str;
-            glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
-        }
-    }
-    void Application::UpdateWindowTitle() {
+    void Application::UpdateWindowTitle() 
+    {
         // Update the window title with FPS
         std::stringstream ss;
         ss << std::fixed << std::setprecision(2) << fps;
