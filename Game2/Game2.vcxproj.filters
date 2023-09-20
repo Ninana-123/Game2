@@ -67,6 +67,9 @@
     <ClInclude Include="Src\Game2\Graphics.h">
       <Filter>Components\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Math.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -89,6 +92,10 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Graphics.cpp">
       <Filter>Components\Graphics</Filter>
+      <Filter>Systems\Graphics\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Texture.cpp">
+      <Filter>Base\Engine\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
