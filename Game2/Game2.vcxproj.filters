@@ -201,20 +201,14 @@
     <ClCompile Include="Src\Game2\Input.cpp">
       <Filter>Base\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Texture.cpp">
-      <Filter>Systems\Graphics\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\Graphics.cpp">
       <Filter>Systems\Graphics\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Base\Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\TestSystem.cpp">
-      <Filter>Base\Engine\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\System.cpp">
-      <Filter>Base</Filter>
+    <ClCompile Include="Src\Game2\Texture.cpp">
+      <Filter>Systems\Graphics\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

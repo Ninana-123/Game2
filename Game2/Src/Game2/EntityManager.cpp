@@ -8,11 +8,6 @@ namespace Engine
 
 	Engine::EntityManager::~EntityManager()
 	{
-		for (auto& pair : entities) 
-		{
-			// Call a function to destroy the entity and its associated components
-			DestroyEntity(pair.first);
-		}
 	}
 
 	EntityID Engine::EntityManager::CreateEntity()
