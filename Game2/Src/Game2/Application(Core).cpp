@@ -142,15 +142,15 @@ namespace Engine
         glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
         glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));    // Left translation
 
-        Shader shader("Shaders/Basic.shader");
+        Shader shader("Resource/Shaders/Basic.shader");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-        Texture luffyTexture("Resource/texture/Luffy.png");
+        Texture luffyTexture("Resource/Texture/Luffy.png");
         luffyTexture.Bind();
         shader.SetUniform1i("u_Texture", 0);
 
-        Texture zoroTexture("res/textures/zoro.png"); // Load the new texture
+        Texture zoroTexture("Resource/Textures/zoro.png"); // Load the new texture
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
 
         va.Unbind();
