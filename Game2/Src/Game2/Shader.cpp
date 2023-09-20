@@ -15,19 +15,31 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Shader.h"
 #include "Renderer.h"
 
-Shader::Shader(const std::string filepath)
-    :m_FilePath(filepath), m_RendererID(0)
+Shader::Shader(const std::string& filepath)
+    : m_FilePath(filepath), m_RendererID(0), m_IsInitialized(false)
 {
-    //load shader source code and create shader program
-    ShaderProgramSource source = ParseShader(filepath);
-    m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
-
 }
-
 
 Shader::~Shader()
 {
-    GLCall(glDeleteProgram(m_RendererID));
+    if (m_IsInitialized)
+        GLCall(glDeleteProgram(m_RendererID));
+}
+
+void Shader::LoadShader(const std::string& filepath)
+{
+    m_FilePath = filepath;
+    m_IsInitialized = false;
+}
+
+void Shader::Initialize()
+{
+    if (m_IsInitialized)
+        return;  // Shader is already initialized
+
+    ShaderProgramSource source = ParseShader(m_FilePath);
+    m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
+    m_IsInitialized = true;
 }
 
 ShaderProgramSource Shader::ParseShader(const std::string& filepath)

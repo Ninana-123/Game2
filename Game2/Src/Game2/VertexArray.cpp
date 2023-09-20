@@ -19,16 +19,27 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Renderer.h"
 
 VertexArray::VertexArray()
+	: m_RendererID(0)
 {
-	GLCall(glGenVertexArrays(1, &m_RendererID));
-	GLCall(glBindVertexArray(m_RendererID));
 }
-
 
 VertexArray::~VertexArray()
 {
 	GLCall(glDeleteVertexArrays(1, &m_RendererID));
 }
+void VertexArray::SetRendererID(GLuint rendererID)
+{
+	m_RendererID = rendererID;
+}
+
+void VertexArray::GenerateRendererID() const
+{
+	GLuint rendererID;
+	GLCall(glGenVertexArrays(1, &rendererID));
+	const_cast<VertexArray*>(this)->SetRendererID(rendererID);
+	GLCall(glBindVertexArray(m_RendererID));
+}
+
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
@@ -51,8 +62,14 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 
 void VertexArray::Bind() const
 {
+	if (m_RendererID == 0)
+	{
+		GenerateRendererID();
+	}
+
 	GLCall(glBindVertexArray(m_RendererID));
 }
+
 
 void VertexArray::Unbind() const
 {

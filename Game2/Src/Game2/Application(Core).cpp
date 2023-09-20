@@ -1,6 +1,5 @@
 #include "pch.h"
-
-#include "Graphics.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Application.h"
 #include "Input.h"
@@ -9,6 +8,7 @@
 #include "Entity.h"
 #include "System.h"
 #include "KeyCodes.h"
+#include "Graphics.h"
 
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
@@ -48,7 +48,7 @@ namespace Engine
         // Create the window
         m_Window = std::unique_ptr<Window>(Window::Create());
         if (!m_Window) {
-            logger.Log(Engine::LogLevel::Error, "Failed to create the window");
+            logger.Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
 
@@ -61,6 +61,7 @@ namespace Engine
         std::unique_ptr<Component> positionComponent = std::make_unique<PositionComponent>();
         targetEntity->AddComponent(std::move(positionComponent));
         position = dynamic_cast<PositionComponent*>(targetEntity->GetComponent(ComponentType::Position)); //reference to Entity Position data
+      
         
     }
 
@@ -75,10 +76,10 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-
+        Graphics graphicsSystem;
+        graphicsSystem.Initialize();
         while (m_Running)
         {
-
             m_Window->OnUpdate();
             
             Application::UpdateDeltaTime();
@@ -94,6 +95,7 @@ namespace Engine
             //std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             */
+            graphicsSystem.Update();
          
         }
     }

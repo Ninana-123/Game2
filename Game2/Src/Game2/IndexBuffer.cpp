@@ -15,38 +15,56 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "IndexBuffer.h"
 #include "Renderer.h"
 
-IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
-    : m_RendererID(0), // Initialize m_RendererID here
-    m_Count(count)
+IndexBuffer::IndexBuffer()
+    : m_RendererID(0), m_Data(nullptr), m_Count(0)
 {
-    ASSERT(sizeof(unsigned int) == sizeof(GLuint));
-
-    GLCall(glGenBuffers(1, &m_RendererID));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
 }
 
+IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)
+    : m_RendererID(0), m_Data(data), m_Count(count)
+{
+}
 
 IndexBuffer::~IndexBuffer()
 {
-    GLCall(glDeleteBuffers(1, &m_RendererID));
+    if (m_RendererID != 0)
+    {
+        GLCall(glDeleteBuffers(1, &m_RendererID));
+        m_RendererID = 0;
+    }
 }
+
+void IndexBuffer::GenerateBuffer() const
+{
+    if (m_RendererID == 0)
+    {
+        ASSERT(sizeof(unsigned int) == sizeof(GLuint));
+
+        GLuint rendererID;
+        GLCall(glGenBuffers(1, &rendererID));
+        const_cast<GLuint&>(m_RendererID) = rendererID;
+
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
+        GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(unsigned int), m_Data, GL_STATIC_DRAW));
+    }
+}
+
+
 
 void IndexBuffer::Bind() const
 {
+    GenerateBuffer();  // Ensure the buffer is generated before binding
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-
 }
 
 void IndexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-
 }
 
 void IndexBuffer::SetData(const unsigned int* data, unsigned int count)
 {
+    m_Data = data;
     m_Count = count;
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
+    GenerateBuffer();  // Ensure the buffer is generated before setting data
 }
