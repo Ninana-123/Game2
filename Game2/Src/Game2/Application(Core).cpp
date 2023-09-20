@@ -55,6 +55,7 @@ namespace Engine
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
         Application::InitializeGLEW();
+        Application::SetupScene();
         logger.Log(Engine::LogLevel::App, "Scene Setup");
 
         while (m_Running)
@@ -110,9 +111,15 @@ namespace Engine
         std::string title_str = "Game2 | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
-
+    
     void Application::SetupScene() {
         // Set up the vertex positions and indices
+        float rotationAngle = 0;
+
+        // Initialize initial positions
+        glm::vec3 translation(200, 200, 0);
+
+
         float positions[] = {
             -50.0f, -50.0f, 0.0f, 0.0f,    // 0
             50.0f, -50.0f, 1.0f, 0.0f,      // 1
@@ -128,7 +135,7 @@ namespace Engine
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-        VertexArray va = VertexArray();
+        VertexArray va {};
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout{};
@@ -152,11 +159,20 @@ namespace Engine
 
         Texture zoroTexture("Resource/Textures/zoro.png"); // Load the new texture
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
-
         va.Unbind();
         vb.Unbind();
         ib.Unbind();
         shader.Unbind();
+
+        Renderer renderer;
+
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);  // Left translation
+        model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
+        glm::mat4 mvp = proj * view * model;
+        luffyTexture.Bind();
+        shader.Bind();
+        shader.SetUniformMat4f("u_MVP", mvp);
+        renderer.Draw(va, ib, shader);
     }
 
     void Application::InitializeGLEW() {
