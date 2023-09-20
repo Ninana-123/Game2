@@ -9,8 +9,6 @@ namespace Engine
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader"),luffyTexture("Resource/Texture/Luffy.png"),zoroTexture("Resource/Texture/zoro.png")
     {
-        Window = glfwGetCurrentContext();
-        InitializeGLEW();
     }
 
     Graphics::~Graphics()
@@ -88,6 +86,9 @@ namespace Engine
 
     void Graphics::Update()
     {
+        int width, height;
+        glfwGetWindowSize(Window, &width, &height);
+        UpdateViewport(width, height);
         // Handle graphics updates here
         renderer.Clear();
         // Handle keyboard input
@@ -144,10 +145,11 @@ namespace Engine
         Graphics::rotationAngle += 0.05f;
 
         GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
-
     }
-
-
-	
+    void Graphics::UpdateViewport(int width, int height)
+    {
+        glViewport(0, 0, width, height);
+        proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
+    }
 
 } // namespace Engine

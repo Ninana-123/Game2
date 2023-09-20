@@ -24,6 +24,7 @@ namespace Engine
         void Initialize();
         void Update();
         void InitializeGLEW();
+        void UpdateViewport(int width, int height);
 
         GLFWwindow* Window;
         Shader shader;

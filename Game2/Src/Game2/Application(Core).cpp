@@ -19,6 +19,7 @@ namespace Engine
 {
     // Create a logger instance
     Engine::Logger logger;
+    Graphics graphicsSystem;
 
     //Entity instances
     Engine::EntityManager EM;
@@ -76,12 +77,12 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-        Graphics graphicsSystem;
+        graphicsSystem.Window = glfwGetCurrentContext();
+        graphicsSystem.InitializeGLEW();
         graphicsSystem.Initialize();
         while (m_Running)
         {
             m_Window->OnUpdate();
-            
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
             if (Input::IsKeyPressed(GLFW_KEY_1))
@@ -106,6 +107,13 @@ namespace Engine
         m_Running = false;
         return true;
     }
+
+    void Application::OnWindowResize(WindowResizeEvent& e)
+    {
+        // Update the viewport and projection matrix
+        graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
+    }
+
 
     void Application::UpdateDeltaTime()
     {
