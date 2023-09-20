@@ -19,6 +19,7 @@ namespace Engine
         // Terminate GLFW
         glfwTerminate();
     }
+
     void Graphics::InitializeGLEW() {
         // Initialize GLEW
         GLenum glewInitResult = glewInit();
@@ -87,12 +88,6 @@ namespace Engine
 
     void Graphics::Update()
     {
-        if (!Window)
-        {
-            // Handle the case where the window creation failed
-            return;
-        }
-
         // Handle graphics updates here
         renderer.Clear();
         // Handle keyboard input
@@ -145,15 +140,9 @@ namespace Engine
             renderer.Draw(va, ib, shader);
         }
 
-
         // Increment the rotation angle for animation
         Graphics::rotationAngle += 0.05f;
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(this->Window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
         GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
 
     }
