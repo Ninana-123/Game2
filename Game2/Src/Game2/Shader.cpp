@@ -116,6 +116,7 @@ void Shader::Bind() const
     }
 
     GLCall(glUseProgram(m_RendererID));
+
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
         std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(m_RendererID)" << std::endl;
@@ -154,17 +155,10 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
 int Shader::GetUniformLocation(const std::string& name)
 {
     if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
-    {
         return m_UniformLocationCache[name];
-    }
-
     GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-
     if (location == -1)
-    {
         std::cout << "Warning: Uniform '" << name << "' doesn't exist" << std::endl;
-        
-    }
     m_UniformLocationCache[name] = location;
     return location;
 }
