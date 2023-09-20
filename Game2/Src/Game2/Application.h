@@ -19,14 +19,15 @@ namespace Engine
         // Destructor
         virtual ~Application();
 
+        void Initialize();
+
         // Run the application
         void Run();
 
         // Event handler
         void OnEvent(Event& e);
 
-        // Get the application window
-        inline Window& GetWindow() { return *m_Window; }
+      
 
         // Get a reference to the application instance (Singleton pattern)
         static Application& Get()
@@ -38,8 +39,9 @@ namespace Engine
         void UpdateDeltaTime();
         void UpdateWindowTitle();
         void SetupScene();
-        void renderScene();
+        //void renderScene();
         void InitializeGLEW();
+        
     private:
         // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);

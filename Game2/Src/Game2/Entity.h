@@ -20,9 +20,9 @@ namespace Engine
         bool HasComponent(ComponentType type) const;
 
         EntityID id;
+        std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
     private:
        
-        std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
     
     };
 }

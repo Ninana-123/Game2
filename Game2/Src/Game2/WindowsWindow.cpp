@@ -27,9 +27,21 @@ namespace Engine {
 		if (!s_GLFWInitialized) {
 			int success = glfwInit();
 			glfwSetErrorCallback(GLFWErrorCallback);
+			if (!success) {
+				// Handle GLFW initialization failure
+				// You can log an error or throw an exception here.
+				return;
+			}
 			s_GLFWInitialized = true;
 		}
+
+		// Window creation
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		if (!m_Window) {
+			// Handle window creation failure
+			// You can log an error or throw an exception here.
+			return;
+		}
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 

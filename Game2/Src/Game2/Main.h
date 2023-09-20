@@ -10,6 +10,7 @@ int main(int argc, char** argv)
 {
     EntryPointLogger.Log(Engine::LogLevel::Debug, "Entry Point entered.");
     auto app = Engine::CreateApplication();
+    app->Initialize();
     app->Run();
     
     delete app;
