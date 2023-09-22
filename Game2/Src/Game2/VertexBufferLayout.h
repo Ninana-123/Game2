@@ -1,17 +1,4 @@
-/******************************************************************************/
-/*!
-\file		VertexBufferLayout.h
-\author 	Wayne Kwok Jun Lin
-\par    	email: k.junlinwayne@digipen.edu
-\date   	August 29, 2023
-\brief		This file contains VertexBufferLayout class, which is used for the
-			layout of vertex data in OpenGL buffers.
 
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
 #pragma once
 
 #include"Renderer.h"

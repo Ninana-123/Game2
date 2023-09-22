@@ -29,19 +29,18 @@ namespace Engine
         else
             GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
     }
-
+    //VertexBuffer* vb;
     void Graphics::Initialize() {
-        float positions[] =
-        {
-            -50.0f, -50.0f, 0.0f, 0.0f, // 0
-            50.0f, -50.0f, 1.0f, 0.0f, // 1
-            50.0f, 50.0f, 1.0f, 1.0f, // 2
-            -50.0f, 50.0f, 0.0f, 1.0f // 3
+        float positions[] = {
+        -50.0f,  -50.0f, 0.0f, 0.0f,    //0
+        50.0f, -50.0f, 1.0f, 0.0f,      //1
+        50.0f,   50.0f, 1.0f, 1.0f,     //2
+       -50.0f,   50.0f, 0.0f, 1.0f      //3
         };
 
 
         // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(positions), std::end(positions), std::begin(this->vtx_postions));
+        //std::copy(std::begin(positions), std::end(positions), std::begin(this->vtx_postions));
 
         unsigned int indices[] =
         {
@@ -49,7 +48,7 @@ namespace Engine
             2, 3, 0
         };
 
-        std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
+        //std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
         glm::vec3 transA(200, 200, 0);
         translationA = transA;
         glm::vec3 transB(400, 200, 0);
@@ -57,6 +56,8 @@ namespace Engine
 
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        //vb = new VertexBuffer(positions, 4 * 4 * sizeof(float));
+        VertexArray va{};
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
@@ -65,6 +66,7 @@ namespace Engine
         Graphics::va.AddBuffer(vb, layout);
 
         Graphics::ib.SetData(indices, 6);
+
         // Moving of the texture
         Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
@@ -77,10 +79,12 @@ namespace Engine
         shader.SetUniform1i("u_Texture", 0);
         zoroTexture.InitGL();
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        
 
+        ib.Unbind();
         va.Unbind();
         vb.Unbind();
-        ib.Unbind();
+       
         shader.Unbind();
     }
 
@@ -122,13 +126,28 @@ namespace Engine
 
 
         {
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA); // Left translation
+            //glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA); // Left translation
+            //model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
+            //glm::mat4 mvp = proj * view * model;
+            //shader.Bind();
+            //luffyTexture.Bind(0);
+            //vb->Bind();
+            //Graphics::va.Bind();
+            //Graphics::ib.Bind();
+            ////shader.SetUniform1i("u_Texture", luffyTexture.);
+            //shader.SetUniformMat4f("u_MVP", mvp);
+            //renderer.Draw(va, ib, shader);
+            //Graphics::va.Unbind();
+            //Graphics::ib.Unbind();
+            //vb->Unbind();
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);  // Left translation
             model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
             glm::mat4 mvp = proj * view * model;
             luffyTexture.Bind(0);
             shader.Bind();
             shader.SetUniformMat4f("u_MVP", mvp);
             renderer.Draw(va, ib, shader);
+
         }
 
         {
@@ -144,7 +163,7 @@ namespace Engine
         // Increment the rotation angle for animation
         Graphics::rotationAngle += 0.05f;
 
-        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
     void Graphics::UpdateViewport(int width, int height)
     {
