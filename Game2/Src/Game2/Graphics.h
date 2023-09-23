@@ -25,9 +25,9 @@ namespace Engine
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
 
-        GLFWwindow* Window;
+        GLFWwindow* Window{};
         Shader shader;
-        float rotationAngle{};
+        float rotationAngleA{}, rotationAngleB{};
         IndexBuffer ib;
         Renderer renderer;
         VertexArray va;
@@ -35,9 +35,10 @@ namespace Engine
         glm::mat4 view{};
         Texture luffyTexture;
         Texture zoroTexture;
-        float vtx_postions[16];
-        unsigned int indices[6];
+        float vtx_postions[16]{};
+        unsigned int indices[6]{};
         glm::vec3 translationA{}, translationB{};
+        glm::vec3 scaleA{}, scaleB{};
     private:
         // Add private members here
     };

@@ -15,5 +15,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <ctime>
+#include <map>
+#include <functional>
 // Windows API Headers
 #include <Windows.h>
