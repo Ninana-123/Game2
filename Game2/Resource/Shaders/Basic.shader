@@ -10,6 +10,7 @@ out
 vec2 v_TexCoord;
 
 uniform mat4 u_MVP;
+uniform vec4 u_Color;
 
 void main()
 {
@@ -33,6 +34,6 @@ uniform sampler2D u_Texture;
 void main()
 {
     vec4 texColor = texture(u_Texture, v_TexCoord);
-    color = texColor;
+    color = texColor * u_Color;
     //color = vec4(1.0); //white box
 };

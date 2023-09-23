@@ -3,7 +3,6 @@
 #include <GLFW/glfw3.h>
 #include "glm/gtc/matrix_transform.hpp"
 
-
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
@@ -28,17 +27,17 @@ namespace Engine
 
         GLFWwindow* Window;
         Shader shader;
-        float rotationAngle;
+        float rotationAngle{};
         IndexBuffer ib;
         Renderer renderer;
         VertexArray va;
-        glm::mat4 proj;
-        glm::mat4 view;
+        glm::mat4 proj{};
+        glm::mat4 view{};
         Texture luffyTexture;
         Texture zoroTexture;
         float vtx_postions[16];
         unsigned int indices[6];
-        glm::vec3 translationA,translationB;
+        glm::vec3 translationA{}, translationB{};
     private:
         // Add private members here
     };
