@@ -1,5 +1,7 @@
-
 #pragma once
+
+#ifndef ENGINE_INDEXBUFFER_H
+#define ENGINE_INDEXBUFFER_H
 
 class IndexBuffer
 {
@@ -17,3 +19,4 @@ public:
 	void Unbind() const;
 	inline unsigned int GetCount() const { return m_Count; }
 };
+#endif ENGINE_INDEXBUFFER_H

@@ -25,25 +25,25 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
-	GLCall(glDeleteVertexArrays(1, &m_RendererID));
+	GLCall(glDeleteVertexArrays(1, &m_RendererID)); //delete VAO when object is destroyed
 }
 void VertexArray::SetRendererID(GLuint rendererID)
 {
-	m_RendererID = rendererID;
+	m_RendererID = rendererID; //set the internal Renderer ID
 }
 
 void VertexArray::GenerateRendererID() const
 {
 	GLuint rendererID;
-	GLCall(glGenVertexArrays(1, &rendererID));
+	GLCall(glGenVertexArrays(1, &rendererID)); //new VAO ID
 	const_cast<VertexArray*>(this)->SetRendererID(rendererID);
-	GLCall(glBindVertexArray(m_RendererID));
+	GLCall(glBindVertexArray(m_RendererID)); //bind newly generated VAO
 }
 
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
-	Bind();		//bind to make vao the active vao
+	Bind();		//bind to make VAO the active VAO
 	vb.Bind();	//bind vertex buffer
 	const auto& elements = layout.GetElements();
 	unsigned int offset = 0;
@@ -52,7 +52,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	{
 		const auto& element = elements[i];
 		GLCall(glEnableVertexAttribArray(i));
-		//links buffer to vao
+		//links buffer to VAO
 		GLCall(glVertexAttribPointer(i, element.count, element.type, 
 			element.normalized, layout.GetStride(), reinterpret_cast<const void*>(static_cast<uintptr_t>(offset))));
 		//calculate offset for next attribute based on current element
@@ -64,9 +64,9 @@ void VertexArray::Bind() const
 {
 	if (m_RendererID == 0)
 	{
-		GenerateRendererID();
+		GenerateRendererID(); //generate new VAO if it doesn't exist
 	}
-
+	//bind to make the new VAO active
 	GLCall(glBindVertexArray(m_RendererID));
 }
 

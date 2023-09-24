@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef ENGINE_TEXTURE_H
+#define ENGIEN_TEXTURE_H
+
 #include "Renderer.h"
 #include <string>
 class Texture
@@ -18,3 +21,4 @@ public:
     void Bind(unsigned int slot) const;
     void Unbind() const;
 };
+#endif ENGINE_TEXTURE_H

@@ -88,9 +88,15 @@ namespace Engine
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
+        //for (int i = 0; i < totalFrames; ++i) {
+        //    std::string frameTexturePath = "Resource/Texture/Luffy" + std::to_string(i) + ".png";
+        //    Texture frameTexture(frameTexturePath);
+        //    frameTexture.InitGL();
+        //    luffyFrames.push_back(frameTexture);
+        //}
+
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
-        //shader.SetUniform1i("u_Texture", 0);
 
         zoroTexture.InitGL();
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
@@ -139,6 +145,21 @@ namespace Engine
             }
         }
 
+        //double currentTime = glfwGetTime();
+        //static double lastTime = 0.0;
+
+        //// Calculate time elapsed since the last frame
+        //double deltaTime = currentTime - lastTime;
+        //lastTime = currentTime;
+
+        //frameTimer += static_cast<float>(deltaTime); // Update the frame timer
+
+        //if (frameTimer >= frameDuration)
+        //{
+        //    frameTimer = 0.0f;
+        //    currentFrame = (currentFrame + 1) % totalFrames;
+        //}
+
         //Texture A
         {
             glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);  // Left translation
@@ -147,6 +168,7 @@ namespace Engine
             glm::mat4 mvp = proj * view * model;
             shader.Bind();
             luffyTexture.Bind(0);
+            //luffyFrames[currentFrame].Bind(0); // Bind the current animation frame
             shader.SetUniform1i("u_Texture", 0);
             shader.SetUniformMat4f("u_MVP", mvp);
             renderer.Draw(va, ib, shader);
