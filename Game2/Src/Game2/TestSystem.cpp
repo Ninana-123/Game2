@@ -14,7 +14,7 @@ void Engine::TestSystem::Update(Entity* entity)
         PositionComponent* positionComponent = static_cast<PositionComponent*>(entity->GetComponent(ComponentType::Position));
 
         // Check for the "2" key press
-        if (Input::IsKeyPressed(GLFW_KEY_2)) 
+        if (Input::IsKeyPressed(KEY_2)) 
         {
             // Update the x and y values of the PositionComponent
             positionComponent->x += 2; // Example: Increment x by 2

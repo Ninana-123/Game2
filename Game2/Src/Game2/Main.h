@@ -13,7 +13,5 @@ int main(int argc, char** argv)
     app->Initialize();
     app->Run();
     
-    delete app;
-
     return 0;
 }

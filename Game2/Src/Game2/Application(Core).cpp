@@ -62,7 +62,8 @@ namespace Engine
         graphicsSystem.Window = glfwGetCurrentContext();
         graphicsSystem.InitializeGLEW();
         graphicsSystem.Initialize();
-
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
+        m_ImGuiWrapper->OnAttach();
         //Systems Manager Initialization
         SM.Initialize();
 
@@ -90,7 +91,8 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-       
+            
+
         while (m_Running)
         {
             m_Window->OnUpdate();
