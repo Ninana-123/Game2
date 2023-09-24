@@ -17,6 +17,7 @@ IndexBuffer::~IndexBuffer()
 {
     if (m_RendererID != 0)
     {
+        //delete openGL buffers if it exists
         GLCall(glDeleteBuffers(1, &m_RendererID));
         m_RendererID = 0;
     }
@@ -26,9 +27,11 @@ void IndexBuffer::GenerateBuffer() const
 {
     if (m_RendererID == 0)
     {
+        //ensure that the size of unsigned int matches with size of GLuint
         ASSERT(sizeof(unsigned int) == sizeof(GLuint));
 
         GLuint rendererID;
+        //store its ID in m_rendererID
         GLCall(glGenBuffers(1, &rendererID));
         const_cast<GLuint&>(m_RendererID) = rendererID;
 
@@ -42,7 +45,7 @@ void IndexBuffer::GenerateBuffer() const
 void IndexBuffer::Bind() const
 {
     GenerateBuffer();  // Ensure the buffer is generated before binding
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID)); //bind element array buffer
 }
 
 void IndexBuffer::Unbind() const
