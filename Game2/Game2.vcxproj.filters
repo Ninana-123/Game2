@@ -71,6 +71,12 @@
     <Filter Include="Base\Engine\Prefabs">
       <UniqueIdentifier>{29af717c-8cd5-4369-b7ae-7b87274f3abf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{e713601b-d03d-4421-b717-4d73f7d42bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiWrapper">
+      <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -172,6 +178,36 @@
     <ClInclude Include="Src\Game2\CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiWrapper.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -221,6 +257,30 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Systems\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
+      <Filter>ImGuiWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
+      <Filter>ImGuiWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
+      <Filter>ImGuiWrapper</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\SystemsManager.cpp">
       <Filter>Base\Engine\System</Filter>

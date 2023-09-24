@@ -11,6 +11,7 @@
 #include "System.h"
 #include "KeyCodes.h"
 #include "Graphics.h"
+#include "ImGuiWrapper.h"
 
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
@@ -22,6 +23,7 @@ namespace Engine
     // Create a logger instance
     Engine::Logger logger;
     Graphics graphicsSystem;
+    std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
     //Entity instances
     Engine::EntityManager EM;
@@ -33,7 +35,6 @@ namespace Engine
     Application::Application()
     {
         logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
-        // Create a window and set its event callback
     }   
 
     Application::~Application()
@@ -110,7 +111,10 @@ namespace Engine
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-           
+            */
+            graphicsSystem.Update();
+            m_ImGuiWrapper->OnUpdate();
+
         }
     }
 

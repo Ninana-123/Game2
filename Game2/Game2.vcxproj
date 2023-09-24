@@ -29,6 +29,16 @@
     <ClInclude Include="Src\Game2\EntityManager.h" />
     <ClInclude Include="Src\Game2\Event.h" />
     <ClInclude Include="Src\Game2\Graphics.h" />
+    <ClInclude Include="Src\Game2\imconfig.h" />
+    <ClInclude Include="Src\Game2\imgui.h" />
+    <ClInclude Include="Src\Game2\ImGuiWrapper.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Src\Game2\imgui_internal.h" />
+    <ClInclude Include="Src\Game2\imstb_rectpack.h" />
+    <ClInclude Include="Src\Game2\imstb_textedit.h" />
+    <ClInclude Include="Src\Game2\imstb_truetype.h" />
     <ClInclude Include="Src\Game2\IndexBuffer.h" />
     <ClInclude Include="Src\Game2\Input.h" />
     <ClInclude Include="Src\Game2\InputEvent.h" />
@@ -60,6 +70,14 @@
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
+    <ClCompile Include="Src\Game2\imgui.cpp" />
+    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp" />
+    <ClCompile Include="Src\Game2\imgui_demo.cpp" />
+    <ClCompile Include="Src\Game2\imgui_draw.cpp" />
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Src\Game2\imgui_tables.cpp" />
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
@@ -108,7 +126,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -190,6 +208,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
