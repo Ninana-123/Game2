@@ -217,7 +217,7 @@ namespace Engine
 
         //Texture B
         {
-            shader.SetUniform1i("u_Texture", 1);
+            //shader.SetUniform1i("u_Texture", 1);
 
             UpdateTransformations(GLFW_KEY_W);
             UpdateTransformations(GLFW_KEY_A);
