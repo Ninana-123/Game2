@@ -1,5 +1,5 @@
 #pragma once
-
+#include "System.h"
 
 namespace Engine
 {
@@ -12,6 +12,6 @@ namespace Engine
 		TestSystem() {};
 		~TestSystem() {};
 
-		void Update(Entity& entity) override;
+		void Update(Entity* entity) override;
 	};
 }

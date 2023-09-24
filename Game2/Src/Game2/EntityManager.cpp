@@ -17,6 +17,12 @@ namespace Engine
 		return entityID;
 	}
 
+	EntityID EntityManager::CreateEntityFromPrefab()
+	{
+		EntityID newEntityID = CreateEntity();
+		return EntityID();
+	}
+
 	Entity* Engine::EntityManager::GetEntity(EntityID id) {
 		auto it = entities.find(id);
 		return (it != entities.end()) ? it->second.get() : nullptr;

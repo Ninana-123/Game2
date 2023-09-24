@@ -213,8 +213,12 @@ namespace Engine
         }
     }
  
-    void Graphics::Update()
+    void Graphics::Update(Entity* entity)
     {
+        if (entity->HasComponent(ComponentType::Transform))
+        {   
+
+        }
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);

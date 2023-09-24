@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Game2/Component.h"
-#include "Game2/EngineTypes.h"
-
+#include "Component.h"
+#include "EngineTypes.h"
 
 namespace Engine
 {
+
 	class PositionComponent : public Component
 	{
 	public:
-		int x = 0, y = 0;
+		int x = 10, y = 15;
 
 		ComponentType GetType() const override { return ComponentType::Position; }
 		Component* Clone() const override 

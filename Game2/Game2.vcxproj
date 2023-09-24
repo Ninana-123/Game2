@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
+    <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
+    <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\EngineTypes.h" />
     <ClInclude Include="Src\Game2\Entity.h" />
     <ClInclude Include="Src\Game2\EntityManager.h" />
@@ -34,15 +36,17 @@
     <ClInclude Include="Src\Game2\Logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\Application.h" />
-    <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\PositionComponent.h" />
+    <ClInclude Include="Src\Game2\Prefab.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\System.h" />
+    <ClInclude Include="Src\Game2\SystemsManager.h" />
     <ClInclude Include="Src\Game2\TestSystem.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
+    <ClInclude Include="Src\Game2\TransformComponent.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
     <ClInclude Include="Src\Game2\VertexBuffer.h" />
     <ClInclude Include="Src\Game2\VertexBufferLayout.h" />
@@ -65,6 +69,8 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
+    <ClCompile Include="Src\Game2\SystemsManager.cpp" />
+    <ClCompile Include="Src\Game2\TestSystem.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>

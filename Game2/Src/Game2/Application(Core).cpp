@@ -4,7 +4,9 @@
 #include "Application.h"
 #include "Input.h"
 #include "EntityManager.h"
+#include "SystemsManager.h"
 #include "PositionComponent.h"
+#include "TransformComponent.h"
 #include "Entity.h"
 #include "System.h"
 #include "KeyCodes.h"
@@ -23,6 +25,7 @@ namespace Engine
 
     //Entity instances
     Engine::EntityManager EM;
+    Engine::SystemsManager SM;
     EntityID entity1, entity2;
     Entity* targetEntity;
     PositionComponent* position;
@@ -55,14 +58,23 @@ namespace Engine
 
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
+        graphicsSystem.Window = glfwGetCurrentContext();
+        graphicsSystem.InitializeGLEW();
+        graphicsSystem.Initialize();
+
+        //Systems Manager Initialization
+        SM.Initialize();
+
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
         //add component to entity
         std::unique_ptr<Component> positionComponent = std::make_unique<PositionComponent>();
+        std::unique_ptr<Component> transformComponent = std::make_unique<TransformComponent>();
         targetEntity->AddComponent(std::move(positionComponent));
+        targetEntity->AddComponent(std::move(transformComponent));
         position = dynamic_cast<PositionComponent*>(targetEntity->GetComponent(ComponentType::Position)); //reference to Entity Position data
-      
+       
         
     }
 
@@ -77,9 +89,7 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-        graphicsSystem.Window = glfwGetCurrentContext();
-        graphicsSystem.InitializeGLEW();
-        graphicsSystem.Initialize();
+       
         while (m_Running)
         {
             m_Window->OnUpdate();
@@ -91,13 +101,16 @@ namespace Engine
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
-            /*
+
+            //System Updating
+            SM.UpdateSystems(targetEntity);
+            graphicsSystem.Update(targetEntity);
+
+            //Entity Debug
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
-            //std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
+            std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            */
-            graphicsSystem.Update();
-         
+           
         }
     }
 

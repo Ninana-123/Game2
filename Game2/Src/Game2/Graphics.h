@@ -14,18 +14,21 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "System.h"
+#include "Component.h"
+#include "Entity.h"
 
 namespace Engine
 {
 
-    class Graphics
+    class Graphics : public System
     {
     public:
         Graphics();
         ~Graphics();
 
         void Initialize();
-        void Update();
+        void Update(Entity* entity) override;
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
         void UpdateTransformations(int key);

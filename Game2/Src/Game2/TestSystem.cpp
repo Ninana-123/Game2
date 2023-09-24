@@ -6,12 +6,12 @@
 #include "System.h"
 #include "TestSystem.h"
 
-void Engine::TestSystem::Update(Entity& entity)
+void Engine::TestSystem::Update(Entity* entity)
 {
     // Check if the entity has a PositionComponent
-    if (entity.HasComponent(ComponentType::Position)) {
+    if (entity->HasComponent(ComponentType::Position)) {
         // Access the PositionComponent
-        PositionComponent* positionComponent = static_cast<PositionComponent*>(entity.GetComponent(ComponentType::Position));
+        PositionComponent* positionComponent = static_cast<PositionComponent*>(entity->GetComponent(ComponentType::Position));
 
         // Check for the "2" key press
         if (Input::IsKeyPressed(GLFW_KEY_2)) 

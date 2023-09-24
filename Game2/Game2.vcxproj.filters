@@ -68,11 +68,11 @@
     <Filter Include="Systems\Graphics\Graphics">
       <UniqueIdentifier>{401611d1-6698-4ef1-bda5-c71d25108e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Engine\Prefabs">
+      <UniqueIdentifier>{29af717c-8cd5-4369-b7ae-7b87274f3abf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Game2\Core.h">
-      <Filter>Base\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Application.h">
       <Filter>Base\Core</Filter>
     </ClInclude>
@@ -157,6 +157,21 @@
     <ClInclude Include="Src\Game2\Graphics.h">
       <Filter>Systems\Graphics\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\SystemsManager.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Prefab.h">
+      <Filter>Base\Engine\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Core.h">
+      <Filter>Base\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TransformComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -164,9 +179,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\WindowsWindow.cpp">
       <Filter>Base\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Core.cpp">
-      <Filter>Base\Core</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\pch.cpp">
       <Filter>Base\Window\Precompiled</Filter>
@@ -209,6 +221,15 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Systems\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\SystemsManager.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Core.cpp">
+      <Filter>Base\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\TestSystem.cpp">
+      <Filter>Base\Engine\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
