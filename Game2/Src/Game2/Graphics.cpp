@@ -88,9 +88,15 @@ namespace Engine
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
+        //for (int i = 0; i < totalFrames; ++i) {
+        //    std::string frameTexturePath = "Resource/Texture/Luffy" + std::to_string(i) + ".png";
+        //    Texture frameTexture(frameTexturePath);
+        //    frameTexture.InitGL();
+        //    luffyFrames.push_back(frameTexture);
+        //}
+
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
-        //shader.SetUniform1i("u_Texture", 0);
 
         zoroTexture.InitGL();
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
@@ -188,6 +194,51 @@ namespace Engine
         // Handle graphics updates here
         renderer.Clear();
 
+        // Define a mapping of keys to actions
+        std::map<int, std::function<void()>> keyActions;
+
+        // Initialize the mapping
+        keyActions[GLFW_KEY_RIGHT] = [&]() { translationA.x += 5.0f; }; //Move right for texture  A
+        keyActions[GLFW_KEY_D]     = [&]() { translationB.x += 5.0f; }; //Move right for texture  B
+        keyActions[GLFW_KEY_LEFT]  = [&]() { translationA.x -= 5.0f; }; //Move left  for texture  A
+        keyActions[GLFW_KEY_A]     = [&]() { translationB.x -= 5.0f; }; //Move left  for texture  B
+        keyActions[GLFW_KEY_DOWN]  = [&]() { translationA.y -= 5.0f; }; //Move down  for texture  A
+        keyActions[GLFW_KEY_S]     = [&]() { translationB.y -= 5.0f; }; //Move down  for texture  B
+        keyActions[GLFW_KEY_UP]    = [&]() { translationA.y += 5.0f; }; //Move up    for texture  A
+        keyActions[GLFW_KEY_W]     = [&]() { translationB.y += 5.0f; }; //Move up    for texture  B
+        keyActions[GLFW_KEY_U]     = [&]() { rotationAngleA += 0.1f; }; // Rotate texture A counterclockwise
+        keyActions[GLFW_KEY_I]     = [&]() { rotationAngleA -= 0.1f; }; // Rotate texture A clockwise
+        keyActions[GLFW_KEY_J]     = [&]() { rotationAngleB += 0.1f; }; // Rotate texture B counterclockwise
+        keyActions[GLFW_KEY_K]     = [&]() { rotationAngleB -= 0.1f; }; // Rotate texture B clockwise
+        keyActions[GLFW_KEY_Z]     = [&]() { scaleA += glm::vec3(0.1f, 0.1f, 0.0f); }; // Increase scale for texture A
+        keyActions[GLFW_KEY_X]     = [&]() { scaleA -= glm::vec3(0.1f, 0.1f, 0.0f); }; // Decrease scale for texture A
+        keyActions[GLFW_KEY_C]     = [&]() { scaleB += glm::vec3(0.1f, 0.1f, 0.0f); }; // Increase scale for texture B
+        keyActions[GLFW_KEY_V]     = [&]() { scaleB -= glm::vec3(0.1f, 0.1f, 0.0f); }; // Decrease scale for texture B
+
+        // Check for key presses and execute corresponding actions
+        for (const auto& pair : keyActions)
+        {
+            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
+            {
+                pair.second();
+            }
+        }
+
+        //double currentTime = glfwGetTime();
+        //static double lastTime = 0.0;
+
+        //// Calculate time elapsed since the last frame
+        //double deltaTime = currentTime - lastTime;
+        //lastTime = currentTime;
+
+        //frameTimer += static_cast<float>(deltaTime); // Update the frame timer
+
+        //if (frameTimer >= frameDuration)
+        //{
+        //    frameTimer = 0.0f;
+        //    currentFrame = (currentFrame + 1) % totalFrames;
+        //}
+
         //Texture A
         {
            
@@ -209,6 +260,8 @@ namespace Engine
 
             glm::mat4 mvp = proj * view * model;
             shader.Bind();
+            luffyTexture.Bind(0);
+            //luffyFrames[currentFrame].Bind(0); // Bind the current animation frame
             shader.SetUniform1i("u_Texture", 0);
             shader.SetUniformMat4f("u_MVP", mvp);
             renderer.Draw(va, ib, shader);

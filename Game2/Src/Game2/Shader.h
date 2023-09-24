@@ -1,5 +1,7 @@
-
 #pragma once
+
+#ifndef ENGINE_SHADER_H
+#define ENGINE_SHADER_H
 
 #include <string>
 #include <unordered_map>
@@ -41,3 +43,4 @@ private:
     unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 };
+#endif ENGINE_SHADER_H

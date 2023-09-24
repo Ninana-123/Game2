@@ -1,5 +1,9 @@
 
 #pragma once
+
+#ifndef ENGINE_RENDERER_H
+#define ENGINE_RENDERER_H
+
 #include <GL/glew.h>
 
 #include "VertexArray.h"
@@ -26,3 +30,4 @@ public:
     void Clear() const;
     void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
 };
+#endif ENGINE_RENDERER_H

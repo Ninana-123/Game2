@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef ENGINE_GRAPHICS_H
+#define ENGINE_GRAPHICS_H
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glm/gtc/matrix_transform.hpp"
@@ -42,10 +46,16 @@ namespace Engine
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
+
+
     private:
         // Add private members here
+        //std::vector<Texture> luffyFrames; // Vector to store animation frames
+        //int currentFrame = 0;
+        //float frameDuration = 0.2f; // Adjust frame duration as needed
+        //float frameTimer = 0.0f;
+        //int totalFrames = 8; // Total number of frames in the animation
     };
 
-
-
-} // namespace Engine
+} 
+#endif // ENGINE_GRAPHICS_H
