@@ -8,8 +8,8 @@ namespace Engine
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader"),
-          luffyTexture("Resource/Texture/Luffy.png"),
-          zoroTexture("Resource/Texture/zoro.png")
+        luffyTexture("Resource/Texture/Luffy.png"),
+        zoroTexture("Resource/Texture/zoro.png")
     {
     }
 
@@ -31,8 +31,9 @@ namespace Engine
         else
             GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
     }
-    
+
     void Graphics::Initialize() {
+        //define vertex array and indices
         float positions[] = {
        -50.0f,  -50.0f, 0.0f, 0.0f,    //0
         50.0f,  -50.0f, 1.0f, 0.0f,    //1
@@ -67,9 +68,11 @@ namespace Engine
         scaleA = scale1;
         scaleB = scale2;
 
+        //enable blending for transparency
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
+        //create vertex array, vertex buffer, and index buffer
         VertexArray va{};
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
@@ -80,17 +83,26 @@ namespace Engine
 
         Graphics::ib.SetData(indices, 6);
 
-        // Moving of the texture
+        // set up projection and view matrices
         Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+
+        // load and initialize the shader
         shader.LoadShader("Resource/Shaders/Basic.shader");
         shader.Initialize();
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
+        //for (int i = 0; i < totalFrames; ++i) {
+        //    std::string frameTexturePath = "Resource/Texture/Luffy" + std::to_string(i) + ".png";
+        //    Texture frameTexture(frameTexturePath);
+        //    frameTexture.InitGL();
+        //    luffyFrames.push_back(frameTexture);
+        //}
+
+        // initialize and bind textures
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
-        //shader.SetUniform1i("u_Texture", 0);
 
         zoroTexture.InitGL();
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
@@ -101,176 +113,208 @@ namespace Engine
         shader.Unbind();
     }
 
-
     void Graphics::UpdateTransformations(int key)
     {
+        // Define a mapping of keys to actions
+        std::map<int, std::function<void()>> keyActions;
+
         const float increment = 1.0f;
         const float angle = 0.01f;
         const float scale = 0.01f;
 
-        // texture A
-        if (glfwGetKey(Window, GLFW_KEY_RIGHT) == GLFW_PRESS) 
-        {
-            translationA.x += increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_LEFT) == GLFW_PRESS) 
-        {
-            translationA.x -= increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_DOWN) == GLFW_PRESS) 
-        {
-            translationA.y -= increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_UP) == GLFW_PRESS) 
-        {
-            translationA.y += increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_U) == GLFW_PRESS) 
-        {
-            rotationAngleA += angle;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_I) == GLFW_PRESS) 
-        {
-            rotationAngleA -= angle;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_Z) == GLFW_PRESS) 
-        {
-            scaleA += glm::vec3(scale, scale, 0.0f);
-        }
-        if (glfwGetKey(Window, GLFW_KEY_X) == GLFW_PRESS) 
-        {
-            scaleA -= glm::vec3(scale, scale, 0.0f);
-        }
+        // Texture A 
+        keyActions[GLFW_KEY_RIGHT] = [&]()
+            {
+                translationA.x += increment; //Move right 
+            };
 
+        keyActions[GLFW_KEY_LEFT] = [&]()
+            {
+                translationA.x -= increment; //Move left
+            };
 
-        // texture B
-        if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS) 
+        keyActions[GLFW_KEY_DOWN] = [&]()
+            {
+                translationA.y -= increment; //Move down
+            };
+
+        keyActions[GLFW_KEY_UP] = [&]()
+            {
+                translationA.y += increment; //Move up
+            };
+
+        keyActions[GLFW_KEY_U] = [&]()
+            {
+                rotationAngleA += angle; //Rotate counterclockwise
+            };
+
+        keyActions[GLFW_KEY_I] = [&]()
+            {
+                rotationAngleA -= angle; //Rotate clockwise
+            };
+        keyActions[GLFW_KEY_Z] = [&]()
+            {
+                scaleA += glm::vec3(scale, scale, 0.0f); //Increase scale
+            };
+
+        keyActions[GLFW_KEY_X] = [&]()
+            {
+                scaleA -= glm::vec3(scale, scale, 0.0f); //Decrease scale
+            };
+
+        // Texture B
+        keyActions[GLFW_KEY_D] = [&]()
+            {
+                translationB.x += increment; //Move right
+            };
+
+        keyActions[GLFW_KEY_A] = [&]()
+            {
+                translationB.x -= increment; //Move left
+            };
+
+        keyActions[GLFW_KEY_S] = [&]()
+            {
+                translationB.y -= increment; //Move down
+            };
+
+        keyActions[GLFW_KEY_W] = [&]()
+            {
+                translationB.y += increment; //Move up
+            };
+
+        keyActions[GLFW_KEY_J] = [&]()
+            {
+                rotationAngleB += angle; // Rotate texture
+            };
+
+        keyActions[GLFW_KEY_K] = [&]()
+            {
+                rotationAngleB -= angle; // Rotate texture
+            };
+
+        keyActions[GLFW_KEY_C] = [&]()
+            {
+                scaleB += glm::vec3(scale, scale, 0.0f); // Increase scale
+            };
+
+        keyActions[GLFW_KEY_V] = [&]()
+            {
+                scaleB -= glm::vec3(scale, scale, 0.0f); // Decrease scale
+            };
+
+        // Check for key presses and execute corresponding actions
+        for (const auto& pair : keyActions)
         {
-            translationB.x += increment;
+            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
+            {
+                pair.second();
+            }
         }
-        if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS) 
-        {
-            translationB.x -= increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS) 
-        {
-            translationB.y -= increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS) 
-        {
-            translationB.y += increment;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_J) == GLFW_PRESS) 
-        {
-            rotationAngleB += angle;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_K) == GLFW_PRESS) 
-        {
-            rotationAngleB -= angle;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_C) == GLFW_PRESS) 
-        {
-            scaleB += glm::vec3(scale, scale, 0.0f);
-        }
-        if (glfwGetKey(Window, GLFW_KEY_V) == GLFW_PRESS) 
-        {
-            scaleB -= glm::vec3(scale, scale, 0.0f);
-        }
-    
     }
 
- 
     void Graphics::Update()
     {
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
+
         // Handle graphics updates here
         renderer.Clear();
 
-        //Texture A
+        // In the Update method, add a key handler to toggle rendering between textured and plain square
+        if (glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS)
         {
-           
-            UpdateTransformations(GLFW_KEY_RIGHT);
-            UpdateTransformations(GLFW_KEY_LEFT);
-            UpdateTransformations(GLFW_KEY_UP);
-            UpdateTransformations(GLFW_KEY_DOWN);
-            UpdateTransformations(GLFW_KEY_U);
-            UpdateTransformations(GLFW_KEY_I);
-            UpdateTransformations(GLFW_KEY_Z);
-            UpdateTransformations(GLFW_KEY_X);
-
-            glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
-
-            // Apply transformations from UpdateTransformations
-            model = glm::translate(model, translationA);
-            model = glm::scale(model, scaleA);
-            model = glm::rotate(model, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
-
-            glm::mat4 mvp = proj * view * model;
-
-            luffyTexture.Bind(0);
+            renderTexturedSquare = !renderTexturedSquare;
             shader.Bind();
-
-            shader.SetUniform1i("u_Texture", 0);
-            shader.SetUniformMat4f("u_MVP", mvp);
-            renderer.Draw(va, ib, shader);
+            if (renderTexturedSquare)
+            {
+                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+            }
+            else
+            {
+                shader.SetUniform1i("u_RenderTextured", 0); // Render plain
+            }
         }
 
+        //double currentTime = glfwGetTime();
+        //static double lastTime = 0.0;
 
-        //Texture B
-        {
-            //shader.SetUniform1i("u_Texture", 1);
+        //// Calculate time elapsed since the last frame
+        //double deltaTime = currentTime - lastTime;
+        //lastTime = currentTime;
 
-            UpdateTransformations(GLFW_KEY_W);
-            UpdateTransformations(GLFW_KEY_A);
-            UpdateTransformations(GLFW_KEY_S);
-            UpdateTransformations(GLFW_KEY_D);
-            UpdateTransformations(GLFW_KEY_J);
-            UpdateTransformations(GLFW_KEY_K);
-            UpdateTransformations(GLFW_KEY_C);
-            UpdateTransformations(GLFW_KEY_V);
+        //frameTimer += static_cast<float>(deltaTime); // Update the frame timer
 
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB); // Right translation
-            model = glm::scale(model, scaleB); // Apply scaling
-            model = glm::rotate(model, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
-
-            glm::mat4 mvp = proj * view * model;
-
-            zoroTexture.Bind(1);
-            shader.Bind();
-
-            shader.SetUniform1i("u_Texture", 1);
-            shader.SetUniformMat4f("u_MVP", mvp);
-            renderer.Draw(va, ib, shader);
-        }
-
-        //// Texture C
+        //if (frameTimer >= frameDuration)
         //{
-        //    shader.SetUniform1i("u_Texture", 2); // Use a different texture unit (e.g., unit 2)
-
-        //    UpdateTransformations(GLFW_KEY_M); // Customize the key for Texture C transformations
-
-        //    glm::mat4 model = glm::translate(glm::mat4(1.0f), translationC); // Customize the translation
-        //    model = glm::scale(model, scaleC); // Customize the scale
-        //    model = glm::rotate(model, rotationAngleC, glm::vec3(0.0f, 0.0f, 1.0f)); // Customize the rotation
-
-        //    glm::mat4 mvp = proj * view * model;
-
-        //    // Bind Texture C
-        //    textureC.Bind(2); // Bind your Texture C to texture unit 2
-
-        //    shader.Bind();
-
-        //    shader.SetUniform1i("u_Texture", 2); // Set the uniform to use texture unit 2
-        //    shader.SetUniformMat4f("u_MVP", mvp);
-
-        //    renderer.Draw(va, ib, shader);
+        //    frameTimer = 0.0f;
+        //    currentFrame = (currentFrame + 1) % totalFrames;
         //}
-       
+        if (renderTexturedSquare)
+        {
+            //Texture A
+            {
+                UpdateTransformations(GLFW_KEY_RIGHT);
+                UpdateTransformations(GLFW_KEY_LEFT);
+                UpdateTransformations(GLFW_KEY_UP);
+                UpdateTransformations(GLFW_KEY_DOWN);
+                UpdateTransformations(GLFW_KEY_U);
+                UpdateTransformations(GLFW_KEY_I);
+                UpdateTransformations(GLFW_KEY_Z);
+                UpdateTransformations(GLFW_KEY_X);
 
+                glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
 
+                // Apply transformations from UpdateTransformations
+                model = glm::translate(model, translationA);
+                model = glm::scale(model, scaleA);
+                model = glm::rotate(model, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
 
+                glm::mat4 mvp = proj * view * model;
+                shader.Bind();
+                luffyTexture.Bind(0);
+                //luffyFrames[currentFrame].Bind(0); // Bind the current animation frame
+                shader.SetUniform1i("u_Texture", 0);
+                shader.SetUniformMat4f("u_MVP", mvp);
+                renderer.Draw(va, ib, shader);
+            }
+
+            //Texture B
+            {
+                UpdateTransformations(GLFW_KEY_W);
+                UpdateTransformations(GLFW_KEY_A);
+                UpdateTransformations(GLFW_KEY_S);
+                UpdateTransformations(GLFW_KEY_D);
+                UpdateTransformations(GLFW_KEY_J);
+                UpdateTransformations(GLFW_KEY_K);
+                UpdateTransformations(GLFW_KEY_C);
+                UpdateTransformations(GLFW_KEY_V);
+
+                glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB); // Right translation
+                model = glm::scale(model, scaleB); // Apply scaling
+                model = glm::rotate(model, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
+
+                glm::mat4 mvp = proj * view * model;
+
+                zoroTexture.Bind(1);
+                shader.Bind();
+
+                shader.SetUniform1i("u_Texture", 1);
+                shader.SetUniformMat4f("u_MVP", mvp);
+                renderer.Draw(va, ib, shader);
+            }
+
+        }
+        else
+        {
+            //glm::mat4 model = glm::mat4(1.0f); // Identity matrix
+            //glm::mat4 mvp = proj * view * model;
+            shader.Bind();
+            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 1.0f, 1.0f);
+            renderer.Draw(va, ib, shader);
+
+        }
         //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 

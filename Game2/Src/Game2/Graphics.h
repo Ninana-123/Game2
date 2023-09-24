@@ -38,7 +38,7 @@ namespace Engine
         Texture zoroTexture;
         float vtx_postions[16]{};
         unsigned int indices[6]{};
-
+        bool renderTexturedSquare = false;
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
