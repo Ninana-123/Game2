@@ -131,13 +131,11 @@ void Shader::Unbind() const
 
 void Shader::SetUniform1i(const std::string& name, int  value)
 {
-    // set a 4-component float uniform variable in the shader
     GLCall(glUniform1i(GetUniformLocation(name), value));
 }
 
 void Shader::SetUniform1f(const std::string& name, float  value)
 {
-    // set a 4-component float uniform variable in the shader
     GLCall(glUniform1f(GetUniformLocation(name), value));
 }
 

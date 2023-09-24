@@ -90,7 +90,7 @@ namespace Engine
 
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
-        shader.SetUniform1i("u_Texture", 0);
+        //shader.SetUniform1i("u_Texture", 0);
 
         zoroTexture.InitGL();
         zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
@@ -141,30 +141,26 @@ namespace Engine
 
         //Texture A
         {
-            //shader.SetUniform1i("u_Texture", 0);
-
             glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);  // Left translation
             model = glm::scale(model, scaleA); // Apply scaling
             model = glm::rotate(model, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
-
             glm::mat4 mvp = proj * view * model;
-
-            luffyTexture.Bind(0);
             shader.Bind();
+            luffyTexture.Bind(0);
+            shader.SetUniform1i("u_Texture", 0);
             shader.SetUniformMat4f("u_MVP", mvp);
             renderer.Draw(va, ib, shader);
         }
 
         //Texture B
         {
-            //shader.SetUniform1i("u_Texture", 1);
-
             glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB); // Right translation
             model = glm::scale(model, scaleB); // Apply scaling
             model = glm::rotate(model, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
             glm::mat4 mvp = proj * view * model;
-            zoroTexture.Bind(1);
             shader.Bind();
+            zoroTexture.Bind(1);
+            shader.SetUniform1i("u_Texture", 1);
             shader.SetUniformMat4f("u_MVP", mvp);
             renderer.Draw(va, ib, shader);
         }
