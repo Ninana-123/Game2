@@ -24,10 +24,11 @@ namespace Engine
         void Update();
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
+        void UpdateTransformations(int key);
 
         GLFWwindow* Window{};
         Shader shader;
-        float rotationAngleA{}, rotationAngleB{};
+       
         IndexBuffer ib;
         Renderer renderer;
         VertexArray va;
@@ -37,10 +38,14 @@ namespace Engine
         Texture zoroTexture;
         float vtx_postions[16]{};
         unsigned int indices[6]{};
+
+        float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
     private:
         // Add private members here
     };
+
+
 
 } // namespace Engine
