@@ -108,11 +108,12 @@ namespace Engine
             graphicsSystem.Update(targetEntity);
 
             //Entity Debug
+            /*
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             */
-            graphicsSystem.Update();
+            
             m_ImGuiWrapper->OnUpdate();
 
         }
