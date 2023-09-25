@@ -199,13 +199,7 @@
     <ClInclude Include="Src\Game2\ImGuiWrapper.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
-      <Filter>ImGuiWrapper</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
-      <Filter>ImGuiWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
   </ItemGroup>
@@ -274,9 +268,6 @@
       <Filter>ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
-      <Filter>ImGuiWrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
       <Filter>ImGuiWrapper</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
