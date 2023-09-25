@@ -93,8 +93,6 @@ namespace Engine
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-       
-
         // initialize and bind textures
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
@@ -243,7 +241,7 @@ namespace Engine
       
         if (renderTexturedSquare)
         {
-           //Texture A
+            //Texture A
             {
                 UpdateTransformations(GLFW_KEY_RIGHT);
                 UpdateTransformations(GLFW_KEY_LEFT);
@@ -254,23 +252,45 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_Z);
                 UpdateTransformations(GLFW_KEY_X);
 
-                glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
+                // Calculate the model matrix for Texture A
+                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
+                modelA = glm::translate(modelA, translationA);
+                modelA = glm::scale(modelA, scaleA);
+                modelA = glm::rotate(modelA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
 
-                // Apply transformations from UpdateTransformations
-                model = glm::translate(model, translationA);
-                model = glm::scale(model, scaleA);
-                model = glm::rotate(model, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
-
-                glm::mat4 mvp = proj * view * model;
+                // Calculate the MVP matrix for Texture A
+                glm::mat4 mvpA = proj * view * modelA;
+                
                 shader.Bind();
                 luffyTexture.Bind(0);
-               
 
+                // Set shader uniforms for Luffy
+                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                 shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvp);
+                shader.SetUniformMat4f("u_MVP", mvpA);
 
+                
                 renderer.Draw(va, ib, shader);
+
+                // Draw a square around Texture A
+                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
+                shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f); // Set the line color
+
+                // Calculate the MVP matrix for the square around Texture A
+               // glm::mat4 modelSquareA = glm::mat4(1.0f);
+                /*modelSquareA = glm::translate(modelSquareA, translationA);
+                modelSquareA = glm::scale(modelSquareA, scaleA);
+                modelSquareA = glm::rotate(modelSquareA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
+                glm::mat4 mvpSquareA = proj * view * modelSquareA;*/
+               // shader.SetUniformMat4f("u_MVP", mvpSquareA);
+
+                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
+                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+                // Reset the shader render mode to textured
+                shader.SetUniform1i("u_RenderTextured", 1);
             }
+
 
 
 
@@ -285,21 +305,37 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_C);
                 UpdateTransformations(GLFW_KEY_V);
 
-                glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB); // Right translation
-                model = glm::scale(model, scaleB); // Apply scaling
-                model = glm::rotate(model, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
+                // Calculate the model matrix for Texture B
+                glm::mat4 modelB = glm::translate(glm::mat4(1.0f), translationB); // Right translation
+                modelB = glm::scale(modelB, scaleB); // Apply scaling
+                modelB = glm::rotate(modelB, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
 
-                glm::mat4 mvp = proj * view * model;
+                // Calculate the MVP matrix for Texture B
+                glm::mat4 mvpB = proj * view * modelB;
 
+                // Bind the shader for Texture B
                 shader.Bind();
                 zoroTexture.Bind(1);
 
-               
-
+                // Set shader uniforms for Texture B
+                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                 shader.SetUniform1i("u_Texture", 1);
-                shader.SetUniformMat4f("u_MVP", mvp);
+                shader.SetUniformMat4f("u_MVP", mvpB);
+
+                // Render Texture B
                 renderer.Draw(va, ib, shader);
+
+                // Draw a square around Texture B
+                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
+                shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f); // Set the line color
+
+                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
+                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+                // Reset the shader render mode to textured
+                shader.SetUniform1i("u_RenderTextured", 1);
             }
+
 
 
         }
