@@ -282,7 +282,7 @@ namespace Engine
                 shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
 
-                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
+                // Draw the square as lines 
                 GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
 
                 // Reset the shader render mode to textured
