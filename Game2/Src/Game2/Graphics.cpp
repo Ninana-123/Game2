@@ -263,7 +263,7 @@ namespace Engine
       
         if (renderTexturedSquare)
         {
-            //Texture A
+           //Texture A
             {
                 UpdateTransformations(GLFW_KEY_RIGHT);
                 UpdateTransformations(GLFW_KEY_LEFT);
@@ -283,12 +283,33 @@ namespace Engine
 
                 glm::mat4 mvp = proj * view * model;
                 shader.Bind();
-                luffyTexture.Bind(0);
-                //luffyFrames[currentFrame].Bind(0); // Bind the current animation frame
+
+                double currentTime = glfwGetTime();
+              
+                // Calculate the time elapsed since the program started
+                double elapsedTime = currentTime - programStartTime;
+
+                // Calculate which texture to display based on elapsed time
+                int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+
+                if (textureIndex == 0)
+                {
+                    // Display "Luffy" texture
+                    luffyTexture.Bind(0);
+                }
+                else
+                {
+                    // Display "Zoro" texture
+                    zoroTexture.Bind(0);
+                }
+
                 shader.SetUniform1i("u_Texture", 0);
                 shader.SetUniformMat4f("u_MVP", mvp);
+
                 renderer.Draw(va, ib, shader);
             }
+
+
 
             //Texture B
             {
@@ -307,13 +328,35 @@ namespace Engine
 
                 glm::mat4 mvp = proj * view * model;
 
-                zoroTexture.Bind(1);
                 shader.Bind();
 
-                shader.SetUniform1i("u_Texture", 1);
+                double currentTime = glfwGetTime();
+
+                // Calculate the time elapsed since the program started
+                double elapsedTime = currentTime - programStartTime;
+
+                // Calculate the time interval for texture switches (3 seconds)
+                double switchInterval = 5.0;
+
+                // Calculate which texture to display based on elapsed time
+                int textureIndex = static_cast<int>(elapsedTime / switchInterval) % 2;
+
+                if (textureIndex == 0)
+                {
+                    // Display "Zoro" texture
+                    zoroTexture.Bind(0);
+                }
+                else
+                {
+                    // Display "Luffy" texture
+                    luffyTexture.Bind(0);
+                }
+
+                shader.SetUniform1i("u_Texture", 0);
                 shader.SetUniformMat4f("u_MVP", mvp);
                 renderer.Draw(va, ib, shader);
             }
+
 
         }
         else
