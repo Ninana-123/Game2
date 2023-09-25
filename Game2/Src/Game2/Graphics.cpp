@@ -259,6 +259,8 @@ namespace Engine
         //    frameTimer = 0.0f;
         //    currentFrame = (currentFrame + 1) % totalFrames;
         //}
+
+      
         if (renderTexturedSquare)
         {
             //Texture A
@@ -316,13 +318,26 @@ namespace Engine
         }
         else
         {
-            //glm::mat4 model = glm::mat4(1.0f); // Identity matrix
-            //glm::mat4 mvp = proj * view * model;
+            // translation vector for the blue square's position
+            glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
+
+            // model matrix with the new translation
+            glm::mat4 model = glm::mat4(1.0f); // Identity matrix
+            model = glm::translate(model, blueSquareTranslation);
+
+            // Calculate the MVP matrix
+            glm::mat4 mvp = proj * view * model;
+
+            // Bind the shader and set uniforms
             shader.Bind();
             shader.SetUniform4f("u_Color", 0.0f, 0.0f, 1.0f, 1.0f);
-            renderer.Draw(va, ib, shader);
+            shader.SetUniformMat4f("u_MVP", mvp);
 
+            // Render the blue square
+            renderer.Draw(va, ib, shader);
         }
+
+
         //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
