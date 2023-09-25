@@ -88,24 +88,10 @@ namespace Engine
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
         // load and initialize the shader
-        shader.LoadShader("Resource/Shaders/Basic.shader");
-        shader.Initialize();
-        shader.Bind();
-        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-        //for (int i = 0; i < totalFrames; ++i) {
-        //    std::string frameTexturePath = "Resource/Texture/Luffy" + std::to_string(i) + ".png";
-        //    Texture frameTexture(frameTexturePath);
-        //    frameTexture.InitGL();
-        //    luffyFrames.push_back(frameTexture);
-        //}
+        InitAndBindShader();
 
         // initialize and bind textures
-        luffyTexture.InitGL();
-        luffyTexture.Bind(0);
-
-        zoroTexture.InitGL();
-        zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        InitAndBindTextures();
 
         ib.Unbind();
         va.Unbind();
@@ -203,6 +189,7 @@ namespace Engine
             scaleB -= glm::vec3(scale, scale, 0.0f); // Decrease scale
         };
 
+
         // Check for key presses and execute corresponding actions
         for (const auto& pair : keyActions)
         {
@@ -232,37 +219,12 @@ namespace Engine
         // Check if there's a change in the 'P' key state
         if (currentPState && !previousPState)
         {
-            // Toggle between textured and plain squares when the 'P' key is pressed
-            renderTexturedSquare = !renderTexturedSquare;
-            shader.Bind();
-            if (renderTexturedSquare)
-            {
-                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-            }
-            else
-            {
-                shader.SetUniform1i("u_RenderTextured", 0); // Render plain
-            }
+            // Toggle the rendering mode
+            ToggleRenderMode();
         }
 
         // Update the previous 'P' key state
         previousPState = currentPState;
-
-
-        //double currentTime = glfwGetTime();
-        //static double lastTime = 0.0;
-
-        //// Calculate time elapsed since the last frame
-        //double deltaTime = currentTime - lastTime;
-        //lastTime = currentTime;
-
-        //frameTimer += static_cast<float>(deltaTime); // Update the frame timer
-
-        //if (frameTimer >= frameDuration)
-        //{
-        //    frameTimer = 0.0f;
-        //    currentFrame = (currentFrame + 1) % totalFrames;
-        //}
 
         if (renderTexturedSquare)
         {
@@ -277,14 +239,9 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_Z);
                 UpdateTransformations(GLFW_KEY_X);
 
-                glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
-
                 // Apply transformations from UpdateTransformations
-                model = glm::translate(model, translationA);
-                model = glm::scale(model, scaleA);
-                model = glm::rotate(model, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
-
-                glm::mat4 mvp = proj * view * model;
+                glm::mat4 modelA = SetupModelMatrix(translationA, rotationAngleA, scaleA);
+                glm::mat4 mvp = proj * view * modelA;
                 shader.Bind();
 
                 double currentTime = glfwGetTime();
@@ -312,8 +269,6 @@ namespace Engine
                 renderer.Draw(va, ib, shader);
             }
 
-
-
             //Texture B
             {
                 UpdateTransformations(GLFW_KEY_W);
@@ -325,11 +280,8 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_C);
                 UpdateTransformations(GLFW_KEY_V);
 
-                glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB); // Right translation
-                model = glm::scale(model, scaleB); // Apply scaling
-                model = glm::rotate(model, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
-
-                glm::mat4 mvp = proj * view * model;
+                glm::mat4 modelB = SetupModelMatrix(translationB, rotationAngleB, scaleB);
+                glm::mat4 mvp = proj * view * modelB;
 
                 shader.Bind();
 
@@ -359,8 +311,6 @@ namespace Engine
                 shader.SetUniformMat4f("u_MVP", mvp);
                 renderer.Draw(va, ib, shader);
             }
-
-
         }
         else
         {
@@ -383,8 +333,7 @@ namespace Engine
             renderer.Draw(va, ib, shader);
         }
 
-
-        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)
@@ -392,4 +341,39 @@ namespace Engine
         glViewport(0, 0, width, height);
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
+
+    void Graphics::InitAndBindShader()
+    {
+        shader.LoadShader("Resource/Shaders/Basic.shader");
+        shader.Initialize();
+        shader.Bind();
+        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    void Graphics::InitAndBindTextures()
+    {
+        luffyTexture.InitGL();
+        luffyTexture.Bind(0);
+
+        zoroTexture.InitGL();
+        zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+    }
+
+    // Function to toggle between textured and plain squares
+    void Graphics::ToggleRenderMode()
+    {
+        renderTexturedSquare = !renderTexturedSquare;
+        shader.Bind();
+        shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
+    }
+
+    glm::mat4 Graphics::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
+    {
+        glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
+        model = glm::translate(model, translation);
+        model = glm::scale(model, scale);
+        model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
+        return model;
+    }
+
 } // namespace Engine

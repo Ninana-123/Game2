@@ -20,7 +20,6 @@
 
 namespace Engine
 {
-
     class Graphics : public System
     {
     public:
@@ -32,41 +31,32 @@ namespace Engine
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
         void UpdateTransformations(int key);
+        void ToggleRenderMode();
+        void InitAndBindShader();
+        void InitAndBindTextures();
+        glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
 
         GLFWwindow* Window{};
-        Shader shader;
-
         IndexBuffer ib;
         Renderer renderer;
         VertexArray va;
         glm::mat4 proj{};
         glm::mat4 view{};
-        Texture luffyTexture;
-        Texture zoroTexture;
         float vtx_postions[16]{};
         unsigned int indices[6]{};
-
-
         double programStartTime = glfwGetTime();
-
         bool renderTexturedSquare = false;
         bool previousPState = false;
+        bool renderTextureSquare = true;
 
-
+    private:
+        Shader shader;
+        Texture luffyTexture;
+        Texture zoroTexture;
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
-
-
-
-    private:
-        // Add private members here
-        //std::vector<Texture> luffyFrames; // Vector to store animation frames
-        //int currentFrame = 0;
-        //float frameDuration = 0.2f; // Adjust frame duration as needed
-        //float frameTimer = 0.0f;
-        //int totalFrames = 8; // Total number of frames in the animation
+        
     };
-
 }
 #endif // ENGINE_GRAPHICS_H
