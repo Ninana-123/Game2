@@ -8,8 +8,8 @@ namespace Engine
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader"),
-        luffyTexture("Resource/Texture/Luffy.png"),
-        zoroTexture("Resource/Texture/zoro.png")
+        luffyTexture("Resource/Texture/Archer1.png"),
+        zoroTexture("Resource/Texture/Archer2.png")
     {
     }
 
@@ -33,6 +33,13 @@ namespace Engine
     }
 
     void Graphics::Initialize() {
+
+       
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Clear the color buffer
+        glClear(GL_COLOR_BUFFER_BIT);
+
         //define vertex array and indices
         float positions[] = {
        -50.0f,  -50.0f, 0.0f, 0.0f,    //0
@@ -291,7 +298,7 @@ namespace Engine
                 double elapsedTime = currentTime - programStartTime;
 
                 // Calculate the time interval for texture switches (3 seconds)
-                double switchInterval = 5.0;
+                double switchInterval = 1.0f;
 
                 // Calculate which texture to display based on elapsed time
                 int textureIndex = static_cast<int>(elapsedTime / switchInterval) % 2;
@@ -326,7 +333,7 @@ namespace Engine
 
             // Bind the shader and set uniforms
             shader.Bind();
-            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 1.0f, 1.0f);
+            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
             shader.SetUniformMat4f("u_MVP", mvp);
 
             // Render the blue square

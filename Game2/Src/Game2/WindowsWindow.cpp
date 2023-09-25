@@ -120,6 +120,9 @@ namespace Engine {
 		glfwDestroyWindow(m_Window);
 	}
 	void WindowsWindow::OnUpdate() {
+
+	
+
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
