@@ -222,9 +222,13 @@ namespace Engine
         // Handle graphics updates here
         renderer.Clear();
 
-        // In the Update method, add a key handler to toggle rendering between textured and plain square
-        if (glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS)
+        // Get the current state of the 'P' key
+        bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+
+        // Check if there's a change in the 'P' key state
+        if (currentPState && !previousPState)
         {
+            // Toggle between textured and plain squares when the 'P' key is pressed
             renderTexturedSquare = !renderTexturedSquare;
             shader.Bind();
             if (renderTexturedSquare)
@@ -236,6 +240,10 @@ namespace Engine
                 shader.SetUniform1i("u_RenderTextured", 0); // Render plain
             }
         }
+
+        // Update the previous 'P' key state
+        previousPState = currentPState;
+
 
         //double currentTime = glfwGetTime();
         //static double lastTime = 0.0;
