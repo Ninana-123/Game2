@@ -65,7 +65,7 @@ namespace Engine
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
         m_ImGuiWrapper->OnAttach();
         //Systems Manager Initialization
-        SM.Initialize();
+        //SM.Initialize();
 
         //Entity creation
         entity1 = EM.CreateEntity();
@@ -98,23 +98,34 @@ namespace Engine
             m_Window->OnUpdate();
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
+
+            /*
             if (Input::IsKeyPressed(GLFW_KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
+            */
 
             //System Updating
-            SM.UpdateSystems(targetEntity);
-            graphicsSystem.Update(targetEntity);
+            //SM.UpdateSystems(targetEntity);
+            //EM.UpdateEntities();
 
+            for (const auto& entityPair : EM.entities)
+            {
+                Entity* entity = entityPair.second.get();
+                //SystemsManager::UpdateSystems(entity);
+                graphicsSystem.Update(entity);
+
+            }
+           
             //Entity Debug
-            /*
+            
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            */
+            
             
             m_ImGuiWrapper->OnUpdate();
 

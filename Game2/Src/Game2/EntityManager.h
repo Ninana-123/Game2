@@ -17,6 +17,8 @@ namespace Engine
 		//std::vector<EntityID> CloneEntity(EntityID sourceEntityID, int num) possible overload specify number of clones
 		void DestroyEntity(EntityID entity);
 
+		void UpdateEntities();
+
 		std::unordered_map<EntityID, std::unique_ptr<Entity>> entities;
 		static EntityID nextEntityID;
 	private:

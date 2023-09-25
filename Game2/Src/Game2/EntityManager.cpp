@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "EntityManager.h"
 #include "System.h"
+#include "SystemsManager.h"
+#include "Graphics.h"
 
 namespace Engine
 {
@@ -62,6 +64,15 @@ namespace Engine
 		if (it != entities.end()) 
 		{
 			entities.erase(it);
+		}
+	}
+	void Engine::EntityManager::UpdateEntities()
+	{
+		for (const auto& entityPair : entities) 
+		{
+			Entity* entity = entityPair.second.get();
+			//SystemsManager::UpdateSystems(entity);
+			
 		}
 	}
 }
