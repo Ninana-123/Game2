@@ -35,7 +35,7 @@ namespace Engine
 
         GLFWwindow* Window{};
         Shader shader;
-       
+
         IndexBuffer ib;
         Renderer renderer;
         VertexArray va;
@@ -46,9 +46,17 @@ namespace Engine
         float vtx_postions[16]{};
         unsigned int indices[6]{};
 
+
+        double programStartTime = glfwGetTime();
+
+        bool renderTexturedSquare = false;
+        bool previousPState = false;
+
+
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
+
 
 
     private:
@@ -60,5 +68,5 @@ namespace Engine
         //int totalFrames = 8; // Total number of frames in the animation
     };
 
-} 
+}
 #endif // ENGINE_GRAPHICS_H
