@@ -213,6 +213,7 @@ namespace Engine
         {
 
         }
+
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
