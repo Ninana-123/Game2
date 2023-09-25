@@ -35,6 +35,9 @@
     <Filter Include="Components\Physics">
       <UniqueIdentifier>{9cb46411-9dcb-462d-aa6d-3fac6151e334}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{b4f368a7-83ef-4717-9c33-dd1f51aacc55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\log.h">
@@ -67,8 +70,12 @@
     <ClInclude Include="Src\Game2\Graphics.h">
       <Filter>Components\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Math.h">
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
+    <ClInclude Include="Src\Game2\mathLib.h">
       <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Physics.h">
+      <Filter>Components\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,11 +98,13 @@
       <Filter>Components\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Graphics.cpp">
-      <Filter>Components\Graphics</Filter>
-      <Filter>Systems\Graphics\Graphics</Filter>
+      <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Texture.cpp">
-      <Filter>Base\Engine\System</Filter>
+    <ClCompile Include="Src\Game2\mathLib.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Physics.cpp">
+      <Filter>Components\Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

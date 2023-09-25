@@ -25,9 +25,10 @@
     <ClInclude Include="Src\Game2\log.h" />
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Core.h" />
-    <ClInclude Include="Src\Game2\Math.h" />
+    <ClInclude Include="Src\Game2\mathLib.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
+    <ClInclude Include="Src\Game2\Physics.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\Window.h" />
     <ClInclude Include="Src\Game2\WindowsWindow.h" />
@@ -38,10 +39,12 @@
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Graphics.cpp" />
     <ClCompile Include="Src\Game2\log.cpp" />
+    <ClCompile Include="Src\Game2\mathLib.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Physics.cpp" />
     <ClCompile Include="Src\Game2\WindowsWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

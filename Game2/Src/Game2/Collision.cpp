@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file		Collision.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		10/09/2023
+\brief		Contains the definition for the logic of AABB Collision
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Collision.h"
 
@@ -22,8 +33,8 @@
 	  Returns true if there is a collision, false is there is not.
 
 ********************************************************************/
-bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
-	const AABB& aabb2, const glm::vec2& vel2)
+bool CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
+	const AABB& aabb2, const VECTORMATH::Vec2& vel2)
 {
 	UNREFERENCED_PARAMETER(aabb1);
 	UNREFERENCED_PARAMETER(vel1);
@@ -66,11 +77,11 @@ bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
 	if (aabb1.min.y > aabb2.max.y)
 		return false;
 
-	glm::vec2 relVelocity = { 0, 0 }; 
-	glm::vec2 tFirst = { 0, 0 };
+	VECTORMATH::Vec2 relVelocity = { 0, 0 };
+	VECTORMATH::Vec2 tFirst = { 0, 0 };
 	// Need to add dt when the global variable is created
-	glm::vec2 tLast = { 0, 0 };
-	glm::vec2 tTemp = { 0, 0 };
+	VECTORMATH::Vec2 tLast = { 0, 0 };
+	VECTORMATH::Vec2 tTemp = { 0, 0 };
 	relVelocity.x = vel2.x - vel1.x;
 	relVelocity.y = vel2.y - vel1.y;
 
