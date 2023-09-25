@@ -52,6 +52,10 @@
     <ClInclude Include="Src\Game2\Prefab.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
+    <ClInclude Include="Src\Game2\mathLib.h" />
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
+    <ClInclude Include="Src\Game2\pch.h" />
+    <ClInclude Include="Src\Game2\Physics.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\SystemsManager.h" />
     <ClInclude Include="Src\Game2\TestSystem.h" />
@@ -81,6 +85,8 @@
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
+    <ClCompile Include="Src\Game2\log.cpp" />
+    <ClCompile Include="Src\Game2\mathLib.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -99,6 +105,7 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\VertexArray.cpp" />
     <ClCompile Include="Src\Game2\VertexBuffer.cpp" />
+    <ClCompile Include="Src\Game2\Physics.cpp" />
     <ClCompile Include="Src\Game2\WindowsWindow.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -19,3 +19,4 @@
 #include <functional>
 // Windows API Headers
 #include <Windows.h>
+#include <cmath>

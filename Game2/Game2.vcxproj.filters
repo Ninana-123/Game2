@@ -77,6 +77,9 @@
     <Filter Include="ImGuiWrapper">
       <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{b4f368a7-83ef-4717-9c33-dd1f51aacc55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -208,6 +211,13 @@
     <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
+    <ClInclude Include="Src\Game2\mathLib.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Physics.h">
+      <Filter>Components\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -290,6 +300,20 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
+    <ClCompile Include="Src\Game2\pch.cpp">
+      <Filter>Base\Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Collision.cpp">
+      <Filter>Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Graphics.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\mathLib.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Physics.cpp">
+      <Filter>Components\Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
