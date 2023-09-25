@@ -8,8 +8,8 @@ namespace Engine
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader"),
-        luffyTexture("Resource/Texture/Archer1.png"),
-        zoroTexture("Resource/Texture/Archer2.png")
+        luffyTexture("Resource/Texture/Luffy.png"),
+        zoroTexture("Resource/Texture/zoro.png")
     {
     }
 
@@ -247,16 +247,18 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_X);
 
                 // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = SetupModelMatrix(translationA, rotationAngleA, scaleA);
-                glm::mat4 mvp = proj * view * modelA;
+                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
+                modelA = glm::translate(modelA, translationA);
+                modelA = glm::scale(modelA, scaleA);
+                modelA = glm::rotate(modelA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
+
+                glm::mat4 mvpA = proj * view * modelA;
+
                 shader.Bind();
+                //luffyTexture.Bind(0);
 
                 double currentTime = glfwGetTime();
-
-                // Calculate the time elapsed since the program started
                 double elapsedTime = currentTime - programStartTime;
-
-                // Calculate which texture to display based on elapsed time
                 int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
 
                 if (textureIndex == 0)
@@ -270,10 +272,22 @@ namespace Engine
                     zoroTexture.Bind(0);
                 }
 
+                // Set shader uniforms for Luffy
+                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                 shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvp);
-
+                shader.SetUniformMat4f("u_MVP", mvpA);
                 renderer.Draw(va, ib, shader);
+
+                // Draw a square around Texture A
+                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+
+                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
+                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+                // Reset the shader render mode to textured
+                shader.SetUniform1i("u_RenderTextured", 1);
+               
             }
 
             //Texture B
@@ -287,36 +301,50 @@ namespace Engine
                 UpdateTransformations(GLFW_KEY_C);
                 UpdateTransformations(GLFW_KEY_V);
 
-                glm::mat4 modelB = SetupModelMatrix(translationB, rotationAngleB, scaleB);
-                glm::mat4 mvp = proj * view * modelB;
+                // Calculate the model matrix for Texture B
+                glm::mat4 modelB = glm::translate(glm::mat4(1.0f), translationB); // Right translation
+                modelB = glm::scale(modelB, scaleB); // Apply scaling
+                modelB = glm::rotate(modelB, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
+
+                // Calculate the MVP matrix for Texture B
+                glm::mat4 mvpB = proj * view * modelB;
 
                 shader.Bind();
+               // zoroTexture.Bind(1);
 
-                double currentTime = glfwGetTime();
-
-                // Calculate the time elapsed since the program started
+                double currentTime = glfwGetTime(); 
                 double elapsedTime = currentTime - programStartTime;
-
-                // Calculate the time interval for texture switches (3 seconds)
-                double switchInterval = 1.0f;
+                double switchInterval = 3.0f;
 
                 // Calculate which texture to display based on elapsed time
                 int textureIndex = static_cast<int>(elapsedTime / switchInterval) % 2;
 
                 if (textureIndex == 0)
                 {
-                    // Display "Zoro" texture
                     zoroTexture.Bind(0);
                 }
                 else
                 {
-                    // Display "Luffy" texture
                     luffyTexture.Bind(0);
                 }
 
+              // Set shader uniforms for Texture B
+                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                 shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvp);
+                shader.SetUniformMat4f("u_MVP", mvpB);
+
+                // Render Texture B
                 renderer.Draw(va, ib, shader);
+
+                // Draw a square around Texture B
+                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+
+                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
+                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+                // Reset the shader render mode to textured
+                shader.SetUniform1i("u_RenderTextured", 1);
             }
         }
         else
