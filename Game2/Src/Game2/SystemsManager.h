@@ -19,11 +19,15 @@ namespace Engine
 		///Initialize systems
 		void Initialize();
 
+		template <typename T>
+		T& GetSystem();
+
 		//Update all systems
-		static void UpdateSystems(Entity* entity);
+		static void UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
 		static std::vector<System*> all_systems;
 	private:
 		
 	};
+	
 }

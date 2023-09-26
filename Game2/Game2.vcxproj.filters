@@ -77,6 +77,9 @@
     <Filter Include="ImGuiWrapper">
       <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Engine\ComponentFactory">
+      <UniqueIdentifier>{ef8978d5-ed8b-465f-8bb6-3d63d2b1cc15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -208,6 +211,9 @@
     <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\ComponentFactory.h">
+      <Filter>Base\Engine\ComponentFactory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -290,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ComponentFactory.cpp">
+      <Filter>Base\Engine\ComponentFactory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

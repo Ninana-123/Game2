@@ -12,10 +12,13 @@ namespace Engine
 	class System
 	{
 	public:
-	
-		//Update function for child class systems
-		virtual void Update(Entity* entity) = 0;
+		//virtual initialize function
+		virtual void Initialize() {}
 
+		//virtual update function
+		virtual void Update(Entity* entity) {}
+
+		//virtual destructor
 		virtual ~System() {}
 
 		
