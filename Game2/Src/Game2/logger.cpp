@@ -3,8 +3,6 @@
 
 
 namespace Engine {
-    Logger::Logger(const std::string& logFileName) : m_FileWriter(logFileName) {}
-    Logger::~Logger() {}
     void Logger::LogInternal(LogLevel level, const std::string& message) {
         std::string levelStr;
         switch (level) {
@@ -34,6 +32,5 @@ namespace Engine {
 
         std::string logEntry = timestamp + levelStr + " " + message;
         std::cout << logEntry << std::endl;
-        m_FileWriter.WriteLog(logEntry);
     }
 }

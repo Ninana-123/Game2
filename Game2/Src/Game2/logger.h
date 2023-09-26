@@ -2,7 +2,7 @@
 
 #include "pch.h"
 #include "Core.h"
-#include "LogFileWriter.h"
+#include <string>
 
 namespace Engine {
     enum class LogLevel {
@@ -15,10 +15,8 @@ namespace Engine {
 
     class GAME2_API Logger {
     public:
-        Logger() : m_FileWriter("default_log.txt") {}
-        Logger(const std::string& logFileName);
-        ~Logger();
-            void Log(LogLevel level, const std::string& message) {
+        // Make Log function conditional on whether NDEBUG is defined
+        void Log(LogLevel level, const std::string& message) {
 #ifdef NDEBUG
             // In release mode, log messages will not be displayed
 #else
@@ -29,6 +27,5 @@ namespace Engine {
 
     private:
         void LogInternal(LogLevel level, const std::string& message);
-        LogFileWriter m_FileWriter;
     };
 }

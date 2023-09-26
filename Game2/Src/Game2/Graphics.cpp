@@ -7,8 +7,9 @@ namespace Engine
     Logger GraphicsLogger;
 
     Graphics::Graphics()
-        : shader("Resource/Shaders/Basic.shader")
-        
+        : shader("Resource/Shaders/Basic.shader"),
+        luffyTexture("Resource/Texture/Luffy.png"),
+        zoroTexture("Resource/Texture/zoro.png")
     {
     }
 
@@ -185,31 +186,31 @@ namespace Engine
             // Handle graphics updates here
             renderer.Clear();
 
-        //// Get the current state of the 'P' key
-        //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+            // Get the current state of the 'P' key
+            bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-        //// Check if there's a change in the 'P' key state
-        //if (currentPState && !previousPState)
-        //{
-        //    // Toggle the rendering mode
-        //    ToggleRenderMode();
-        //}
-
-        //// Update the previous 'P' key state
-        //previousPState = currentPState;
-
-        /*if (renderTexturedSquare)
-        {*/
-            //Texture A
+            // Check if there's a change in the 'P' key state
+            if (currentPState && !previousPState)
             {
-                UpdateTransformations(GLFW_KEY_RIGHT);
-                UpdateTransformations(GLFW_KEY_LEFT);
-                UpdateTransformations(GLFW_KEY_UP);
-                UpdateTransformations(GLFW_KEY_DOWN);
-                UpdateTransformations(GLFW_KEY_U);
-                UpdateTransformations(GLFW_KEY_I);
-                UpdateTransformations(GLFW_KEY_Z);
-                UpdateTransformations(GLFW_KEY_X);
+                // Toggle the rendering mode
+                ToggleRenderMode();
+            }
+
+            // Update the previous 'P' key state
+            previousPState = currentPState;
+
+            if (renderTexturedSquare)
+            {
+                //Texture A
+                {
+                    UpdateTransformations(GLFW_KEY_RIGHT);
+                    UpdateTransformations(GLFW_KEY_LEFT);
+                    UpdateTransformations(GLFW_KEY_UP);
+                    UpdateTransformations(GLFW_KEY_DOWN);
+                    UpdateTransformations(GLFW_KEY_U);
+                    UpdateTransformations(GLFW_KEY_I);
+                    UpdateTransformations(GLFW_KEY_Z);
+                    UpdateTransformations(GLFW_KEY_X);
 
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
@@ -255,45 +256,27 @@ namespace Engine
 
                 }
 
-              // Set shader uniforms for Texture B
-                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-                shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvpB);
-
-                // Render Texture B
-                renderer.Draw(va, ib, shader);
-
-                // Draw a square around Texture B
-                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
-                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
-                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-                // Reset the shader render mode to textured
-                shader.SetUniform1i("u_RenderTextured", 1);
             }
-        }
-        else
-        {
-            // translation vector for the blue square's position
-            glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
+            else
+            {
+                // translation vector for the blue square's position
+                glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
 
-        //    // model matrix with the new translation
-        //    glm::mat4 model = glm::mat4(1.0f); // Identity matrix
-        //    model = glm::translate(model, blueSquareTranslation);
+                // model matrix with the new translation
+                glm::mat4 model = glm::mat4(1.0f); // Identity matrix
+                model = glm::translate(model, blueSquareTranslation);
 
-        //    // Calculate the MVP matrix
-        //    glm::mat4 mvp = proj * view * model;
+                // Calculate the MVP matrix
+                glm::mat4 mvp = proj * view * model;
 
-        //    // Bind the shader and set uniforms
-        //    shader.Bind();
-        //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-        //    shader.SetUniformMat4f("u_MVP", mvp);
+                // Bind the shader and set uniforms
+                shader.Bind();
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                shader.SetUniformMat4f("u_MVP", mvp);
 
-        //    // Render the blue square
-        //    renderer.Draw(va, ib, shader);
-        //}
+                // Render the blue square
+                renderer.Draw(va, ib, shader);
+            }
 
             transform->x = translationA.x;
             transform->y = translationA.y;
@@ -318,9 +301,6 @@ namespace Engine
 
     void Graphics::InitAndBindTextures()
     {
-        luffyTexture.Load("Resource/Texture/Tank.png");
-        zoroTexture.Load("Resource/Texture/Archer.png");
-
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
 

@@ -64,26 +64,7 @@ namespace Engine {
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
-    class GAME2_API KeyTypedEvent : public KeyEvent {
-    public:
-        KeyTypedEvent(Logger& logger, KeyCode keycode) : KeyEvent(logger, keycode) {}
-        std::string ToString() const override {
-            auto it = Engine::Key::keyMap.find(m_KeyCode);
-            std::string keyName = (it != Key::keyMap.end()) ? it->second : "Unknown";
-
-            std::stringstream ss;
-            ss << "KeyTypedEvent: " << keyName ;
-            return ss.str();
-        }
-        void LogEventInfo() const
-        {
-            m_Logger.Log(LogLevel::Event, "Event Type: " + ToString());
-        }
-        EVENT_CLASS_TYPE(KeyTyped)
-
-    };
     // Mouse Inputs
-
 
     // Event for mouse movement
     class GAME2_API MouseMovedEvent : public Event {

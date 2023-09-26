@@ -1,9 +1,0 @@
-2023-09-27 03:43:25[DEBUG] GLEW successfully ini2023-09-27 03:43:25[APP] Application Running.
-2023-09-27 03:43:25[EVENT] MouseMovedEvent: 949, 117
-2023-09-27 03:43:25[EVENT] MouseMovedEvent: 950, 117
-2023-09-27 03:43:25[EVENT] MouseMovedEvent: 1073, 64
-2023-09-27 03:43:26[EVENT] MouseMovedEvent: 1177, 16
-2023-09-27 03:43:26[EVENT] MouseMovedEvent: 1183, 13
-2023-09-27 03:43:26[EVENT] MouseMovedEvent: 1187, 10
-2023-09-27 03:43:26[EVENT] MouseMovedEvent: 1202, 5
-2023-09-27 03:43:26[EVENT] MouseMovedEvent: 1206, 4
