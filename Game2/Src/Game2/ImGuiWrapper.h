@@ -1,5 +1,7 @@
 #pragma once
 #include "Event.h"
+#include "InputEvent.h"
+#include "AppEvent.h"
 
 namespace Engine {
 	class GAME2_API ImGuiWrapper {
@@ -11,6 +13,17 @@ namespace Engine {
 		void OnDetach();
 		void OnUpdate();
 		void OnEvent(Event& event);
+	private:
+		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
+		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
+		bool OnMouseMovedEvent(MouseMovedEvent& e);
+		bool OnMouseScrolledEvent(MouseScrolledEvent& e);
+		bool OnKeyPressedEvent(KeyPressedEvent& e);
+		bool OnKeyReleased(KeyReleasedEvent& e);
+		bool OnKeyTypedEvent(KeyTypedEvent & e);
+		bool OnWindowResizeEvent(WindowResizeEvent& e);
+
+
 	private:
 		float m_Time = 0.0f;
 

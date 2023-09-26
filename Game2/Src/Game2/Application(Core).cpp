@@ -86,6 +86,8 @@ namespace Engine
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
        logger.Log(Engine::LogLevel::Event, e.ToString());
+
+       m_ImGuiWrapper->OnEvent(e);
     }
 
     void Application::Run()
@@ -128,6 +130,7 @@ namespace Engine
             
             
             m_ImGuiWrapper->OnUpdate();
+
 
         }
     }
