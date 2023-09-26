@@ -89,6 +89,7 @@ namespace Engine {
 
 		ImGui::Text("GPU Vendor: %s", str_ven);
 		ImGui::Text("GL Renderer: %s", str_ren);
+		ImGui::Text("GL Version: %s",str_ver);
 		ImGui::Text("GL Shader Version: %s", str_sha);
 		ImGui::Text("GL Major Version: %d", major_ver);
 		ImGui::Text("GL Minor Version: %d", minor_ver);
@@ -121,7 +122,7 @@ namespace Engine {
 
 	// Function to get memory usage percentage 
 	float GetMemoryUsagePercentage() {
-		MEMORYSTATUSEX status;
+		MEMORYSTATUSEX status ;
 		status.dwLength = sizeof(status);
 		GlobalMemoryStatusEx(&status);
 
