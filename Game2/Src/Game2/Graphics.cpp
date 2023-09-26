@@ -7,9 +7,8 @@ namespace Engine
     Logger GraphicsLogger;
 
     Graphics::Graphics()
-        : shader("Resource/Shaders/Basic.shader"),
-        luffyTexture("Resource/Texture/Tank.png"),
-        zoroTexture("Resource/Texture/Archer.png")
+        : shader("Resource/Shaders/Basic.shader")
+        
     {
     }
 
@@ -256,7 +255,7 @@ namespace Engine
                 glm::mat4 mvpA = proj * view * modelA;
 
                 shader.Bind();
-                //luffyTexture.Bind(0);
+               // luffyTexture.Bind(0);
 
                 double currentTime = glfwGetTime();
                 double elapsedTime = currentTime - programStartTime;
@@ -311,11 +310,11 @@ namespace Engine
                 glm::mat4 mvpB = proj * view * modelB;
 
                 shader.Bind();
-               // zoroTexture.Bind(1);
+              // zoroTexture.Bind(0);
 
                 double currentTime = glfwGetTime(); 
                 double elapsedTime = currentTime - programStartTime;
-                double switchInterval = 3.0f;
+                double switchInterval = 10.0f;
 
                 // Calculate which texture to display based on elapsed time
                 int textureIndex = static_cast<int>(elapsedTime / switchInterval) % 2;
@@ -388,6 +387,9 @@ namespace Engine
 
     void Graphics::InitAndBindTextures()
     {
+        luffyTexture.Load("Resource/Texture/Tank.png");
+        zoroTexture.Load("Resource/Texture/Archer.png");
+
         luffyTexture.InitGL();
         luffyTexture.Bind(0);
 
