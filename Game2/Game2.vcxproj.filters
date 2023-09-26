@@ -17,9 +17,6 @@
     <Filter Include="Driver">
       <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Window\Precompiled">
-      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base\Log">
       <UniqueIdentifier>{47224339-ad97-471c-8471-0cf4dbd3a96c}</UniqueIdentifier>
     </Filter>
@@ -77,13 +74,16 @@
     <Filter Include="ImGuiWrapper">
       <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Precompiled">
+      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
       <Filter>Base\Core</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\pch.h">
-      <Filter>Base\Window\Precompiled</Filter>
+      <Filter>Base\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\WindowsWindow.h">
       <Filter>Base\Window</Filter>
@@ -202,6 +202,9 @@
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\LogFileWriter.h">
+      <Filter>Base\Log</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -211,7 +214,7 @@
       <Filter>Base\Window</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\pch.cpp">
-      <Filter>Base\Window\Precompiled</Filter>
+      <Filter>Base\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Collision.cpp">
       <Filter>Systems\Collision</Filter>
@@ -281,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
+      <Filter>Base\Log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

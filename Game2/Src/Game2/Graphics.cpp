@@ -368,7 +368,6 @@ namespace Engine
         //    renderer.Draw(va, ib, shader);
         //}
 
-        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)

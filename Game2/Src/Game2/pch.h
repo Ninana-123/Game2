@@ -17,5 +17,6 @@
 #include <ctime>
 #include <map>
 #include <functional>
+#include <chrono>
 // Windows API Headers
 #include <Windows.h>
