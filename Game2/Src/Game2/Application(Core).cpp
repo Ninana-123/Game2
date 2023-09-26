@@ -81,8 +81,10 @@ namespace Engine
     {
         // Event handler
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-        logger.Log(Engine::LogLevel::Event, e.ToString());
+       dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+       logger.Log(Engine::LogLevel::Event, e.ToString());
+
+       m_ImGuiWrapper->OnEvent(e);
     }
 
     void Application::Run()
@@ -114,6 +116,7 @@ namespace Engine
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             
             m_ImGuiWrapper->OnUpdate();
+
 
         }
     }
