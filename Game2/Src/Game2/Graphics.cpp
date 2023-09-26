@@ -8,8 +8,8 @@ namespace Engine
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader"),
-        luffyTexture("Resource/Texture/Luffy.png"),
-        zoroTexture("Resource/Texture/zoro.png")
+        luffyTexture("Resource/Texture/Tank.png"),
+        zoroTexture("Resource/Texture/Archer.png")
     {
     }
 
@@ -221,21 +221,21 @@ namespace Engine
         // Handle graphics updates here
         renderer.Clear();
 
-        // Get the current state of the 'P' key
-        bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+        //// Get the current state of the 'P' key
+        //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-        // Check if there's a change in the 'P' key state
-        if (currentPState && !previousPState)
-        {
-            // Toggle the rendering mode
-            ToggleRenderMode();
-        }
+        //// Check if there's a change in the 'P' key state
+        //if (currentPState && !previousPState)
+        //{
+        //    // Toggle the rendering mode
+        //    ToggleRenderMode();
+        //}
 
-        // Update the previous 'P' key state
-        previousPState = currentPState;
+        //// Update the previous 'P' key state
+        //previousPState = currentPState;
 
-        if (renderTexturedSquare)
-        {
+        /*if (renderTexturedSquare)
+        {*/
             //Texture A
             {
                 UpdateTransformations(GLFW_KEY_RIGHT);
@@ -347,27 +347,27 @@ namespace Engine
                 // Reset the shader render mode to textured
                 shader.SetUniform1i("u_RenderTextured", 1);
             }
-        }
-        else
-        {
-            // translation vector for the blue square's position
-            glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
+        //}
+        //else
+        //{
+        //    // translation vector for the blue square's position
+        //    glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
 
-            // model matrix with the new translation
-            glm::mat4 model = glm::mat4(1.0f); // Identity matrix
-            model = glm::translate(model, blueSquareTranslation);
+        //    // model matrix with the new translation
+        //    glm::mat4 model = glm::mat4(1.0f); // Identity matrix
+        //    model = glm::translate(model, blueSquareTranslation);
 
-            // Calculate the MVP matrix
-            glm::mat4 mvp = proj * view * model;
+        //    // Calculate the MVP matrix
+        //    glm::mat4 mvp = proj * view * model;
 
-            // Bind the shader and set uniforms
-            shader.Bind();
-            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-            shader.SetUniformMat4f("u_MVP", mvp);
+        //    // Bind the shader and set uniforms
+        //    shader.Bind();
+        //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+        //    shader.SetUniformMat4f("u_MVP", mvp);
 
-            // Render the blue square
-            renderer.Draw(va, ib, shader);
-        }
+        //    // Render the blue square
+        //    renderer.Draw(va, ib, shader);
+        //}
 
         GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
