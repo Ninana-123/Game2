@@ -10,7 +10,6 @@ namespace Engine
 
 	Engine::EntityManager::~EntityManager()
 	{
-
 	}
 
 	EntityID Engine::EntityManager::CreateEntity()
@@ -29,11 +28,6 @@ namespace Engine
 	Entity* Engine::EntityManager::GetEntity(EntityID id) {
 		auto it = entities.find(id);
 		return (it != entities.end()) ? it->second.get() : nullptr;
-	}
-
-	std::unordered_map<EntityID, std::unique_ptr<Entity>>* EntityManager::GetEntities() 
-	{
-		return &entities;
 	}
 
 	EntityID Engine::EntityManager::CloneEntity(EntityID sourceEntityID) {
@@ -72,6 +66,14 @@ namespace Engine
 			entities.erase(it);
 		}
 	}
-
+	void Engine::EntityManager::UpdateEntities()
+	{
+		for (const auto& entityPair : entities) 
+		{
+			Entity* entity = entityPair.second.get();
+			//SystemsManager::UpdateSystems(entity);
+			
+		}
+	}
 }
 

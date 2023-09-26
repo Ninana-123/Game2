@@ -23,7 +23,6 @@
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
-    <ClInclude Include="Src\Game2\ComponentFactory.h" />
     <ClInclude Include="Src\Game2\Core.h" />
     <ClInclude Include="Src\Game2\EngineTypes.h" />
     <ClInclude Include="Src\Game2\Entity.h" />
@@ -66,7 +65,6 @@
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\Collision.cpp" />
-    <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />

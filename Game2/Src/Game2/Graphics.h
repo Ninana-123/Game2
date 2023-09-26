@@ -16,7 +16,6 @@
 #include "Texture.h"
 #include "System.h"
 #include "Component.h"
-#include "TransformComponent.h"
 #include "Entity.h"
 
 namespace Engine
@@ -27,7 +26,7 @@ namespace Engine
         Graphics();
         ~Graphics();
 
-        void Initialize() override;
+        void Initialize();
         void Update(Entity* entity) override;
         void InitializeGLEW();
         void UpdateViewport(int width, int height);

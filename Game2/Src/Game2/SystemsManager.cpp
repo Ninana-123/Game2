@@ -8,44 +8,16 @@ namespace Engine
 
 	void SystemsManager::Initialize()
 	{
-		//add systems into systems container
 		all_systems.push_back(new TestSystem());
-		all_systems.push_back(new Graphics());
+		//all_systems.push_back(new Graphics());
+	}
 
-		//initialize each system
+	void SystemsManager::UpdateSystems(Entity* entity)
+	{
 		for (auto system : all_systems)
 		{
-			system->Initialize();
+			system->Update(entity);
 		}
-	}
-
-	template <typename T>
-	T& SystemsManager::GetSystem()
-	{
-		for (System* system : all_systems)
-		{
-			if (dynamic_cast<T*>(system) != nullptr)
-			{
-				return *static_cast<T*>(system);
-			}
-		}
-		// Handle error case (e.g., system not found)
-		throw std::runtime_error("System not found");
-	}
-
-	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
-	{
-
-		for (const auto& entityPair : *entities)
-		{
-			Entity* entity = entityPair.second.get();
-
-			for (auto system : all_systems)
-			{
-				system->Update(entity);
-			}
-		}
-		
 	}
 
 }
