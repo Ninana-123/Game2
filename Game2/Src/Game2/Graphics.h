@@ -33,8 +33,17 @@ namespace Engine
         void UpdateViewport(int width, int height);
         //void UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation);
         void ToggleRenderMode();
-        void InitialiseShader();
-        void InitialiseTextures();
+        void InitializeShader();
+        void InitializeTextures();
+
+    private:
+        Shader shader;
+        Texture textureA;
+        Texture textureB;
+        float rotationAngleA{}, rotationAngleB{};
+        glm::vec3 translationA{}, translationB{};
+        glm::vec3 scaleA{}, scaleB{};
+        
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
 
         GLFWwindow* Window{};
@@ -49,15 +58,6 @@ namespace Engine
         bool renderTexturedSquare = false;
         bool previousPState = false;
         bool renderTextureSquare = true;
-
-    private:
-        Shader shader;
-        Texture textureA;
-        Texture textureB;
-        float rotationAngleA{}, rotationAngleB{};
-        glm::vec3 translationA{}, translationB{};
-        glm::vec3 scaleA{}, scaleB{};
-        
     };
 }
 #endif // ENGINE_GRAPHICS_H
