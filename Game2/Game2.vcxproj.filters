@@ -77,7 +77,6 @@
     <Filter Include="Base\ComponentFactory">
       <UniqueIdentifier>{a75ae341-3a2c-4ed3-b880-a5007b65f2aa}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="Base\Precompiled">
       <UniqueIdentifier>{4ee9a6bf-7bf2-41c3-aa7f-7911c32a6944}</UniqueIdentifier>
     </Filter>
@@ -87,8 +86,6 @@
     <Filter Include="Systems\Physics">
       <UniqueIdentifier>{55ae4719-8dd7-4112-b129-db5282409267}</UniqueIdentifier>
     </Filter>
-=======
->>>>>>> parent of b939dba (Cleanup + filters)
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -178,9 +175,6 @@
     <ClInclude Include="Src\Game2\Prefab.h">
       <Filter>Base\Engine\Prefabs</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Core.h">
-      <Filter>Base\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -214,14 +208,12 @@
     <ClInclude Include="Src\Game2\LogFileWriter.h">
       <Filter>Base\Log</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\ComponentFactory.h">
       <Filter>Base\ComponentFactory</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\pch.h">
       <Filter>Base\Precompiled</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Src\Game2\Vector2d.h">
       <Filter>Base\Math</Filter>
     </ClInclude>
@@ -240,11 +232,6 @@
     <ClInclude Include="Src\Game2\Core.h">
       <Filter>Base\Core</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="Src\Game2\Vector2d.h" />
-    <ClInclude Include="Src\Game2\AudioEngine.h" />
-    <ClInclude Include="Src\Game2\SoundInfo.h" />
->>>>>>> parent of b939dba (Cleanup + filters)
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -316,17 +303,8 @@
     <ClCompile Include="Src\Game2\SystemsManager.cpp">
       <Filter>Base\Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Core.cpp">
-      <Filter>Base\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\pch.cpp">
-      <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\ComponentFactory.cpp">
       <Filter>Base\ComponentFactory</Filter>
@@ -334,11 +312,16 @@
     <ClCompile Include="Src\Game2\Prefab.cpp">
       <Filter>Base\Engine\Prefabs</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
+      <Filter>Base\Log</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Game2\Vector2d.cpp">
-      <Filter>Base</Filter>
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\pch.cpp">
+      <Filter>Base\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
-<<<<<<< HEAD
       <Filter>Systems\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Physics.cpp">
@@ -348,11 +331,14 @@
       <Filter>Base\Core</Filter>
 <<<<<<< HEAD
       <Filter>Base\Engine\Audio</Filter>
+<<<<<<< HEAD
 =======
       <Filter>Base</Filter>
 >>>>>>> parent of b939dba (Cleanup + filters)
 =======
 >>>>>>> parent of 11763a3 (Merge branch 'Vance2')
+=======
+>>>>>>> parent of 5bc894f (revert)
     </ClCompile>
   </ItemGroup>
 </Project>

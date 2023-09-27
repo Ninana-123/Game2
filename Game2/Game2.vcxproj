@@ -49,6 +49,7 @@
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
+    <ClInclude Include="Src\Game2\Physics.h" />
     <ClInclude Include="Src\Game2\PositionComponent.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
@@ -90,6 +91,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Physics.cpp" />
     <ClCompile Include="Src\Game2\Prefab.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
