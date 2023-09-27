@@ -36,6 +36,10 @@ namespace Engine
     TransformComponent* transformTest;
     ComponentFactory CF;
 
+    float scalar = 0.5f;
+    float rotation = 0.125f;
+    float transformation = 5.0f;
+
     Application::Application()
     {
         logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
@@ -67,14 +71,12 @@ namespace Engine
         //Systems Manager Initialization
         //Currently initializes TestSystem and Graphics
         SM.Initialize();
-
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
-        m_ImGuiWrapper->OnAttach();
-
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
 
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper->OnAttach();
         //add component to entity
         targetEntity->AddNewComponent(ComponentType::Transform);
         targetEntity->AddNewComponent(ComponentType::Position);
@@ -87,7 +89,7 @@ namespace Engine
         // Event handler
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-       logger.Log(Engine::LogLevel::Event, e.ToString());
+       //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
     }
 
@@ -131,23 +133,48 @@ namespace Engine
             
             if (InputHandler.IsKeyPressed(KEY_UP))
             {
-                transformTest->y += 20;
+                transformTest->y += transformation;
             }
             
             if (InputHandler.IsKeyPressed(KEY_DOWN))
             {
-                transformTest->y -= 20;
+                transformTest->y -= transformation;
             }
 
             if (InputHandler.IsKeyPressed(KEY_LEFT))
             {
-                transformTest->x -= 20;
+                transformTest->x -= transformation;
             }
 
             if (InputHandler.IsKeyPressed(KEY_RIGHT))
             {
-                transformTest->x += 20;
+                transformTest->x += transformation;
             }
+
+            if (InputHandler.IsKeyPressed(KEY_R))
+            {
+                transformTest->rot += rotation; //Rotate counterclockwise
+            };
+
+            if (InputHandler.IsKeyPressed(KEY_T))
+            {
+                transformTest->rot -= rotation; //Rotate counterclockwise
+            };
+
+            if (InputHandler.IsKeyPressed(KEY_Z))
+            {
+                //Scale Up
+                transformTest->scaleX += scalar; 
+                transformTest->scaleY += scalar; 
+            }
+
+            if (InputHandler.IsKeyPressed(KEY_X))
+            {
+                // Scale Down
+                transformTest->scaleX -= scalar; 
+                transformTest->scaleY -= scalar; 
+            }
+
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());

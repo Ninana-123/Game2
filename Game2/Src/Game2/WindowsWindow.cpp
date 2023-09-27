@@ -47,7 +47,7 @@ namespace Engine {
 		}
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-		glfwSwapInterval(3);
+		glfwSwapInterval(1);
 
 		//GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
