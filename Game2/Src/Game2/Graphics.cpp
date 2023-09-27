@@ -3,17 +3,9 @@
 #include "logger.h"
 #include "Collision.h"
 #include "Vector2d.h"
-#include "AudioEngine.h"
-
 namespace Engine
-{   
-    //Set filepath of audio to the variable
-    AudioEngine audioEngine;
-    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
-    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
-
+{
     Logger GraphicsLogger;
-    
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader")
@@ -46,12 +38,6 @@ namespace Engine
 
         Graphics::InitializeGLEW();
 
-        //initialize audio files
-        audioEngine.init();
-        //load both audio 
-        audioEngine.loadSound(sound);
-        audioEngine.loadSound(sound2);
-        
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         // Clear the color buffer
@@ -109,50 +95,6 @@ namespace Engine
 
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-        // Define a mapping of keys to actions
-        std::map<int, std::function<void()>> keyActions;
-
-        const float increment = 1.0f;
-        const float angle = 0.01f;
-        const float scale = 0.01f;
-
-        //press "1" key to play first audio file
-        keyActions[GLFW_KEY_9] = [&]()
-        {
-            audioEngine.playSound(sound);
-        };
-
-        //press "2" key to play second audio file
-        keyActions[GLFW_KEY_0] = [&]()
-        {
-            audioEngine.playSound(sound2);
-        };
-
-        
-
-        // Check for key presses and execute corresponding actions
-        for (const auto& pair : keyActions)
-        {
-            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-            {
-                pair.second();
-            }
-        }
-    }
-
-    void Graphics::Update(Entity* entity)
-    {
-        //audioEngine.update();
-        if (entity->HasComponent(ComponentType::Transform))
-        {
-
-        }
-
-        int width, height;
-        glfwGetWindowSize(Window, &width, &height);
-        UpdateViewport(width, height);
-
-        // Handle graphics updates here
         renderer.Clear();
 
         for (const auto& entityPair : *entities)
