@@ -35,9 +35,9 @@ namespace Engine
     TransformComponent* transformTest;
     ComponentFactory CF;
 
-    float scalar = 1.0f;
-    float rotation = 0.25f;
-    float transformation = 20.0f;
+    float scalar = 0.5f;
+    float rotation = 0.125f;
+    float transformation = 5.0f;
 
     Application::Application()
     {
