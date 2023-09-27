@@ -87,7 +87,7 @@
       <UniqueIdentifier>{55ae4719-8dd7-4112-b129-db5282409267}</UniqueIdentifier>
     </Filter>
     <Filter Include="Serializer">
-      <UniqueIdentifier>{7e8f7b05-00c2-4760-a5f9-04a443474ad3}</UniqueIdentifier>
+      <UniqueIdentifier>{866f601d-65eb-4179-be0f-1a1c2957e94b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +345,9 @@
 >>>>>>> parent of 11763a3 (Merge branch 'Vance2')
 =======
 >>>>>>> parent of 5bc894f (revert)
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Serializer.cpp">
+      <Filter>Serializer</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Serializer.cpp">
       <Filter>Serializer</Filter>

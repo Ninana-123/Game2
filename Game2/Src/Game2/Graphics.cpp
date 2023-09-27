@@ -7,6 +7,7 @@
 #include "Vector2d.h"
 namespace Engine
 {
+
     Logger GraphicsLogger;
 
     Graphics::Graphics()
@@ -38,6 +39,7 @@ namespace Engine
         Window = glfwGetCurrentContext();
 
         Graphics::InitializeGLEW();
+
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         // Clear the color buffer
@@ -96,6 +98,8 @@ namespace Engine
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
+
+
         for (const auto& entityPair : *entities)
         {
             Entity* entity = entityPair.second.get();

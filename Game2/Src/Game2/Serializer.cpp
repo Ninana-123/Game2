@@ -56,7 +56,7 @@ namespace Engine
         // if word "transform"
         //create transform component from component factory
         // assign json contents to transform data members
-        return 0;
+        return;
     }
 
    
