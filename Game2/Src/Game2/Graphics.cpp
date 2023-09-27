@@ -195,7 +195,6 @@ namespace Engine
             }
 
         }
-        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)

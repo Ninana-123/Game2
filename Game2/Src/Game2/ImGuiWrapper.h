@@ -2,11 +2,13 @@
 #include "Event.h"
 #include "InputEvent.h"
 #include "AppEvent.h"
+#include "EntityManager.h"
 
 namespace Engine {
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
+		ImGuiWrapper(Engine::EntityManager* em) : entityManager(em) {}
 		~ImGuiWrapper();
 
 		void OnAttach();
@@ -26,6 +28,7 @@ namespace Engine {
 
 	private:
 		float m_Time = 0.0f;
+		Engine::EntityManager* entityManager;
 
 	};
 }

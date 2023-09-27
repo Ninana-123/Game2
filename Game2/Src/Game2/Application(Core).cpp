@@ -70,14 +70,12 @@ namespace Engine
         //Systems Manager Initialization
         //Currently initializes TestSystem and Graphics
         SM.Initialize();
-
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
-        m_ImGuiWrapper->OnAttach();
-
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
 
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper->OnAttach();
         //add component to entity
         targetEntity->AddNewComponent(ComponentType::Transform);
         targetEntity->AddNewComponent(ComponentType::Position);
@@ -90,7 +88,7 @@ namespace Engine
         // Event handler
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-       logger.Log(Engine::LogLevel::Event, e.ToString());
+       //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
     }
 
@@ -163,11 +161,11 @@ namespace Engine
             SM.UpdateSystems(EM.GetEntities());
 
             //Entity Debug
-            
+            /*
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            
+            */
             m_ImGuiWrapper->OnUpdate();
 
         }

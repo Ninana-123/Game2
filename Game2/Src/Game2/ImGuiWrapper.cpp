@@ -11,8 +11,13 @@
 
 namespace Engine {
 
-	ImGuiWrapper::ImGuiWrapper()
+	EntityID firstEntity, secondEntity;
+	Entity* targettedEntity;
+
+
+	ImGuiWrapper::ImGuiWrapper() : entityManager()
 	{
+		
 	}
 
 	ImGuiWrapper::~ImGuiWrapper()
@@ -167,6 +172,11 @@ namespace Engine {
 		io.SetClipboardTextFn = SetClipboardText;
 		io.GetClipboardTextFn = GetClipboardText;
 		io.ClipboardUserData = glfwGetCurrentContext();
+		if (entityManager) {
+			firstEntity = 0;
+			targettedEntity = entityManager->GetEntity(firstEntity);
+
+		}
 	}
 
 	void ImGuiWrapper::OnDetach()
@@ -231,6 +241,26 @@ namespace Engine {
 				ImGui::Text("No Keys Pressed");
 			}
 		}
+		ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+		if (entityManager)
+		{
+			// Create Entity button
+			if (ImGui::Button("Create Entity"))
+			{
+				entityManager->CreateEntity();
+				std::cout<<"Created Entity"<<std::endl;
+			}
+			if (ImGui::Button("Clone Entity"))
+			{
+				// Clone firstEntity and store its ID
+				secondEntity = entityManager->CloneEntity(firstEntity);
+				targettedEntity = entityManager->GetEntity(secondEntity);
+			}
+			auto entities = entityManager->GetEntities();
+			ImGui::Text("Number of Entities: %d", entities->size());
+		}
+		ImGui::End();
 
 		// End the ImGui window
 		ImGui::End();
