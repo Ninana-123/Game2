@@ -18,5 +18,6 @@
 #include <map>
 #include <functional>
 #include <chrono>
+#include <filesystem>
 // Windows API Headers
 #include <Windows.h>
