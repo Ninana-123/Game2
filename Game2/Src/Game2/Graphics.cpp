@@ -82,10 +82,10 @@ namespace Engine
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
         // load and initialize the shader
-        InitialiseShader();
+        InitializeShader();
 
         // initialize and bind textures
-        InitialiseTextures();
+        InitializeTextures();
 
         ib.Unbind();
         va.Unbind();
@@ -252,84 +252,37 @@ namespace Engine
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
-    void Graphics::InitialiseShader()
+    void Graphics::InitializeShader()
     {
         shader.LoadShader("Resource/Shaders/Basic.shader");
+
         shader.Initialize();
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    void Graphics::InitialiseTextures()
+    void Graphics::InitializeTextures()
     {
-        textureA.Load("Resource/Texture/Tank.png");
-        textureB.Load("Resource/Texture/Archer.png");
+        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        {
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
+            // Handle the error as needed, e.g., return or throw an exception
+        }
+        else {
+            textureA.InitGL();
+            textureA.Bind(0);
+        }
 
-        textureA.InitGL();
-        textureA.Bind(0);
-
-        textureB.InitGL();
-        textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        if (!textureB.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
+        {
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
+            // Handle the error as needed, e.g., return or throw an exception
+        }
+        else {
+            textureB.InitGL();
+            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        }
     }
-
-    //void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
-    //{
-    //    // Define a mapping of keys to actions
-    //    std::map<int, std::function<void()>> keyActions;
-
-    //    const float increment = 1.0f;
-    //    const float angle = 0.01f;
-    //    const float scalar = 0.01f;
-
-    //    // Texture A 
-    //    keyActions[GLFW_KEY_RIGHT] = [&]()
-    //    {
-    //        translation.x += increment; //Move right 
-    //    };
-
-    //    keyActions[GLFW_KEY_LEFT] = [&]()
-    //    {
-    //        translation.x -= increment; //Move left
-    //    };
-
-    //    keyActions[GLFW_KEY_DOWN] = [&]()
-    //    {
-    //        translation.y -= increment; //Move down
-    //    };
-
-    //    keyActions[GLFW_KEY_UP] = [&]()
-    //    {
-    //        translation.y += increment; //Move up
-    //    };
-
-    //    keyActions[GLFW_KEY_U] = [&]()
-    //    {
-    //        rotation += angle; //Rotate counterclockwise
-    //    };
-
-    //    keyActions[GLFW_KEY_I] = [&]()
-    //    {
-    //        rotation -= angle; //Rotate clockwise
-    //    };
-    //    keyActions[GLFW_KEY_Z] = [&]()
-    //    {
-    //        scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
-    //    };
-
-    //    keyActions[GLFW_KEY_X] = [&]()
-    //    {
-    //        scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
-    //    };
-
-    //    // Check for key presses and execute corresponding actions
-    //    for (const auto& pair : keyActions)
-    //    {
-    //        if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-    //        {
-    //            pair.second();
-    //        }
-    //    }
-    //}
 
     // Function to toggle between textured and plain squares
     void Graphics::ToggleRenderMode()
