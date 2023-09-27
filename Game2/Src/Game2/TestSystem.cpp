@@ -13,7 +13,8 @@ void Engine::TestSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Ent
         Entity* entity = entityPair.second.get();
 
         // Check if the entity has a PositionComponent
-        if (entity->HasComponent(ComponentType::Position)) {
+        if (entity->HasComponent(ComponentType::Position)) 
+        {
             // Access the PositionComponent
             PositionComponent* positionComponent = static_cast<PositionComponent*>(entity->GetComponent(ComponentType::Position));
 

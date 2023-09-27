@@ -36,12 +36,10 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-
 		for (auto system : all_systems)
 		{
 			system->Update(entities);
 		}
-
 	}
 
 }
