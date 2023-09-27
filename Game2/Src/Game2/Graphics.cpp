@@ -121,15 +121,8 @@ namespace Engine
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
-                //Assign reference to transform component
-                TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-               
-                glm::vec3 transA(transform->x, transform->y, 0);  
-                float rotation = transform->rot;
-                glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
 
-
-                // Check collision with the window boundaries
+               // Check collision with the window boundaries
                // VECTORMATH::Vec2 velA(0.0f, 0.0f);
                 float halfWidth = 50.0f;  // Half of the texture width
                 float halfHeight = 50.0f; // Half of the texture height
