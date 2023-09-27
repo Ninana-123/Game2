@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "EntityManager.h"
 #include "SystemsManager.h"
+#include "ComponentFactory.h"
 #include "PositionComponent.h"
 #include "TransformComponent.h"
 #include "Entity.h"
@@ -30,7 +31,8 @@ namespace Engine
     Engine::SystemsManager SM;
     EntityID entity1, entity2;
     Entity* targetEntity;
-    PositionComponent* position;
+    TransformComponent* transformTest;
+    ComponentFactory CF;
 
     Application::Application()
     {
@@ -44,6 +46,7 @@ namespace Engine
 
     void Application::Initialize()
     {
+       
         // Initialize GLFW
         if (!glfwInit()) {
             logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -59,25 +62,22 @@ namespace Engine
 
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
-        graphicsSystem.Window = glfwGetCurrentContext();
-        graphicsSystem.InitializeGLEW();
-        graphicsSystem.Initialize();
+        //Systems Manager Initialization
+        //Currently initializes TestSystem and Graphics
+        SM.Initialize();
+
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
         m_ImGuiWrapper->OnAttach();
-        //Systems Manager Initialization
-        //SM.Initialize();
 
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
+
         //add component to entity
-        std::unique_ptr<Component> positionComponent = std::make_unique<PositionComponent>();
-        std::unique_ptr<Component> transformComponent = std::make_unique<TransformComponent>();
-        targetEntity->AddComponent(std::move(positionComponent));
-        targetEntity->AddComponent(std::move(transformComponent));
-        position = dynamic_cast<PositionComponent*>(targetEntity->GetComponent(ComponentType::Position)); //reference to Entity Position data
-       
-        
+        targetEntity->AddNewComponent(ComponentType::Transform);
+        targetEntity->AddNewComponent(ComponentType::Position);
+        transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+      
     }
 
     void Application::OnEvent(Event& e)
@@ -99,31 +99,24 @@ namespace Engine
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
-            /*
+            
             if (Input::IsKeyPressed(GLFW_KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
-            */
+            
 
             //System Updating
-            //SM.UpdateSystems(targetEntity);
-            //EM.UpdateEntities();
+            SM.UpdateSystems(EM.GetEntities());
 
-            for (const auto& entityPair : EM.entities)
-            {
-                Entity* entity = entityPair.second.get();
-                //SystemsManager::UpdateSystems(entity);
-                graphicsSystem.Update(entity);
-
-            }
+         
            
             //Entity Debug
             
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
-            std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
+            std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             
             

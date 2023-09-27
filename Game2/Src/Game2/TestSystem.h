@@ -11,7 +11,7 @@ namespace Engine
 	public:
 		TestSystem() {};
 		~TestSystem() {};
-
-		void Update(Entity* entity) override;
+		
+		void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
 	};
 }

@@ -8,11 +8,12 @@ namespace Engine
 {
 	EntityID EntityManager::nextEntityID = 0;
 
-	Engine::EntityManager::~EntityManager()
+	EntityManager::~EntityManager()
 	{
+
 	}
 
-	EntityID Engine::EntityManager::CreateEntity()
+	EntityID EntityManager::CreateEntity()
 	{
 		EntityID entityID = nextEntityID++;
 		entities.emplace(entityID, std::make_unique<Entity>(entityID));
@@ -25,12 +26,17 @@ namespace Engine
 		return EntityID();
 	}
 
-	Entity* Engine::EntityManager::GetEntity(EntityID id) {
+	Entity* EntityManager::GetEntity(EntityID id) {
 		auto it = entities.find(id);
 		return (it != entities.end()) ? it->second.get() : nullptr;
 	}
 
-	EntityID Engine::EntityManager::CloneEntity(EntityID sourceEntityID) {
+	std::unordered_map<EntityID, std::unique_ptr<Entity>>* EntityManager::GetEntities()
+	{
+		return &entities;
+	}
+
+	EntityID EntityManager::CloneEntity(EntityID sourceEntityID) {
 		// Get the source entity to clone
 		Entity* sourceEntity = GetEntity(sourceEntityID);
 		if (!sourceEntity) {
@@ -66,14 +72,6 @@ namespace Engine
 			entities.erase(it);
 		}
 	}
-	void Engine::EntityManager::UpdateEntities()
-	{
-		for (const auto& entityPair : entities) 
-		{
-			Entity* entity = entityPair.second.get();
-			//SystemsManager::UpdateSystems(entity);
-			
-		}
-	}
+	
 }
 

@@ -1,19 +1,20 @@
 #pragma once
 
 #include "Component.h"
-
+#include "ComponentFactory.h"
 
 namespace Engine
 {
     class System;
 
-    class Entity 
+    class Entity
     {
     public:
         Entity(EntityID id) : id(id) {}
         ~Entity() = default;
 
         void AddComponent(std::unique_ptr<Component> component);
+        void AddNewComponent(ComponentType type);
         Component* GetComponent(ComponentType type) const;
         std::unordered_map<ComponentType, Component*> GetComponents() const;
         EntityID GetID() const { return id; }
@@ -22,7 +23,7 @@ namespace Engine
         EntityID id;
         std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
     private:
-       
-    
+
+
     };
 }

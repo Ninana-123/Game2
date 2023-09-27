@@ -26,8 +26,9 @@ namespace Engine
         Graphics();
         ~Graphics();
 
-        void Initialize();
-        void Update(Entity* entity) override;
+        void Initialize() override;
+        void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
+
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
         void UpdateTransformations(int key);

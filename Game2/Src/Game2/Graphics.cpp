@@ -33,7 +33,10 @@ namespace Engine
 
     void Graphics::Initialize() {
 
-       
+        Window = glfwGetCurrentContext();
+
+        Graphics::InitializeGLEW();
+
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         // Clear the color buffer
@@ -57,22 +60,6 @@ namespace Engine
         };
 
         std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
-
-        //Translation for A and B
-        glm::vec3 transA(200, 200, 0);
-        translationA = transA;
-        glm::vec3 transB(400, 200, 0);
-        translationB = transB;
-
-        // Rotation angles for textures A and B
-        rotationAngleA = 0.0f; // Initial rotation angle 
-        rotationAngleB = 0.0f;
-
-        //Scale for A and B
-        glm::vec3 scale1(1.0f, 1.0f, 1.0f); //initial scale
-        glm::vec3 scale2(1.0f, 1.0f, 1.0f);
-        scaleA = scale1;
-        scaleB = scale2;
 
         //enable blending for transparency
         GLCall(glEnable(GL_BLEND));
@@ -106,169 +93,137 @@ namespace Engine
     }
 
 
-    void Graphics::Update(Entity* entity)
+    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-        if (entity->HasComponent(ComponentType::Transform))
+
+        for (const auto& entityPair : *entities)
         {
+            Entity* entity = entityPair.second.get();
+
+            if (entity->HasComponent(ComponentType::Transform))
+            {
+                //Assign reference to transform component
+                TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+                //Read transform data from component
+                 
+                //translate
+                glm::vec3 transA(transform->x, transform->y, 0);
+                translationA = transA;
+
+                //rotate
+                rotationAngleA = transform->rot;
+
+                //scale
+                glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
+                scaleA = scale1;
+
+                int width, height;
+                glfwGetWindowSize(Window, &width, &height);
+                UpdateViewport(width, height);
+
+                // Handle graphics updates here
+                renderer.Clear();
+
+                //// Get the current state of the 'P' key
+                //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+
+                //// Check if there's a change in the 'P' key state
+                //if (currentPState && !previousPState)
+                //{
+                //    // Toggle the rendering mode
+                //    ToggleRenderMode();
+                //}
+
+                //// Update the previous 'P' key state
+                //previousPState = currentPState;
+
+                /*if (renderTexturedSquare)
+                {*/
+                //Texture A
+                {
+                    UpdateTransformations(GLFW_KEY_RIGHT);
+                    UpdateTransformations(GLFW_KEY_LEFT);
+                    UpdateTransformations(GLFW_KEY_UP);
+                    UpdateTransformations(GLFW_KEY_DOWN);
+                    UpdateTransformations(GLFW_KEY_U);
+                    UpdateTransformations(GLFW_KEY_I);
+                    UpdateTransformations(GLFW_KEY_Z);
+                    UpdateTransformations(GLFW_KEY_X);
+
+                    // Apply transformations from UpdateTransformations
+                    glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
+                    modelA = glm::translate(modelA, translationA);
+                    modelA = glm::scale(modelA, scaleA);
+                    modelA = glm::rotate(modelA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
+
+                    glm::mat4 mvpA = proj * view * modelA;
+
+                    shader.Bind();
+                    //luffyTexture.Bind(0);
+
+                    double currentTime = glfwGetTime();
+                    double elapsedTime = currentTime - programStartTime;
+                    int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+
+                    if (textureIndex == 0)
+                    {
+                        // Display "Luffy" texture
+                        textureA.Bind(0);
+                    }
+                    else
+                    {
+                        // Display "Zoro" texture
+                        textureB.Bind(0);
+                    }
+
+                    // Set shader uniforms for Luffy
+                    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+                    shader.SetUniform1i("u_Texture", 0);
+                    shader.SetUniformMat4f("u_MVP", mvpA);
+                    renderer.Draw(va, ib, shader);
+
+                    // Draw a square around Texture A
+                    shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
+                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+
+                    // Draw the square as lines 
+                    GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+                    // Reset the shader render mode to textured
+                    shader.SetUniform1i("u_RenderTextured", 1);
+
+                }
+
+                //}
+                //else
+                //{
+                //    // translation vector for the blue square's position
+                //    glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
+
+                //    // model matrix with the new translation
+                //    glm::mat4 model = glm::mat4(1.0f); // Identity matrix
+                //    model = glm::translate(model, blueSquareTranslation);
+
+                //    // Calculate the MVP matrix
+                //    glm::mat4 mvp = proj * view * model;
+
+                //    // Bind the shader and set uniforms
+                //    shader.Bind();
+                //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                //    shader.SetUniformMat4f("u_MVP", mvp);
+
+                //    // Render the blue square
+                //    renderer.Draw(va, ib, shader);
+                //}
+                transform->x = translationA.x;
+                transform->y = translationA.y;
+
+                GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+
+            }
 
         }
-
-        int width, height;
-        glfwGetWindowSize(Window, &width, &height);
-        UpdateViewport(width, height);
-
-        // Handle graphics updates here
-        renderer.Clear();
-
-        //// Get the current state of the 'P' key
-        //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
-
-        //// Check if there's a change in the 'P' key state
-        //if (currentPState && !previousPState)
-        //{
-        //    // Toggle the rendering mode
-        //    ToggleRenderMode();
-        //}
-
-        //// Update the previous 'P' key state
-        //previousPState = currentPState;
-
-        /*if (renderTexturedSquare)
-        {*/
-            //Texture A
-            {
-                UpdateTransformations(GLFW_KEY_RIGHT);
-                UpdateTransformations(GLFW_KEY_LEFT);
-                UpdateTransformations(GLFW_KEY_UP);
-                UpdateTransformations(GLFW_KEY_DOWN);
-                UpdateTransformations(GLFW_KEY_U);
-                UpdateTransformations(GLFW_KEY_I);
-                UpdateTransformations(GLFW_KEY_Z);
-                UpdateTransformations(GLFW_KEY_X);
-
-                // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
-                modelA = glm::translate(modelA, translationA);
-                modelA = glm::scale(modelA, scaleA);
-                modelA = glm::rotate(modelA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
-
-                glm::mat4 mvpA = proj * view * modelA;
-
-                shader.Bind();
-                //luffyTexture.Bind(0);
-
-                double currentTime = glfwGetTime();
-                double elapsedTime = currentTime - programStartTime;
-                int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
-
-                if (textureIndex == 0)
-                {
-                    // Display "Luffy" texture
-                    textureA.Bind(0);
-                }
-                else
-                {
-                    // Display "Zoro" texture
-                    textureB.Bind(0);
-                }
-
-                // Set shader uniforms for Luffy
-                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-                shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvpA);
-                renderer.Draw(va, ib, shader);
-
-                // Draw a square around Texture A
-                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
-                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-                // Draw the square as lines 
-                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-                // Reset the shader render mode to textured
-                shader.SetUniform1i("u_RenderTextured", 1);
-               
-            }
-
-            //Texture B
-            {
-                UpdateTransformations(GLFW_KEY_W);
-                UpdateTransformations(GLFW_KEY_A);
-                UpdateTransformations(GLFW_KEY_S);
-                UpdateTransformations(GLFW_KEY_D);
-                UpdateTransformations(GLFW_KEY_J);
-                UpdateTransformations(GLFW_KEY_K);
-                UpdateTransformations(GLFW_KEY_C);
-                UpdateTransformations(GLFW_KEY_V);
-
-                // Calculate the model matrix for Texture B
-                glm::mat4 modelB = glm::translate(glm::mat4(1.0f), translationB); // Right translation
-                modelB = glm::scale(modelB, scaleB); // Apply scaling
-                modelB = glm::rotate(modelB, rotationAngleB, glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate around the Z-axis
-
-                // Calculate the MVP matrix for Texture B
-                glm::mat4 mvpB = proj * view * modelB;
-
-                shader.Bind();
-               // zoroTexture.Bind(1);
-
-                double currentTime = glfwGetTime(); 
-                double elapsedTime = currentTime - programStartTime;
-                double switchInterval = 10.0f;
-
-                // Calculate which texture to display based on elapsed time
-                int textureIndex = static_cast<int>(elapsedTime / switchInterval) % 2;
-
-                if (textureIndex == 0)
-                {
-                    textureB.Bind(0);
-                }
-                else
-                {
-                    textureA.Bind(0);
-                }
-
-              // Set shader uniforms for Texture B
-                shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-                shader.SetUniform1i("u_Texture", 0);
-                shader.SetUniformMat4f("u_MVP", mvpB);
-
-                // Render Texture B
-                renderer.Draw(va, ib, shader);
-
-                // Draw a square around Texture B
-                shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
-                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-                // Draw the square as lines (4 vertices, primitive type GL_LINE_LOOP)
-                GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-                // Reset the shader render mode to textured
-                shader.SetUniform1i("u_RenderTextured", 1);
-            }
-        //}
-        //else
-        //{
-        //    // translation vector for the blue square's position
-        //    glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
-
-        //    // model matrix with the new translation
-        //    glm::mat4 model = glm::mat4(1.0f); // Identity matrix
-        //    model = glm::translate(model, blueSquareTranslation);
-
-        //    // Calculate the MVP matrix
-        //    glm::mat4 mvp = proj * view * model;
-
-        //    // Bind the shader and set uniforms
-        //    shader.Bind();
-        //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-        //    shader.SetUniformMat4f("u_MVP", mvp);
-
-        //    // Render the blue square
-        //    renderer.Draw(va, ib, shader);
-        //}
-
-        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+        
     }
 
     void Graphics::UpdateViewport(int width, int height)

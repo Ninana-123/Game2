@@ -1,6 +1,6 @@
 //System.h 
 #include "pch.h"
-
+#include "EngineTypes.h"
 
 #pragma once
 
@@ -12,9 +12,11 @@ namespace Engine
 	class System
 	{
 	public:
-	
+		
+		virtual void Initialize() {}
+
 		//Update function for child class systems
-		virtual void Update(Entity* entity) = 0;
+		virtual void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) = 0;
 
 		virtual ~System() {}
 
