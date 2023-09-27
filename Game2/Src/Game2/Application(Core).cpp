@@ -23,6 +23,7 @@ namespace Engine
 {
     // Create a logger instance
     Engine::Logger logger;
+    Engine::Input InputHandler;
     Graphics graphicsSystem;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
@@ -96,34 +97,35 @@ namespace Engine
 
         while (m_Running)
         {
+            InputHandler.Update();
             m_Window->OnUpdate();
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
             
-            if (Input::IsKeyPressed(GLFW_KEY_1))
+            if (InputHandler.IsKeyTriggered(KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
             
-            if (Input::IsKeyPressed(KEY_UP))
+            if (InputHandler.IsKeyPressed(KEY_UP))
             {
                 transformTest->y += 20;
             }
             
-            if (Input::IsKeyPressed(KEY_DOWN))
+            if (InputHandler.IsKeyPressed(KEY_DOWN))
             {
                 transformTest->y -= 20;
             }
 
-            if (Input::IsKeyPressed(KEY_LEFT))
+            if (InputHandler.IsKeyPressed(KEY_LEFT))
             {
                 transformTest->x -= 20;
             }
 
-            if (Input::IsKeyPressed(KEY_RIGHT))
+            if (InputHandler.IsKeyPressed(KEY_RIGHT))
             {
                 transformTest->x += 20;
             }
