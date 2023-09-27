@@ -25,7 +25,7 @@
         float getX() const { return x; }
         float getY() const { return y; }
         float getZ() const { return z; }
-
+        inline void setLoop() { loop = true; }
         void setVolume(float newVolume) { volume = newVolume; }
         void setLoaded(bool isLoaded) { loaded = isLoaded; }
         void setX(float newX) { x = newX; }

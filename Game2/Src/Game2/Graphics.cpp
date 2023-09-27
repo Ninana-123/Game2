@@ -7,10 +7,6 @@
 #include "Vector2d.h"
 namespace Engine
 {
-    //Set filepath of audio to the variable
-    AudioEngine audioEngine;
-    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
-    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
 
     Logger GraphicsLogger;
 
@@ -44,12 +40,6 @@ namespace Engine
         Window = glfwGetCurrentContext();
 
         Graphics::InitializeGLEW();
-
-        //initialize audio files
-        audioEngine.init();
-        //load both audio 
-        audioEngine.loadSound(sound);
-        audioEngine.loadSound(sound2);
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -109,39 +99,6 @@ namespace Engine
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
-
-        std::map<int, std::function<void()>> keyActions;
-
-        //press "1" key to play first audio file
-        keyActions[GLFW_KEY_9] = [&]()
-        {
-            audioEngine.playSound(sound);
-        };
-
-        //press "2" key to play second audio file
-        keyActions[GLFW_KEY_0] = [&]()
-        {
-            audioEngine.playSound(sound2);
-        };
-
-        keyActions[GLFW_KEY_8] = [&]()
-        {
-            audioEngine.stopSound(sound);
-        };
-
-        keyActions[GLFW_KEY_7] = [&]()
-        {
-            audioEngine.stopSound(sound2);
-        };
-
-        // Check for key presses and execute corresponding actions
-        for (const auto& pair : keyActions)
-        {
-            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-            {
-                pair.second();
-            }
-        }
 
 
         for (const auto& entityPair : *entities)
