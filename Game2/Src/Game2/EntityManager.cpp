@@ -20,13 +20,27 @@ namespace Engine
 		return entityID;
 	}
 
-	EntityID EntityManager::CreateEntityFromPrefab()
+	EntityID EntityManager::CreateEntityFromPrefab(const Prefab& prefab)
 	{
 		EntityID newEntityID = CreateEntity();
-		return EntityID();
+		auto sourceComponents = prefab.GetComponents();
+
+		// Copy components from the archetype to the new entity
+		for (const auto& pair : sourceComponents)
+		{
+			ComponentType componentType = pair.first;
+			Component* sourceComponent = pair.second;
+
+			// Clone the component and add it to the entity using AddComponent
+			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+			GetEntity(newEntityID)->AddComponent(std::unique_ptr<Component>(clonedComponent));
+		}
+
+		return newEntityID;
 	}
 
-	Entity* EntityManager::GetEntity(EntityID id) {
+	Entity* EntityManager::GetEntity(EntityID id) 
+	{
 		auto it = entities.find(id);
 		return (it != entities.end()) ? it->second.get() : nullptr;
 	}
@@ -39,7 +53,8 @@ namespace Engine
 	EntityID EntityManager::CloneEntity(EntityID sourceEntityID) {
 		// Get the source entity to clone
 		Entity* sourceEntity = GetEntity(sourceEntityID);
-		if (!sourceEntity) {
+		if (!sourceEntity) 
+		{
 			// Entity not found
 			return -1; // Or use an appropriate error value
 		}

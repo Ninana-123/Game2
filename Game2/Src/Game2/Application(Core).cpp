@@ -14,10 +14,11 @@
 #include "Graphics.h"
 #include "ImGuiWrapper.h"
 
+
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
 double dt = 0.0;  // Time difference between frames (delta time)
-
+int selectedEntityIndex = 0;
 
 namespace Engine
 {
@@ -102,13 +103,31 @@ namespace Engine
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
-            
+            if (InputHandler.IsKeyTriggered(KEY_F1))
+            {
+                // Decrement the selected entity index
+                selectedEntityIndex--;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_F2))
+            {
+                // Increment the selected entity index
+                selectedEntityIndex++;
+            }
+
+            // Ensure the selected entity index is within valid bounds
+            int numEntities = EM.GetEntities()->size();
+            selectedEntityIndex = std::clamp(selectedEntityIndex, 0, numEntities - 1);
+            targetEntity = EM.GetEntity(selectedEntityIndex);
+
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
+
+            transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             
             if (InputHandler.IsKeyPressed(KEY_UP))
             {
@@ -134,7 +153,6 @@ namespace Engine
             SM.UpdateSystems(EM.GetEntities());
 
             //Entity Debug
-            
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
