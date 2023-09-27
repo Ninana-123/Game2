@@ -27,7 +27,8 @@ VertexArray::~VertexArray()
 {
 	GLCall(glDeleteVertexArrays(1, &m_RendererID)); //delete VAO when object is destroyed
 }
-void VertexArray::SetRendererID(GLuint rendererID)
+
+void VertexArray::SetRendererID(unsigned int rendererID)
 {
 	m_RendererID = rendererID; //set the internal Renderer ID
 }
