@@ -126,6 +126,7 @@ namespace Engine
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
+                //isNewEntityMoved = true;
             }
 
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
@@ -178,9 +179,9 @@ namespace Engine
             SM.UpdateSystems(EM.GetEntities());
 
             //Entity Debug
-            std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
+           /* std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
-            std::cout << "Number of entities: " << EM.entities.size() << std::endl;
+            std::cout << "Number of entities: " << EM.entities.size() << std::endl;*/
             
             m_ImGuiWrapper->OnUpdate();
 

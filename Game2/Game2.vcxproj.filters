@@ -80,6 +80,9 @@
     <Filter Include="Base\PrefabManager">
       <UniqueIdentifier>{1ff850c7-50b9-46d9-80ea-4aa120918e53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Precompiled">
+      <UniqueIdentifier>{e21d30eb-8c92-4f35-b9f7-306c9788ec3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -205,12 +208,20 @@
     <ClInclude Include="Src\Game2\LogFileWriter.h">
       <Filter>Base\Log</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\ComponentFactory.h">
       <Filter>Base\ComponentFactory</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\PrefabManager.h">
       <Filter>Base\PrefabManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\pch.h">
+      <Filter>Base\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\pch.h">
+      <Filter>Base\Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Vector2d.h">
+      <Filter>Base\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -289,17 +300,20 @@
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\pch.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\ComponentFactory.cpp">
       <Filter>Base\ComponentFactory</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Prefab.cpp">
       <Filter>Base\Engine\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
+      <Filter>Base\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Vector2d.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\pch.cpp">
+      <Filter>Base\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\PrefabManager.cpp">
       <Filter>Base\PrefabManager</Filter>
