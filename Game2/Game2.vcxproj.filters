@@ -85,6 +85,8 @@
     </Filter>
     <Filter Include="Systems\Physics">
       <UniqueIdentifier>{55ae4719-8dd7-4112-b129-db5282409267}</UniqueIdentifier>
+    <Filter Include="Base\Engine\Audio">
+      <UniqueIdentifier>{89047daa-9222-448c-991b-e29c5ffea501}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +233,12 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Core.h">
       <Filter>Base\Core</Filter>
+    <ClInclude Include="Src\Game2\Vector2d.h" />
+    <ClInclude Include="Src\Game2\AudioEngine.h">
+      <Filter>Base\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SoundInfo.h">
+      <Filter>Base\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -329,6 +337,7 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Core.cpp">
       <Filter>Base\Core</Filter>
+      <Filter>Base\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
