@@ -74,7 +74,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\Src\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)bin\Debug-x64\Game2;$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)bin\Debug-x64\Game2;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
@@ -112,24 +112,19 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>
-      </PreprocessorDefinitions>
+      <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src;$(SolutionDir)Game2\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Game2\vendor\FMOD\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin\Debug-x64\Game2\Game2.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
-xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodL.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
-xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodstudioL.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
-</Command>
+      <Command>xcopy "$(SolutionDir)bin\Debug-x64\Game2\Game2.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

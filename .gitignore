@@ -364,3 +364,4 @@ FodyWeavers.xsd
 *.tlog
 *.idb
 *.recipe
+Game2/default_log.txt
