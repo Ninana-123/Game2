@@ -11,6 +11,11 @@ namespace Engine {
 	{
 	public:
 		static bool IsKeyPressed(KeyCode key);
+        bool IsKeyTriggered(const KeyCode key);
+        bool IsKeyDown(const KeyCode key);
+        bool IsKeyReleased(const KeyCode key);
+        void UpdateKeyStates();
+		void Update();
 		static bool IsMouseButtonPressed(MouseCode button);
 		static glm::vec2 GetMousePosition();
 		static float GetMouseX();

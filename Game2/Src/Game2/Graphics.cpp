@@ -44,10 +44,10 @@ namespace Engine
 
         //define vertex array and indices
         float positions[] = {
-       -10.0f,  -10.0f, 0.0f, 0.0f,    //0
-        10.0f,  -10.0f, 1.0f, 0.0f,    //1
-        10.0f,   10.0f, 1.0f, 1.0f,    //2
-       -10.0f,   10.0f, 0.0f, 1.0f     //3
+       -20.0f,  -20.0f, 0.0f, 0.0f,    //0
+        20.0f,  -20.0f, 1.0f, 0.0f,    //1
+        20.0f,   20.0f, 1.0f, 1.0f,    //2
+       -20.0f,   20.0f, 0.0f, 1.0f     //3
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -103,25 +103,33 @@ namespace Engine
 
             if (entity->HasComponent(ComponentType::Transform))
             {
-                int width, height;
-                glfwGetWindowSize(Window, &width, &height);
-                UpdateViewport(width, height);
-
                 //Assign reference to transform component
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-                //Read transform data from component
+
+                //Read transform data from Transform component
                  
                 //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
-                //glm::vec3 transB(transform->x, transform->y, 0);
 
                 //rotate
                 float rotation = transform->rot;
 
                 //scale
                 glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
+
+                int width, height;
+                glfwGetWindowSize(Window, &width, &height);
+                UpdateViewport(width, height);
+
+                // Apply transformations from UpdateTransformations
+                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
+                modelA = glm::translate(modelA, transA);
+                modelA = glm::scale(modelA, scale1);
+                modelA = glm::rotate(modelA, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+
+                glm::mat4 mvpA = proj * view * modelA;
                
-                // Get the current state of the 'P' key
+                //Get the current state of the 'P' key
                 bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
                 // Check if there's a change in the 'P' key state
@@ -136,27 +144,6 @@ namespace Engine
 
                 if (renderTexturedSquare)
                 {
-                //Texture A
-                {
-                    /*
-                    * UpdateTransformations(GLFW_KEY_RIGHT, transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_LEFT,  transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_UP,    transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_DOWN,  transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_U,     transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_I,     transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_Z,     transA, scale1, rotation);
-                    UpdateTransformations(GLFW_KEY_X,     transA, scale1, rotation);
-                    */
-                    
-
-                    // Apply transformations from UpdateTransformations
-                    glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
-                    modelA = glm::translate(modelA, transA);
-                    modelA = glm::scale(modelA, scale1);
-                    modelA = glm::rotate(modelA, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
-
-                    glm::mat4 mvpA = proj * view * modelA;
 
                     shader.Bind();
                     //luffyTexture.Bind(0);
@@ -193,27 +180,15 @@ namespace Engine
                     shader.SetUniform1i("u_RenderTextured", 1);
 
                 }
-                transform->x = transA.x;
-                transform->y = transA.y;
-
-                }
                 else
                 {
-                    // Apply transformations from UpdateTransformations
-                    glm::mat4 blueSquareTranslation = glm::mat4(1.0f); // Initialize the model matrix as identity
-                    blueSquareTranslation = glm::translate(blueSquareTranslation, transA);
-                    blueSquareTranslation = glm::scale(blueSquareTranslation, scale1);
-                    blueSquareTranslation = glm::rotate(blueSquareTranslation, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+                      // Bind the shader and set uniforms
+                      shader.Bind();
+                      shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                      shader.SetUniformMat4f("u_MVP", mvpA);
 
-                    glm::mat4 mvpA = proj * view * blueSquareTranslation;
-
-                    // Bind the shader and set uniforms
-                    shader.Bind();
-                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-                    shader.SetUniformMat4f("u_MVP", mvpA);
-
-                    // Render the blue square
-                    renderer.Draw(va, ib, shader);
+                      // Render the blue square
+                      renderer.Draw(va, ib, shader);
                 }
                 transform->x = transA.x;
                 transform->y = transA.y;
@@ -250,64 +225,64 @@ namespace Engine
     }
 
 
-    void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
-    {
-        // Define a mapping of keys to actions
-        std::map<int, std::function<void()>> keyActions;
+    //void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
+    //{
+    //    // Define a mapping of keys to actions
+    //    std::map<int, std::function<void()>> keyActions;
 
-        const float increment = 1.0f;
-        const float angle = 0.01f;
-        const float scalar = 0.01f;
+    //    const float increment = 1.0f;
+    //    const float angle = 0.01f;
+    //    const float scalar = 0.01f;
 
-        // Texture A 
-        keyActions[GLFW_KEY_RIGHT] = [&]()
-        {
-            translation.x += increment; //Move right 
-        };
+    //    // Texture A 
+    //    keyActions[GLFW_KEY_RIGHT] = [&]()
+    //    {
+    //        translation.x += increment; //Move right 
+    //    };
 
-        keyActions[GLFW_KEY_LEFT] = [&]()
-        {
-            translation.x -= increment; //Move left
-        };
+    //    keyActions[GLFW_KEY_LEFT] = [&]()
+    //    {
+    //        translation.x -= increment; //Move left
+    //    };
 
-        keyActions[GLFW_KEY_DOWN] = [&]()
-        {
-            translation.y -= increment; //Move down
-        };
+    //    keyActions[GLFW_KEY_DOWN] = [&]()
+    //    {
+    //        translation.y -= increment; //Move down
+    //    };
 
-        keyActions[GLFW_KEY_UP] = [&]()
-        {
-            translation.y += increment; //Move up
-        };
+    //    keyActions[GLFW_KEY_UP] = [&]()
+    //    {
+    //        translation.y += increment; //Move up
+    //    };
 
-        keyActions[GLFW_KEY_U] = [&]()
-        {
-            rotation += angle; //Rotate counterclockwise
-        };
+    //    keyActions[GLFW_KEY_U] = [&]()
+    //    {
+    //        rotation += angle; //Rotate counterclockwise
+    //    };
 
-        keyActions[GLFW_KEY_I] = [&]()
-        {
-            rotation -= angle; //Rotate clockwise
-        };
-        keyActions[GLFW_KEY_Z] = [&]()
-        {
-            scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
-        };
+    //    keyActions[GLFW_KEY_I] = [&]()
+    //    {
+    //        rotation -= angle; //Rotate clockwise
+    //    };
+    //    keyActions[GLFW_KEY_Z] = [&]()
+    //    {
+    //        scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
+    //    };
 
-        keyActions[GLFW_KEY_X] = [&]()
-        {
-            scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
-        };
+    //    keyActions[GLFW_KEY_X] = [&]()
+    //    {
+    //        scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
+    //    };
 
-        // Check for key presses and execute corresponding actions
-        for (const auto& pair : keyActions)
-        {
-            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-            {
-                pair.second();
-            }
-        }
-    }
+    //    // Check for key presses and execute corresponding actions
+    //    for (const auto& pair : keyActions)
+    //    {
+    //        if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
+    //        {
+    //            pair.second();
+    //        }
+    //    }
+    //}
 
     // Function to toggle between textured and plain squares
     void Graphics::ToggleRenderMode()

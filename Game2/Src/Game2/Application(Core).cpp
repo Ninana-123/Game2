@@ -23,6 +23,7 @@ namespace Engine
 {
     // Create a logger instance
     Engine::Logger logger;
+    Engine::Input InputHandler;
     Graphics graphicsSystem;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
@@ -33,6 +34,10 @@ namespace Engine
     Entity* targetEntity;
     TransformComponent* transformTest;
     ComponentFactory CF;
+
+    float scalar = 1.0f;
+    float rotation = 0.25f;
+    float transformation = 20.0f;
 
     Application::Application()
     {
@@ -96,76 +101,74 @@ namespace Engine
 
         while (m_Running)
         {
+            InputHandler.Update();
             m_Window->OnUpdate();
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
             
-            if (Input::IsKeyPressed(GLFW_KEY_1))
+            if (InputHandler.IsKeyTriggered(KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
             }
             
-            if (Input::IsKeyPressed(KEY_UP))
+            if (InputHandler.IsKeyPressed(KEY_UP))
             {
-                transformTest->y += 20;
+                transformTest->y += transformation;
             }
             
-            if (Input::IsKeyPressed(KEY_DOWN))
+            if (InputHandler.IsKeyPressed(KEY_DOWN))
             {
-                transformTest->y -= 20;
+                transformTest->y -= transformation;
             }
 
-            if (Input::IsKeyPressed(KEY_LEFT))
+            if (InputHandler.IsKeyPressed(KEY_LEFT))
             {
-                transformTest->x -= 20;
+                transformTest->x -= transformation;
             }
 
-            if (Input::IsKeyPressed(KEY_RIGHT))
+            if (InputHandler.IsKeyPressed(KEY_RIGHT))
             {
-                transformTest->x += 20;
+                transformTest->x += transformation;
             }
 
-            if(Input::IsKeyPressed(KEY_R))
+            if (InputHandler.IsKeyPressed(KEY_R))
             {
-                transformTest->rot += 2; //Rotate counterclockwise
+                transformTest->rot += rotation; //Rotate counterclockwise
             };
 
-            if (Input::IsKeyPressed(KEY_T))
+            if (InputHandler.IsKeyPressed(KEY_T))
             {
-                transformTest->rot -= 2; //Rotate counterclockwise
+                transformTest->rot -= rotation; //Rotate counterclockwise
             };
-           
-            if (Input::IsKeyPressed(KEY_Z))
+
+            if (InputHandler.IsKeyPressed(KEY_Z))
             {
-                float scalar = 0.01;
-                transformTest->scaleX += scalar; // Increase scaleX
-                transformTest->scaleY += scalar; // Increase scaleY
+                //Scale Up
+                transformTest->scaleX += scalar; 
+                transformTest->scaleY += scalar; 
             }
 
-            if (Input::IsKeyPressed(KEY_X))
+            if (InputHandler.IsKeyPressed(KEY_X))
             {
-                float scalar = 0.01;
-                transformTest->scaleX -= scalar; // Decrease scaleX
-                transformTest->scaleY -= scalar; // Decrease scaleY
+                // Scale Down
+                transformTest->scaleX -= scalar; 
+                transformTest->scaleY -= scalar; 
             }
+
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());
 
-         
-           
             //Entity Debug
             
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             
-            
             m_ImGuiWrapper->OnUpdate();
-
 
         }
     }
@@ -182,7 +185,6 @@ namespace Engine
         // Update the viewport and projection matrix
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
-
 
     void Application::UpdateDeltaTime()
     {
