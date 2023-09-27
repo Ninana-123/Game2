@@ -1,1 +1,1 @@
-2023-09-27 23:21:27[DEBUG] GLEW successfully ini2023-09-27 23:21:27[APP] Application Running.
+2023-09-27 23:36:44[DEBUG] GLEW successfully ini2023-09-27 23:36:44[APP] Application Running.
