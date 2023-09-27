@@ -1,567 +1,1913 @@
-2023-09-27 19:01:00[DEBUG] GLEW successfully ini2023-09-272023-09-27 19:01:00[DEBUG] Currently updating graphics
-2023-09-27 19:01:00[DEBUG] Currently2023-09-27 19:01:00[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:01[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: Right ( 0 repeats)
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: Right ( 1 repeats)
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: Right ( 1 repeats)
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: Right ( 1 repeats)
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:01[EVENT] KeyReleasedEvent: Right
-2023-09-27 19:01:01[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:01[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:01[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:02[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:02[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: D1 ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: Right ( 0 repeats)
-2023-09-27 19:01:03[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: Right ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: Right ( 1 repeats)
-2023-09-27 19:01:03[EVENT] KeyPressedEvent: Down ( 0 repeats)
-2023-09-27 19:01:03[EVENT] KeyReleasedEvent: Right
-2023-09-27 19:01:04[EVENT] KeyReleasedEvent: Down
-2023-09-27 19:01:04[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:04[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:04[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:04[EVENT] KeyPressedEvent: Left ( 0 repeats)
-2023-09-27 19:01:04[EVENT] KeyReleasedEvent: Left
-2023-09-27 19:01:04[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:04[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:04[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:04[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: Left ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: Down ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: Left
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:05[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:05[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: Down
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: Right ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: Right
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:06[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:06[EVENT] KeyPressedEvent: Down ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: Right ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: Down
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: Right
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:07[EVENT] KeyPressedEvent: Up ( 0 repeats)
-2023-09-27 19:01:07[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: Left ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: Up
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: Down ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: Left
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: Down
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyPressedEvent: D1 ( 0 repeats)
-2023-09-27 19:01:08[EVENT] KeyTypedEvent: D1
-2023-09-27 19:01:08[EVENT] KeyReleasedEvent: D1
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1179, 584
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1176, 550
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1167, 503
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1153, 467
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1137, 436
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1115, 402
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1091, 361
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1081, 343
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1071, 322
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1064, 310
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1063, 306
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1061, 302
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1055, 292
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1040, 247
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1046, 166
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1065, 101
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1082, 51
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1087, 40
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1088, 37
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1089, 33
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1091, 28
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1095, 21
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1105, 7
-2023-09-27 19:01:09[EVENT] MouseMovedEvent: 1110, 0
-cs
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:04[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:05[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:06[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:07[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:08[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:09[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:10[DEBUG] Currently updating graphics
-2023-09-27 19:01:11[DEBUG] Currently updating graphics
-2023-09-27 19:01:11[DEBUG] Currently updating graphics
-2023-09-27 19:01:11[DEBUG] Currently updating graphics
+2023-09-27 20:48:45[DEBUG] GLEW successfully ini2023-09-272023-09-27 20:48:45[DEBUG] Currently updating graphics
+2023-09-27 20:48:45[DEBUG] Currentl2023-09-27 20:48:45[EVENT] MouseMovedEvent: 354, 146
+2023-09-27 20:48:45[EVENT] MouseMovedEvent: 356, 144
+2023-09-27 20:48:45[EVENT] MouseMovedEvent: 357, 143
+2023-09-27 20:48:45[EVENT] MouseMovedEvent: 359, 142
+2023-09-27 20:48:45[EVENT] MouseMovedEvent: 360, 138
+2023-09-27 20:48:46[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:48:46[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:48:47[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:48:47[EVENT] KeyPressedEvent: P ( 0 repeats)
+2023-09-27 20:48:47[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:47[EVENT] KeyReleasedEvent: P
+2023-09-27 20:48:47[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:48:47[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:48:48[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:48:48[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:48:48[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:48:48[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:48:48[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:48:48[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:48:48[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:48:48[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:48:48[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:48[EVENT] KeyReleasedEvent: R
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:49[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:49[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:50[EVENT] KeyReleasedEvent: R
+2023-09-27 20:48:50[EVENT] KeyPressedEvent: T ( 0 repeats)
+2023-09-27 20:48:50[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:51[EVENT] KeyReleasedEvent: T
+2023-09-27 20:48:51[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:48:51[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:51[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:48:51[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:52[EVENT] KeyReleasedEvent: X
+2023-09-27 20:48:52[EVENT] KeyReleasedEvent: C
+2023-09-27 20:48:52[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:48:52[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:52[EVENT] KeyReleasedEvent: C
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:53[EVENT] KeyReleasedEvent: R
+2023-09-27 20:48:53[EVENT] KeyPressedEvent: T ( 0 repeats)
+2023-09-27 20:48:53[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyPressedEvent: T ( 1 repeats)
+2023-09-27 20:48:54[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:54[EVENT] KeyReleasedEvent: T
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:55[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:55[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:48:56[EVENT] KeyReleasedEvent: R
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:48:56[EVENT] KeyTypedEvent: D1
+2023-09-27 20:48:56[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:48:56[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:48:57[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:48:57[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:48:57[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:48:57[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:48:57[EVENT] KeyTypedEvent: D1
+2023-09-27 20:48:57[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:48:57[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:48:57[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:48:58[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:48:58[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:48:58[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:48:58[EVENT] KeyTypedEvent: D1
+2023-09-27 20:48:58[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:48:58[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:48:58[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:48:59[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:48:59[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:48:59[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:00[EVENT] KeyPressedEvent: E ( 0 repeats)
+2023-09-27 20:49:00[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:01[EVENT] KeyReleasedEvent: E
+2023-09-27 20:49:01[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:01[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:01[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:01[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:01[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:02[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:03[EVENT] KeyPressedEvent: E ( 0 repeats)
+2023-09-27 20:49:03[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:03[EVENT] KeyReleasedEvent: E
+2023-09-27 20:49:03[EVENT] KeyPressedEvent: E ( 0 repeats)
+2023-09-27 20:49:03[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:04[EVENT] KeyReleasedEvent: E
+2023-09-27 20:49:04[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:04[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:05[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:05[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:06[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:06[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:06[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:06[EVENT] KeyPressedEvent: C ( 1 repeats)
+2023-09-27 20:49:06[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:06[EVENT] KeyPressedEvent: C ( 1 repeats)
+2023-09-27 20:49:06[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:06[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:07[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:07[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:07[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:07[EVENT] KeyPressedEvent: Z ( 0 repeats)
+2023-09-27 20:49:07[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:08[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:08[EVENT] KeyReleasedEvent: Z
+2023-09-27 20:49:08[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:08[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:09[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:09[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:09[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:09[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:09[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:09[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:09[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:10[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:10[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:10[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:11[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:11[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:11[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:11[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:11[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:11[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:11[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:11[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:13[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:13[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:13[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:13[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:13[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:13[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:14[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:49:14[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:14[EVENT] KeyReleasedEvent: R
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:15[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:15[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:16[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:16[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:16[EVENT] KeyPressedEvent: R ( 1 repeats)
+2023-09-27 20:49:16[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:16[EVENT] KeyReleasedEvent: R
+2023-09-27 20:49:16[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:49:16[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:16[EVENT] KeyReleasedEvent: R
+2023-09-27 20:49:16[EVENT] KeyPressedEvent: R ( 0 repeats)
+2023-09-27 20:49:16[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:16[EVENT] KeyReleasedEvent: R
+2023-09-27 20:49:17[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:17[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:17[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:17[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:17[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:17[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:17[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:17[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:18[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:18[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:18[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:18[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:18[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:18[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:18[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:19[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:19[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:19[EVENT] KeyPressedEvent: C ( 0 repeats)
+2023-09-27 20:49:19[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:19[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:19[EVENT] KeyPressedEvent: X ( 0 repeats)
+2023-09-27 20:49:19[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:19[EVENT] KeyReleasedEvent: C
+2023-09-27 20:49:19[EVENT] KeyReleasedEvent: X
+2023-09-27 20:49:20[EVENT] KeyPressedEvent: Z ( 0 repeats)
+2023-09-27 20:49:20[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:20[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:20[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:20[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:21[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:21[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:21[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:21[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:21[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:21[EVENT] KeyPressedEvent: Z ( 1 repeats)
+2023-09-27 20:49:21[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:21[EVENT] KeyReleasedEvent: Z
+2023-09-27 20:49:21[EVENT] KeyPressedEvent: I ( 0 repeats)
+2023-09-27 20:49:21[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:21[EVENT] KeyReleasedEvent: I
+2023-09-27 20:49:22[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:22[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:22[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:22[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:22[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:22[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:22[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:23[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:23[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:23[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:24[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:24[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:24[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:24[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:24[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:25[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:25[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:25[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:25[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:25[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:25[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:25[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:26[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:26[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:26[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:26[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:26[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:26[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:26[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:27[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:27[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:27[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:27[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:27[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:27[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:27[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:27[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:27[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:27[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:27[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:28[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:28[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:28[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:28[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:28[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:29[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:29[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:29[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:29[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:29[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:29[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:29[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:29[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:29[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:29[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:29[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:30[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:30[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:30[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:30[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:30[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:30[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:30[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:30[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:30[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:31[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:31[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:31[EVENT] KeyPressedEvent: Up ( 1 repeats)
+2023-09-27 20:49:31[EVENT] KeyPressedEvent: Up ( 1 repeats)
+2023-09-27 20:49:31[EVENT] KeyPressedEvent: Up ( 1 repeats)
+2023-09-27 20:49:31[EVENT] KeyPressedEvent: Up ( 1 repeats)
+2023-09-27 20:49:32[EVENT] KeyPressedEvent: Up ( 1 repeats)
+2023-09-27 20:49:32[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:32[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:32[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:32[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:32[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:32[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:32[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:32[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:33[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:33[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:33[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:33[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:33[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:33[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:33[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:33[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:34[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:34[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:34[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:34[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:34[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:35[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:35[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:35[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:35[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:36[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:36[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:36[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:36[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:36[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:36[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:36[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:36[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:36[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:36[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:37[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:37[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:37[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:37[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:38[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:38[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-27 20:49:38[EVENT] KeyTypedEvent: D1
+2023-09-27 20:49:38[EVENT] KeyReleasedEvent: D1
+2023-09-27 20:49:38[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:38[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:38[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:39[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:39[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:39[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:39[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:39[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:39[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:40[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:40[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:40[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:40[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:41[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:42[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:42[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:42[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 20:49:42[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:42[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:42[EVENT] KeyReleasedEvent: W
+2023-09-27 20:49:42[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:42[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:42[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:42[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:42[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:42[EVENT] KeyPressedEvent: S ( 0 repeats)
+2023-09-27 20:49:42[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:43[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:43[EVENT] KeyReleasedEvent: S
+2023-09-27 20:49:43[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:43[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:43[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:43[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:44[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:44[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:44[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:44[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:45[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:45[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-27 20:49:45[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:46[EVENT] KeyReleasedEvent: Up
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:46[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Down ( 0 repeats)
+2023-09-27 20:49:47[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:47[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:47[EVENT] KeyReleasedEvent: Down
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:48[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:49[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:49[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:50[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:51[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:51[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:52[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:53[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-27 20:49:54[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:54[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Left ( 1 repeats)
+2023-09-27 20:49:55[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-27 20:49:55[EVENT] KeyReleasedEvent: Left
+2023-09-27 20:49:56[EVENT] KeyReleasedEvent: Right
+2023-09-27 20:49:56[EVENT] KeyPressedEvent: A ( 0 repeats)
+2023-09-27 20:49:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:56[EVENT] KeyReleasedEvent: A
+2023-09-27 20:49:56[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 20:49:56[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:57[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:57[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:57[EVENT] KeyReleasedEvent: W
+2023-09-27 20:49:57[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:57[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:57[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:57[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:57[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 20:49:57[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:57[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 20:49:57[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:58[EVENT] KeyReleasedEvent: W
+2023-09-27 20:49:58[EVENT] KeyReleasedEvent: D
+2023-09-27 20:49:58[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 20:49:58[EVENT] KeyTypedEvent: Unknown
+2023-09-27 20:49:58[EVENT] KeyReleasedEvent: W
+2023-09-27 20:49:59[EVENT] MouseMovedEvent: 301, 209
+2023-09-27 20:49:59[EVENT] MouseMovedEvent: 284, 401
+2023-09-27 20:49:59[EVENT] MouseMovedEvent: 307, 495
+2023-09-27 20:49:59[EVENT] MouseMovedEvent: 313, 536
+2023-09-27 20:49:59[EVENT] MouseMovedEvent: 328, 625
+2023-09-27 20:50:01[EVENT] MouseMovedEvent: 741, 666
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 586, 133
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 311, 202
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 296, 233
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 307, 267
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 293, 284
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 260, 305
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 238, 310
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 247, 304
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 248, 303
+2023-09-27 20:50:19[EVENT] MouseButtonPressedEvent: Left Mouse Button
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 253, 299
+2023-09-27 20:50:19[EVENT] MouseButtonReleasedEvent: Left Mouse Button
+2023-09-27 20:50:19[EVENT] MouseMovedEvent: 271, 293
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 450, 234
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 701, 139
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 957, 90
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1008, 86
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1025, 86
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1118, 87
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1144, 85
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1175, 59
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1180, 33
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1196, 14
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1196, 12
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1202, 8
+2023-09-27 20:50:20[EVENT] MouseMovedEvent: 1208, 5
+2023-09-27 20:50:21[EVENT] WindowClose
+aphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:19[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:20[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:21[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:22[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:23[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:24[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:25[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:26[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:27[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:28[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:29[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:30[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:31[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:32[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:33[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:34[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:35[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:36[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:37[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:38[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:39[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:40[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:41[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:42[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:43[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:44[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:45[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:46[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:47[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:48[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:49[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:50[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:51[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:52[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:53[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:54[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:55[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:56[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:57[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:58[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:49:59[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:00[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:01[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:02[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:03[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:04[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:05[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:06[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:07[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:08[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:09[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:10[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:11[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:12[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:13[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:14[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:15[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:16[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:17[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:18[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:19[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:20[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics
+2023-09-27 20:50:21[DEBUG] Currently updating graphics

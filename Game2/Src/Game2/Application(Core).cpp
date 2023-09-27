@@ -35,6 +35,10 @@ namespace Engine
     TransformComponent* transformTest;
     ComponentFactory CF;
 
+    float scalar = 1.0f;
+    float rotation = 0.25f;
+    float transformation = 20.0f;
+
     Application::Application()
     {
         logger.Log(Engine::LogLevel::Debug, "Logger Initialized.");
@@ -112,23 +116,48 @@ namespace Engine
             
             if (InputHandler.IsKeyPressed(KEY_UP))
             {
-                transformTest->y += 20;
+                transformTest->y += transformation;
             }
             
             if (InputHandler.IsKeyPressed(KEY_DOWN))
             {
-                transformTest->y -= 20;
+                transformTest->y -= transformation;
             }
 
             if (InputHandler.IsKeyPressed(KEY_LEFT))
             {
-                transformTest->x -= 20;
+                transformTest->x -= transformation;
             }
 
             if (InputHandler.IsKeyPressed(KEY_RIGHT))
             {
-                transformTest->x += 20;
+                transformTest->x += transformation;
             }
+
+            if (InputHandler.IsKeyPressed(KEY_R))
+            {
+                transformTest->rot += rotation; //Rotate counterclockwise
+            };
+
+            if (InputHandler.IsKeyPressed(KEY_T))
+            {
+                transformTest->rot -= rotation; //Rotate counterclockwise
+            };
+
+            if (InputHandler.IsKeyPressed(KEY_Z))
+            {
+                //Scale Up
+                transformTest->scaleX += scalar; 
+                transformTest->scaleY += scalar; 
+            }
+
+            if (InputHandler.IsKeyPressed(KEY_X))
+            {
+                // Scale Down
+                transformTest->scaleX -= scalar; 
+                transformTest->scaleY -= scalar; 
+            }
+
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());

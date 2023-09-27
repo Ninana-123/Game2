@@ -225,64 +225,64 @@ namespace Engine
     }
 
 
-    void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
-    {
-        // Define a mapping of keys to actions
-        std::map<int, std::function<void()>> keyActions;
+    //void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
+    //{
+    //    // Define a mapping of keys to actions
+    //    std::map<int, std::function<void()>> keyActions;
 
-        const float increment = 1.0f;
-        const float angle = 0.01f;
-        const float scalar = 0.01f;
+    //    const float increment = 1.0f;
+    //    const float angle = 0.01f;
+    //    const float scalar = 0.01f;
 
-        // Texture A 
-        keyActions[GLFW_KEY_RIGHT] = [&]()
-        {
-            translation.x += increment; //Move right 
-        };
+    //    // Texture A 
+    //    keyActions[GLFW_KEY_RIGHT] = [&]()
+    //    {
+    //        translation.x += increment; //Move right 
+    //    };
 
-        keyActions[GLFW_KEY_LEFT] = [&]()
-        {
-            translation.x -= increment; //Move left
-        };
+    //    keyActions[GLFW_KEY_LEFT] = [&]()
+    //    {
+    //        translation.x -= increment; //Move left
+    //    };
 
-        keyActions[GLFW_KEY_DOWN] = [&]()
-        {
-            translation.y -= increment; //Move down
-        };
+    //    keyActions[GLFW_KEY_DOWN] = [&]()
+    //    {
+    //        translation.y -= increment; //Move down
+    //    };
 
-        keyActions[GLFW_KEY_UP] = [&]()
-        {
-            translation.y += increment; //Move up
-        };
+    //    keyActions[GLFW_KEY_UP] = [&]()
+    //    {
+    //        translation.y += increment; //Move up
+    //    };
 
-        keyActions[GLFW_KEY_U] = [&]()
-        {
-            rotation += angle; //Rotate counterclockwise
-        };
+    //    keyActions[GLFW_KEY_U] = [&]()
+    //    {
+    //        rotation += angle; //Rotate counterclockwise
+    //    };
 
-        keyActions[GLFW_KEY_I] = [&]()
-        {
-            rotation -= angle; //Rotate clockwise
-        };
-        keyActions[GLFW_KEY_Z] = [&]()
-        {
-            scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
-        };
+    //    keyActions[GLFW_KEY_I] = [&]()
+    //    {
+    //        rotation -= angle; //Rotate clockwise
+    //    };
+    //    keyActions[GLFW_KEY_Z] = [&]()
+    //    {
+    //        scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
+    //    };
 
-        keyActions[GLFW_KEY_X] = [&]()
-        {
-            scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
-        };
+    //    keyActions[GLFW_KEY_X] = [&]()
+    //    {
+    //        scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
+    //    };
 
-        // Check for key presses and execute corresponding actions
-        for (const auto& pair : keyActions)
-        {
-            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-            {
-                pair.second();
-            }
-        }
-    }
+    //    // Check for key presses and execute corresponding actions
+    //    for (const auto& pair : keyActions)
+    //    {
+    //        if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
+    //        {
+    //            pair.second();
+    //        }
+    //    }
+    //}
 
     // Function to toggle between textured and plain squares
     void Graphics::ToggleRenderMode()
