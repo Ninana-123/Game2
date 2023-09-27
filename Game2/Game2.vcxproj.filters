@@ -77,6 +77,12 @@
     <Filter Include="ImGuiWrapper">
       <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{34f16b5d-396b-4241-ab08-72e72f729cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization">
+      <UniqueIdentifier>{bf8c2e7c-0702-4f18-bb14-fb277401bad8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -202,6 +208,15 @@
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\AudioEngine.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SoundInfo.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Serializer.h">
+      <Filter>Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -281,6 +296,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\TestSystem.cpp">
       <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\AudioEngine.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Serializer.cpp">
+      <Filter>Serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

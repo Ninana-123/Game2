@@ -12,11 +12,11 @@
 #include "KeyCodes.h"
 #include "Graphics.h"
 #include "ImGuiWrapper.h"
+#include "AudioEngine.h"
 
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
 double dt = 0.0;  // Time difference between frames (delta time)
-
 
 namespace Engine
 {
@@ -44,6 +44,9 @@ namespace Engine
 
     void Application::Initialize()
     {
+       
+        
+ 
         // Initialize GLFW
         if (!glfwInit()) {
             logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -93,14 +96,14 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-            
+   
+       
 
         while (m_Running)
         {
             m_Window->OnUpdate();
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
-
             /*
             if (Input::IsKeyPressed(GLFW_KEY_1))
             {
@@ -128,10 +131,9 @@ namespace Engine
             std::cout << "PositionComponent X: " << position->x << " Y: " << position->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             
-            
             m_ImGuiWrapper->OnUpdate();
 
-
+            
         }
     }
 

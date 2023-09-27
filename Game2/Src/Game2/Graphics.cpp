@@ -1,10 +1,17 @@
 #include "pch.h"
 #include "Graphics.h"
 #include "logger.h"
+#include "AudioEngine.h"
 
 namespace Engine
-{
+{   
+    //Set filepath of audio to the variable
+    AudioEngine audioEngine;
+    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
+    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
+
     Logger GraphicsLogger;
+    
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader")
@@ -33,7 +40,12 @@ namespace Engine
 
     void Graphics::Initialize() {
 
-       
+        //initialize audio files
+        audioEngine.init();
+        //load both audio 
+        audioEngine.loadSound(sound);
+        audioEngine.loadSound(sound2);
+        
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         // Clear the color buffer
@@ -114,10 +126,23 @@ namespace Engine
         const float angle = 0.01f;
         const float scale = 0.01f;
 
+        //press "1" key to play first audio file
+        keyActions[GLFW_KEY_1] = [&]()
+        {
+            audioEngine.playSound(sound);
+        };
+
+        //press "2" key to play second audio file
+        keyActions[GLFW_KEY_2] = [&]()
+        {
+            audioEngine.playSound(sound2);
+        };
+
         // Texture A 
         keyActions[GLFW_KEY_RIGHT] = [&]()
         {
             translationA.x += increment; //Move right 
+            audioEngine.stopSound(sound);
         };
 
         keyActions[GLFW_KEY_LEFT] = [&]()
@@ -208,6 +233,7 @@ namespace Engine
 
     void Graphics::Update(Entity* entity)
     {
+        //audioEngine.update();
         if (entity->HasComponent(ComponentType::Transform))
         {
 
