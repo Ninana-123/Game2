@@ -210,6 +210,8 @@
       <Filter>Base\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Vector2d.h" />
+    <ClInclude Include="Src\Game2\AudioEngine.h" />
+    <ClInclude Include="Src\Game2\SoundInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -300,6 +302,9 @@
       <Filter>Base\Engine\Prefabs</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Vector2d.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>

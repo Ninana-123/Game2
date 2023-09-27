@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "Graphics.h"
+#include "AudioEngine.h"
 #include "logger.h"
 #include "Collision.h"
 #include "Vector2d.h"
