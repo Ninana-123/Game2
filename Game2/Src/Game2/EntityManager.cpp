@@ -65,8 +65,7 @@ namespace Engine
 
 		// Clone the components from the source entity to the cloned entity
 		auto sourceComponents = sourceEntity->GetComponents();
-		for (const auto& pair : sourceComponents) 
-		{
+		for (const auto& pair : sourceComponents) {
 			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
 
