@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Graphics.h"
 #include "logger.h"
-
+#include "Collision.h"
+#include "Vector2d.h"
 namespace Engine
 {
     Logger GraphicsLogger;
@@ -44,10 +45,10 @@ namespace Engine
 
         //define vertex array and indices
         float positions[] = {
-       -20.0f,  -20.0f, 0.0f, 0.0f,    //0
-        20.0f,  -20.0f, 1.0f, 0.0f,    //1
-        20.0f,   20.0f, 1.0f, 1.0f,    //2
-       -20.0f,   20.0f, 0.0f, 1.0f     //3
+       -60.0f,  -60.0f, 0.0f, 0.0f,    //0
+        60.0f,  -60.0f, 1.0f, 0.0f,    //1
+        60.0f,   60.0f, 1.0f, 1.0f,    //2
+       -60.0f,   60.0f, 0.0f, 1.0f     //3
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -120,6 +121,66 @@ namespace Engine
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
+                //Assign reference to transform component
+                TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+               
+                glm::vec3 transA(transform->x, transform->y, 0);  
+                float rotation = transform->rot;
+                glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
+
+
+                // Check collision with the window boundaries
+               // VECTORMATH::Vec2 velA(0.0f, 0.0f);
+                float halfWidth = 50.0f;  // Half of the texture width
+                float halfHeight = 50.0f; // Half of the texture height
+
+                AABB aabb1;
+                aabb1.min = VECTORMATH::Vec2(transA.x - halfWidth, transA.y - halfHeight);
+                aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
+
+                bool isCollisionWithWindow = false;
+                bool isCollisionWithBoundary = false;
+
+                if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
+                    isCollisionWithWindow = true;
+                }
+
+                if (isCollisionWithWindow)
+                {
+                    std::cout << "Collision with the window detected!" << std::endl;
+                }
+              
+
+                // collision with the entities
+                for (const auto& otherEntityPair : *entities)
+                {
+                    if (otherEntityPair.first != entityPair.first) 
+                    {
+                        Entity* otherEntity = otherEntityPair.second.get();
+
+                        if (otherEntity->HasComponent(ComponentType::Transform))
+                        {
+                            TransformComponent* otherTransform = dynamic_cast<TransformComponent*>(otherEntity->GetComponent(ComponentType::Transform));
+
+                            float halfWidthB = 50.0f;  // Half of the texture width for entity2
+                            float halfHeightB = 50.0f; // Half of the texture height for entity2
+
+                            AABB aabb2;
+                            aabb2.min = VECTORMATH::Vec2(otherTransform->x - halfWidthB, otherTransform->y - halfHeightB);
+                            aabb2.max = VECTORMATH::Vec2(otherTransform->x + halfWidthB, otherTransform->y + halfHeightB);
+
+                            // Check for collision between aabb1 and aabb2
+                            if (aabb1.min.x < aabb2.max.x && aabb1.max.x > aabb2.min.x &&
+                                aabb1.min.y < aabb2.max.y && aabb1.max.y > aabb2.min.y)
+                            {
+                                std::cout << "Collision between new entity and old entity detected!" << std::endl;
+                                // Handle the collision as needed
+                            }
+                        }
+                    }
+                }
+
+
                 // Apply transformations from UpdateTransformations
                 glm::mat4 modelA = SetupModelMatrix(transA, rotationA, scaleA);
 
@@ -142,24 +203,22 @@ namespace Engine
                 {
 
                     shader.Bind();
-                    //luffyTexture.Bind(0);
+                   
 
                     double currentTime = glfwGetTime();
                     double elapsedTime = currentTime - programStartTime;
                     int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
 
                     if (textureIndex == 0)
-                    {
-                        // Display "Luffy" texture
+                    {           
                         textureA.Bind(0);
                     }
                     else
-                    {
-                        // Display "Zoro" texture
+                    {                  
                         textureB.Bind(0);
                     }
 
-                    // Set shader uniforms for Luffy
+                    
                     shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                     shader.SetUniform1i("u_Texture", 0);
                     shader.SetUniformMat4f("u_MVP", mvpA);
@@ -191,6 +250,7 @@ namespace Engine
             }
 
         }
+        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)

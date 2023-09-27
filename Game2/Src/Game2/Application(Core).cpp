@@ -127,6 +127,7 @@ namespace Engine
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
+                //isNewEntityMoved = true;
             }
 
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data

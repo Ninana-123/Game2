@@ -1,0 +1,59 @@
+2023-09-28 00:18:09[DEBUG] GLEW successfully ini2023-09-28 00:18:09[APP] Application Running.
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 568, 355
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 568, 354
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 569, 346
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 572, 321
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 574, 256
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 567, 212
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 561, 186
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 553, 166
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 548, 153
+2023-09-28 00:18:09[EVENT] MouseMovedEvent: 545, 143
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 542, 130
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 538, 114
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 533, 97
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 528, 80
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 526, 68
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 526, 60
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 526, 51
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 527, 42
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 529, 36
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 529, 33
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 530, 30
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 531, 26
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 531, 25
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 531, 24
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 532, 23
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 532, 22
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 533, 21
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 533, 19
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 534, 17
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 535, 14
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 537, 11
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 537, 9
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 538, 8
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 539, 6
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 540, 4
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 541, 1
+2023-09-28 00:18:10[EVENT] MouseMovedEvent: 542, 0
+2023-09-28 00:18:11[EVENT] KeyPressedEvent: Up ( 0 repeats)
+2023-09-28 00:18:11[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-28 00:18:12[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-28 00:18:12[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-28 00:18:12[EVENT] KeyReleasedEvent: Up
+2023-09-28 00:18:12[EVENT] KeyReleasedEvent: Right
+2023-09-28 00:18:12[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-28 00:18:13[EVENT] KeyReleasedEvent: Right
+2023-09-28 00:18:15[EVENT] KeyPressedEvent: D1 ( 0 repeats)
+2023-09-28 00:18:15[EVENT] KeyTypedEvent: D1
+2023-09-28 00:18:15[EVENT] KeyReleasedEvent: D1
+2023-09-28 00:18:15[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-28 00:18:16[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-28 00:18:16[EVENT] KeyPressedEvent: Right ( 1 repeats)
+2023-09-28 00:18:16[EVENT] KeyReleasedEvent: Right
+2023-09-28 00:18:16[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-28 00:18:16[EVENT] KeyReleasedEvent: Left
+2023-09-28 00:18:17[EVENT] KeyPressedEvent: Left ( 0 repeats)
+2023-09-28 00:18:17[EVENT] KeyReleasedEvent: Left
+2023-09-28 00:18:17[EVENT] KeyPressedEvent: Right ( 0 repeats)
+2023-09-28 00:18:17[EVENT] KeyReleasedEvent: Right

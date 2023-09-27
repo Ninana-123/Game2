@@ -57,6 +57,7 @@
     <ClInclude Include="Src\Game2\TestSystem.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\TransformComponent.h" />
+    <ClInclude Include="Src\Game2\Vector2d.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
     <ClInclude Include="Src\Game2\VertexBuffer.h" />
     <ClInclude Include="Src\Game2\VertexBufferLayout.h" />
@@ -99,6 +100,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Vector2d.cpp" />
     <ClCompile Include="Src\Game2\VertexArray.cpp" />
     <ClCompile Include="Src\Game2\VertexBuffer.cpp" />
     <ClCompile Include="Src\Game2\WindowsWindow.cpp" />
