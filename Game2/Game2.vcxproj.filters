@@ -77,6 +77,9 @@
     <Filter Include="Base\ComponentFactory">
       <UniqueIdentifier>{a75ae341-3a2c-4ed3-b880-a5007b65f2aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\PrefabManager">
+      <UniqueIdentifier>{1ff850c7-50b9-46d9-80ea-4aa120918e53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -205,6 +208,9 @@
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\ComponentFactory.h">
       <Filter>Base\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PrefabManager.h">
+      <Filter>Base\PrefabManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -97,7 +97,6 @@ namespace Engine
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
             
-
         while (m_Running)
         {
             InputHandler.Update();
@@ -174,7 +173,6 @@ namespace Engine
                 transformTest->scaleX -= scalar; 
                 transformTest->scaleY -= scalar; 
             }
-
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());

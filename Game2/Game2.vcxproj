@@ -50,6 +50,7 @@
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\PositionComponent.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
+    <ClInclude Include="Src\Game2\PrefabManager.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\System.h" />
