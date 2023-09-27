@@ -10,8 +10,6 @@ Shader::Shader(const std::string& filepath)
 
 Shader::~Shader()
 {
-    if (m_IsInitialized)
-        GLCall(glDeleteProgram(m_RendererID));
 }
 
 void Shader::LoadShader(const std::string& filepath)
