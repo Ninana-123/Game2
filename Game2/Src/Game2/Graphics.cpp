@@ -44,10 +44,10 @@ namespace Engine
 
         //define vertex array and indices
         float positions[] = {
-       -50.0f,  -50.0f, 0.0f, 0.0f,    //0
-        50.0f,  -50.0f, 1.0f, 0.0f,    //1
-        50.0f,   50.0f, 1.0f, 1.0f,    //2
-       -50.0f,   50.0f, 0.0f, 1.0f     //3
+       -10.0f,  -10.0f, 0.0f, 0.0f,    //0
+        10.0f,  -10.0f, 1.0f, 0.0f,    //1
+        10.0f,   10.0f, 1.0f, 1.0f,    //2
+       -10.0f,   10.0f, 0.0f, 1.0f     //3
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -103,39 +103,39 @@ namespace Engine
 
             if (entity->HasComponent(ComponentType::Transform))
             {
+                int width, height;
+                glfwGetWindowSize(Window, &width, &height);
+                UpdateViewport(width, height);
+
                 //Assign reference to transform component
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                 //Read transform data from component
                  
                 //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
-           
+                //glm::vec3 transB(transform->x, transform->y, 0);
+
                 //rotate
                 float rotation = transform->rot;
 
                 //scale
                 glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
-
-                int width, height;
-                glfwGetWindowSize(Window, &width, &height);
-                UpdateViewport(width, height);
-
                
-                //// Get the current state of the 'P' key
-                //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+                // Get the current state of the 'P' key
+                bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                //// Check if there's a change in the 'P' key state
-                //if (currentPState && !previousPState)
-                //{
-                //    // Toggle the rendering mode
-                //    ToggleRenderMode();
-                //}
+                // Check if there's a change in the 'P' key state
+                if (currentPState && !previousPState)
+                {
+                    // Toggle the rendering mode
+                    ToggleRenderMode();
+                }
 
-                //// Update the previous 'P' key state
-                //previousPState = currentPState;
+                // Update the previous 'P' key state
+                previousPState = currentPState;
 
-                /*if (renderTexturedSquare)
-                {*/
+                if (renderTexturedSquare)
+                {
                 //Texture A
                 {
                     /*
@@ -193,28 +193,28 @@ namespace Engine
                     shader.SetUniform1i("u_RenderTextured", 1);
 
                 }
+                transform->x = transA.x;
+                transform->y = transA.y;
 
-                //}
-                //else
-                //{
-                //    // translation vector for the blue square's position
-                //    glm::vec3 blueSquareTranslation = glm::vec3(600.0f, 200.0f, 0.0f); // Modify the values as needed
+                }
+                else
+                {
+                    // Apply transformations from UpdateTransformations
+                    glm::mat4 blueSquareTranslation = glm::mat4(1.0f); // Initialize the model matrix as identity
+                    blueSquareTranslation = glm::translate(blueSquareTranslation, transA);
+                    blueSquareTranslation = glm::scale(blueSquareTranslation, scale1);
+                    blueSquareTranslation = glm::rotate(blueSquareTranslation, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 
-                //    // model matrix with the new translation
-                //    glm::mat4 model = glm::mat4(1.0f); // Identity matrix
-                //    model = glm::translate(model, blueSquareTranslation);
+                    glm::mat4 mvpA = proj * view * blueSquareTranslation;
 
-                //    // Calculate the MVP matrix
-                //    glm::mat4 mvp = proj * view * model;
+                    // Bind the shader and set uniforms
+                    shader.Bind();
+                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                    shader.SetUniformMat4f("u_MVP", mvpA);
 
-                //    // Bind the shader and set uniforms
-                //    shader.Bind();
-                //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-                //    shader.SetUniformMat4f("u_MVP", mvp);
-
-                //    // Render the blue square
-                //    renderer.Draw(va, ib, shader);
-                //}
+                    // Render the blue square
+                    renderer.Draw(va, ib, shader);
+                }
                 transform->x = transA.x;
                 transform->y = transA.y;
             }

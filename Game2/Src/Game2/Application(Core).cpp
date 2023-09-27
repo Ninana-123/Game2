@@ -128,6 +128,30 @@ namespace Engine
                 transformTest->x += 20;
             }
 
+            if(Input::IsKeyPressed(KEY_R))
+            {
+                transformTest->rot += 2; //Rotate counterclockwise
+            };
+
+            if (Input::IsKeyPressed(KEY_T))
+            {
+                transformTest->rot -= 2; //Rotate counterclockwise
+            };
+           
+            if (Input::IsKeyPressed(KEY_Z))
+            {
+                float scalar = 0.01;
+                transformTest->scaleX += scalar; // Increase scaleX
+                transformTest->scaleY += scalar; // Increase scaleY
+            }
+
+            if (Input::IsKeyPressed(KEY_X))
+            {
+                float scalar = 0.01;
+                transformTest->scaleX -= scalar; // Decrease scaleX
+                transformTest->scaleY -= scalar; // Decrease scaleY
+            }
+
             //System Updating
             SM.UpdateSystems(EM.GetEntities());
 
