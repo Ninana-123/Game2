@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\AppEvent.h" />
-    <ClInclude Include="Src\Game2\AudioEngine.h" />
     <ClInclude Include="Src\Game2\Collision.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
@@ -52,9 +51,7 @@
     <ClInclude Include="Src\Game2\PositionComponent.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
-    <ClInclude Include="Src\Game2\Serializer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
-    <ClInclude Include="Src\Game2\SoundInfo.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\SystemsManager.h" />
     <ClInclude Include="Src\Game2\TestSystem.h" />
@@ -69,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
-    <ClCompile Include="Src\Game2\AudioEngine.cpp" />
     <ClCompile Include="Src\Game2\Collision.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
@@ -93,7 +89,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Prefab.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
-    <ClCompile Include="Src\Game2\Serializer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />
     <ClCompile Include="Src\Game2\TestSystem.cpp" />
@@ -167,8 +162,6 @@
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(SolutionDir)Game2\vendor\stb-master\;$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)Game2\vendor\FMOD\;$(SolutionDir)Game2\vendor\stb-master\;$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
@@ -212,7 +205,6 @@
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\FMOD\Include;Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;$(SolutionDir)Game2\vendor\rapidjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -222,8 +214,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;$(SolutionDir)Game2\vendor\FMOD\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -236,7 +226,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;HZ_BUILD_DLL;GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\Src\Game2;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;$(SolutionDir)Game2\vendor\rapidjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src\Game2;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -245,8 +235,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Game2\vendor\FMOD\Libraries;$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

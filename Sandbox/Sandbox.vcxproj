@@ -73,14 +73,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\Src\;$(SolutionDir)Game2\vendor\FMOD\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)bin\Debug-x64\Game2;$(SolutionDir)Game2\vendor\FMOD\Libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\Src\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)bin\Debug-x64\Game2;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)Game2\vendor\FMOD\Libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,12 +116,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\FMOD\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src;$(SolutionDir)Game2\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Debug-x64\Game2\Game2.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y</Command>
@@ -135,14 +135,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\FMOD\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game2\Src;$(SolutionDir)Game2\vendor\spdlog\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)bin\Release-x64\Game2\Game2.dll" "$(SolutionDir)bin\Release-x64\Sandbox" /y</Command>
