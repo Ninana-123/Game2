@@ -1,15 +1,22 @@
+
 #include "pch.h"
 #include "Graphics.h"
+#include "AudioEngine.h"
 #include "logger.h"
 #include "Collision.h"
 #include "Vector2d.h"
 namespace Engine
 {
+    //Set filepath of audio to the variable
+    AudioEngine audioEngine;
+    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
+    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
+
     Logger GraphicsLogger;
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader")
-        
+
     {
     }
 
@@ -37,6 +44,12 @@ namespace Engine
         Window = glfwGetCurrentContext();
 
         Graphics::InitializeGLEW();
+
+        //initialize audio files
+        audioEngine.init();
+        //load both audio 
+        audioEngine.loadSound(sound);
+        audioEngine.loadSound(sound2);
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -97,6 +110,40 @@ namespace Engine
     {
         renderer.Clear();
 
+        std::map<int, std::function<void()>> keyActions;
+
+        //press "1" key to play first audio file
+        keyActions[GLFW_KEY_9] = [&]()
+        {
+            audioEngine.playSound(sound);
+        };
+
+        //press "2" key to play second audio file
+        keyActions[GLFW_KEY_0] = [&]()
+        {
+            audioEngine.playSound(sound2);
+        };
+
+        keyActions[GLFW_KEY_8] = [&]()
+        {
+            audioEngine.stopSound(sound);
+        };
+
+        keyActions[GLFW_KEY_7] = [&]()
+        {
+            audioEngine.stopSound(sound2);
+        };
+
+        // Check for key presses and execute corresponding actions
+        for (const auto& pair : keyActions)
+        {
+            if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
+            {
+                pair.second();
+            }
+        }
+
+
         for (const auto& entityPair : *entities)
         {
             Entity* entity = entityPair.second.get();
@@ -107,7 +154,7 @@ namespace Engine
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 
                 //Read transform data from Transform component
-                 
+
                 //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
 
@@ -122,8 +169,8 @@ namespace Engine
                 UpdateViewport(width, height);
 
 
-               // Check collision with the window boundaries
-               // VECTORMATH::Vec2 velA(0.0f, 0.0f);
+                // Check collision with the window boundaries
+                // VECTORMATH::Vec2 velA(0.0f, 0.0f);
                 float halfWidth = 50.0f;  // Half of the texture width
                 float halfHeight = 50.0f; // Half of the texture height
 
@@ -142,12 +189,12 @@ namespace Engine
                 {
                     std::cout << "Collision with the window detected!" << std::endl;
                 }
-              
+
 
                 // collision with the entities
                 for (const auto& otherEntityPair : *entities)
                 {
-                    if (otherEntityPair.first != entityPair.first) 
+                    if (otherEntityPair.first != entityPair.first)
                     {
                         Entity* otherEntity = otherEntityPair.second.get();
 
@@ -178,7 +225,7 @@ namespace Engine
                 glm::mat4 modelA = SetupModelMatrix(transA, rotationA, scaleA);
 
                 glm::mat4 mvpA = proj * view * modelA;
-               
+
                 //Get the current state of the 'P' key
                 bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
@@ -196,22 +243,22 @@ namespace Engine
                 {
 
                     shader.Bind();
-                   
+
 
                     double currentTime = glfwGetTime();
                     double elapsedTime = currentTime - programStartTime;
                     int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
 
                     if (textureIndex == 0)
-                    {           
+                    {
                         textureA.Bind(0);
                     }
                     else
-                    {                  
+                    {
                         textureB.Bind(0);
                     }
 
-                    
+
                     shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                     shader.SetUniform1i("u_Texture", 0);
                     shader.SetUniformMat4f("u_MVP", mvpA);
@@ -230,13 +277,13 @@ namespace Engine
                 }
                 else
                 {
-                      // Bind the shader and set uniforms
-                      shader.Bind();
-                      shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-                      shader.SetUniformMat4f("u_MVP", mvpA);
+                    // Bind the shader and set uniforms
+                    shader.Bind();
+                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                    shader.SetUniformMat4f("u_MVP", mvpA);
 
-                      // Render the blue square
-                      renderer.Draw(va, ib, shader);
+                    // Render the blue square
+                    renderer.Draw(va, ib, shader);
                 }
                 transform->x = transA.x;
                 transform->y = transA.y;

@@ -76,11 +76,6 @@
     </Filter>
     <Filter Include="Base\ComponentFactory">
       <UniqueIdentifier>{a75ae341-3a2c-4ed3-b880-a5007b65f2aa}</UniqueIdentifier>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{34f16b5d-396b-4241-ab08-72e72f729cc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Serialization">
-      <UniqueIdentifier>{bf8c2e7c-0702-4f18-bb14-fb277401bad8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -215,15 +210,8 @@
       <Filter>Base\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Vector2d.h" />
-    <ClInclude Include="Src\Game2\AudioEngine.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\SoundInfo.h">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\Serializer.h">
-      <Filter>Serialization</Filter>
-    </ClInclude>
+    <ClInclude Include="Src\Game2\AudioEngine.h" />
+    <ClInclude Include="Src\Game2\SoundInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -315,11 +303,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Vector2d.cpp">
       <Filter>Base</Filter>
-    <ClCompile Include="Src\Game2\AudioEngine.cpp">
-      <Filter>Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Serializer.cpp">
-      <Filter>Serialization</Filter>
+    <ClCompile Include="Src\Game2\AudioEngine.cpp">
+      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
