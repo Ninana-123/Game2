@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\liu_x\OneDrive\Documents\GitHub\Game2\bin\Debug-x64\Game2\Game2.dll</FullPath>
+      <FullPath>C:\Users\vance\OneDrive\Documents\GitHub\Gam1\Game2\bin\Debug-x64\Game2\Game2.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>C:\Users\liu_x\OneDrive\Documents\GitHub\Game2\bin\Debug-x64\Sandbox\Sandbox.exe</FullPath>
+      <FullPath>C:\Users\vance\OneDrive\Documents\GitHub\Gam1\Game2\bin\Debug-x64\Sandbox\Sandbox.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
