@@ -17,7 +17,7 @@ namespace Engine
         static bool parseJsonFilesInDirectory(const std::string& directoryPath, std::vector<rapidjson::Value>& jsonObjects);
 
         // deserialize entity
-        Entity DeserializeEntity(const rapidjson::Value& jsonEntity);
+        //Entity DeserializeEntity(const rapidjson::Value& jsonEntity);
 
         // deserialize prefabs
        // Prefab DeserializePrefab(const std::string& filePath);

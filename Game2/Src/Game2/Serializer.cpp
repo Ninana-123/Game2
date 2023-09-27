@@ -48,7 +48,7 @@ namespace Engine
         }
     }
 
-
+    /*
     Entity Serializer::DeserializeEntity(const rapidjson::Value& jsonEntity)
     {
         //Read json contents
@@ -58,6 +58,7 @@ namespace Engine
         // assign json contents to transform data members
         return;
     }
+    */
 
    
 }
