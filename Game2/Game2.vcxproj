@@ -163,13 +163,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Game2\vendor\stb-master\;$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\vendor\rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Game2\vendor\stb-master\;$(SolutionDir)Game2\vendor\glm-0.9.9.8\;$(SolutionDir)Game2\vendor\imgui-1.87\backends\;$(SolutionDir)Game2\vendor\imgui-1.87\;$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;$(SolutionDir)Game2\vendor\FMOD\Include\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\vendor\rapidjson;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)Game2\vendor\FMOD\Include\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
