@@ -2,11 +2,26 @@
 #include "Entity.h"
 #include "Component.h"
 
-namespace Engine 
+namespace Engine
 {
-	void Engine::Entity::AddComponent(std::unique_ptr<Component> component)
+	void Entity::AddComponent(std::unique_ptr<Component> component)
 	{
 		components.emplace(component->GetType(), std::move(component));
+	}
+
+	void Entity::AddNewComponent(ComponentType type)
+	{
+		auto newComponent = ComponentFactory::CreateComponent(type);
+
+		if (newComponent)
+		{
+			// Emplace the new component into the entity's container
+			components.emplace(type, std::move(newComponent));
+		}
+		else
+		{
+			std::cout << "Failed to add new component." << std::endl;
+		}
 	}
 
 	Component* Entity::GetComponent(ComponentType type) const
@@ -29,12 +44,9 @@ namespace Engine
 		return result;
 	}
 
-	bool Entity::HasComponent(ComponentType type) const 
+	bool Entity::HasComponent(ComponentType type) const
 	{
 		return components.find(type) != components.end();
 	}
 
 }
-
-
-

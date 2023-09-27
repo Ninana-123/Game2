@@ -17,9 +17,6 @@
     <Filter Include="Driver">
       <UniqueIdentifier>{20de2f80-6cde-4458-a0d6-16f1acfa5f38}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Window\Precompiled">
-      <UniqueIdentifier>{dceb7503-c773-46a9-96a1-0d89f219a984}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base\Log">
       <UniqueIdentifier>{47224339-ad97-471c-8471-0cf4dbd3a96c}</UniqueIdentifier>
     </Filter>
@@ -68,16 +65,25 @@
     <Filter Include="Systems\Graphics\Graphics">
       <UniqueIdentifier>{401611d1-6698-4ef1-bda5-c71d25108e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Engine\Prefabs">
+      <UniqueIdentifier>{29af717c-8cd5-4369-b7ae-7b87274f3abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{e713601b-d03d-4421-b717-4d73f7d42bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiWrapper">
+      <UniqueIdentifier>{a056624c-34d5-4173-b4cf-cc9379fd1dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\ComponentFactory">
+      <UniqueIdentifier>{a75ae341-3a2c-4ed3-b880-a5007b65f2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Precompiled">
+      <UniqueIdentifier>{aa273c38-96e1-41f4-afe3-b54a7e5a510e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\Game2\Core.h">
-      <Filter>Base\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Application.h">
       <Filter>Base\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\pch.h">
-      <Filter>Base\Window\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\WindowsWindow.h">
       <Filter>Base\Window</Filter>
@@ -157,6 +163,54 @@
     <ClInclude Include="Src\Game2\Graphics.h">
       <Filter>Systems\Graphics\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\SystemsManager.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Prefab.h">
+      <Filter>Base\Engine\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Core.h">
+      <Filter>Base\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TransformComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiWrapper.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\LogFileWriter.h">
+      <Filter>Base\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ComponentFactory.h">
+      <Filter>Base\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\pch.h">
+      <Filter>Base\Precompiled</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -164,12 +218,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\WindowsWindow.cpp">
       <Filter>Base\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Core.cpp">
-      <Filter>Base\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\pch.cpp">
-      <Filter>Base\Window\Precompiled</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Collision.cpp">
       <Filter>Systems\Collision</Filter>
@@ -209,6 +257,45 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
       <Filter>Systems\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
+      <Filter>ImGuiWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
+      <Filter>ImGuiWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\SystemsManager.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Core.cpp">
+      <Filter>Base\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\TestSystem.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ComponentFactory.cpp">
+      <Filter>Base\ComponentFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
+      <Filter>Base\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\pch.cpp">
+      <Filter>Base\Precompiled</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
 
 void GLClearError()
 {
-    while (glGetError());
+    while (glGetError()); //clear openGL errors
 }
 
 bool GLLogCall(const char* function, const char* file, int line)
@@ -21,7 +21,7 @@ bool GLLogCall(const char* function, const char* file, int line)
 
 void Renderer::Clear() const
 {
-    /* Render here */
+    //render here
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
 }

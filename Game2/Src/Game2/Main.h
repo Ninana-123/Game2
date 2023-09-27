@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Application.h" 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
@@ -13,7 +12,5 @@ int main(int argc, char** argv)
     app->Initialize();
     app->Run();
     
-    delete app;
-
     return 0;
 }
