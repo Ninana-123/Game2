@@ -13,6 +13,7 @@
 #include "KeyCodes.h"
 #include "Graphics.h"
 #include "ImGuiWrapper.h"
+#include "AudioEngine.h"
 
 
 double fps = 0.00;  // Frames per second
@@ -53,6 +54,8 @@ namespace Engine
     void Application::Initialize()
     {
        
+        
+ 
         // Initialize GLFW
         if (!glfwInit()) {
             logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -96,7 +99,8 @@ namespace Engine
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-            
+   
+       
 
         while (m_Running)
         {
