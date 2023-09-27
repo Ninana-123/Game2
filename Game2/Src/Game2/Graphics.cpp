@@ -80,7 +80,7 @@ namespace Engine
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
         //create vertex array, vertex buffer, and index buffer
-        VertexArray va{};
+    
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
@@ -162,7 +162,7 @@ namespace Engine
                 float rotationA = transform->rot;
 
                 //scale
-                glm::vec3 scaleA(transform->scaleX, transform->scaleY, 1.0f);
+                glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
@@ -179,7 +179,7 @@ namespace Engine
                 aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
 
                 bool isCollisionWithWindow = false;
-                bool isCollisionWithBoundary = false;
+               // bool isCollisionWithBoundary = false;
 
                 if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
                     isCollisionWithWindow = true;
@@ -222,7 +222,7 @@ namespace Engine
 
 
                 // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, scaleA);
+                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
 
                 glm::mat4 mvpA = proj * view * modelA;
 
@@ -285,8 +285,9 @@ namespace Engine
                     // Render the blue square
                     renderer.Draw(va, ib, shader);
                 }
-                transform->x = transA.x;
-                transform->y = transA.y;
+                transform->x = static_cast<int>(transA.x);
+                transform->y = static_cast<int>(transA.y);
+
             }
 
         }
