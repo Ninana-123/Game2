@@ -92,7 +92,6 @@ namespace Engine
         shader.Unbind();
     }
 
-
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
@@ -112,20 +111,17 @@ namespace Engine
                 glm::vec3 transA(transform->x, transform->y, 0);
 
                 //rotate
-                float rotation = transform->rot;
+                float rotationA = transform->rot;
 
                 //scale
-                glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
+                glm::vec3 scaleA(transform->scaleX, transform->scaleY, 1.0f);
 
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
                 // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
-                modelA = glm::translate(modelA, transA);
-                modelA = glm::scale(modelA, scale1);
-                modelA = glm::rotate(modelA, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, scaleA);
 
                 glm::mat4 mvpA = proj * view * modelA;
                
@@ -222,7 +218,6 @@ namespace Engine
         textureB.InitGL();
         textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
     }
-
 
     //void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
     //{
