@@ -77,6 +77,9 @@
     <Filter Include="Base\ComponentFactory">
       <UniqueIdentifier>{a75ae341-3a2c-4ed3-b880-a5007b65f2aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Engine\Audio">
+      <UniqueIdentifier>{89047daa-9222-448c-991b-e29c5ffea501}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -210,8 +213,12 @@
       <Filter>Base\Precompiled</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Vector2d.h" />
-    <ClInclude Include="Src\Game2\AudioEngine.h" />
-    <ClInclude Include="Src\Game2\SoundInfo.h" />
+    <ClInclude Include="Src\Game2\AudioEngine.h">
+      <Filter>Base\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SoundInfo.h">
+      <Filter>Base\Engine\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp">
@@ -305,7 +312,7 @@
       <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
-      <Filter>Base</Filter>
+      <Filter>Base\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
