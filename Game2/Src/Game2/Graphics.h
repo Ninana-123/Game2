@@ -32,8 +32,8 @@ namespace Engine
         void UpdateViewport(int width, int height);
         void UpdateTransformations(int key);
         void ToggleRenderMode();
-        void InitAndBindShader();
-        void InitAndBindTextures();
+        void InitialiseShader();
+        void InitialiseTextures();
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
 
         GLFWwindow* Window{};
@@ -51,8 +51,8 @@ namespace Engine
 
     private:
         Shader shader;
-        Texture luffyTexture;
-        Texture zoroTexture;
+        Texture textureA;
+        Texture textureB;
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};

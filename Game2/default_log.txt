@@ -1,414 +1,103 @@
-2023-09-27 09:53:36[DEBUG] GLEW successfully ini2023-09-272023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 09:53:36[DEBUG] Currently updating graphics
-2023-09-27 2023-09-27 09:53:37[EVENT] KeyPressedEvent: D ( 0 repeats)
-2023-09-27 09:53:37[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:37[EVENT] KeyPressedEvent: W ( 0 repeats)
-2023-09-27 09:53:37[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:37[EVENT] KeyPressedEvent: A ( 0 repeats)
-2023-09-27 09:53:37[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:37[EVENT] KeyReleasedEvent: D
-2023-09-27 09:53:37[EVENT] KeyReleasedEvent: W
-2023-09-27 09:53:37[EVENT] KeyPressedEvent: D ( 0 repeats)
-2023-09-27 09:53:37[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:38[EVENT] KeyPressedEvent: S ( 0 repeats)
-2023-09-27 09:53:38[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:38[EVENT] KeyReleasedEvent: D
-2023-09-27 09:53:38[EVENT] KeyReleasedEvent: A
-2023-09-27 09:53:38[EVENT] KeyPressedEvent: D ( 0 repeats)
-2023-09-27 09:53:38[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:38[EVENT] KeyReleasedEvent: S
-2023-09-27 09:53:38[EVENT] KeyReleasedEvent: D
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 651, 378
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 667, 380
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 698, 377
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 717, 372
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 728, 365
-2023-09-27 09:53:39[EVENT] MouseMovedEvent: 729, 365
-2023-09-27 09:53:39[EVENT] KeyPressedEvent: D ( 0 repeats)
-2023-09-27 09:53:39[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:40[EVENT] KeyPressedEvent: W ( 0 repeats)
-2023-09-27 09:53:40[EVENT] KeyTypedEvent: Unknown
-2023-09-27 09:53:40[EVENT] KeyReleasedEvent: D
-2023-09-27 09:53:40[EVENT] MouseMovedEvent: 733, 359
-2023-09-27 09:53:40[EVENT] MouseMovedEvent: 748, 319
-2023-09-27 09:53:40[EVENT] MouseMovedEvent: 764, 168
-2023-09-27 09:53:40[EVENT] MouseMovedEvent: 781, 52
-2023-09-27 09:53:40[EVENT] KeyReleasedEvent: W
-2023-09-27 09:53:40[EVENT] MouseMovedEvent: 785, 47
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 805, 60
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 830, 70
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 875, 83
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 926, 103
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 970, 109
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 984, 102
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 988, 86
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 993, 79
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 992, 74
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 990, 73
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 985, 71
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 980, 72
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 971, 80
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 968, 92
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 968, 94
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 968, 95
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 967, 101
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 970, 96
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 970, 93
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 972, 89
-2023-09-27 09:53:41[EVENT] MouseMovedEvent: 972, 83
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 80
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 79
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 76
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 74
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 72
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 70
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 67
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 66
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 972, 65
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 971, 64
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 971, 63
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 971, 62
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 969, 62
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 969, 60
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 967, 58
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 964, 56
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 964, 55
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 962, 55
-2023-09-27 09:53:42[EVENT] MouseMovedEvent: 960, 56
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 959, 57
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 956, 61
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 955, 63
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 964, 86
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 971, 109
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 973, 118
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 972, 127
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 972, 129
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 971, 132
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 970, 135
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 969, 135
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 967, 135
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 964, 135
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 960, 136
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 957, 137
-2023-09-27 09:53:43[EVENT] MouseMovedEvent: 953, 139
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 140
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 141
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 143
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 144
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 146
-2023-09-27 09:53:44[EVENT] MouseMovedEvent: 953, 147
-2023-09-27 09:53:44[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 956, 152
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 967, 164
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 973, 169
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 975, 170
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 982, 177
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 978, 173
-2023-09-27 09:53:45[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 976, 171
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 972, 165
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 964, 157
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 955, 150
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 955, 149
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 954, 149
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 954, 146
-2023-09-27 09:53:45[EVENT] MouseMovedEvent: 955, 144
-2023-09-27 09:53:45[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 963, 155
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 973, 166
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 975, 168
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 978, 172
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 980, 175
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 981, 175
-2023-09-27 09:53:46[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 981, 174
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 980, 172
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 977, 170
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 964, 160
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 938, 136
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 918, 114
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 892, 96
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 869, 81
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 834, 59
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 828, 55
-2023-09-27 09:53:46[EVENT] MouseMovedEvent: 809, 45
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 800, 38
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 799, 34
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 798, 30
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 798, 29
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 798, 28
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 795, 22
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 790, 19
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 788, 17
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 789, 17
-2023-09-27 09:53:47[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:47[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 791, 17
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 803, 26
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 852, 67
-2023-09-27 09:53:47[EVENT] MouseMovedEvent: 926, 135
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 967, 168
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 968, 169
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 970, 169
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 969, 168
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 968, 141
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 963, 105
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 956, 82
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 953, 67
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 59
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 54
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 949, 49
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 41
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 36
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 33
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 28
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 950, 27
-2023-09-27 09:53:48[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 951, 27
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 955, 27
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 977, 47
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 989, 59
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 995, 66
-2023-09-27 09:53:48[EVENT] MouseMovedEvent: 996, 67
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 992, 72
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 988, 72
-2023-09-27 09:53:49[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 945, 69
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 913, 63
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 912, 62
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 890, 95
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 865, 134
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 861, 136
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 859, 136
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 845, 135
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 841, 135
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 828, 133
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 823, 131
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 819, 130
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 811, 131
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 810, 131
-2023-09-27 09:53:49[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:49[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 809, 132
-2023-09-27 09:53:49[EVENT] MouseMovedEvent: 806, 132
-2023-09-27 09:53:49[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 806, 131
-2023-09-27 09:53:50[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 806, 130
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 806, 129
-2023-09-27 09:53:50[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 806, 128
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 806, 127
-2023-09-27 09:53:50[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 808, 120
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 813, 93
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 814, 62
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 814, 57
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 814, 56
-2023-09-27 09:53:50[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 814, 53
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 814, 52
-2023-09-27 09:53:50[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 815, 51
-2023-09-27 09:53:50[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 829, 75
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 831, 99
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 831, 102
-2023-09-27 09:53:50[EVENT] MouseMovedEvent: 831, 103
-2023-09-27 09:53:50[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 833, 99
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 833, 98
-2023-09-27 09:53:51[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 832, 98
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 831, 98
-2023-09-27 09:53:51[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 829, 97
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 826, 96
-2023-09-27 09:53:51[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 824, 96
-2023-09-27 09:53:51[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:51[EVENT] MouseScrolledEvent: 0, -1
-2023-09-27 09:53:51[EVENT] MouseMovedEvent: 824, 95
-2023-09-27 09:53:51[EVENT] MouseScrolledEvent: 0, -4
-2023-09-27 09:53:51[EVENT] MouseScrolledEvent: 0, 2
-2023-09-27 09:53:51[EVENT] MouseScrolledEvent: 0, 1
-2023-09-27 09:53:51[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 817, 87
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 815, 82
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 815, 81
-2023-09-27 09:53:52[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 814, 81
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 812, 83
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 809, 85
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 808, 85
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 805, 86
-2023-09-27 09:53:52[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 805, 87
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 809, 99
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 811, 118
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 811, 127
-2023-09-27 09:53:52[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 811, 133
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 811, 134
-2023-09-27 09:53:52[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 811, 132
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 812, 129
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 823, 108
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 830, 99
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 834, 93
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 835, 93
-2023-09-27 09:53:52[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 836, 92
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 840, 89
-2023-09-27 09:53:52[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 842, 88
-2023-09-27 09:53:52[EVENT] MouseMovedEvent: 848, 84
-2023-09-27 09:53:53[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 817, 72
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 802, 67
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 799, 64
-2023-09-27 09:53:53[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 799, 63
-2023-09-27 09:53:53[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 810, 95
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 820, 125
-2023-09-27 09:53:53[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 820, 126
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 820, 129
-2023-09-27 09:53:53[EVENT] MouseMovedEvent: 820, 131
-2023-09-27 09:53:53[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:53[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 821, 125
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 820, 117
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 815, 107
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 814, 104
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 813, 102
-2023-09-27 09:53:54[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 830, 107
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 834, 110
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 832, 114
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 831, 114
-2023-09-27 09:53:54[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 830, 117
-2023-09-27 09:53:54[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 825, 120
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 824, 121
-2023-09-27 09:53:54[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 824, 122
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 823, 122
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 823, 123
-2023-09-27 09:53:54[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:54[EVENT] MouseMovedEvent: 823, 122
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 832, 103
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 850, 71
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 852, 68
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 866, 59
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 893, 47
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 925, 29
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 927, 27
-2023-09-27 09:53:55[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 930, 26
-2023-09-27 09:53:55[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 931, 26
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 942, 23
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 950, 19
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 950, 18
-2023-09-27 09:53:55[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 956, 16
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 977, 15
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 989, 15
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 991, 15
-2023-09-27 09:53:55[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:55[EVENT] MouseMovedEvent: 987, 20
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 958, 37
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 954, 41
-2023-09-27 09:53:56[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 979, 33
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 987, 31
-2023-09-27 09:53:56[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 960, 55
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 945, 68
-2023-09-27 09:53:56[EVENT] MouseButtonPressedEvent: Left Mouse Button
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 954, 61
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 972, 54
-2023-09-27 09:53:56[EVENT] MouseButtonReleasedEvent: Left Mouse Button
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1003, 44
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1071, 37
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1143, 35
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1212, 31
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1245, 22
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1256, 18
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1263, 13
-2023-09-27 09:53:56[EVENT] MouseMovedEvent: 1260, 3
-2023-09-27 09:53:57[EVENT] WindowClose
-tly updating graphics
-2023-09-27 09:53:54[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:55[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:56[DEBUG] Currently updating graphics
-2023-09-27 09:53:57[DEBUG] Currently updating graphics
-2023-09-27 09:53:57[DEBUG] Currently updating graphics
-2023-09-27 09:53:57[DEBUG] Currently updating graphics
-2023-09-27 09:53:57[DEBUG] Currently updating graphics
+2023-09-27 14:02:33[DEBUG] GLEW successfully ini2023-09-272023-09-27 14:02:34[DEBUG] Currently updating graphics
+2023-09-27 14:02:34[DEBUG] Currentl2023-09-27 14:02:34[EVENT] MouseMovedEvent: 464, 171
+2023-09-27 14:02:34[EVENT] MouseMovedEvent: 465, 209
+2023-09-27 14:02:34[EVENT] MouseMovedEvent: 472, 239
+2023-09-27 14:02:34[EVENT] MouseMovedEvent: 482, 264
+2023-09-27 14:02:34[EVENT] MouseMovedEvent: 483, 266
+2023-09-27 14:02:34[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:34[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:34[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 14:02:34[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:34[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:34[EVENT] KeyPressedEvent: A ( 0 repeats)
+2023-09-27 14:02:34[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:34[EVENT] KeyReleasedEvent: W
+2023-09-27 14:02:35[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:35[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:35[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 14:02:35[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:35[EVENT] KeyReleasedEvent: A
+2023-09-27 14:02:35[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:35[EVENT] KeyReleasedEvent: W
+2023-09-27 14:02:35[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:35[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:35[EVENT] KeyPressedEvent: S ( 0 repeats)
+2023-09-27 14:02:35[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:35[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:35[EVENT] KeyReleasedEvent: S
+2023-09-27 14:02:35[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:35[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:36[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:36[EVENT] KeyPressedEvent: A ( 0 repeats)
+2023-09-27 14:02:36[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:36[EVENT] KeyReleasedEvent: A
+2023-09-27 14:02:36[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:36[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:37[EVENT] KeyPressedEvent: S ( 0 repeats)
+2023-09-27 14:02:37[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] KeyReleasedEvent: S
+2023-09-27 14:02:37[EVENT] KeyPressedEvent: A ( 0 repeats)
+2023-09-27 14:02:37[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 485, 266
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 509, 255
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 550, 242
+2023-09-27 14:02:37[EVENT] KeyReleasedEvent: A
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 555, 241
+2023-09-27 14:02:37[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:37[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 594, 235
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 655, 223
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 709, 202
+2023-09-27 14:02:37[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 721, 197
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 760, 181
+2023-09-27 14:02:37[EVENT] KeyPressedEvent: A ( 0 repeats)
+2023-09-27 14:02:37[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 780, 172
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 794, 164
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 797, 160
+2023-09-27 14:02:37[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 14:02:37[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 799, 157
+2023-09-27 14:02:37[EVENT] KeyReleasedEvent: A
+2023-09-27 14:02:37[EVENT] MouseMovedEvent: 800, 156
+2023-09-27 14:02:38[EVENT] KeyReleasedEvent: W
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 812, 145
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 857, 119
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 925, 99
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 941, 94
+2023-09-27 14:02:38[EVENT] KeyPressedEvent: D ( 0 repeats)
+2023-09-27 14:02:38[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1011, 74
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1087, 65
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1095, 63
+2023-09-27 14:02:38[EVENT] KeyReleasedEvent: D
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1096, 62
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1099, 60
+2023-09-27 14:02:38[EVENT] KeyPressedEvent: W ( 0 repeats)
+2023-09-27 14:02:38[EVENT] KeyTypedEvent: Unknown
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1112, 44
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1124, 30
+2023-09-27 14:02:38[EVENT] KeyReleasedEvent: W
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1124, 27
+2023-09-27 14:02:38[EVENT] MouseMovedEvent: 1109, 2
+dating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics
+2023-09-27 14:02:38[DEBUG] Currently updating graphics

@@ -94,10 +94,10 @@ namespace Engine
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
         // load and initialize the shader
-        InitAndBindShader();
+        InitialiseShader();
 
         // initialize and bind textures
-        InitAndBindTextures();
+        InitialiseTextures();
 
         ib.Unbind();
         va.Unbind();
@@ -164,12 +164,12 @@ namespace Engine
                 if (textureIndex == 0)
                 {
                     // Display "Luffy" texture
-                    luffyTexture.Bind(0);
+                    textureA.Bind(0);
                 }
                 else
                 {
                     // Display "Zoro" texture
-                    zoroTexture.Bind(0);
+                    textureB.Bind(0);
                 }
 
                 // Set shader uniforms for Luffy
@@ -221,11 +221,11 @@ namespace Engine
 
                 if (textureIndex == 0)
                 {
-                    zoroTexture.Bind(0);
+                    textureB.Bind(0);
                 }
                 else
                 {
-                    luffyTexture.Bind(0);
+                    textureA.Bind(0);
                 }
 
               // Set shader uniforms for Texture B
@@ -277,7 +277,7 @@ namespace Engine
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
-    void Graphics::InitAndBindShader()
+    void Graphics::InitialiseShader()
     {
         shader.LoadShader("Resource/Shaders/Basic.shader");
         shader.Initialize();
@@ -285,16 +285,16 @@ namespace Engine
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    void Graphics::InitAndBindTextures()
+    void Graphics::InitialiseTextures()
     {
-        luffyTexture.Load("Resource/Texture/Tank.png");
-        zoroTexture.Load("Resource/Texture/Archer.png");
+        textureA.Load("Resource/Texture/Tank.png");
+        textureB.Load("Resource/Texture/Archer.png");
 
-        luffyTexture.InitGL();
-        luffyTexture.Bind(0);
+        textureA.InitGL();
+        textureA.Bind(0);
 
-        zoroTexture.InitGL();
-        zoroTexture.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        textureB.InitGL();
+        textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
     }
 
 
