@@ -108,6 +108,25 @@ namespace Engine
                 targetEntity = EM.GetEntity(entity2);
             }
             
+            if (Input::IsKeyPressed(KEY_UP))
+            {
+                transformTest->y += 20;
+            }
+            
+            if (Input::IsKeyPressed(KEY_DOWN))
+            {
+                transformTest->y -= 20;
+            }
+
+            if (Input::IsKeyPressed(KEY_LEFT))
+            {
+                transformTest->x -= 20;
+            }
+
+            if (Input::IsKeyPressed(KEY_RIGHT))
+            {
+                transformTest->x += 20;
+            }
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());

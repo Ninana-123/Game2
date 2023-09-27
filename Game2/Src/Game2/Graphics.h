@@ -31,7 +31,7 @@ namespace Engine
 
         void InitializeGLEW();
         void UpdateViewport(int width, int height);
-        void UpdateTransformations(int key);
+        void UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation);
         void ToggleRenderMode();
         void InitialiseShader();
         void InitialiseTextures();

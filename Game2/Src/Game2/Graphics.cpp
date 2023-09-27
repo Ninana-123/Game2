@@ -95,6 +95,7 @@ namespace Engine
 
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
+        renderer.Clear();
 
         for (const auto& entityPair : *entities)
         {
@@ -108,22 +109,18 @@ namespace Engine
                  
                 //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
-                translationA = transA;
-
+           
                 //rotate
-                rotationAngleA = transform->rot;
+                float rotation = transform->rot;
 
                 //scale
                 glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
-                scaleA = scale1;
 
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
-                // Handle graphics updates here
-                renderer.Clear();
-
+               
                 //// Get the current state of the 'P' key
                 //bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
@@ -141,20 +138,23 @@ namespace Engine
                 {*/
                 //Texture A
                 {
-                    UpdateTransformations(GLFW_KEY_RIGHT);
-                    UpdateTransformations(GLFW_KEY_LEFT);
-                    UpdateTransformations(GLFW_KEY_UP);
-                    UpdateTransformations(GLFW_KEY_DOWN);
-                    UpdateTransformations(GLFW_KEY_U);
-                    UpdateTransformations(GLFW_KEY_I);
-                    UpdateTransformations(GLFW_KEY_Z);
-                    UpdateTransformations(GLFW_KEY_X);
+                    /*
+                    * UpdateTransformations(GLFW_KEY_RIGHT, transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_LEFT,  transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_UP,    transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_DOWN,  transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_U,     transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_I,     transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_Z,     transA, scale1, rotation);
+                    UpdateTransformations(GLFW_KEY_X,     transA, scale1, rotation);
+                    */
+                    
 
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
-                    modelA = glm::translate(modelA, translationA);
-                    modelA = glm::scale(modelA, scaleA);
-                    modelA = glm::rotate(modelA, rotationAngleA, glm::vec3(0.0f, 0.0f, 1.0f));
+                    modelA = glm::translate(modelA, transA);
+                    modelA = glm::scale(modelA, scale1);
+                    modelA = glm::rotate(modelA, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
 
                     glm::mat4 mvpA = proj * view * modelA;
 
@@ -215,15 +215,12 @@ namespace Engine
                 //    // Render the blue square
                 //    renderer.Draw(va, ib, shader);
                 //}
-                transform->x = translationA.x;
-                transform->y = translationA.y;
-
-                GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
-
+                transform->x = transA.x;
+                transform->y = transA.y;
             }
 
         }
-        
+        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)
@@ -253,96 +250,54 @@ namespace Engine
     }
 
 
-    void Graphics::UpdateTransformations(int key)
+    void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
     {
         // Define a mapping of keys to actions
         std::map<int, std::function<void()>> keyActions;
 
         const float increment = 1.0f;
         const float angle = 0.01f;
-        const float scale = 0.01f;
+        const float scalar = 0.01f;
 
         // Texture A 
         keyActions[GLFW_KEY_RIGHT] = [&]()
         {
-            translationA.x += increment; //Move right 
+            translation.x += increment; //Move right 
         };
 
         keyActions[GLFW_KEY_LEFT] = [&]()
         {
-            translationA.x -= increment; //Move left
+            translation.x -= increment; //Move left
         };
 
         keyActions[GLFW_KEY_DOWN] = [&]()
         {
-            translationA.y -= increment; //Move down
+            translation.y -= increment; //Move down
         };
 
         keyActions[GLFW_KEY_UP] = [&]()
         {
-            translationA.y += increment; //Move up
+            translation.y += increment; //Move up
         };
 
         keyActions[GLFW_KEY_U] = [&]()
         {
-            rotationAngleA += angle; //Rotate counterclockwise
+            rotation += angle; //Rotate counterclockwise
         };
 
         keyActions[GLFW_KEY_I] = [&]()
         {
-            rotationAngleA -= angle; //Rotate clockwise
+            rotation -= angle; //Rotate clockwise
         };
         keyActions[GLFW_KEY_Z] = [&]()
         {
-            scaleA += glm::vec3(scale, scale, 0.0f); //Increase scale
+            scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
         };
 
         keyActions[GLFW_KEY_X] = [&]()
         {
-            scaleA -= glm::vec3(scale, scale, 0.0f); //Decrease scale
+            scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
         };
-
-        // Texture B
-        keyActions[GLFW_KEY_D] = [&]()
-        {
-            translationB.x += increment; //Move right
-        };
-
-        keyActions[GLFW_KEY_A] = [&]()
-        {
-            translationB.x -= increment; //Move left
-        };
-
-        keyActions[GLFW_KEY_S] = [&]()
-        {
-            translationB.y -= increment; //Move down
-        };
-
-        keyActions[GLFW_KEY_W] = [&]()
-        {
-            translationB.y += increment; //Move up
-        };
-
-        keyActions[GLFW_KEY_J] = [&]()
-        {
-            rotationAngleB += angle; // Rotate texture
-        };
-
-        keyActions[GLFW_KEY_K] = [&]()
-        {
-            rotationAngleB -= angle; // Rotate texture
-        };
-
-        keyActions[GLFW_KEY_C] = [&]()
-        {
-            scaleB += glm::vec3(scale, scale, 0.0f); // Increase scale
-        };
-
-        keyActions[GLFW_KEY_V] = [&]()
-        {
-            scaleB -= glm::vec3(scale, scale, 0.0f); // Decrease scale
-        };
-
 
         // Check for key presses and execute corresponding actions
         for (const auto& pair : keyActions)
