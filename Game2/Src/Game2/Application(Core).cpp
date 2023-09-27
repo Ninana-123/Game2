@@ -131,17 +131,13 @@ namespace Engine
             //System Updating
             SM.UpdateSystems(EM.GetEntities());
 
-         
-           
             //Entity Debug
             
             std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             
-            
             m_ImGuiWrapper->OnUpdate();
-
 
         }
     }
@@ -158,7 +154,6 @@ namespace Engine
         // Update the viewport and projection matrix
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
-
 
     void Application::UpdateDeltaTime()
     {
