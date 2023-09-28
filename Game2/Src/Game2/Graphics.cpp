@@ -51,6 +51,14 @@ namespace Engine
         // initialize and bind textures
         InitializeTextures();
 
+        //enable blending for transparency
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+
+        // set up projection and view matrices
+        Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+        Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
       /**************************************************************************************************/
         //define vertex array and indices
@@ -81,21 +89,16 @@ namespace Engine
 
         Graphics::ib.SetData(indices, 6);
 
-        ib.Unbind();
-        va.Unbind();
-        vb.Unbind();
        /**************************************************************************************************/
 
         VertexArray vaLines;
-        
-
         // Define vertex array and indices for lines
         float linePositions[] = 
         {
-            -60.0f, -60.0f, 0.0f, 0.0f,
-             60.0f, -60.0f, 1.0f, 0.0f,
-             60.0f,  60.0f, 1.0f, 1.0f,
-            -60.0f,  60.0f, 0.0f, 1.0f
+            -30.0f, -30.0f, 0.0f, 0.0f,
+             30.0f, -30.0f, 1.0f, 0.0f,
+             30.0f,  30.0f, 1.0f, 1.0f,
+            -30.0f,  30.0f, 0.0f, 1.0f
         };
 
         VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
@@ -103,22 +106,16 @@ namespace Engine
         VertexBufferLayout layoutLines;
         layoutLines.Push<float>(2);
         layoutLines.Push<float>(2);
-        vaLines.AddBuffer(vbLines, layoutLines);
+        Graphics::vaLines.AddBuffer(vbLines, layoutLines);
         
-        vbLines.Unbind();
-
         /**************************************************************************************************/
 
-        //enable blending for transparency
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        ib.Unbind();
+        va.Unbind();
+        vb.Unbind();
 
+        vbLines.Unbind();
 
-        // set up projection and view matrices
-        Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-        Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
-
- 
         shader.Unbind();
     }
     
@@ -155,7 +152,7 @@ namespace Engine
         shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
 
         // Draw the lines directly without an IBO
-        GLCall(glDrawArrays(GL_LINES, 0, 8));
+        GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
 
         // Debugging statement to print that the square lines are being drawn
         std::cout << "Drawing square lines..." << std::endl;
@@ -206,51 +203,51 @@ namespace Engine
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
-                // Check collision with the window boundaries
-                float halfWidth = 50.0f;  // Half of the texture width
-                float halfHeight = 50.0f; // Half of the texture height
+                //// Check collision with the window boundaries
+                //float halfWidth = 50.0f;  // Half of the texture width
+                //float halfHeight = 50.0f; // Half of the texture height
 
-                AABB aabb1;
-                aabb1.min = VECTORMATH::Vec2(transA.x - halfWidth, transA.y - halfHeight);
-                aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
+                //AABB aabb1;
+                //aabb1.min = VECTORMATH::Vec2(transA.x - halfWidth, transA.y - halfHeight);
+                //aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
 
-                bool isCollisionWithWindow = false;
+                //bool isCollisionWithWindow = false;
 
-                if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
-                    isCollisionWithWindow = true;
-                }
+                //if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
+                //    isCollisionWithWindow = true;
+                //}
 
-                if (isCollisionWithWindow) {
-                    std::cout << "Collision with the window detected!" << std::endl;
-                }
+                //if (isCollisionWithWindow) {
+                //    std::cout << "Collision with the window detected!" << std::endl;
+                //}
 
-                // collision with the entities
-                for (const auto& otherEntityPair : *entities) 
-                {
-                    if (otherEntityPair.first != entityPair.first) 
-                    {
-                        Entity* otherEntity = otherEntityPair.second.get();
+                //// collision with the entities
+                //for (const auto& otherEntityPair : *entities) 
+                //{
+                //    if (otherEntityPair.first != entityPair.first) 
+                //    {
+                //        Entity* otherEntity = otherEntityPair.second.get();
 
-                        if (otherEntity->HasComponent(ComponentType::Transform)) 
-                        {
-                            TransformComponent* otherTransform = dynamic_cast<TransformComponent*>(otherEntity->GetComponent(ComponentType::Transform));
+                //        if (otherEntity->HasComponent(ComponentType::Transform)) 
+                //        {
+                //            TransformComponent* otherTransform = dynamic_cast<TransformComponent*>(otherEntity->GetComponent(ComponentType::Transform));
 
-                            float halfWidthB = 50.0f;  // Half of the texture width for entity2
-                            float halfHeightB = 50.0f; // Half of the texture height for entity2
+                //            float halfWidthB = 50.0f;  // Half of the texture width for entity2
+                //            float halfHeightB = 50.0f; // Half of the texture height for entity2
 
-                            AABB aabb2;
-                            aabb2.min = VECTORMATH::Vec2(otherTransform->x - halfWidthB, otherTransform->y - halfHeightB);
-                            aabb2.max = VECTORMATH::Vec2(otherTransform->x + halfWidthB, otherTransform->y + halfHeightB);
+                //            AABB aabb2;
+                //            aabb2.min = VECTORMATH::Vec2(otherTransform->x - halfWidthB, otherTransform->y - halfHeightB);
+                //            aabb2.max = VECTORMATH::Vec2(otherTransform->x + halfWidthB, otherTransform->y + halfHeightB);
 
-                            // Check for collision between aabb1 and aabb2
-                            if (aabb1.min.x < aabb2.max.x && aabb1.max.x > aabb2.min.x &&
-                                aabb1.min.y < aabb2.max.y && aabb1.max.y > aabb2.min.y) {
-                                std::cout << "Collision between new entity and old entity detected!" << std::endl;
-                                // Handle the collision as needed
-                            }
-                        }
-                    }
-                }
+                //            // Check for collision between aabb1 and aabb2
+                //            if (aabb1.min.x < aabb2.max.x && aabb1.max.x > aabb2.min.x &&
+                //                aabb1.min.y < aabb2.max.y && aabb1.max.y > aabb2.min.y) {
+                //                std::cout << "Collision between new entity and old entity detected!" << std::endl;
+                //                // Handle the collision as needed
+                //            }
+                //        }
+                //    }
+                //}
 
                 // Apply transformations from UpdateTransformations
                 glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
