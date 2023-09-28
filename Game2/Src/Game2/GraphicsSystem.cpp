@@ -257,7 +257,7 @@ namespace Engine
         shader.Unbind();
     }
 
-    void Graphics::DrawColoredSquare(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms
         shader.Bind();
