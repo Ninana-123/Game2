@@ -2,9 +2,7 @@
 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
-
-#include <glm/glm.hpp>
-
+#include "Vector2d.h"
 namespace Engine {
 
 	class Input
@@ -17,7 +15,7 @@ namespace Engine {
         void UpdateKeyStates();
 		void Update();
 		static bool IsMouseButtonPressed(MouseCode button);
-		static glm::vec2 GetMousePosition();
+		static VECTORMATH::Vector2D GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
 	};

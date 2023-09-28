@@ -1,2 +1,3 @@
-2023-09-29 02:02:53[DEBUG] GLEW successfully ini2023-09-29 02:02:53[2023-09-29 02:02:55[EVENT] Event Type: WindowResizeEvent: 1920, 1017
-2023-09-29 02:02:56[EVENT] Event Type: WindowResizeEvent: 1280, 720
+2023-09-29 04:45:00[DEBUG] GLEW successfully ini2023-09-29 04:45:00[DEBUG] Loading Scene
+2023-09-29 04:45:00[DEBUG] Scene Loaded
+2023-09-29 04:45:01[APP] Application Running.
