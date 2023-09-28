@@ -273,6 +273,7 @@ namespace Engine
 
             if (entity->HasComponent(ComponentType::Transform))
             {
+
                 //Assign reference to transform component
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 
