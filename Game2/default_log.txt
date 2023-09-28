@@ -1,3 +1,3 @@
-2023-09-29 04:45:00[DEBUG] GLEW successfully ini2023-09-29 04:45:00[DEBUG] Loading Scene
-2023-09-29 04:45:00[DEBUG] Scene Loaded
-2023-09-29 04:45:01[APP] Application Running.
+2023-09-29 04:57:19[DEBUG] GLEW successfully ini2023-09-29 04:57:19[DEBUG] Loading Scene
+2023-09-29 04:57:19[DEBUG] Scene Loaded
+2023-09-29 04:57:19[APP] Application Running.
