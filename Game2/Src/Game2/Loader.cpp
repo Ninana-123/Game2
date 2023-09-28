@@ -58,10 +58,14 @@ namespace Engine {
 
                 int x = 300, y = 300;
                 float scaleX = 1.0f, scaleY = 1.0f, rot = 0;
+                float c_Width = 30.0f, c_Height = 45.0f;
+                bool isColliding = false;
+
+                int minX = 0, minY = 0, maxX = 0, maxY = 0;
 
                 if (std::getline(sceneFile, line)) {
                     std::istringstream iss(line);
-                    if (iss >> x >> y >> scaleX >> scaleY >> rot) {
+                    if (iss >> x >> y >> scaleX >> scaleY >> rot>> c_Width>>c_Height>>isColliding>>minX>>minY>>maxX>>maxY) {
                         // Successfully read properties from the scene file
                     }
                     else {
@@ -83,11 +87,18 @@ namespace Engine {
                 transform->scaleX = scaleX;
                 transform->scaleY = scaleY;
                 transform->rot = rot;
+                entityPtr->AddNewComponent(ComponentType::Collision);
+                CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entityPtr->GetComponent(ComponentType::Collision));
+                collision->c_Width = c_Width;
+                collision->c_Height = c_Height;
 
                 // Add more components as needed based on the format of your scene file
                 std::cout << "Entity " << i + 1 << " created\n";
                 if (entityPtr->HasComponent(ComponentType::Transform)) {
                     //std::cout << "Entity " << i + 1 << " has a transform component\n";
+                }
+                if (entityPtr->HasComponent(ComponentType::Collision)) {
+                   std::cout << "Entity " << i + 1 << " has a collision component\n";
                 }
             }
         }
