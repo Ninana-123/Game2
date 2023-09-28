@@ -58,7 +58,6 @@ namespace Engine
 
     void Application::Initialize()
     {
-       
         // Initialize GLFW
         if (!glfwInit()) {
             logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -74,9 +73,11 @@ namespace Engine
 
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
+      
         //Systems Manager Initialization
         //Currently initializes TestSystem and Graphics
         SM.Initialize();
+        //graphicsSystem.Initialize();
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
@@ -95,6 +96,10 @@ namespace Engine
         audioEngine.loadSound(sound2);
         sound.setLoop();
         sound2.setLoop();
+
+       
+       
+
     }
 
     void Application::OnEvent(Event& e)
@@ -110,13 +115,15 @@ namespace Engine
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
 
-
         while (m_Running)
         {
+            //graphicsSystem.RenderBackground();
+
             InputHandler.Update();
             m_Window->OnUpdate();
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
+
 
             if (currentlyPlayingSound == false) {
                 if (InputHandler.IsKeyTriggered(KEY_9)) {
@@ -163,7 +170,7 @@ namespace Engine
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
                 // Clone entity1 and store its ID
-                entity2 = EM.CloneEntity(entity1);
+                entity2 = EM.CloneEntity(targetEntity->GetID());
                 targetEntity = EM.GetEntity(entity2);
                 //isNewEntityMoved = true;
             }
@@ -224,7 +231,7 @@ namespace Engine
             std::cout << "Number of entities: " << EM.entities.size() << std::endl;*/
 
             m_ImGuiWrapper->OnUpdate();
-
+           
 
         }
     }
