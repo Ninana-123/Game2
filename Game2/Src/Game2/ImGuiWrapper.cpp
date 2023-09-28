@@ -19,7 +19,7 @@ namespace Engine {
 
 	ImGuiWrapper::ImGuiWrapper() : entityManager()
 	{
-		
+
 	}
 
 	ImGuiWrapper::~ImGuiWrapper()
@@ -96,7 +96,7 @@ namespace Engine {
 
 		ImGui::Text("GPU Vendor: %s", str_ven);
 		ImGui::Text("GL Renderer: %s", str_ren);
-		ImGui::Text("GL Version: %s",str_ver);
+		ImGui::Text("GL Version: %s", str_ver);
 		ImGui::Text("GL Shader Version: %s", str_sha);
 		ImGui::Text("GL Major Version: %d", major_ver);
 		ImGui::Text("GL Minor Version: %d", minor_ver);
@@ -129,7 +129,7 @@ namespace Engine {
 
 	// Function to get memory usage percentage 
 	float GetMemoryUsagePercentage() {
-		MEMORYSTATUSEX status ;
+		MEMORYSTATUSEX status;
 		status.dwLength = sizeof(status);
 		GlobalMemoryStatusEx(&status);
 
@@ -161,13 +161,13 @@ namespace Engine {
 		io.KeyMap[ImGuiKey_Backspace] = KEY_BACKSPACE;
 		io.KeyMap[ImGuiKey_Space] = KEY_SPACE;
 		io.KeyMap[ImGuiKey_Enter] = KEY_ENTER;
-		io.KeyMap[ImGuiKey_Escape] = KEY_ESCAPE;		
+		io.KeyMap[ImGuiKey_Escape] = KEY_ESCAPE;
 		io.KeyMap[ImGuiKey_A] = KEY_A;
-		io.KeyMap[ImGuiKey_C] = KEY_C;		
+		io.KeyMap[ImGuiKey_C] = KEY_C;
 		io.KeyMap[ImGuiKey_V] = KEY_V;
-		io.KeyMap[ImGuiKey_X] = KEY_X;		
+		io.KeyMap[ImGuiKey_X] = KEY_X;
 		io.KeyMap[ImGuiKey_Y] = KEY_Y;
-		io.KeyMap[ImGuiKey_Z] = KEY_Z;		
+		io.KeyMap[ImGuiKey_Z] = KEY_Z;
 
 		ImGui_ImplOpenGL3_Init("#version 410");
 
@@ -298,8 +298,36 @@ namespace Engine {
 				}
 			}
 
-			auto entities = entityManager->GetEntities();
+			const auto entities = entityManager->GetEntities();
 			ImGui::Text("Number of Entities: %d", entities->size());
+			ImGui::Separator();
+			ImGui::Text("Currently selected entity ID:");
+
+			std::vector<std::string> entityNames;
+			for (const auto& entity : *entities) {
+				entityNames.push_back("Entity " + std::to_string(entity.first));
+			}
+
+
+			if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+				for (int i = 0; i < entityNames.size(); ++i) {
+					const bool isSelected = (selectedEntityIndex == i);
+					if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+						selectedEntityIndex = i;
+						targetEntity = entityManager->GetEntity(selectedEntityIndex);
+						std::cout << targetEntity->GetID();
+					}
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+			/*
+			if (ImGui::Button("Delete currently selected entity")) {
+				entityManager->DestroyEntity(selectedEntityIndex);
+			}
+			*/
+			
 		}
 
 		ImGui::End();
@@ -318,7 +346,7 @@ namespace Engine {
 	{
 		EventDispatcher dispatcher(event);
 
-		dispatcher.Dispatch<MouseButtonPressedEvent>(std::bind(&ImGuiWrapper::OnMouseButtonPressedEvent,this,std::placeholders::_1));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(std::bind(&ImGuiWrapper::OnMouseButtonPressedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<MouseButtonReleasedEvent>(std::bind(&ImGuiWrapper::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<MouseMovedEvent>(std::bind(&ImGuiWrapper::OnMouseMovedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<MouseScrolledEvent>(std::bind(&ImGuiWrapper::OnMouseScrolledEvent, this, std::placeholders::_1));
@@ -398,4 +426,5 @@ namespace Engine {
 
 		return false;
 	}
+
 }

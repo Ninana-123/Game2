@@ -3,9 +3,6 @@
 #include "Window.h"
 #include <GLFW/glfw3.h>
 
-Engine::Logger WindowLogger;
-
-
 namespace Engine {
 	class WindowsWindow : public Window {
 	public:

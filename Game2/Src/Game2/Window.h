@@ -10,7 +10,7 @@ namespace Engine {
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
-		
+		//Default Properties
 		WindowProps(const std::string& title = "Game2 Engine",
 			unsigned int width = 1280,
 			unsigned int height = 720)

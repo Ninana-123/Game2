@@ -45,8 +45,25 @@ namespace Engine
         // Clear the color buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // load and initialize the shader
+        InitializeShader();
+
+        // initialize and bind textures
+        InitializeTextures();
+
+        //enable blending for transparency
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+
+        // set up projection and view matrices
+        Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+        Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+
+      /**************************************************************************************************/
         //define vertex array and indices
-        float positions[] = {
+        float positions1[] = 
+        {
        -60.0f,  -60.0f, 0.0f, 0.0f,    //0
         60.0f,  -60.0f, 1.0f, 0.0f,    //1
         60.0f,   60.0f, 1.0f, 1.0f,    //2
@@ -54,23 +71,16 @@ namespace Engine
         };
 
         // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(positions), std::end(positions), std::begin(this->vtx_postions));
+        std::copy(std::begin(positions1), std::end(positions1), std::begin(this->vtx_postions));
 
-        unsigned int indices[] =
+        unsigned int indices1[] =
         {
             0, 1, 2,
             2, 3, 0
         };
 
-        std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
-
-        //enable blending for transparency
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-        //create vertex array, vertex buffer, and index buffer
-    
-        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+        std::copy(std::begin(indices1), std::end(indices1), std::begin(this->indices));
+        VertexBuffer vb(positions1, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
         layout.Push<float>(2);
@@ -79,32 +89,103 @@ namespace Engine
 
         Graphics::ib.SetData(indices, 6);
 
-        // set up projection and view matrices
-        Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-        Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+       /**************************************************************************************************/
 
-        // load and initialize the shader
-        InitializeShader();
+        VertexArray vaLines1;
+        // Define vertex array and indices for lines
+        float linePositions[] = 
+        {
+            -30.0f, -30.0f, 0.0f, 0.0f,
+             30.0f, -30.0f, 1.0f, 0.0f,
+             30.0f,  30.0f, 1.0f, 1.0f,
+            -30.0f,  30.0f, 0.0f, 1.0f
+        };
 
-        // initialize and bind textures
-        InitializeTextures();
+        VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
+
+        VertexBufferLayout layoutLines;
+        layoutLines.Push<float>(2);
+        layoutLines.Push<float>(2);
+        Graphics::vaLines.AddBuffer(vbLines, layoutLines);
+        
+        /**************************************************************************************************/
 
         ib.Unbind();
         va.Unbind();
         vb.Unbind();
+
+        vbLines.Unbind();
+
         shader.Unbind();
     }
+    
+    void Graphics::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    {
+        shader.Bind();
 
-    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+        double currentTime = glfwGetTime();
+        double elapsedTime = currentTime - programStartTime;
+        int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+
+        if (textureIndex)
+        {
+            textureA.Bind(0);
+        }
+        else 
+        {
+            textureB.Bind(0);
+        }
+
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture", 0);
+        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+
+        renderer.Draw(va, ib, shader);
+    }
+
+    void Graphics::RenderLines(const glm::mat4& mvpMatrix)
+    {
+        UNREFERENCED_PARAMETER(mvpMatrix);
+
+        // Bind the shader and set uniforms for line rendering
+        shader.Bind();
+        vaLines.Bind();
+        shader.SetUniform1i("u_RenderTextured", 0); // no texture
+        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+
+        // Draw the lines directly without an IBO
+        GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+
+        // Debugging statement to print that the square lines are being drawn
+        std::cout << "Drawing square lines..." << std::endl;
+
+        shader.SetUniform1i("u_RenderTextured", 1);
+        vaLines.Unbind();
+    }
+
+
+
+    void Graphics::DrawColoredSquare(const glm::mat4& mvpMatrix) 
+    {
+        // Bind the shader and set uniforms
+        shader.Bind();
+        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+
+        // Render the square
+        renderer.Draw(va, ib, shader);
+    }
+
+
+    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
         renderer.Clear();
 
-
-        for (const auto& entityPair : *entities)
+        for (const auto& entityPair : *entities) 
         {
             Entity* entity = entityPair.second.get();
 
-            if (entity->HasComponent(ComponentType::Transform))
+            if (entity->HasComponent(ComponentType::Transform)) 
             {
                 //Assign reference to transform component
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
@@ -124,17 +205,24 @@ namespace Engine
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
-                // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
+                                // Handle the collision as needed
+                            }
 
+                        }
+                    }
+                //Get the current state of the 'P' key
+
+
+                // Apply transformations from UpdateTransformations
+                if (currentPState && !previousPState)
+                {
                 glm::mat4 mvpA = proj * view * modelA;
 
-                //Get the current state of the 'P' key
+                // Get the current state of the 'P' key
                 bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
                 // Check if there's a change in the 'P' key state
-                if (currentPState && !previousPState)
-                {
+                if (currentPState && !previousPState) {
                     // Toggle the rendering mode
                     ToggleRenderMode();
                 }
@@ -142,60 +230,23 @@ namespace Engine
                 // Update the previous 'P' key state
                 previousPState = currentPState;
 
-                if (renderTexturedSquare)
+                if (renderTexturedSquare) 
                 {
-
-                    shader.Bind();
-
-
-                    double currentTime = glfwGetTime();
-                    double elapsedTime = currentTime - programStartTime;
-                    int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
-
-                    if (textureIndex == 0)
-                    {
-                        textureA.Bind(0);
-                    }
-                    else
-                    {
-                        textureB.Bind(0);
-                    }
-
-
-                    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-                    shader.SetUniform1i("u_Texture", 0);
-                    shader.SetUniformMat4f("u_MVP", mvpA);
-                    renderer.Draw(va, ib, shader);
-
-                    // Draw a square around Texture A
-                    shader.SetUniform1i("u_RenderTextured", 0); // Render plain (no texture)
-                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-                    // Draw the square as lines 
-                    GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-                    // Reset the shader render mode to textured
-                    shader.SetUniform1i("u_RenderTextured", 1);
-
+                    RenderTexturedEntity(mvpA);
+                    RenderLines(mvpA);
                 }
                 else
                 {
-                    // Bind the shader and set uniforms
-                    shader.Bind();
-                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-                    shader.SetUniformMat4f("u_MVP", mvpA);
-
-                    // Render the blue square
-                    renderer.Draw(va, ib, shader);
+                    DrawColoredSquare(mvpA);
                 }
+
                 transform->x = static_cast<int>(transA.x);
                 transform->y = static_cast<int>(transA.y);
-
             }
-
         }
         //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
+
 
     void Graphics::UpdateViewport(int width, int height)
     {

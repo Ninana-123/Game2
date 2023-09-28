@@ -30,7 +30,8 @@ namespace Engine
 		{
 			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-
+			UNREFERENCED_PARAMETER(componentType);
+			UNREFERENCED_PARAMETER(sourceComponent);
 			// Clone the component and add it to the entity using AddComponent
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 			GetEntity(newEntityID)->AddComponent(std::unique_ptr<Component>(clonedComponent));
@@ -56,7 +57,7 @@ namespace Engine
 		if (!sourceEntity) 
 		{
 			// Entity not found
-			return -1; // Or use an appropriate error value
+			return UINT_MAX;
 		}
 
 		// Create a new entity as a clone
@@ -68,7 +69,7 @@ namespace Engine
 		for (const auto& pair : sourceComponents) {
 			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-
+			UNREFERENCED_PARAMETER(componentType);
 			// You may need to implement a copy constructor or clone method for your components
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 

@@ -11,8 +11,6 @@
  */
  /******************************************************************************/
 
-#pragma once
-
 namespace VECTORMATH
 {
 
@@ -24,15 +22,16 @@ namespace VECTORMATH
 	 /**************************************************************************/
 	typedef union Vector2D
 	{
+	#pragma warning(disable : 4201)
 		struct
 		{
 			float x, y;
 		};
-
+	#pragma warning(default : 4201)
 		float m[2];
 
 		// Constructors
-		Vector2D() : x(0.0f), y(0.0f) {}
+		Vector2D() : m{ 0.0f, 0.0f } {}
 		Vector2D(float _x, float _y);
 
 		//Do not change the following
