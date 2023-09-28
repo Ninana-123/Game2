@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #ifndef ENGINE_TEXTURE_H
