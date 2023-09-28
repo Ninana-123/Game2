@@ -28,7 +28,7 @@ namespace Engine {
     {
     }
 
-    WindowProps Loader::LoadWindowPropsFromConfig(const std::string& filePath) {
+    WindowConfig Loader::LoadWindowPropsFromConfig(const std::string& filePath) {
         Config config;
         config.LoadConfig(filePath);
 
@@ -37,7 +37,7 @@ namespace Engine {
         unsigned int width = std::stoi(config.properties["Width"]);
         unsigned int height = std::stoi(config.properties["Height"]);
 
-        return WindowProps(title, width, height);
+        return WindowConfig(title, width, height);
     }
 
     void Loader::LoadScene(const std::string& filePath) {

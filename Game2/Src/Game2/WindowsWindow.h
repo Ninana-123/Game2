@@ -6,7 +6,7 @@
 namespace Engine {
 	class WindowsWindow : public Window {
 	public:
-		WindowsWindow(const WindowProps& props);
+		WindowsWindow(const WindowConfig& props);
 		virtual ~WindowsWindow();
 
 		void OnUpdate();
@@ -17,7 +17,7 @@ namespace Engine {
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 
 	private:
-		virtual void Init(const WindowProps& props);
+		virtual void Init(const WindowConfig& props);
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;

@@ -23,7 +23,7 @@ namespace Engine
 {
     std::unique_ptr<Loader> loader;
     //Window Properties
-    Engine::WindowProps windowProps = loader->LoadWindowPropsFromConfig("config.txt");
+    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("config.txt");
 
     //Set filepath of audio to the variable
     AudioEngine audioEngine;
@@ -74,8 +74,6 @@ namespace Engine
             logger.Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
-
-
 
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
