@@ -19,11 +19,17 @@ namespace Engine
 		///Initialize systems
 		void Initialize();
 
+		//Update all systems
+		static void UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+
 		template <typename T>
 		T& GetSystem();
 
-		//Update all systems
-		static void UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+		template <typename T>
+		void SetSystemState(SystemState newState);
+
+		template <typename T>
+		void ToggleSystemState();
 
 		static std::vector<System*> all_systems;
 	private:

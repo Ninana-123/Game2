@@ -3,7 +3,7 @@
 #include "Graphics.h"
 #include "AudioEngine.h"
 #include "Logger.h"
-#include "Collision.h"
+#include "CollisionSystem.h"
 #include "Vector2d.h"
 namespace Engine
 {
@@ -123,59 +123,6 @@ namespace Engine
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
-
-
-                // Check collision with the window boundaries
-                // VECTORMATH::Vec2 velA(0.0f, 0.0f);
-                float halfWidth = 50.0f;  // Half of the texture width
-                float halfHeight = 50.0f; // Half of the texture height
-
-                AABB aabb1;
-                aabb1.min = VECTORMATH::Vec2(transA.x - halfWidth, transA.y - halfHeight);
-                aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
-
-                bool isCollisionWithWindow = false;
-               // bool isCollisionWithBoundary = false;
-
-                if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
-                    isCollisionWithWindow = true;
-                }
-
-                if (isCollisionWithWindow)
-                {
-                    std::cout << "Collision with the window detected!" << std::endl;
-                }
-
-
-                // collision with the entities
-                for (const auto& otherEntityPair : *entities)
-                {
-                    if (otherEntityPair.first != entityPair.first)
-                    {
-                        Entity* otherEntity = otherEntityPair.second.get();
-
-                        if (otherEntity->HasComponent(ComponentType::Transform))
-                        {
-                            TransformComponent* otherTransform = dynamic_cast<TransformComponent*>(otherEntity->GetComponent(ComponentType::Transform));
-
-                            float halfWidthB = 50.0f;  // Half of the texture width for entity2
-                            float halfHeightB = 50.0f; // Half of the texture height for entity2
-
-                            AABB aabb2;
-                            aabb2.min = VECTORMATH::Vec2(otherTransform->x - halfWidthB, otherTransform->y - halfHeightB);
-                            aabb2.max = VECTORMATH::Vec2(otherTransform->x + halfWidthB, otherTransform->y + halfHeightB);
-
-                            // Check for collision between aabb1 and aabb2
-                            if (aabb1.min.x < aabb2.max.x && aabb1.max.x > aabb2.min.x &&
-                                aabb1.min.y < aabb2.max.y && aabb1.max.y > aabb2.min.y)
-                            {
-                                std::cout << "Collision between new entity and old entity detected!" << std::endl;
-                                // Handle the collision as needed
-                            }
-                        }
-                    }
-                }
-
 
                 // Apply transformations from UpdateTransformations
                 glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);

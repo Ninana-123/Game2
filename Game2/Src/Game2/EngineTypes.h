@@ -8,4 +8,5 @@ typedef unsigned int ComponentID;
 typedef size_t ComponentIndex;
 constexpr ComponentIndex INVALID_INDEX = 0;
 
-enum class ComponentType {Position, Health, Hitbox, Transform};
+enum class ComponentType { Position, Collision, Transform, Texture };
+

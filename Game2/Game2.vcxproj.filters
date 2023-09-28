@@ -67,7 +67,7 @@
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Systems\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Collision.cpp">
+    <ClCompile Include="Src\Game2\CollisionSystem.cpp">
       <Filter>Systems\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Graphics.cpp">
@@ -198,7 +198,7 @@
     <ClInclude Include="Src\Game2\SoundInfo.h">
       <Filter>Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Collision.h">
+    <ClInclude Include="Src\Game2\CollisionSystem.h">
       <Filter>Systems\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Graphics.h">

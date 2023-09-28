@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "PositionComponent.h"
+#include "CollisionComponent.h"
 
 namespace Engine
 {

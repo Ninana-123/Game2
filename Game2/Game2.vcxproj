@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
-    <ClInclude Include="Src\Game2\Collision.h" />
+    <ClInclude Include="Src\Game2\CollisionSystem.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
     <ClInclude Include="Src\Game2\ComponentFactory.h" />
@@ -70,7 +70,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
-    <ClCompile Include="Src\Game2\Collision.cpp" />
+    <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />

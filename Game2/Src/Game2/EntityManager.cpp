@@ -79,11 +79,12 @@ namespace Engine
 		return clonedEntityID;
 	}
 
-	void Engine::EntityManager::DestroyEntity(EntityID entity)
+	void EntityManager::DestroyEntity(EntityID entity)
 	{
 		auto it = entities.find(entity);
 		if (it != entities.end())
-		{
+		{	
+			entities.erase(it);
 			// After removing the entity, reassign EntityIDs to close gaps
 			for (auto& pair : entities)
 			{
@@ -97,6 +98,5 @@ namespace Engine
 			}
 		}
 	}
-	
 }
 

@@ -85,7 +85,7 @@ namespace Engine
         m_ImGuiWrapper->OnAttach();
         //add component to entity
         targetEntity->AddNewComponent(ComponentType::Transform);
-        targetEntity->AddNewComponent(ComponentType::Position);
+        targetEntity->AddNewComponent(ComponentType::Collision);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
 
         //initialize audio files
@@ -162,10 +162,12 @@ namespace Engine
 
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
-                // Clone entity1 and store its ID
-                entity2 = EM.CloneEntity(entity1);
-                targetEntity = EM.GetEntity(entity2);
-                //isNewEntityMoved = true;
+               SM.ToggleSystemState<Graphics>();
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_2))
+            {
+                SM.ToggleSystemState<CollisionSystem>();
             }
 
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
