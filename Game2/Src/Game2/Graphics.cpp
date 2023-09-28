@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include "Graphics.h"
 #include "AudioEngine.h"
@@ -45,6 +44,10 @@ namespace Engine
         // Clear the color buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
+        int screenWidth, screenHeight;
+        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+
+
         // load and initialize the shader
         InitializeShader();
 
@@ -60,9 +63,9 @@ namespace Engine
         Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
-      /**************************************************************************************************/
-        //define vertex array and indices
-        float positions1[] = 
+        /**************************************************************************************************/
+          //define vertex array and indices
+        float positions[] =
         {
        -60.0f,  -60.0f, 0.0f, 0.0f,    //0
         60.0f,  -60.0f, 1.0f, 0.0f,    //1
@@ -71,16 +74,16 @@ namespace Engine
         };
 
         // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(positions1), std::end(positions1), std::begin(this->vtx_postions));
+        std::copy(std::begin(positions), std::end(positions), std::begin(this->vtx_postions));
 
-        unsigned int indices1[] =
+        unsigned int indices[] =
         {
             0, 1, 2,
             2, 3, 0
         };
 
-        std::copy(std::begin(indices1), std::end(indices1), std::begin(this->indices));
-        VertexBuffer vb(positions1, 4 * 4 * sizeof(float));
+        std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
         layout.Push<float>(2);
@@ -89,11 +92,11 @@ namespace Engine
 
         Graphics::ib.SetData(indices, 6);
 
-       /**************************************************************************************************/
+        /**************************************************************************************************/
 
-        VertexArray vaLines1;
+        VertexArray vaLines;
         // Define vertex array and indices for lines
-        float linePositions[] = 
+        float linePositions[] =
         {
             -30.0f, -30.0f, 0.0f, 0.0f,
              30.0f, -30.0f, 1.0f, 0.0f,
@@ -107,7 +110,49 @@ namespace Engine
         layoutLines.Push<float>(2);
         layoutLines.Push<float>(2);
         Graphics::vaLines.AddBuffer(vbLines, layoutLines);
-        
+
+        /**************************************************************************************************/
+        //VertexArray vaSingleLine;
+        //// Define vertex array and indices for a single line
+        //float singleLinePositions[] =
+        //{
+        //    -10.0f, 0.0f,   // Start point
+        //    10.0f, 0.0f     // End point
+        //};
+
+        //VertexBuffer vbSingleLine(singleLinePositions, 2 * 2 * sizeof(float));
+
+        //VertexBufferLayout layoutSingleLine;
+        //layoutSingleLine.Push<float>(2);
+        //vaSingleLine.AddBuffer(vbSingleLine, layoutSingleLine);
+        /**************************************************************************************************/
+
+      // Define vertices for the background
+        float backgroundPositions[] =
+        {
+            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float> (screenHeight) / 2.0f, 0.0f, 1.0f
+        };
+
+
+        // Define indices for the background
+        unsigned int backgroundIndices[] =
+        {
+            0, 1, 2,
+            2, 3, 0
+        };
+
+        VertexBuffer vbBackground(backgroundPositions, 4 * 4 * sizeof(float));
+
+        VertexBufferLayout layoutBackground;
+        layoutBackground.Push<float>(2);
+        layoutBackground.Push<float>(2);
+
+        Graphics::vaBackground.AddBuffer(vbBackground, layoutBackground);
+        Graphics::ibBackground.SetData(backgroundIndices, 6);
+
         /**************************************************************************************************/
 
         ib.Unbind();
@@ -115,10 +160,30 @@ namespace Engine
         vb.Unbind();
 
         vbLines.Unbind();
+        //vbSingleLine.Unbind();
+
+        vaBackground.Unbind();
+        ibBackground.Unbind();
 
         shader.Unbind();
     }
-    
+
+    void Graphics::RenderBackground()
+    {
+        shader.Bind();
+        textureC.Bind(0);
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture", 0);
+
+
+        vaBackground.Bind(); // Bind the background vertex array
+        ibBackground.Bind(); // Bind the background index buffer
+
+        renderer.Draw(vaBackground, ibBackground, shader);
+
+        shader.Unbind();
+    }
+
     void Graphics::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
@@ -131,7 +196,7 @@ namespace Engine
         {
             textureA.Bind(0);
         }
-        else 
+        else
         {
             textureB.Bind(0);
         }
@@ -141,12 +206,11 @@ namespace Engine
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
         renderer.Draw(va, ib, shader);
+        shader.Unbind();
     }
 
     void Graphics::RenderLines(const glm::mat4& mvpMatrix)
     {
-        UNREFERENCED_PARAMETER(mvpMatrix);
-
         // Bind the shader and set uniforms for line rendering
         shader.Bind();
         vaLines.Bind();
@@ -161,68 +225,72 @@ namespace Engine
 
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
+        shader.Unbind();
+    }
+
+    void Graphics::RenderSingleLine(const glm::mat4& mvpMatrix)
+    {
+        shader.Bind();
+        vaLines.Bind();
+        shader.SetUniform1i("u_RenderTextured", 0); // no texture
+        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+
+        // Draw a single straight line
+        GLCall(glDrawArrays(GL_LINES, 0, 2));
+
+        shader.SetUniform1i("u_RenderTextured", 1);
+        vaLines.Unbind();
+        shader.Unbind();
     }
 
 
-
-    void Graphics::DrawColoredSquare(const glm::mat4& mvpMatrix) 
+    void Graphics::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms
         shader.Bind();
-        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
+        va.Bind();
+        ib.Bind();
         // Render the square
         renderer.Draw(va, ib, shader);
+        shader.Unbind();
     }
 
 
-    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
+    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
+        RenderBackground();
 
-        for (const auto& entityPair : *entities) 
+        for (const auto& entityPair : *entities)
         {
             Entity* entity = entityPair.second.get();
 
-            if (entity->HasComponent(ComponentType::Transform)) 
+            if (entity->HasComponent(ComponentType::Transform))
             {
                 //Assign reference to transform component
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 
-                //Read transform data from Transform component
-
-                //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
-
-                //rotate
                 float rotationA = transform->rot;
-
-                //scale
                 glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
-                                // Handle the collision as needed
-                            }
-
-                        }
-                    }
-                //Get the current state of the 'P' key
-
-
                 // Apply transformations from UpdateTransformations
-                if (currentPState && !previousPState)
-                {
+                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
                 glm::mat4 mvpA = proj * view * modelA;
 
                 // Get the current state of the 'P' key
                 bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
                 // Check if there's a change in the 'P' key state
-                if (currentPState && !previousPState) {
+                if (currentPState && !previousPState)
+                {
                     // Toggle the rendering mode
                     ToggleRenderMode();
                 }
@@ -230,15 +298,18 @@ namespace Engine
                 // Update the previous 'P' key state
                 previousPState = currentPState;
 
-                if (renderTexturedSquare) 
+                if (renderTexturedSquare)
                 {
                     RenderTexturedEntity(mvpA);
                     RenderLines(mvpA);
+
                 }
                 else
                 {
+
                     DrawColoredSquare(mvpA);
                 }
+                RenderSingleLine(mvpA);
 
                 transform->x = static_cast<int>(transA.x);
                 transform->y = static_cast<int>(transA.y);
@@ -260,6 +331,7 @@ namespace Engine
 
         shader.Initialize();
         shader.Bind();
+
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -284,6 +356,17 @@ namespace Engine
             textureB.InitGL();
             textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
         }
+
+
+        if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
+        {
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
+            // Handle the error as needed, e.g., return or throw an exception
+        }
+        else {
+            textureC.InitGL();
+            textureC.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        }
     }
 
     // Function to toggle between textured and plain squares
@@ -296,11 +379,21 @@ namespace Engine
 
     glm::mat4 Graphics::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
+        int screenWidth, screenHeight;
+        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
+
+        // Translate the object to the center of the screen
+        model = glm::translate(model, glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f));
+
+        // Apply the provided translation
         model = glm::translate(model, translation);
+
         model = glm::scale(model, scale);
         model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
         return model;
     }
+
 
 } // namespace Engine
