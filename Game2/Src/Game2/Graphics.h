@@ -37,6 +37,9 @@ namespace Engine
         void ToggleRenderMode();
         void InitializeShader();
         void InitializeTextures();
+        void RenderTexturedEntity(const glm::mat4& mvpMatrix);
+        void RenderLines(const glm::mat4& mvpMatrix);
+        void DrawColoredSquare(const glm::mat4& mvpMatrix);
 
     private:
         Shader shader;
@@ -50,11 +53,15 @@ namespace Engine
 
         GLFWwindow* Window{};
         IndexBuffer ib;
+        IndexBuffer ibLines;
         Renderer renderer;
         VertexArray va;
+        VertexArray vaLines;
         glm::mat4 proj{};
         glm::mat4 view{};
 
+        VertexBuffer* aabbMeshVB;  // Declare as pointer
+        VertexBufferLayout* aabbMeshLayout;  // Declare as pointer
        
 
         float vtx_postions[16]{};

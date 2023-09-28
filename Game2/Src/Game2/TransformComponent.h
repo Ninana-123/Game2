@@ -10,7 +10,7 @@ namespace Engine
 	{
 	public:
 		int x = 0, y = 0;
-		float scaleX = 1.0f, scaleY = 1.0f;
+		float scaleX =1.0f, scaleY = 1.0f;
 		float rot = 0.0f;
 
 		ComponentType GetType() const override { return ComponentType::Transform; }
