@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include "IndexBuffer.h"
 #include "Renderer.h"
@@ -39,8 +38,6 @@ void IndexBuffer::GenerateBuffer() const
         GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(unsigned int), m_Data, GL_STATIC_DRAW));
     }
 }
-
-
 
 void IndexBuffer::Bind() const
 {
