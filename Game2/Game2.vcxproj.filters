@@ -94,6 +94,9 @@
     <ClCompile Include="Src\Game2\Loader.cpp">
       <Filter>Base\Serializer</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -236,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Loader.h">
       <Filter>Base\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Matrix3x3Lib.h">
+      <Filter>Base\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
