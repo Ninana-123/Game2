@@ -14,6 +14,7 @@
 #include "Graphics.h"
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
+#include "Loader.h"
 
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
@@ -22,6 +23,10 @@ int selectedEntityIndex = 0;
 
 namespace Engine
 {
+    std::unique_ptr<Loader> loader;
+    //Window Properties
+    Engine::WindowProps windowProps = loader->LoadWindowPropsFromConfig("config.txt");
+
     //Set filepath of audio to the variable
     AudioEngine audioEngine;
     SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
@@ -66,7 +71,7 @@ namespace Engine
         }
 
         // Create the window
-        m_Window = std::unique_ptr<Window>(Window::Create());
+        m_Window = std::unique_ptr<Window>(Window::Create(windowProps));
         if (!m_Window) {
             logger.Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
@@ -81,8 +86,6 @@ namespace Engine
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
 
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
-        m_ImGuiWrapper->OnAttach();
         //add component to entity
         targetEntity->AddNewComponent(ComponentType::Transform);
         targetEntity->AddNewComponent(ComponentType::Position);
@@ -95,6 +98,15 @@ namespace Engine
         audioEngine.loadSound(sound2);
         sound.setLoop();
         sound2.setLoop();
+
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper->OnAttach();
+        loader = std::make_unique<Engine::Loader>(&EM);
+        logger.Log(LogLevel::Debug, "Loading Scene");
+        loader->LoadScene("testscene.txt");
+        logger.Log(LogLevel::Debug, "Scene Loaded");
+
+
     }
 
     void Application::OnEvent(Event& e)
@@ -168,7 +180,9 @@ namespace Engine
                 //isNewEntityMoved = true;
             }
 
+
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+
 
             if (InputHandler.IsKeyPressed(KEY_UP))
             {
@@ -264,7 +278,7 @@ namespace Engine
         std::stringstream ss;
         ss << std::fixed << std::setprecision(2) << fps;
         std::string fps_str = ss.str();
-        std::string title_str = "Game2 | FPS: " + fps_str;
+        std::string title_str = windowProps.Title +" | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
     

@@ -4,6 +4,8 @@
 #include "InputEvent.h"
 
 namespace Engine {
+	Engine::Logger WindowLogger;
+
 	static bool s_GLFWInitialized = false;
 
 	static void GLFWErrorCallback(int error, const char* description) {

@@ -1,0 +1,3 @@
+Title=Game2 Engine
+Width=1280
+Height=720

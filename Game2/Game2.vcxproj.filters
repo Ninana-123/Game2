@@ -94,6 +94,9 @@
     <ClCompile Include="Src\Game2\Physics.cpp">
       <Filter>Systems\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Loader.cpp">
+      <Filter>Base\Serializer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -236,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\imstb_truetype.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Loader.h">
+      <Filter>Base\Serializer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
