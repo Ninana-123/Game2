@@ -6,17 +6,17 @@ namespace Engine
 {
 	std::vector<System*> SystemsManager::all_systems;
 
-	template Graphics& SystemsManager::GetSystem<Graphics>();
+	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
 	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>();
 
-	template void SystemsManager::ToggleSystemState<Graphics>();
+	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 
 	void SystemsManager::Initialize()
 	{
 		//add systems into systems container
 		all_systems.push_back(new CollisionSystem());
-		all_systems.push_back(new Graphics());
+		all_systems.push_back(new GraphicsSystem());
 
 		//initialize each system
 		for (auto system : all_systems)

@@ -2,7 +2,7 @@
 #include "EntityManager.h"
 #include "System.h"
 #include "SystemsManager.h"
-#include "Graphics.h"
+#include "GraphicsSystem.h"
 
 namespace Engine
 {

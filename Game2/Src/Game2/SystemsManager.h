@@ -1,8 +1,7 @@
 //System.h 
 #include "pch.h"
 #include "System.h"
-#include "TestSystem.h"
-#include "Graphics.h"
+#include "GraphicsSystem.h"
 
 #pragma once
 

@@ -18,7 +18,6 @@ Technology is prohibited.
 #include "CollisionComponent.h"
 
 
-
 float dt = 0.0;  // Time difference between frames (delta time)
 
 /*!*****************************************************************

@@ -6,12 +6,11 @@
 #include "EntityManager.h"
 #include "SystemsManager.h"
 #include "ComponentFactory.h"
-#include "PositionComponent.h"
 #include "TransformComponent.h"
 #include "Entity.h"
 #include "System.h"
 #include "KeyCodes.h"
-#include "Graphics.h"
+#include "GraphicsSystem.h"
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
 #include "Loader.h"
@@ -34,7 +33,7 @@ namespace Engine
     // Create a logger instance
     Engine::Logger logger;
     Engine::Input InputHandler;
-    Graphics graphicsSystem;
+    GraphicsSystem graphicsSystem;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
     //Entity instances
@@ -152,7 +151,7 @@ namespace Engine
 
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
-               SM.ToggleSystemState<Graphics>();
+               SM.ToggleSystemState<GraphicsSystem>();
             }
 
             if (InputHandler.IsKeyTriggered(KEY_2))

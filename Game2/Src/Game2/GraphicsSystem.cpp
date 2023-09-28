@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Graphics.h"
+#include "GraphicsSystem.h"
 #include "AudioEngine.h"
 #include "Logger.h"
 #include "CollisionSystem.h"
@@ -9,19 +9,19 @@ namespace Engine
 
     Logger GraphicsLogger;
 
-    Graphics::Graphics()
+    GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Basic.shader")
     {
     }
 
-    Graphics::~Graphics()
+    GraphicsSystem::~GraphicsSystem()
     {
         // Cleanup any resources here
         // Terminate GLFW
         glfwTerminate();
     }
 
-    void Graphics::InitializeGLEW() {
+    void GraphicsSystem::InitializeGLEW() {
         // Initialize GLEW
         GLenum glewInitResult = glewInit();
         if (glewInitResult != GLEW_OK)
@@ -33,11 +33,11 @@ namespace Engine
             GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
-    void Graphics::Initialize() {
+    void GraphicsSystem::Initialize() {
 
         Window = glfwGetCurrentContext();
 
-        Graphics::InitializeGLEW();
+        GraphicsSystem::InitializeGLEW();
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -60,8 +60,8 @@ namespace Engine
 
 
         // set up projection and view matrices
-        Graphics::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-        Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+        GraphicsSystem::proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+        GraphicsSystem::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
         /**************************************************************************************************/
           //define vertex array and indices
@@ -88,9 +88,9 @@ namespace Engine
         VertexBufferLayout layout;
         layout.Push<float>(2);
         layout.Push<float>(2);
-        Graphics::va.AddBuffer(vb, layout);
+        GraphicsSystem::va.AddBuffer(vb, layout);
 
-        Graphics::ib.SetData(indices, 6);
+        GraphicsSystem::ib.SetData(indices, 6);
 
         /**************************************************************************************************/
 
@@ -109,7 +109,7 @@ namespace Engine
         VertexBufferLayout layoutLines;
         layoutLines.Push<float>(2);
         layoutLines.Push<float>(2);
-        Graphics::vaLines.AddBuffer(vbLines, layoutLines);
+        GraphicsSystem::vaLines.AddBuffer(vbLines, layoutLines);
 
         /**************************************************************************************************/
         //VertexArray vaSingleLine;
@@ -150,8 +150,8 @@ namespace Engine
         layoutBackground.Push<float>(2);
         layoutBackground.Push<float>(2);
 
-        Graphics::vaBackground.AddBuffer(vbBackground, layoutBackground);
-        Graphics::ibBackground.SetData(backgroundIndices, 6);
+        GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
+        GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
 
         /**************************************************************************************************/
 
@@ -168,7 +168,7 @@ namespace Engine
         shader.Unbind();
     }
 
-    void Graphics::RenderBackground()
+    void GraphicsSystem::RenderBackground()
     {
         shader.Bind();
         textureC.Bind(0);
@@ -184,7 +184,7 @@ namespace Engine
         shader.Unbind();
     }
 
-    void Graphics::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
 
@@ -209,7 +209,7 @@ namespace Engine
         shader.Unbind();
     }
 
-    void Graphics::RenderLines(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::RenderLines(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms for line rendering
         shader.Bind();
@@ -228,7 +228,7 @@ namespace Engine
         shader.Unbind();
     }
 
-    void Graphics::RenderSingleLine(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
         vaLines.Bind();
@@ -244,7 +244,7 @@ namespace Engine
     }
 
 
-    void Graphics::DrawColoredSquare(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms
         shader.Bind();
@@ -259,7 +259,7 @@ namespace Engine
     }
 
 
-    void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+    void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
         RenderBackground();
@@ -319,13 +319,13 @@ namespace Engine
     }
 
 
-    void Graphics::UpdateViewport(int width, int height)
+    void GraphicsSystem::UpdateViewport(int width, int height)
     {
         glViewport(0, 0, width, height);
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
-    void Graphics::InitializeShader()
+    void GraphicsSystem::InitializeShader()
     {
         shader.LoadShader("Resource/Shaders/Basic.shader");
 
@@ -335,7 +335,7 @@ namespace Engine
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    void Graphics::InitializeTextures()
+    void GraphicsSystem::InitializeTextures()
     {
         if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
         {
@@ -370,14 +370,14 @@ namespace Engine
     }
 
     // Function to toggle between textured and plain squares
-    void Graphics::ToggleRenderMode()
+    void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
         shader.Bind();
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
     }
 
-    glm::mat4 Graphics::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
+    glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
         int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);

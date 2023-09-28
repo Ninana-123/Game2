@@ -5,8 +5,20 @@ constexpr EntityID EMPTY_ID = 0;
 
 typedef unsigned int ComponentID;
 
-typedef size_t ComponentIndex;
-constexpr ComponentIndex INVALID_INDEX = 0;
+enum class ComponentType { Collision, Transform, Texture };
 
-enum class ComponentType { Position, Collision, Transform, Texture };
+enum class TextureClass
+{
+    Null,
+    Unit,
+    Background,
+    Tower,
+};
 
+enum class TextureType
+{ 
+    Null,
+    Type1,
+    Type2,
+    Type3,
+};

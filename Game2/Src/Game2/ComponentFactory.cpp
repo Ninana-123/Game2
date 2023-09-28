@@ -8,7 +8,7 @@ namespace Engine
         // Register components with predefined ComponentType values
         RegisterComponent(ComponentType::Transform, []() { return std::make_unique<TransformComponent>(); });
         RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>(); });
-        RegisterComponent(ComponentType::Position, []() { return std::make_unique<PositionComponent>(); });
+        RegisterComponent(ComponentType::Texture,   []() { return std::make_unique<TextureComponent>();   });
 
     }
 
