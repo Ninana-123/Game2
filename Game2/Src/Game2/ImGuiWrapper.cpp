@@ -324,8 +324,10 @@ namespace Engine {
 			}
 			/*
 			if (ImGui::Button("Delete currently selected entity")) {
+				entityManager->DestroyEntity(selectedEntityIndex);
 			}
 			*/
+			
 		}
 
 		ImGui::End();

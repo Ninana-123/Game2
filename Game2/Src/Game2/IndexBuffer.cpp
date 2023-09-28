@@ -27,9 +27,9 @@ void IndexBuffer::GenerateBuffer() const
 {
     if (m_RendererID == 0)
     {
-        //ensure that the size of unsigned int matches with size of GLuint
-        ASSERT(sizeof(unsigned int) == sizeof(GLuint));
-
+#if !defined(NDEBUG) || defined(_DEBUG)
+        static_assert(sizeof(unsigned int) == sizeof(GLuint), "Size mismatch between unsigned int and GLuint");
+#endif
         GLuint rendererID;
         //store its ID in m_rendererID
         GLCall(glGenBuffers(1, &rendererID));

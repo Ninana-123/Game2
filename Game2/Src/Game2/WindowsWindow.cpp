@@ -9,6 +9,7 @@ namespace Engine {
 	static bool s_GLFWInitialized = false;
 
 	static void GLFWErrorCallback(int error, const char* description) {
+		UNREFERENCED_PARAMETER(error);
 		WindowLogger.Log(Engine::LogLevel::Error, description);
 	}
 	Window* Window::Create(const WindowProps& props) {
@@ -67,6 +68,8 @@ namespace Engine {
 
 		});
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			UNREFERENCED_PARAMETER(scancode);
+			UNREFERENCED_PARAMETER(mods);
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
 			case GLFW_PRESS:
@@ -96,6 +99,7 @@ namespace Engine {
 		});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow * window, int button, int action, int mods) {
+			UNREFERENCED_PARAMETER(mods);
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
 			case GLFW_PRESS: {

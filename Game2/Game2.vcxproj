@@ -44,7 +44,6 @@
     <ClInclude Include="Src\Game2\InputEvent.h" />
     <ClInclude Include="Src\Game2\KeyCodes.h" />
     <ClInclude Include="Src\Game2\Loader.h" />
-    <ClInclude Include="Src\Game2\LogFileWriter.h" />
     <ClInclude Include="Src\Game2\Logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\Application.h" />
@@ -87,7 +86,6 @@
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
-    <ClCompile Include="Src\Game2\LogFileWriter.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

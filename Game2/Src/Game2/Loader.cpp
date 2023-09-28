@@ -87,7 +87,7 @@ namespace Engine {
                 // Add more components as needed based on the format of your scene file
                 std::cout << "Entity " << i + 1 << " created\n";
                 if (entityPtr->HasComponent(ComponentType::Transform)) {
-                    std::cout << "Entity " << i + 1 << " has a transform component\n";
+                    //std::cout << "Entity " << i + 1 << " has a transform component\n";
                 }
             }
         }

@@ -47,7 +47,7 @@ namespace Engine
 
     float scalar = 0.5f;
     float rotation = 0.125f;
-    float transformation = 5.0f;
+    int transformation = 5;
     bool currentlyPlayingSound = 0;
 
     Application::Application()
@@ -221,6 +221,7 @@ namespace Engine
 
     bool Application::OnWindowClose(WindowCloseEvent& e)
     {
+        UNREFERENCED_PARAMETER(e);
         // Handle window close event
         m_Running = false;
         return true;

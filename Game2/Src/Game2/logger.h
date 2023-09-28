@@ -1,8 +1,9 @@
-    #pragma once
+#pragma once
+//#pragma warning(disable : 4251)
 
 #include "pch.h"
 #include "Core.h"
-#include "LogFileWriter.h"
+#include <fstream>
 
 namespace Engine {
     enum class LogLevel {
@@ -15,20 +16,14 @@ namespace Engine {
 
     class GAME2_API Logger {
     public:
-        Logger() : m_FileWriter("default_log.txt") {}
-        Logger(const std::string& logFileName);
+        Logger(const std::string& logFileName = "default_log.txt");
         ~Logger();
-            void Log(LogLevel level, const std::string& message) {
-#ifdef NDEBUG
-            // In release mode, log messages will not be displayed
-#else
-            // In debug mode, log messages will be displayed
-            LogInternal(level, message);
-#endif
-        }
+
+        void Log(LogLevel level, const std::string& message);
 
     private:
-        void LogInternal(LogLevel level, const std::string& message);
-        LogFileWriter m_FileWriter;
+        void WriteLog(const std::string& logMessage);
+
+        std::ofstream m_LogFile;
     };
-}
+    }

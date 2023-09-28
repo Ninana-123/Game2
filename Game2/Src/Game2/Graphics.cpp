@@ -62,7 +62,7 @@ namespace Engine
 
       /**************************************************************************************************/
         //define vertex array and indices
-        float positions[] = 
+        float positions1[] = 
         {
        -60.0f,  -60.0f, 0.0f, 0.0f,    //0
         60.0f,  -60.0f, 1.0f, 0.0f,    //1
@@ -71,16 +71,16 @@ namespace Engine
         };
 
         // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(positions), std::end(positions), std::begin(this->vtx_postions));
+        std::copy(std::begin(positions1), std::end(positions1), std::begin(this->vtx_postions));
 
-        unsigned int indices[] =
+        unsigned int indices1[] =
         {
             0, 1, 2,
             2, 3, 0
         };
 
-        std::copy(std::begin(indices), std::end(indices), std::begin(this->indices));
-        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+        std::copy(std::begin(indices1), std::end(indices1), std::begin(this->indices));
+        VertexBuffer vb(positions1, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
         layout.Push<float>(2);
@@ -91,7 +91,7 @@ namespace Engine
 
        /**************************************************************************************************/
 
-        VertexArray vaLines;
+        VertexArray vaLines1;
         // Define vertex array and indices for lines
         float linePositions[] = 
         {
@@ -145,6 +145,8 @@ namespace Engine
 
     void Graphics::RenderLines(const glm::mat4& mvpMatrix)
     {
+        UNREFERENCED_PARAMETER(mvpMatrix);
+
         // Bind the shader and set uniforms for line rendering
         shader.Bind();
         vaLines.Bind();
