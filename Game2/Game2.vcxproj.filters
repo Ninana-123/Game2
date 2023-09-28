@@ -16,9 +16,6 @@
     <ClCompile Include="Src\Game2\Entity.cpp">
       <Filter>Base\Engine\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\TestSystem.cpp">
-      <Filter>Base\Engine\System</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\SystemsManager.cpp">
       <Filter>Base\Engine\System</Filter>
     </ClCompile>
@@ -27,9 +24,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Input.cpp">
       <Filter>Base\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\LogFileWriter.cpp">
-      <Filter>Base\Logger</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Logger.cpp">
       <Filter>Base\Logger</Filter>
@@ -67,32 +61,38 @@
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Systems\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Collision.cpp">
+    <ClCompile Include="Src\Game2\CollisionSystem.cpp">
       <Filter>Systems\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Graphics.cpp">
+    <ClCompile Include="Src\Game2\GraphicsSystem.cpp">
       <Filter>Systems\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\IndexBuffer.cpp">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Renderer.cpp">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Shader.cpp">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Texture.cpp">
-      <Filter>Systems\Texture</Filter>
+      <Filter>Systems\Graphics\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\VertexArray.cpp">
-      <Filter>Systems\Vertex</Filter>
+      <Filter>Systems\Graphics\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\VertexBuffer.cpp">
-      <Filter>Systems\Vertex</Filter>
+      <Filter>Systems\Graphics\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Physics.cpp">
       <Filter>Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Loader.cpp">
+      <Filter>Base\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp">
+      <Filter>Base\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +120,6 @@
     <ClInclude Include="Src\Game2\SystemsManager.h">
       <Filter>Base\Engine\System</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\TestSystem.h">
-      <Filter>Base\Engine\System</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Prefab.h">
       <Filter>Base\Engine\Prefabs</Filter>
     </ClInclude>
@@ -146,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\MouseButtonCodes.h">
       <Filter>Base\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\LogFileWriter.h">
-      <Filter>Base\Logger</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Logger.h">
       <Filter>Base\Logger</Filter>
@@ -183,9 +177,6 @@
     <ClInclude Include="Src\Game2\CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\PositionComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\TransformComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -198,32 +189,32 @@
     <ClInclude Include="Src\Game2\SoundInfo.h">
       <Filter>Systems\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Collision.h">
+    <ClInclude Include="Src\Game2\CollisionSystem.h">
       <Filter>Systems\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Graphics.h">
+    <ClInclude Include="Src\Game2\GraphicsSystem.h">
       <Filter>Systems\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\IndexBuffer.h">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Renderer.h">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Shader.h">
-      <Filter>Systems\Rendering</Filter>
+      <Filter>Systems\Graphics\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Texture.h">
-      <Filter>Systems\Texture</Filter>
+      <Filter>Systems\Graphics\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\VertexArray.h">
-      <Filter>Systems\Vertex</Filter>
+      <Filter>Systems\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\VertexBuffer.h">
-      <Filter>Systems\Vertex</Filter>
+      <Filter>Systems\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\VertexBufferLayout.h">
-      <Filter>Systems\Vertex</Filter>
+      <Filter>Systems\Graphics\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Physics.h">
       <Filter>Systems\Physics</Filter>
@@ -236,6 +227,15 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\imstb_truetype.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Loader.h">
+      <Filter>Base\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TextureComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Matrix3x3Lib.h">
+      <Filter>Base\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,20 +305,20 @@
     <Filter Include="Systems\Graphics">
       <UniqueIdentifier>{0edaf45b-2834-4c91-ab30-0a1ebe2ef42c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\Rendering">
+    <Filter Include="Base\Serializer">
+      <UniqueIdentifier>{aef22555-3bc9-4211-8b79-97478826eb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Rendering">
       <UniqueIdentifier>{716fb4de-156e-41c7-a898-06a00819b2b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Texture">
-      <UniqueIdentifier>{679c7976-1ac9-4808-b83e-39b2a6338c16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Vertex">
-      <UniqueIdentifier>{578c0454-6b9a-4d77-b65d-e5a923949581}</UniqueIdentifier>
     </Filter>
     <Filter Include="Systems\Physics">
       <UniqueIdentifier>{2c52e513-b5c7-454c-8da1-3b1bae9fbe9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Serializer">
-      <UniqueIdentifier>{aef22555-3bc9-4211-8b79-97478826eb26}</UniqueIdentifier>
+    <Filter Include="Systems\Graphics\Texture">
+      <UniqueIdentifier>{679c7976-1ac9-4808-b83e-39b2a6338c16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Vertex">
+      <UniqueIdentifier>{578c0454-6b9a-4d77-b65d-e5a923949581}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

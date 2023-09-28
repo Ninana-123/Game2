@@ -2,7 +2,8 @@
 #include "pch.h"
 #include "Component.h"
 #include "TransformComponent.h"
-#include "PositionComponent.h"
+#include "CollisionComponent.h"
+#include "TextureComponent.h"
 
 namespace Engine
 {

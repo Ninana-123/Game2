@@ -224,8 +224,8 @@ namespace VECTORMATH {
      */
      /**************************************************************************/
     float Vector2DLength(const Vector2D& pVec0) {
-        float xSquared = pow(pVec0.x, 2);
-        float ySquared = pow(pVec0.y, 2);
+        float xSquared = static_cast<float>(pow(pVec0.x, 2));
+        float ySquared = static_cast<float>(pow(pVec0.y, 2));
         float squaredLength = xSquared + ySquared;
         float length = sqrt(squaredLength);
         return length;
@@ -237,8 +237,8 @@ namespace VECTORMATH {
      */
      /**************************************************************************/
     float Vector2DSquareLength(const Vector2D& pVec0) {
-        float xSquared = pow(pVec0.x, 2);
-        float ySquared = pow(pVec0.y, 2);
+        float xSquared = static_cast<float>(pow(pVec0.x, 2));
+        float ySquared = static_cast<float>(pow(pVec0.y, 2));
         float squaredLength = xSquared + ySquared;
         return squaredLength;
     }
@@ -252,7 +252,7 @@ namespace VECTORMATH {
     float Vector2DDistance(const Vector2D& pVec0, const Vector2D& pVec1) {
         float deltaX = pVec0.x - pVec1.x;
         float deltaY = pVec0.y - pVec1.y;
-        float squaredDistance = pow(deltaX, 2) + pow(deltaY, 2);
+        float squaredDistance = static_cast<float>(pow(deltaX, 2) + pow(deltaY, 2));
         float distance = sqrt(squaredDistance);
         return distance;
     }
@@ -267,7 +267,7 @@ namespace VECTORMATH {
     float Vector2DSquareDistance(const Vector2D& pVec0, const Vector2D& pVec1) {
         float deltaX = pVec0.x - pVec1.x;
         float deltaY = pVec0.y - pVec1.y;
-        float squaredDistance = pow(deltaX, 2) + pow(deltaY, 2);
+        float squaredDistance = static_cast<float>(pow(deltaX, 2) + pow(deltaY, 2));
         return squaredDistance;
     }
 

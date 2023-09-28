@@ -3,9 +3,20 @@
 
 
 namespace Engine {
-    Logger::Logger(const std::string& logFileName) : m_FileWriter(logFileName) {}
-    Logger::~Logger() {}
-    void Logger::LogInternal(LogLevel level, const std::string& message) {
+    Logger::Logger(const std::string& logFileName) {
+        m_LogFile.open(logFileName, std::ios::out | std::ios::trunc);
+        if (!m_LogFile.is_open()) {
+            throw std::runtime_error("Failed to open log file.");
+        }
+    }
+
+    Logger::~Logger() {
+        if (m_LogFile.is_open()) {
+            m_LogFile.close();
+        }
+    }
+
+    void Engine::Logger::Log(LogLevel level, const std::string& message) {
         std::string levelStr;
         switch (level) {
         case LogLevel::Debug:
@@ -27,13 +38,20 @@ namespace Engine {
 
         std::time_t now = std::time(nullptr);
         struct tm timeInfo;
-        localtime_s(&timeInfo, &now); 
+        localtime_s(&timeInfo, &now);
 
         char timestamp[64];
         std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeInfo);
 
         std::string logEntry = timestamp + levelStr + " " + message;
         std::cout << logEntry << std::endl;
-        m_FileWriter.WriteLog(logEntry);
+        WriteLog(logEntry);
+    }
+
+    void Logger::WriteLog(const std::string& logMessage) {
+        if (m_LogFile.is_open()) {
+            m_LogFile << logMessage << '\n';
+            m_LogFile.flush();
+        }
     }
 }

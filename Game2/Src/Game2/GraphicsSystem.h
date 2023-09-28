@@ -17,16 +17,17 @@
 #include "System.h"
 #include "Component.h"
 #include "Entity.h"
-#include"Collision.h"
+#include"CollisionSystem.h"
 #include"Vector2d.h"
 
 namespace Engine
 {
-    class Graphics : public System
+    class GraphicsSystem : public System
     {
     public:
-        Graphics();
-        ~Graphics();
+
+        GraphicsSystem();
+        ~GraphicsSystem();
 
         void Initialize() override;
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;

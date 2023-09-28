@@ -2,12 +2,12 @@
 #include "Application.h" 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
-#include "logger.h"
+#include "Logger.h"
 
-Engine::Logger EntryPointLogger;
 int main(int argc, char** argv)
 {
-    EntryPointLogger.Log(Engine::LogLevel::Debug, "Entry Point entered.");
+    UNREFERENCED_PARAMETER(argc);
+    UNREFERENCED_PARAMETER(argv);
     auto app = Engine::CreateApplication();
     app->Initialize();
     app->Run();

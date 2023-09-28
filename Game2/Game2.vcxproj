@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
-    <ClInclude Include="Src\Game2\Collision.h" />
+    <ClInclude Include="Src\Game2\CollisionSystem.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
     <ClInclude Include="Src\Game2\ComponentFactory.h" />
@@ -30,7 +30,7 @@
     <ClInclude Include="Src\Game2\Entity.h" />
     <ClInclude Include="Src\Game2\EntityManager.h" />
     <ClInclude Include="Src\Game2\Event.h" />
-    <ClInclude Include="Src\Game2\Graphics.h" />
+    <ClInclude Include="Src\Game2\GraphicsSystem.h" />
     <ClInclude Include="Src\Game2\imconfig.h" />
     <ClInclude Include="Src\Game2\imgui.h" />
     <ClInclude Include="Src\Game2\ImGuiWrapper.h" />
@@ -43,22 +43,22 @@
     <ClInclude Include="Src\Game2\Input.h" />
     <ClInclude Include="Src\Game2\InputEvent.h" />
     <ClInclude Include="Src\Game2\KeyCodes.h" />
-    <ClInclude Include="Src\Game2\LogFileWriter.h" />
+    <ClInclude Include="Src\Game2\Loader.h" />
     <ClInclude Include="Src\Game2\Logger.h" />
     <ClInclude Include="Src\Game2\Main.h" />
     <ClInclude Include="Src\Game2\Application.h" />
+    <ClInclude Include="Src\Game2\Matrix3x3Lib.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\Physics.h" />
-    <ClInclude Include="Src\Game2\PositionComponent.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\SoundInfo.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\SystemsManager.h" />
-    <ClInclude Include="Src\Game2\TestSystem.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
+    <ClInclude Include="Src\Game2\TextureComponent.h" />
     <ClInclude Include="Src\Game2\TransformComponent.h" />
     <ClInclude Include="Src\Game2\Vector2d.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
@@ -70,12 +70,12 @@
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
-    <ClCompile Include="Src\Game2\Collision.cpp" />
+    <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
-    <ClCompile Include="Src\Game2\Graphics.cpp" />
+    <ClCompile Include="Src\Game2\GraphicsSystem.cpp" />
     <ClCompile Include="Src\Game2\imgui.cpp" />
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp" />
     <ClCompile Include="Src\Game2\imgui_demo.cpp" />
@@ -85,8 +85,9 @@
     <ClCompile Include="Src\Game2\imgui_widgets.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
-    <ClCompile Include="Src\Game2\LogFileWriter.cpp" />
+    <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
+    <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -96,7 +97,6 @@
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />
-    <ClCompile Include="Src\Game2\TestSystem.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>

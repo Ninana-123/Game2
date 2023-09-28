@@ -10,11 +10,13 @@ namespace Engine {
 		ImGuiWrapper();
 		ImGuiWrapper(Engine::EntityManager* em) : entityManager(em) {}
 		~ImGuiWrapper();
-
+		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
 		void OnAttach();
 		void OnDetach();
 		void OnUpdate();
 		void OnEvent(Event& event);
+		inline Entity* TargetEntityGetter() { return targetEntity; }
+		int selectedEntityIndex = 0;
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
@@ -29,6 +31,7 @@ namespace Engine {
 	private:
 		float m_Time = 0.0f;
 		Engine::EntityManager* entityManager;
+		Entity* targetEntity = nullptr;
 
 	};
 }

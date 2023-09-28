@@ -2,7 +2,7 @@
 #include "EntityManager.h"
 #include "System.h"
 #include "SystemsManager.h"
-#include "Graphics.h"
+#include "GraphicsSystem.h"
 
 namespace Engine
 {
@@ -30,7 +30,8 @@ namespace Engine
 		{
 			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-
+			UNREFERENCED_PARAMETER(componentType);
+			UNREFERENCED_PARAMETER(sourceComponent);
 			// Clone the component and add it to the entity using AddComponent
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 			GetEntity(newEntityID)->AddComponent(std::unique_ptr<Component>(clonedComponent));
@@ -56,7 +57,7 @@ namespace Engine
 		if (!sourceEntity) 
 		{
 			// Entity not found
-			return -1; // Or use an appropriate error value
+			return UINT_MAX;
 		}
 
 		// Create a new entity as a clone
@@ -68,7 +69,7 @@ namespace Engine
 		for (const auto& pair : sourceComponents) {
 			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-
+			UNREFERENCED_PARAMETER(componentType);
 			// You may need to implement a copy constructor or clone method for your components
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 
@@ -79,14 +80,24 @@ namespace Engine
 		return clonedEntityID;
 	}
 
-	void Engine::EntityManager::DestroyEntity(EntityID entity)
+	void EntityManager::DestroyEntity(EntityID entity)
 	{
 		auto it = entities.find(entity);
-		if (it != entities.end()) 
-		{
+		if (it != entities.end())
+		{	
 			entities.erase(it);
+			// After removing the entity, reassign EntityIDs to close gaps
+			for (auto& pair : entities)
+			{
+				if (pair.first > entity) //check if ID is greater than the target ID
+				{
+					EntityID newID = pair.first - 1; // -1 and reassign entity ptr in map
+					entities[newID] = std::move(pair.second);
+					entities.erase(pair.first);
+					pair.second->id = newID;
+				}
+			}
 		}
 	}
-	
 }
 

@@ -172,6 +172,8 @@
     void AudioEngine::playEvent(const char* eventName, int instanceIndex) {
         // printEventInfo(eventDescriptions[eventName]);
         auto eventInstance = eventInstances[eventName];
+        UNREFERENCED_PARAMETER(eventInstance);
+        UNREFERENCED_PARAMETER(instanceIndex);
         if (eventInstances.count(eventName) > 0)
             ERRCHECK(eventInstances[eventName]->start());
         else
@@ -179,6 +181,7 @@
     }
 
     void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
+        UNREFERENCED_PARAMETER(instanceIndex);
         if (eventInstances.count(eventName) > 0)
             ERRCHECK(eventInstances[eventName]->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
         else
@@ -191,6 +194,7 @@
     }
 
     bool AudioEngine::eventIsPlaying(const char* eventName, int instance /*= 0*/) {
+        UNREFERENCED_PARAMETER(instance);
         FMOD_STUDIO_PLAYBACK_STATE playbackState;
         ERRCHECK(eventInstances[eventName]->getPlaybackState(&playbackState));
         return playbackState == FMOD_STUDIO_PLAYBACK_PLAYING;
@@ -233,6 +237,7 @@
     // Error checking/debugging function definitions
 
     void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line) {
+        UNREFERENCED_PARAMETER(file);
         if (result != FMOD_OK)
             std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - " << FMOD_ErrorString(result) << '\n';
     }

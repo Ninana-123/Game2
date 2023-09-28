@@ -6,22 +6,35 @@
 
 namespace Engine
 {
-	///System is a pure virtual base class (which is to say, an interface) that is
-	///the base class for all systems used by the game. 
+	enum class SystemState { On, Off };
+	
 	class Entity;
-	class System
+	class System 
 	{
 	public:
 		
+		// Set the state of the system
+		void SetSystemState(SystemState newState)
+		{
+			state = newState;
+		}
+
+		// Get the current state of the system
+		SystemState GetSystemState() const
+		{
+			return state;
+		}
+
+		//virtual initialize
 		virtual void Initialize() {}
 
-		//Update function for child class systems
+		//virtual update
 		virtual void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) = 0;
 
 		virtual ~System() {}
 
-		
 	private:
+		SystemState state = SystemState::On;
 		
 	};
 }
