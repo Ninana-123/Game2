@@ -60,7 +60,7 @@ void Texture::Unbind() const
 }
 
 //change the texture of an existing texture object by loading a different image file
-void Texture::Load(const std::string& path)
+bool Texture::Load(const std::string& path)
 {
     // Enable vertical flipping of loaded images
     stbi_set_flip_vertically_on_load(1);
@@ -70,6 +70,9 @@ void Texture::Load(const std::string& path)
 
     // Update the file path
     m_Filepath = path;
+
+    // Check if the loading process was successful
+    return m_LocalBuffer != nullptr;
 }
 
 void Texture::SetRenderPos(float posX, float posY)

@@ -13,14 +13,20 @@
 #include "KeyCodes.h"
 #include "Graphics.h"
 #include "ImGuiWrapper.h"
+#include "AudioEngine.h"
 
 double fps = 0.00;  // Frames per second
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
 double dt = 0.0;  // Time difference between frames (delta time)
-
+int selectedEntityIndex = 0;
 
 namespace Engine
 {
+    //Set filepath of audio to the variable
+    AudioEngine audioEngine;
+    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
+    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
+
     // Create a logger instance
     Engine::Logger logger;
     Engine::Input InputHandler;
@@ -35,9 +41,10 @@ namespace Engine
     TransformComponent* transformTest;
     ComponentFactory CF;
 
-    float scalar = 1.0f;
-    float rotation = 0.25f;
-    float transformation = 20.0f;
+    float scalar = 0.5f;
+    float rotation = 0.125f;
+    float transformation = 5.0f;
+    bool currentlyPlayingSound = 0;
 
     Application::Application()
     {
@@ -70,19 +77,24 @@ namespace Engine
         //Systems Manager Initialization
         //Currently initializes TestSystem and Graphics
         SM.Initialize();
-
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>();
-        m_ImGuiWrapper->OnAttach();
-
         //Entity creation
         entity1 = EM.CreateEntity();
         targetEntity = EM.GetEntity(entity1);
 
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper->OnAttach();
         //add component to entity
         targetEntity->AddNewComponent(ComponentType::Transform);
         targetEntity->AddNewComponent(ComponentType::Position);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-      
+
+        //initialize audio files
+        audioEngine.init();
+        //load both audio 
+        audioEngine.loadSound(sound);
+        audioEngine.loadSound(sound2);
+        sound.setLoop();
+        sound2.setLoop();
     }
 
     void Application::OnEvent(Event& e)
@@ -90,14 +102,14 @@ namespace Engine
         // Event handler
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-       logger.Log(Engine::LogLevel::Event, e.ToString());
+       //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
     }
 
     void Application::Run()
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
-            
+
 
         while (m_Running)
         {
@@ -106,19 +118,63 @@ namespace Engine
             Application::UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
-            
+            if (currentlyPlayingSound == false) {
+                if (InputHandler.IsKeyTriggered(KEY_9)) {
+                    audioEngine.playSound(sound);
+                    currentlyPlayingSound = true;
+                }
+            }
+
+            if (currentlyPlayingSound == false) {
+                if (InputHandler.IsKeyTriggered(KEY_0)) {
+                    audioEngine.playSound(sound2);
+                    currentlyPlayingSound = true;
+                }
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound)) {
+                audioEngine.stopSound(sound);
+                currentlyPlayingSound = false;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_7) && audioEngine.soundIsPlaying(sound2)) {
+                audioEngine.stopSound(sound2);
+                currentlyPlayingSound = false;
+            }
+
+
+            if (InputHandler.IsKeyTriggered(KEY_F1))
+            {
+                // Decrement the selected entity index
+                selectedEntityIndex--;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_F2))
+            {
+                // Increment the selected entity index
+                selectedEntityIndex++;
+            }
+
+            // Ensure the selected entity index is within valid bounds
+            int numEntities = EM.GetEntities()->size();
+            selectedEntityIndex = std::clamp(selectedEntityIndex, 0, numEntities - 1);
+            targetEntity = EM.GetEntity(selectedEntityIndex);
+
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
                 // Clone entity1 and store its ID
                 entity2 = EM.CloneEntity(entity1);
                 targetEntity = EM.GetEntity(entity2);
+                //isNewEntityMoved = true;
             }
-            
+
+            transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+
             if (InputHandler.IsKeyPressed(KEY_UP))
             {
                 transformTest->y += transformation;
             }
-            
+
             if (InputHandler.IsKeyPressed(KEY_DOWN))
             {
                 transformTest->y -= transformation;
@@ -147,15 +203,15 @@ namespace Engine
             if (InputHandler.IsKeyPressed(KEY_Z))
             {
                 //Scale Up
-                transformTest->scaleX += scalar; 
-                transformTest->scaleY += scalar; 
+                transformTest->scaleX += scalar;
+                transformTest->scaleY += scalar;
             }
 
             if (InputHandler.IsKeyPressed(KEY_X))
             {
                 // Scale Down
-                transformTest->scaleX -= scalar; 
-                transformTest->scaleY -= scalar; 
+                transformTest->scaleX -= scalar;
+                transformTest->scaleY -= scalar;
             }
 
 
@@ -163,12 +219,12 @@ namespace Engine
             SM.UpdateSystems(EM.GetEntities());
 
             //Entity Debug
-            
-            std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
+           /* std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
-            std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            
+            std::cout << "Number of entities: " << EM.entities.size() << std::endl;*/
+
             m_ImGuiWrapper->OnUpdate();
+
 
         }
     }

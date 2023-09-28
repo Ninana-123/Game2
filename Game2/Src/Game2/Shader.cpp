@@ -25,6 +25,17 @@ void Shader::Initialize()
 
     ShaderProgramSource source = ParseShader(m_FilePath);
     m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
+
+    // Check for shader compilation and linking errors
+    int success;
+    char infoLog[512];
+    GLCall(glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success));
+    if (!success) {
+        GLCall(glGetProgramInfoLog(m_RendererID, 512, NULL, infoLog));
+        std::cerr << "Shader program linking failed:\n" << infoLog << std::endl;
+        // Handle the error as needed, e.g., return or throw an exception
+    }
+
     m_IsInitialized = true;
 }
 

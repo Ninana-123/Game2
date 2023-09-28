@@ -1,14 +1,17 @@
+
 #include "pch.h"
 #include "Graphics.h"
-#include "logger.h"
-
+#include "AudioEngine.h"
+#include "Logger.h"
+#include "Collision.h"
+#include "Vector2d.h"
 namespace Engine
 {
+
     Logger GraphicsLogger;
 
     Graphics::Graphics()
         : shader("Resource/Shaders/Basic.shader")
-        
     {
     }
 
@@ -44,10 +47,10 @@ namespace Engine
 
         //define vertex array and indices
         float positions[] = {
-       -20.0f,  -20.0f, 0.0f, 0.0f,    //0
-        20.0f,  -20.0f, 1.0f, 0.0f,    //1
-        20.0f,   20.0f, 1.0f, 1.0f,    //2
-       -20.0f,   20.0f, 0.0f, 1.0f     //3
+       -60.0f,  -60.0f, 0.0f, 0.0f,    //0
+        60.0f,  -60.0f, 1.0f, 0.0f,    //1
+        60.0f,   60.0f, 1.0f, 1.0f,    //2
+       -60.0f,   60.0f, 0.0f, 1.0f     //3
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -66,7 +69,7 @@ namespace Engine
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
         //create vertex array, vertex buffer, and index buffer
-        VertexArray va{};
+    
         VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
@@ -81,10 +84,10 @@ namespace Engine
         Graphics::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
         // load and initialize the shader
-        InitialiseShader();
+        InitializeShader();
 
         // initialize and bind textures
-        InitialiseTextures();
+        InitializeTextures();
 
         ib.Unbind();
         va.Unbind();
@@ -92,10 +95,10 @@ namespace Engine
         shader.Unbind();
     }
 
-
     void Graphics::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         renderer.Clear();
+
 
         for (const auto& entityPair : *entities)
         {
@@ -107,28 +110,78 @@ namespace Engine
                 TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 
                 //Read transform data from Transform component
-                 
+
                 //translate
                 glm::vec3 transA(transform->x, transform->y, 0);
 
                 //rotate
-                float rotation = transform->rot;
+                float rotationA = transform->rot;
 
                 //scale
-                glm::vec3 scale1(transform->scaleX, transform->scaleY, 1.0f);
+                glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
                 int width, height;
                 glfwGetWindowSize(Window, &width, &height);
                 UpdateViewport(width, height);
 
+
+                // Check collision with the window boundaries
+                // VECTORMATH::Vec2 velA(0.0f, 0.0f);
+                float halfWidth = 50.0f;  // Half of the texture width
+                float halfHeight = 50.0f; // Half of the texture height
+
+                AABB aabb1;
+                aabb1.min = VECTORMATH::Vec2(transA.x - halfWidth, transA.y - halfHeight);
+                aabb1.max = VECTORMATH::Vec2(transA.x + halfWidth, transA.y + halfHeight);
+
+                bool isCollisionWithWindow = false;
+               // bool isCollisionWithBoundary = false;
+
+                if (aabb1.min.x < 0 || aabb1.max.x > width || aabb1.min.y < 0 || aabb1.max.y > height) {
+                    isCollisionWithWindow = true;
+                }
+
+                if (isCollisionWithWindow)
+                {
+                    std::cout << "Collision with the window detected!" << std::endl;
+                }
+
+
+                // collision with the entities
+                for (const auto& otherEntityPair : *entities)
+                {
+                    if (otherEntityPair.first != entityPair.first)
+                    {
+                        Entity* otherEntity = otherEntityPair.second.get();
+
+                        if (otherEntity->HasComponent(ComponentType::Transform))
+                        {
+                            TransformComponent* otherTransform = dynamic_cast<TransformComponent*>(otherEntity->GetComponent(ComponentType::Transform));
+
+                            float halfWidthB = 50.0f;  // Half of the texture width for entity2
+                            float halfHeightB = 50.0f; // Half of the texture height for entity2
+
+                            AABB aabb2;
+                            aabb2.min = VECTORMATH::Vec2(otherTransform->x - halfWidthB, otherTransform->y - halfHeightB);
+                            aabb2.max = VECTORMATH::Vec2(otherTransform->x + halfWidthB, otherTransform->y + halfHeightB);
+
+                            // Check for collision between aabb1 and aabb2
+                            if (aabb1.min.x < aabb2.max.x && aabb1.max.x > aabb2.min.x &&
+                                aabb1.min.y < aabb2.max.y && aabb1.max.y > aabb2.min.y)
+                            {
+                                std::cout << "Collision between new entity and old entity detected!" << std::endl;
+                                // Handle the collision as needed
+                            }
+                        }
+                    }
+                }
+
+
                 // Apply transformations from UpdateTransformations
-                glm::mat4 modelA = glm::mat4(1.0f); // Initialize the model matrix as identity
-                modelA = glm::translate(modelA, transA);
-                modelA = glm::scale(modelA, scale1);
-                modelA = glm::rotate(modelA, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+                glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
 
                 glm::mat4 mvpA = proj * view * modelA;
-               
+
                 //Get the current state of the 'P' key
                 bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
@@ -146,7 +199,7 @@ namespace Engine
                 {
 
                     shader.Bind();
-                    //luffyTexture.Bind(0);
+
 
                     double currentTime = glfwGetTime();
                     double elapsedTime = currentTime - programStartTime;
@@ -154,16 +207,14 @@ namespace Engine
 
                     if (textureIndex == 0)
                     {
-                        // Display "Luffy" texture
                         textureA.Bind(0);
                     }
                     else
                     {
-                        // Display "Zoro" texture
                         textureB.Bind(0);
                     }
 
-                    // Set shader uniforms for Luffy
+
                     shader.SetUniform1i("u_RenderTextured", 1); // Render textured
                     shader.SetUniform1i("u_Texture", 0);
                     shader.SetUniformMat4f("u_MVP", mvpA);
@@ -182,20 +233,21 @@ namespace Engine
                 }
                 else
                 {
-                      // Bind the shader and set uniforms
-                      shader.Bind();
-                      shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
-                      shader.SetUniformMat4f("u_MVP", mvpA);
+                    // Bind the shader and set uniforms
+                    shader.Bind();
+                    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f);
+                    shader.SetUniformMat4f("u_MVP", mvpA);
 
-                      // Render the blue square
-                      renderer.Draw(va, ib, shader);
+                    // Render the blue square
+                    renderer.Draw(va, ib, shader);
                 }
-                transform->x = transA.x;
-                transform->y = transA.y;
+                transform->x = static_cast<int>(transA.x);
+                transform->y = static_cast<int>(transA.y);
+
             }
 
         }
-        GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void Graphics::UpdateViewport(int width, int height)
@@ -204,85 +256,37 @@ namespace Engine
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
-    void Graphics::InitialiseShader()
+    void Graphics::InitializeShader()
     {
         shader.LoadShader("Resource/Shaders/Basic.shader");
+
         shader.Initialize();
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    void Graphics::InitialiseTextures()
+    void Graphics::InitializeTextures()
     {
-        textureA.Load("Resource/Texture/Tank.png");
-        textureB.Load("Resource/Texture/Archer.png");
+        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        {
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
+            // Handle the error as needed, e.g., return or throw an exception
+        }
+        else {
+            textureA.InitGL();
+            textureA.Bind(0);
+        }
 
-        textureA.InitGL();
-        textureA.Bind(0);
-
-        textureB.InitGL();
-        textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        if (!textureB.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
+        {
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
+            // Handle the error as needed, e.g., return or throw an exception
+        }
+        else {
+            textureB.InitGL();
+            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        }
     }
-
-
-    //void Graphics::UpdateTransformations(int key, glm::vec3 translation, glm::vec3 scale, float rotation)
-    //{
-    //    // Define a mapping of keys to actions
-    //    std::map<int, std::function<void()>> keyActions;
-
-    //    const float increment = 1.0f;
-    //    const float angle = 0.01f;
-    //    const float scalar = 0.01f;
-
-    //    // Texture A 
-    //    keyActions[GLFW_KEY_RIGHT] = [&]()
-    //    {
-    //        translation.x += increment; //Move right 
-    //    };
-
-    //    keyActions[GLFW_KEY_LEFT] = [&]()
-    //    {
-    //        translation.x -= increment; //Move left
-    //    };
-
-    //    keyActions[GLFW_KEY_DOWN] = [&]()
-    //    {
-    //        translation.y -= increment; //Move down
-    //    };
-
-    //    keyActions[GLFW_KEY_UP] = [&]()
-    //    {
-    //        translation.y += increment; //Move up
-    //    };
-
-    //    keyActions[GLFW_KEY_U] = [&]()
-    //    {
-    //        rotation += angle; //Rotate counterclockwise
-    //    };
-
-    //    keyActions[GLFW_KEY_I] = [&]()
-    //    {
-    //        rotation -= angle; //Rotate clockwise
-    //    };
-    //    keyActions[GLFW_KEY_Z] = [&]()
-    //    {
-    //        scale += glm::vec3(scalar, scalar, 0.0f); //Increase scale
-    //    };
-
-    //    keyActions[GLFW_KEY_X] = [&]()
-    //    {
-    //        scale -= glm::vec3(scalar, scalar, 0.0f); //Decrease scale
-    //    };
-
-    //    // Check for key presses and execute corresponding actions
-    //    for (const auto& pair : keyActions)
-    //    {
-    //        if (glfwGetKey(this->Window, pair.first) == GLFW_PRESS)
-    //        {
-    //            pair.second();
-    //        }
-    //    }
-    //}
 
     // Function to toggle between textured and plain squares
     void Graphics::ToggleRenderMode()

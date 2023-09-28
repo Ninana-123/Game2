@@ -1,5 +1,23 @@
+/******************************************************************************/
+/*!
+\file		Collision.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		01/03/2023
+\brief		Contains the defintion for the logic of AABB Collision
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "Collision.h"
+#include "Vector2d.h"
+
+
+float dt = 0.0;  // Time difference between frames (delta time)
 
 /*!*****************************************************************
 
@@ -22,13 +40,16 @@
 	  Returns true if there is a collision, false is there is not.
 
 ********************************************************************/
-bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
-	const AABB& aabb2, const glm::vec2& vel2)
+
+
+// Check if this object collides with another object
+bool CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
+	const AABB& aabb2, const VECTORMATH::Vec2& vel2)
 {
-	UNREFERENCED_PARAMETER(aabb1);
-	UNREFERENCED_PARAMETER(vel1);
-	UNREFERENCED_PARAMETER(aabb2);
-	UNREFERENCED_PARAMETER(vel2);
+	//UNREFERENCED_PARAMETER(aabb1);
+	//UNREFERENCED_PARAMETER(vel1);
+	//UNREFERENCED_PARAMETER(aabb2);
+	//UNREFERENCED_PARAMETER(vel2);
 
 	/*
 	Implement the collision intersection over here.
@@ -66,10 +87,10 @@ bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
 	if (aabb1.min.y > aabb2.max.y)
 		return false;
 
-	glm::vec2 relVelocity = { 0, 0 }; 
-	glm::vec2 tFirst = { 0, 0 };
-	glm::vec2 tLast = { 0, 0 };
-	glm::vec2 tTemp = { 0, 0 };
+	VECTORMATH::Vec2 relVelocity = { 0, 0 };
+	VECTORMATH::Vec2 tFirst = { 0, 0 };
+	VECTORMATH::Vec2 tLast = { dt, dt };
+	VECTORMATH::Vec2 tTemp = { 0, 0 };
 	relVelocity.x = vel2.x - vel1.x;
 	relVelocity.y = vel2.y - vel1.y;
 
@@ -153,6 +174,143 @@ bool CollisionIntersection_RectRect(const AABB& aabb1, const glm::vec2& vel1,
 	}
 
 	return true;
-
 }
+
+// Function to check if two circles collide
+bool CollisionIntersection_CircleCircle(const Circle& circle1, const VECTORMATH::Vec2& vel1,
+	const Circle& circle2, const VECTORMATH::Vec2& vel2)
+{
+	// Calculate the relative velocity
+	VECTORMATH::Vec2 relVelocity = vel2 - vel1;
+
+	// Calculate the distance between the centers of the two circles
+	VECTORMATH::Vec2 distanceVec = circle2.center - circle1.center;
+	float distance = VECTORMATH::Vector2DLength(distanceVec);
+
+	// Check if the distance is less than the sum of the radii
+	if (distance > circle1.radius + circle2.radius) {
+		// Circles are not colliding
+		return false;
+	}
+
+	// If the circles are colliding, calculate the time of collision
+	float tFirst = 0.0f;
+	float tLast = 1.0f; // Assuming time interval [0, 1] for the frame
+
+	// Calculate the components of relative velocity and distance along each axis
+	float relVelX = relVelocity.x;
+	float relVelY = relVelocity.y;
+	float distX = distanceVec.x;
+	float distY = distanceVec.y;
+
+	// Calculate the quadratic coefficients
+	float a = relVelX * relVelX + relVelY * relVelY;
+	float b = 2.0f * (relVelX * distX + relVelY * distY);
+	float c = distX * distX + distY * distY - (circle1.radius + circle2.radius) * (circle1.radius + circle2.radius);
+
+	// Check for a collision along the x-axis
+	if (a != 0.0f) {
+		float discriminant = b * b - 4.0f * a * c;
+		if (discriminant >= 0.0f) {
+			float sqrtDiscriminant = sqrt(discriminant);
+			float t1 = (-b + sqrtDiscriminant) / (2.0f * a);
+			float t2 = (-b - sqrtDiscriminant) / (2.0f * a);
+
+			// Update tFirst and tLast based on collision times along the x-axis
+			if (t1 > t2) {
+				float temp = t1;
+				t1 = t2;
+				t2 = temp;
+			}
+
+			if (t1 > tFirst) {
+				tFirst = t1;
+			}
+
+			if (t2 < tLast) {
+				tLast = t2;
+			}
+
+			// If tFirst is greater than tLast, there is no collision along the x-axis
+			if (tFirst > tLast) {
+				return false;
+			}
+		}
+	}
+
+	// Check for a collision along the y-axis
+	if (a != 0.0f) {
+		float discriminant = b * b - 4.0f * a * c;
+		if (discriminant >= 0.0f) {
+			float sqrtDiscriminant = sqrt(discriminant);
+			float t1 = (-b + sqrtDiscriminant) / (2.0f * a);
+			float t2 = (-b - sqrtDiscriminant) / (2.0f * a);
+
+			// Update tFirst and tLast based on collision times along the y-axis
+			if (t1 > t2) {
+				float temp = t1;
+				t1 = t2;
+				t2 = temp;
+			}
+
+			if (t1 > tFirst) {
+				tFirst = t1;
+			}
+
+			if (t2 < tLast) {
+				tLast = t2;
+			}
+
+			// If tFirst is greater than tLast, there is no collision along the y-axis
+			if (tFirst > tLast) {
+				return false;
+			}
+		}
+	}
+
+	// If tFirst is less than or equal to 1, a collision occurs within the time frame
+	if (tFirst <= 1.0f) {
+		return true;
+	}
+
+	return false;
+}
+
+// Function to check if a circle and a rectangle collide
+bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect) {
+	float testX = circle.center.x;
+	float testY = circle.center.y;
+
+	// Calculate the closest point on the rectangle to the circle's center
+	if (circle.center.x < rect.min.x) {
+		testX = rect.min.x;
+	}
+	else if (circle.center.x > rect.max.x) {
+		testX = rect.max.x;
+	}
+
+	if (circle.center.y < rect.min.y) {
+		testY = rect.min.y;
+	}
+	else if (circle.center.y > rect.max.y) {
+		testY = rect.max.y;
+	}
+
+	// Calculate the horizontal and vertical distances
+	float distanceX = circle.center.x - testX;
+	float distanceY = circle.center.y - testY;
+
+	// Calculate the distance from the circle's center to the closest point on the rectangle
+	float distance = std::sqrt(distanceX * distanceX + distanceY * distanceY);
+
+	// Check for collision
+	if (distance < circle.radius) {
+		return true; // Collision
+	}
+	else {
+		return false; // No collision
+	}
+}
+
+
 

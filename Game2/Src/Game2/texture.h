@@ -24,7 +24,7 @@ public:
     void InitGL();  // Initialize OpenGL components
     void Bind(unsigned int slot) const;
     void Unbind() const;
-    void Load(const std::string& path); // Load texture from file
+    bool Load(const std::string& path); // Load texture from file
     void SetRenderPos(float posX, float posY); // Set rendering position
 
 private:

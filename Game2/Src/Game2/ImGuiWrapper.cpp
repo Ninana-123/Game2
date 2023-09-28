@@ -11,8 +11,15 @@
 
 namespace Engine {
 
-	ImGuiWrapper::ImGuiWrapper()
+	EntityID firstEntity, secondEntity;
+	Entity* targettedEntity;
+	char cloneCountInput[10] = "";  // Buffer to store the input text
+	char createCountInput[10] = "";  // Buffer to store the input text
+
+
+	ImGuiWrapper::ImGuiWrapper() : entityManager()
 	{
+		
 	}
 
 	ImGuiWrapper::~ImGuiWrapper()
@@ -167,6 +174,11 @@ namespace Engine {
 		io.SetClipboardTextFn = SetClipboardText;
 		io.GetClipboardTextFn = GetClipboardText;
 		io.ClipboardUserData = glfwGetCurrentContext();
+		if (entityManager) {
+			firstEntity = 0;
+			targettedEntity = entityManager->GetEntity(firstEntity);
+
+		}
 	}
 
 	void ImGuiWrapper::OnDetach()
@@ -231,6 +243,66 @@ namespace Engine {
 				ImGui::Text("No Keys Pressed");
 			}
 		}
+		ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+		if (entityManager)
+		{
+			if (ImGui::Button("Create Entity"))
+			{
+				entityManager->CreateEntity();
+				std::cout << "Created Entity" << std::endl;
+			}
+			ImGui::Text("Create Multiple Entities");
+			ImGui::InputText("Create Count", createCountInput, 10);
+			// Clone Entity button
+			if (ImGui::Button("Create Multiple Entities"))
+			{
+				// Parse the clone count from the input text
+				int createCount = atoi(createCountInput);
+
+				// Ensure clone count is valid and non-negative
+				if (createCount > 0)
+				{
+					// Clone the object 'cloneCount' times
+					for (int i = 0; i < createCount; ++i)
+					{
+						entityManager->CreateEntity();
+						std::cout << "Created Entity" << std::endl;
+					}
+				}
+			}
+			// Clone Entity button
+			if (ImGui::Button("Clone Entity"))
+			{
+				secondEntity = entityManager->CloneEntity(firstEntity);
+				targettedEntity = entityManager->GetEntity(secondEntity);
+			}
+			ImGui::Text("Clone Multiple Entities");
+			ImGui::InputText("Clone Count", cloneCountInput, 10);
+			// Clone Entity button
+			if (ImGui::Button("Clone Multiple Entities"))
+			{
+				// Parse the clone count from the input text
+				int cloneCount = atoi(cloneCountInput);
+
+				// Ensure clone count is valid and non-negative
+				if (cloneCount > 0)
+				{
+					// Clone the object 'cloneCount' times
+					for (int i = 0; i < cloneCount; ++i)
+					{
+						// Clone firstEntity and store its ID
+						secondEntity = entityManager->CloneEntity(firstEntity);
+						targettedEntity = entityManager->GetEntity(secondEntity);
+					}
+				}
+			}
+
+			auto entities = entityManager->GetEntities();
+			ImGui::Text("Number of Entities: %d", entities->size());
+		}
+
+		ImGui::End();
 
 		// End the ImGui window
 		ImGui::End();
