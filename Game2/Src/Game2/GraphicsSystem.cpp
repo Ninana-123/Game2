@@ -232,18 +232,13 @@ namespace Engine
         }
     }
 
-     /*!
-     * \brief Render the background.
-     *
-     * This function renders a textured background.
-     */
-    void GraphicsSystem::RenderBackground()
+    void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
         textureC.Bind(0);
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
-
+        shader.SetUniformMat4f("u_MVP", mvpMatrix);
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
 
@@ -384,7 +379,7 @@ namespace Engine
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
         renderer.Clear();
-        //RenderBackground();
+       
 
         for (const auto& entityPair : *entities)
         {
@@ -419,27 +414,34 @@ namespace Engine
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                    // Check if there's a change in the 'P' key state
-                    if (currentPState && !previousPState)
+                    if (entity->HasComponent(ComponentType::Physics))
                     {
-                        // Toggle the rendering mode
-                        ToggleRenderMode();
-                    }
+                        // Check if there's a change in the 'P' key state
+                        if (currentPState && !previousPState)
+                        {
+                            // Toggle the rendering mode
+                            ToggleRenderMode();
+                        }
 
-                    // Update the previous 'P' key state
-                    previousPState = currentPState;
+                        // Update the previous 'P' key state
+                        previousPState = currentPState;
 
-                    if (renderTexturedSquare)
-                    {
-                        RenderTexturedEntity(mvpA);
-                        RenderLines(mvpA);
+                        if (renderTexturedSquare)
+                        {
+                            RenderTexturedEntity(mvpA);
+                            RenderLines(mvpA);
+                        }
+                        else
+                        {
+                            DrawColoredSquare(mvpA);
+                        }
                     }
                     else
                     {
-                        DrawColoredSquare(mvpA);
+                        RenderBackground(mvpA);
                     }
-                    //RenderSingleLine(mvpA, lineStart, lineEnd);
-
+                    
+                    //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->x = static_cast<int>(transA.x);
                     transform->y = static_cast<int>(transA.y);
                 }

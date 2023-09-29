@@ -1,10 +1,11 @@
 /******************************************************************************/
 /*!
-\file		Collision.cpp
-\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\file		CollisionSystem.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807 
+\co		    Tristan Tham Rui Hong,  t.tham@digipen.edu 2200794
 \par		a.junshengaloysius@digipen.edu
-\date		01/03/2023
-\brief		Contains the defintion for the logic of AABB Collision
+\date		10/09/2023
+\brief		Contains the defintion for the logic of AABB, Circle to Circle and Circle to AABB Collision
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -12,6 +13,7 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
+
 #include "pch.h"
 #include "CollisionSystem.h"
 #include "Entity.h"

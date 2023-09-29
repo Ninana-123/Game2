@@ -1,3 +1,19 @@
+/******************************************************************************/
+/*!
+\file		AppEvent.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Declares event classes related to window actions for the Game2 
+			Engine.
+			This file contains the declaration of event classes for window 
+			actions, such as resize and close.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 
 #include "pch.h"

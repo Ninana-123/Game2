@@ -56,18 +56,19 @@ namespace Engine {
                 entity = entityManager->CreateEntity();
                 entityPtr = entityManager->GetEntity(entity);
 
-                bool addTransformComponent = false, addCollisionComponent = false;
+                bool addTransformComponent = false, addCollisionComponent = false, addPhysicsComponent = false;
                 int x = 300, y = 300;
 
                 float scaleX = 1.0f, scaleY = 1.0f, rot = 0;
                 float c_Width = 30.0f, c_Height = 45.0f;
+                float veloX = 0, veloY = 0;
                 bool isColliding = false;
 
                 int minX = 0, minY = 0, maxX = 0, maxY = 0;
 
                 if (std::getline(sceneFile, line)) {
                     std::istringstream iss(line);
-                    if (iss >>addTransformComponent>> x >> y >> scaleX >> scaleY >> rot>> addCollisionComponent >> c_Width>>c_Height>>isColliding>>minX>>minY>>maxX>>maxY) {
+                    if (iss >>addTransformComponent>> x >> y >> scaleX >> scaleY >> rot>> addCollisionComponent >> c_Width>>c_Height>>isColliding>>minX>>minY>>maxX>>maxY>>addPhysicsComponent>>veloX>>veloY) {
                         // Successfully read properties from the scene file
                     }
                     else {
@@ -84,19 +85,31 @@ namespace Engine {
                     transform->scaleY = scaleY;
                     transform->rot = rot;
                 }
+
                 if (addCollisionComponent) {
                     entityPtr->AddNewComponent(ComponentType::Collision);
                     CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entityPtr->GetComponent(ComponentType::Collision));
                     collision->c_Width = c_Width;
                     collision->c_Height = c_Height;
                 }
+                if (addPhysicsComponent) {
+                    entityPtr->AddNewComponent(ComponentType::Physics);
+                    PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(entityPtr->GetComponent(ComponentType::Physics));
+                    physics->velocityX = veloX;
+                    physics->velocityY = veloY;
+                }
+
+
                 // Add more components as needed based on the format of your scene file
                 std::cout << "Entity " << i + 1 << " created\n";
                 if (entityPtr->HasComponent(ComponentType::Transform)) {
-                    std::cout << "Entity " << i + 1 << " has a transform component\n";
+                    std::cout << "Entity " << i + 1 << " has a transform component"<<std::endl;
                 }
                 if (entityPtr->HasComponent(ComponentType::Collision)) {
                    std::cout << "Entity " << i + 1 << " has a collision component\n";
+                }
+                if (entityPtr->HasComponent(ComponentType::Physics)) {
+                    std::cout << "Entity " << i + 1 << " has a physics component\n";
                 }
             }
         }

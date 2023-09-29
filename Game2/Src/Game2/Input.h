@@ -1,3 +1,19 @@
+/******************************************************************************/
+/*!
+\file		Input.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Declares the Input class and related functionalities for keyboard 
+			and mouse input handling.
+			This file contains the declaration of the Input class and 
+			associated methods for managing keyboard and mouse input.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+/******************************************************************************/
 #pragma once
 
 #include "KeyCodes.h"

@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		ImGuiWrapper.cpp
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		This file contains the implementation of the ImGuiWrapper class,
+			which encapsulates ImGui functionality for UI rendering and 
+			interaction.
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "ImGuiWrapper.h"
 #include "imgui.h"
@@ -16,27 +30,49 @@ namespace Engine {
 	char cloneCountInput[10] = "";  // Buffer to store the input text
 	char createCountInput[10] = "";  // Buffer to store the input text
 
-
+	/*!**********************************************************************
+	\brief
+	Constructor for ImGuiWrapper class.
+	*************************************************************************/
 	ImGuiWrapper::ImGuiWrapper() : entityManager()
 	{
 
 	}
-
+	/*!**********************************************************************
+	\brief
+	Destructor for ImGuiWrapper class.
+	*************************************************************************/
 	ImGuiWrapper::~ImGuiWrapper()
 	{
 	}
-
+	/*!**********************************************************************
+	\brief
+	Sets the text to the system clipboard using GLFW.
+	\param[in] user_data
+	A pointer to user-defined data.
+	\param[in] text
+	The text to set in the clipboard.
+	*************************************************************************/
 	static void SetClipboardText(void* user_data, const char* text)
 	{
 		glfwSetClipboardString((GLFWwindow*)user_data, text);
 	}
-
+	/*!**********************************************************************
+	\brief
+	Gets the text from the system clipboard using GLFW
+	\param[in] user_data
+	A pointer to user-defined data.
+	*************************************************************************/
 	static const char* GetClipboardText(void* user_data)
 	{
 		return glfwGetClipboardString((GLFWwindow*)user_data);
 	}
-
-	// Function to get driver version
+	/*!**********************************************************************
+	\brief
+	Gets the GPU vendor using OpenGL and GLEW.
+	\return
+	A pointer to a string representing the GPU vendor.
+	*************************************************************************/
 	const char* GetGPUVendor() {
 		// Ensure GLEW is initialized
 		if (glewInit() != GLEW_OK) {
@@ -48,7 +84,12 @@ namespace Engine {
 		const char* vendor = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 		return vendor ? vendor : "N/A";
 	}
-
+	/*!**********************************************************************
+	\brief
+	Gets the renderer using OpenGL and GLEW.
+	\return
+	A pointer to a string representing the rendereer.
+	*************************************************************************/
 	const char* GetGraphicsCardInfo() {
 		// Ensure GLEW is initialized
 		if (glewInit() != GLEW_OK) {
@@ -61,7 +102,12 @@ namespace Engine {
 		return renderer ? renderer : "N/A";
 	}
 
-	// Function to get OpenGL version
+	/*!**********************************************************************
+	\brief
+	Gets the OpenGL version using OpenGL and GLEW.
+	\return
+	A pointer to a string representing the OpenGL version.
+	*************************************************************************/
 	const char* GetOpenGLVersion() {
 		// Ensure GLEW is initialized
 		if (glewInit() != GLEW_OK) {
@@ -73,7 +119,10 @@ namespace Engine {
 		const char* version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 		return version ? version : "N/A";
 	}
-
+	/*!**********************************************************************
+	\brief
+	Prints the GPU and graphics-related specifications using ImGui
+	*************************************************************************/
 	void print_specs() {
 		//get string
 		GLubyte const* str_ven = glGetString(GL_VENDOR);
@@ -111,7 +160,12 @@ namespace Engine {
 		ImGui::Text("Maximum generic vertex attributes: %d", max_vtx_attribs);
 		ImGui::Text("Maximum vertex buffer bindings: %d", vtx_buf_binds);
 	}
-
+	/*!**********************************************************************
+	\brief
+	Get the total available physical memory in megabytes
+	\return
+	Total available physical memory in megabytes
+	*************************************************************************/
 	float GetTotalMemoryInMB() {
 		MEMORYSTATUSEX status;
 		status.dwLength = sizeof(status);
@@ -119,7 +173,12 @@ namespace Engine {
 		return static_cast<float>(status.ullTotalPhys) / (1024 * 1024);
 	}
 
-	// Function to get available memory in MB (Windows-specific)
+	/*!**********************************************************************
+	\brief
+	Get the available physical memory in megabytes
+	\return
+	Available physical memory in megabytes
+	*************************************************************************/
 	float GetAvailableMemoryInMB() {
 		MEMORYSTATUSEX status;
 		status.dwLength = sizeof(status);
@@ -127,7 +186,12 @@ namespace Engine {
 		return static_cast<float>(status.ullAvailPhys) / (1024 * 1024);
 	}
 
-	// Function to get memory usage percentage 
+	/*!**********************************************************************
+	\brief
+	Get the memory usage percentage
+	\return
+	Memory usage percentage.
+	*************************************************************************/
 	float GetMemoryUsagePercentage() {
 		MEMORYSTATUSEX status;
 		status.dwLength = sizeof(status);
@@ -137,7 +201,11 @@ namespace Engine {
 		float memoryUsagePercentage = static_cast<float>(status.dwMemoryLoad);
 		return memoryUsagePercentage;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Called when attaching ImGui
+	Initializes ImGui context, style, and key mappings
+	*************************************************************************/
 	void ImGuiWrapper::OnAttach()
 	{
 		ImGui::CreateContext();
@@ -181,10 +249,20 @@ namespace Engine {
 		}
 	}
 
+	/*!**********************************************************************
+	\brief
+	Called when detaching ImGui.
+    Currently empty as there are no specific detach actions needed.
+	*************************************************************************/
 	void ImGuiWrapper::OnDetach()
 	{
 	}
-
+	/*!**********************************************************************
+	\brief
+	Update ImGui for the current frame.
+	This function is responsible for updating ImGui and rendering ImGui 
+	content for the current frame.
+	*************************************************************************/
 	void ImGuiWrapper::OnUpdate()
 	{
 		int displayWidth, displayHeight;
@@ -341,7 +419,13 @@ namespace Engine {
 	}
 
 
-
+	/*!**********************************************************************
+	\brief
+	Handle events for ImGui interaction.
+	This function processes events related to ImGui interaction.
+	\param[in] event 
+	The event to handle.
+	*************************************************************************/
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
@@ -356,7 +440,16 @@ namespace Engine {
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse button pressed event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a mouse button 
+	press event.
+	\param[in] e
+	The mouse button pressed event.
+	\return 
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -364,7 +457,16 @@ namespace Engine {
 
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse button released event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a mouse button
+	released event.
+	\param[in] e
+	The mouse button released event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -372,7 +474,15 @@ namespace Engine {
 
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse moved event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a mouse moved event.
+	\param[in] e
+	The mouse moved event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseMovedEvent(MouseMovedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -380,7 +490,16 @@ namespace Engine {
 
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse scrolled event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a mouse scrolled
+	event.
+	\param[in] e
+	The mouse scrolled event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseScrolledEvent(MouseScrolledEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -389,7 +508,15 @@ namespace Engine {
 
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle key pressed event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a key press event.
+	\param[in] e
+	The key pressed event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnKeyPressedEvent(KeyPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -400,14 +527,32 @@ namespace Engine {
 		io.KeySuper = io.KeysDown[KEY_LEFT_SUPER] || io.KeysDown[KEY_RIGHT_SUPER];
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle key released event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a key released
+	event.
+	\param[in] e
+	The key released event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnKeyReleased(KeyReleasedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[e.GetKeyCode()] = false;
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle key typed event for ImGui interaction.
+	This function sets the appropriate flag in ImGuiIO for a key typed
+	event.
+	\param[in] e
+	The key typed event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnKeyTypedEvent(KeyTypedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -416,7 +561,16 @@ namespace Engine {
 			io.AddInputCharacter((unsigned short)keycode);
 		return false;
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle window resize event for ImGui interaction.
+	This function updates ImGuiIO with the new display size and 
+	framebuffer scale, as well as sets the OpenGL viewport.
+	\param[in] e
+	The window resize event.
+	\return
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnWindowResizeEvent(WindowResizeEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
