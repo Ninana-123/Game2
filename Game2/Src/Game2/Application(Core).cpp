@@ -117,7 +117,7 @@ namespace Engine
         logger.Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
-        targetEntity = EM.GetEntity(0);
+        targetEntity = EM.GetEntity(1);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
         collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
         physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
@@ -161,7 +161,6 @@ namespace Engine
 
         while (m_Running)
         {
-
             // Update input, window, delta time, and window title
             InputHandler.Update();
             m_Window->OnUpdate();
@@ -262,7 +261,7 @@ namespace Engine
 
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
-            //std::cout << "vel X: " << physicsTest->velocityX << " Y: " << physicsTest->velocityY << std::endl;
+            std::cout << "vel X: " << collisionTest->isColliding << " Y: " << physicsTest->velocityY << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             m_ImGuiWrapper->OnUpdate();
 
