@@ -74,6 +74,8 @@ namespace Engine
 
                         physicsComponent->velocityX = 0.0f;
                         physicsComponent->velocityY = 0.0f;
+
+                        collisionComponent->isColliding = false;
                     }
                     else
                     {
