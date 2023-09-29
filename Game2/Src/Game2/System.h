@@ -9,7 +9,7 @@ namespace Engine
 	enum class SystemState { On, Off };
 	
 	class Entity;
-	class System 
+	class System //Base class System
 	{
 	public:
 		

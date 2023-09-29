@@ -295,7 +295,7 @@ namespace Engine
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
         renderer.Clear();
-        RenderBackground();
+        //RenderBackground();
 
         for (const auto& entityPair : *entities)
         {

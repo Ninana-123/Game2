@@ -9,6 +9,7 @@ namespace Engine
         RegisterComponent(ComponentType::Transform, []() { return std::make_unique<TransformComponent>(); });
         RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>(); });
         RegisterComponent(ComponentType::Texture,   []() { return std::make_unique<TextureComponent>();   });
+        RegisterComponent(ComponentType::Physics,   []() { return std::make_unique<PhysicsComponent>();   });
 
     }
 

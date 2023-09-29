@@ -27,6 +27,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "System.h"
 #include "KeyCodes.h"
 #include "GraphicsSystem.h"
+#include "PhysicsSystem.h"
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
 #include "Loader.h"
@@ -34,7 +35,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
-double dt = 0.0;  // Time difference between frames (delta time)
+extern double dt = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
@@ -58,9 +59,12 @@ namespace Engine
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
+    CollisionComponent* collisionTest;
+    PhysicsComponent* physicsTest;
     ComponentFactory CF;
 
-    // Constants for transformation and scaling
+    float vx = 0.0f;
+    float vy = 0.0f;
     float scalar = 0.5f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -114,7 +118,9 @@ namespace Engine
         loader->LoadScene("Resource/Scenes/testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
         targetEntity = EM.GetEntity(0);
-        transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); // Reference to Entity Transform data
+        transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+        collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
+        physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
 
         // Initialize audio files and load sounds
         audioEngine.init();
@@ -189,71 +195,78 @@ namespace Engine
 
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
-               SM.ToggleSystemState<GraphicsSystem>();
+                SM.ToggleSystemState<CollisionSystem>();
             }
 
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
-                SM.ToggleSystemState<CollisionSystem>();
+                SM.ToggleSystemState<PhysicsSystem>();
+            }          
+
+            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+            physicsTest= dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+
+            if (physicsTest && transformTest)
+            {
+                if (InputHandler.IsKeyPressed(KEY_UP))
+                {
+                    //transformTest->y += transformation;
+                    physicsTest->velocityY += 10.0f;
+                }
+
+                if (InputHandler.IsKeyPressed(KEY_DOWN))
+                {
+                    //transformTest->y -= transformation;
+                    physicsTest->velocityY -= 10.0f;
+                }
+
+                if (InputHandler.IsKeyPressed(KEY_LEFT))
+                {
+                    //transformTest->x -= transformation;
+                    physicsTest->velocityX -= 10.0f;
+                }
+
+                if (InputHandler.IsKeyPressed(KEY_RIGHT))
+                {
+                    //transformTest->x += transformation;
+                    physicsTest->velocityX += 10.0f;
+                }
+
+                if (InputHandler.IsKeyPressed(KEY_R))
+                {
+                    transformTest->rot += rotation; //Rotate counterclockwise
+                };
+
+                if (InputHandler.IsKeyPressed(KEY_T))
+                {
+                    transformTest->rot -= rotation; //Rotate counterclockwise
+                };
+
+                if (InputHandler.IsKeyPressed(KEY_Z))
+                {
+                    //Scale Up
+                    transformTest->scaleX += scalar;
+                    transformTest->scaleY += scalar;
+                }
+
+                if (InputHandler.IsKeyPressed(KEY_X))
+                {
+                    // Scale Down
+                    transformTest->scaleX -= scalar;
+                    transformTest->scaleY -= scalar;
+                }
+
             }
 
-            // Entity transformation based on input
-            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform));
-
-
-            if (InputHandler.IsKeyPressed(KEY_UP))
-            {
-                transformTest->y += transformation;
-            }
-
-            if (InputHandler.IsKeyPressed(KEY_DOWN))
-            {
-                transformTest->y -= transformation;
-            }
-
-            if (InputHandler.IsKeyPressed(KEY_LEFT))
-            {
-                transformTest->x -= transformation;
-            }
-
-            if (InputHandler.IsKeyPressed(KEY_RIGHT))
-            {
-                transformTest->x += transformation;
-            }
-
-            if (InputHandler.IsKeyPressed(KEY_R))
-            {
-                transformTest->rot += rotation; //Rotate counterclockwise
-            };
-
-            if (InputHandler.IsKeyPressed(KEY_T))
-            {
-                transformTest->rot -= rotation; //Rotate counterclockwise
-            };
-
-            if (InputHandler.IsKeyPressed(KEY_Z))
-            {
-                //Scale Up
-                transformTest->scaleX += scalar;
-                transformTest->scaleY += scalar;
-            }
-
-            if (InputHandler.IsKeyPressed(KEY_X))
-            {
-                // Scale Down
-                transformTest->scaleX -= scalar;
-                transformTest->scaleY -= scalar;
-            }
-
-            // Update systems and ImGui
+            //System Updating
             SM.UpdateSystems(EM.GetEntities());
 
             //Entity Debug
-           /* std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
-            std::cout << "TransformComponent X: " << transformTest->x << " Y: " << transformTest->y << std::endl;
-            std::cout << "Number of entities: " << EM.entities.size() << std::endl;*/
+            //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
+            //std::cout << "vel X: " << physicsTest->velocityX << " Y: " << physicsTest->velocityY << std::endl;
+            //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             m_ImGuiWrapper->OnUpdate();
-
 
         }
     }
