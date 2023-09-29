@@ -2,7 +2,7 @@
 #include "Vector2d.h"
 #include "Matrix3x3lib.h"
 
-# define M_PI           3.14159265358979323846
+#define M_PI           3.14159265358979323846
 
 namespace MATRIXMATH
 {
@@ -116,9 +116,10 @@ namespace MATRIXMATH
 
     void Matrix3x3::SetRotationDeg(float angle)
     {
-        float angleRad = angle * (M_PI / 180.0f);
+        float angleRad = static_cast<float>(angle * (M_PI / 180.0));
         SetRotationRad(angleRad);
     }
+
 
     void Matrix3x3::Transpose()
     {

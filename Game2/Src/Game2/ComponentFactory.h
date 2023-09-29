@@ -4,6 +4,7 @@
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 #include "TextureComponent.h"
+#include "PhysicsComponent.h"
 
 namespace Engine
 {

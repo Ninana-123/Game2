@@ -7,15 +7,15 @@ namespace Engine
 	class CollisionComponent : public Component
 	{
 	public:
-		float c_Width = 30.0f;
-		float c_Height = 45.0f;
+		float c_Width = 0.0f;
+		float c_Height = 0.0f;
 		bool isColliding = false;
 
 		int minX = 0;
 		int minY = 0;
 		int	maxX = 0;
 		int	maxY = 0;
-		
+
 		ComponentType GetType() const override { return ComponentType::Collision; }
 		Component* Clone() const override
 		{

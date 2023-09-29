@@ -20,5 +20,6 @@
 #include <filesystem>
 #include <chrono>
 #include <filesystem>
+#include <stdexcept>
 // Windows API Headers
 #include <Windows.h>

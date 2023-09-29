@@ -67,7 +67,7 @@ namespace Engine {
         return state == GLFW_PRESS;
     }
 
-    glm::vec2 Input::GetMousePosition()
+    VECTORMATH::Vector2D Input::GetMousePosition()
     {
         auto* window = glfwGetCurrentContext();
         double xpos, ypos;

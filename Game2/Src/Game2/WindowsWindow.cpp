@@ -12,16 +12,16 @@ namespace Engine {
 		UNREFERENCED_PARAMETER(error);
 		WindowLogger.Log(Engine::LogLevel::Error, description);
 	}
-	Window* Window::Create(const WindowProps& props) {
+	Window* Window::Create(const WindowConfig& props) {
 		return new WindowsWindow(props);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProps& props) {
+	WindowsWindow::WindowsWindow(const WindowConfig& props) {
 		Init(props);
 	}
 	WindowsWindow::~WindowsWindow() {
 	}
-	void WindowsWindow::Init(const WindowProps& props) {
+	void WindowsWindow::Init(const WindowConfig& props) {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -31,8 +31,7 @@ namespace Engine {
 			int success = glfwInit();
 			glfwSetErrorCallback(GLFWErrorCallback);
 			if (!success) {
-				// Handle GLFW initialization failure
-				// You can log an error or throw an exception here.
+				WindowLogger.Log(LogLevel::Error, "Failed to initialize GLFW.");
 				return;
 			}
 			s_GLFWInitialized = true;

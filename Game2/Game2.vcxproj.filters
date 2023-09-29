@@ -85,7 +85,7 @@
     <ClCompile Include="Src\Game2\VertexBuffer.cpp">
       <Filter>Systems\Graphics\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Physics.cpp">
+    <ClCompile Include="Src\Game2\PhysicsSystem.cpp">
       <Filter>Systems\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Loader.cpp">
@@ -216,7 +216,7 @@
     <ClInclude Include="Src\Game2\VertexBufferLayout.h">
       <Filter>Systems\Graphics\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Physics.h">
+    <ClInclude Include="Src\Game2\PhysicsSystem.h">
       <Filter>Systems\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\imstb_rectpack.h">
@@ -236,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Matrix3x3Lib.h">
       <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PhysicsComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
