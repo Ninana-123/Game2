@@ -1,21 +1,15 @@
-/******************************************************************************/
-/*!
-\file		AudioEngine.h
-\author 	Tay Jun Feng Vance
-\par    	email: junfengvance.t@digipen.edu
-\date       29/09/2023
-\brief		This file contains the declaration of all functions related to the FMOD
-            API to allow audio file-based implementations alongside the use of FMOD
-            Sound Banks.
-            With reference to FMOD documentation.
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
-
 #pragma once
+///
+/// @file AudioEngine.h
+/// 
+/// FMOD wrapper which loads sound files (.wav, .mp3, .ogg etc) and FMOD soundbanks (.bank files)
+/// and supports looping or one-shot playback in stereo, as well as customizable 3D positional audio
+/// Implements the FMOD Studio and FMOD Core API's to allow audio file-based implementations,
+/// alongside/in addition to use of FMOD Studio Sound Banks.
+///
+/// @author Ross Hoyt
+/// @dependencies FMOD Studio & Core
+/// 
 #include <fmod_studio.hpp>
 #include <fmod.hpp>
 #include <iostream>

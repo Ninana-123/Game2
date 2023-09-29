@@ -1,20 +1,10 @@
-/******************************************************************************/
-/*!
-\file		SoundInfo.h
-\author 	Tay Jun Feng Vance
-\par    	email: junfengvance.t@digipen.edu
-\date       29/09/2023
-\brief		This file contains the implementation of class SoundInfo which hold information 
-            about a sound, including its file path, unique ID, 3D attributes and playback settings.
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
-
 #pragma once
+//#include "pch.h"
 
+/**
+ * A class to hold information about a sound, including its file path, unique ID,
+ * 3D attributes, and playback settings.
+ */
 
     class SoundInfo {
     public:

@@ -1,41 +1,21 @@
-/******************************************************************************/
-/*!
-\file		Loader.cpp
-\author 	Tay Jun Feng Vance
-\par    	email: junfengvance.t@digipen.edu
-\date       29/09/2023
-\brief		This file contains the implementation of the Loader class, which is responsible for loading scenes
-            from data files and creating entities with associated properties. It also defines the
-            methods for loading configuration properties from files and creating entities based on scene data.
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
- */
- /******************************************************************************/
-
 #include "pch.h"
 #include "Loader.h"
 #include "Component.h"
 
 
 namespace Engine {
-    void Config::LoadConfig(const std::string& filePath) 
-    {
+    void Config::LoadConfig(const std::string& filePath) {
         std::ifstream configFile(filePath);
-        if (!configFile.is_open()) 
-        {
+        if (!configFile.is_open()) {
             std::cerr << "Error: Could not open config file " << filePath << "\n";
             return;
         }
 
         std::string line;
-        while (std::getline(configFile, line)) 
-        {
+        while (std::getline(configFile, line)) {
             std::istringstream iss(line);
             std::string key, value;
-            if (std::getline(iss, key, '=') && std::getline(iss, value)) 
-            {
+            if (std::getline(iss, key, '=') && std::getline(iss, value)) {
                 properties[key] = value;
             }
         }
@@ -48,8 +28,7 @@ namespace Engine {
     {
     }
 
-    WindowConfig Loader::LoadWindowPropsFromConfig(const std::string& filePath) 
-    {
+    WindowConfig Loader::LoadWindowPropsFromConfig(const std::string& filePath) {
         Config config;
         config.LoadConfig(filePath);
 
@@ -61,21 +40,17 @@ namespace Engine {
         return WindowConfig(title, width, height);
     }
 
-    void Loader::LoadScene(const std::string& filePath) 
-    {
+    void Loader::LoadScene(const std::string& filePath) {
         std::ifstream sceneFile(filePath);
-        if (!sceneFile.is_open()) 
-        {
+        if (!sceneFile.is_open()) {
             std::cerr << "Error: Could not open scene file " << filePath << "\n";
             return;
         }
 
         std::string line;
-        if (std::getline(sceneFile, line)) 
-        {
+        if (std::getline(sceneFile, line)) {
             int entityCount = std::stoi(line);
-            for (int i = 0; i < entityCount; ++i) 
-            {
+            for (int i = 0; i < entityCount; ++i) {
                 EntityID entity;
                 Entity* entityPtr;
                 entity = entityManager->CreateEntity();
@@ -91,11 +66,9 @@ namespace Engine {
 
                 int minX = 0, minY = 0, maxX = 0, maxY = 0;
 
-                if (std::getline(sceneFile, line)) 
-                {
+                if (std::getline(sceneFile, line)) {
                     std::istringstream iss(line);
-                    if (iss >>addTransformComponent>> x >> y >> scaleX >> scaleY >> rot>> addCollisionComponent >> c_Width>>c_Height>>isColliding>>minX>>minY>>maxX>>maxY>>addPhysicsComponent>>veloX>>veloY) 
-                    {
+                    if (iss >>addTransformComponent>> x >> y >> scaleX >> scaleY >> rot>> addCollisionComponent >> c_Width>>c_Height>>isColliding>>minX>>minY>>maxX>>maxY>>addPhysicsComponent>>veloX>>veloY) {
                         // Successfully read properties from the scene file
                     }
                     else {
@@ -103,8 +76,7 @@ namespace Engine {
                     }
                 }
 
-                if (addTransformComponent) 
-                {
+                if (addTransformComponent) {
                     entityPtr->AddNewComponent(ComponentType::Transform);
                     TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
                     transform->x = x;
@@ -114,15 +86,13 @@ namespace Engine {
                     transform->rot = rot;
                 }
 
-                if (addCollisionComponent) 
-                {
+                if (addCollisionComponent) {
                     entityPtr->AddNewComponent(ComponentType::Collision);
                     CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entityPtr->GetComponent(ComponentType::Collision));
                     collision->c_Width = c_Width;
                     collision->c_Height = c_Height;
                 }
-                if (addPhysicsComponent) 
-                {
+                if (addPhysicsComponent) {
                     entityPtr->AddNewComponent(ComponentType::Physics);
                     PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(entityPtr->GetComponent(ComponentType::Physics));
                     physics->velocityX = veloX;
@@ -132,16 +102,13 @@ namespace Engine {
 
                 // Add more components as needed based on the format of your scene file
                 std::cout << "Entity " << i + 1 << " created\n";
-                if (entityPtr->HasComponent(ComponentType::Transform)) 
-                {
+                if (entityPtr->HasComponent(ComponentType::Transform)) {
                     std::cout << "Entity " << i + 1 << " has a transform component"<<std::endl;
                 }
-                if (entityPtr->HasComponent(ComponentType::Collision)) 
-                {
+                if (entityPtr->HasComponent(ComponentType::Collision)) {
                    std::cout << "Entity " << i + 1 << " has a collision component\n";
                 }
-                if (entityPtr->HasComponent(ComponentType::Physics)) 
-                {
+                if (entityPtr->HasComponent(ComponentType::Physics)) {
                     std::cout << "Entity " << i + 1 << " has a physics component\n";
                 }
             }
