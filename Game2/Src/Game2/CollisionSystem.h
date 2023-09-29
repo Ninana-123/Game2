@@ -1,13 +1,12 @@
-#pragma once
 /******************************************************************************/
 /*!
-\file		Collision.h
+\file		CollisionSystem.h
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
  co			Tristan Tham Rui Hong,  t.tham,				2200794
 
 \par		a.junshengaloysius@digipen.edu
-\date		01/03/2023
-\brief		Contains the declaration for the logic of AABB Collision
+\date		10/09/2023
+\brief		Contains the declaration for the logic of AABB, Circle to Circle and Circle to AABB Collision
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -15,6 +14,9 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
+
+#pragma once
+
 #include "System.h"
 #include "Vector2d.h"
 #include "EngineTypes.h"

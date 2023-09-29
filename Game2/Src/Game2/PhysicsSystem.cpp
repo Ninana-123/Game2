@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file		PhysicsSystem.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		10/09/2023
+\brief		Contains the definitions of the Physics of the game.
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "PhysicsSystem.h"
 
@@ -5,19 +16,23 @@ extern double dt;
 
 namespace Engine
 {
+    // Constructor for the PhysicsSystem class.
     PhysicsSystem::PhysicsSystem()
         : x(0.0f), y(0.0f), velocityX(0.0f), velocityY(0.0f), accelerationX(1.0f), accelerationY(1.0f) {}
 
+    // Sets the velocity of the physics system.
     void PhysicsSystem::setVelocity(float vx, float vy) {
         velocityX = vx;
         velocityY = vy;
     }
 
+    // Sets the acceleration of the physics system.
     void PhysicsSystem::setAcceleration(float ax, float ay) {
         accelerationX = ax;
         accelerationY = ay;
     }
 
+    // Updates the object's position based on physics calculations.
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
         for (const auto& entityPair : *entities)
@@ -73,26 +88,32 @@ namespace Engine
         }
     }
 
+    // Gets the x-coordinate of the object's position.
     float PhysicsSystem::getX() const {
         return x;
     }
 
+    // Gets the y-coordinate of the object's position.
     float PhysicsSystem::getY() const {
         return y;
     }
 
+    // Gets the velocity of x of the object's position.
     float PhysicsSystem::getVelocityX() const {
         return velocityX;
     }
 
+    // Gets the velocity of y of the object's position.
     float PhysicsSystem::getVelocityY() const {
         return velocityY;
     }
 
+    // Gets the acceleration of x of the object's position.
     float PhysicsSystem::getAccelerationX() const {
         return accelerationX;
     }
 
+    // Gets the acceleration of x of the object's position.
     float PhysicsSystem::getAccelerationY() const {
         return accelerationY;
     }

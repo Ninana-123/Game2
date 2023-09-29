@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		mathLib.cpp
+\file		Vector2d.cpp
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
 \par		a.junshengaloysius@digipen.edu
 \date		10/09/2023
