@@ -65,7 +65,7 @@ namespace Engine
 
     float vx = 0.0f;
     float vy = 0.0f;
-    float scalar = 0.5f;
+    float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
 
@@ -205,9 +205,14 @@ namespace Engine
             transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+            
             // Define a threshold for the minimum and maximum scales
-            const float minScale = 0.1f; // Adjust this value as needed
+            const float minScale = 0.5f; // Adjust this value as needed
             const float maxScale = 2.0f; // Adjust this value as needed
+
+            // Add a flag to keep track of scaling direction
+            bool scalingUp = false;
+            bool scalingDown = false;
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
                 if (InputHandler.IsKeyPressed(KEY_UP))
@@ -249,6 +254,13 @@ namespace Engine
                     {
                         transformTest->scaleX = maxScale;
                         transformTest->scaleY = maxScale;
+                        scalingUp = false; // Stop scaling up
+                        scalingDown = true; // Start scaling down
+                    }
+                    else
+                    {
+                        scalingUp = true; // Continue scaling up
+                        scalingDown = false; // Stop scaling down
                     }
                 }
                 else if (InputHandler.IsKeyPressed(KEY_X))
@@ -262,6 +274,13 @@ namespace Engine
                     {
                         transformTest->scaleX = minScale;
                         transformTest->scaleY = minScale;
+                        scalingUp = true; // Start scaling up
+                        scalingDown = false; // Stop scaling down
+                    }
+                    else
+                    {
+                        scalingUp = false; // Stop scaling up
+                        scalingDown = true; // Continue scaling down
                     }
                 }
                 else
