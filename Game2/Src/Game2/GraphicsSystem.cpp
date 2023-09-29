@@ -426,7 +426,7 @@ namespace Engine
                         // Update the previous 'P' key state
                         previousPState = currentPState;
 
-                        if (renderTexturedSquare)
+                        if (!renderTexturedSquare)
                         {
                             RenderTexturedEntity(mvpA);
                             RenderLines(mvpA);
