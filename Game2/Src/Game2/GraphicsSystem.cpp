@@ -174,7 +174,7 @@ namespace Engine
         }
         else {
             textureB.InitGL();
-            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+            textureB.Bind(0); // Bind the texture to a different texture unit (e.g., unit 1)
         }
 
         if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
@@ -184,7 +184,7 @@ namespace Engine
         }
         else {
             textureC.InitGL();
-            textureC.Bind(2); 
+            textureC.Bind(0); 
         }
     }
 
@@ -199,7 +199,7 @@ namespace Engine
         ibBackground.Bind(); // Bind the background index buffer
 
         renderer.Draw(vaBackground, ibBackground, shader);
-
+        textureC.Unbind();
         shader.Unbind();
     }
 
@@ -247,33 +247,33 @@ namespace Engine
         shader.Unbind();
     }
 
-    void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
-    {
-        shader.Bind();
-        vaLines.Bind();
-        shader.SetUniform1i("u_RenderTextured", 0); // no texture
-        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+    //void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
+    //{
+    //    shader.Bind();
+    //    vaLines.Bind();
+    //    shader.SetUniform1i("u_RenderTextured", 0); // no texture
+    //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
 
-        // Update the line vertices based on the new start and end positions
-        float linePositions[] =
-        {
-            lineStart.x, lineStart.y, 0.0f, 0.0f,
-            lineEnd.x, lineEnd.y, 1.0f, 1.0f
-        };
+    //    // Update the line vertices based on the new start and end positions
+    //    float linePositions[] =
+    //    {
+    //        lineStart.x, lineStart.y, 0.0f, 0.0f,
+    //        lineEnd.x, lineEnd.y, 1.0f, 1.0f
+    //    };
 
-        VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
-        VertexBufferLayout layoutLines;
-        layoutLines.Push<float>(2);
-        layoutLines.Push<float>(2);
-        vaLines.AddBuffer(vbLines, layoutLines);
+    //    VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
+    //    VertexBufferLayout layoutLines;
+    //    layoutLines.Push<float>(2);
+    //    layoutLines.Push<float>(2);
+    //    vaLines.AddBuffer(vbLines, layoutLines);
 
-        // Draw a single straight line
-        GLCall(glDrawArrays(GL_LINES, 0, 2));
+    //    // Draw a single straight line
+    //    GLCall(glDrawArrays(GL_LINES, 0, 2));
 
-        shader.SetUniform1i("u_RenderTextured", 1);
-        vaLines.Unbind();
-        shader.Unbind();
-    }
+    //    shader.SetUniform1i("u_RenderTextured", 1);
+    //    vaLines.Unbind();
+    //    shader.Unbind();
+    //}
 
     void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
@@ -349,7 +349,7 @@ namespace Engine
                     {
                         DrawColoredSquare(mvpA);
                     }
-                    RenderSingleLine(mvpA, lineStart, lineEnd);
+                    //RenderSingleLine(mvpA, lineStart, lineEnd);
 
                     transform->x = static_cast<int>(transA.x);
                     transform->y = static_cast<int>(transA.y);

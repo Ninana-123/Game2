@@ -41,11 +41,11 @@ namespace Engine
                 float l_velocityY = physicsComponent->velocityY;
 
                 // Update the object's position using the equations of motion
-                l_velocityX += accelerationX * dt;
-                l_velocityY += accelerationY * dt;
+                l_velocityX += static_cast<float>(accelerationX * dt);
+                l_velocityY += static_cast<float>(accelerationY * dt);
 
-                currentX += l_velocityX * dt;
-                currentY += l_velocityY * dt;
+                currentX += static_cast<int>(l_velocityX * dt);
+                currentY += static_cast<int>(l_velocityY * dt);
 
                 if (entity->HasComponent(ComponentType::Collision))
                 {

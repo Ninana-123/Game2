@@ -116,9 +116,10 @@ namespace MATRIXMATH
 
     void Matrix3x3::SetRotationDeg(float angle)
     {
-        float angleRad = angle * (M_PI / 180.0f);
+        float angleRad = static_cast<float>(angle * (M_PI / 180.0));
         SetRotationRad(angleRad);
     }
+
 
     void Matrix3x3::Transpose()
     {
