@@ -4,25 +4,37 @@
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains the implementation of the Texture class, which
+            represents an OpenGL texture and handles texture loading and rendering.
 
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents without the prior
-written consent of DigiPen Institute of Technology is prohibited.
+            Copyright (C) 2023 DigiPen Institute of Technology.
+            Reproduction or disclosure of this file or its contents without the prior
+            written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+
 #include "pch.h"
 #include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+/*!
+ * \brief Texture default constructor.
+ *
+ * This constructor initializes a Texture object with default values.
+ */
 Texture::Texture()
     : m_Filepath(""), m_RendererID(0), m_LocalBuffer(nullptr),
     m_Width(0), m_Height(0), m_BPP(0), m_RenderPosX(0.0f), m_RenderPosY(0.0f)
 {
 }
 
-//create a texture object and and initializing it with texture file
+/*!
+ * \brief Texture constructor with file path.
+ * \param path The file path to the texture image.
+ *
+ * This constructor creates a Texture object and loads the image from the specified file path.
+ */
 Texture::Texture(const std::string& path)
     : m_Filepath(path), m_RendererID(0), m_LocalBuffer(nullptr),
     m_Width(0), m_Height(0), m_BPP(0), m_RenderPosX(0.0f), m_RenderPosY(0.0f)
@@ -34,6 +46,11 @@ Texture::Texture(const std::string& path)
     m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 }
 
+/*!
+ * \brief Texture destructor.
+ *
+ * This destructor releases the memory allocated for the texture image.
+ */
 Texture::~Texture()
 {
     if (m_LocalBuffer)
@@ -42,6 +59,11 @@ Texture::~Texture()
     }
 }
 
+/*!
+ * \brief Initialize the OpenGL texture.
+ *
+ * This function generates and initializes an OpenGL texture using the loaded image data.
+ */
 void Texture::InitGL()
 {
     // Generate a new OpenGL texture
@@ -59,6 +81,12 @@ void Texture::InitGL()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+/*!
+ * \brief Bind the texture to a texture slot.
+ * \param slot The texture slot to bind to.
+ *
+ * This function binds the texture to a specific texture slot in OpenGL.
+ */
 void Texture::Bind(unsigned int slot) const
 {
     // Bind texture to a specific texture slot
@@ -66,12 +94,24 @@ void Texture::Bind(unsigned int slot) const
     GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
+/*!
+ * \brief Unbind the currently bound texture.
+ *
+ * This function unbinds the currently bound OpenGL texture.
+ */
 void Texture::Unbind() const
 {
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
-//change the texture of an existing texture object by loading a different image file
+/*!
+ * \brief Load a new texture from a file.
+ * \param path The file path to the new texture image.
+ * \return True if the loading process was successful; false otherwise.
+ *
+ * This function loads a new texture image from the specified file path and updates
+ * the Texture object with the new image data.
+ */
 bool Texture::Load(const std::string& path)
 {
     // Enable vertical flipping of loaded images
@@ -87,6 +127,13 @@ bool Texture::Load(const std::string& path)
     return m_LocalBuffer != nullptr;
 }
 
+/*!
+ * \brief Set the rendering position of the texture.
+ * \param posX The x-coordinate of the rendering position.
+ * \param posY The y-coordinate of the rendering position.
+ *
+ * This function sets the rendering position of the texture for rendering.
+ */
 void Texture::SetRenderPos(float posX, float posY)
 {
     m_RenderPosX = posX;

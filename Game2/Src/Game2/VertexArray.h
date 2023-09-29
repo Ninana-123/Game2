@@ -4,7 +4,9 @@
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains the VertexArray class. It
+			provides functions for managing Vertex Array Objects (VAOs), adding
+			vertex buffers, and setting vertex buffer layouts.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior

@@ -4,7 +4,8 @@
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains 
+\brief		This file contains the implementation of the Renderer class, which
+            provides functions for OpenGL rendering.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior

@@ -4,7 +4,9 @@
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023
-\brief		This file contains the 
+\brief		This file contains the implementation of the GraphicsSystem class.
+            It handles initializing OpenGL, rendering entities, and managing
+            rendering modes.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
@@ -22,11 +24,23 @@ namespace Engine
 {
     Logger GraphicsLogger;
 
+    /*!
+   * \brief GraphicsSystem constructor.
+   *
+   * This constructor initializes a GraphicsSystem object and sets up the
+   * default shader and textures.
+   */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Basic.shader")
     {
     }
 
+    /*!
+   * \brief Initialize the GLEW library.
+   *
+   * This function initializes the GLEW (OpenGL Extension Wrangler Library)
+   * and logs the initialization result.
+   */
     void GraphicsSystem::InitializeGLEW() {
         // Initialize GLEW
         GLenum glewInitResult = glewInit();
@@ -40,6 +54,12 @@ namespace Engine
             GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
+    /*!
+   * \brief Initialize the GraphicsSystem.
+   *
+   * This function initializes the GraphicsSystem by setting up OpenGL,
+   * loading shaders, and initializing textures.
+   */
     void GraphicsSystem::Initialize() {
 
         Window = glfwGetCurrentContext();
@@ -158,6 +178,12 @@ namespace Engine
         shader.Unbind();
     }
 
+    /*!
+    * \brief Initialize the shader used for rendering.
+    *
+    * This function loads and initializes the shader used for rendering
+    * and sets its initial uniform values.
+    */
     void GraphicsSystem::InitializeShader()
     {
         shader.LoadShader("Resource/Shaders/Basic.shader");
@@ -168,6 +194,11 @@ namespace Engine
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
+    /*!
+    * \brief Initialize textures used for rendering.
+    *
+    * This function loads and initializes textures used for rendering.
+    */
     void GraphicsSystem::InitializeTextures()
     {
         if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
@@ -201,6 +232,11 @@ namespace Engine
         }
     }
 
+     /*!
+     * \brief Render the background.
+     *
+     * This function renders a textured background.
+     */
     void GraphicsSystem::RenderBackground()
     {
         shader.Bind();
@@ -215,6 +251,15 @@ namespace Engine
         textureC.Unbind();
         shader.Unbind();
     }
+
+    /*!
+     * \brief Render a textured entity.
+     *
+     * This function renders a textured entity with the specified MVP matrix and alternates
+     * between two textures based on time.
+     *
+     * \param mvpMatrix The Model-View-Projection matrix for rendering.
+     */
 
     void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     {
@@ -241,6 +286,13 @@ namespace Engine
         shader.Unbind();
     }
 
+    /*!
+     * \brief Render lines.
+     *
+     * This function renders lines with the specified MVP matrix.
+     *
+     * \param mvpMatrix The Model-View-Projection matrix for rendering.
+     */
     void GraphicsSystem::RenderLines(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms for line rendering
@@ -260,34 +312,50 @@ namespace Engine
         shader.Unbind();
     }
 
-    //void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
-    //{
-    //    shader.Bind();
-    //    vaLines.Bind();
-    //    shader.SetUniform1i("u_RenderTextured", 0); // no texture
-    //    shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+    /*!
+   * \brief Render a single line.
+   *
+   * This function renders a single line with the specified MVP matrix, start, and end positions.
+   *
+   * \param mvpMatrix The Model-View-Projection matrix for rendering.
+   * \param lineStart The starting position of the line.
+   * \param lineEnd The ending position of the line.
+   */
+    void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
+    {
+        shader.Bind();
+        vaLines.Bind();
+        shader.SetUniform1i("u_RenderTextured", 0); // no texture
+        shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
 
-    //    // Update the line vertices based on the new start and end positions
-    //    float linePositions[] =
-    //    {
-    //        lineStart.x, lineStart.y, 0.0f, 0.0f,
-    //        lineEnd.x, lineEnd.y, 1.0f, 1.0f
-    //    };
+        // Update the line vertices based on the new start and end positions
+        float linePositions[] =
+        {
+            lineStart.x, lineStart.y, 0.0f, 0.0f,
+            lineEnd.x, lineEnd.y, 1.0f, 1.0f
+        };
 
-    //    VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
-    //    VertexBufferLayout layoutLines;
-    //    layoutLines.Push<float>(2);
-    //    layoutLines.Push<float>(2);
-    //    vaLines.AddBuffer(vbLines, layoutLines);
+        VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
+        VertexBufferLayout layoutLines;
+        layoutLines.Push<float>(2);
+        layoutLines.Push<float>(2);
+        vaLines.AddBuffer(vbLines, layoutLines);
 
-    //    // Draw a single straight line
-    //    GLCall(glDrawArrays(GL_LINES, 0, 2));
+        // Draw a single straight line
+        GLCall(glDrawArrays(GL_LINES, 0, 2));
 
-    //    shader.SetUniform1i("u_RenderTextured", 1);
-    //    vaLines.Unbind();
-    //    shader.Unbind();
-    //}
+        shader.SetUniform1i("u_RenderTextured", 1);
+        vaLines.Unbind();
+        shader.Unbind();
+    }
 
+    /*!
+    * \brief Render a single colored square.
+    *
+    * This function renders a single colored square with the specified MVP matrix.
+    *
+    * \param mvpMatrix The Model-View-Projection matrix for rendering.
+    */
     void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
         // Bind the shader and set uniforms
@@ -302,6 +370,14 @@ namespace Engine
         shader.Unbind();
     }
 
+    /*!
+     * \brief Update the GraphicsSystem.
+     *
+     * This function updates the GraphicsSystem by rendering entities and handling
+     * user input for toggling rendering modes.
+     *
+     * \param entities A pointer to a map of entities.
+     */
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
         int width, height;
@@ -382,7 +458,11 @@ namespace Engine
         proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
-    // Function to toggle between textured and plain squares
+    /*!
+     * \brief Toggle the rendering mode.
+     *
+     * This function toggles between textured and plain squares for rendering.
+     */
     void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
@@ -390,6 +470,19 @@ namespace Engine
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
     }
 
+
+    /*!
+     * \brief Setup the model matrix for an entity.
+     *
+     * This function sets up the model matrix for an entity based on translation,
+     * rotation, and scale parameters.
+     *
+     * \param translation The translation vector.
+     * \param rotationAngle The rotation angle in radians.
+     * \param scale The scale vector.
+     *
+     * \return The model matrix for the entity.
+     */
     glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
         int screenWidth, screenHeight;
