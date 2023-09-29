@@ -23,10 +23,12 @@ namespace Engine {
 		GLFWwindow* m_Window;
 		struct WindowData {
 			std::string Title;
-			unsigned int Width, Height;
+			unsigned int Width = 0;  // Initialize to a default value
+			unsigned int Height = 0; // Initialize to a default value
 
 			EventCallbackFn EventCallback;
 		};
+
 		WindowData m_Data;
 	};
 }

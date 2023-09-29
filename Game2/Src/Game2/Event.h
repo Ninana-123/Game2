@@ -1,3 +1,18 @@
+/******************************************************************************/
+/*!
+\file		Event.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Defines event-related classes and enums for the Game2 Engine.
+            This file contains the declaration of event-related classes, enums, 
+            and macros.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 
 #include "pch.h"
@@ -45,7 +60,6 @@ namespace Engine {
         virtual int GetCategoryFlags() const = 0;
         virtual std::string ToString() const { return GetName(); }
         virtual void LogEventInfo() const = 0;
-
         inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
     protected:
         Logger& m_Logger;

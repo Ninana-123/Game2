@@ -1,9 +1,10 @@
 #pragma once
-//#pragma warning(disable : 4251)
+#pragma warning(disable : 4251)
 
 #include "pch.h"
 #include "Core.h"
 #include <fstream>
+
 
 namespace Engine {
     enum class LogLevel {

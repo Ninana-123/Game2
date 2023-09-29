@@ -7,9 +7,6 @@
     <ClCompile Include="Src\Game2\ComponentFactory.cpp">
       <Filter>Base\ComponentFactory</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Core.cpp">
-      <Filter>Base\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityManager.cpp">
       <Filter>Base\Engine\EntityManager</Filter>
     </ClCompile>

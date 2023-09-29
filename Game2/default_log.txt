@@ -1,2 +1,3 @@
-2023-09-29 13:50:09[DEBUG] Loading Scene
-2023-09-29 13:50:09[DEBUG]2023-09-29 13:50:22[EVENT] Event Type: WindowResizeEvent: 2560, 1494
+2023-09-29 14:01:19[DEBUG] Loading Scene
+2023-09-29 14:01:19[DEBUG] Scene Loaded
+2023-09-29 14:01:19[APP] Application Running.
