@@ -1,6 +1,15 @@
+/******************************************************************************/
+/*!
+\file		SystemManager.cpp
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Contains the definitions of the System Manager
+
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "SystemsManager.h"
-
 
 namespace Engine
 {

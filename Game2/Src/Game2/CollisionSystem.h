@@ -37,10 +37,18 @@ Technology is prohibited.
 
 namespace Engine
 {
-	class CollisionSystem : public System
+	class CollisionSystem : public System //CollisionSystem class, Child class of System base class
 	{
 	public:
+		/*!*****************************************************************
 
+		 \brief
+			Logic of systems calculating logic on component data from each entity
+
+		\param[in] entities
+			map container of entities with references
+
+		********************************************************************/
 		void Update (std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
 
 		struct AABB

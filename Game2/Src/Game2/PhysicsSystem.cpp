@@ -2,7 +2,11 @@
 /*!
 \file		PhysicsSystem.cpp
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\co         Tristan Tham Rui Hong, t.tham, 2200794
+
 \par		a.junshengaloysius@digipen.edu
+            t.tham@digipen.edu
+
 \date		10/09/2023
 \brief		Contains the definitions of the Physics of the game.
 
