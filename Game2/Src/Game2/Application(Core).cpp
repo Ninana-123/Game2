@@ -41,7 +41,7 @@ namespace Engine
 {
     std::unique_ptr<Loader> loader;
     // Window Properties configuration loaded from a file
-    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("Resource/Config/config.txt");
+    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("config.txt");
 
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
@@ -115,7 +115,7 @@ namespace Engine
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(&EM);
         logger.Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene("Resource/Scenes/testscene.txt");
+        loader->LoadScene("testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
         targetEntity = EM.GetEntity(0);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
