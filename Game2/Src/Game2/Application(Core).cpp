@@ -24,7 +24,7 @@ namespace Engine
 {
     std::unique_ptr<Loader> loader;
     //Window Properties
-    Engine::WindowProps windowProps = loader->LoadWindowPropsFromConfig("config.txt");
+    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("config.txt");
 
     //Set filepath of audio to the variable
     AudioEngine audioEngine;

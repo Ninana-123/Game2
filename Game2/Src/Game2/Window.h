@@ -6,12 +6,12 @@
 
 
 namespace Engine {
-	struct WindowProps {
+	struct WindowConfig {
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
 		//Default Properties
-		WindowProps(const std::string& title = "Game2 Engine",
+		WindowConfig(const std::string& title = "Game2 Engine",
 			unsigned int width = 1280,
 			unsigned int height = 720)
 			: Title(title), Width(width), Height(height) {
@@ -23,7 +23,7 @@ namespace Engine {
 		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() {}
-		static Window* Create(const WindowProps& props = WindowProps());
+		static Window* Create(const WindowConfig& props = WindowConfig());
 		virtual void OnUpdate() = 0;
 
 		virtual unsigned int GetWidth() const = 0;
