@@ -6,7 +6,7 @@ extern double dt;
 namespace Engine
 {
     PhysicsSystem::PhysicsSystem()
-        : x(0.0f), y(0.0f), velocityX(0.0f), velocityY(0.0f), accelerationX(1.0f), accelerationY(1.0f) {}
+        : x(0.0f), y(0.0f), velocityX(0.0f), velocityY(0.0f), accelerationX(0.0f), accelerationY(0.0f) {}
 
     void PhysicsSystem::setVelocity(float vx, float vy) {
         velocityX = vx;

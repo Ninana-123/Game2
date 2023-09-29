@@ -117,7 +117,7 @@ namespace Engine
         logger.Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
-        targetEntity = EM.GetEntity(0);
+        targetEntity = EM.GetEntity(1);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
         collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
         physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
@@ -205,56 +205,54 @@ namespace Engine
 
             transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
-            physicsTest= dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+            physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
 
             if (physicsTest && transformTest)
             {
                 if (InputHandler.IsKeyPressed(KEY_UP))
                 {
                     //transformTest->y += transformation;
-                    physicsTest->velocityY += 10.0f;
+                    physicsTest->velocityY = 10.0f;
                 }
-
-                if (InputHandler.IsKeyPressed(KEY_DOWN))
+                else if (InputHandler.IsKeyPressed(KEY_DOWN))
                 {
                     //transformTest->y -= transformation;
-                    physicsTest->velocityY -= 10.0f;
+                    physicsTest->velocityY = -10.0f;
                 }
-
-                if (InputHandler.IsKeyPressed(KEY_LEFT))
+                else if (InputHandler.IsKeyPressed(KEY_LEFT))
                 {
                     //transformTest->x -= transformation;
-                    physicsTest->velocityX -= 10.0f;
+                    physicsTest->velocityX = -10.0f;
                 }
-
-                if (InputHandler.IsKeyPressed(KEY_RIGHT))
+                else if (InputHandler.IsKeyPressed(KEY_RIGHT))
                 {
                     //transformTest->x += transformation;
-                    physicsTest->velocityX += 10.0f;
+                    physicsTest->velocityX = 10.0f;
                 }
-
-                if (InputHandler.IsKeyPressed(KEY_R))
+                else if (InputHandler.IsKeyPressed(KEY_R))
                 {
                     transformTest->rot += rotation; //Rotate counterclockwise
-                };
-
-                if (InputHandler.IsKeyPressed(KEY_T))
+                }
+                else if (InputHandler.IsKeyPressed(KEY_T))
                 {
                     transformTest->rot -= rotation; //Rotate counterclockwise
-                };
-
-                if (InputHandler.IsKeyPressed(KEY_Z))
+                }
+                else if (InputHandler.IsKeyPressed(KEY_Z))
                 {
                     //Scale Up
                     transformTest->scaleX += scalar;
                     transformTest->scaleY += scalar;
                 }
-
-                if (InputHandler.IsKeyPressed(KEY_X))
+                else if (InputHandler.IsKeyPressed(KEY_X))
                 {
                     // Scale Down
                     transformTest->scaleX -= scalar;
                     transformTest->scaleY -= scalar;
+                }
+                else
+                {
+                    physicsTest->velocityX = 0.0f;
+                    physicsTest->velocityY = 0.0f;
                 }
 
             }
