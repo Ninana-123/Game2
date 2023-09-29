@@ -261,8 +261,9 @@ namespace Engine
 
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
+
         renderer.Clear();
-        RenderBackground();
+        //RenderBackground();
 
         for (const auto& entityPair : *entities)
         {

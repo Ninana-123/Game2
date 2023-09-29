@@ -5,7 +5,7 @@ constexpr EntityID EMPTY_ID = 0;
 
 typedef unsigned int ComponentID;
 
-enum class ComponentType { Collision, Transform, Texture };
+enum class ComponentType { Collision, Transform, Texture, Physics };
 
 enum class TextureClass
 {

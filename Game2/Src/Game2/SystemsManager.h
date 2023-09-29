@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "System.h"
 #include "GraphicsSystem.h"
+#include "PhysicsSystem.h"
+#include "CollisionSystem.h"
 
 #pragma once
 
