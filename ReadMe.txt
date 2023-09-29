@@ -13,3 +13,5 @@
 - To select different entities
 - entity 0 is the background, 
  -entity 1-3 is the different game objects 
+Click create entity to create a base entity with no tex or component loaded
+Click clone to clone currently selected entity
