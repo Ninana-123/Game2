@@ -4,8 +4,8 @@
 \file		TransformComponent.h
 \author		Tristan Tham Rui Hong
 \par		t.tham@digipen.edu
-\date		10/09/2023
-\brief		Contains the definitions of the Physics of the game.
+\date		9/09/2023
+\brief		Contains the interface of the Transform Component
 
  */
  /******************************************************************************/
@@ -22,8 +22,27 @@ namespace Engine
 		int x = 0, y = 0;
 		float scaleX =1.0f, scaleY = 1.0f;
 		float rot = 0.0f;
+		/*!*****************************************************************
+
+		\brief
+		Getter for this Components enum
+
+		\return  ComponentType
+		Returns an enum of the component Type
+
+		********************************************************************/
 
 		ComponentType GetType() const override { return ComponentType::Transform; }
+
+		/*!*****************************************************************
+
+		\brief
+		Cloner for this component
+
+		\return  Component*
+		Clone component with cloned data members
+
+		********************************************************************/
 		Component* Clone() const override
 		{
 			TransformComponent* cloneComponent = new TransformComponent();
