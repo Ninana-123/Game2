@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		mathLib.cpp
+\file		Vector2d.cpp
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
 \par		a.junshengaloysius@digipen.edu
 \date		10/09/2023
@@ -13,17 +13,61 @@
 #include <algorithm>
 #include "Vector2d.h"
 
+/**************************************************************************/
+/*!
+\brief Returns the minimum of two values.
+
+\param[in] a
+    The first value.
+
+\param[in] b
+    The second value.
+
+\return
+    The smaller of the two input values.
+
+*/
+/**************************************************************************/
 template <typename T>
 T customMin(T a, T b) {
     return (a < b) ? a : b;
 }
 
+/**************************************************************************/
+/*!
+\brief Returns the maximum of two values.
+
+\param[in] a
+    The first value.
+
+\param[in] b
+    The second value.
+
+\return
+    The larger of the two input values.
+
+*/
+/**************************************************************************/
 template <typename T>
 T customMax(T a, T b) {
     return (a > b) ? a : b;
 }
 
-// Custom clamp function to ensure a value falls within a specified range
+/**************************************************************************/
+/*!
+\brief Clamps the vector components to a specified range.
+
+\param[in,out] vec
+    The Vector2D object whose components will be clamped.
+
+\param[in] minVal
+    The minimum allowed value for each component.
+
+\param[in] maxVal
+    The maximum allowed value for each component.
+
+*/
+/**************************************************************************/
 template <typename T>
 T customClamp(T value, T minValue, T maxValue) {
     return customMin(customMax(value, minValue), maxValue);
@@ -32,53 +76,33 @@ T customClamp(T value, T minValue, T maxValue) {
 
 namespace VECTORMATH {
 
-    /**************************************************************************/
-    /*!
-        Initializes the x and y values with the given parameters
-     */
-     /**************************************************************************/
+    // Initializes the x and y components of a Vector2D object.
     Vector2D::Vector2D(float _x, float _y) : x(_x), y(_y) {
     }
 
     // Assignment operators
-    /**************************************************************************/
-    /*!
-        Adds two Vectors together and returns the modified vector
-     */
-     /**************************************************************************/
+    // Adds two Vector2D objects and modifies the calling vector.
     Vector2D& Vector2D::operator += (const Vector2D& rhs) {
         x += rhs.x;
         y += rhs.y;
         return *this;
     }
 
-    /**************************************************************************/
-    /*!
-        Subtracts two Vectors together and returns the modified vector
-     */
-     /**************************************************************************/
+    // Subtracts two Vector2D objects and modifies the calling vector.
     Vector2D& Vector2D::operator -= (const Vector2D& rhs) {
         x -= rhs.x;
         y -= rhs.y;
         return *this;
     }
 
-    /**************************************************************************/
-    /*!
-        Multiplies a vector by a float value rhs and returns the modified vector
-     */
-     /**************************************************************************/
+    // Multiplies a Vector2D object by a scalar and modifies the calling vector.
     Vector2D& Vector2D::operator*=(float rhs) {
         x *= rhs;
         y *= rhs;
         return *this;
     }
 
-    /**************************************************************************/
-    /*!
-        Divides a vector by a float value rhs and returns the modified vector
-     */
-     /**************************************************************************/
+    // Divides a Vector2D object by a scalar and modifies the calling vector.
     Vector2D& Vector2D::operator /= (float rhs) {
         x /= rhs;
         y /= rhs;
@@ -86,21 +110,13 @@ namespace VECTORMATH {
     }
 
     // Unary operator
-    /**************************************************************************/
-    /*!
-        Inverses the values of the vector
-     */
-     /**************************************************************************/
+    // Returns the negation of a Vector2D object.
     Vector2D Vector2D::operator -() const {
         return Vector2D(-x, -y);
     }
 
     // Binary operators
-    /**************************************************************************/
-    /*!
-        Adds two vectors together and returns the result
-     */
-     /**************************************************************************/
+    // Adds two Vector2D objectsand returns the result.
     Vector2D operator + (const Vector2D& lhs, const Vector2D& rhs) {
         Vector2D result;
         result.x = lhs.x + rhs.x;
@@ -108,11 +124,7 @@ namespace VECTORMATH {
         return result;
     }
 
-    /**************************************************************************/
-    /*!
-        Subtracts two vectors together and returns the result
-     */
-     /**************************************************************************/
+    // Subtracts one Vector2D object from another and returns the result.
     Vector2D operator - (const Vector2D& lhs, const Vector2D& rhs) {
         Vector2D result;
         result.x = lhs.x - rhs.x;
@@ -120,11 +132,7 @@ namespace VECTORMATH {
         return result;
     }
 
-    /**************************************************************************/
-    /*!
-        Performs scalar multiplication and returns the result
-     */
-     /**************************************************************************/
+    // Multiplies a Vector2D object by a scalar and returns the result.
     Vector2D operator * (const Vector2D& lhs, float rhs) {
         Vector2D result;
         result.x = lhs.x * rhs;
@@ -132,11 +140,7 @@ namespace VECTORMATH {
         return result;
     }
 
-    /**************************************************************************/
-    /*!
-        Performs scalar multiplication and returns the result
-     */
-     /**************************************************************************/
+    // Multiplies a scalar by a Vector2D object and returns the result.
     Vector2D operator * (float lhs, const Vector2D& rhs) {
         Vector2D result;
         result.x = rhs.x * lhs;
@@ -144,11 +148,7 @@ namespace VECTORMATH {
         return result;
     }
 
-    /**************************************************************************/
-    /*!
-        Performs scalar division and returns the result
-     */
-     /**************************************************************************/
+    // Divides a Vector2D object by a scalar and returns the result.
     Vector2D operator / (const Vector2D& lhs, float rhs) {
         Vector2D result;
         result.x = lhs.x / rhs;
@@ -201,11 +201,7 @@ namespace VECTORMATH {
         }
     }
 
-    /**************************************************************************/
-    /*!
-        In this function, pResult will be the unit vector of pVec0
-     */
-     /**************************************************************************/
+    // Normalizes a vector to unit length.
     void Vector2DNormalize(Vector2D& pResult, const Vector2D& pVec0) {
         float magnitude = sqrt((pVec0.x * pVec0.x) + (pVec0.y * pVec0.y));
         if (magnitude > 0) {
@@ -218,11 +214,7 @@ namespace VECTORMATH {
         }
     }
 
-    /**************************************************************************/
-    /*!
-        This function returns the length of the vector pVec0
-     */
-     /**************************************************************************/
+    // Calculates the length of a vector.
     float Vector2DLength(const Vector2D& pVec0) {
         float xSquared = static_cast<float>(pow(pVec0.x, 2));
         float ySquared = static_cast<float>(pow(pVec0.y, 2));
@@ -231,11 +223,7 @@ namespace VECTORMATH {
         return length;
     }
 
-    /**************************************************************************/
-    /*!
-        This function returns the square of pVec0's length. Avoid the square root
-     */
-     /**************************************************************************/
+    // Calculates the square of the length of a vector.
     float Vector2DSquareLength(const Vector2D& pVec0) {
         float xSquared = static_cast<float>(pow(pVec0.x, 2));
         float ySquared = static_cast<float>(pow(pVec0.y, 2));
@@ -243,12 +231,7 @@ namespace VECTORMATH {
         return squaredLength;
     }
 
-    /**************************************************************************/
-    /*!
-        In this function, pVec0 and pVec1 are considered as 2D points.
-        The distance between these 2 2D points is returned
-     */
-     /**************************************************************************/
+    // Calculates the distance between two points represented by Vector2D objects.
     float Vector2DDistance(const Vector2D& pVec0, const Vector2D& pVec1) {
         float deltaX = pVec0.x - pVec1.x;
         float deltaY = pVec0.y - pVec1.y;
@@ -257,13 +240,7 @@ namespace VECTORMATH {
         return distance;
     }
 
-    /**************************************************************************/
-    /*!
-        In this function, pVec0 and pVec1 are considered as 2D points.
-        The squared distance between these 2 2D points is returned.
-        Avoid the square root
-     */
-     /**************************************************************************/
+    // Calculates the square of the distance between two points represented by Vector2D objects.
     float Vector2DSquareDistance(const Vector2D& pVec0, const Vector2D& pVec1) {
         float deltaX = pVec0.x - pVec1.x;
         float deltaY = pVec0.y - pVec1.y;
@@ -272,11 +249,7 @@ namespace VECTORMATH {
     }
 
 
-    /**************************************************************************/
-    /*!
-        This function returns the dot product between pVec0 and pVec1
-     */
-     /**************************************************************************/
+    // Calculates the dot product between two Vector2D objects.
     float Vector2DDotProduct(const Vector2D& pVec0, const Vector2D& pVec1) {
         float dotProductX = pVec0.x * pVec1.x;
         float dotProductY = pVec0.y * pVec1.y;
@@ -284,12 +257,7 @@ namespace VECTORMATH {
         return dotProduct;
     }
 
-    /**************************************************************************/
-    /*!
-        This function returns the cross product magnitude
-        between pVec0 and pVec1
-     */
-     /**************************************************************************/
+    // Calculates the magnitude of the cross product between two Vector2D objects.
     float Vector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1) {
         float crossProductX = pVec0.x * pVec1.y;
         float crossProductY = pVec1.x * pVec0.y;

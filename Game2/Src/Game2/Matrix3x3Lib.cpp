@@ -1,3 +1,18 @@
+/******************************************************************************/
+/*!
+\file		Matrix3x3Lib.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		10/09/2023
+\brief		Contains the definitions of the recreated matrix 3x3 library.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Vector2d.h"
 #include "Matrix3x3lib.h"
