@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		WindowsWindow.cpp
+\file		Window.h
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923

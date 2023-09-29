@@ -1,32 +1,91 @@
+/******************************************************************************/
+/*!
+\file		WindowsWindow.cpp
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Implementation of the WindowsWindow class, derived from the 
+			Window class.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "WindowsWindow.h"
 #include "AppEvent.h"
 #include "InputEvent.h"
 
 namespace Engine {
+	// Initialize a logger specific to the window
 	Engine::Logger WindowLogger;
 
+	// Static flag to check if GLFW is initialized
 	static bool s_GLFWInitialized = false;
 
+	/*!**********************************************************************
+	\brief
+	Error callback function for GLFW
+	\param[in] error
+	The error code
+	\param[in] description 
+	Description of the error
+	*************************************************************************/
 	static void GLFWErrorCallback(int error, const char* description) {
 		UNREFERENCED_PARAMETER(error);
 		WindowLogger.Log(Engine::LogLevel::Error, description);
 	}
+
+	/*!**********************************************************************
+	\brief
+	Factory method to create a Window object based on the 
+	provided WindowConfig properties.
+	\param[in] props 
+	The WindowConfig containing the window properties.
+	\return
+	A pointer to the created Window object.
+	*************************************************************************/
 	Window* Window::Create(const WindowConfig& props) {
 		return new WindowsWindow(props);
 	}
 
+	/*!**********************************************************************
+	\brief
+	Constructor for the WindowsWindow class.
+	\param[in] props
+	The WindowConfig containing the window properties.
+	*************************************************************************/
 	WindowsWindow::WindowsWindow(const WindowConfig& props) {
 		Init(props);
 	}
+
+	/*!**********************************************************************
+	\brief
+	Destructor for the WindowsWindow class.
+	*************************************************************************/	
 	WindowsWindow::~WindowsWindow() {
 	}
+
+	/*!**********************************************************************
+	\brief
+	Initializes the WindowsWindow using the provided WindowConfig properties.
+	It sets up the GLFW window and sets appropriate GLFW hints
+	for window creation.
+	\param[in] props
+	The WindowConfig containing the window properties.
+	*************************************************************************/
+
 	void WindowsWindow::Init(const WindowConfig& props) {
+		// Initialize window properties
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
+
+		// Log window creation information
 		WindowLogger.Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
 
+		// Initialize GLFW if not already initialized
 		if (!s_GLFWInitialized) {
 			int success = glfwInit();
 			glfwSetErrorCallback(GLFWErrorCallback);
@@ -59,13 +118,13 @@ namespace Engine {
 
 			WindowResizeEvent event(WindowLogger, width, height);
 			data.EventCallback(event);
-		});
+			});
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event(WindowLogger);
 			data.EventCallback(event);
 
-		});
+			});
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			UNREFERENCED_PARAMETER(scancode);
 			UNREFERENCED_PARAMETER(mods);
@@ -89,15 +148,15 @@ namespace Engine {
 				break;
 			}
 			}
-		});
+			});
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			KeyTypedEvent event(WindowLogger, keycode);
 			data.EventCallback(event);
-		});
+			});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow * window, int button, int action, int mods) {
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
 			UNREFERENCED_PARAMETER(mods);
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
@@ -112,29 +171,35 @@ namespace Engine {
 				break;
 			}
 			}
-		});
+			});
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			
+
 			MouseScrolledEvent event(WindowLogger, (float)xOffset, (float)yOffset);
 			data.EventCallback(event);
-		});
+			});
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			
-			MouseMovedEvent event(WindowLogger,(float)xPos, (float)yPos);
+
+			MouseMovedEvent event(WindowLogger, (float)xPos, (float)yPos);
 			data.EventCallback(event);
-		});
+			});
 
 	}
 
-	void WindowsWindow::Shutdown(){
+	/*!**********************************************************************
+	\brief
+	Shuts down the WindowsWindow, destroying the GLFW window.
+	*************************************************************************/
+
+	void WindowsWindow::Shutdown() {
 		glfwDestroyWindow(m_Window);
 	}
+	/*!**********************************************************************
+	\brief
+	Updates the WindowsWindow by processing events and swapping buffers.
+	*************************************************************************/
 	void WindowsWindow::OnUpdate() {
-
-	
-
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}

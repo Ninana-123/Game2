@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		Logger.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Provides a logger class to manage log messages with different 
+            log levels.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+/******************************************************************************/
 #pragma once
 #pragma warning(disable : 4251)
 
