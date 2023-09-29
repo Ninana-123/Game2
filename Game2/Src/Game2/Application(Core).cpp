@@ -117,7 +117,7 @@ namespace Engine
         logger.Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
-        targetEntity = EM.GetEntity(0);
+        targetEntity = EM.GetEntity(1);
         transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
         collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
         physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
@@ -161,7 +161,6 @@ namespace Engine
 
         while (m_Running)
         {
-
             // Update input, window, delta time, and window title
             InputHandler.Update();
             m_Window->OnUpdate();
@@ -207,27 +206,27 @@ namespace Engine
             collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
 
-            if (physicsTest && transformTest)
+            if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
                 if (InputHandler.IsKeyPressed(KEY_UP))
                 {
-                    //transformTest->y += transformation;
-                    physicsTest->velocityY = 10.0f;
+                    transformTest->y += transformation;
+                    //physicsTest->velocityY = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_DOWN))
                 {
-                    //transformTest->y -= transformation;
-                    physicsTest->velocityY = -10.0f;
+                    transformTest->y -= transformation;
+                    //physicsTest->velocityY = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_LEFT))
                 {
-                    //transformTest->x -= transformation;
-                    physicsTest->velocityX = -10.0f;
+                    transformTest->x -= transformation;
+                    //physicsTest->velocityX = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_RIGHT))
                 {
-                    //transformTest->x += transformation;
-                    physicsTest->velocityX = 10.0f;
+                    transformTest->x += transformation;
+                    //physicsTest->velocityX = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_R))
                 {
@@ -262,7 +261,6 @@ namespace Engine
 
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
-            //std::cout << "vel X: " << physicsTest->velocityX << " Y: " << physicsTest->velocityY << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             m_ImGuiWrapper->OnUpdate();
 

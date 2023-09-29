@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "CollisionComponent.h"
+#include "PhysicsComponent.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
@@ -60,6 +61,7 @@ namespace Engine
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 				
 				AABB aabb1;
+				VECTORMATH::Vec2 vel1;
 
 				if (collisionComponent1)
 				{
@@ -75,7 +77,15 @@ namespace Engine
 					aabb1.max = VECTORMATH::Vec2(maxX_1, maxY_1);
 				}
 
-				VECTORMATH::Vec2 vel1 = VECTORMATH::Vec2(0.0f, 0.0f);
+				if (entity1->HasComponent(ComponentType::Physics))
+				{
+					PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
+					vel1 = VECTORMATH::Vec2(physicsComponent1->velocityX, physicsComponent1->velocityY);
+				}
+				else
+				{
+					vel1 = VECTORMATH::Vec2(0.0f, 0.0f);
+				}
 
 				for (auto it2 = std::next(it1); it2 != entities->end(); ++it2)
 				{
@@ -87,6 +97,7 @@ namespace Engine
 						TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 
 						AABB aabb2;
+						VECTORMATH::Vec2 vel2;
 
 						float halfWidth_2  = collisionComponent2->c_Width  / 2.0f;
 						float halfHeight_2 = collisionComponent2->c_Height / 2.0f;
@@ -98,8 +109,16 @@ namespace Engine
 						
 						aabb2.min = VECTORMATH::Vec2(minX_2, minY_2);													
 						aabb2.max = VECTORMATH::Vec2(maxX_2, maxY_2);
-													
-						VECTORMATH::Vec2 vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
+						
+						if (entity2->HasComponent(ComponentType::Physics))
+						{
+							PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
+							vel2 = VECTORMATH::Vec2(physicsComponent2->velocityX, physicsComponent2->velocityY);
+						}
+						else
+						{
+							vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
+						}
 
 						// If collision detected, set the isColliding flag for both entities
 						if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))																			

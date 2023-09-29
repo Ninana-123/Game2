@@ -35,10 +35,11 @@ namespace Engine
     // Updates the object's position based on physics calculations.
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
+        std::cout << "Physics Checking" << std::endl;
+
         for (const auto& entityPair : *entities)
         {
             Entity* entity = entityPair.second.get();
-            std::cout << "Physics Checking" << std::endl;
 
             if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)))
             {
@@ -56,8 +57,8 @@ namespace Engine
                 float l_velocityY = physicsComponent->velocityY;
 
                 // Update the object's position using the equations of motion
-                l_velocityX += static_cast<float>(accelerationX * dt);
-                l_velocityY += static_cast<float>(accelerationY * dt);
+                //l_velocityX += static_cast<float>(accelerationX * dt);
+                //l_velocityY += static_cast<float>(accelerationY * dt);
 
                 currentX += static_cast<int>(l_velocityX * dt);
                 currentY += static_cast<int>(l_velocityY * dt);

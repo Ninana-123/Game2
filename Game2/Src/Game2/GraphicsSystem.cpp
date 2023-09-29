@@ -438,7 +438,7 @@ namespace Engine
                     }
                     else
                     {
-                        RenderBackground(mvpA);
+                        RenderBackground(mvpA); //Assuming background only has Transform
                     }
                     
                     //RenderSingleLine(mvpA, lineStart, lineEnd

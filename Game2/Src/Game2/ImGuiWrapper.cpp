@@ -243,8 +243,8 @@ namespace Engine {
 		io.GetClipboardTextFn = GetClipboardText;
 		io.ClipboardUserData = glfwGetCurrentContext();
 		if (entityManager) {
-			firstEntity = 0;
-			targettedEntity = entityManager->GetEntity(firstEntity);
+			firstEntity = 1;
+			targettedEntity = entityManager->GetEntity(1);
 
 		}
 	}
@@ -349,6 +349,32 @@ namespace Engine {
 					}
 				}
 			}
+
+			const auto entities = entityManager->GetEntities();
+			ImGui::Text("Number of Entities: %d", entities->size());
+			ImGui::Separator();
+			ImGui::Text("Currently selected entity ID:");
+
+			std::vector<std::string> entityNames;
+			for (const auto& entity : *entities) {
+				entityNames.push_back("Entity " + std::to_string(entity.first));
+			}
+
+
+			if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+				for (int i = 1; i < entityNames.size(); ++i) {
+					const bool isSelected = (selectedEntityIndex == i);
+					if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+						selectedEntityIndex = i;
+						targetEntity = entityManager->GetEntity(selectedEntityIndex);
+						std::cout << targetEntity->GetID();
+					}
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+
 			// Clone Entity button
 			if (ImGui::Button("Clone Entity"))
 			{
@@ -370,35 +396,11 @@ namespace Engine {
 					for (int i = 0; i < cloneCount; ++i)
 					{
 						// Clone firstEntity and store its ID
+						firstEntity = targetEntity->GetID();
 						secondEntity = entityManager->CloneEntity(firstEntity);
 						targettedEntity = entityManager->GetEntity(secondEntity);
 					}
 				}
-			}
-
-			const auto entities = entityManager->GetEntities();
-			ImGui::Text("Number of Entities: %d", entities->size());
-			ImGui::Separator();
-			ImGui::Text("Currently selected entity ID:");
-
-			std::vector<std::string> entityNames;
-			for (const auto& entity : *entities) {
-				entityNames.push_back("Entity " + std::to_string(entity.first));
-			}
-
-
-			if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-				for (int i = 0; i < entityNames.size(); ++i) {
-					const bool isSelected = (selectedEntityIndex == i);
-					if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
-						selectedEntityIndex = i;
-						targetEntity = entityManager->GetEntity(selectedEntityIndex);
-						std::cout << targetEntity->GetID();
-					}
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-				ImGui::EndCombo();
 			}
 			/*
 			if (ImGui::Button("Delete currently selected entity")) {

@@ -1,4 +1,14 @@
 #pragma once
+/******************************************************************************/
+/*!
+\file		TransformComponent.h
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		10/09/2023
+\brief		Contains the definitions of the Physics of the game.
+
+ */
+ /******************************************************************************/
 
 #include "Component.h"
 #include "EngineTypes.h"
