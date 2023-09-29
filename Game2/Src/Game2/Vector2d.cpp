@@ -80,6 +80,7 @@ namespace VECTORMATH {
     Vector2D::Vector2D(float _x, float _y) : x(_x), y(_y) {
     }
 
+
     // Assignment operators
     // Adds two Vector2D objects and modifies the calling vector.
     Vector2D& Vector2D::operator += (const Vector2D& rhs) {

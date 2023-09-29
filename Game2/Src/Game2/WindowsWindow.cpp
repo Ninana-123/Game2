@@ -100,12 +100,17 @@ namespace Engine {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		if (!m_Window) {
 			// Handle window creation failure
 			// You can log an error or throw an exception here.
 			return;
 		}
+		//NOT RESIZABLE FOR NOW
+		glfwSetWindowAttrib(m_Window, GLFW_RESIZABLE, GLFW_FALSE);
+
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		glfwSwapInterval(1);
