@@ -67,9 +67,7 @@ namespace Engine
 		// Clone the components from the source entity to the cloned entity
 		auto sourceComponents = sourceEntity->GetComponents();
 		for (const auto& pair : sourceComponents) {
-			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-			UNREFERENCED_PARAMETER(componentType);
 			// You may need to implement a copy constructor or clone method for your components
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 

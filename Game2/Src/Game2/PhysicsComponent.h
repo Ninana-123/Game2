@@ -12,7 +12,7 @@ namespace Engine
 		float velocityX = 0.0f;
 		float velocityY = 0.0f;
 
-		ComponentType GetType() const override { return ComponentType::Collision; }
+		ComponentType GetType() const override { return ComponentType::Physics; }
 		Component* Clone() const override
 		{
 			PhysicsComponent* cloneComponent = new PhysicsComponent();
