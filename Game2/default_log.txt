@@ -1,3 +1,3 @@
-2023-09-29 15:13:38[DEBUG] Loading Scene
-2023-09-29 15:13:38[DEBUG] Scene Loaded
-2023-09-29 15:13:38[APP] Application Running.
+2023-09-29 15:36:18[DEBUG] Loading Scene
+2023-09-29 15:36:18[DEBUG] Scene Loaded
+2023-09-29 15:36:18[APP] Application Running.
