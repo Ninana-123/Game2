@@ -75,7 +75,7 @@
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
     <IncludePath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;$(SolutionDir)Game2\Src\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\lib-vc2022;$(SolutionDir)bin\Debug-x64\Game2;$(SolutionDir)Game2\vendor\glew-2.2.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>

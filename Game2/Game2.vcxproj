@@ -73,7 +73,6 @@
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
-    <ClCompile Include="Src\Game2\Core.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
     <ClCompile Include="Src\Game2\GraphicsSystem.cpp" />

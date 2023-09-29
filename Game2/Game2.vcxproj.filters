@@ -7,9 +7,6 @@
     <ClCompile Include="Src\Game2\ComponentFactory.cpp">
       <Filter>Base\ComponentFactory</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Core.cpp">
-      <Filter>Base\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityManager.cpp">
       <Filter>Base\Engine\EntityManager</Filter>
     </ClCompile>
@@ -55,9 +52,6 @@
     <ClCompile Include="Src\Game2\imgui_tables.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Systems\Audio</Filter>
     </ClCompile>
@@ -93,6 +87,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp">
       <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
+      <Filter>ImGuiWrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +168,6 @@
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
       <Filter>ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\ImGuiWrapper.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -239,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\PhysicsComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiWrapper.h">
+      <Filter>ImGuiWrapper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +319,9 @@
     </Filter>
     <Filter Include="Systems\Graphics\Vertex">
       <UniqueIdentifier>{578c0454-6b9a-4d77-b65d-e5a923949581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiWrapper">
+      <UniqueIdentifier>{6c327942-ec98-4f23-804e-d67d8279b0d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

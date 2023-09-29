@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		MouseButtonCodes.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Defines mouse button codes and a mapping of mouse button codes 
+            to mouse button names.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 #include <map>
 
