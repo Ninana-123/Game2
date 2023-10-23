@@ -51,14 +51,14 @@ namespace Engine
                 PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
 
                 //Store Local variables for processing
-                int previousX = transformComponent->x;
-                int previousY = transformComponent->y;
+                float previousX = transformComponent->position.x;
+                float previousY = transformComponent->position.y;
 
-                int currentX = transformComponent->x;
-                int currentY = transformComponent->y;
+                float currentX = transformComponent->position.x;
+                float currentY = transformComponent->position.y;
 
-                float l_velocityX = physicsComponent->velocityX;
-                float l_velocityY = physicsComponent->velocityY;
+                float l_velocityX = physicsComponent->velocity.x;
+                float l_velocityY = physicsComponent->velocity.y;
 
                 // Update the object's position using the equations of motion
                 //l_velocityX += static_cast<float>(accelerationX * dt);
@@ -74,21 +74,19 @@ namespace Engine
                     if (collisionComponent->isColliding)
                     {
                         //Update position to previous position (Stopping)
-                        transformComponent->x = previousX;
-                        transformComponent->y = previousY;
+                        transformComponent->position.x = previousX;
+                        transformComponent->position.y = previousY;
 
-                        physicsComponent->velocityX = 0.0f;
-                        physicsComponent->velocityY = 0.0f;
-
-                        collisionComponent->isColliding = false;
+                        physicsComponent->velocity.x = 0.0f;
+                        physicsComponent->velocity.y = 0.0f;
                     }
                     else
                     {
                         //Update position after acceleration model
-                        transformComponent->x = currentX;
-                        transformComponent->y = currentY;
-                        physicsComponent->velocityX = l_velocityX;
-                        physicsComponent->velocityY = l_velocityY;
+                        transformComponent->position.x = currentX;
+                        transformComponent->position.y = currentY;
+                        physicsComponent->velocity.x = l_velocityX;
+                        physicsComponent->velocity.y = l_velocityY;
                     }
                 }            
             }

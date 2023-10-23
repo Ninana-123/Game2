@@ -96,10 +96,10 @@ namespace Engine
         //define vertex array and indices
         float quadPositions[] =
         {
-       -60.0f,  -60.0f, 0.0f, 0.0f,    //0
-        60.0f,  -60.0f, 1.0f, 0.0f,    //1
-        60.0f,   60.0f, 1.0f, 1.0f,    //2
-       -60.0f,   60.0f, 0.0f, 1.0f     //3
+           -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
+            60.f, -60.f, 1.0f, 0.0f,  // bottom-right
+            60.f,  60.f, 1.0f, 1.0f,  // top-right
+           -60.f,  60.f, 0.0f, 1.0f   // top-left
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -201,7 +201,7 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        if (!textureA.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
         {
             GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
@@ -211,14 +211,14 @@ namespace Engine
             textureA.Bind(0);
         }
 
-        if (!textureB.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
+        if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
         {
             GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
             // Handle the error as needed, e.g., return or throw an exception
         }
         else {
             textureB.InitGL();
-            textureB.Bind(0); // Bind the texture to a different texture unit (e.g., unit 1)
+            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
         }
 
         if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
@@ -298,9 +298,6 @@ namespace Engine
 
         // Draw the lines directly without an IBO
         GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-        // Debugging statement to print that the square lines are being drawn
-        std::cout << "Drawing square lines..." << std::endl;
 
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
@@ -399,7 +396,7 @@ namespace Engine
                         continue; // Continue processing other entities
                     }
 
-                    glm::vec3 transA(transform->x, transform->y, 0);
+                    glm::vec3 transA(transform->position.x, transform->position.y, 0);
                     float rotationA = transform->rot;
                     glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
@@ -442,8 +439,8 @@ namespace Engine
                     }
                     
                     //RenderSingleLine(mvpA, lineStart, lineEnd
-                    transform->x = static_cast<int>(transA.x);
-                    transform->y = static_cast<int>(transA.y);
+                    transform->position.x = transA.x;
+                    transform->position.y = transA.y;
                 }
                 catch (const std::exception& ex)
                 {

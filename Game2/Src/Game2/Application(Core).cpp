@@ -218,22 +218,22 @@ namespace Engine
             {
                 if (InputHandler.IsKeyPressed(KEY_UP))
                 {
-                    transformTest->y += transformation;
+                    transformTest->position.y += transformation;
                     //physicsTest->velocityY = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_DOWN))
                 {
-                    transformTest->y -= transformation;
+                    transformTest->position.y -= transformation;
                     //physicsTest->velocityY = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_LEFT))
                 {
-                    transformTest->x -= transformation;
+                    transformTest->position.x -= transformation;
                     //physicsTest->velocityX = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_RIGHT))
                 {
-                    transformTest->x += transformation;
+                    transformTest->position.x += transformation;
                     //physicsTest->velocityX = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_R))
@@ -286,8 +286,8 @@ namespace Engine
                 }
                 else
                 {
-                    physicsTest->velocityX = 0.0f;
-                    physicsTest->velocityY = 0.0f;
+                    physicsTest->velocity.x = 0.0f;
+                    physicsTest->velocity.y = 0.0f;
                 }
 
             }
@@ -300,7 +300,11 @@ namespace Engine
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             m_ImGuiWrapper->OnUpdate();
 
+
+            if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
+                m_Running = false;
         }
+            
     }
     /*!**********************************************************************
     \brief

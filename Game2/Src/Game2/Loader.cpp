@@ -82,7 +82,7 @@ namespace Engine {
                 entityPtr = entityManager->GetEntity(entity);
 
                 bool addTransformComponent = false, addCollisionComponent = false, addPhysicsComponent = false;
-                int x = 300, y = 300;
+                float x = 300, y = 300;
 
                 float scaleX = 1.0f, scaleY = 1.0f, rot = 0;
                 float c_Width = 30.0f, c_Height = 45.0f;
@@ -106,8 +106,8 @@ namespace Engine {
                 {
                     entityPtr->AddNewComponent(ComponentType::Transform);
                     TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
-                    transform->x = x;
-                    transform->y = y;
+                    transform->position.x = x;
+                    transform->position.y = y;
                     transform->scaleX = scaleX;
                     transform->scaleY = scaleY;
                     transform->rot = rot;
@@ -124,8 +124,8 @@ namespace Engine {
                 {
                     entityPtr->AddNewComponent(ComponentType::Physics);
                     PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(entityPtr->GetComponent(ComponentType::Physics));
-                    physics->velocityX = veloX;
-                    physics->velocityY = veloY;
+                    physics->velocity.x = veloX;
+                    physics->velocity.y = veloY;
                 }
 
 

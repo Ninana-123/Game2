@@ -19,8 +19,7 @@ namespace Engine
 	{
 	public:
 		
-		float velocityX = 0.0f;
-		float velocityY = 0.0f;
+		VECTORMATH::Vector2D velocity = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************
 
@@ -46,8 +45,7 @@ namespace Engine
 		Component* Clone() const override
 		{
 			PhysicsComponent* cloneComponent = new PhysicsComponent();
-			cloneComponent->velocityX = velocityX;
-			cloneComponent->velocityY = velocityY;
+			cloneComponent->velocity = velocity;
 			
 			return cloneComponent;
 		}
