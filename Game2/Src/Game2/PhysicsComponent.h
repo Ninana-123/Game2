@@ -1,26 +1,25 @@
 #pragma once
 /******************************************************************************/
 /*!
-\file		TextureComponent.h
+\file		PhysicsComponent.h
 \author		Tristan Tham Rui Hong
 \par		t.tham@digipen.edu
-\date		10/09/2023
-\brief		Contains the interface of the Texture Component
+\date		27/09/2023
+\brief		Contains the interface of the Physics Component
 
  */
  /******************************************************************************/
 
 #include "Component.h"
-#include "EngineTypes.h"
+#include "CollisionSystem.h"
 
 namespace Engine
 {
-	class TextureComponent : public Component
+	class PhysicsComponent : public Component
 	{
 	public:
-
-		TextureClass textureClass = TextureClass::Null;
-		TextureType textureType = TextureType::Null;
+		
+		VECTORMATH::Vector2D velocity = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************
 
@@ -32,7 +31,7 @@ namespace Engine
 
 		********************************************************************/
 
-		ComponentType GetType() const override { return ComponentType::Texture; } 
+		ComponentType GetType() const override { return ComponentType::Physics; }
 
 		/*!*****************************************************************
 
@@ -45,9 +44,9 @@ namespace Engine
 		********************************************************************/
 		Component* Clone() const override
 		{
-			TextureComponent* cloneComponent = new TextureComponent();
-			cloneComponent->textureClass = textureClass;
-			cloneComponent->textureType = textureType;
+			PhysicsComponent* cloneComponent = new PhysicsComponent();
+			cloneComponent->velocity = velocity;
+			
 			return cloneComponent;
 		}
 	};

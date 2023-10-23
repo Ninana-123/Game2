@@ -1,8 +1,22 @@
+/******************************************************************************/
+/*!
+\file		Matrix3x3Lib.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		10/09/2023
+\brief		Contains the definitions of the recreated matrix 3x3 library.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Vector2d.h"
 #include "Matrix3x3lib.h"
 
-# define M_PI           3.14159265358979323846
 
 namespace MATRIXMATH
 {
@@ -116,9 +130,10 @@ namespace MATRIXMATH
 
     void Matrix3x3::SetRotationDeg(float angle)
     {
-        float angleRad = angle * (M_PI / 180.0f);
+        float angleRad = static_cast<float>(angle * (M_PI / 180.0));
         SetRotationRad(angleRad);
     }
+
 
     void Matrix3x3::Transpose()
     {

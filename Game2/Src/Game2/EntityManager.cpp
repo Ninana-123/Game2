@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file		EntityManager.cpp
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Contains the definitions of the System Manager
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "EntityManager.h"
 #include "System.h"
@@ -67,9 +78,7 @@ namespace Engine
 		// Clone the components from the source entity to the cloned entity
 		auto sourceComponents = sourceEntity->GetComponents();
 		for (const auto& pair : sourceComponents) {
-			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-			UNREFERENCED_PARAMETER(componentType);
 			// You may need to implement a copy constructor or clone method for your components
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
 

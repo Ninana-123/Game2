@@ -1,3 +1,20 @@
+/******************************************************************************/
+/*!
+\file		Loader.h
+\author 	Tay Jun Feng Vance
+\par    	email: junfengvance.t@digipen.edu
+\date       29/09/2023
+\brief		Defines the Loader class and related structures for managing scene loading and configuration.
+            This file contains the declaration of the Loader class, which is responsible for loading scenes
+            from data files and creating entities with properties. It also defines the Config structure
+            for managing configuration properties.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #pragma once
 #include "pch.h"
 #include "WindowsWindow.h"
@@ -17,7 +34,7 @@ namespace Engine {
         ~Loader();
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
-        WindowProps LoadWindowPropsFromConfig(const std::string& filePath);
+        WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
         Engine::EntityManager* entityManager;
     };

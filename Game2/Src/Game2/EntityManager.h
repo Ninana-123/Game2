@@ -1,4 +1,14 @@
 #pragma once
+/******************************************************************************/
+/*!
+\file		EntityManager.h
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Contains the interface of the Entity Manager
+
+ */
+ /******************************************************************************/
 #include "Entity.h"
 #include "Prefab.h"
 

@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		WindowsWindow.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Declaration of the WindowsWindow class, derived from the
+			Window class.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 
 #include "Window.h"
@@ -6,7 +20,7 @@
 namespace Engine {
 	class WindowsWindow : public Window {
 	public:
-		WindowsWindow(const WindowProps& props);
+		WindowsWindow(const WindowConfig& props);
 		virtual ~WindowsWindow();
 
 		void OnUpdate();
@@ -17,16 +31,18 @@ namespace Engine {
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 
 	private:
-		virtual void Init(const WindowProps& props);
+		virtual void Init(const WindowConfig& props);
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
 		struct WindowData {
 			std::string Title;
-			unsigned int Width, Height;
+			unsigned int Width = 0;  // Initialize to a default value
+			unsigned int Height = 0; // Initialize to a default value
 
 			EventCallbackFn EventCallback;
 		};
+
 		WindowData m_Data;
 	};
 }

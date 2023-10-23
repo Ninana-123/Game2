@@ -1,10 +1,11 @@
 /******************************************************************************/
 /*!
-\file		Collision.cpp
-\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\file		CollisionSystem.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807 
+\co		    Tristan Tham Rui Hong,  t.tham@digipen.edu 2200794
 \par		a.junshengaloysius@digipen.edu
-\date		01/03/2023
-\brief		Contains the defintion for the logic of AABB Collision
+\date		10/09/2023
+\brief		Contains the defintion for the logic of AABB, Circle to Circle and Circle to AABB Collision
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -12,10 +13,12 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
+
 #include "pch.h"
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "CollisionComponent.h"
+#include "PhysicsComponent.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
@@ -58,77 +61,91 @@ namespace Engine
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 				
 				AABB aabb1;
+				VECTORMATH::Vec2 vel1;
 
 				if (collisionComponent1)
 				{
 					float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
 					float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
 
-					float minX_1 = static_cast<float>(transformComponent1->x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent1->x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent1->y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent1->y) + halfHeight_1;
+					float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
+					float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
+					float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
+					float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
 					aabb1.min = VECTORMATH::Vec2(minX_1, minY_1);
 					aabb1.max = VECTORMATH::Vec2(maxX_1, maxY_1);
 				}
 
-				VECTORMATH::Vec2 vel1 = VECTORMATH::Vec2(0.0f, 0.0f);
-
-				for (auto it2 = std::next(it1); it2 != entities->end(); ++it2)
+				if (entity1->HasComponent(ComponentType::Physics))
 				{
-					Entity* entity2 = it2->second.get();
+					PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
+					vel1 = VECTORMATH::Vec2(physicsComponent1->velocity.x, physicsComponent1->velocity.y);
+				}
+				else
+				{
+					vel1 = VECTORMATH::Vec2(0.0f, 0.0f);
+				}
 
-					if (entity2->HasComponent(ComponentType::Collision) && (entity2->HasComponent(ComponentType::Transform)))
+				bool isColliding = false; // Flag to check if entity1 is colliding with any other entity
+
+				for (auto it2 = entities->begin(); it2 != entities->end(); ++it2)
+				{
+					if (it1 != it2) // Avoid self-collision check
 					{
-						CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
-						TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+						Entity* entity2 = it2->second.get();
 
-						AABB aabb2;
-
-						float halfWidth_2  = collisionComponent2->c_Width  / 2.0f;
-						float halfHeight_2 = collisionComponent2->c_Height / 2.0f;
-
-						float minX_2 = static_cast<float>(transformComponent2->x) - halfWidth_2;
-						float maxX_2 = static_cast<float>(transformComponent2->x) + halfWidth_2;
-						float minY_2 = static_cast<float>(transformComponent2->y) - halfHeight_2;
-						float maxY_2 = static_cast<float>(transformComponent2->y) + halfHeight_2;
-						
-						aabb2.min = VECTORMATH::Vec2(minX_2, minY_2);													
-						aabb2.max = VECTORMATH::Vec2(maxX_2, maxY_2);
-													
-						VECTORMATH::Vec2 vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
-
-						// If collision detected, set the isColliding flag for both entities
-						if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))																			
+						if (entity2->HasComponent(ComponentType::Collision) && (entity2->HasComponent(ComponentType::Transform)))
 						{
-							if (collisionComponent1)
-							{
-								collisionComponent1->isColliding = true;
-							}
+							CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
+							TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 
-							if (collisionComponent2)
-							{
-								collisionComponent2->isColliding = true;
-							}
-							std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) <<std::endl;
-						}
-						else
-						{
-							if (collisionComponent1)
-							{
-								collisionComponent1->isColliding = false;
-							}
-							
-							if (collisionComponent2)
-							{
-								collisionComponent2->isColliding = false;
-							}
+							AABB aabb2;
+							VECTORMATH::Vec2 vel2;
 
-							std::cout << "No Collision Detected" << std::endl;
+							float halfWidth_2 = collisionComponent2->c_Width / 2.0f;
+							float halfHeight_2 = collisionComponent2->c_Height / 2.0f;
+
+							float minX_2 = static_cast<float>(transformComponent2->position.x) - halfWidth_2;
+							float maxX_2 = static_cast<float>(transformComponent2->position.x) + halfWidth_2;
+							float minY_2 = static_cast<float>(transformComponent2->position.y) - halfHeight_2;
+							float maxY_2 = static_cast<float>(transformComponent2->position.y) + halfHeight_2;
+
+							aabb2.min = VECTORMATH::Vec2(minX_2, minY_2);
+							aabb2.max = VECTORMATH::Vec2(maxX_2, maxY_2);
+
+							if (entity2->HasComponent(ComponentType::Physics))
+							{
+								PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
+								vel2 = VECTORMATH::Vec2(physicsComponent2->velocity.x, physicsComponent2->velocity.y);
+							}
+							else
+							{
+								vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
+							}
+							// Check for collision with entity2
+							if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
+							{
+								isColliding = true;
+								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+							}
 						}
 					}
 				}
+
+
+				// Set the collision flag based on whether there was any collision
+				if (collisionComponent1)
+				{
+					collisionComponent1->isColliding = isColliding;
+				}
+
+				if (!isColliding)
+				{
+					std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+				}
+
+
 				//update AABB coordinates in entity1
 				if (collisionComponent1)
 				{

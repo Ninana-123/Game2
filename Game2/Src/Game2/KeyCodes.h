@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		KeyCodes.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	29/09/2923
+\brief		Defines key codes and a mapping of key codes to key names 
+            (characters).
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 #include <map>
 

@@ -1,3 +1,20 @@
+/******************************************************************************/
+/*!
+\file		AudioEngine.cpp
+\author 	Tay Jun Feng Vance
+\par    	email: junfengvance.t@digipen.edu
+\date       29/09/2023
+\brief		This file contains the definition of all functions related to the FMOD
+            API to allow audio file-based implementations alongside the use of FMOD
+            Sound Banks.
+            With reference to FMOD documentation.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
 
 #include "pch.h"
 #include "AudioEngine.h"

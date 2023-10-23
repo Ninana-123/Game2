@@ -1,21 +1,33 @@
+/******************************************************************************/
+/*!
+\file		SystemManager.cpp
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Contains the definitions of the System Manager
+
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "SystemsManager.h"
-
 
 namespace Engine
 {
 	std::vector<System*> SystemsManager::all_systems;
 
 	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
-	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>();
+	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>(); 
+		template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
 
-	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
-
+	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
+	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
+	
 	void SystemsManager::Initialize()
 	{
 		//add systems into systems container
 		all_systems.push_back(new CollisionSystem());
+		all_systems.push_back(new PhysicsSystem());
 		all_systems.push_back(new GraphicsSystem());
 
 		//initialize each system
