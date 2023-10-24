@@ -378,7 +378,7 @@ namespace Engine {
 						if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
 							selectedEntityIndex = i;
 							targetEntity = entityManager->GetEntity(selectedEntityIndex);
-							std::cout << targetEntity->GetID();
+							//std::cout << targetEntity->GetID();
 						}
 						if (isSelected)
 							ImGui::SetItemDefaultFocus();
