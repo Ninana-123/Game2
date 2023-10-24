@@ -366,14 +366,24 @@ namespace Engine {
 				ImGui::Text("Number of Entities: %d", entities->size());
 				ImGui::Separator();
 				ImGui::Text("Currently selected entity ID:");
-
 				std::vector<std::string> entityNames;
 				for (const auto& entity : *entities) {
-					entityNames.push_back("Entity " + std::to_string(entity.first));
+					if (entity.first == 0) {
+						entityNames.push_back("Background");
+					}
+					else {
+						entityNames.push_back("Entity " + std::to_string(entity.first));
+					}
 				}
-				
+
+				if (selectedEntityIndex >= entityNames.size()) {
+					selectedEntityIndex = entityNames.size() - 1;
+				}
+
+
+
 				if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-					for (int i = 1; i < entityNames.size(); ++i) {
+					for (int i = 0; i < entityNames.size(); ++i) {
 						const bool isSelected = (selectedEntityIndex == i);
 						if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
 							selectedEntityIndex = i;
@@ -385,7 +395,6 @@ namespace Engine {
 					}
 					ImGui::EndCombo();
 				}
-
 				// Clone Entity button
 				if (ImGui::Button("Clone Entity"))
 				{
@@ -490,8 +499,6 @@ namespace Engine {
 						ImGui::Text("Collision with another entity detected.");
 					else if(collision->isColliding == false)
 						ImGui::Text("No collision detected.");
-
-					std::cout << collision->isColliding << std::endl;
 				}
 				// Add more properties as needed
 				if (ImGui::CollapsingHeader("Component List")) {

@@ -27,6 +27,7 @@ namespace Engine
         ~Entity() { components.clear(); }
 
         void AddComponent(std::unique_ptr<Component> component);
+        Component* Create(const std::string& componentType);
         void AddNewComponent(ComponentType type);
         Component* GetComponent(ComponentType type) const;
         std::unordered_map<ComponentType, Component*> GetComponents() const;

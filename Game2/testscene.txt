@@ -1,5 +1,57 @@
 4
-1 0 0 1.0 1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-1 200 200 1.0 1.0 0 1 45 45 0 0 0 0 0 1 0 0
-1 400 400 1.0 1.0 0 1 45 45 0 0 0 0 0 1 0 0
-1 100 100 1.0 1.0 0 1 45 45 0 0 0 0 0 1 0 0
+Transform 
+Position: 1 0
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+EndEntity
+Transform 
+Position: 200 200
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+EndEntity
+Transform 
+Position: 100 100
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+EndEntity
+Transform 
+Position: 300 300
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+EndEntity
+
+

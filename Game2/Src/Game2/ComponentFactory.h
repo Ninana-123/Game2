@@ -33,7 +33,6 @@ namespace Engine
 		static void RegisterComponent(ComponentType type, CreationFunction function);
 
 		static std::unique_ptr<Component> CreateComponent(ComponentType type);
-
 	private:
 		static std::unordered_map<ComponentType, CreationFunction>& componentRegistry();
 	};
