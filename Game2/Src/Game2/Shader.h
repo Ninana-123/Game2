@@ -31,15 +31,18 @@ class Shader
 {
 private:
     std::string m_FilePath;             // Filepath to shader source files
+    std::string m_FilePath2;
     unsigned int m_RendererID;          // Shader program ID
     bool m_IsInitialized;               // Flag to track initialization
     std::unordered_map<std::string, int> m_UniformLocationCache; // Caching for uniforms
 
 public:
-    Shader(const std::string& filepath);
+    Shader(const std::string& filepath, const std::string& filepath2);
     ~Shader();
 
-    void LoadShader(const std::string& filepath);  // Load shader source from a file
+    //void LoadShader(const std::string& filepath);
+    std::string LoadShaderSource(const std::string& filepath);
+    // Load shader source from a file
     void Initialize();  // Compile and set up the shader
 
     void Bind() const;
