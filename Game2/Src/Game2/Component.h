@@ -2,7 +2,7 @@
 /*!
 \file		Component.h
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the Component class.
 

@@ -371,8 +371,7 @@ namespace Engine {
 				for (const auto& entity : *entities) {
 					entityNames.push_back("Entity " + std::to_string(entity.first));
 				}
-
-
+				
 				if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
 					for (int i = 1; i < entityNames.size(); ++i) {
 						const bool isSelected = (selectedEntityIndex == i);
@@ -415,12 +414,20 @@ namespace Engine {
 						}
 					}
 				}
-				/*
-				if (ImGui::Button("Delete currently selected entity")) {
-					entityManager->DestroyEntity(selectedEntityIndex);
-				}
-				*/
 
+				if (ImGui::Button("Delete selected entity")) 
+				{
+					entityManager->DestroyEntity(selectedEntityIndex);
+					entityNames.erase(entityNames.begin() + selectedEntityIndex);
+					// Update other relevant data structures
+
+					// Resize the vector if necessary
+					if (selectedEntityIndex >= entityNames.size()) 
+					{
+						selectedEntityIndex = entityNames.size() - 1;; // Adjust the selected index
+					}
+					targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+				}
 			}
 
 			ImGui::Begin("Entity Properties", nullptr, ImGuiWindowFlags_AlwaysAutoResize);

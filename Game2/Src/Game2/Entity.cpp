@@ -2,7 +2,7 @@
 /*!
 \file		Entity.cpp
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen
 \date   	29/09/2923
 \brief		Definition of the Entity class.
 
