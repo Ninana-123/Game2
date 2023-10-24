@@ -206,15 +206,19 @@ namespace Engine
                 SM.ToggleSystemState<PhysicsSystem>();
             }
 
-            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
-                transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            if (m_ImGuiWrapper->TargetEntityGetter())
+            {
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+                    transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+                }
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
+                    collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+                }
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Physics)) {
+                    physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+                }
             }
-            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
-                collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
-            }
-            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Physics)) {
-                physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
-            }
+            
             
 
             // Define a threshold for the minimum and maximum scales

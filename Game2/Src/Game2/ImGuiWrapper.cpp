@@ -380,21 +380,27 @@ namespace Engine {
 					selectedEntityIndex = entityNames.size() - 1;
 				}
 
-
-
-				if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-					for (int i = 0; i < entityNames.size(); ++i) {
-						const bool isSelected = (selectedEntityIndex == i);
-						if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
-							selectedEntityIndex = i;
-							targetEntity = entityManager->GetEntity(selectedEntityIndex);
-							//std::cout << targetEntity->GetID();
+				if (!entityNames.empty() && selectedEntityIndex >= 0)
+				{
+					if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+						for (int i = 0; i < entityNames.size(); ++i) {
+							const bool isSelected = (selectedEntityIndex == i);
+							if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+								selectedEntityIndex = i;
+								targetEntity = entityManager->GetEntity(selectedEntityIndex);
+								//std::cout << targetEntity->GetID();
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
 						}
-						if (isSelected)
-							ImGui::SetItemDefaultFocus();
+						ImGui::EndCombo();
 					}
-					ImGui::EndCombo();
 				}
+				else
+				{
+					ImGui::Text("No entities available"); // or handle as appropriate
+				}
+				
 				// Clone Entity button
 				if (ImGui::Button("Clone Entity"))
 				{
@@ -424,18 +430,31 @@ namespace Engine {
 					}
 				}
 
-				if (ImGui::Button("Delete selected entity")) 
+				if (ImGui::Button("Delete selected entity"))
 				{
-					entityManager->DestroyEntity(selectedEntityIndex);
-					entityNames.erase(entityNames.begin() + selectedEntityIndex);
-					// Update other relevant data structures
-
-					// Resize the vector if necessary
-					if (selectedEntityIndex >= entityNames.size()) 
+					if (!entityNames.empty())
 					{
-						selectedEntityIndex = entityNames.size() - 1;; // Adjust the selected index
+						entityManager->DestroyEntity(selectedEntityIndex);
+						entityNames.erase(entityNames.begin() + selectedEntityIndex);
+
+						// Update other relevant data structures
+
+						// Resize the vector if necessary
+						if (entityNames.empty())
+						{
+							selectedEntityIndex = -1; // No entities left, set index to an invalid value
+							targetEntity = nullptr;   // No entity to select
+						}
+						else if (selectedEntityIndex >= entityNames.size())
+						{
+							selectedEntityIndex = entityNames.size() - 1; // Adjust the selected index
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
+						else
+						{
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
 					}
-					targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 				}
 			}
 
