@@ -23,9 +23,11 @@
  *
  * This constructor initializes a Shader object with the provided file path.
  */
-Shader::Shader(const std::string& filepath)
-    : m_FilePath(filepath), m_RendererID(0), m_IsInitialized(false)
+Shader::Shader(const std::string& filepath, const std::string& filepath2)
+    : m_FilePath(filepath), m_FilePath2(filepath2), m_RendererID(0), m_IsInitialized(false)
 {
+    /*ShaderProgramSource source = ParseShader(filepath);
+    m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);*/
 }
 
 /*!
@@ -43,10 +45,31 @@ Shader::~Shader()
  *
  * This function loads shader source code from a file and updates the Shader object's file path.
  */
-void Shader::LoadShader(const std::string& filepath)
+//void Shader::LoadShader(const std::string& filepath)
+//{
+//    m_FilePath = filepath;
+//    m_IsInitialized = false;
+//}
+std::string Shader::LoadShaderSource(const std::string& filepath)
 {
-    m_FilePath = filepath;
-    m_IsInitialized = false;
+    std::ifstream file(filepath);
+    std::string shaderSource;
+    std::string line;
+
+    if (file.is_open())
+    {
+        while (getline(file, line))
+        {
+            shaderSource += line + "\n";
+        }
+        file.close();
+    }
+    else
+    {
+        std::cerr << "Failed to open shader file: " << filepath << std::endl;
+    }
+
+    return shaderSource;
 }
 
 /*!
@@ -60,8 +83,14 @@ void Shader::Initialize()
     if (m_IsInitialized)
         return;  // Shader is already initialized
 
-    ShaderProgramSource source = ParseShader(m_FilePath);
-    m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
+    // Load vertex shader source code from file
+    std::string vertexShaderSource = LoadShaderSource(m_FilePath); 
+
+    // Load fragment shader source code from file
+    std::string fragmentShaderSource = LoadShaderSource(m_FilePath2);  
+
+    // Create and compile shader program
+    m_RendererID = CreateShader(vertexShaderSource, fragmentShaderSource);
 
     // Check for shader compilation and linking errors
     int success;
@@ -92,7 +121,6 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
     {
         NONE = -1, VERTEX = 0, FRAGMENT = 1
     };
-
     std::string line;
     std::stringstream ss[2];
     ShaderType type = ShaderType::NONE;
@@ -102,11 +130,8 @@ ShaderProgramSource Shader::ParseShader(const std::string& filepath)
         if (line.find("shader") != std::string::npos)
         {
             if (line.find("vertex") != std::string::npos)
-                // Set mode to vertex
                 type = ShaderType::VERTEX;
-
             else if (line.find("fragment") != std::string::npos)
-                // Set mode to fragment
                 type = ShaderType::FRAGMENT;
         }
         else
@@ -157,9 +182,8 @@ unsigned int Shader::CreateShader(const std::string& VtxShdr, const std::string&
  */
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 {
-    // Compile the shader
     unsigned int id = glCreateShader(type);
-    const char* src = source.c_str(); // Returns a pointer to the data inside std::string
+    const char* src = source.c_str();
     GLCall(glShaderSource(id, 1, &src, nullptr));
     GLCall(glCompileShader(id));
 
@@ -169,7 +193,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     {
         int length;
         GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-        char* message = (char*)_malloca(length * sizeof(char));
+        char* message = (char*)alloca(length * sizeof(char));
         GLCall(glGetShaderInfoLog(id, length, &length, message));
         std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!" << std::endl;
         std::cout << message << std::endl;
