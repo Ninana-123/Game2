@@ -37,7 +37,6 @@ namespace Engine
 		ComponentType GetType() const override { return ComponentType::Transform; }
 
 		/*!*****************************************************************
-
 		\brief
 		Cloner for this component
 
@@ -53,6 +52,20 @@ namespace Engine
 			cloneComponent->scaleY = scaleY;
 			cloneComponent->rot = rot;
 			return cloneComponent;
+		}
+
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "Position: " << position.x << ' ' << position.y << '\n';
+			outputStream << "ScaleX: " << scaleX << '\n';
+			outputStream << "ScaleY: " << scaleY << '\n';
+			outputStream << "Rotation: " << rot << '\n';
+		}
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> position.x >> position.y; // Assuming format is "Position: x y"
+			inputStream >> temp >> scaleX;
+			inputStream >> temp >> scaleY;
+			inputStream >> temp >> rot;
 		}
 	};
 }

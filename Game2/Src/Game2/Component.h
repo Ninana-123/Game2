@@ -2,7 +2,7 @@
 /*!
 \file		Component.h
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the Component class.
 
@@ -22,5 +22,7 @@ namespace Engine
 		virtual ~Component() = default;
 		virtual ComponentType GetType() const = 0;
 		virtual Component* Clone() const = 0;
+		virtual void Serialize(std::ostream& os) const = 0;
+		virtual void Deserialize(std::istream& is) = 0;
 	};
 }

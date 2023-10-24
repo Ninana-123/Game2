@@ -2,7 +2,7 @@
 /*!
 \file		Entity.cpp
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Definition of the Entity class.
 
@@ -26,6 +26,35 @@ namespace Engine
 	void Entity::AddComponent(std::unique_ptr<Component> component)
 	{
 		components.emplace(component->GetType(), std::move(component));
+	}
+
+	Component* Entity::Create(const std::string& componentType) {
+		if (componentType == "Transform") {
+			TransformComponent* component = new TransformComponent();
+			components.emplace(component->GetType(), std::move(component));
+			return component;
+		}
+
+		else if (componentType == "Collision"){
+			CollisionComponent* component = new CollisionComponent();
+			components.emplace(component->GetType(), std::move(component));
+			return component;
+		}
+		else if (componentType == "Physics") {
+			PhysicsComponent* component = new PhysicsComponent();
+			components.emplace(component->GetType(), std::move(component));
+			return component;
+		}
+
+		else if (componentType == "Texture") {
+			TextureComponent* component = new TextureComponent();
+			components.emplace(component->GetType(), std::move(component));
+			return component;
+		}
+
+		else {
+			return nullptr;
+		}
 	}
 	/*!**********************************************************************
 	\brief

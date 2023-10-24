@@ -366,27 +366,41 @@ namespace Engine {
 				ImGui::Text("Number of Entities: %d", entities->size());
 				ImGui::Separator();
 				ImGui::Text("Currently selected entity ID:");
-
 				std::vector<std::string> entityNames;
 				for (const auto& entity : *entities) {
-					entityNames.push_back("Entity " + std::to_string(entity.first));
-				}
-
-
-				if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-					for (int i = 1; i < entityNames.size(); ++i) {
-						const bool isSelected = (selectedEntityIndex == i);
-						if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
-							selectedEntityIndex = i;
-							targetEntity = entityManager->GetEntity(selectedEntityIndex);
-							std::cout << targetEntity->GetID();
-						}
-						if (isSelected)
-							ImGui::SetItemDefaultFocus();
+					if (entity.first == 0) {
+						entityNames.push_back("Background");
 					}
-					ImGui::EndCombo();
+					else {
+						entityNames.push_back("Entity " + std::to_string(entity.first));
+					}
 				}
 
+				if (selectedEntityIndex >= entityNames.size()) {
+					selectedEntityIndex = entityNames.size() - 1;
+				}
+
+				if (!entityNames.empty() && selectedEntityIndex >= 0)
+				{
+					if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+						for (int i = 0; i < entityNames.size(); ++i) {
+							const bool isSelected = (selectedEntityIndex == i);
+							if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+								selectedEntityIndex = i;
+								targetEntity = entityManager->GetEntity(selectedEntityIndex);
+								//std::cout << targetEntity->GetID();
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
+						}
+						ImGui::EndCombo();
+					}
+				}
+				else
+				{
+					ImGui::Text("No entities available"); // or handle as appropriate
+				}
+				
 				// Clone Entity button
 				if (ImGui::Button("Clone Entity"))
 				{
@@ -415,12 +429,33 @@ namespace Engine {
 						}
 					}
 				}
-				/*
-				if (ImGui::Button("Delete currently selected entity")) {
-					entityManager->DestroyEntity(selectedEntityIndex);
-				}
-				*/
 
+				if (ImGui::Button("Delete selected entity"))
+				{
+					if (!entityNames.empty())
+					{
+						entityManager->DestroyEntity(selectedEntityIndex);
+						entityNames.erase(entityNames.begin() + selectedEntityIndex);
+
+						// Update other relevant data structures
+
+						// Resize the vector if necessary
+						if (entityNames.empty())
+						{
+							selectedEntityIndex = -1; // No entities left, set index to an invalid value
+							targetEntity = nullptr;   // No entity to select
+						}
+						else if (selectedEntityIndex >= entityNames.size())
+						{
+							selectedEntityIndex = entityNames.size() - 1; // Adjust the selected index
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
+						else
+						{
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
+					}
+				}
 			}
 
 			ImGui::Begin("Entity Properties", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
@@ -483,8 +518,6 @@ namespace Engine {
 						ImGui::Text("Collision with another entity detected.");
 					else if(collision->isColliding == false)
 						ImGui::Text("No collision detected.");
-
-					std::cout << collision->isColliding << std::endl;
 				}
 				// Add more properties as needed
 				if (ImGui::CollapsingHeader("Component List")) {

@@ -60,5 +60,27 @@ namespace Engine
 
 			return cloneComponent;
 		}
+
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "c_Width: " << c_Width << '\n';
+			outputStream << "c_Height: " <<  c_Height << '\n';
+			outputStream << "isColliding: " << isColliding << '\n';
+			outputStream << "Min X: " << minX << '\n';
+			outputStream << "Min Y: " << minY << '\n';
+			outputStream << "Max X: " << maxX << '\n';
+			outputStream << "Max Y: " << maxY << '\n';
+		}
+
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> c_Width;
+			inputStream >> temp >> c_Height;
+			inputStream >> temp >> isColliding;
+			inputStream >> temp >> minX;
+			inputStream >> temp >> minY;
+			inputStream >> temp >> maxX;
+			inputStream >> temp >> maxY;
+		}
+
 	};
 }

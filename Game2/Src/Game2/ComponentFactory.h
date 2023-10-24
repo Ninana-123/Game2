@@ -2,7 +2,7 @@
 /*!
 \file		ComponentFactory.h
 \author 	Tristan Tham Rui Hong 
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the ComponentFactory class.
 
@@ -33,7 +33,6 @@ namespace Engine
 		static void RegisterComponent(ComponentType type, CreationFunction function);
 
 		static std::unique_ptr<Component> CreateComponent(ComponentType type);
-
 	private:
 		static std::unordered_map<ComponentType, CreationFunction>& componentRegistry();
 	};

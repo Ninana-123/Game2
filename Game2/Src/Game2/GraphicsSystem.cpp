@@ -31,7 +31,7 @@ namespace Engine
    * default shader and textures.
    */
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Basic.shader")
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag")
     {
     }
 
@@ -184,13 +184,22 @@ namespace Engine
     * This function loads and initializes the shader used for rendering
     * and sets its initial uniform values.
     */
+    //void GraphicsSystem::InitializeShader()
+    //{
+    //    shader.LoadShader("Resource/Shaders/Basic.shader");
+
+    //    shader.Initialize();
+    //    shader.Bind();
+
+    //    shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+    //}
     void GraphicsSystem::InitializeShader()
     {
-        shader.LoadShader("Resource/Shaders/Basic.shader");
+        shader.LoadShaderSource("Resource/Shaders/Shader.frag");
+        shader.LoadShaderSource("Resource/Shaders/Shader.vert");
 
         shader.Initialize();
         shader.Bind();
-
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -277,6 +286,10 @@ namespace Engine
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
+        va.Bind();
+        ib.Bind();
+
+        // Render the entity
         renderer.Draw(va, ib, shader);
         shader.Unbind();
     }

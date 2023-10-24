@@ -2,7 +2,7 @@
 /*!
 \file		Entity.h
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the Entity class.
 
@@ -24,9 +24,10 @@ namespace Engine
     {
     public:
         Entity(EntityID id) : id(id) {}
-        ~Entity() = default;
+        ~Entity() { components.clear(); }
 
         void AddComponent(std::unique_ptr<Component> component);
+        Component* Create(const std::string& componentType);
         void AddNewComponent(ComponentType type);
         Component* GetComponent(ComponentType type) const;
         std::unordered_map<ComponentType, Component*> GetComponents() const;
