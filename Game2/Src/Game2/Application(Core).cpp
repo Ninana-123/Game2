@@ -117,11 +117,14 @@ namespace Engine
         logger.Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
         logger.Log(LogLevel::Debug, "Scene Loaded");
-        targetEntity = EM.GetEntity(1);
-        transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-        collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
-        physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
-
+        if (EM.GetEntity(1) != nullptr) {
+            targetEntity = EM.GetEntity(1);
+            transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
+            physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
+        }
+        else
+            targetEntity = EM.GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
         audioEngine.loadSound(sound);
@@ -201,12 +204,19 @@ namespace Engine
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
                 SM.ToggleSystemState<PhysicsSystem>();
-            }          
+            }
 
-            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-            collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
-            physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+                transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            }
+            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
+                collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+            }
+            if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Physics)) {
+                physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+            }
             
+
             // Define a threshold for the minimum and maximum scales
             const float minScale = 0.5f; // Adjust this value as needed
             const float maxScale = 2.0f; // Adjust this value as needed
@@ -298,8 +308,8 @@ namespace Engine
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            m_ImGuiWrapper->OnUpdate();
 
+            m_ImGuiWrapper->OnUpdate();
 
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

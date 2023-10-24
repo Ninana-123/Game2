@@ -1,28 +1,15 @@
 /******************************************************************************/
 /*!
-\file		Component.h
-\author 	Tristan Tham Rui Hong
+\file		AssetsManager.cpp
+\author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
-\brief		Declaration of the Component class.
+\brief		This file contains the implementation of the Asset Manager which 
+			handles the assets used by the engine.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-#include "EngineTypes.h"
-
-namespace Engine
-{
-	class Component 
-	{
-	public:
-		virtual ~Component() = default;
-		virtual ComponentType GetType() const = 0;
-		virtual Component* Clone() const = 0;
-		virtual void Serialize(std::ostream& os) const = 0;
-		virtual void Deserialize(std::istream& is) = 0;
-	};
-}
+#include "pch.h"
