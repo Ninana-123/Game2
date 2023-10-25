@@ -28,8 +28,8 @@
 //{
 //}
 Shader::Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4)
-    : m_FilePath1(filepath1), m_FilePath2(filepath2), m_RendererID(0), 
-    m_FilePath3(filepath3), m_FilePath4(filepath4), m_RendererID2(0), m_IsInitialized(false)
+    : m_FilePath1(filepath1), m_FilePath2(filepath2), 
+    m_FilePath3(filepath3), m_FilePath4(filepath4), m_IsInitialized(false), m_CurrentShaderSet(1)
 {
 }
 
@@ -76,28 +76,61 @@ std::string Shader::LoadShaderSource(const std::string& filepath)
  * This function initializes the shader program, compiles the shaders, and links the program.
  * It also performs error checking for shader compilation and linking.
  */
+//void Shader::Initialize()
+//{
+//    if (m_IsInitialized)
+//        return;  // Shader is already initialized
+//
+//    // Load vertex shader source code from file
+//    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath1); 
+//    std::string vertexShaderSource2 = LoadShaderSource(m_FilePath3);
+//
+//    // Load fragment shader source code from file
+//    std::string fragmentShaderSource1 = LoadShaderSource(m_FilePath2); 
+//    std::string fragmentShaderSource2 = LoadShaderSource(m_FilePath4);
+//
+//    // Create and compile shader program
+//    m_RendererID1 = CreateShader(vertexShaderSource1, fragmentShaderSource1);
+//    m_RendererID2 = CreateShader(vertexShaderSource2, fragmentShaderSource2);
+//
+//    // Check for shader compilation and linking errors for the first shader program
+//    CheckShaderCompilation(m_RendererID1, "ShaderSet1");
+//
+//    // Check for shader compilation and linking errors for the second shader program
+//    CheckShaderCompilation(m_RendererID2, "ShaderSet2");
+//
+//    m_IsInitialized = true;
+//}
+
 void Shader::Initialize()
 {
     if (m_IsInitialized)
         return;  // Shader is already initialized
 
     // Load vertex shader source code from file
-    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath1); 
+    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath1);
     std::string vertexShaderSource2 = LoadShaderSource(m_FilePath3);
 
     // Load fragment shader source code from file
-    std::string fragmentShaderSource1 = LoadShaderSource(m_FilePath2); 
+    std::string fragmentShaderSource1 = LoadShaderSource(m_FilePath2);
     std::string fragmentShaderSource2 = LoadShaderSource(m_FilePath4);
 
-    // Create and compile shader program
-    m_RendererID = CreateShader(vertexShaderSource1, fragmentShaderSource1);
-    m_RendererID2 = CreateShader(vertexShaderSource2, fragmentShaderSource2);
+    // Create and compile shader programs for both sets
+    unsigned int program1 = CreateShader(vertexShaderSource1, fragmentShaderSource1);
+    unsigned int program2 = CreateShader(vertexShaderSource2, fragmentShaderSource2);
 
     // Check for shader compilation and linking errors for the first shader program
-    CheckShaderCompilation(m_RendererID, "ShaderSet1");
+    CheckShaderCompilation(program1, "ShaderSet1");
 
     // Check for shader compilation and linking errors for the second shader program
-    CheckShaderCompilation(m_RendererID2, "ShaderSet2");
+    CheckShaderCompilation(program2, "ShaderSet2");
+
+    // Store shader program IDs in the map
+    m_RendererIDs[1] = program1;
+    m_RendererIDs[2] = program2;
+
+    // Set the initial shader set
+    m_CurrentShaderSet = 1;
 
     m_IsInitialized = true;
 }
@@ -217,19 +250,47 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
  *
  * This function binds the OpenGL shader program for rendering.
  */
+//void Shader::Bind() const
+//{
+//    if (m_RendererID1 == 0) {
+//        std::cerr << "Attempting to use an invalid shader program!" << std::endl;
+//        return;
+//    }
+//
+//    GLCall(glUseProgram(m_RendererID1));
+//
+//    GLenum error = glGetError();
+//    if (error != GL_NO_ERROR) {
+//        std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(m_RendererID1)" << std::endl;
+//        __debugbreak();  // This will trigger a debugger break to help you pinpoint the issue.
+//    }
+//}
+
 void Shader::Bind() const
 {
-    if (m_RendererID == 0) {
-        std::cerr << "Attempting to use an invalid shader program!" << std::endl;
-        return;
+    auto it = m_RendererIDs.find(m_CurrentShaderSet);
+    if (it != m_RendererIDs.end())
+    {
+        unsigned int rendererID = it->second;
+        if (rendererID != 0)
+        {
+            GLCall(glUseProgram(rendererID));
+
+            GLenum error = glGetError();
+            if (error != GL_NO_ERROR)
+            {
+                std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(rendererID)" << std::endl;
+                __debugbreak();
+            }
+        }
+        else
+        {
+            std::cerr << "Attempting to use an invalid shader program!" << std::endl;
+        }
     }
-
-    GLCall(glUseProgram(m_RendererID));
-
-    GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
-        std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(m_RendererID)" << std::endl;
-        __debugbreak();  // This will trigger a debugger break to help you pinpoint the issue.
+    else
+    {
+        std::cerr << "Shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
     }
 }
 
@@ -302,13 +363,35 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
  * This function retrieves the location of a uniform variable in the shader program
  * and caches it for future use to improve performance.
  */
+//int Shader::GetUniformLocation(const std::string& name)
+//{
+//    if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
+//        return m_UniformLocationCache[name];
+//    GLCall(int location = glGetUniformLocation(m_RendererID1, name.c_str()));
+//    if (location == -1)
+//        std::cout << "Warning: Uniform '" << name << "' doesn't exist" << std::endl;
+//    m_UniformLocationCache[name] = location;
+//    return location;
+//}
+
 int Shader::GetUniformLocation(const std::string& name)
 {
-    if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
-        return m_UniformLocationCache[name];
-    GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
+    auto& uniformLocationCache = m_UniformLocationCaches[m_CurrentShaderSet];
+
+    if (uniformLocationCache.find(name) != uniformLocationCache.end())
+        return uniformLocationCache[name];
+
+    unsigned int rendererID = m_RendererIDs[m_CurrentShaderSet];
+    GLCall(int location = glGetUniformLocation(rendererID, name.c_str()));
+
     if (location == -1)
         std::cout << "Warning: Uniform '" << name << "' doesn't exist" << std::endl;
-    m_UniformLocationCache[name] = location;
+
+    uniformLocationCache[name] = location;
     return location;
+}
+
+void Shader::SetActiveShaderSet(int shaderSet)
+{
+    m_CurrentShaderSet = shaderSet;
 }
