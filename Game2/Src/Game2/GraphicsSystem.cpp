@@ -523,7 +523,7 @@ namespace Engine
     void GraphicsSystem::ToggleShaderSet()
     {
         useShaderSet1 = !useShaderSet1;
-        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "Set 1" : "Set 2") << std::endl;
+        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "ShaderSet1" : "ShaderSet2") << std::endl;
         InitializeShader(); // Reinitialize shaders based on the new set
     }
 
