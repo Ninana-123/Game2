@@ -34,10 +34,12 @@ private:
     std::string m_FilePath2;
     std::string m_FilePath3;
     std::string m_FilePath4;
-    unsigned int m_RendererID;          // Shader program ID
-    unsigned int m_RendererID2;
+    //unsigned int m_RendererID1;          // Shader program ID
+    //unsigned int m_RendererID2;
+    int m_CurrentShaderSet;             // Current active shader set (1 or 2)
     bool m_IsInitialized;               // Flag to track initialization
-    std::unordered_map<std::string, int> m_UniformLocationCache; // Caching for uniforms
+    std::unordered_map<int, std::unordered_map<std::string, int>> m_UniformLocationCaches; // Caching for uniforms of different shader sets
+    std::unordered_map<int, unsigned int> m_RendererIDs;                                    // Shader program IDs for different shader sets
 
 public:
     //Shader(const std::string& filepath, const std::string& filepath2);
@@ -53,6 +55,8 @@ public:
     void Unbind() const;
 
     void CheckShaderCompilation(unsigned int programID, const std::string& shaderSetName);
+
+    void SetActiveShaderSet(int shaderSet);
 
     // Set uniforms
     void SetUniform1i(const std::string& name, int value);
