@@ -27,8 +27,9 @@
 //    : m_FilePath(filepath), m_FilePath2(filepath2), m_RendererID(0), m_IsInitialized(false)
 //{
 //}
-Shader::Shader(const std::string& filepath, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4)
-    : m_FilePath(filepath), m_FilePath2(filepath2), m_FilePath3(filepath3), m_FilePath4(filepath4), m_RendererID(0), m_RendererID2(0), m_IsInitialized(false)
+Shader::Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4)
+    : m_FilePath1(filepath1), m_FilePath2(filepath2), m_RendererID(0), 
+    m_FilePath3(filepath3), m_FilePath4(filepath4), m_RendererID2(0), m_IsInitialized(false)
 {
 }
 
@@ -81,7 +82,7 @@ void Shader::Initialize()
         return;  // Shader is already initialized
 
     // Load vertex shader source code from file
-    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath); 
+    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath1); 
     std::string vertexShaderSource2 = LoadShaderSource(m_FilePath3);
 
     // Load fragment shader source code from file

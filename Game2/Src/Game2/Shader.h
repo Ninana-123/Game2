@@ -30,7 +30,7 @@ struct ShaderProgramSource
 class Shader
 {
 private:
-    std::string m_FilePath;             // Filepath to shader source files
+    std::string m_FilePath1;             // Filepath to shader source files
     std::string m_FilePath2;
     std::string m_FilePath3;
     std::string m_FilePath4;
@@ -41,7 +41,7 @@ private:
 
 public:
     //Shader(const std::string& filepath, const std::string& filepath2);
-    Shader(const std::string& filepath, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4);
+    Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4);
     ~Shader();
 
     //void LoadShader(const std::string& filepath);
