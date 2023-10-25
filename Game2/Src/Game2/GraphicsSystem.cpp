@@ -48,7 +48,8 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
+            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " 
+                + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
@@ -190,22 +191,27 @@ namespace Engine
         // Initialize the shader object (load shader source files and compile them)
         shader.Initialize();
         shader.Bind();
+        //GraphicsLogger.Log(LogLevel::Debug, "Current Shader Set: " + std::to_string(shader.m_CurrentShaderSet));
 
         std::string vertexShaderPath;
         std::string fragmentShaderPath;
 
         // Determine which set of shaders to use
-        if (useShaderSet1)
+        if (shader.GetCurrentShaderSet() == 1)
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
             GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
-        else
+        else if (shader.GetCurrentShaderSet() == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
             GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
+        }
+        else
+        {
+            throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
         }
 
         // Load shader source code from files
@@ -233,18 +239,12 @@ namespace Engine
             else
             {
                 // Shader compilation or linking failed
-                GraphicsLogger.Log(LogLevel::Error, "Shader compilation or linking failed. See console for details.");
-
-                // Throw an exception to stop program execution
                 throw std::runtime_error("Shader compilation or linking failed.");
             }
         }
         else
         {
             // Shader source files were not loaded successfully
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load shader source files.");
-
-            // Throw an exception to stop program execution
             throw std::runtime_error("Failed to load shader source files.");
         }
 
@@ -551,8 +551,13 @@ namespace Engine
     void GraphicsSystem::ToggleShaderSet()
     {
         std::cout << "ToggleShaderSet() called!" << std::endl;
-        useShaderSet1 = !useShaderSet1;
-        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+        if (shader.GetCurrentShaderSet() == 1) {
+            shader.SetActiveShaderSet(2);
+        }
+        else {
+            shader.SetActiveShaderSet(1);
+        }
+        std::cout << "Shader Set Toggled: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
         InitializeShader(); // Reinitialize shaders based on the new set
     }
 
@@ -588,8 +593,6 @@ namespace Engine
 
     GraphicsSystem::~GraphicsSystem()
     {
-        // Cleanup any resources here
-        // Terminate GLFW
         glfwTerminate();
     }
 } // namespace Engine

@@ -200,6 +200,11 @@ unsigned int Shader::CreateShader(const std::string& VtxShdr, const std::string&
     return program;
 }
 
+int Shader::GetCurrentShaderSet() const
+{
+    return m_CurrentShaderSet;
+}
+
 /*!
  * \brief Compile an OpenGL shader.
  * \param type The type of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
