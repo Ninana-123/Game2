@@ -11,10 +11,8 @@ uniform bool u_RenderTextured;
 
 void main()
 {
-    // Example: Use the normal attribute in fragment shader logic
     vec3 normal = normalize(v_Normal);
     
-    // Example: Apply a simple lighting effect based on the normal
     float lightIntensity = dot(normal, vec3(0.0, 0.0, 1.0)); // Simple directional light along z-axis
     lightIntensity = clamp(lightIntensity, 0.2, 1.0); // Clamp the intensity
     

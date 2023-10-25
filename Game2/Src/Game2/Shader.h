@@ -63,10 +63,11 @@ public:
     void SetUniform1f(const std::string& name, float value);
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+    void SetShaderProgram(int shaderSet, unsigned int programID);
 
+    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
 private:
     ShaderProgramSource ParseShader(const std::string& filepath);
-    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
     unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 };

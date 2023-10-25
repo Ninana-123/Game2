@@ -55,8 +55,8 @@ namespace Engine
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
-        void DrawColoredSquare(const glm::mat4& mvpMatrix);
         void ToggleShaderSet();
+        void DrawColoredSquare(const glm::mat4& mvpMatrix);
 
     private:
         Shader shader;

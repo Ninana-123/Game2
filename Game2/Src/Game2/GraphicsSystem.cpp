@@ -30,10 +30,6 @@ namespace Engine
    * This constructor initializes a GraphicsSystem object and sets up the
    * default shader and textures.
    */
-    //GraphicsSystem::GraphicsSystem()
-    //    : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag")
-    //{
-    //}
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
                  "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
@@ -189,39 +185,73 @@ namespace Engine
     * This function loads and initializes the shader used for rendering
     * and sets its initial uniform values.
     */
-    //void GraphicsSystem::InitializeShader()
-    //{
-    //    shader.LoadShader("Resource/Shaders/Basic.shader");
-
-    //    shader.Initialize();
-    //    shader.Bind();
-
-    //    shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-    //}
     void GraphicsSystem::InitializeShader()
     {
-        //shader.LoadShaderSource("Resource/Shaders/Shader.frag");
-        //shader.LoadShaderSource("Resource/Shaders/Shader.vert");
+        // Initialize the shader object (load shader source files and compile them)
+        shader.Initialize();
+        shader.Bind();
 
-        //shader.Initialize();
-        //shader.Bind();
-        //shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+        std::string vertexShaderPath;
+        std::string fragmentShaderPath;
+
+        // Determine which set of shaders to use
         if (useShaderSet1)
         {
-            // Load and initialize shaders for set 1
-            shader.LoadShaderSource("Resource/Shaders/Shader.vert");
-            shader.LoadShaderSource("Resource/Shaders/Shader.frag");
+            vertexShaderPath = "Resource/Shaders/Shader.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader.frag";
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
         else
         {
-            // Load and initialize shaders for set 2
-            shader.LoadShaderSource("Resource/Shaders/Shader2.vert");
-            shader.LoadShaderSource("Resource/Shaders/Shader2.frag");
+            vertexShaderPath = "Resource/Shaders/Shader2.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader2.frag";
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
 
-        shader.Initialize();
-        shader.Bind();
+        // Load shader source code from files
+        std::string vertexShaderSource = shader.LoadShaderSource(vertexShaderPath);
+        std::string fragmentShaderSource = shader.LoadShaderSource(fragmentShaderPath);
+
+        // Check if shader source files were successfully loaded
+        if (!vertexShaderSource.empty() && !fragmentShaderSource.empty())
+        {
+            // Compile shaders and create shader program
+            unsigned int shaderProgram = shader.CreateShader(vertexShaderSource, fragmentShaderSource);
+
+            // Check for shader compilation and linking errors
+            if (shaderProgram != 0)
+            {
+                // Shader compilation and linking successful
+                GraphicsLogger.Log(LogLevel::Debug, "Shader compilation and linking successful.");
+
+                // Store the shader program ID in the shader class based on the shader set being used
+                shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
+
+                // Check for additional shader compilation errors (if any)
+                shader.CheckShaderCompilation(shaderProgram, "Shader Set");
+            }
+            else
+            {
+                // Shader compilation or linking failed
+                GraphicsLogger.Log(LogLevel::Error, "Shader compilation or linking failed. See console for details.");
+
+                // Throw an exception to stop program execution
+                throw std::runtime_error("Shader compilation or linking failed.");
+            }
+        }
+        else
+        {
+            // Shader source files were not loaded successfully
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load shader source files.");
+
+            // Throw an exception to stop program execution
+            throw std::runtime_error("Failed to load shader source files.");
+        }
+
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Unbind the shader program after setting up uniforms
+        shader.Unbind();
     }
 
     /*!
@@ -406,7 +436,6 @@ namespace Engine
      */
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
@@ -414,7 +443,7 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        //std::cout << "S Key State: " << currentSState << std::endl;
+        std::cout << "S Key State: " << currentSState << std::endl;
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -422,7 +451,6 @@ namespace Engine
             // Toggle the shader state
             ToggleShaderSet();
         }
-
         // Update the previous 'S' key state
         previousSState = currentSState;
 
@@ -522,8 +550,9 @@ namespace Engine
 
     void GraphicsSystem::ToggleShaderSet()
     {
+        std::cout << "ToggleShaderSet() called!" << std::endl;
         useShaderSet1 = !useShaderSet1;
-        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "ShaderSet1" : "ShaderSet2") << std::endl;
+        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
         InitializeShader(); // Reinitialize shaders based on the new set
     }
 
