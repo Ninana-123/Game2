@@ -49,5 +49,12 @@ namespace Engine
 			
 			return cloneComponent;
 		}
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "Velocity: " << velocity.x << ' ' << velocity.y << '\n';
+		}
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> velocity.x >> velocity.y; // Assuming format is "Position: x y"
+		}
 	};
 }

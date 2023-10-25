@@ -3,7 +3,7 @@
 \file		CollisionSystem.cpp
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807 
 \co		    Tristan Tham Rui Hong,  t.tham@digipen.edu 2200794
-\par		a.junshengaloysius@digipen.edu
+
 \date		10/09/2023
 \brief		Contains the defintion for the logic of AABB, Circle to Circle and Circle to AABB Collision
 
