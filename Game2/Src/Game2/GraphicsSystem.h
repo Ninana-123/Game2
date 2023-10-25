@@ -35,6 +35,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "Vector2d.h"
 #include "Camera.h"
+#include "Animation.h"
 
 namespace Engine
 {
@@ -57,6 +58,10 @@ namespace Engine
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+        int screenWidth, screenHeight;
+      
+        double animationStartTime;
+        double frameDuration;
        
 
 

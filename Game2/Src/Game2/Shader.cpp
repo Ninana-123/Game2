@@ -310,3 +310,7 @@ int Shader::GetUniformLocation(const std::string& name)
 }
 
 
+void Shader::SetUniform2f(const std::string& name, const glm::vec2& vector)
+{
+    GLCall(glUniform2f(GetUniformLocation(name), vector.x, vector.y));
+}

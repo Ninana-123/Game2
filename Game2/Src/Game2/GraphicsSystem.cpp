@@ -32,7 +32,7 @@ namespace Engine
    */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag"),
-          m_Camera(-4.0f, 4.0f, -4.0f, 4.0f)
+          m_Camera(-640.0f, 640.0f , -360.0f, 360.0f)
     {
     }
 
@@ -118,7 +118,6 @@ namespace Engine
         VertexBufferLayout layout;
         layout.Push<float>(2);
         layout.Push<float>(2);
-        GraphicsSystem::va.AddBuffer(vb, layout);
 
         GraphicsSystem::ib.SetData(localIndices, 6);
 
@@ -162,6 +161,8 @@ namespace Engine
         layoutBackground.Push<float>(2);
         layoutBackground.Push<float>(2);
 
+        GraphicsSystem::va.AddBuffer(vb, layout);
+
         GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
         GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
 
@@ -202,7 +203,7 @@ namespace Engine
 
         shader.Initialize();
         shader.Bind();
-        //shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+       // shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -213,7 +214,7 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
+        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
         {
             GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
@@ -250,9 +251,10 @@ namespace Engine
         textureC.Bind(0);
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
-        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
+       
 
         renderer.Draw(vaBackground, ibBackground, shader);
         textureC.Unbind();
@@ -271,31 +273,118 @@ namespace Engine
     void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
+        textureA.Bind(0);
 
-        double currentTime = glfwGetTime();
-        double elapsedTime = currentTime - programStartTime;
-        int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
-
-        if (textureIndex)
-        {
-            textureA.Bind(0);
-        }
-        else
-        {
-            textureB.Bind(0);
-        }
-
-        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+     
+        // Set the shader uniforms for texture coordinates and MVP matrix
+        shader.SetUniform1i("u_RenderTextured", 1);
         shader.SetUniform1i("u_Texture", 0);
-        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+       
+        glm::mat4 result = m_Camera.GetViewProjectionMatrix()* mvpMatrix;
+        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+       
+        std::cout << "mat4:" << std::endl;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                std::cout << m_Camera.GetViewProjectionMatrix()[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
 
         va.Bind();
         ib.Bind();
 
         // Render the entity
         renderer.Draw(va, ib, shader);
+
+        // Unbind the texture and shader
+        textureA.Unbind();
         shader.Unbind();
     }
+
+
+    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    //{
+    //    shader.Bind();
+
+    //    // Assuming you have an `Animation` object for textureA
+    //    static Animation animation(6.0f); // 6 frames per second
+    //    animation.AddFrame(0); // Add the texture index for frame 1
+    //    animation.AddFrame(1); // Add the texture index for frame 2
+    //    animation.AddFrame(2); // Add the texture index for frame 3
+    //    animation.AddFrame(3); // Add the texture index for frame 4
+    //    animation.AddFrame(4); // Add the texture index for frame 5
+    //    animation.AddFrame(5); // Add the texture index for frame 6
+
+    //    // Check if the animation is playing and update it
+    //    if (animation.IsPlaying()) {
+    //        animation.Update(1.0f / 60.0f); // Assuming a 60 FPS frame rate
+    //    }
+
+    //    // Get the current frame index
+    //    int currentFrame = animation.GetCurrentFrame();
+
+    //    // Set the texture offset (u_TextureOffset) directly based on the current frame
+    //    float frameWidth = 1.0f / 6; // Assuming 6 frames in the animation
+    //    float texCoordX = currentFrame * frameWidth;
+
+    //    // Set the texture offset in the shader
+    //    shader.SetUniform1f("u_TextureOffset", texCoordX);
+
+    //    textureA.Bind(0);
+
+    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+    //    shader.SetUniform1i("u_Texture", 0);
+    //    shader.SetUniformMat4f("u_MVP", mvpMatrix);
+
+    //    va.Bind();
+    //    ib.Bind();
+
+    //    // Render the entity
+    //    renderer.Draw(va, ib, shader);
+    //    shader.Unbind();
+    //}
+    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    //{
+    //    shader.Bind();
+
+    //    // Calculate the current frame index based on time
+    //    static const float frameDuration = 1.0f; // 1 second per frame
+    //    static const int numFrames = 6;
+    //    static float totalTime = 0.0f;
+
+    //    // Calculate the frame to show
+    //    int currentFrame = static_cast<int>((totalTime / frameDuration)) % numFrames;
+
+    //    // Set the texture offset (u_TextureOffset) based on the current frame
+    //    float frameWidth = 1.0f / numFrames;
+    //    float texCoordX = frameWidth * currentFrame;
+
+    //    // Clear the previous frame by setting the texture offset to show only the current frame
+    //    shader.SetUniform1f("u_TextureOffset", texCoordX);
+
+    //    textureA.Bind(0);
+
+    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+    //    shader.SetUniform1i("u_Texture", 0);
+    //    shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+
+    //    va.Bind();
+    //    ib.Bind();
+
+    //    // Render the entity
+    //    renderer.Draw(va, ib, shader);
+    //    shader.Unbind();
+
+    //    // Update the total time for the animation
+    //    totalTime += 1.0f / 60.0f; // Assuming a 60 FPS frame rate
+
+    //    // Ensure the animation loops
+    //    if (totalTime >= numFrames * frameDuration) {
+    //        totalTime = 0.0f;
+    //    }
+    //}
+
 
     /*!
      * \brief Render lines.
@@ -317,6 +406,7 @@ namespace Engine
 
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
+        textureA.Unbind();
         shader.Unbind();
     }
 
@@ -369,7 +459,7 @@ namespace Engine
         // Bind the shader and set uniforms
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
 
         va.Bind();
         ib.Bind();
@@ -423,12 +513,18 @@ namespace Engine
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
                     glm::mat4 mvpA = proj * view * modelA;
+                   // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
+                  
+
 
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
+                   /* RenderBackground(mvpA);*/
+
                     if (entity->HasComponent(ComponentType::Physics))
                     {
+                      
                         // Check if there's a change in the 'P' key state
                         if (currentPState && !previousPState)
                         {
@@ -443,15 +539,24 @@ namespace Engine
                         {
                             RenderTexturedEntity(mvpA);
                             RenderLines(mvpA);
+                           /* std::cout << "Texmat4: " << std::endl;
+                            for (int i = 0; i < 4; i++) {
+                                for (int j = 0; j < 4; j++) {
+                                    std::cout << mvpA[i][j] << " ";
+                                }
+                                std::cout << std::endl;
+                            }*/
                         }
                         else
                         {
                             DrawColoredSquare(mvpA);
+                         
                         }
                     }
                     else
                     {
                         RenderBackground(mvpA); //Assuming background only has Transform
+                       
                     }
                     
                     //RenderSingleLine(mvpA, lineStart, lineEnd

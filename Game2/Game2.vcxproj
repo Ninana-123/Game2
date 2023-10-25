@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetsManager.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="Src\Game2\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\AssetsManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
