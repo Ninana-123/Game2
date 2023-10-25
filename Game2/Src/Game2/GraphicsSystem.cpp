@@ -31,7 +31,8 @@ namespace Engine
    * default shader and textures.
    */
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag")
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag"),
+          m_Camera(-4.0f, 4.0f, -4.0f, 4.0f)
     {
     }
 
@@ -184,15 +185,16 @@ namespace Engine
     * This function loads and initializes the shader used for rendering
     * and sets its initial uniform values.
     */
-    //void GraphicsSystem::InitializeShader()
-    //{
-    //    shader.LoadShader("Resource/Shaders/Basic.shader");
+    /*void GraphicsSystem::InitializeShader()
+    {
+        shader.LoadShaderSource("Resource/Shaders/Basic.shader");
 
-    //    shader.Initialize();
-    //    shader.Bind();
+        shader.Initialize();
+        shader.Bind();
+         
+        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+    }*/
 
-    //    shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-    //}
     void GraphicsSystem::InitializeShader()
     {
         shader.LoadShaderSource("Resource/Shaders/Shader.frag");
@@ -200,6 +202,7 @@ namespace Engine
 
         shader.Initialize();
         shader.Bind();
+        //shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
     }
 
@@ -500,18 +503,22 @@ namespace Engine
         int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
+        // Calculate the position for your object at the center of the screen
+        glm::vec3 objectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
+
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
 
-        // Translate the object to the center of the screen
-        model = glm::translate(model, glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f));
+        // Translate the object to the calculated center position
+        model = glm::translate(model, objectPosition);
 
-        // Apply the provided translation
+        // Apply the provided translation, scale, and rotation
         model = glm::translate(model, translation);
-
         model = glm::scale(model, scale);
         model = glm::rotate(model, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
+
         return model;
     }
+
 
     GraphicsSystem::~GraphicsSystem()
     {

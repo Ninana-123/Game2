@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "Camera.h"
 
 namespace Engine
 {
@@ -56,6 +57,8 @@ namespace Engine
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+       
+
 
     private:
         Shader shader;
@@ -66,7 +69,7 @@ namespace Engine
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
-
+        glm::vec3 objectPosition;
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
         glm::mat4 proj{};
         glm::mat4 view{};
@@ -83,6 +86,8 @@ namespace Engine
         VertexArray vaSingleLine;
 
         Renderer renderer;
+
+        Camera m_Camera;
 
         float vtx_positions[16]{};
         unsigned int indices[6]{};

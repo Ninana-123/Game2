@@ -109,7 +109,7 @@ namespace Engine {
 			return;
 		}
 		//NOT RESIZABLE FOR NOW
-		glfwSetWindowAttrib(m_Window, GLFW_RESIZABLE, GLFW_FALSE);
+		glfwSetWindowAttrib(m_Window, GLFW_RESIZABLE, GLFW_TRUE);
 
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);

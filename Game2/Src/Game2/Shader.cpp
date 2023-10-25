@@ -213,7 +213,7 @@ void Shader::Bind() const
 {
     if (m_RendererID == 0) {
         std::cerr << "Attempting to use an invalid shader program!" << std::endl;
-        return;
+        return ; // Return a reference to this Shader object
     }
 
     GLCall(glUseProgram(m_RendererID));
@@ -223,6 +223,8 @@ void Shader::Bind() const
         std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(m_RendererID)" << std::endl;
         __debugbreak();  // This will trigger a debugger break to help you pinpoint the issue.
     }
+
+    
 }
 
 /*!
@@ -268,7 +270,9 @@ void Shader::SetUniform1f(const std::string& name, float value)
  */
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
 {
+   
     GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+   
 }
 
 /*!
@@ -304,3 +308,5 @@ int Shader::GetUniformLocation(const std::string& name)
     m_UniformLocationCache[name] = location;
     return location;
 }
+
+
