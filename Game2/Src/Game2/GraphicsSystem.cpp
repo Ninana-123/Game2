@@ -30,8 +30,13 @@ namespace Engine
    * This constructor initializes a GraphicsSystem object and sets up the
    * default shader and textures.
    */
+    //GraphicsSystem::GraphicsSystem()
+    //    : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag")
+    //{
+    //}
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag")
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
     {
     }
 
@@ -195,8 +200,24 @@ namespace Engine
     //}
     void GraphicsSystem::InitializeShader()
     {
-        shader.LoadShaderSource("Resource/Shaders/Shader.frag");
-        shader.LoadShaderSource("Resource/Shaders/Shader.vert");
+        //shader.LoadShaderSource("Resource/Shaders/Shader.frag");
+        //shader.LoadShaderSource("Resource/Shaders/Shader.vert");
+
+        //shader.Initialize();
+        //shader.Bind();
+        //shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+        if (useShaderSet1)
+        {
+            // Load and initialize shaders for set 1
+            shader.LoadShaderSource("Resource/Shaders/Shader.vert");
+            shader.LoadShaderSource("Resource/Shaders/Shader.frag");
+        }
+        else
+        {
+            // Load and initialize shaders for set 2
+            shader.LoadShaderSource("Resource/Shaders/Shader2.vert");
+            shader.LoadShaderSource("Resource/Shaders/Shader2.frag");
+        }
 
         shader.Initialize();
         shader.Bind();
@@ -385,11 +406,25 @@ namespace Engine
      */
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
+
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();
-       
+        renderer.Clear();    
+
+        // Get the current state of the 'S' key
+        bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
+        //std::cout << "S Key State: " << currentSState << std::endl;
+        
+        // Check if there's a change in the 'S' key state
+        if (currentSState && !previousSState)
+        {
+            // Toggle the shader state
+            ToggleShaderSet();
+        }
+
+        // Update the previous 'S' key state
+        previousSState = currentSState;
 
         for (const auto& entityPair : *entities)
         {
@@ -478,10 +513,19 @@ namespace Engine
     void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
+        std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl; 
+
         shader.Bind();
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
+        std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl; 
     }
 
+    void GraphicsSystem::ToggleShaderSet()
+    {
+        useShaderSet1 = !useShaderSet1;
+        std::cout << "Shader Set Toggled: " << (useShaderSet1 ? "Set 1" : "Set 2") << std::endl;
+        InitializeShader(); // Reinitialize shaders based on the new set
+    }
 
     /*!
      * \brief Setup the model matrix for an entity.

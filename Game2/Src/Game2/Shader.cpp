@@ -23,11 +23,13 @@
  *
  * This constructor initializes a Shader object with the provided file path.
  */
-Shader::Shader(const std::string& filepath, const std::string& filepath2)
-    : m_FilePath(filepath), m_FilePath2(filepath2), m_RendererID(0), m_IsInitialized(false)
+//Shader::Shader(const std::string& filepath, const std::string& filepath2)
+//    : m_FilePath(filepath), m_FilePath2(filepath2), m_RendererID(0), m_IsInitialized(false)
+//{
+//}
+Shader::Shader(const std::string& filepath, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4)
+    : m_FilePath(filepath), m_FilePath2(filepath2), m_FilePath3(filepath3), m_FilePath4(filepath4), m_RendererID(0), m_RendererID2(0), m_IsInitialized(false)
 {
-    /*ShaderProgramSource source = ParseShader(filepath);
-    m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);*/
 }
 
 /*!
@@ -45,11 +47,6 @@ Shader::~Shader()
  *
  * This function loads shader source code from a file and updates the Shader object's file path.
  */
-//void Shader::LoadShader(const std::string& filepath)
-//{
-//    m_FilePath = filepath;
-//    m_IsInitialized = false;
-//}
 std::string Shader::LoadShaderSource(const std::string& filepath)
 {
     std::ifstream file(filepath);
@@ -84,25 +81,35 @@ void Shader::Initialize()
         return;  // Shader is already initialized
 
     // Load vertex shader source code from file
-    std::string vertexShaderSource = LoadShaderSource(m_FilePath); 
+    std::string vertexShaderSource1 = LoadShaderSource(m_FilePath); 
+    std::string vertexShaderSource2 = LoadShaderSource(m_FilePath3);
 
     // Load fragment shader source code from file
-    std::string fragmentShaderSource = LoadShaderSource(m_FilePath2);  
+    std::string fragmentShaderSource1 = LoadShaderSource(m_FilePath2); 
+    std::string fragmentShaderSource2 = LoadShaderSource(m_FilePath4);
 
     // Create and compile shader program
-    m_RendererID = CreateShader(vertexShaderSource, fragmentShaderSource);
+    m_RendererID = CreateShader(vertexShaderSource1, fragmentShaderSource1);
+    m_RendererID2 = CreateShader(vertexShaderSource2, fragmentShaderSource2);
 
-    // Check for shader compilation and linking errors
-    int success;
-    char infoLog[512];
-    GLCall(glGetProgramiv(m_RendererID, GL_LINK_STATUS, &success));
-    if (!success) {
-        GLCall(glGetProgramInfoLog(m_RendererID, 512, NULL, infoLog));
-        std::cerr << "Shader program linking failed:\n" << infoLog << std::endl;
-        // Handle the error as needed, e.g., return or throw an exception
-    }
+    // Check for shader compilation and linking errors for the first shader program
+    CheckShaderCompilation(m_RendererID, "ShaderSet1");
+
+    // Check for shader compilation and linking errors for the second shader program
+    CheckShaderCompilation(m_RendererID2, "ShaderSet2");
 
     m_IsInitialized = true;
+}
+
+void Shader::CheckShaderCompilation(unsigned int programID, const std::string& shaderSetName) {
+    int success;
+    char infoLog[512];
+    GLCall(glGetProgramiv(programID, GL_LINK_STATUS, &success));
+    if (!success) {
+        GLCall(glGetProgramInfoLog(programID, 512, NULL, infoLog));
+        std::cerr << "Shader program (" << shaderSetName << ") linking failed:\n" << infoLog << std::endl;
+        // Handle the error as needed, e.g., return or throw an exception
+    }
 }
 
 /*!
@@ -193,7 +200,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
     {
         int length;
         GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-        char* message = (char*)alloca(length * sizeof(char));
+        char* message = (char*)_malloca(length * sizeof(char));
         GLCall(glGetShaderInfoLog(id, length, &length, message));
         std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!" << std::endl;
         std::cout << message << std::endl;

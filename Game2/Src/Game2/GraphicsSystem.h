@@ -56,6 +56,7 @@ namespace Engine
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+        void ToggleShaderSet();
 
     private:
         Shader shader;
@@ -90,6 +91,8 @@ namespace Engine
         bool renderTexturedSquare = false;
         bool previousPState = false;
         bool renderTextureSquare = true;
+        bool useShaderSet1 = true;
+        bool previousSState = false;
     };
 }
 #endif // ENGINE_GRAPHICS_H
