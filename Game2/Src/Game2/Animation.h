@@ -1,35 +1,31 @@
 #pragma once
+
 #include <vector>
+
 namespace Engine
 {
     class Animation
     {
     public:
-        Animation(float frameRate);
+        Animation(float frameRate, int spriteWidth, int spriteHeight);
+        Animation(); // Default constructor
 
-        // Add a frame to the animation.
-        void AddFrame(int textureIndex);
-
-        // Play the animation.
+        void AddFrame(int textureIndex, int frameDuration = 1);
         void Play();
-
-        // Pause the animation.
         void Pause();
-
-        // Update the animation frame based on elapsed time.
+        void Stop();
         void Update(float deltaTime);
-
-        // Get the current texture index.
         int GetCurrentFrame();
-
-        // Check if the animation is playing.
         bool IsPlaying();
-
-      
+        int GetCurrentFrameWidth();
+        int GetCurrentFrameHeight();
 
     private:
         float frameRate;
+        int spriteWidth;
+        int spriteHeight;
         std::vector<int> frames;
+        std::vector<int> frameDurations;
         int currentFrame;
         float frameTimer;
         bool playing;

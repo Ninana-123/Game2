@@ -19,10 +19,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Logger.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "Input.h"
+#include "Animation.h"
+
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
     Logger GraphicsLogger;
+    Input InputController;
+    Animation animation;
 
     /*!
    * \brief GraphicsSystem constructor.
@@ -33,9 +38,12 @@ namespace Engine
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag"),
           m_Camera(-640.0f, 640.0f , -360.0f, 360.0f)
+          
+         
     {
     }
 
+  
     /*!
    * \brief Initialize the GLEW library.
    *
@@ -252,14 +260,25 @@ namespace Engine
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+
+        const glm::mat4& viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
+        std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+               
+                std::cout << viewProjectionMatrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
-       
 
         renderer.Draw(vaBackground, ibBackground, shader);
         textureC.Unbind();
         shader.Unbind();
     }
+
 
     /*!
      * \brief Render a textured entity.
@@ -269,31 +288,16 @@ namespace Engine
      *
      * \param mvpMatrix The Model-View-Projection matrix for rendering.
      */
-
     void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
         textureA.Bind(0);
-
-     
-        // Set the shader uniforms for texture coordinates and MVP matrix
-        shader.SetUniform1i("u_RenderTextured", 1);
-        shader.SetUniform1i("u_Texture", 0);
-       
-        glm::mat4 result = m_Camera.GetViewProjectionMatrix()* mvpMatrix;
-        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
-       
-        std::cout << "mat4:" << std::endl;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                std::cout << m_Camera.GetViewProjectionMatrix()[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
+        
+        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+        shader.SetUniformMat4f("u_MVP", result);
 
         va.Bind();
         ib.Bind();
-
         // Render the entity
         renderer.Draw(va, ib, shader);
 
@@ -302,48 +306,43 @@ namespace Engine
         shader.Unbind();
     }
 
-
     //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     //{
     //    shader.Bind();
-
-    //    // Assuming you have an `Animation` object for textureA
-    //    static Animation animation(6.0f); // 6 frames per second
-    //    animation.AddFrame(0); // Add the texture index for frame 1
-    //    animation.AddFrame(1); // Add the texture index for frame 2
-    //    animation.AddFrame(2); // Add the texture index for frame 3
-    //    animation.AddFrame(3); // Add the texture index for frame 4
-    //    animation.AddFrame(4); // Add the texture index for frame 5
-    //    animation.AddFrame(5); // Add the texture index for frame 6
-
-    //    // Check if the animation is playing and update it
-    //    if (animation.IsPlaying()) {
-    //        animation.Update(1.0f / 60.0f); // Assuming a 60 FPS frame rate
-    //    }
-
-    //    // Get the current frame index
-    //    int currentFrame = animation.GetCurrentFrame();
-
-    //    // Set the texture offset (u_TextureOffset) directly based on the current frame
-    //    float frameWidth = 1.0f / 6; // Assuming 6 frames in the animation
-    //    float texCoordX = currentFrame * frameWidth;
-
-    //    // Set the texture offset in the shader
-    //    shader.SetUniform1f("u_TextureOffset", texCoordX);
-
     //    textureA.Bind(0);
 
-    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+    //  /*  float scaleX = 1.0f / 0.0015625f;
+    //    float scaleY = 1.0f / 0.00277778f;*/
+
+    //    // Set the shader uniforms for texture coordinates and MVP matrix
+    //    shader.SetUniform1i("u_RenderTextured", 1);
     //    shader.SetUniform1i("u_Texture", 0);
-    //    shader.SetUniformMat4f("u_MVP", mvpMatrix);
+    //   
+    //    glm::mat4 result = mvpMatrix * m_Camera.GetViewProjectionMatrix();
+    //  /*  result = glm::scale(result, glm::vec3(scaleX, scaleY, 1.0f));
+
+    //    std::cout << "Texture MATRIX: " << '\n' << " ";
+    //    for (int i = 0; i < 4; i++) {
+    //        for (int j = 0; j < 4; j++) {
+    //            std::cout << result[i][j] << " ";
+    //        }
+    //        std::cout << std::endl;
+    //    }*/
+    //    
+    //    shader.SetUniformMat4f("u_MVP", result);
+    //  
 
     //    va.Bind();
     //    ib.Bind();
 
     //    // Render the entity
     //    renderer.Draw(va, ib, shader);
+
+    //    // Unbind the texture and shader
+    //    textureA.Unbind();
     //    shader.Unbind();
     //}
+
     //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     //{
     //    shader.Bind();
@@ -367,7 +366,7 @@ namespace Engine
 
     //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
     //    shader.SetUniform1i("u_Texture", 0);
-    //    shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+    //    shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
     //    va.Bind();
     //    ib.Bind();
@@ -520,7 +519,7 @@ namespace Engine
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                   /* RenderBackground(mvpA);*/
+                   //RenderBackground(mvpA);
 
                     if (entity->HasComponent(ComponentType::Physics))
                     {
@@ -555,7 +554,7 @@ namespace Engine
                     }
                     else
                     {
-                        RenderBackground(mvpA); //Assuming background only has Transform
+                       RenderBackground(mvpA); //Assuming background only has Transform
                        
                     }
                     
@@ -570,6 +569,13 @@ namespace Engine
             }
         }
         //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+
+        // CAMERA
+        m_Camera.UpdatePosition(InputController, CameraSpeed);
+
+      
+     
+
     }
 
     void GraphicsSystem::UpdateViewport(int width, int height)

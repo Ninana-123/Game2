@@ -39,7 +39,7 @@ namespace Engine
     // Updates the object's position based on physics calculations.
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
-        std::cout << "Physics Checking" << std::endl;
+        //std::cout << "Physics Checking" << std::endl;
 
         for (const auto& entityPair : *entities)
         {

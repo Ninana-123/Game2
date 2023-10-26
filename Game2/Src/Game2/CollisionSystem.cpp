@@ -142,7 +142,7 @@ namespace Engine
 
 				if (!isColliding)
 				{
-					std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+					//std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
 				}
 
 

@@ -1,12 +1,14 @@
 #pragma once
 #include "pch.h"
 #include <glm/glm.hpp>
+#include "Input.h"
 
 namespace Engine
 {
 	class Camera
 	{
 	public:
+
 		Camera(float left, float right, float bottom, float top);
 
 		const glm::vec3& GetPosition()
@@ -24,9 +26,28 @@ namespace Engine
 			m_Rotation = rotation;
 		}
 
-		const glm::mat4& GetProjectionMatrix()const { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix()const { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix()const { return m_ViewProjectionMatrix; }
+		void Translate(const glm::vec3& translation)
+		{
+			m_Position += translation;
+			RecalculateViewMatrix();
+		}
+
+		const glm::mat4& GetProjectionMatrix()const 
+		{
+			return m_ProjectionMatrix; 
+		}
+		const glm::mat4& GetViewMatrix()const 
+		{
+			return m_ViewMatrix; 
+		}
+		const glm::mat4& GetViewProjectionMatrix()const 
+		{ 
+			return m_ViewProjectionMatrix; 
+		}
+
+		void UpdatePosition(const Input& input, float CameraSpeed);
+		//void HandleMouseScroll(float yOffset);
+
 	private:
 		void RecalculateViewMatrix();
 
@@ -35,8 +56,15 @@ namespace Engine
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
 
-		glm::vec3 m_Position;
+		glm::vec3 m_Position = {0.0f, 0.0f, 0.0f};
 		float m_Rotation = 0.0f;
+		float m_Left;
+		float m_Right;
+		float m_Bottom;
+		float m_Top;
+		float m_Zoom;
 
 	};
+
+	
 }

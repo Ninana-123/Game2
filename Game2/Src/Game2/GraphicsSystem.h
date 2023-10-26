@@ -93,6 +93,9 @@ namespace Engine
         Renderer renderer;
 
         Camera m_Camera;
+        float CameraSpeed = 1.5f;
+        float yOffset = 1.0f;
+       
 
         float vtx_positions[16]{};
         unsigned int indices[6]{};
