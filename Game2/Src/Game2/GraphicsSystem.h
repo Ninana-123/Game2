@@ -93,13 +93,10 @@ namespace Engine
         bool renderTexturedSquare = false;
         bool previousPState = false;
         bool renderTextureSquare = true;
-<<<<<<< Updated upstream
         bool useShaderSet1 = true;
         bool previousSState = false;
-=======
 
         std::shared_ptr<Engine::AssetManager> assetManager;
->>>>>>> Stashed changes
     };
 }
 #endif // ENGINE_GRAPHICS_H

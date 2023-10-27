@@ -19,6 +19,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Application.h" 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
+#include "AssetManager.h"
 
 int main(int argc, char** argv)
 {

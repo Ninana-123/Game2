@@ -36,7 +36,8 @@ namespace Engine
     {
     }
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
-        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag") {
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") {
         // other initialization code
     }
 
