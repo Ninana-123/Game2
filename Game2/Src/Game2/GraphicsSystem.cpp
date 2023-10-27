@@ -222,7 +222,7 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        if (!textureA.Load("Resource/Texture/TankWalking.png")) // Check for texture loading errors
         {
             GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
@@ -288,23 +288,23 @@ namespace Engine
      *
      * \param mvpMatrix The Model-View-Projection matrix for rendering.
      */
-    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
-    {
-        shader.Bind();
-        textureA.Bind(0);
-        
-        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
-        shader.SetUniformMat4f("u_MVP", result);
+    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    //{
+    //    shader.Bind();
+    //    textureA.Bind(0);
 
-        va.Bind();
-        ib.Bind();
-        // Render the entity
-        renderer.Draw(va, ib, shader);
+    //    glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+    //    shader.SetUniformMat4f("u_MVP", result);
 
-        // Unbind the texture and shader
-        textureA.Unbind();
-        shader.Unbind();
-    }
+    //    va.Bind();
+    //    ib.Bind();
+    //    // Render the entity
+    //    renderer.Draw(va, ib, shader);
+
+    //    // Unbind the texture and shader
+    //    textureA.Unbind();
+    //    shader.Unbind();
+    //}
 
     //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
     //{
@@ -343,46 +343,48 @@ namespace Engine
     //    shader.Unbind();
     //}
 
-    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
-    //{
-    //    shader.Bind();
+    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    {
+        shader.Bind();
 
-    //    // Calculate the current frame index based on time
-    //    static const float frameDuration = 1.0f; // 1 second per frame
-    //    static const int numFrames = 6;
-    //    static float totalTime = 0.0f;
+        // Calculate the current frame index based on time
+        static const float frameDuration = 1.0f; // 1 second per frame
+        static const int numFrames = 6;
+        static float totalTime = 0.0f;
 
-    //    // Calculate the frame to show
-    //    int currentFrame = static_cast<int>((totalTime / frameDuration)) % numFrames;
+        // Calculate the frame to show
+        int currentFrame = numFrames - 1 - static_cast<int>((totalTime / frameDuration)) % numFrames;
 
-    //    // Set the texture offset (u_TextureOffset) based on the current frame
-    //    float frameWidth = 1.0f / numFrames;
-    //    float texCoordX = frameWidth * currentFrame;
+        // Set the texture offset (u_TextureOffset) based on the current frame
+        float frameWidth = 1.0f / numFrames;
+        float texCoordX = frameWidth * currentFrame;
 
-    //    // Clear the previous frame by setting the texture offset to show only the current frame
-    //    shader.SetUniform1f("u_TextureOffset", texCoordX);
+        // Clear the previous frame by setting the texture offset to show only the current frame
+        shader.SetUniform1f("u_TextureOffset", texCoordX);
 
-    //    textureA.Bind(0);
+        textureA.Bind(0);
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture", 0);
+       // shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+        shader.SetUniformMat4f("u_MVP", result);
 
-    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-    //    shader.SetUniform1i("u_Texture", 0);
-    //    shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        va.Bind();
+        ib.Bind();
 
-    //    va.Bind();
-    //    ib.Bind();
+        // Render the entity
+        renderer.Draw(va, ib, shader);
+        shader.Unbind();
 
-    //    // Render the entity
-    //    renderer.Draw(va, ib, shader);
-    //    shader.Unbind();
+        // Update the total time for the animation
+        totalTime += 1.0f / 60.0f; // Assuming a 60 FPS frame rate
 
-    //    // Update the total time for the animation
-    //    totalTime += 1.0f / 60.0f; // Assuming a 60 FPS frame rate
+        // Ensure the animation loops
+        if (totalTime >= numFrames * frameDuration) {
+            totalTime = 0.0f;
+        }
+    }
 
-    //    // Ensure the animation loops
-    //    if (totalTime >= numFrames * frameDuration) {
-    //        totalTime = 0.0f;
-    //    }
-    //}
 
 
     /*!

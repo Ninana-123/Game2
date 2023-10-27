@@ -7,13 +7,10 @@ namespace Engine
     Camera::Camera(float left, float right, float bottom, float top)
         : m_ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_ViewMatrix(1.0f), m_Zoom(1.0f)
     {
+        // vertex pos * world matrix(world) * view matrix * projection matrix
+        // camera  =  view * projection
         m_ViewProjectionMatrix = m_ViewMatrix * m_ProjectionMatrix;
-       /* for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                std::cout << m_ViewProjectionMatrix[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }*/
+       
     }
 
     void Camera::RecalculateViewMatrix()
