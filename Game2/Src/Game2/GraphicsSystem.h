@@ -34,14 +34,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "AssetManager.h"
 
 namespace Engine
 {
     class GraphicsSystem : public System
     {
     public:
-
         GraphicsSystem();
+        GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager);
         ~GraphicsSystem();
 
         void Initialize() override;
@@ -57,6 +58,7 @@ namespace Engine
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+
 
     private:
         Shader shader;
@@ -91,8 +93,13 @@ namespace Engine
         bool renderTexturedSquare = false;
         bool previousPState = false;
         bool renderTextureSquare = true;
+<<<<<<< Updated upstream
         bool useShaderSet1 = true;
         bool previousSState = false;
+=======
+
+        std::shared_ptr<Engine::AssetManager> assetManager;
+>>>>>>> Stashed changes
     };
 }
 #endif // ENGINE_GRAPHICS_H

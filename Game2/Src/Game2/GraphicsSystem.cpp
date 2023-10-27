@@ -35,6 +35,10 @@ namespace Engine
                  "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
     {
     }
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag") {
+        // other initialization code
+    }
 
     /*!
    * \brief Initialize the GLEW library.
@@ -281,15 +285,11 @@ namespace Engine
             textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
         }
 
-        if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
-        {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture C.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
+        textureC = *(assetManager->getTexture("Background"));
+        // Handle the error as needed, e.g., return or throw an exception
             textureC.InitGL();
-            textureC.Bind(0); 
-        }
+            textureC.Bind(0);
+
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)

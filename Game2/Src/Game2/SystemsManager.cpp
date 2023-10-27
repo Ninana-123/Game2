@@ -10,6 +10,7 @@
  /******************************************************************************/
 #include "pch.h"
 #include "SystemsManager.h"
+#include "Application.h"
 
 namespace Engine
 {
@@ -17,18 +18,22 @@ namespace Engine
 
 	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
 	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>(); 
-		template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
+	template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
 
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
 	
+	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager)
+		: assetManager(assetManager) {
+	}
+
 	void SystemsManager::Initialize()
 	{
 		//add systems into systems container
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
-		all_systems.push_back(new GraphicsSystem());
+		all_systems.push_back(new GraphicsSystem(assetManager));
 
 		//initialize each system
 		for (auto system : all_systems)

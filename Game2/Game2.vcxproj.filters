@@ -91,7 +91,7 @@
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
       <Filter>ImGuiWrapper</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\AssetsManager.cpp">
+    <ClCompile Include="Src\Game2\AssetManager.cpp">
       <Filter>Base\AssetsManager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -240,7 +240,7 @@
     <ClInclude Include="Src\Game2\ImGuiWrapper.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\AssetsManager.h">
+    <ClInclude Include="Src\Game2\AssetManager.h">
       <Filter>Base\AssetsManager</Filter>
     </ClInclude>
   </ItemGroup>
