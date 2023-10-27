@@ -31,6 +31,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
 #include "Loader.h"
+#include "AssetManager.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -50,12 +51,12 @@ namespace Engine
 
     Engine::Logger logger;
     Engine::Input InputHandler;
-    GraphicsSystem graphicsSystem;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
     // Entity-related instances and properties
+    std::shared_ptr<SystemsManager> systemsManager = nullptr;
+    GraphicsSystem graphicsSystem;
     Engine::EntityManager EM;
-    Engine::SystemsManager SM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
@@ -110,7 +111,12 @@ namespace Engine
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
         // Systems Manager Initialization: initializes TestSystem and Graphics
-        SM.Initialize();
+        assetManager = std::make_shared<Engine::AssetManager>();
+        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
+        logger.Log(Engine::LogLevel::Error, "Test");
+        systemsManager = std::make_shared<SystemsManager>(assetManager);
+        systemsManager->Initialize();
+        logger.Log(Engine::LogLevel::Error, "Test");
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(&EM);
@@ -136,7 +142,14 @@ namespace Engine
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
+
+        assetManager = std::make_shared<Engine::AssetManager>();
+        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
+
+        systemsManager = std::make_shared<SystemsManager>(assetManager);
+        systemsManager->Initialize();
     }
+
     /*!**********************************************************************
     \brief
     Event handler for processing events
@@ -198,12 +211,12 @@ namespace Engine
             //Systems State Toggle Test
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
-                SM.ToggleSystemState<CollisionSystem>();
+                systemsManager->ToggleSystemState<CollisionSystem>();
             }
 
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
-                SM.ToggleSystemState<PhysicsSystem>();
+                systemsManager->ToggleSystemState<PhysicsSystem>();
             }
 
             if (m_ImGuiWrapper->TargetEntityGetter())
@@ -307,7 +320,7 @@ namespace Engine
             }
 
             //System Updating
-            SM.UpdateSystems(EM.GetEntities());
+            systemsManager->UpdateSystems(EM.GetEntities());
 
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
@@ -348,6 +361,7 @@ namespace Engine
     void Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
+
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
     /*!**********************************************************************

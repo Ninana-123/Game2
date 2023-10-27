@@ -14,6 +14,7 @@
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
+#include "AssetManager.h"
 
 #pragma once
 
@@ -29,6 +30,8 @@ namespace Engine
     class SystemsManager
     {
     public:
+
+        SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager);
         /*!*****************************************************************
         \brief Initializes all the system types and their respective initialize functions.
         ********************************************************************/
@@ -68,6 +71,7 @@ namespace Engine
 
     private:
         // Add any private members or helper functions if needed.
+        std::shared_ptr<Engine::AssetManager> assetManager;
     };
 
 }  // namespace Engine

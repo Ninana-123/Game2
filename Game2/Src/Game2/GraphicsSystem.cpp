@@ -36,11 +36,15 @@ namespace Engine
    * default shader and textures.
    */
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag"),
-          m_Camera(-640.0f, 640.0f , -360.0f, 360.0f)
-          
-         
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+                  m_Camera(-640.0f, 640.0f , -360.0f, 360.0f)
     {
+    }
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") {
+        // other initialization code
     }
 
   
@@ -56,7 +60,8 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
+            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " 
+                + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
@@ -194,25 +199,72 @@ namespace Engine
     * This function loads and initializes the shader used for rendering
     * and sets its initial uniform values.
     */
-    /*void GraphicsSystem::InitializeShader()
-    {
-        shader.LoadShaderSource("Resource/Shaders/Basic.shader");
-
-        shader.Initialize();
-        shader.Bind();
-         
-        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-    }*/
-
     void GraphicsSystem::InitializeShader()
     {
-        shader.LoadShaderSource("Resource/Shaders/Shader.frag");
-        shader.LoadShaderSource("Resource/Shaders/Shader.vert");
-
+        // Initialize the shader object (load shader source files and compile them)
         shader.Initialize();
         shader.Bind();
-       // shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+        //GraphicsLogger.Log(LogLevel::Debug, "Current Shader Set: " + std::to_string(shader.m_CurrentShaderSet));
+
+        std::string vertexShaderPath;
+        std::string fragmentShaderPath;
+
+        // Determine which set of shaders to use
+        if (shader.GetCurrentShaderSet() == 1)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader.frag";
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
+        }
+        else if (shader.GetCurrentShaderSet() == 2)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader2.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader2.frag";
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
+        }
+        else
+        {
+            throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
+        }
+
+        // Load shader source code from files
+        std::string vertexShaderSource = shader.LoadShaderSource(vertexShaderPath);
+        std::string fragmentShaderSource = shader.LoadShaderSource(fragmentShaderPath);
+
+        // Check if shader source files were successfully loaded
+        if (!vertexShaderSource.empty() && !fragmentShaderSource.empty())
+        {
+            // Compile shaders and create shader program
+            unsigned int shaderProgram = shader.CreateShader(vertexShaderSource, fragmentShaderSource);
+
+            // Check for shader compilation and linking errors
+            if (shaderProgram != 0)
+            {
+                // Shader compilation and linking successful
+                GraphicsLogger.Log(LogLevel::Debug, "Shader compilation and linking successful.");
+
+                // Store the shader program ID in the shader class based on the shader set being used
+                shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
+
+                // Check for additional shader compilation errors (if any)
+                shader.CheckShaderCompilation(shaderProgram, "Shader Set");
+            }
+            else
+            {
+                // Shader compilation or linking failed
+                throw std::runtime_error("Shader compilation or linking failed.");
+            }
+        }
+        else
+        {
+            // Shader source files were not loaded successfully
+            throw std::runtime_error("Failed to load shader source files.");
+        }
+
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Unbind the shader program after setting up uniforms
+        shader.Unbind();
     }
 
     /*!
@@ -242,15 +294,11 @@ namespace Engine
             textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
         }
 
-        if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
-        {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture C.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
+        textureC = *(assetManager->getTexture("Background"));
+        // Handle the error as needed, e.g., return or throw an exception
             textureC.InitGL();
-            textureC.Bind(0); 
-        }
+            textureC.Bind(0);
+
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
@@ -482,8 +530,20 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();
-       
+        renderer.Clear();    
+
+        // Get the current state of the 'S' key
+        bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
+        std::cout << "S Key State: " << currentSState << std::endl;
+        
+        // Check if there's a change in the 'S' key state
+        if (currentSState && !previousSState)
+        {
+            // Toggle the shader state
+            ToggleShaderSet();
+        }
+        // Update the previous 'S' key state
+        previousSState = currentSState;
 
         for (const auto& entityPair : *entities)
         {
@@ -594,10 +654,25 @@ namespace Engine
     void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
+        std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl; 
+
         shader.Bind();
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
+        std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl; 
     }
 
+    void GraphicsSystem::ToggleShaderSet()
+    {
+        std::cout << "ToggleShaderSet() called!" << std::endl;
+        if (shader.GetCurrentShaderSet() == 1) {
+            shader.SetActiveShaderSet(2);
+        }
+        else {
+            shader.SetActiveShaderSet(1);
+        }
+        std::cout << "Shader Set Toggled: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+        InitializeShader(); // Reinitialize shaders based on the new set
+    }
 
     /*!
      * \brief Setup the model matrix for an entity.
@@ -635,8 +710,6 @@ namespace Engine
 
     GraphicsSystem::~GraphicsSystem()
     {
-        // Cleanup any resources here
-        // Terminate GLFW
         glfwTerminate();
     }
 } // namespace Engine

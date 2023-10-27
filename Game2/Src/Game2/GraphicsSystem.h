@@ -36,14 +36,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Vector2d.h"
 #include "Camera.h"
 #include "Animation.h"
+#include "AssetManager.h"
 
 namespace Engine
 {
     class GraphicsSystem : public System
     {
     public:
-
         GraphicsSystem();
+        GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager);
         ~GraphicsSystem();
 
         void Initialize() override;
@@ -57,12 +58,14 @@ namespace Engine
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
+        void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
         int screenWidth, screenHeight;
       
         double animationStartTime;
         double frameDuration;
        
+
 
 
     private:
@@ -103,6 +106,10 @@ namespace Engine
         bool renderTexturedSquare = false;
         bool previousPState = false;
         bool renderTextureSquare = true;
+        bool useShaderSet1 = true;
+        bool previousSState = false;
+
+        std::shared_ptr<Engine::AssetManager> assetManager;
     };
 }
 #endif // ENGINE_GRAPHICS_H
