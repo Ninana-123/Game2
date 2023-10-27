@@ -14,6 +14,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "Entity.h"
 #include "Component.h"
+#include "AnimationComponent.h"  
 
 namespace Engine
 {
@@ -49,6 +50,11 @@ namespace Engine
 		else if (componentType == "Texture") {
 			TextureComponent* component = new TextureComponent();
 			components.emplace(component->GetType(), std::move(component));
+			return component;
+		}
+		else if (componentType == "Animation") {
+			AnimationComponent* component = new AnimationComponent(); 
+			components.emplace(component->GetType(), std::unique_ptr<Component>(component));
 			return component;
 		}
 

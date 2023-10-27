@@ -20,6 +20,12 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Animation
+Frames: 0 1 2 3 4 5 
+FrameDurations: 100 100 100 100 100 100 
+CurrentFrame: 0  
+FrameTimer: 50.0  
+Playing: 1  
 EndEntity
 Transform 
 Position: 100 100
@@ -36,6 +42,12 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Animation
+Frames: 0 1 2 3 4 5 
+FrameDurations: 100 100 100 100 100 100 
+CurrentFrame: 0  
+FrameTimer: 50.0  
+Playing: 1 
 EndEntity
 Transform 
 Position: 300 300
@@ -52,6 +64,12 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Animation
+Frames: 0 1 2 3 4 5 
+FrameDurations: 100 100 100 100 100 100 
+CurrentFrame: 0  
+FrameTimer: 50.0  
+Playing: 1 
 EndEntity
 
 

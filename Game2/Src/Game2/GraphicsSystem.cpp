@@ -43,7 +43,9 @@ namespace Engine
     }
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
         : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") {
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") ,
+                m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
+    {
         // other initialization code
     }
 
@@ -310,14 +312,14 @@ namespace Engine
         shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
 
         const glm::mat4& viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
-        std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
+      /*  std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                
                 std::cout << viewProjectionMatrix[i][j] << " ";
             }
             std::cout << std::endl;
-        }
+        }*/
 
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
@@ -391,47 +393,112 @@ namespace Engine
     //    shader.Unbind();
     //}
 
-    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+    //{
+    //    shader.Bind();
+
+    //    for (const auto& entityPair : *entities)
+    //    {
+    //        Entity* entity = entityPair.second.get();
+
+    //        if (entity->HasComponent(ComponentType::Animation))
+    //        {
+    //            Animation animation;
+    //            animation.Pause();
+    //            // Calculate the current frame index based on time
+    //            static const float frameDuration = 1.0f; // 1 second per frame
+    //            static const int numFrames = 6;
+    //            static float totalTime = 0.0f;
+
+    //            // Calculate the frame to show
+    //            int currentFrame = numFrames - 1 - static_cast<int>((totalTime / frameDuration)) % numFrames;
+
+    //            // Set the texture offset (u_TextureOffset) based on the current frame
+    //            float frameWidth = 1.0f / numFrames;
+    //            float texCoordX = frameWidth * currentFrame;
+
+    //            // Clear the previous frame by setting the texture offset to show only the current frame
+    //            shader.SetUniform1f("u_TextureOffset", texCoordX);
+
+    //            textureA.Bind(0);
+    //            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+    //            shader.SetUniform1i("u_Texture", 0);
+    //            // shader.SetUniformMat4f("u_MVP", mvpMatrix);
+    //            glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+    //            shader.SetUniformMat4f("u_MVP", result);
+
+    //            va.Bind();
+    //            ib.Bind();
+
+    //            // Render the entity
+    //            renderer.Draw(va, ib, shader);
+    //            shader.Unbind();
+
+    //            // Update the total time for the animation
+    //            totalTime += 1.0f / 60.0f; // Assuming a 60 FPS frame rate
+
+    //            // Ensure the animation loops
+    //            if (totalTime >= numFrames * frameDuration) 
+    //            {
+    //                totalTime = 0.0f;
+    //            }
+    //        }
+    //    }
+    //}
+void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+{
+    shader.Bind();
+    va.Bind();
+    ib.Bind();
+    textureA.Bind(0);
+
+    for (const auto& entityPair : *entities)
     {
-        shader.Bind();
+        Entity* entity = entityPair.second.get();
+       
+        // Check if the entity has an AnimationComponent
+        if (entity->HasComponent(ComponentType::Animation))
+        {
+            AnimationComponent* animationComponent = dynamic_cast<AnimationComponent*>(entity->GetComponent(ComponentType::Animation));
 
-        // Calculate the current frame index based on time
-        static const float frameDuration = 1.0f; // 1 second per frame
-        static const int numFrames = 6;
-        static float totalTime = 0.0f;
+           
+            animationComponent->UpdateAnimation(1.0f / 60.0f); // Assuming a 60 FPS frame rate
+            int currentFrame = animationComponent->GetCurrentFrame();
 
-        // Calculate the frame to show
-        int currentFrame = numFrames - 1 - static_cast<int>((totalTime / frameDuration)) % numFrames;
+            // Set the texture offset based on the current frame
+            float frameWidth = 1.0f / animationComponent->GetNumFrames();
+            float texCoordX = frameWidth * currentFrame;
+            shader.SetUniform1f("u_TextureOffset", texCoordX);
 
-        // Set the texture offset (u_TextureOffset) based on the current frame
-        float frameWidth = 1.0f / numFrames;
-        float texCoordX = frameWidth * currentFrame;
+          
+            currentFrame = (currentFrame + 1) % animationComponent->GetNumFrames();
+            animationComponent->Play(); //restart
 
-        // Clear the previous frame by setting the texture offset to show only the current frame
-        shader.SetUniform1f("u_TextureOffset", texCoordX);
+            std::cout << "Animation: "  << std::endl;
+        }
+        else
+        {
+            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+            shader.SetUniform1i("u_Texture", 0);
+            // shader.SetUniformMat4f("u_MVP", mvpMatrix);
+            glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+            shader.SetUniformMat4f("u_MVP", result);
+        }
 
-        textureA.Bind(0);
-        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-        shader.SetUniform1i("u_Texture", 0);
-       // shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        // Set other shader uniforms (e.g., u_MVP)
         glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
         shader.SetUniformMat4f("u_MVP", result);
 
-        va.Bind();
-        ib.Bind();
-
         // Render the entity
         renderer.Draw(va, ib, shader);
-        shader.Unbind();
-
-        // Update the total time for the animation
-        totalTime += 1.0f / 60.0f; // Assuming a 60 FPS frame rate
-
-        // Ensure the animation loops
-        if (totalTime >= numFrames * frameDuration) {
-            totalTime = 0.0f;
-        }
     }
+    
+
+    // Unbind the shader after rendering all entities
+    shader.Unbind();
+}
+
+
 
 
 
@@ -534,7 +601,7 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        std::cout << "S Key State: " << currentSState << std::endl;
+       // std::cout << "S Key State: " << currentSState << std::endl;
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -598,7 +665,8 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            RenderTexturedEntity(mvpA);
+                            RenderTexturedEntity(mvpA, entities);
+
                             RenderLines(mvpA);
                            /* std::cout << "Texmat4: " << std::endl;
                             for (int i = 0; i < 4; i++) {
