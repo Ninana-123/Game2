@@ -31,6 +31,7 @@ namespace Engine {
 		void OnUpdate();
 		void OnEvent(Event& event);
 		inline Entity* TargetEntityGetter() { return targetEntity; }
+		void DisplaySystemTimes();
 		int selectedEntityIndex = 1;
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);

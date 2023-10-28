@@ -96,6 +96,8 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Body.cpp">
       <Filter>Systems\Physics</Filter>
+    <ClCompile Include="Src\Game2\ErrorHandler.cpp">
+      <Filter>Base\Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +250,8 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Body.h">
       <Filter>Systems\Physics</Filter>
+    <ClInclude Include="Src\Game2\ErrorHandler.h">
+      <Filter>Base\Logger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

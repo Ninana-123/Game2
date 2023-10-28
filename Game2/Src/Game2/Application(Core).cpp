@@ -36,7 +36,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
-extern double dt = 0.0;  // Time difference between frames (delta time)
+double loopTime = 0.0;  // Definition of loopTime
+double dt = 0.0;
+
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -52,7 +54,6 @@ namespace Engine
     SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
     SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
 
-    Engine::Logger logger;
     Engine::Input InputHandler;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
@@ -99,14 +100,14 @@ namespace Engine
     {
         // Initialize GLFW
         if (!glfwInit()) {
-            logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
+            Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
             return; // Handle the initialization error
         }
 
         // Create the window
         m_Window = std::unique_ptr<Window>(Window::Create(windowProps));
         if (!m_Window) {
-            logger.Log(Engine::LogLevel::Error, "Failed to create the Window");
+            Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
 
@@ -116,16 +117,14 @@ namespace Engine
         // Systems Manager Initialization: initializes TestSystem and Graphics
         assetManager = std::make_shared<Engine::AssetManager>();
         assetManager->loadTexture("Background", "Resource/Texture/Background.png");
-        logger.Log(Engine::LogLevel::Error, "Test");
         systemsManager = std::make_shared<SystemsManager>(assetManager);
         systemsManager->Initialize();
-        logger.Log(Engine::LogLevel::Error, "Test");
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(&EM);
-        logger.Log(LogLevel::Debug, "Loading Scene");
+        Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
-        logger.Log(LogLevel::Debug, "Scene Loaded");
+        Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         if (EM.GetEntity(1) != nullptr) {
             targetEntity = EM.GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
@@ -175,11 +174,12 @@ namespace Engine
     *************************************************************************/
     void Application::Run()
     {
-        logger.Log(Engine::LogLevel::App, "Application Running.");
+        Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
 
         while (m_Running)
         {
+            auto loopStartTime = std::chrono::high_resolution_clock::now();
             // Update input, window, delta time, and window title
             InputHandler.Update();
             m_Window->OnUpdate();
@@ -376,11 +376,22 @@ namespace Engine
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
+            auto loopEndTime = std::chrono::high_resolution_clock::now();
+            loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
 
             m_ImGuiWrapper->OnUpdate();
+            systemsManager->ResetSystemTimers();
+
 
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
+
+            // Reset system timers for the next loop iteration
+            if (InputHandler.IsKeyTriggered(KEY_F12)) // Use any key you like, for this example I'm using 'C'
+            {
+                int* crashPointer = nullptr;
+                *crashPointer = 42; // This will cause a read access violation, simulating a crash
+            }
         }
             
     }
