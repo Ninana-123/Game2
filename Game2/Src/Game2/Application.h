@@ -18,6 +18,10 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AppEvent.h"
 #include "AssetManager.h"
 
+extern double loopTime;
+extern double dt;
+
+
 
 namespace Engine
 {

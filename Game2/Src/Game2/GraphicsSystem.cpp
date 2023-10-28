@@ -322,8 +322,8 @@ namespace Engine
         shader.Bind();
 
         double currentTime = glfwGetTime();
-        double elapsedTime = currentTime - programStartTime;
-        int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+        double totalTime = currentTime - programStartTime;
+        int textureIndex = static_cast<int>(totalTime / 3.0) % 2;
 
         if (textureIndex)
         {
@@ -444,7 +444,7 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        std::cout << "S Key State: " << currentSState << std::endl;
+        //std::cout << "S Key State: " << currentSState << std::endl;
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)

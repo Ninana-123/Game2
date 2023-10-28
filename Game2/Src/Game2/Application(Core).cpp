@@ -36,7 +36,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
-extern double dt = 0.0;  // Time difference between frames (delta time)
+double loopTime = 0.0;  // Definition of loopTime
+double dt = 0.0;
+
 
 namespace Engine
 {
@@ -177,6 +179,7 @@ namespace Engine
 
         while (m_Running)
         {
+            auto loopStartTime = std::chrono::high_resolution_clock::now();
             // Update input, window, delta time, and window title
             InputHandler.Update();
             m_Window->OnUpdate();
@@ -325,11 +328,17 @@ namespace Engine
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
+            auto loopEndTime = std::chrono::high_resolution_clock::now();
+            loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
 
             m_ImGuiWrapper->OnUpdate();
+            systemsManager->ResetSystemTimers();
+
 
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
+
+            // Reset system timers for the next loop iteration
         }
             
     }
