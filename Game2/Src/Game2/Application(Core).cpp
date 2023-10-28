@@ -60,6 +60,7 @@ namespace Engine
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     GraphicsSystem graphicsSystem;
     Engine::EntityManager EM;
+    Engine::PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
@@ -113,17 +114,21 @@ namespace Engine
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
-        // Systems Manager Initialization: initializes TestSystem and Graphics
+        // Systems Manager & Asset Manager Initialization
         assetManager = std::make_shared<Engine::AssetManager>();
         assetManager->loadTexture("Background", "Resource/Texture/Background.png");
         systemsManager = std::make_shared<SystemsManager>(assetManager);
         systemsManager->Initialize();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(&EM);
+        loader = std::make_unique<Engine::Loader>(&EM, &PM);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
+        Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
+        loader->LoadPrefabs("Resource/Prefabs.txt");
+        Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
+        
         if (EM.GetEntity(1) != nullptr) {
             targetEntity = EM.GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data

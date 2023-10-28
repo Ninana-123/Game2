@@ -17,6 +17,18 @@ namespace Engine
 			std::cout << "Failed to add new component." << std::endl;
 		}
 	}
+
+	Component* Prefab::GetComponent(ComponentType type) const
+	{
+		auto it = components.find(type);
+
+		if (it != components.end())
+		{
+			return it->second.get();
+		}
+		else return nullptr;
+	}
+
 	std::unordered_map<ComponentType, Component*> Prefab::GetComponents() const
 	{
 		std::unordered_map<ComponentType, Component*> result;
@@ -26,7 +38,7 @@ namespace Engine
 		}
 
 		return result;
-
 	}
+	
 }
 

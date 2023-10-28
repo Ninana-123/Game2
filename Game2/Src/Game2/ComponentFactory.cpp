@@ -70,6 +70,27 @@ namespace Engine
         }
         return nullptr; // Handle unknown component types or add appropriate error handling
     }
+
+    ComponentType ComponentFactory::StringToComponentType(const std::string& typeString)
+    {
+        // Map component type strings to enum values
+        static std::unordered_map<std::string, ComponentType> typeMap = 
+        {
+            {"Transform", ComponentType::Transform  },
+            {"Collision", ComponentType::Collision  },
+            {"Physics",   ComponentType::Physics    },
+            {"Texture",   ComponentType::Texture    },
+        };
+
+        // Find the corresponding enum value for the given string
+        auto it = typeMap.find(typeString);
+        if (it != typeMap.end()) {
+            return it->second;
+        }
+
+        // If the type string is not found, return ComponentType::Unknown
+        return ComponentType::Unknown;
+    }
 }
 
 

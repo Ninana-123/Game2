@@ -19,11 +19,6 @@ namespace Engine
 {
 	EntityID EntityManager::nextEntityID = 0;
 
-	EntityManager::~EntityManager()
-	{
-
-	}
-
 	EntityID EntityManager::CreateEntity()
 	{
 		EntityID entityID = nextEntityID++;

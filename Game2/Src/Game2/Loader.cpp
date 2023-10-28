@@ -78,7 +78,9 @@ namespace Engine {
 
             std::string componentType;
             while (sceneFile >> componentType && componentType != "EndEntity") {
-                Component* component = entityPtr->Create(componentType);
+                ComponentType type = ComponentFactory::StringToComponentType(componentType);
+                entityPtr->AddNewComponent(type);
+                Component* component = entityPtr->GetComponent(type);
                 if (component) {
                     component->Deserialize(sceneFile);
                 }
@@ -91,4 +93,37 @@ namespace Engine {
 
         sceneFile.close();
     }
+    
+    void Loader::LoadPrefabs(const std::string& filepath)
+    {
+        std::ifstream PrefabFile(filepath);
+        if (!PrefabFile.is_open()) {
+            std::cerr << "Error: Could not open Prefab file " << filepath << "\n";
+            return;
+        }
+
+        int prefabCount;
+        PrefabFile >> prefabCount;
+        for (int i = 0; i < prefabCount; ++i) {
+            PrefabID prefab = prefabManager->CreatePrefab();
+            Prefab* prefabPtr = prefabManager->GetPrefab(prefab);
+            PrefabFile >> prefabPtr->name;
+
+            std::string componentType;
+            while (PrefabFile >> componentType && componentType != "EndPrefab") {
+                ComponentType type = ComponentFactory::StringToComponentType(componentType);
+                prefabPtr->AddNewComponent(type);
+                Component* component = prefabPtr->GetComponent(type);
+                if (component) {
+                    component->Deserialize(PrefabFile);
+                }
+                else {
+                    std::cerr << "Unknown component type: " << componentType << std::endl;
+                }
+            }
+            std::cout << "Prefab: " << prefabPtr->name << " created\n";
+        }
+
+    }
+    
 }
