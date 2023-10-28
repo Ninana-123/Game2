@@ -91,6 +91,7 @@
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
       <Filter>ImGuiWrapper</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">

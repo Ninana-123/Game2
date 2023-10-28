@@ -32,6 +32,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 
+
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
@@ -45,8 +46,10 @@ namespace Engine
 
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
-    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
+    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01");
+    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02");
+    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03");
+    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04");
 
     Engine::Logger logger;
     Engine::Input InputHandler;
@@ -124,10 +127,14 @@ namespace Engine
 
         // Initialize audio files and load sounds
         audioEngine.init();
-        audioEngine.loadSound(sound);
-        audioEngine.loadSound(sound2);
-        sound.setLoop();
-        sound2.setLoop();
+        audioEngine.loadSound(sound_BGM);
+        audioEngine.loadSound(sound_Win);
+        audioEngine.loadSound(sound_Arrow);
+        audioEngine.loadSound(sound_Slash);
+        sound_BGM.setLoop();
+        sound_Win.setLoop();
+        sound_Arrow.setLoop();
+        sound_Slash.setLoop();
 
         // Initialize ImGuiWrapper
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
@@ -158,6 +165,7 @@ namespace Engine
     {
         logger.Log(Engine::LogLevel::App, "Application Running.");
 
+        audioEngine.playSound(sound_BGM);
 
         while (m_Running)
         {
@@ -169,26 +177,43 @@ namespace Engine
 
             // Audio handling based on key input
             if (currentlyPlayingSound == false) {
-                if (InputHandler.IsKeyTriggered(KEY_9)) {
-                    audioEngine.playSound(sound);
+                if (InputHandler.IsKeyTriggered(KEY_3)) {
+                    audioEngine.playSound(sound_Win);
                     currentlyPlayingSound = true;
                 }
             }
 
             if (currentlyPlayingSound == false) {
-                if (InputHandler.IsKeyTriggered(KEY_0)) {
-                    audioEngine.playSound(sound2);
+                if (InputHandler.IsKeyTriggered(KEY_5)) {
+                    audioEngine.playSound(sound_Arrow);
                     currentlyPlayingSound = true;
                 }
             }
 
-            if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound)) {
-                audioEngine.stopSound(sound);
+            if (currentlyPlayingSound == false) {
+                if (InputHandler.IsKeyTriggered(KEY_7)) {
+                    audioEngine.playSound(sound_Slash);
+                    currentlyPlayingSound = true;
+                }
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_9) && audioEngine.soundIsPlaying(sound_BGM)) {
+                audioEngine.stopSound(sound_BGM);
                 currentlyPlayingSound = false;
             }
 
-            if (InputHandler.IsKeyTriggered(KEY_7) && audioEngine.soundIsPlaying(sound2)) {
-                audioEngine.stopSound(sound2);
+            if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
+                audioEngine.stopSound(sound_Win);
+                currentlyPlayingSound = false;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_6) && audioEngine.soundIsPlaying(sound_Arrow)) {
+                audioEngine.stopSound(sound_Arrow);
+                currentlyPlayingSound = false;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound_Slash)) {
+                audioEngine.stopSound(sound_Slash);
                 currentlyPlayingSound = false;
             }
 
@@ -291,6 +316,8 @@ namespace Engine
                 }
 
             }
+
+            audioEngine.update();
 
             //System Updating
             SM.UpdateSystems(EM.GetEntities());
