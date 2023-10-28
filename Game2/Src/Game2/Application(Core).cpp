@@ -39,6 +39,8 @@ double previousTime = glfwGetTime();  // Previous time for FPS calculation
 double loopTime = 0.0;  // Definition of loopTime
 double dt = 0.0;
 
+// Variable for last key pressed
+int lastKeyPressed = 0;
 
 namespace Engine
 {
@@ -241,27 +243,73 @@ namespace Engine
             // Add a flag to keep track of scaling direction
             bool scalingUp = false;
             bool scalingDown = false;
+
+            // Variables for last position
+            float lastPositionX = transformTest->position.x;
+            float lastPositionY = transformTest->position.y;
+
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
-                if (InputHandler.IsKeyPressed(KEY_UP))
-                {
-                    transformTest->position.y += transformation;
-                    //physicsTest->velocityY = 10.0f;
+                if (collisionTest->isColliding) {
+                    if (lastKeyPressed == 1) {
+                        transformTest->position.y = lastPositionY - 20.f;
+                    }
+                    if (lastKeyPressed == 2) {
+                        transformTest->position.y = lastPositionY + 20.f;
+                    }
+                    if (lastKeyPressed == 3) {
+                        transformTest->position.x = lastPositionX + 20.f;
+                    }
+                    if (lastKeyPressed == 4) {
+                        transformTest->position.x = lastPositionX - 20.f;
+                    }
                 }
-                else if (InputHandler.IsKeyPressed(KEY_DOWN))
+
+                if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.y -= transformation;
-                    //physicsTest->velocityY = -10.0f;
+                    //lastPositionY = transformTest->position.y;
+                    lastPositionY += transformation;
+                    transformTest->position.y = lastPositionY;
+                    if (physicsTest->velocity.y <= 0.0f) {
+                        physicsTest->velocity.y = 1.0f;
+                    }
+                    lastKeyPressed = 1;
                 }
-                else if (InputHandler.IsKeyPressed(KEY_LEFT))
+
+                else if (InputHandler.IsKeyPressed(KEY_DOWN) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.x -= transformation;
-                    //physicsTest->velocityX = -10.0f;
+                    //lastPositionY = transformTest->position.y;
+                    lastPositionY -= transformation;
+                    transformTest->position.y = lastPositionY;
+                    // transformTest->position.y -= transformation;
+                    if (physicsTest->velocity.y >= -0.0f) {
+                        physicsTest->velocity.y = -1.0f;
+                    }
+                    lastKeyPressed = 2;
                 }
-                else if (InputHandler.IsKeyPressed(KEY_RIGHT))
+
+                else if (InputHandler.IsKeyPressed(KEY_LEFT) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.x += transformation;
-                    //physicsTest->velocityX = 10.0f;
+                    //lastPositionX = transformTest->position.x;
+                    lastPositionX -= transformation;
+                    transformTest->position.x = lastPositionX;
+                    //transformTest->position.x -= transformation;
+                    if (physicsTest->velocity.x >= -0.0f) {
+                        physicsTest->velocity.x = -1.0f;
+                    }
+                    lastKeyPressed = 3;
+                }
+
+                else if (InputHandler.IsKeyPressed(KEY_RIGHT) && !(collisionTest->isColliding))
+                {
+                    //lastPositionX = transformTest->position.x;
+                    lastPositionX += transformation;
+                    transformTest->position.x = lastPositionX;
+                    //transformTest->position.x += transformation;
+                    if (physicsTest->velocity.x <= 0.0f) {
+                        physicsTest->velocity.x = 1.0f;
+                    }
+                    lastKeyPressed = 4;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_R))
                 {

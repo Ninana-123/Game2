@@ -97,6 +97,9 @@
     <ClCompile Include="Src\Game2\ErrorHandler.cpp">
       <Filter>Base\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Body.cpp">
+      <Filter>Systems\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -248,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\ErrorHandler.h">
       <Filter>Base\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Body.h">
+      <Filter>Systems\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
