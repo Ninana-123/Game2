@@ -1,10 +1,10 @@
-2023-10-28 04:56:21[DEBUG] GLEW s2023-10-28 04:56:21[ERROR] Test
-2023-10-28 04:56:21[DEBUG] Loading Scene
-2023-10-28 04:56:21[DEBUG] Scene Loaded
-2023-10-28 04:56:21[APP] Application Running.
-6:21[DEBUG] GLEW successfully initialized
-2023-10-28 04:56:21[DEBUG] Loading Shader Set 1...
-2023-10-28 04:56:21[DEBUG] Shader compilation and linking successful.
-2023-10-28 04:56:21[DEBUG] GLEW successfully initialized
-2023-10-28 04:56:21[DEBUG] Loading Shader Set 1...
-2023-10-28 04:56:21[DEBUG] Shader compilation and linking successful.
+2023-10-29 00:47:36[DEBUG] GLEW s2023-10-29 00:47:36[ERROR] Test
+2023-10-29 00:47:36[DEBUG] Loading Scene
+2023-10-29 00:47:36[DEBUG] Scene Loaded
+2023-10-29 00:47:36[APP] Application Running.
+7:36[DEBUG] GLEW successfully initialized
+2023-10-29 00:47:36[DEBUG] Loading Shader Set 1...
+2023-10-29 00:47:36[DEBUG] Shader compilation and linking successful.
+2023-10-29 00:47:36[DEBUG] GLEW successfully initialized
+2023-10-29 00:47:36[DEBUG] Loading Shader Set 1...
+2023-10-29 00:47:36[DEBUG] Shader compilation and linking successful.

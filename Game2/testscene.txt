@@ -1,10 +1,4 @@
-4
-Transform 
-Position: 1 0
-ScaleX: 1.0
-ScaleY: 1.0
-Rotation: 0
-EndEntity
+1
 Transform 
 Position: 200 200
 ScaleX: 1.0
@@ -20,56 +14,4 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
-Animation
-Frames: 0 1 2 3 4 5 
-FrameDurations: 100 100 100 100 100 100 
-CurrentFrame: 0  
-FrameTimer: 50.0  
-Playing: 1  
-EndEntity
-Transform 
-Position: 100 100
-ScaleX: 1.0
-ScaleY: 1.0
-Rotation: 0
-Collision
-c_Width: 45 
-c_Height: 45 
-isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
-Physics
-Velocity: 0 0
-Animation
-Frames: 0 1 2 3 4 5 
-FrameDurations: 100 100 100 100 100 100 
-CurrentFrame: 0  
-FrameTimer: 50.0  
-Playing: 1 
-EndEntity
-Transform 
-Position: 300 300
-ScaleX: 1.0
-ScaleY: 1.0
-Rotation: 0
-Collision
-c_Width: 45 
-c_Height: 45 
-isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
-Physics
-Velocity: 0 0
-Animation
-Frames: 0 1 2 3 4 5 
-FrameDurations: 100 100 100 100 100 100 
-CurrentFrame: 0  
-FrameTimer: 50.0  
-Playing: 1 
-EndEntity
-
 
