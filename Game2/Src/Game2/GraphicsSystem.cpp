@@ -22,6 +22,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
+    Logger GraphicsLogger;
+
     /*!
    * \brief GraphicsSystem constructor.
    *
@@ -51,12 +53,12 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            Logger::GetInstance().Log(LogLevel::Error, "GLEW failed to initialize: "
+            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " 
                 + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
-            Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
+            GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
     /*!
@@ -204,13 +206,13 @@ namespace Engine
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
-            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
         else if (shader.GetCurrentShaderSet() == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
-            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
+            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
         else
         {
@@ -231,7 +233,7 @@ namespace Engine
             if (shaderProgram != 0)
             {
                 // Shader compilation and linking successful
-                Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
+                GraphicsLogger.Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
                 // Store the shader program ID in the shader class based on the shader set being used
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
@@ -266,7 +268,7 @@ namespace Engine
     {
         if (!textureA.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
         {
-            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture A.");
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
         }
         else {
@@ -276,7 +278,7 @@ namespace Engine
 
         if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
         {
-            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture B.");
+            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
             // Handle the error as needed, e.g., return or throw an exception
         }
         else {
@@ -320,8 +322,8 @@ namespace Engine
         shader.Bind();
 
         double currentTime = glfwGetTime();
-        double totalTime = currentTime - programStartTime;
-        int textureIndex = static_cast<int>(totalTime / 3.0) % 2;
+        double elapsedTime = currentTime - programStartTime;
+        int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
 
         if (textureIndex)
         {
@@ -442,7 +444,7 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        //std::cout << "S Key State: " << currentSState << std::endl;
+        std::cout << "S Key State: " << currentSState << std::endl;
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -467,7 +469,7 @@ namespace Engine
                     if (!transform)
                     {
                         // Log the error using your existing Logger
-                        Logger::GetInstance().Log(LogLevel::Error, "Transform component not found for an entity.");
+                        GraphicsLogger.Log(LogLevel::Error, "Transform component not found for an entity.");
                         continue; // Continue processing other entities
                     }
 
@@ -519,7 +521,7 @@ namespace Engine
                 }
                 catch (const std::exception& ex)
                 {
-                    Logger::GetInstance().Log(LogLevel::Error, ("Graphics error: " + std::string(ex.what())).c_str());
+                    GraphicsLogger.Log(LogLevel::Error, "Graphics error: " + std::string(ex.what()));
                 }
             }
         }

@@ -18,6 +18,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "InputEvent.h"
 
 namespace Engine {
+	// Initialize a logger specific to the window
+	Engine::Logger WindowLogger;
+
 	// Static flag to check if GLFW is initialized
 	static bool s_GLFWInitialized = false;
 
@@ -31,7 +34,7 @@ namespace Engine {
 	*************************************************************************/
 	static void GLFWErrorCallback(int error, const char* description) {
 		UNREFERENCED_PARAMETER(error);
-		Logger::GetInstance().Log(Engine::LogLevel::Error, description);
+		WindowLogger.Log(Engine::LogLevel::Error, description);
 	}
 
 	/*!**********************************************************************
@@ -80,14 +83,14 @@ namespace Engine {
 		m_Data.Height = props.Height;
 
 		// Log window creation information
-		Logger::GetInstance().Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
+		WindowLogger.Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
 
 		// Initialize GLFW if not already initialized
 		if (!s_GLFWInitialized) {
 			int success = glfwInit();
 			glfwSetErrorCallback(GLFWErrorCallback);
 			if (!success) {
-				Logger::GetInstance().Log(LogLevel::Error, "Failed to initialize GLFW.");
+				WindowLogger.Log(LogLevel::Error, "Failed to initialize GLFW.");
 				return;
 			}
 			s_GLFWInitialized = true;
@@ -118,12 +121,12 @@ namespace Engine {
 			data.Width = width;
 			data.Height = height;
 
-			WindowResizeEvent event(width, height);
+			WindowResizeEvent event(WindowLogger, width, height);
 			data.EventCallback(event);
 			});
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			WindowCloseEvent event;
+			WindowCloseEvent event(WindowLogger);
 			data.EventCallback(event);
 
 			});
@@ -134,18 +137,18 @@ namespace Engine {
 			switch (action) {
 			case GLFW_PRESS:
 			{
-				KeyPressedEvent event(key, 0);
+				KeyPressedEvent event(WindowLogger, key, 0);
 				data.EventCallback(event);
 				break;
 			}
 			case GLFW_RELEASE:
 			{
-				KeyReleasedEvent event(key);
+				KeyReleasedEvent event(WindowLogger, key);
 				data.EventCallback(event);
 				break;
 			}
 			case GLFW_REPEAT: {
-				KeyPressedEvent event(key, 1);
+				KeyPressedEvent event(WindowLogger, key, 1);
 				data.EventCallback(event);
 				break;
 			}
@@ -154,7 +157,7 @@ namespace Engine {
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			KeyTypedEvent event(keycode);
+			KeyTypedEvent event(WindowLogger, keycode);
 			data.EventCallback(event);
 			});
 
@@ -163,12 +166,12 @@ namespace Engine {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
 			case GLFW_PRESS: {
-				MouseButtonPressedEvent event(button);
+				MouseButtonPressedEvent event(WindowLogger, button);
 				data.EventCallback(event);
 				break;
 			}
 			case GLFW_RELEASE: {
-				MouseButtonReleasedEvent event(button);
+				MouseButtonReleasedEvent event(WindowLogger, button);
 				data.EventCallback(event);
 				break;
 			}
@@ -177,13 +180,13 @@ namespace Engine {
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			MouseScrolledEvent event((float)xOffset, (float)yOffset);
+			MouseScrolledEvent event(WindowLogger, (float)xOffset, (float)yOffset);
 			data.EventCallback(event);
 			});
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			MouseMovedEvent event((float)xPos, (float)yPos);
+			MouseMovedEvent event(WindowLogger, (float)xPos, (float)yPos);
 			data.EventCallback(event);
 			});
 

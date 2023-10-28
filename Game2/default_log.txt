@@ -8,17 +8,3 @@
 2023-10-28 22:38:59[DEBUG] GLEW successfully initialized
 2023-10-28 22:38:59[DEBUG] Loading Shader Set 1...
 2023-10-28 22:38:59[DEBUG] Shader compilation and linking successful.
-2023-10-28 22:05:24 [INFO] Creating Window Game2 Engine (1280, 720)
-2023-10-28 22:05:24 [DEBUG] GLEW successfully initialized
-2023-10-28 22:05:24 [DEBUG] Loading Shader Set 1...
-2023-10-28 22:05:24 [DEBUG] Shader compilation and linking successful.
-2023-10-28 22:05:24 [DEBUG] Loading Scene
-2023-10-28 22:05:24 [DEBUG] Scene Loaded
-2023-10-28 22:05:24 [DEBUG] GLEW successfully initialized
-2023-10-28 22:05:24 [DEBUG] Loading Shader Set 1...
-2023-10-28 22:05:24 [DEBUG] Shader compilation and linking successful.
-2023-10-28 22:05:24 [DEBUG] GLEW successfully initialized
-2023-10-28 22:05:24 [DEBUG] Loading Shader Set 1...
-2023-10-28 22:05:24 [DEBUG] Shader compilation and linking successful.
-2023-10-28 22:05:24 [APP] Application Running.
-2023-10-28 22:05:25 [ERROR] Unhandled exception: Access violation

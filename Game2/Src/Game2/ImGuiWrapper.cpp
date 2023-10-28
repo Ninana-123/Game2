@@ -23,7 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <windows.h>
 #include "Matrix3x3Lib.h"
 #include "Input.h"
-#include "SystemsManager.h"
+
 
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
@@ -333,7 +333,6 @@ namespace Engine {
 					ImGui::Text("No Keys Pressed");
 				}
 			}
-			DisplaySystemTimes();
 			ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
 			if (entityManager)
@@ -378,7 +377,7 @@ namespace Engine {
 				}
 
 				if (selectedEntityIndex >= entityNames.size()) {
-					selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
+					selectedEntityIndex = entityNames.size() - 1;
 				}
 
 				if (!entityNames.empty() && selectedEntityIndex >= 0)
@@ -448,7 +447,7 @@ namespace Engine {
 						}
 						else if (selectedEntityIndex >= entityNames.size())
 						{
-							selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+							selectedEntityIndex = entityNames.size() - 1; // Adjust the selected index
 							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 						}
 						else
@@ -719,17 +718,6 @@ namespace Engine {
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
 		return false;
-	}
-
-	void ImGuiWrapper::DisplaySystemTimes() {
-		SystemsManager& systemsManager = SystemsManager::GetInstance();
-		auto systemTimes = systemsManager.DisplaySystemTimes(loopTime);
-
-		if (ImGui::CollapsingHeader("System Times")) {
-			for (const auto& [systemName, percentage] : systemTimes) {
-				ImGui::Text("%s: %.2f%% of the total game loop time", systemName.c_str(), percentage);
-			}
-		}
 	}
 
 }
