@@ -16,12 +16,13 @@ Technology is prohibited.
 
 #include "pch.h"
 #include "CollisionSystem.h"
+#include "CollisionSystem.h"
 #include "Entity.h"
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 
 
-float dt = 0.0;  // Time difference between frames (delta time)
+extern float dt = 0.0;  // Time difference between frames (delta time)
 
 /*!*****************************************************************
 

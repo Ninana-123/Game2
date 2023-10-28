@@ -71,11 +71,14 @@ namespace Engine
                 {
                     CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
             
-                    if (collisionComponent->isColliding)
+                    if ((collisionComponent->isColliding))
                     {
                         //Update position to previous position (Stopping)
                         transformComponent->position.x = previousX;
                         transformComponent->position.y = previousY;
+                        //transformComponent->position.x = 0;
+                        //transformComponent->position.y = 0;
+
 
                         physicsComponent->velocity.x = 0.0f;
                         physicsComponent->velocity.y = 0.0f;
