@@ -19,8 +19,7 @@ namespace Engine
 	{
 	public:
 		
-		float velocityX = 0.0f;
-		float velocityY = 0.0f;
+		VECTORMATH::Vector2D velocity = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************
 
@@ -46,10 +45,16 @@ namespace Engine
 		Component* Clone() const override
 		{
 			PhysicsComponent* cloneComponent = new PhysicsComponent();
-			cloneComponent->velocityX = velocityX;
-			cloneComponent->velocityY = velocityY;
+			cloneComponent->velocity = velocity;
 			
 			return cloneComponent;
+		}
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "Velocity: " << velocity.x << ' ' << velocity.y << '\n';
+		}
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> velocity.x >> velocity.y; // Assuming format is "Position: x y"
 		}
 	};
 }

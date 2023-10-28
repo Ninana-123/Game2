@@ -31,12 +31,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
 #include "Loader.h"
+#include "AssetManager.h"
 
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
-extern double dt = 0.0;  // Time difference between frames (delta time)
+double loopTime = 0.0;  // Definition of loopTime
+double dt = 0.0;
+
 
 namespace Engine
 {
@@ -51,14 +54,13 @@ namespace Engine
     SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03");
     SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04");
 
-    Engine::Logger logger;
     Engine::Input InputHandler;
-    GraphicsSystem graphicsSystem;
     std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
 
     // Entity-related instances and properties
+    std::shared_ptr<SystemsManager> systemsManager = nullptr;
+    GraphicsSystem graphicsSystem;
     Engine::EntityManager EM;
-    Engine::SystemsManager SM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
@@ -98,14 +100,14 @@ namespace Engine
     {
         // Initialize GLFW
         if (!glfwInit()) {
-            logger.Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
+            Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
             return; // Handle the initialization error
         }
 
         // Create the window
         m_Window = std::unique_ptr<Window>(Window::Create(windowProps));
         if (!m_Window) {
-            logger.Log(Engine::LogLevel::Error, "Failed to create the Window");
+            Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
 
@@ -113,18 +115,24 @@ namespace Engine
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
         // Systems Manager Initialization: initializes TestSystem and Graphics
-        SM.Initialize();
+        assetManager = std::make_shared<Engine::AssetManager>();
+        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
+        systemsManager = std::make_shared<SystemsManager>(assetManager);
+        systemsManager->Initialize();
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(&EM);
-        logger.Log(LogLevel::Debug, "Loading Scene");
+        Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("testscene.txt");
-        logger.Log(LogLevel::Debug, "Scene Loaded");
-        targetEntity = EM.GetEntity(1);
-        transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-        collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
-        physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
-
+        Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
+        if (EM.GetEntity(1) != nullptr) {
+            targetEntity = EM.GetEntity(1);
+            transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
+            physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
+        }
+        else
+            targetEntity = EM.GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
         audioEngine.loadSound(sound_BGM);
@@ -140,7 +148,14 @@ namespace Engine
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
+
+        assetManager = std::make_shared<Engine::AssetManager>();
+        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
+
+        systemsManager = std::make_shared<SystemsManager>(assetManager);
+        systemsManager->Initialize();
     }
+
     /*!**********************************************************************
     \brief
     Event handler for processing events
@@ -163,12 +178,13 @@ namespace Engine
     *************************************************************************/
     void Application::Run()
     {
-        logger.Log(Engine::LogLevel::App, "Application Running.");
+        Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
         audioEngine.playSound(sound_BGM);
 
         while (m_Running)
         {
+            auto loopStartTime = std::chrono::high_resolution_clock::now();
             // Update input, window, delta time, and window title
             InputHandler.Update();
             m_Window->OnUpdate();
@@ -220,18 +236,29 @@ namespace Engine
             //Systems State Toggle Test
             if (InputHandler.IsKeyTriggered(KEY_1))
             {
-                SM.ToggleSystemState<CollisionSystem>();
+                systemsManager->ToggleSystemState<CollisionSystem>();
             }
 
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
-                SM.ToggleSystemState<PhysicsSystem>();
-            }          
+                systemsManager->ToggleSystemState<PhysicsSystem>();
+            }
 
-            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-            collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
-            physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+            if (m_ImGuiWrapper->TargetEntityGetter())
+            {
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+                    transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+                }
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
+                    collisionTest = dynamic_cast<CollisionComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+                }
+                if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Physics)) {
+                    physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
+                }
+            }
             
+            
+
             // Define a threshold for the minimum and maximum scales
             const float minScale = 0.5f; // Adjust this value as needed
             const float maxScale = 2.0f; // Adjust this value as needed
@@ -243,22 +270,22 @@ namespace Engine
             {
                 if (InputHandler.IsKeyPressed(KEY_UP))
                 {
-                    transformTest->y += transformation;
+                    transformTest->position.y += transformation;
                     //physicsTest->velocityY = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_DOWN))
                 {
-                    transformTest->y -= transformation;
+                    transformTest->position.y -= transformation;
                     //physicsTest->velocityY = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_LEFT))
                 {
-                    transformTest->x -= transformation;
+                    transformTest->position.x -= transformation;
                     //physicsTest->velocityX = -10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_RIGHT))
                 {
-                    transformTest->x += transformation;
+                    transformTest->position.x += transformation;
                     //physicsTest->velocityX = 10.0f;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_R))
@@ -311,8 +338,8 @@ namespace Engine
                 }
                 else
                 {
-                    physicsTest->velocityX = 0.0f;
-                    physicsTest->velocityY = 0.0f;
+                    physicsTest->velocity.x = 0.0f;
+                    physicsTest->velocity.y = 0.0f;
                 }
 
             }
@@ -320,14 +347,29 @@ namespace Engine
             audioEngine.update();
 
             //System Updating
-            SM.UpdateSystems(EM.GetEntities());
+            systemsManager->UpdateSystems(EM.GetEntities());
 
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
-            m_ImGuiWrapper->OnUpdate();
+            auto loopEndTime = std::chrono::high_resolution_clock::now();
+            loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
 
+            m_ImGuiWrapper->OnUpdate();
+            systemsManager->ResetSystemTimers();
+
+
+            if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
+                m_Running = false;
+
+            // Reset system timers for the next loop iteration
+            if (InputHandler.IsKeyTriggered(KEY_F12)) // Use any key you like, for this example I'm using 'C'
+            {
+                int* crashPointer = nullptr;
+                *crashPointer = 42; // This will cause a read access violation, simulating a crash
+            }
         }
+            
     }
     /*!**********************************************************************
     \brief
@@ -357,6 +399,7 @@ namespace Engine
     void Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
+
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
     /*!**********************************************************************

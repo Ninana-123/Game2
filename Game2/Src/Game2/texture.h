@@ -20,6 +20,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Renderer.h"
 #include <string>
 
+
 class Texture
 {
 private:

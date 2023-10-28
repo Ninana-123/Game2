@@ -22,8 +22,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
-    Logger GraphicsLogger;
-
     /*!
    * \brief GraphicsSystem constructor.
    *
@@ -31,8 +29,14 @@ namespace Engine
    * default shader and textures.
    */
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Basic.shader")
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
     {
+    }
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") {
+        // other initialization code
     }
 
     /*!
@@ -47,11 +51,12 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
+            Logger::GetInstance().Log(LogLevel::Error, "GLEW failed to initialize: "
+                + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
-            GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
+            Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
     /*!
@@ -96,10 +101,10 @@ namespace Engine
         //define vertex array and indices
         float quadPositions[] =
         {
-       -60.0f,  -60.0f, 0.0f, 0.0f,    //0
-        60.0f,  -60.0f, 1.0f, 0.0f,    //1
-        60.0f,   60.0f, 1.0f, 1.0f,    //2
-       -60.0f,   60.0f, 0.0f, 1.0f     //3
+           -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
+            60.f, -60.f, 1.0f, 0.0f,  // bottom-right
+            60.f,  60.f, 1.0f, 1.0f,  // top-right
+           -60.f,  60.f, 0.0f, 1.0f   // top-left
         };
 
         // Copy vtx_position into vtx_position member variable
@@ -186,12 +191,70 @@ namespace Engine
     */
     void GraphicsSystem::InitializeShader()
     {
-        shader.LoadShader("Resource/Shaders/Basic.shader");
-
+        // Initialize the shader object (load shader source files and compile them)
         shader.Initialize();
         shader.Bind();
+        //GraphicsLogger.Log(LogLevel::Debug, "Current Shader Set: " + std::to_string(shader.m_CurrentShaderSet));
+
+        std::string vertexShaderPath;
+        std::string fragmentShaderPath;
+
+        // Determine which set of shaders to use
+        if (shader.GetCurrentShaderSet() == 1)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader.frag";
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
+        }
+        else if (shader.GetCurrentShaderSet() == 2)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader2.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader2.frag";
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
+        }
+        else
+        {
+            throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
+        }
+
+        // Load shader source code from files
+        std::string vertexShaderSource = shader.LoadShaderSource(vertexShaderPath);
+        std::string fragmentShaderSource = shader.LoadShaderSource(fragmentShaderPath);
+
+        // Check if shader source files were successfully loaded
+        if (!vertexShaderSource.empty() && !fragmentShaderSource.empty())
+        {
+            // Compile shaders and create shader program
+            unsigned int shaderProgram = shader.CreateShader(vertexShaderSource, fragmentShaderSource);
+
+            // Check for shader compilation and linking errors
+            if (shaderProgram != 0)
+            {
+                // Shader compilation and linking successful
+                Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
+
+                // Store the shader program ID in the shader class based on the shader set being used
+                shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
+
+                // Check for additional shader compilation errors (if any)
+                shader.CheckShaderCompilation(shaderProgram, "Shader Set");
+            }
+            else
+            {
+                // Shader compilation or linking failed
+                throw std::runtime_error("Shader compilation or linking failed.");
+            }
+        }
+        else
+        {
+            // Shader source files were not loaded successfully
+            throw std::runtime_error("Failed to load shader source files.");
+        }
 
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Unbind the shader program after setting up uniforms
+        shader.Unbind();
     }
 
     /*!
@@ -201,9 +264,9 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        if (!textureA.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
         {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
+            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
         }
         else {
@@ -211,25 +274,21 @@ namespace Engine
             textureA.Bind(0);
         }
 
-        if (!textureB.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
+        if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
         {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
+            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture B.");
             // Handle the error as needed, e.g., return or throw an exception
         }
         else {
             textureB.InitGL();
-            textureB.Bind(0); // Bind the texture to a different texture unit (e.g., unit 1)
+            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
         }
 
-        if (!textureC.Load("Resource/Texture/Background.png")) // Check for texture loading errors
-        {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture C.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
+        textureC = *(assetManager->getTexture("Background"));
+        // Handle the error as needed, e.g., return or throw an exception
             textureC.InitGL();
-            textureC.Bind(0); 
-        }
+            textureC.Bind(0);
+
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
@@ -261,8 +320,8 @@ namespace Engine
         shader.Bind();
 
         double currentTime = glfwGetTime();
-        double elapsedTime = currentTime - programStartTime;
-        int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+        double totalTime = currentTime - programStartTime;
+        int textureIndex = static_cast<int>(totalTime / 3.0) % 2;
 
         if (textureIndex)
         {
@@ -277,6 +336,10 @@ namespace Engine
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
+        va.Bind();
+        ib.Bind();
+
+        // Render the entity
         renderer.Draw(va, ib, shader);
         shader.Unbind();
     }
@@ -298,9 +361,6 @@ namespace Engine
 
         // Draw the lines directly without an IBO
         GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
-        // Debugging statement to print that the square lines are being drawn
-        std::cout << "Drawing square lines..." << std::endl;
 
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
@@ -378,8 +438,20 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();
-       
+        renderer.Clear();    
+
+        // Get the current state of the 'S' key
+        bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
+        //std::cout << "S Key State: " << currentSState << std::endl;
+        
+        // Check if there's a change in the 'S' key state
+        if (currentSState && !previousSState)
+        {
+            // Toggle the shader state
+            ToggleShaderSet();
+        }
+        // Update the previous 'S' key state
+        previousSState = currentSState;
 
         for (const auto& entityPair : *entities)
         {
@@ -395,11 +467,11 @@ namespace Engine
                     if (!transform)
                     {
                         // Log the error using your existing Logger
-                        GraphicsLogger.Log(LogLevel::Error, "Transform component not found for an entity.");
+                        Logger::GetInstance().Log(LogLevel::Error, "Transform component not found for an entity.");
                         continue; // Continue processing other entities
                     }
 
-                    glm::vec3 transA(transform->x, transform->y, 0);
+                    glm::vec3 transA(transform->position.x, transform->position.y, 0);
                     float rotationA = transform->rot;
                     glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
@@ -442,12 +514,12 @@ namespace Engine
                     }
                     
                     //RenderSingleLine(mvpA, lineStart, lineEnd
-                    transform->x = static_cast<int>(transA.x);
-                    transform->y = static_cast<int>(transA.y);
+                    transform->position.x = transA.x;
+                    transform->position.y = transA.y;
                 }
                 catch (const std::exception& ex)
                 {
-                    GraphicsLogger.Log(LogLevel::Error, "Graphics error: " + std::string(ex.what()));
+                    Logger::GetInstance().Log(LogLevel::Error, ("Graphics error: " + std::string(ex.what())).c_str());
                 }
             }
         }
@@ -468,10 +540,25 @@ namespace Engine
     void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
+        std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl; 
+
         shader.Bind();
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
+        std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl; 
     }
 
+    void GraphicsSystem::ToggleShaderSet()
+    {
+        std::cout << "ToggleShaderSet() called!" << std::endl;
+        if (shader.GetCurrentShaderSet() == 1) {
+            shader.SetActiveShaderSet(2);
+        }
+        else {
+            shader.SetActiveShaderSet(1);
+        }
+        std::cout << "Shader Set Toggled: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+        InitializeShader(); // Reinitialize shaders based on the new set
+    }
 
     /*!
      * \brief Setup the model matrix for an entity.
@@ -505,8 +592,6 @@ namespace Engine
 
     GraphicsSystem::~GraphicsSystem()
     {
-        // Cleanup any resources here
-        // Terminate GLFW
         glfwTerminate();
     }
 } // namespace Engine

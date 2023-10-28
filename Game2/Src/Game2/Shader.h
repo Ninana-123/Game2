@@ -30,30 +30,45 @@ struct ShaderProgramSource
 class Shader
 {
 private:
-    std::string m_FilePath;             // Filepath to shader source files
-    unsigned int m_RendererID;          // Shader program ID
+    std::string m_FilePath1;             // Filepath to shader source files
+    std::string m_FilePath2;
+    std::string m_FilePath3;
+    std::string m_FilePath4;
+    //unsigned int m_RendererID1;          // Shader program ID
+    //unsigned int m_RendererID2;
     bool m_IsInitialized;               // Flag to track initialization
-    std::unordered_map<std::string, int> m_UniformLocationCache; // Caching for uniforms
+    std::unordered_map<int, std::unordered_map<std::string, int>> m_UniformLocationCaches; // Caching for uniforms of different shader sets
+    std::unordered_map<int, unsigned int> m_RendererIDs;                                    // Shader program IDs for different shader sets
+    int m_CurrentShaderSet;             // Current active shader set (1 or 2)
 
 public:
-    Shader(const std::string& filepath);
+    //Shader(const std::string& filepath, const std::string& filepath2);
+    Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4);
     ~Shader();
 
-    void LoadShader(const std::string& filepath);  // Load shader source from a file
+    //void LoadShader(const std::string& filepath);
+    std::string LoadShaderSource(const std::string& filepath);
+    // Load shader source from a file
     void Initialize();  // Compile and set up the shader
 
     void Bind() const;
     void Unbind() const;
+
+    void CheckShaderCompilation(unsigned int programID, const std::string& shaderSetName);
+
+    void SetActiveShaderSet(int shaderSet);
 
     // Set uniforms
     void SetUniform1i(const std::string& name, int value);
     void SetUniform1f(const std::string& name, float value);
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+    void SetShaderProgram(int shaderSet, unsigned int programID);
 
+    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
+    int GetCurrentShaderSet() const;
 private:
     ShaderProgramSource ParseShader(const std::string& filepath);
-    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
     unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 };

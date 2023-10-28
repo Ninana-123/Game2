@@ -16,6 +16,11 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Core.h"
 #include "Window.h"
 #include "AppEvent.h"
+#include "AssetManager.h"
+
+extern double loopTime;
+extern double dt;
+
 
 
 namespace Engine
@@ -49,6 +54,8 @@ namespace Engine
 
         void UpdateDeltaTime();
         void UpdateWindowTitle();
+
+        std::shared_ptr<Engine::AssetManager> assetManager;
         
     private:
         // Handle the window close event

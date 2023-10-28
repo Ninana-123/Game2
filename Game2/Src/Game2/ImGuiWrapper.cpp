@@ -21,14 +21,22 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <GLFW/glfw3.h>
 #include "Application.h"
 #include <windows.h>
-
+#include "Matrix3x3Lib.h"
+#include "Input.h"
+#include "SystemsManager.h"
 
 namespace Engine {
+#ifdef NDEBUG // Check if we are in release mode
+	bool renderImGuiGUI = false;
+#else
+	bool renderImGuiGUI = true; // Debug mode
+#endif
 
 	EntityID firstEntity, secondEntity;
 	Entity* targettedEntity;
 	char cloneCountInput[10] = "";  // Buffer to store the input text
 	char createCountInput[10] = "";  // Buffer to store the input text
+	Input InputHandlerImGui;
 
 	/*!**********************************************************************
 	\brief
@@ -265,159 +273,289 @@ namespace Engine {
 	*************************************************************************/
 	void ImGuiWrapper::OnUpdate()
 	{
-		int displayWidth, displayHeight;
-		glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
-
-		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize.x = static_cast<float>(displayWidth);
-		io.DisplaySize.y = static_cast<float>(displayHeight);
-
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
-		m_Time = time;
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-
-		// Start a new ImGui window for debugging info
-		ImGui::Begin("Debug Information", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
-
-		// Display FPS
-		ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
-
-		// Display frame time
-		ImGui::Text("Frame Time: %.4f ms", 1000.0f / ImGui::GetIO().Framerate);
-
-		// Memory Usage dropdown
-		if (ImGui::CollapsingHeader("Memory Usage")) {
-			ImGui::Text("Total Memory: %.2f MB", GetTotalMemoryInMB());
-			ImGui::Text("Available Memory: %.2f MB", GetAvailableMemoryInMB());
-			ImGui::Text("Memory Usage: %.2f%%", GetMemoryUsagePercentage());
+		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
+			renderImGuiGUI = !renderImGuiGUI;
 		}
+		if (renderImGuiGUI == true) {
+			int displayWidth, displayHeight;
+			glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
 
-		// Graphics Information dropdown
-		if (ImGui::CollapsingHeader("Graphics Information")) {
-			print_specs();  // Assuming print_specs() provides the necessary graphics info
-		}
+			ImGuiIO& io = ImGui::GetIO();
+			io.DisplaySize.x = static_cast<float>(displayWidth);
+			io.DisplaySize.y = static_cast<float>(displayHeight);
 
-		// Input dropdown
-		if (ImGui::CollapsingHeader("Input")) {
-			ImGui::Text("Mouse Position: (%.1f, %.1f)", io.MousePos.x, io.MousePos.y);
-			ImGui::Text("Keys Pressed:");
+			float time = (float)glfwGetTime();
+			io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
+			m_Time = time;
 
-			bool anyKeyPressed = false; // Track if any key is pressed
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui::NewFrame();
 
-			for (int key = KEY_SPACE; key <= GLFW_KEY_LAST; ++key) {
-				auto keyIter = Key::keyMap.find(key);
-				if (keyIter != Key::keyMap.end() && glfwGetKey(glfwGetCurrentContext(), key) == GLFW_PRESS) {
-					ImGui::Bullet();
-					ImGui::SameLine();
-					ImGui::Text("%s", keyIter->second.c_str());
-					anyKeyPressed = true;  // Set the flag to true if any key is pressed
-				}
+			// Start a new ImGui window for debugging info
+			ImGui::Begin("Debug Information", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+			// Display FPS
+			ImGui::Text("FPS: %.2f", ImGui::GetIO().Framerate);
+
+			// Display frame time
+			ImGui::Text("Frame Time: %.4f ms", 1000.0f / ImGui::GetIO().Framerate);
+
+			// Memory Usage dropdown
+			if (ImGui::CollapsingHeader("Memory Usage")) {
+				ImGui::Text("Total Memory: %.2f MB", GetTotalMemoryInMB());
+				ImGui::Text("Available Memory: %.2f MB", GetAvailableMemoryInMB());
+				ImGui::Text("Memory Usage: %.2f%%", GetMemoryUsagePercentage());
 			}
 
-			if (!anyKeyPressed) {
-				ImGui::Text("No Keys Pressed");
+			// Graphics Information dropdown
+			if (ImGui::CollapsingHeader("Graphics Information")) {
+				print_specs();  // Assuming print_specs() provides the necessary graphics info
 			}
-		}
-		ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-		if (entityManager)
-		{
-			if (ImGui::Button("Create Entity"))
-			{
-				entityManager->CreateEntity();
-				std::cout << "Created Entity" << std::endl;
-			}
-			ImGui::Text("Create Multiple Entities");
-			ImGui::InputText("Create Count", createCountInput, 10);
-			// Clone Entity button
-			if (ImGui::Button("Create Multiple Entities"))
-			{
-				// Parse the clone count from the input text
-				int createCount = atoi(createCountInput);
+			// Input dropdown
+			if (ImGui::CollapsingHeader("Input")) {
+				ImGui::Text("Mouse Position: (%.1f, %.1f)", io.MousePos.x, io.MousePos.y);
+				ImGui::Text("Keys Pressed:");
 
-				// Ensure clone count is valid and non-negative
-				if (createCount > 0)
-				{
-					// Clone the object 'cloneCount' times
-					for (int i = 0; i < createCount; ++i)
-					{
-						entityManager->CreateEntity();
-						std::cout << "Created Entity" << std::endl;
+				bool anyKeyPressed = false; // Track if any key is pressed
+
+				for (int key = KEY_SPACE; key <= GLFW_KEY_LAST; ++key) {
+					auto keyIter = Key::keyMap.find(key);
+					if (keyIter != Key::keyMap.end() && glfwGetKey(glfwGetCurrentContext(), key) == GLFW_PRESS) {
+						ImGui::Bullet();
+						ImGui::SameLine();
+						ImGui::Text("%s", keyIter->second.c_str());
+						anyKeyPressed = true;  // Set the flag to true if any key is pressed
 					}
 				}
-			}
 
-			const auto entities = entityManager->GetEntities();
-			ImGui::Text("Number of Entities: %d", entities->size());
-			ImGui::Separator();
-			ImGui::Text("Currently selected entity ID:");
-
-			std::vector<std::string> entityNames;
-			for (const auto& entity : *entities) {
-				entityNames.push_back("Entity " + std::to_string(entity.first));
-			}
-
-
-			if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-				for (int i = 1; i < entityNames.size(); ++i) {
-					const bool isSelected = (selectedEntityIndex == i);
-					if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
-						selectedEntityIndex = i;
-						targetEntity = entityManager->GetEntity(selectedEntityIndex);
-						std::cout << targetEntity->GetID();
-					}
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
+				if (!anyKeyPressed) {
+					ImGui::Text("No Keys Pressed");
 				}
-				ImGui::EndCombo();
 			}
+			DisplaySystemTimes();
+			ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
-			// Clone Entity button
-			if (ImGui::Button("Clone Entity"))
+			if (entityManager)
 			{
-				secondEntity = entityManager->CloneEntity(firstEntity);
-				targettedEntity = entityManager->GetEntity(secondEntity);
-			}
-			ImGui::Text("Clone Multiple Entities");
-			ImGui::InputText("Clone Count", cloneCountInput, 10);
-			// Clone Entity button
-			if (ImGui::Button("Clone Multiple Entities"))
-			{
-				// Parse the clone count from the input text
-				int cloneCount = atoi(cloneCountInput);
-
-				// Ensure clone count is valid and non-negative
-				if (cloneCount > 0)
+				if (ImGui::Button("Create Entity"))
 				{
-					// Clone the object 'cloneCount' times
-					for (int i = 0; i < cloneCount; ++i)
+					entityManager->CreateEntity();
+					std::cout << "Created Entity" << std::endl;
+				}
+				ImGui::Text("Create Multiple Entities");
+				ImGui::InputText("Create Count", createCountInput, 10);
+				// Clone Entity button
+				if (ImGui::Button("Create Multiple Entities"))
+				{
+					// Parse the clone count from the input text
+					int createCount = atoi(createCountInput);
+
+					// Ensure clone count is valid and non-negative
+					if (createCount > 0)
 					{
-						// Clone firstEntity and store its ID
-						firstEntity = targetEntity->GetID();
-						secondEntity = entityManager->CloneEntity(firstEntity);
+						// Clone the object 'cloneCount' times
+						for (int i = 0; i < createCount; ++i)
+						{
+							entityManager->CreateEntity();
+							std::cout << "Created Entity" << std::endl;
+						}
+					}
+				}
+
+				const auto entities = entityManager->GetEntities();
+				ImGui::Text("Number of Entities: %d", entities->size());
+				ImGui::Separator();
+				ImGui::Text("Currently selected entity ID:");
+				std::vector<std::string> entityNames;
+				for (const auto& entity : *entities) {
+					if (entity.first == 0) {
+						entityNames.push_back("Background");
+					}
+					else {
+						entityNames.push_back("Entity " + std::to_string(entity.first));
+					}
+				}
+
+				if (selectedEntityIndex >= entityNames.size()) {
+					selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
+				}
+
+				if (!entityNames.empty() && selectedEntityIndex >= 0)
+				{
+					if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+						for (int i = 0; i < entityNames.size(); ++i) {
+							const bool isSelected = (selectedEntityIndex == i);
+							if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+								selectedEntityIndex = i;
+								targetEntity = entityManager->GetEntity(selectedEntityIndex);
+								//std::cout << targetEntity->GetID();
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
+						}
+						ImGui::EndCombo();
+					}
+				}
+				else
+				{
+					ImGui::Text("No entities available"); // or handle as appropriate
+				}
+				
+				// Clone Entity button
+				if (ImGui::Button("Clone Entity"))
+				{
+					if (targetEntity)
+					{
+						secondEntity = entityManager->CloneEntity(targetEntity->GetID());
 						targettedEntity = entityManager->GetEntity(secondEntity);
 					}
 				}
+
+				ImGui::Text("Clone Multiple Entities");
+				ImGui::InputText("Clone Count", cloneCountInput, 10);
+				// Clone Multiple Entity button
+				if (ImGui::Button("Clone Multiple Entities"))
+				{
+					// Parse the clone count from the input text
+					int cloneCount = atoi(cloneCountInput);
+
+					// Ensure clone count is valid and non-negative
+					if (cloneCount > 0 && targetEntity)
+					{
+						// Clone the selected entity 'cloneCount' times
+						for (int i = 0; i < cloneCount; ++i)
+						{
+							entityManager->CloneEntity(targetEntity->GetID());
+						}
+					}
+				}
+
+				if (ImGui::Button("Delete selected entity"))
+				{
+					if (!entityNames.empty())
+					{
+						entityManager->DestroyEntity(selectedEntityIndex);
+						entityNames.erase(entityNames.begin() + selectedEntityIndex);
+
+						// Update other relevant data structures
+
+						// Resize the vector if necessary
+						if (entityNames.empty())
+						{
+							selectedEntityIndex = -1; // No entities left, set index to an invalid value
+							targetEntity = nullptr;   // No entity to select
+						}
+						else if (selectedEntityIndex >= entityNames.size())
+						{
+							selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
+						else
+						{
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+						}
+					}
+				}
 			}
-			/*
-			if (ImGui::Button("Delete currently selected entity")) {
-				entityManager->DestroyEntity(selectedEntityIndex);
+
+			ImGui::Begin("Entity Properties", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+
+			if (entityManager && targetEntity) {
+				std::unordered_map<ComponentType, Component*> components = targetEntity->GetComponents();
+				// Get the properties of the selected entity (you will need to replace these with your actual entity property retrieval code)
+				std::string entityName = "Entity " + std::to_string(targetEntity->GetID());
+				TransformComponent* transform = nullptr;
+				CollisionComponent* collision = nullptr;
+
+				if (targetEntity->GetComponent(ComponentType::Transform) != nullptr) {
+					transform = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform));
+				}
+				if (targetEntity->GetComponent(ComponentType::Collision) != nullptr) {
+					collision = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
+				}
+
+				// Display the properties
+				ImGui::Text("Entity Name: %s", entityName.c_str());
+
+				if (transform != nullptr) {
+					float posX = transform->position.x;
+					float posY = transform->position.y;
+					float scaleX = transform->scaleX;
+					float scaleY = transform->scaleY;
+					float rot = transform->rot;
+					float rotDeg = static_cast<float>(rot * (180.f / M_PI));
+					rotDeg = fmod(rotDeg, 360.0f); // Ensure rotDeg stays within the 0-360 range
+
+					// Input boxes for editing position, scale, and rotation with specified widths
+					if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f")) {
+						// Handle position X change here
+						transform->position.x = posX;
+					}
+
+					if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f")) {
+						// Handle position Y change here
+						transform->position.y = posY;
+					}
+
+					if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f")) {
+						// Handle scale X change here
+						transform->scaleX = scaleX;
+					}
+
+					if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f")) {
+						// Handle scale Y change here
+						transform->scaleY = scaleY;
+					}
+
+					if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f")) {
+						// Handle rotation change here
+						rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+						transform->rot = rot;
+					}
+				}
+				if (collision != nullptr) {
+					if (collision->isColliding == true)
+						ImGui::Text("Collision with another entity detected.");
+					else if(collision->isColliding == false)
+						ImGui::Text("No collision detected.");
+				}
+				// Add more properties as needed
+				if (ImGui::CollapsingHeader("Component List")) {
+					for (const auto& pair : components) {
+						ComponentType type = pair.first;
+						// Display component-specific properties here
+						if (type == ComponentType::Transform) {
+							ImGui::Text("Entity has Transform component.");
+						}
+						if (type == ComponentType::Texture) {
+							ImGui::Text("Entity has Texture component.");
+						}
+						if (type == ComponentType::Physics) {
+							ImGui::Text("Entity has Physics component.");
+						}
+						if (type == ComponentType::Collision) {
+							ImGui::Text("Entity has Collision component.");
+						}
+					}
+				}
+
 			}
-			*/
-			
+			else {
+				ImGui::Text("No entity selected.");
+			}
+
+			ImGui::End(); // End the selected entity properties window
+
+			ImGui::End();
+
+			// End the ImGui window
+			ImGui::End();
+
+			// Render ImGui
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		}
-
-		ImGui::End();
-
-		// End the ImGui window
-		ImGui::End();
-
-		// Render ImGui
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
 
@@ -581,6 +719,17 @@ namespace Engine {
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
 		return false;
+	}
+
+	void ImGuiWrapper::DisplaySystemTimes() {
+		SystemsManager& systemsManager = SystemsManager::GetInstance();
+		auto systemTimes = systemsManager.DisplaySystemTimes(loopTime);
+
+		if (ImGui::CollapsingHeader("System Times")) {
+			for (const auto& [systemName, percentage] : systemTimes) {
+				ImGui::Text("%s: %.2f%% of the total game loop time", systemName.c_str(), percentage);
+			}
+		}
 	}
 
 }

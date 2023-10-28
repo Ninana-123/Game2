@@ -91,7 +91,12 @@
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
       <Filter>ImGuiWrapper</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Text.cpp" />
+    <ClCompile Include="Src\Game2\AssetManager.cpp">
+      <Filter>Base\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ErrorHandler.cpp">
+      <Filter>Base\Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -238,6 +243,12 @@
     <ClInclude Include="Src\Game2\ImGuiWrapper.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\AssetManager.h">
+      <Filter>Base\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ErrorHandler.h">
+      <Filter>Base\Logger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -323,6 +334,9 @@
     </Filter>
     <Filter Include="ImGuiWrapper">
       <UniqueIdentifier>{6c327942-ec98-4f23-804e-d67d8279b0d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\AssetsManager">
+      <UniqueIdentifier>{9bb45b5c-b999-4dab-9cb3-dbdaf640c5d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
