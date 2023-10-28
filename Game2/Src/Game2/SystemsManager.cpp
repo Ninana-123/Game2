@@ -44,15 +44,19 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
+		int i = 0;
 		for (auto system : all_systems)
 		{
+			
 			if (system->GetSystemState() == SystemState::On)
 			{
 				system->StartTimer();
 				system->Update(entities);
 				system->StopTimer();
+				i++;
 			}
 		}
+		std::cout << "System loop count:" << i << std::endl;
 	}
 
 	template <typename T>

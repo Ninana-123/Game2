@@ -27,6 +27,51 @@ namespace Engine
 		auto it = prefabs.find(id);
 		return (it != prefabs.end()) ? it->second.get() : nullptr;
 	}
+
+	Prefab* PrefabManager::GetPrefab(std::string name)
+	{
+		for (auto& pair : prefabs)
+		{
+			if (pair.second->GetName() == name)
+			{
+				return pair.second.get();
+			}
+		}
+		return nullptr;
+	}
+
+	std::unordered_map<PrefabID, std::unique_ptr<Prefab>>* PrefabManager::GetPrefabs()
+	{
+		return &prefabs;
+	}
+
+	PrefabID PrefabManager::ClonePrefab(PrefabID sourcePrefabID) 
+	{
+		// Get the source entity to clone
+		Prefab* sourcePrefab = GetPrefab(sourcePrefabID);
+		if (!sourcePrefab)
+		{
+			// Entity not found
+			return UINT_MAX;
+		}
+
+		// Create a new entity as a clone
+		PrefabID clonedPrefabID = CreatePrefab();
+		Prefab* clonedPrefab = GetPrefab(clonedPrefabID);
+
+		// Clone the components from the source entity to the cloned entity
+		auto sourceComponents = sourcePrefab->GetComponents();
+		for (const auto& pair : sourceComponents) {
+			Component* sourceComponent = pair.second;
+			// You may need to implement a copy constructor or clone method for your components
+			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+
+			// Add the cloned component to the cloned entity
+			clonedPrefab->AddComponent(std::unique_ptr<Component>(clonedComponent));
+		}
+
+		return clonedPrefabID;
+	}
 	
 	void PrefabManager::DestroyPrefab(PrefabID prefab)
 	{

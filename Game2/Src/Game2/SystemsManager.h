@@ -69,9 +69,7 @@ namespace Engine
         /// Container holding pointers to all registered systems.
         static std::vector<System*> all_systems;
 
-
         std::unordered_map<std::string, double> DisplaySystemTimes(double loopTime);
-
 
         void ResetSystemTimers();
 

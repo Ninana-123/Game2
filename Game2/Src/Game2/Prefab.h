@@ -22,9 +22,11 @@ namespace Engine
 		Prefab(PrefabID id) : id(id), name("\0") {};
 		~Prefab() { components.clear(); }
 
+		void AddComponent(std::unique_ptr<Component> component);
 		void AddNewComponent(ComponentType type);
 		Component* GetComponent(ComponentType type) const;
 	
+		PrefabID GetID() const { return id; }
 		std::string GetName() const { return name; }
 
 		std::unordered_map<ComponentType, Component*> GetComponents() const;

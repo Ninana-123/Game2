@@ -145,15 +145,13 @@ namespace Engine
         sound2.setLoop();
 
         // Initialize ImGuiWrapper
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM, &PM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
 
         assetManager = std::make_shared<Engine::AssetManager>();
         assetManager->loadTexture("Background", "Resource/Texture/Background.png");
 
-        systemsManager = std::make_shared<SystemsManager>(assetManager);
-        systemsManager->Initialize();
     }
 
     /*!**********************************************************************
@@ -179,7 +177,6 @@ namespace Engine
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
-
 
         while (m_Running)
         {
@@ -224,7 +221,7 @@ namespace Engine
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
                 systemsManager->ToggleSystemState<PhysicsSystem>();
-            }
+            }    
 
             if (m_ImGuiWrapper->TargetEntityGetter())
             {
@@ -238,9 +235,7 @@ namespace Engine
                     physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
                 }
             }
-            
-            
-
+                    
             // Define a threshold for the minimum and maximum scales
             const float minScale = 0.5f; // Adjust this value as needed
             const float maxScale = 2.0f; // Adjust this value as needed

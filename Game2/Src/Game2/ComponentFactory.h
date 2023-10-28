@@ -35,6 +35,7 @@ namespace Engine
 		static std::unique_ptr<Component> CreateComponent(ComponentType type);
 
 		static ComponentType StringToComponentType(const std::string& typeString);
+		static std::string ComponentTypeToString(ComponentType type);
 
 	private:
 		static std::unordered_map<ComponentType, CreationFunction>& componentRegistry();

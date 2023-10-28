@@ -3,6 +3,11 @@
 
 namespace Engine
 {
+	void Prefab::AddComponent(std::unique_ptr<Component> component)
+	{
+		components.emplace(component->GetType(), std::move(component));
+	}
+
 	void Prefab::AddNewComponent(ComponentType type)
 	{
 		auto newComponent = ComponentFactory::CreateComponent(type);

@@ -5,6 +5,14 @@ Position: 150 150
 ScaleX: 1.5
 ScaleY: 1.5
 Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
 EndPrefab
 Archer
 Transform

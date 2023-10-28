@@ -22,11 +22,10 @@ namespace Engine
 
 		PrefabID CreatePrefab();
 		Prefab* GetPrefab(PrefabID id);
+		Prefab* GetPrefab(std::string name);
+		std::unordered_map<PrefabID, std::unique_ptr<Prefab>>* GetPrefabs();
+		PrefabID ClonePrefab(PrefabID sourcePrefabID);
 		void DestroyPrefab(PrefabID prefab);
-		/*
-		std::unordered_map<EntityID, std::unique_ptr<Entity>>* GetEntities();
-		EntityID CloneEntity(EntityID sourceEntityID);
-		*/
 
 		std::unordered_map<PrefabID, std::unique_ptr<Prefab>> prefabs;
 		static PrefabID nextPrefabID;
