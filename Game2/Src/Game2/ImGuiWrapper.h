@@ -2,7 +2,10 @@
 /*!
 \file		ImGuiWrapper.h
 \author 	Liu Xujie
+\co			Tristan Tham Rui Hong
+
 \par    	email: l.xujie@digipen.edu
+				   t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Contains the declaration of the ImGuiWrapper class.
 			This file declares the ImGuiWrapper class, which provides 
@@ -21,6 +24,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "PrefabManager.h"
 
 namespace Engine {
+
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
@@ -49,6 +53,7 @@ namespace Engine {
 		float m_Time = 0.0f;
 		Engine::EntityManager* entityManager;
 		Engine::PrefabManager* prefabManager;
+
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
 

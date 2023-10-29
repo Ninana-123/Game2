@@ -125,5 +125,44 @@ namespace Engine {
         }
 
     }
-    
+
+    void Loader::SavePrefabs(const std::string& filepath)
+    {
+        std::ofstream PrefabFile(filepath);
+
+        if (!PrefabFile.is_open()) {
+            std::cerr << "Error: Could not open Prefab file " << filepath << "\n";
+            return;
+        }
+
+        // Access the PrefabManager and Prefabs
+        auto* prefabs = prefabManager->GetPrefabs();
+
+        // Write the number of prefabs
+        PrefabFile << prefabs->size() << '\n';
+
+        // Iterate through prefabs and serialize each one
+        for (const auto& pair : *prefabs)
+        {
+            // Write the prefab name
+            PrefabFile << pair.second->GetName() << '\n';
+
+            // Serialize each component in the prefab
+            for (const auto& componentPair : pair.second->GetComponents())
+            {
+                const ComponentType type = componentPair.first;
+                const Component* component = componentPair.second;
+
+                // Write the component type
+                PrefabFile << ComponentFactory::ComponentTypeToString(type) << '\n';
+
+                // Serialize the component
+                component->Serialize(PrefabFile);
+            }
+
+            // Write the end of prefab marker
+            PrefabFile << "EndPrefab\n";
+        }
+    }
+
 }

@@ -2,7 +2,11 @@
 /*!
 \file		ImGuiWrapper.cpp
 \author 	Liu Xujie
-\par    	email: l.xujie@digipen.edu
+\co			Tristan Tham Rui Hong
+
+\email		l.xujie@digipen.edu
+			t.tham@digipen.edu
+
 \date   	29/09/2923
 \brief		This file contains the implementation of the ImGuiWrapper class,
 			which encapsulates ImGui functionality for UI rendering and 
@@ -290,7 +294,7 @@ namespace Engine {
 
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui::NewFrame();
-
+			
 			// Start a new ImGui window for debugging info
 			ImGui::Begin("Debug Information", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
@@ -544,7 +548,7 @@ namespace Engine {
 				ImGui::Text("No entity selected.");
 			}
 
-			//Prefab Menu
+			//Prefab Tool
 			ImGui::Begin("Prefab Tool", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 			if (prefabManager)
 			{
@@ -581,26 +585,72 @@ namespace Engine {
 					}
 				}
 				
-				// Display property editor for the selected prefab
+				//Prefab Property editor
 				if (selectedPrefabIndex >= 0 && selectedPrefabIndex < prefabNames.size()) 
 				{
 					Prefab* selectedPrefab = prefabManager->GetPrefab(prefabNames[selectedPrefabIndex]);
 
-					// Add ImGui code to display and edit properties of the selected prefab
 					ImGui::Text("Prefab Properties:");
-					ImGui::Text("Prefab Name: %s", selectedPrefab->GetName().c_str());
+					static bool showComponentExistsWarning = false;
+					char newNameBuffer[128];//buffer to hold input name changes
+					strncpy_s(newNameBuffer, selectedPrefab->GetName().c_str(), sizeof(newNameBuffer));
 
-					// Display components of the selected prefab
-					ImGui::Text("Edit Components:");
+					if (ImGui::InputText("Prefab Name", newNameBuffer, sizeof(newNameBuffer))) 
+					{					
+						selectedPrefab->name = newNameBuffer; //Update name buffer 
+					}
+
+					// display components of the selected prefab
+					ImGui::Text("Components");
+					ImGui::SameLine();
+					ImGui::Spacing();
+					// Dropdown list for adding components					
+					const char* componentTypes[] = {"", "Transform", "Collision", "Physics" }; //add texture when working
+					static int selectedComponentType = 0; // Index of the selected component 
+					if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
+					{
+						if (selectedComponentType > 0)
+						{
+							// check if component already exists in buffer
+							ComponentType typeToAdd = ComponentFactory::StringToComponentType(componentTypes[selectedComponentType]);
+							if (!selectedPrefab->HasComponent(typeToAdd))
+							{
+								// Add the selected component type to the selected prefab
+								selectedPrefab->AddNewComponent(typeToAdd);
+								selectedComponentType = 0; // reset the index
+							}
+							else
+							{
+								// Set the flag to show the warning message
+								showComponentExistsWarning = true;
+								selectedComponentType = 0;
+							}							
+						}					
+					}
+					ImGui::Spacing();
+					ImGui::Spacing();
+					if (showComponentExistsWarning)
+					{
+						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already has a %s component!", componentTypes[selectedComponentType]);
+						ImGui::SameLine();
+						
+						if (ImGui::Button("Dismiss")) //confirmation button
+						{
+							showComponentExistsWarning = false;
+						}
+					}
+													
 					const auto components = selectedPrefab->GetComponents();
 					for (const auto& pair : components)
 					{
 						ComponentType component = pair.first;
-						ImGui::Text("%s", ComponentFactory::ComponentTypeToString(component).c_str());
-						// Add ImGui code to display and edit properties of the component
-						switch (component) 
+						if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(component).c_str()))
 						{
-							case ComponentType::Transform: 
+							ImGui::Indent();
+
+							switch (component)
+							{
+							case ComponentType::Transform:
 							{
 								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
 
@@ -612,34 +662,34 @@ namespace Engine {
 								rotDeg = fmod(rotDeg, 360.0f);
 
 								// Input boxes for editing TransformComponent properties
-								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f")) 
+								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
 								{
 									transform->position.x = posX;
 								}
 
-								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f")) 
+								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
 								{
 									transform->position.y = posY;
 								}
 
-								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f")) 
+								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
 								{
 									transform->scaleX = scaleX;
 								}
 
-								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f")) 
+								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
 								{
 									transform->scaleY = scaleY;
 								}
 
-								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f")) 
+								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
 								{
 									transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
 								}
 								break;
 							}
-						
-							case ComponentType::Collision: 
+
+							case ComponentType::Collision:
 							{
 								CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
 
@@ -648,12 +698,12 @@ namespace Engine {
 								bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
-								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f")) 
+								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
 								{
 									collision->c_Width = width;
 								}
 
-								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f")) 
+								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f"))
 								{
 									collision->c_Height = height;
 								}
@@ -664,43 +714,248 @@ namespace Engine {
 								}
 								break;
 							}
-						default:							
-							break;
+							case ComponentType::Physics:
+							{
+								PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+								float velocity_x = physics->velocity.x;
+								float velocity_y = physics->velocity.y;
+
+								if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.x = velocity_x;
+								}
+
+								if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.y = velocity_y;
+								}
+
+								break;
+							}
+																
+							default:
+								break;
+							}
+
+							ImGui::SameLine();
+							if (ImGui::Button("Remove")) //Delete component
+							{
+								selectedPrefab->components.erase(component);
+							}
+
+							ImGui::Unindent();
 						}
+						
 					}
-					/*
-					* if (ImGui::Button("Duplicate Prefab"))
+					ImGui::Spacing();
+							
+					if (ImGui::Button("Spawn"))
 					{
 						if (selectedPrefab)
 						{
-							PrefabID duplicatedPrefabID = prefabManager->ClonePrefab(selectedPrefab->GetID());
-							// Handle the duplication of the selected prefab, update UI, etc.
+							//Spawn Entity from Prefab
+							entityManager->CreateEntityFromPrefab(*selectedPrefab);
 						}
 					}
 
-					if (ImGui::Button("Delete Prefab"))
+					ImGui::SameLine();
+
+					if (ImGui::Button("Delete Prefab")) 
 					{
 						if (selectedPrefab)
 						{
 							prefabManager->DestroyPrefab(selectedPrefab->GetID());
-							// Handle the deletion of the selected prefab, update UI, etc.
 						}
 					}
 
-					ImGui::Separator();
+					/*
+					ImGui::SameLine();
 
-					ImGui::Text("Prefab Creator");
-					// Buttons for adding, duplicating, and deleting prefabs
-					if (ImGui::Button("Add Prefab"))
+					if (ImGui::Button("Save Changes"))
 					{
-						PrefabID newPrefabID = prefabManager->CreatePrefab();
-						// Handle the creation of a new prefab, update UI, etc.
+						loader->SavePrefabs("Resource/Prefabs.txt");
 					}
 					*/
-									
+					
+
+					ImGui::Separator();
+
+					if (ImGui::CollapsingHeader("Prefab Creator"))
+					{
+						static bool ComponentExistsWarning = false;
+						static char newPrefabName[64] = "New Prefab"; // input prefab name
+						ImGui::InputText("New Prefab Name", newPrefabName, sizeof(newPrefabName));
+
+						static Prefab bufferPrefab(0); // buffer prefab to hold changes
+
+						// Dropdown list for adding components
+						const char* creatorComponentTypes[] = {"", "Transform", "Collision", "Physics"}; //Add texture when working
+						static int selectedComponent = 0; // index for component types array
+
+						if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
+						{
+							if (selectedComponent > 0)
+							{
+								// Check if a component of the selected type already exists in the prefab
+								ComponentType typeToAdd = ComponentFactory::StringToComponentType(creatorComponentTypes[selectedComponent]);
+								if (!bufferPrefab.HasComponent(typeToAdd))
+								{
+									// Add the selected component type to the selected prefab
+									bufferPrefab.AddNewComponent(typeToAdd);
+									selectedComponent = 0; // Reset the selected component index
+								}
+								else
+								{
+									// Set the flag to show the warning message
+									ComponentExistsWarning = true;
+									selectedComponent = 0;
+								}								
+							}						
+						}
+
+						if (ComponentExistsWarning)
+						{
+							ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already has a %s component!", creatorComponentTypes[selectedComponent]);
+							ImGui::SameLine();
+							// Optionally, you can add a button to dismiss the warning
+							if (ImGui::Button("Dismiss"))
+							{
+								ComponentExistsWarning = false;
+							}
+						}
+
+						// iterate through the components in the buffer prefab and display as collapsing headers
+						const auto& bufferComponents = bufferPrefab.GetComponents();
+						for (const auto& pair : bufferComponents)
+						{
+							ComponentType componentType = pair.first;
+							ImGui::PushID(static_cast<int>(componentType));
+
+							if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(componentType).c_str()))
+							{
+								ImGui::Indent();
+
+								switch (componentType)
+								{
+								case ComponentType::Transform:
+								{
+									TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+									float posX = transform->position.x;
+									float posY = transform->position.y;
+									float scaleX = transform->scaleX;
+									float scaleY = transform->scaleY;
+									float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+									rotDeg = fmod(rotDeg, 360.0f);
+
+									// Input boxes for editing TransformComponent properties
+									if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
+									{
+										transform->position.x = posX;
+									}
+
+									if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
+									{
+										transform->position.y = posY;
+									}
+
+									if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
+									{
+										transform->scaleX = scaleX;
+									}
+
+									if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
+									{
+										transform->scaleY = scaleY;
+									}
+
+									if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
+									{
+										transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+									}
+									break;
+								}
+
+								case ComponentType::Collision:
+								{
+									CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+									float width = collision->c_Width;
+									float height = collision->c_Height;
+									bool isColliding = collision->isColliding;
+
+									// Input boxes for editing CollisionComponent properties
+									if (ImGui::InputFloat("Hitbox Width", &width, 1.0f, 5.0f, "%.2f"))
+									{
+										collision->c_Width = width;
+									}
+
+									if (ImGui::InputFloat("Hitbox Height", &height, 1.0f, 5.0f, "%.2f"))
+									{
+										collision->c_Height = height;
+									}
+
+									if (ImGui::Checkbox("Is Colliding", &isColliding))
+									{
+										collision->isColliding = isColliding;
+									}
+									break;
+								}
+
+								case ComponentType::Physics:
+								{
+									PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+									float velocity_x = physics->velocity.x;
+									float velocity_y = physics->velocity.y;
+
+									if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+									{
+										physics->velocity.x = velocity_x;
+									}
+
+									if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+									{
+										physics->velocity.y = velocity_y;
+									}
+
+									break;
+								}
+
+								// Add similar blocks for other component types
+
+								default:
+									break;
+								}
+
+								ImGui::SameLine();
+								if (ImGui::Button("Remove"))
+								{
+									bufferPrefab.components.erase(componentType);
+								}
+
+								ImGui::Unindent();
+							}
+
+							ImGui::PopID();
+						}
+
+						if (ImGui::Button("Create New Prefab"))
+						{
+							PrefabID newPrefabID = prefabManager->CreatePrefab();
+							Prefab* newPrefab = prefabManager->GetPrefab(newPrefabID);
+							newPrefab->name = newPrefabName;
+
+							// Add each component to the new prefab
+							for (const auto& pair : bufferComponents)
+							{
+								Component* clonedComponent = pair.second->Clone();
+								newPrefab->components.emplace(pair.first, std::unique_ptr<Component>(clonedComponent));
+							}
+						}
+					}												
 				}
 			}
-			ImGui::End();
+			ImGui::End(); // End Prefab Tool
 			
 			ImGui::End(); // End the selected entity properties window
 

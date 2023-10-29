@@ -1,3 +1,14 @@
+/******************************************************************************/
+/*!
+\file		Prefab.cpp
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Contains the definitions of the Prefab Class
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Prefab.h"
 
@@ -43,6 +54,11 @@ namespace Engine
 		}
 
 		return result;
+	}
+
+	bool Prefab::HasComponent(ComponentType type) const
+	{
+		return components.find(type) != components.end();
 	}
 	
 }

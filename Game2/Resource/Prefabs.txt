@@ -13,6 +13,8 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Physics
+Velocity: 0 0
 EndPrefab
 Archer
 Transform
@@ -20,4 +22,6 @@ Position: 100 150
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
+Physics
+Velocity: 0 0
 EndPrefab

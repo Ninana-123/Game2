@@ -55,8 +55,7 @@ namespace Engine
 				system->StopTimer();
 				i++;
 			}
-		}
-		std::cout << "System loop count:" << i << std::endl;
+		}		
 	}
 
 	template <typename T>

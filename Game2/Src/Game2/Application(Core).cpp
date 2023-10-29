@@ -406,6 +406,7 @@ namespace Engine
     {
         UNREFERENCED_PARAMETER(e);
         // Handle window close event
+        loader->SavePrefabs("Resource/Prefab.txt");
         m_Running = false;
         return true;
     }
@@ -456,5 +457,4 @@ namespace Engine
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
     
-
 }

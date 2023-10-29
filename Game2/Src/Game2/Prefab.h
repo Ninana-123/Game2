@@ -5,7 +5,7 @@
 \author		Tristan Tham Rui Hong
 \par		t.tham@digipen.edu
 \date		9/09/2023
-\brief		Contains the interface of the Entity Manager
+\brief		Contains the interface of the Prefab class
 
  */
  /******************************************************************************/
@@ -25,6 +25,7 @@ namespace Engine
 		void AddComponent(std::unique_ptr<Component> component);
 		void AddNewComponent(ComponentType type);
 		Component* GetComponent(ComponentType type) const;
+		bool HasComponent(ComponentType type) const;
 	
 		PrefabID GetID() const { return id; }
 		std::string GetName() const { return name; }

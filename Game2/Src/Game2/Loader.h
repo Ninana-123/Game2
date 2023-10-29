@@ -37,6 +37,8 @@ namespace Engine {
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
         void LoadPrefabs(const std::string& filepath);
+        
+        void SavePrefabs(const std::string& filepath);
         WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
         Engine::EntityManager* entityManager;
