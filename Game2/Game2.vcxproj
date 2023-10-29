@@ -22,6 +22,7 @@
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
+    <ClInclude Include="Src\Game2\Body.h" />
     <ClInclude Include="Src\Game2\CollisionSystem.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Src\Game2\PhysicsComponent.h" />
     <ClInclude Include="Src\Game2\PhysicsSystem.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
+    <ClInclude Include="Src\Game2\PrefabManager.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
     <ClInclude Include="Src\Game2\ErrorHandler.h" />
@@ -74,6 +76,7 @@
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\AssetManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
+    <ClCompile Include="Src\Game2\Body.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
@@ -97,6 +100,7 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\PhysicsSystem.cpp" />
     <ClCompile Include="Src\Game2\Prefab.cpp" />
+    <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />

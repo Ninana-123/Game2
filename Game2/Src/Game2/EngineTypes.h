@@ -1,11 +1,12 @@
 #pragma once
 
 typedef unsigned int EntityID;
+typedef unsigned int PrefabID;
 constexpr EntityID EMPTY_ID = 0;
 
 typedef unsigned int ComponentID;
 
-enum class ComponentType { Collision, Transform, Texture, Physics };
+enum class ComponentType { Collision, Transform, Texture, Physics, Unknown };
 
 enum TextureClass
 {

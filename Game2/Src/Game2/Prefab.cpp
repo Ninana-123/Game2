@@ -3,6 +3,11 @@
 
 namespace Engine
 {
+	void Prefab::AddComponent(std::unique_ptr<Component> component)
+	{
+		components.emplace(component->GetType(), std::move(component));
+	}
+
 	void Prefab::AddNewComponent(ComponentType type)
 	{
 		auto newComponent = ComponentFactory::CreateComponent(type);
@@ -17,6 +22,18 @@ namespace Engine
 			std::cout << "Failed to add new component." << std::endl;
 		}
 	}
+
+	Component* Prefab::GetComponent(ComponentType type) const
+	{
+		auto it = components.find(type);
+
+		if (it != components.end())
+		{
+			return it->second.get();
+		}
+		else return nullptr;
+	}
+
 	std::unordered_map<ComponentType, Component*> Prefab::GetComponents() const
 	{
 		std::unordered_map<ComponentType, Component*> result;
@@ -26,7 +43,7 @@ namespace Engine
 		}
 
 		return result;
-
 	}
+	
 }
 

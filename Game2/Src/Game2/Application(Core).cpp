@@ -39,6 +39,8 @@ double previousTime = glfwGetTime();  // Previous time for FPS calculation
 double loopTime = 0.0;  // Definition of loopTime
 double dt = 0.0;
 
+// Variable for last key pressed
+int lastKeyPressed = 0;
 
 namespace Engine
 {
@@ -55,6 +57,8 @@ namespace Engine
 
     // Entity-related instances and properties
     GraphicsSystem graphicsSystem;
+    Engine::EntityManager EM;
+    Engine::PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
@@ -106,7 +110,7 @@ namespace Engine
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
-        // Systems Manager Initialization: initializes TestSystem and Graphics
+        // Systems Manager & Asset Manager Initialization
         assetManager = std::make_shared<Engine::AssetManager>();
         for (int i = 0; i < TextureClassCount; i++) {
             assetManager->loadTexture(i, assetManager->textureFilePaths.at(i));
@@ -118,12 +122,16 @@ namespace Engine
         systemsManager->Initialize();
 
         // Load scene from a file
-        loader = std::make_shared<Loader>(EM);
+        loader = std::make_unique<Engine::Loader>(&EM, &PM);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("Resource/Scenes/testscene.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
-        if (EM->GetEntity(1) != nullptr) {
-            targetEntity = EM->GetEntity(1);
+        Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
+        loader->LoadPrefabs("Resource/Prefabs.txt");
+        Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
+        
+        if (EM.GetEntity(1) != nullptr) {
+            targetEntity = EM.GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
@@ -138,9 +146,13 @@ namespace Engine
         sound2.setLoop();
 
         // Initialize ImGuiWrapper
-        m_ImGuiWrapper = std::make_shared<Engine::ImGuiWrapper>(EM);
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM, &PM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
+
+        assetManager = std::make_shared<Engine::AssetManager>();
+        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
+
     }
 
     /*!**********************************************************************
@@ -166,7 +178,6 @@ namespace Engine
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
-
 
         while (m_Running)
         {
@@ -211,7 +222,7 @@ namespace Engine
             if (InputHandler.IsKeyTriggered(KEY_2))
             {
                 systemsManager->ToggleSystemState<PhysicsSystem>();
-            }
+            }    
 
             if (m_ImGuiWrapper->TargetEntityGetter())
             {
@@ -225,9 +236,7 @@ namespace Engine
                     physicsTest = dynamic_cast<PhysicsComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Physics));
                 }
             }
-            
-            
-
+                    
             // Define a threshold for the minimum and maximum scales
             const float minScale = 0.5f; // Adjust this value as needed
             const float maxScale = 2.0f; // Adjust this value as needed
@@ -235,27 +244,73 @@ namespace Engine
             // Add a flag to keep track of scaling direction
             bool scalingUp = false;
             bool scalingDown = false;
+
+            // Variables for last position
+            float lastPositionX = transformTest->position.x;
+            float lastPositionY = transformTest->position.y;
+
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
-                if (InputHandler.IsKeyPressed(KEY_UP))
-                {
-                    transformTest->position.y += transformation;
-                    //physicsTest->velocityY = 10.0f;
+                if (collisionTest->isColliding) {
+                    if (lastKeyPressed == 1) {
+                        transformTest->position.y = lastPositionY - 20.f;
+                    }
+                    if (lastKeyPressed == 2) {
+                        transformTest->position.y = lastPositionY + 20.f;
+                    }
+                    if (lastKeyPressed == 3) {
+                        transformTest->position.x = lastPositionX + 20.f;
+                    }
+                    if (lastKeyPressed == 4) {
+                        transformTest->position.x = lastPositionX - 20.f;
+                    }
                 }
-                else if (InputHandler.IsKeyPressed(KEY_DOWN))
+
+                if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.y -= transformation;
-                    //physicsTest->velocityY = -10.0f;
+                    //lastPositionY = transformTest->position.y;
+                    lastPositionY += transformation;
+                    transformTest->position.y = lastPositionY;
+                    if (physicsTest->velocity.y <= 0.0f) {
+                        physicsTest->velocity.y = 1.0f;
+                    }
+                    lastKeyPressed = 1;
                 }
-                else if (InputHandler.IsKeyPressed(KEY_LEFT))
+
+                else if (InputHandler.IsKeyPressed(KEY_DOWN) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.x -= transformation;
-                    //physicsTest->velocityX = -10.0f;
+                    //lastPositionY = transformTest->position.y;
+                    lastPositionY -= transformation;
+                    transformTest->position.y = lastPositionY;
+                    // transformTest->position.y -= transformation;
+                    if (physicsTest->velocity.y >= -0.0f) {
+                        physicsTest->velocity.y = -1.0f;
+                    }
+                    lastKeyPressed = 2;
                 }
-                else if (InputHandler.IsKeyPressed(KEY_RIGHT))
+
+                else if (InputHandler.IsKeyPressed(KEY_LEFT) && !(collisionTest->isColliding))
                 {
-                    transformTest->position.x += transformation;
-                    //physicsTest->velocityX = 10.0f;
+                    //lastPositionX = transformTest->position.x;
+                    lastPositionX -= transformation;
+                    transformTest->position.x = lastPositionX;
+                    //transformTest->position.x -= transformation;
+                    if (physicsTest->velocity.x >= -0.0f) {
+                        physicsTest->velocity.x = -1.0f;
+                    }
+                    lastKeyPressed = 3;
+                }
+
+                else if (InputHandler.IsKeyPressed(KEY_RIGHT) && !(collisionTest->isColliding))
+                {
+                    //lastPositionX = transformTest->position.x;
+                    lastPositionX += transformation;
+                    transformTest->position.x = lastPositionX;
+                    //transformTest->position.x += transformation;
+                    if (physicsTest->velocity.x <= 0.0f) {
+                        physicsTest->velocity.x = 1.0f;
+                    }
+                    lastKeyPressed = 4;
                 }
                 else if (InputHandler.IsKeyPressed(KEY_R))
                 {

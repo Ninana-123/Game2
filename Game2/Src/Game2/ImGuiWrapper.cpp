@@ -42,7 +42,7 @@ namespace Engine {
 	\brief
 	Constructor for ImGuiWrapper class.
 	*************************************************************************/
-	ImGuiWrapper::ImGuiWrapper() : entityManager()
+	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
 
 	}
@@ -539,12 +539,169 @@ namespace Engine {
 						}
 					}
 				}
-
 			}
 			else {
 				ImGui::Text("No entity selected.");
 			}
 
+			//Prefab Menu
+			ImGui::Begin("Prefab Tool", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+			if (prefabManager)
+			{
+				// Display a combo box to select the current prefab
+				const auto prefabs = prefabManager->GetPrefabs();
+				static int selectedPrefabIndex = -1;
+
+				std::vector<std::string> prefabNames;
+				for (const auto& pair : *prefabs) 
+				{
+					prefabNames.push_back(pair.second->GetName());
+				}
+
+				if (selectedPrefabIndex >= prefabNames.size()) {
+					selectedPrefabIndex = static_cast<int>(prefabNames.size() - 1);
+				}
+
+				if (!prefabNames.empty() && selectedPrefabIndex >= 0)
+				{
+					if (ImGui::BeginCombo("Select Prefab", prefabNames[selectedPrefabIndex].c_str()))
+					{
+						for (int i = 0; i < prefabNames.size(); ++i)
+						{
+							const bool isSelected = (selectedPrefabIndex == i);
+							if (ImGui::Selectable(prefabNames[i].c_str(), isSelected))
+							{
+								selectedPrefabIndex = i;
+								targetPrefab = prefabManager->GetPrefab(selectedPrefabIndex);
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
+						}
+						ImGui::EndCombo();
+					}
+				}
+				
+				// Display property editor for the selected prefab
+				if (selectedPrefabIndex >= 0 && selectedPrefabIndex < prefabNames.size()) 
+				{
+					Prefab* selectedPrefab = prefabManager->GetPrefab(prefabNames[selectedPrefabIndex]);
+
+					// Add ImGui code to display and edit properties of the selected prefab
+					ImGui::Text("Prefab Properties:");
+					ImGui::Text("Prefab Name: %s", selectedPrefab->GetName().c_str());
+
+					// Display components of the selected prefab
+					ImGui::Text("Edit Components:");
+					const auto components = selectedPrefab->GetComponents();
+					for (const auto& pair : components)
+					{
+						ComponentType component = pair.first;
+						ImGui::Text("%s", ComponentFactory::ComponentTypeToString(component).c_str());
+						// Add ImGui code to display and edit properties of the component
+						switch (component) 
+						{
+							case ComponentType::Transform: 
+							{
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+								float posX = transform->position.x;
+								float posY = transform->position.y;
+								float scaleX = transform->scaleX;
+								float scaleY = transform->scaleY;
+								float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+								rotDeg = fmod(rotDeg, 360.0f);
+
+								// Input boxes for editing TransformComponent properties
+								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f")) 
+								{
+									transform->position.x = posX;
+								}
+
+								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f")) 
+								{
+									transform->position.y = posY;
+								}
+
+								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f")) 
+								{
+									transform->scaleX = scaleX;
+								}
+
+								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f")) 
+								{
+									transform->scaleY = scaleY;
+								}
+
+								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f")) 
+								{
+									transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+								}
+								break;
+							}
+						
+							case ComponentType::Collision: 
+							{
+								CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+								float width = collision->c_Width;
+								float height = collision->c_Height;
+								bool isColliding = collision->isColliding;
+
+								// Input boxes for editing CollisionComponent properties
+								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f")) 
+								{
+									collision->c_Width = width;
+								}
+
+								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f")) 
+								{
+									collision->c_Height = height;
+								}
+
+								if (ImGui::Checkbox("Is Colliding", &isColliding))
+								{
+									collision->isColliding = isColliding;
+								}
+								break;
+							}
+						default:							
+							break;
+						}
+					}
+					/*
+					* if (ImGui::Button("Duplicate Prefab"))
+					{
+						if (selectedPrefab)
+						{
+							PrefabID duplicatedPrefabID = prefabManager->ClonePrefab(selectedPrefab->GetID());
+							// Handle the duplication of the selected prefab, update UI, etc.
+						}
+					}
+
+					if (ImGui::Button("Delete Prefab"))
+					{
+						if (selectedPrefab)
+						{
+							prefabManager->DestroyPrefab(selectedPrefab->GetID());
+							// Handle the deletion of the selected prefab, update UI, etc.
+						}
+					}
+
+					ImGui::Separator();
+
+					ImGui::Text("Prefab Creator");
+					// Buttons for adding, duplicating, and deleting prefabs
+					if (ImGui::Button("Add Prefab"))
+					{
+						PrefabID newPrefabID = prefabManager->CreatePrefab();
+						// Handle the creation of a new prefab, update UI, etc.
+					}
+					*/
+									
+				}
+			}
+			ImGui::End();
+			
 			ImGui::End(); // End the selected entity properties window
 
 			ImGui::End();

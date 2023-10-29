@@ -97,6 +97,12 @@
     <ClCompile Include="Src\Game2\ErrorHandler.cpp">
       <Filter>Base\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Body.cpp">
+      <Filter>Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PrefabManager.cpp">
+      <Filter>Base\Engine\PrefabManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -249,6 +255,12 @@
     <ClInclude Include="Src\Game2\ErrorHandler.h">
       <Filter>Base\Logger</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Body.h">
+      <Filter>Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PrefabManager.h">
+      <Filter>Base\Engine\PrefabManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -337,6 +349,9 @@
     </Filter>
     <Filter Include="Base\AssetsManager">
       <UniqueIdentifier>{9bb45b5c-b999-4dab-9cb3-dbdaf640c5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\PrefabManager">
+      <UniqueIdentifier>{4a796833-5ab4-4915-9316-b04e94de34ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

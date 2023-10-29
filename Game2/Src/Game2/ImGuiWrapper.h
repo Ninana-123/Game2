@@ -18,12 +18,13 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "InputEvent.h"
 #include "AppEvent.h"
 #include "EntityManager.h"
+#include "PrefabManager.h"
 
 namespace Engine {
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
-		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> EM) : entityManager(EM) {}
+		ImGuiWrapper(Engine::EntityManager* em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
 		void OnAttach();
@@ -46,8 +47,10 @@ namespace Engine {
 
 	private:
 		float m_Time = 0.0f;
-		std::shared_ptr<Engine::EntityManager> entityManager;
+		Engine::EntityManager* entityManager;
+		Engine::PrefabManager* prefabManager;
 		Entity* targetEntity = nullptr;
+		Prefab* targetPrefab = nullptr;
 
 	};
 }

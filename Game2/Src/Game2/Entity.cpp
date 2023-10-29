@@ -28,34 +28,6 @@ namespace Engine
 		components.emplace(component->GetType(), std::move(component));
 	}
 
-	Component* Entity::Create(const std::string& componentType) {
-		if (componentType == "Transform") {
-			TransformComponent* component = new TransformComponent();
-			components.emplace(component->GetType(), std::move(component));
-			return component;
-		}
-
-		else if (componentType == "Collision"){
-			CollisionComponent* component = new CollisionComponent();
-			components.emplace(component->GetType(), std::move(component));
-			return component;
-		}
-		else if (componentType == "Physics") {
-			PhysicsComponent* component = new PhysicsComponent();
-			components.emplace(component->GetType(), std::move(component));
-			return component;
-		}
-
-		else if (componentType == "Texture") {
-			TextureComponent* component = new TextureComponent();
-			components.emplace(component->GetType(), std::move(component));
-			return component;
-		}
-
-		else {
-			return nullptr;
-		}
-	}
 	/*!**********************************************************************
 	\brief
 	Adds a new component of the specified type to the entity.
