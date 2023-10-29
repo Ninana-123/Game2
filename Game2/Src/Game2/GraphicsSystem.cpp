@@ -351,14 +351,14 @@ namespace Engine
         double deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        float frameRate = 5.0f;
-        float spriteWidth = 6.0f; // Number of horizontal frames
-        float spriteHeight = 1.0f; // Number of vertical frames
+        float frameRate = 1.0f;
+        float horizontalFrames = 6.0f; // Number of horizontal frames
+        float verticalFrames = 1.0f; // Number of vertical frames
         float Length = 1536.0f; // length of sprite sheet
         Anim_Mode playMode = Anim_Mode::LOOP;
 
         // Create a static animation object if not created already
-        static Animation animation(frameRate, spriteWidth, spriteHeight, playMode);
+        static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
 
         // Play the animation
         animation.Play();
@@ -370,17 +370,22 @@ namespace Engine
         int currentFrame = animation.GetCurrentFrame();
 
         // Calculate the texture offset based on the current frame
-        float frameWidth = 1.0 / spriteWidth;
-        float texCoordX = 1.0 - (currentFrame * frameWidth);
-
-        // Debugging: Print out the values
-        std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
+        float frameWidth = Length / horizontalFrames;
+        float texCoordX = currentFrame * frameWidth;
 
         // Set the texture offset in the shader
-        shader.SetUniform1f("u_TextureOffset", texCoordX);
+        shader.SetUniform1f("texCoordX", texCoordX);
+
+     
+        shader.SetUniform1f("u_FrameCount", horizontalFrames);
+        shader.SetUniform1f("u_FrameWidth", frameWidth);
+        shader.SetUniform1i("u_CurrentFrame", currentFrame);
+
         glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
         shader.SetUniformMat4f("u_MVP", result);
 
+        // Debugging: Print out the values
+        std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
         va.Bind();
         ib.Bind();
 
@@ -660,8 +665,14 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            RenderTexturedEntity(mvpA);
+                            /*int currentFrame = 0;
+                            for ( int i = 0; i <= currentFrame; i++)
+                            {
+                                RenderTexturedEntity(mvpA,currentFrame);
+                                currentFrame = (currentFrame + 1) % 6;
 
+                            }*/
+                            RenderTexturedEntity(mvpA);
                             RenderLines(mvpA);
                            /* std::cout << "Texmat4: " << std::endl;
                             for (int i = 0; i < 4; i++) {

@@ -25,11 +25,9 @@ namespace Engine
 
     private:
         float frameRate;
-        int spriteWidth;
-        int spriteHeight;
+        int horizontalFrames;
+        int verticalFrames;
         int frameCount;
-        float textureWidth;
-        float textureHeight;
         float frameTimer;
         float animTimer;
         float frameDisplayTime;

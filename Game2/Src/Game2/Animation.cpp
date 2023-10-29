@@ -3,12 +3,10 @@
 
 namespace Engine
 {
-    Animation::Animation(float frameRate, float spriteWidth, float spriteHeight, Anim_Mode mode)
-        : frameRate(frameRate), spriteWidth(spriteWidth), spriteHeight(spriteHeight), playMode(mode)
+    Animation::Animation(float frameRate, float horizontalFrames, float verticalFrames, Anim_Mode mode)
+        : frameRate(frameRate), horizontalFrames(horizontalFrames), verticalFrames(verticalFrames), playMode(mode)
     {
-        frameCount = spriteWidth * spriteHeight;
-        textureWidth = 1.0f / spriteWidth;
-        textureHeight = 1.0f / spriteHeight;
+        frameCount = horizontalFrames * verticalFrames;
         frameTimer = 1.0f / frameRate;
         playing = false;
         currentFrame = 0;
@@ -81,8 +79,8 @@ namespace Engine
         }
 
         // Calculate texture coordinates based on the current frame
-        textureXIndex = currentFrame % static_cast<int>(spriteWidth);
-        textureYIndex = currentFrame / static_cast<int>(spriteWidth);
+        textureXIndex = currentFrame % static_cast<int>(horizontalFrames);
+        textureYIndex = currentFrame / static_cast<int>(horizontalFrames);
     }
 
     
