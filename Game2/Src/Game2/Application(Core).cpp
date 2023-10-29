@@ -403,7 +403,7 @@ namespace Engine
     {
         UNREFERENCED_PARAMETER(e);
         // Handle window close event
-        loader->SavePrefabs("Resource/Prefab.txt");
+        loader->SavePrefabs("Resource/Prefabs.txt");
         m_Running = false;
         return true;
     }

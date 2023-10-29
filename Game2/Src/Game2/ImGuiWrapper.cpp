@@ -393,12 +393,20 @@ namespace Engine {
 							if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
 								selectedEntityIndex = i;
 								targetEntity = entityManager->GetEntity(selectedEntityIndex);
-								//std::cout << targetEntity->GetID();
 							}
 							if (isSelected)
 								ImGui::SetItemDefaultFocus();
 						}
 						ImGui::EndCombo();
+					}
+
+					// Clone Entity button
+					if (ImGui::Button("Clone Entity"))
+					{
+						if (selectedEntityIndex)
+						{
+							entityManager->CloneEntity(selectedEntityIndex);							
+						}
 					}
 				}
 				else
@@ -406,16 +414,6 @@ namespace Engine {
 					ImGui::Text("No entities available"); // or handle as appropriate
 				}
 				
-				// Clone Entity button
-				if (ImGui::Button("Clone Entity"))
-				{
-					if (targetEntity)
-					{
-						secondEntity = entityManager->CloneEntity(targetEntity->GetID());
-						targettedEntity = entityManager->GetEntity(secondEntity);
-					}
-				}
-
 				ImGui::Text("Clone Multiple Entities");
 				ImGui::InputText("Clone Count", cloneCountInput, 10);
 				// Clone Multiple Entity button
@@ -453,6 +451,15 @@ namespace Engine {
 						else if (selectedEntityIndex >= entityNames.size())
 						{
 							selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+							entityManager->nextEntityID--;
+							prefabManager->nextPrefabID--;
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+							
+						}
+						else if (selectedEntityIndex < entityNames.size())
+						{
+							entityManager->nextEntityID--;
+							prefabManager->nextPrefabID--;
 							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 						}
 						else
@@ -554,7 +561,7 @@ namespace Engine {
 			{
 				// Display a combo box to select the current prefab
 				const auto prefabs = prefabManager->GetPrefabs();
-				static int selectedPrefabIndex = -1;
+				static int selectedPrefabIndex = 0;
 
 				std::vector<std::string> prefabNames;
 				for (const auto& pair : *prefabs) 
@@ -605,7 +612,7 @@ namespace Engine {
 					ImGui::SameLine();
 					ImGui::Spacing();
 					// Dropdown list for adding components					
-					const char* componentTypes[] = {"", "Transform", "Collision", "Physics" }; //add texture when working
+					const char* componentTypes[] = {"", "Transform", "Collision", "Physics", "Texture"}; //add texture when working
 					static int selectedComponentType = 0; // Index of the selected component 
 					if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 					{
@@ -732,7 +739,17 @@ namespace Engine {
 
 								break;
 							}
-																
+							case ComponentType::Texture:
+							{
+								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+								int textureIndex = static_cast<int>(texture->textureClass);
+								if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+								{
+									texture->textureClass = static_cast<TextureClass>(textureIndex);
+								}
+							
+							}
+
 							default:
 								break;
 							}
@@ -742,8 +759,9 @@ namespace Engine {
 							{
 								selectedPrefab->components.erase(component);
 							}
-
+						
 							ImGui::Unindent();
+							ImGui::Spacing();
 						}
 						
 					}
@@ -789,7 +807,7 @@ namespace Engine {
 						static Prefab bufferPrefab(0); // buffer prefab to hold changes
 
 						// Dropdown list for adding components
-						const char* creatorComponentTypes[] = {"", "Transform", "Collision", "Physics"}; //Add texture when working
+						const char* creatorComponentTypes[] = {"", "Transform", "Collision", "Physics", "Texture"};
 						static int selectedComponent = 0; // index for component types array
 
 						if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
@@ -921,7 +939,20 @@ namespace Engine {
 									break;
 								}
 
-								// Add similar blocks for other component types
+								case ComponentType::Texture:
+								{
+									TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+									int textureIndex = static_cast<int>(texture->textureClass);
+									if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+									{
+										texture->textureClass = static_cast<TextureClass>(textureIndex);
+									}
+									else
+									{
+										texture->textureClass = TextureClass::Warrior;
+									}
+								}
+								
 
 								default:
 									break;
