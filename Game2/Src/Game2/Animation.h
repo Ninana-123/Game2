@@ -1,33 +1,41 @@
 #pragma once
 
-#include <vector>
-
 namespace Engine
 {
+    enum class Anim_Mode
+    {
+        LOOP, ONE_TIME
+    };
+
     class Animation
     {
     public:
-        Animation(float frameRate, int spriteWidth, int spriteHeight);
-        Animation(); // Default constructor
+        Animation(float frameRate, float  spriteWidth, float spriteHeight, Anim_Mode mode = Anim_Mode::LOOP);
 
-        void AddFrame(int textureIndex, int frameDuration = 1);
         void Play();
         void Pause();
-        void Stop();
+        void ResetAnim();
         void Update(float deltaTime);
         int GetCurrentFrame();
-        bool IsPlaying();
-        int GetCurrentFrameWidth();
-        int GetCurrentFrameHeight();
+        bool IsPlaying();        
+        void NextFrame();
+        float GetAnimTimer() const;
+
 
     private:
         float frameRate;
         int spriteWidth;
         int spriteHeight;
-        std::vector<int> frames;
-        std::vector<int> frameDurations;
-        int currentFrame;
+        int frameCount;
+        float textureWidth;
+        float textureHeight;
         float frameTimer;
+        float animTimer;
+        float frameDisplayTime;
+        int currentFrame;
+        int textureXIndex;
+        int textureYIndex;
         bool playing;
+        Anim_Mode playMode;
     };
 }
