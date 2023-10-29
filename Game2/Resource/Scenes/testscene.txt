@@ -4,6 +4,8 @@ Position: 1 0
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
+Texture
+TextureClass: 0
 EndEntity
 Transform 
 Position: 200 200
@@ -20,6 +22,8 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Texture
+TextureClass: 3
 EndEntity
 Transform 
 Position: 100 100
@@ -36,6 +40,8 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Texture
+TextureClass: 1
 EndEntity
 Transform 
 Position: 300 300
@@ -52,6 +58,8 @@ MaxX: 0
 MaxY: 0
 Physics
 Velocity: 0 0
+Texture
+TextureClass: 2
 EndEntity
 
 

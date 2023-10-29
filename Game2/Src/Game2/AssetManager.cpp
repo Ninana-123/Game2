@@ -14,22 +14,25 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #include "pch.h"
 #include "AssetManager.h"
+#include "TextureComponent.h"
+#include "logger.h"
 
 
 namespace Engine {
 
-        std::shared_ptr<Texture> AssetManager::loadTexture(const std::string& name, const std::string& filePath) {
+
+        std::shared_ptr<Texture> AssetManager::loadTexture(const int texid, const std::string& filePath) {
             auto texture = std::make_shared<Texture>(filePath);
-            textures[name] = texture;
+            textures[texid] = texture;
             return texture;
         }
 
-        std::shared_ptr<Texture> AssetManager::getTexture(const std::string& name) const {
-            auto it = textures.find(name);
+        std::shared_ptr<Texture> AssetManager::getTexture(const int texid) const {
+            auto it = textures.find(texid);
             if (it != textures.end()) {
                 return it->second;
             }
-            std::cerr << "Texture not found: " << name << std::endl;
+            std::cerr << "Texture ID not found: " << texid << std::endl;
             return nullptr;
         }
 }

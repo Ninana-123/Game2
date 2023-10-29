@@ -42,22 +42,19 @@ double dt = 0.0;
 
 namespace Engine
 {
-    std::unique_ptr<Loader> loader;
-    // Window Properties configuration loaded from a file
-    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("config.txt");
-
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
     SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
     SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
-
     Engine::Input InputHandler;
-    std::unique_ptr<ImGuiWrapper> m_ImGuiWrapper;
+    // Window Properties configuration loaded from a file
+    std::shared_ptr<Loader> loader = nullptr;
+    Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("Resource/Config/config.txt");
+    std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
+    std::shared_ptr<SystemsManager> systemsManager = nullptr;
 
     // Entity-related instances and properties
-    std::shared_ptr<SystemsManager> systemsManager = nullptr;
     GraphicsSystem graphicsSystem;
-    Engine::EntityManager EM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
@@ -65,8 +62,6 @@ namespace Engine
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
 
-    float vx = 0.0f;
-    float vy = 0.0f;
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -113,23 +108,28 @@ namespace Engine
 
         // Systems Manager Initialization: initializes TestSystem and Graphics
         assetManager = std::make_shared<Engine::AssetManager>();
-        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
-        systemsManager = std::make_shared<SystemsManager>(assetManager);
+        for (int i = 0; i < TextureClassCount; i++) {
+            assetManager->loadTexture(i, assetManager->textureFilePaths.at(i));
+        }
+
+        EM = std::make_shared<Engine::EntityManager>();
+
+        systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(&EM);
+        loader = std::make_shared<Loader>(EM);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene("testscene.txt");
+        loader->LoadScene("Resource/Scenes/testscene.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
-        if (EM.GetEntity(1) != nullptr) {
-            targetEntity = EM.GetEntity(1);
+        if (EM->GetEntity(1) != nullptr) {
+            targetEntity = EM->GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
         }
         else
-            targetEntity = EM.GetEntity(0);
+            targetEntity = EM->GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
         audioEngine.loadSound(sound);
@@ -138,15 +138,9 @@ namespace Engine
         sound2.setLoop();
 
         // Initialize ImGuiWrapper
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM);
+        m_ImGuiWrapper = std::make_shared<Engine::ImGuiWrapper>(EM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
-
-        assetManager = std::make_shared<Engine::AssetManager>();
-        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
-
-        systemsManager = std::make_shared<SystemsManager>(assetManager);
-        systemsManager->Initialize();
     }
 
     /*!**********************************************************************
@@ -320,7 +314,7 @@ namespace Engine
             }
 
             //System Updating
-            systemsManager->UpdateSystems(EM.GetEntities());
+            systemsManager->UpdateSystems(EM->GetEntities());
 
             //Entity Debug
             //std::cout << "EntityID: " << static_cast<int>(targetEntity->id) << " Number of Components: " << targetEntity->components.size() << std::endl;

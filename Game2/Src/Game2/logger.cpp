@@ -13,9 +13,8 @@ written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 #include "pch.h"
-#include "Game2/logger.h"
-#include <stdexcept>
-#include <iostream>
+#include "logger.h"
+
 
 namespace Engine {
 
@@ -36,7 +35,11 @@ namespace Engine {
 
     Logger::Logger(const std::string& logFileName) {
         try {
-            m_LogFile.open(logFileName, std::ios::out | std::ios::trunc);
+            // Ensure the directory exists
+            std::filesystem::create_directories("Resource/Logs/");
+
+            std::string fullPath = "Resource/Logs/" + logFileName;
+            m_LogFile.open(fullPath, std::ios::out | std::ios::trunc);
             if (!m_LogFile.is_open()) {
                 throw std::runtime_error("Failed to open log file.");
             }

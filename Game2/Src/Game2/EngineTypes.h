@@ -7,18 +7,13 @@ typedef unsigned int ComponentID;
 
 enum class ComponentType { Collision, Transform, Texture, Physics };
 
-enum class TextureClass
+enum TextureClass
 {
-    Null,
-    Unit,
     Background,
+    Warrior,
+    Tank,
+    Archer,
     Tower,
-};
-
-enum class TextureType
-{ 
-    Null,
-    Type1,
-    Type2,
-    Type3,
+    Castle,
+    TextureClassCount
 };

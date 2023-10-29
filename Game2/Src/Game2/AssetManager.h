@@ -14,14 +14,24 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 #include "pch.h"
 #include "texture.h"
+#include "EngineTypes.h"
 
 namespace Engine {
     class AssetManager {
     private:
-        std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
+        std::unordered_map<int , std::shared_ptr<Texture>> textures;
 
     public:
-        std::shared_ptr<Texture> loadTexture(const std::string& name, const std::string& filePath);
-        std::shared_ptr<Texture> getTexture(const std::string& name) const;
+        std::shared_ptr<Texture> loadTexture(const int texid, const std::string& filePath);
+        std::shared_ptr<Texture> getTexture(const int texid) const;
+
+        std::map<int, std::string> textureFilePaths = {
+        {TextureClass::Background, "Resource/Texture/Background.png"},
+        {TextureClass::Warrior, "Resource/Texture/Warrior.png"},
+        {TextureClass::Tank, "Resource/Texture/Tank.png"},
+        {TextureClass::Archer, "Resource/Texture/Archer.png"},
+        {TextureClass::Tower, "Resource/Texture/Tower.png"},
+        {TextureClass::Castle, "Resource/Texture/Castle.png"}
+        };
     };
 }

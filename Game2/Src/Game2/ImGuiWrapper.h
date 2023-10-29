@@ -23,7 +23,7 @@ namespace Engine {
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
-		ImGuiWrapper(Engine::EntityManager* em) : entityManager(em) {}
+		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> EM) : entityManager(EM) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
 		void OnAttach();
@@ -46,7 +46,7 @@ namespace Engine {
 
 	private:
 		float m_Time = 0.0f;
-		Engine::EntityManager* entityManager;
+		std::shared_ptr<Engine::EntityManager> entityManager;
 		Entity* targetEntity = nullptr;
 
 	};

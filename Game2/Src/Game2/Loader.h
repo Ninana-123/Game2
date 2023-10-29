@@ -30,13 +30,13 @@ namespace Engine {
 
     class Loader {
     public:
-        Loader(EntityManager* entityManager) : entityManager(entityManager) {};
+        Loader(std::shared_ptr<Engine::EntityManager> EM) : entityManager(EM) {};
         ~Loader();
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
         WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
-        Engine::EntityManager* entityManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
     };
 
 }
