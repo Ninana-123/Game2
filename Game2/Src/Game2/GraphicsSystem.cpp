@@ -33,9 +33,10 @@ namespace Engine
                  "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
     {
     }
-    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
+
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") {
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"), entityManager(entityManager){
         // other initialization code
     }
 
@@ -264,37 +265,18 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/Archer.png")) // Check for texture loading errors
-        {
-            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture A.");
-            // Handle the error as needed, e.g., return or throw an exception
+        textures.resize(TextureClassCount);
+        for (int i = 0; i < TextureClassCount; i++) {
+            textures[i] = *(assetManager->getTexture(i));
+            textures[i].InitGL();
+            textures[i].Bind(0);
         }
-        else {
-            textureA.InitGL();
-            textureA.Bind(0);
-        }
-
-        if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
-        {
-            Logger::GetInstance().Log(LogLevel::Error, "Failed to load Texture B.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
-            textureB.InitGL();
-            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
-        }
-
-        textureC = *(assetManager->getTexture("Background"));
-        // Handle the error as needed, e.g., return or throw an exception
-            textureC.InitGL();
-            textureC.Bind(0);
-
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
-        textureC.Bind(0);
+        textures[Background].Bind(0);
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
@@ -302,7 +284,7 @@ namespace Engine
         ibBackground.Bind(); // Bind the background index buffer
 
         renderer.Draw(vaBackground, ibBackground, shader);
-        textureC.Unbind();
+        textures[Background].Unbind();
         shader.Unbind();
     }
 
@@ -315,23 +297,19 @@ namespace Engine
      * \param mvpMatrix The Model-View-Projection matrix for rendering.
      */
 
-    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
     {
+        if (!entity->HasComponent(ComponentType::Texture))
+            return;
+
+        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
+        if (texture != nullptr)
+        {
+            textures[texture->textureClass].Bind(0);
+        }
+
         shader.Bind();
-
-        double currentTime = glfwGetTime();
-        double totalTime = currentTime - programStartTime;
-        int textureIndex = static_cast<int>(totalTime / 3.0) % 2;
-
-        if (textureIndex)
-        {
-            textureA.Bind(0);
-        }
-        else
-        {
-            textureB.Bind(0);
-        }
-
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
@@ -343,6 +321,7 @@ namespace Engine
         renderer.Draw(va, ib, shader);
         shader.Unbind();
     }
+
 
     /*!
      * \brief Render lines.
@@ -486,8 +465,10 @@ namespace Engine
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                    if (entity->HasComponent(ComponentType::Physics))
+                    if (entity->HasComponent(ComponentType::Texture))
                     {
+                        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
                         // Check if there's a change in the 'P' key state
                         if (currentPState && !previousPState)
                         {
@@ -500,17 +481,17 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            RenderTexturedEntity(mvpA);
-                            RenderLines(mvpA);
+                            if(texture->textureClass == Background)
+                                RenderBackground(mvpA);
+                            else {
+                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                                RenderLines(mvpA);
+                            }
                         }
                         else
                         {
                             DrawColoredSquare(mvpA);
                         }
-                    }
-                    else
-                    {
-                        RenderBackground(mvpA); //Assuming background only has Transform
                     }
                     
                     //RenderSingleLine(mvpA, lineStart, lineEnd
@@ -523,7 +504,6 @@ namespace Engine
                 }
             }
         }
-        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void GraphicsSystem::UpdateViewport(int width, int height)

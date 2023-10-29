@@ -32,7 +32,7 @@ namespace Engine {
 
     class Loader {
     public:
-        Loader(EntityManager* entityManager, PrefabManager* prefabManager) : entityManager(entityManager), prefabManager(prefabManager) {};
+        Loader(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager) : entityManager(EM), prefabManager(prefabManager) {};
         ~Loader();
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
@@ -41,7 +41,7 @@ namespace Engine {
         void SavePrefabs(const std::string& filepath);
         WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
-        Engine::EntityManager* entityManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
         Engine::PrefabManager* prefabManager;
     };
 
