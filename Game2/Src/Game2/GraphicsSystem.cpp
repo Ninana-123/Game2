@@ -351,13 +351,11 @@ namespace Engine
         double deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        // Create an instance of Animation with the appropriate parameters
-        // Adjust these values according to your sprite sheet
-        float frameRate = 10.0f; // Lower frame rate for smoother animation
-        float spriteWidth = 6.0f; // Number of horizontal frames in your sprite sheet
-        float spriteHeight = 1.0f; // Number of vertical frames in your sprite sheet
+        float frameRate = 5.0f;
+        float spriteWidth = 6.0f; // Number of horizontal frames
+        float spriteHeight = 1.0f; // Number of vertical frames
         float Length = 1536.0f; // length of sprite sheet
-        Anim_Mode playMode = Anim_Mode::LOOP; // Set your desired play mode
+        Anim_Mode playMode = Anim_Mode::LOOP;
 
         // Create a static animation object if not created already
         static Animation animation(frameRate, spriteWidth, spriteHeight, playMode);
@@ -372,22 +370,11 @@ namespace Engine
         int currentFrame = animation.GetCurrentFrame();
 
         // Calculate the texture offset based on the current frame
-        float frameWidth = Length / spriteWidth;
-        float texCoordX = frameWidth * currentFrame;
-
-       
-
-        // Check if the current frame has been shown long enough
-        if (animation.IsPlaying() && animation.GetCurrentFrame() == currentFrame) {
-            // You can adjust the frame duration as needed
-            if (animation.GetAnimTimer() >= 1.0f) { // Adjust 1.0f to the duration you want
-                animation.NextFrame();
-            }
-        }
+        float frameWidth = 1.0 / spriteWidth;
+        float texCoordX = 1.0 - (currentFrame * frameWidth);
 
         // Debugging: Print out the values
-        std::cout << "Frame Width: " << frameWidth <<  "TexCoordX: " << texCoordX << "Current Frame: "<< currentFrame << std::endl;
-       
+        std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
 
         // Set the texture offset in the shader
         shader.SetUniform1f("u_TextureOffset", texCoordX);
@@ -404,7 +391,6 @@ namespace Engine
         textureA.Unbind();
         shader.Unbind();
     }
-
 
 
     //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)

@@ -20,6 +20,8 @@ namespace Engine
     void Animation::Play()
     {
         playing = true;
+        textureXIndex = 0;
+        textureYIndex = 0;
     }
 
     void Animation::Pause()
@@ -35,6 +37,21 @@ namespace Engine
     bool Animation::IsPlaying()
     {
         return playing;
+    }
+
+    bool Animation::IsFinished() const
+    {
+        if (playMode == Anim_Mode::LOOP) {
+           
+            return false;
+        }
+        else if (playMode == Anim_Mode::ONE_TIME) {
+           
+            return currentFrame == frameCount - 1;
+        }
+       
+
+        return false; 
     }
 
     void Animation::ResetAnim()
@@ -58,20 +75,18 @@ namespace Engine
             return;
         }
 
-        ++textureXIndex;
-        if (textureXIndex >= spriteWidth) {
-            textureXIndex = 0;
-            ++textureYIndex;
-            if (textureYIndex >= spriteHeight) {
-                textureYIndex = 0;
-            }
-        }
-
         ++currentFrame;
         if (currentFrame >= frameCount) {
-            currentFrame = 0;
+            currentFrame = 0; // Wrap around to the first frame
         }
+
+        // Calculate texture coordinates based on the current frame
+        textureXIndex = currentFrame % static_cast<int>(spriteWidth);
+        textureYIndex = currentFrame / static_cast<int>(spriteWidth);
     }
+
+    
+
 
     void Animation::Update(float deltaTime)
     {

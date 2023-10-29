@@ -20,6 +20,7 @@ namespace Engine
         bool IsPlaying();        
         void NextFrame();
         float GetAnimTimer() const;
+        bool IsFinished() const;
 
 
     private:
