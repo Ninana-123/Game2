@@ -57,7 +57,7 @@ namespace Engine
 
     // Entity-related instances and properties
     GraphicsSystem graphicsSystem;
-    Engine::EntityManager EM;
+    std::shared_ptr<EntityManager> EM;
     Engine::PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
@@ -122,7 +122,7 @@ namespace Engine
         systemsManager->Initialize();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(&EM, &PM);
+        loader = std::make_unique<Engine::Loader>(EM, &PM);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene("Resource/Scenes/testscene.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
@@ -130,8 +130,8 @@ namespace Engine
         loader->LoadPrefabs("Resource/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
-        if (EM.GetEntity(1) != nullptr) {
-            targetEntity = EM.GetEntity(1);
+        if (EM->GetEntity(1) != nullptr) {
+            targetEntity = EM->GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
@@ -146,13 +146,9 @@ namespace Engine
         sound2.setLoop();
 
         // Initialize ImGuiWrapper
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(&EM, &PM);
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM);
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
-
-        assetManager = std::make_shared<Engine::AssetManager>();
-        assetManager->loadTexture("Background", "Resource/Texture/Background.png");
-
     }
 
     /*!**********************************************************************
