@@ -44,19 +44,23 @@ namespace Engine
         GraphicsSystem();
         ~GraphicsSystem();
 
+        //void Initialize(const std::vector<float>& positions, const std::vector<unsigned int>& indices) override;
         void Initialize() override;
+        //void Initialize(const std::vector<float>& quadPositions, const std::vector<float>& linePositions, const std::vector<float>& backgroundPositions) override;
         void InitializeGLEW();
         void InitializeShader();
         void InitializeTextures();
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
         void RenderTexturedEntity(const glm::mat4& mvpMatrix);
+        void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,
+            const std::vector<float>& texIndices);
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
-        void DrawColoredSquare(const glm::mat4& mvpMatrix);
         void ToggleShaderSet();
+        void DrawColoredSquare(const glm::mat4& mvpMatrix);
 
     private:
         Shader shader;
@@ -74,16 +78,21 @@ namespace Engine
         glm::mat4 mvpMatrixForBackground = glm::mat4(1.0f);
 
         GLFWwindow* Window{};
-        IndexBuffer ib;
-        IndexBuffer ibLines;
+        IndexBuffer ibQuad;
         IndexBuffer ibBackground;
 
         VertexArray vaBackground;
-        VertexArray va;
+        VertexArray vaQuad;
         VertexArray vaLines;
-        VertexArray vaSingleLine;
 
         Renderer renderer;
+
+        std::vector<float> vtx_positions_quad{};
+        std::vector<unsigned int> indices_quad{};
+        std::vector<float> vtx_positions_lines{};
+        //std::vector<unsigned int> indices_lines;
+        std::vector<float> vtx_positions_background{};
+        std::vector<unsigned int> indices_background{};
 
         float vtx_positions[16]{};
         unsigned int indices[6]{};

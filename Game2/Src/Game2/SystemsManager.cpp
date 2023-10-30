@@ -25,12 +25,12 @@ namespace Engine
 	
 	void SystemsManager::Initialize()
 	{
-		//add systems into systems container
+		// Add systems into the systems container
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
 		all_systems.push_back(new GraphicsSystem());
 
-		//initialize each system
+		// Initialize each system
 		for (auto system : all_systems)
 		{
 			system->Initialize();

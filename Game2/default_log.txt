@@ -1,3 +1,4 @@
-2023-10-25 11:02:57[DEBUG] Loading Scene
-2023-10-25 11:02:57[DEBUG] Scene Loaded
-2023-10-25 11:02:58[APP] Application Running.
+2023-10-30 12:08:45[DEBUG] Loading Scene
+2023-10-30 12:08:45[DEBUG] Scene Loaded
+2023-10-30 12:08:46[APP] Application Running.
+DEBUG] Shader compilation and linking successful.

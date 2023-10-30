@@ -1,7 +1,7 @@
 //System.h 
 #include "pch.h"
 #include "EngineTypes.h"
-
+#pragma warning(disable: 4100) // disable "unreferenced parameter" 
 #pragma once
 
 namespace Engine
@@ -26,8 +26,9 @@ namespace Engine
 		}
 
 		//virtual initialize
+		//virtual void Initialize(const std::vector<float>& positions = {}, const std::vector<unsigned int>& indices= {}) {}
 		virtual void Initialize() {}
-
+		//virtual void Initialize(const std::vector<float>& quadPositions = {}, const std::vector<float>& linePositions = {}, const std::vector<float>& backgroundPositions = {}) {}
 		//virtual update
 		virtual void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) = 0;
 

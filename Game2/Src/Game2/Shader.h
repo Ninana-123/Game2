@@ -36,10 +36,10 @@ private:
     std::string m_FilePath4;
     //unsigned int m_RendererID1;          // Shader program ID
     //unsigned int m_RendererID2;
-    int m_CurrentShaderSet;             // Current active shader set (1 or 2)
     bool m_IsInitialized;               // Flag to track initialization
     std::unordered_map<int, std::unordered_map<std::string, int>> m_UniformLocationCaches; // Caching for uniforms of different shader sets
     std::unordered_map<int, unsigned int> m_RendererIDs;                                    // Shader program IDs for different shader sets
+    int m_CurrentShaderSet;             // Current active shader set (1 or 2)
 
 public:
     //Shader(const std::string& filepath, const std::string& filepath2);
@@ -63,10 +63,12 @@ public:
     void SetUniform1f(const std::string& name, float value);
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
+    void SetShaderProgram(int shaderSet, unsigned int programID);
 
+    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
+    int GetCurrentShaderSet() const;
 private:
     ShaderProgramSource ParseShader(const std::string& filepath);
-    unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
     unsigned int CompileShader(unsigned int type, const std::string& source);
     int GetUniformLocation(const std::string& name);
 };
