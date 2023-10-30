@@ -24,6 +24,11 @@ Physics
 Velocity: 0 0
 Texture
 TextureClass: 3
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
 EndEntity
 Transform 
 Position: 100 100
@@ -42,6 +47,11 @@ Physics
 Velocity: 0 0
 Texture
 TextureClass: 1
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
 EndEntity
 Transform 
 Position: 300 300
@@ -60,6 +70,11 @@ Physics
 Velocity: 0 0
 Texture
 TextureClass: 2
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
 EndEntity
 
 

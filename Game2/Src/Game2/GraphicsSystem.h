@@ -55,7 +55,7 @@ namespace Engine
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
        // void RenderTexturedEntity(const glm::mat4& mvpMatrix);
-        //void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+       // void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
         
         void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
         void RenderBackground(const glm::mat4& mvpMatrix);

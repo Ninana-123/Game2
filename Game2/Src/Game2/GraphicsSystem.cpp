@@ -422,6 +422,85 @@ namespace Engine
        // textureA.Unbind();
         shader.Unbind();
     }
+    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
+    //{
+    //  
+
+    //        if (!entity->HasComponent(ComponentType::Texture))
+    //        {
+    //            return;
+    //        }
+    //        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
+    //        if (texture != nullptr)
+    //        {
+    //            textures[texture->textureClass].Bind(0);
+    //        }
+
+    //        shader.Bind();
+    //        va.Bind();
+    //        ib.Bind();
+
+    //        // Check if the entity has an AnimationComponent
+    //        if (entity->HasComponent(ComponentType::Animation))
+    //        {
+    //            AnimationComponent* Animation = dynamic_cast<AnimationComponent*>(entity->GetComponent(ComponentType:: Animation));
+    //            // Calculate deltaTime (time since the last frame)
+    //            static double lastTime = glfwGetTime();
+    //            double currentTime = glfwGetTime();
+    //            double deltaTime = currentTime - lastTime;
+    //            lastTime = currentTime;
+
+    //            float frameRate = 1.0f;
+    //            float horizontalFrames = 6.0f; // Number of horizontal frames
+    //            float verticalFrames = 1.0f; // Number of vertical frames
+    //            float Length = 1536.0f; // length of sprite sheet
+    //            Anim_Mode playMode = Anim_Mode::LOOP;
+
+    //            // Create a static animation object if not created already
+    //            static AnimationComponent AnimationComponent(frameRate, horizontalFrames, verticalFrames, playMode);
+
+    //            // Play the animation
+    //            AnimationComponent.Play();
+
+    //            // Update the animation with deltaTime
+    //            AnimationComponent.Update(static_cast<float>(deltaTime));
+
+    //            // Get the current frame index
+    //            int currentFrame = AnimationComponent.GetCurrentFrame();
+
+    //            // Calculate the texture offset based on the current frame
+    //            float frameWidth = 1.0f / horizontalFrames;
+    //            float frameHeight = 1.0f / verticalFrames;
+    //            float texCoordX = currentFrame * frameWidth;
+    //            //float texCoordY = currentRow * frameHeight;
+
+    //            // Set the texture offset in the shader
+    //            shader.SetUniform1f("texCoordX", texCoordX);
+    //            //shader.SetUniform1f("texCoordY", texCoordY);
+    //            shader.SetUniform1f("u_FrameCount", horizontalFrames);
+    //            shader.SetUniform1f("u_FrameWidth", frameWidth);
+    //            shader.SetUniform1f("u_FrameHeight", frameHeight);
+    //            shader.SetUniform1i("u_CurrentFrame", currentFrame);
+    //        }
+
+    //        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+    //        shader.SetUniformMat4f("u_MVP", result);
+
+    //        // Debugging: Print out the values
+    //        // std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
+    //        /*  va.Bind();
+    //        ib.Bind();*/
+
+    //        // Render the entity
+    //        renderer.Draw(va, ib, shader);
+
+    //        // Unbind the texture and shader
+    //        //textureA.Unbind();
+    //    
+    //    shader.Unbind();
+    //}
+
 
 
     /*!
@@ -445,6 +524,7 @@ namespace Engine
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
        // textureA.Unbind();
+        
         shader.Unbind();
     }
 
