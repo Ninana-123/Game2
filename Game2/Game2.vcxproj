@@ -35,6 +35,7 @@
     <ClInclude Include="Src\Game2\GraphicsSystem.h" />
     <ClInclude Include="Src\Game2\imconfig.h" />
     <ClInclude Include="Src\Game2\imgui.h" />
+    <ClInclude Include="Src\Game2\ImGuiFileBrowser.h" />
     <ClInclude Include="Src\Game2\ImGuiWrapper.h" />
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h" />
     <ClInclude Include="Src\Game2\imgui_internal.h" />

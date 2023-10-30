@@ -146,7 +146,8 @@ namespace Engine
         sound2.setLoop();
 
         // Initialize ImGuiWrapper
-        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM);
+        m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM, assetManager);
+        m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
     }

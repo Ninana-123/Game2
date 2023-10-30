@@ -24,6 +24,7 @@ namespace Engine {
         std::shared_ptr<Texture> AssetManager::loadTexture(const int texid, const std::string& filePath) {
             auto texture = std::make_shared<Texture>(filePath);
             textures[texid] = texture;
+            textureFilePaths[texid] = filePath;
             return texture;
         }
 
@@ -35,4 +36,37 @@ namespace Engine {
             std::cerr << "Texture ID not found: " << texid << std::endl;
             return nullptr;
         }
+
+        void AssetManager::updateTextureFilePath(int texid, const std::string& newFilePath) {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                it->second = newFilePath;
+            }
+            else {
+                std::cerr << "Texture ID not found: " << texid << std::endl;
+            }
+        }
+
+        std::shared_ptr<Texture> AssetManager::reloadTexture(int texid) {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                return loadTexture(texid, it->second);
+            }
+            else {
+                std::cerr << "Texture ID not found: " << texid << std::endl;
+                return nullptr;
+            }
+        }
+
+        const std::string& AssetManager::GetTexturePath(int texid) const {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                return it->second;
+            }
+            static const std::string emptyString = "";
+            std::cerr << "Texture ID not found: " << texid << std::endl;
+            return emptyString;
+        }
+
+
 }

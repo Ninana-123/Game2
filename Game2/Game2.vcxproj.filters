@@ -261,6 +261,9 @@
     <ClInclude Include="Src\Game2\PrefabManager.h">
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

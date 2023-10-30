@@ -28,6 +28,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Matrix3x3Lib.h"
 #include "Input.h"
 #include "SystemsManager.h"
+#include "ImGuiFileBrowser.h"
 
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
@@ -41,6 +42,7 @@ namespace Engine {
 	char cloneCountInput[10] = "";  // Buffer to store the input text
 	char createCountInput[10] = "";  // Buffer to store the input text
 	Input InputHandlerImGui;
+	SimpleFileBrowser fileBrowser;
 
 	/*!**********************************************************************
 	\brief
@@ -48,7 +50,6 @@ namespace Engine {
 	*************************************************************************/
 	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
-
 	}
 	/*!**********************************************************************
 	\brief
@@ -212,6 +213,9 @@ namespace Engine {
 		// Calculate memory usage percentage
 		float memoryUsagePercentage = static_cast<float>(status.dwMemoryLoad);
 		return memoryUsagePercentage;
+	}
+	void ImGuiWrapper::Initialize() {
+		fileBrowser.setAssetManagerPtr(assetManager);
 	}
 	/*!**********************************************************************
 	\brief
@@ -986,6 +990,10 @@ namespace Engine {
 					}												
 				}
 			}
+			if (InputHandlerImGui.IsKeyTriggered(KEY_F3))
+				renderAssetBrowser = !renderAssetBrowser;
+			if(renderAssetBrowser == true)
+				RenderAssetBrowser();
 			ImGui::End(); // End Prefab Tool
 			
 			ImGui::End(); // End the selected entity properties window
@@ -1172,6 +1180,46 @@ namespace Engine {
 			for (const auto& [systemName, percentage] : systemTimes) {
 				ImGui::Text("%s: %.2f%% of the total game loop time", systemName.c_str(), percentage);
 			}
+		}
+	}
+
+
+	void ImGuiWrapper::RenderAssetBrowser() {
+
+		ImGui::Begin("Asset Browser");
+
+		if ((InputHandlerImGui.IsKeyPressed(KEY_F9) == true)) {
+			std::vector<int> allTexIDs = assetManager->getAllTextureIDs();
+				for (int texid : allTexIDs) {
+					// Process or print each texid
+					std::cout << "Texture ID: " << texid << std::endl;
+				}
+		}
+		auto& textures = assetManager->GetAllTextures();
+		for (auto& [texid, texture] : textures) {
+			ImGui::PushID(texid);
+
+			std::string texturePath = assetManager->GetTexturePath(texid);
+			texture = (assetManager->getTexture(texid));
+			// Display texture preview
+			ImGui::Image((void*)(intptr_t)(texid+1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::SameLine();
+
+			// Display texture information
+			ImGui::Text("ID: %d\nPath: %s", texid, texturePath.c_str());
+
+			// Replace texture button
+			if (ImGui::Button("Replace")) {
+				fileBrowser.Open("Resource/Texture");
+			}
+
+			ImGui::PopID();
+		}
+
+		ImGui::End();
+
+		if (fileBrowser.isOpen) {
+			fileBrowser.Show();
 		}
 	}
 

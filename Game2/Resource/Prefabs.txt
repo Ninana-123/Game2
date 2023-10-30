@@ -1,27 +1,18 @@
 2
 Tank
 Transform
-Position: 150 150
+Position: 172 150
 ScaleX: 1.5
 ScaleY: 1.5
 Rotation: 0
 Collision
-c_Width: 45 
-c_Height: 45 
+c_Width: 45
+c_Height: 45
 isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
-Physics
-Velocity: 0 0
+Min X: 0
+Min Y: 0
+Max X: 0
+Max Y: 0
 EndPrefab
-Archer
-Transform
-Position: 100 150
-ScaleX: 1.0
-ScaleY: 1.0
-Rotation: 0
-Physics
-Velocity: 0 0
+
 EndPrefab

@@ -22,21 +22,24 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AppEvent.h"
 #include "EntityManager.h"
 #include "PrefabManager.h"
+#include "AssetManager.h"
 
 namespace Engine {
 
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
-		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::AssetManager> am) : entityManager(em), prefabManager(pm), assetManager(am) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+		void Initialize();
 		void OnAttach();
 		void OnDetach();
 		void OnUpdate();
 		void OnEvent(Event& event);
 		inline Entity* TargetEntityGetter() { return targetEntity; }
 		void DisplaySystemTimes();
+		void RenderAssetBrowser();
 		int selectedEntityIndex = 1;
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
@@ -51,9 +54,10 @@ namespace Engine {
 
 	private:
 		float m_Time = 0.0f;
+		bool renderAssetBrowser = false;
 		std::shared_ptr<Engine::EntityManager> entityManager;
 		Engine::PrefabManager* prefabManager;
-
+		std::shared_ptr<Engine::AssetManager> assetManager;
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
 
