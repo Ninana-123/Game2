@@ -92,6 +92,7 @@
       <Filter>ImGuiWrapper</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Text.cpp" />
+    <ClCompile Include="Src\Game2\Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -238,6 +239,7 @@
     <ClInclude Include="Src\Game2\ImGuiWrapper.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Font.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

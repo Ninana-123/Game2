@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "Font.h"
 
 namespace Engine
 {
@@ -43,7 +44,7 @@ namespace Engine
 
         GraphicsSystem();
         ~GraphicsSystem();
-
+       
         void Initialize() override;
         void InitializeGLEW();
         void InitializeShader();
@@ -83,6 +84,9 @@ namespace Engine
         VertexArray vaSingleLine;
 
         Renderer renderer;
+
+        Font::font_data ft_font;
+        Font font; 
 
         float vtx_positions[16]{};
         unsigned int indices[6]{};

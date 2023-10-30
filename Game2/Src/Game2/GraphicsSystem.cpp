@@ -19,10 +19,12 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Logger.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include"Font.h"
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
     Logger GraphicsLogger;
+   
 
     /*!
    * \brief GraphicsSystem constructor.
@@ -80,6 +82,12 @@ namespace Engine
 
         // initialize and bind textures
         InitializeTextures();
+
+        Font::font_data myFont;
+        myFont.init("resources/fonts/Antonio-Bold.ttf", 24);  // Replace with your actual font file
+
+        // Store the initialized font object in a member variable for later use
+        this->ft_font = myFont;
 
         //enable blending for transparency
         GLCall(glEnable(GL_BLEND));
@@ -440,7 +448,13 @@ namespace Engine
                     {
                         RenderBackground(mvpA); //Assuming background only has Transform
                     }
-                    
+                    const char* textToRender = "Hello, World!";
+                    float textX = transA.x; // Adjust the X position
+                    float textY = transA.y - 30.0f; // Adjust the Y position
+                    font.print(ft_font, textX, textY, textToRender); // Assuming 'font' is an instance of the Font class
+
+
+
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->x = static_cast<int>(transA.x);
                     transform->y = static_cast<int>(transA.y);
