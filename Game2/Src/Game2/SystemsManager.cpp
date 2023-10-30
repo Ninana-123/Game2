@@ -24,8 +24,8 @@ namespace Engine
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
 	
-	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager)
-		: assetManager(assetManager) {
+	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
+		: assetManager(assetManager), entityManager(entityManager) {
 	}
 
 	void SystemsManager::Initialize()
@@ -33,7 +33,7 @@ namespace Engine
 		//add systems into systems container
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
-		all_systems.push_back(new GraphicsSystem(assetManager));
+		all_systems.push_back(new GraphicsSystem(assetManager, entityManager));
 
 		//initialize each system
 		for (auto system : all_systems)
@@ -44,15 +44,18 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
+		int i = 0;
 		for (auto system : all_systems)
 		{
+			
 			if (system->GetSystemState() == SystemState::On)
 			{
 				system->StartTimer();
 				system->Update(entities);
 				system->StopTimer();
+				i++;
 			}
-		}
+		}		
 	}
 
 	template <typename T>

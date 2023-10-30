@@ -1,13 +1,9 @@
-2023-10-29 19:55:30 [INFO] Creating Window Game2 Engine (1280, 720)
-2023-10-29 19:55:31 [DEBUG] GLEW successfully initialized
-2023-10-29 19:55:31 [DEBUG] Loading Shader Set 1...
-2023-10-29 19:55:31 [DEBUG] Shader compilation and linking successful.
-2023-10-29 19:55:31 [DEBUG] Loading Scene
-2023-10-29 19:55:31 [DEBUG] Scene Loaded
-2023-10-29 19:55:31 [DEBUG] GLEW successfully initialized
-2023-10-29 19:55:31 [DEBUG] Loading Shader Set 1...
-2023-10-29 19:55:31 [DEBUG] Shader compilation and linking successful.
-2023-10-29 19:55:31 [DEBUG] GLEW successfully initialized
-2023-10-29 19:55:31 [DEBUG] Loading Shader Set 1...
-2023-10-29 19:55:31 [DEBUG] Shader compilation and linking successful.
-2023-10-29 19:55:31 [APP] Application Running.
+2023-10-30 01:09:57 [INFO] Creating Window Game2 Engine (1280, 720)
+2023-10-30 01:09:58 [DEBUG] GLEW successfully initialized
+2023-10-30 01:09:58 [DEBUG] Loading Shader Set 1...
+2023-10-30 01:09:58 [DEBUG] Shader compilation and linking successful.
+2023-10-30 01:09:58 [DEBUG] Loading Scene
+2023-10-30 01:09:58 [DEBUG] Scene Loaded
+2023-10-30 01:09:58 [DEBUG] Loading Prefabs
+2023-10-30 01:09:58 [DEBUG] Prefabs Loaded
+2023-10-30 01:09:58 [APP] Application Running.

@@ -15,6 +15,7 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include "AssetManager.h"
+#include "EntityManager.h"
 
 #pragma once
 
@@ -31,7 +32,7 @@ namespace Engine
     {
     public:
 
-        SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager);
+        SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> EM);
         /*!*****************************************************************
         \brief Initializes all the system types and their respective initialize functions.
         ********************************************************************/
@@ -69,9 +70,7 @@ namespace Engine
         /// Container holding pointers to all registered systems.
         static std::vector<System*> all_systems;
 
-
         std::unordered_map<std::string, double> DisplaySystemTimes(double loopTime);
-
 
         void ResetSystemTimers();
 
@@ -84,6 +83,7 @@ namespace Engine
     private:
         // Add any private members or helper functions if needed.
         std::shared_ptr<Engine::AssetManager> assetManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
         static SystemsManager* instance;
 
     };

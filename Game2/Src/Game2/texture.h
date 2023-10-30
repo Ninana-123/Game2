@@ -39,6 +39,9 @@ public:
     void Unbind() const;
     bool Load(const std::string& path); // Load texture from file
     void SetRenderPos(float posX, float posY); // Set rendering position
+    unsigned int GetTextureID() const {
+        return m_RendererID;
+    }
 
 private:
     float m_RenderPosX, m_RenderPosY; // Position for rendering
