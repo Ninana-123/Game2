@@ -277,7 +277,7 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/TankWalking.png")) // Check for texture loading errors
+        if (!textureA.Load("Resource/Texture/InfantryWalking.png")) // Check for texture loading errors
         {
             GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
             // Handle the error as needed, e.g., return or throw an exception
@@ -352,7 +352,7 @@ namespace Engine
         double deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        float frameRate = 24.0f;
+        float frameRate = 10.0f;
         float horizontalFrames = 6.0f; // Number of horizontal frames
         float verticalFrames = 1.0f; // Number of vertical frames
         float Length = 1536.0f; // length of sprite sheet
