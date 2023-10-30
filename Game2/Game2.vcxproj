@@ -23,6 +23,7 @@
     <ClInclude Include="Src\Game2\AssetManager.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
     <ClInclude Include="Src\Game2\Body.h" />
+    <ClInclude Include="Src\Game2\Camera.h" />
     <ClInclude Include="Src\Game2\CollisionSystem.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Src\Game2\AssetManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
     <ClCompile Include="Src\Game2\Body.cpp" />
+    <ClCompile Include="Src\Game2\Camera.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />

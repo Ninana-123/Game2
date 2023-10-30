@@ -280,30 +280,30 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        if (!textureA.Load("Resource/Texture/InfantryWalking.png")) // Check for texture loading errors
-        {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
-            textureA.InitGL();
-            textureA.Bind(0);
-        }
+        //if (!textureA.Load("Resource/Texture/InfantryWalking.png")) // Check for texture loading errors
+        //{
+        //    GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
+        //    // Handle the error as needed, e.g., return or throw an exception
+        //}
+        //else {
+        //    textureA.InitGL();
+        //    textureA.Bind(0);
+        //}
 
-        if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
-        {
-            GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
-            // Handle the error as needed, e.g., return or throw an exception
-        }
-        else {
-            textureB.InitGL();
-            textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
-        }
+        //if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
+        //{
+        //    GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
+        //    // Handle the error as needed, e.g., return or throw an exception
+        //}
+        //else {
+        //    textureB.InitGL();
+        //    textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
+        //}
 
-        textureC = *(assetManager->getTexture("Background"));
-        // Handle the error as needed, e.g., return or throw an exception
-        textureC.InitGL();
-        textureC.Bind(0);
+        //textureC = *(assetManager->getTexture("Background"));
+        //// Handle the error as needed, e.g., return or throw an exception
+        //textureC.InitGL();
+        //textureC.Bind(0);
 
         textures.resize(TextureClassCount);
         for (int i = 0; i < TextureClassCount; i++) {
@@ -365,7 +365,7 @@ namespace Engine
         }
 
         shader.Bind();
-        textureA.Bind(0);
+        //textureA.Bind(0);
 
         // Calculate deltaTime (time since the last frame)
         static double lastTime = glfwGetTime();
@@ -419,7 +419,7 @@ namespace Engine
         renderer.Draw(va, ib, shader);
 
         // Unbind the texture and shader
-        textureA.Unbind();
+       // textureA.Unbind();
         shader.Unbind();
     }
 
@@ -444,7 +444,7 @@ namespace Engine
 
         shader.SetUniform1i("u_RenderTextured", 1);
         vaLines.Unbind();
-        textureA.Unbind();
+       // textureA.Unbind();
         shader.Unbind();
     }
 
