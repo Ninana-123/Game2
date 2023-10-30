@@ -82,8 +82,6 @@ namespace Engine
     }
 
     
-
-
     void Animation::Update(float deltaTime)
     {
         if (!playing) {

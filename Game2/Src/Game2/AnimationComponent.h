@@ -1,120 +1,95 @@
-#pragma once
-
-#include "Component.h"
-#include "EngineTypes.h"
-
-namespace Engine
-{
-    class AnimationComponent : public Component 
-    {
-    public:
-        AnimationComponent(float frameRate, int spriteWidth, int spriteHeight);
-        AnimationComponent(); // Default constructor
-
-        void AddFrame(int textureIndex, int frameDuration);
-        void Play();
-        void Pause();
-        void Stop();
-        void UpdateAnimation(float deltaTime);
-        int GetCurrentFrame();
-        bool IsPlaying();
-        int GetCurrentFrameWidth();
-        int GetCurrentFrameHeight();
-        int GetNumFrames() const;
-        void SetFrameRate(float frameRate);
-
-        Component* Clone() const override
-        {
-            AnimationComponent* cloneComponent = new AnimationComponent(frameRate, spriteWidth, spriteHeight);
-            cloneComponent->frames = frames;
-            cloneComponent->frameDurations = frameDurations;
-            cloneComponent->currentFrame = currentFrame;
-            cloneComponent->frameTimer = frameTimer;
-            cloneComponent->playing = playing;
-            return cloneComponent;
-        }
-
-        ComponentType GetType() const override
-        {
-            return ComponentType::Animation; 
-        }
-
-        void Serialize(std::ostream& os) const override 
-        {
-           
-            os << "Frames: ";
-            for (int frame : frames) {
-                os << frame << ' ';
-            }
-            os << '\n';
-
-            os << "FrameDurations: ";
-            for (int duration : frameDurations) {
-                os << duration << ' ';
-            }
-            os << '\n';
-            os << "CurrentFrame: " << currentFrame << '\n';
-            os << "FrameTimer: " << frameTimer << '\n';
-            os << "Playing: " << (playing ? 1 : 0) << '\n';
-        }
-
-        void Deserialize(std::istream& is)
-        {
-            std::string line;
-            while (std::getline(is, line))
-            {
-                std::istringstream lineStream(line);
-                std::string key;
-                lineStream >> key;
-
-                if (key == "Frames:")
-                {
-                    frames.clear();
-                    int frame;
-                    while (lineStream >> frame)
-                    {
-                        frames.push_back(frame);
-                    }
-                }
-                else if (key == "FrameDurations:")
-                {
-                    frameDurations.clear();
-                    int duration;
-                    while (lineStream >> duration)
-                    {
-                        frameDurations.push_back(duration);
-                    }
-                }
-                else if (key == "CurrentFrame:")
-                {
-                    lineStream >> currentFrame;
-                }
-                else if (key == "FrameTimer:")
-                {
-                    lineStream >> frameTimer;
-                }
-                else if (key == "Playing:")
-                {
-                    int playingValue;
-                    lineStream >> playingValue;
-                    playing = (playingValue == 1);
-                }
-            }
-        }
-
-
-    private:
-        float frameRate;
-        int spriteWidth;
-        int spriteHeight;
-        std::vector<int> frames;
-        std::vector<int> frameDurations;
-        int currentFrame;
-        float frameTimer;
-        bool playing;
-    };
-
-}
-#pragma once
-
-
+//#pragma once
+//
+//#include "Component.h"
+//#include "EngineTypes.h"
+//
+//namespace Engine
+//{
+//
+//    enum class Anim_Mode
+//    {
+//        LOOP, ONE_TIME
+//    };
+//
+//    class AnimationComponent : public Component
+//    {
+//    public:
+//        AnimationComponent(float frameRate, float  spriteWidth, float spriteHeight, Anim_Mode mode = Anim_Mode::LOOP);
+//        AnimationComponent();
+//        void Play();
+//        void Pause();
+//        void ResetAnim();
+//        void Update(float deltaTime);
+//        int GetCurrentFrame();
+//        bool IsPlaying();
+//        void NextFrame();
+//        float GetAnimTimer() const;
+//        bool IsFinished() const;
+//
+//        float frameRate;
+//        int horizontalFrames;
+//        int verticalFrames;
+//        int frameCount = horizontalFrames * verticalFrames;;
+//        float frameTimer = 1.0f / frameRate;
+//        float animTimer;
+//        int currentFrame;
+//        int textureXIndex;
+//        int textureYIndex;
+//        bool playing = false;
+//        Anim_Mode playMode;
+//
+//
+//        Component* Clone() const override
+//        {
+//            AnimationComponent* cloneComponent = new AnimationComponent(frameRate, horizontalFrames, verticalFrames, playMode);
+//            cloneComponent->frameTimer = frameTimer;
+//            cloneComponent->animTimer = animTimer;
+//            cloneComponent->currentFrame = currentFrame;
+//            cloneComponent->textureXIndex = textureXIndex;
+//            cloneComponent->textureYIndex = textureYIndex;
+//            cloneComponent->playing = playing;
+//            cloneComponent->playMode = playMode;
+//            return cloneComponent;
+//        }
+//
+//
+//        ComponentType GetType() const override
+//        {
+//            return ComponentType::Animation;
+//        }
+//
+//        void Serialize(std::ostream& outputStream) const {
+//            outputStream << "frameRate: " << frameRate << '\n';
+//            outputStream << "horizontalFrames: " << horizontalFrames << '\n';
+//            outputStream << "verticalFrames: " << verticalFrames << '\n';
+//            outputStream << "frameTimer: " << frameTimer << '\n';
+//            outputStream << "animTimer: " << animTimer << '\n';
+//            outputStream << "currentFrame: " << currentFrame << '\n';
+//            outputStream << "textureXIndex: " << textureXIndex << '\n';
+//            outputStream << "textureYIndex: " << textureYIndex << '\n';
+//            outputStream << "playing: " << playing << '\n';
+//            outputStream << "playMode: " << static_cast<int>(playMode) << '\n';
+//        }
+//
+//        void Deserialize(std::istream& inputStream) {
+//            std::string temp;
+//            inputStream >> temp >> frameRate;
+//            inputStream >> temp >> horizontalFrames;
+//            inputStream >> temp >> verticalFrames;
+//            inputStream >> temp >> frameTimer;
+//            inputStream >> temp >> animTimer;
+//            inputStream >> temp >> currentFrame;
+//            inputStream >> temp >> textureXIndex;
+//            inputStream >> temp >> textureYIndex;
+//            inputStream >> temp >> playing;
+//            int mode;
+//            inputStream >> temp >> mode;
+//            playMode = static_cast<Anim_Mode>(mode);
+//        }
+//
+//
+//    };
+//}
+//#pragma once
+//
+//
