@@ -15,11 +15,12 @@
 
 #include "pch.h"
 #include "PhysicsSystem.h"
+#include "AudioEngine.h"
 
 extern double dt;
 
 namespace Engine
-{
+{      
     // Constructor for the PhysicsSystem class.
     PhysicsSystem::PhysicsSystem()
         : x(0.0f), y(0.0f), velocityX(0.0f), velocityY(0.0f), accelerationX(0.0f), accelerationY(0.0f) {}
@@ -79,6 +80,7 @@ namespace Engine
 
                         physicsComponent->velocity.x = 0.0f;
                         physicsComponent->velocity.y = 0.0f;
+                   
                     }
                     else
                     {
