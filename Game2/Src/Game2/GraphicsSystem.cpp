@@ -26,8 +26,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
-    Logger GraphicsLogger;
-    Input InputController;
+    // Logger GraphicsLogger;
+    // Input InputController;
 
 
     /*!
@@ -42,12 +42,14 @@ namespace Engine
         m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
     }
-    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
-        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
+            entityManager(entityManager),
+             m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
-        // other initialization code
+
+  
     }
 
 
@@ -63,12 +65,13 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: "
+           
+            Logger::GetInstance().Log(LogLevel::Error, "GLEW failed to initialize: "
                 + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
-            GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
+            Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
     /*!
@@ -217,13 +220,13 @@ namespace Engine
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
-            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
         else if (shader.GetCurrentShaderSet() == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
-            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
         else
         {
@@ -244,7 +247,7 @@ namespace Engine
             if (shaderProgram != 0)
             {
                 // Shader compilation and linking successful
-                GraphicsLogger.Log(LogLevel::Debug, "Shader compilation and linking successful.");
+                Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
                 // Store the shader program ID in the shader class based on the shader set being used
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
@@ -302,12 +305,18 @@ namespace Engine
         textureC.InitGL();
         textureC.Bind(0);
 
+        textures.resize(TextureClassCount);
+        for (int i = 0; i < TextureClassCount; i++) {
+            textures[i] = *(assetManager->getTexture(i));
+            textures[i].InitGL();
+            textures[i].Bind(0);
+        }
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
-        textureC.Bind(0);
+        textures[Background].Bind(0);
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
         shader.SetUniform1i("u_Texture", 0);
         shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
@@ -326,7 +335,7 @@ namespace Engine
         ibBackground.Bind(); // Bind the background index buffer
 
         renderer.Draw(vaBackground, ibBackground, shader);
-        textureC.Unbind();
+        textures[Background].Unbind();
         shader.Unbind();
     }
 
@@ -341,8 +350,20 @@ namespace Engine
      *
      * \param mvpMatrix The Model-View-Projection matrix for rendering.
      */
-    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+   // void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+
+    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
     {
+        if (!entity->HasComponent(ComponentType::Texture))
+            return;
+
+        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
+        if (texture != nullptr)
+        {
+            textures[texture->textureClass].Bind(0);
+        }
+
         shader.Bind();
         textureA.Bind(0);
 
@@ -401,79 +422,6 @@ namespace Engine
         textureA.Unbind();
         shader.Unbind();
     }
-
-    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
-    //{
-    //    shader.Bind(); 
-    //    va.Bind();
-    //    ib.Bind();
-    //    textureA.Bind(0);
-
-    //    for (const auto& entityPair : *entities)
-    //    {
-    //        Entity* entity = entityPair.second.get();
-
-    //        // Check if the entity has an AnimationComponent
-    //        if (entity->HasComponent(ComponentType::Animation))
-    //        {
-    //            // Calculate deltaTime (time since the last frame)
-    //            static double lastTime = glfwGetTime();
-    //            double currentTime = glfwGetTime();
-    //            double deltaTime = currentTime - lastTime;
-    //            lastTime = currentTime;
-
-    //            float frameRate = 1.0f;
-    //            float horizontalFrames = 6.0f; // Number of horizontal frames
-    //            float verticalFrames = 1.0f; // Number of vertical frames
-    //            float Length = 1536.0f; // length of sprite sheet
-    //            Anim_Mode playMode = Anim_Mode::LOOP;
-
-    //            // Create a static animation object if not created already
-    //            static AnimationComponent AnimationComponent(frameRate, horizontalFrames, verticalFrames, playMode);
-
-    //            // Play the animation
-    //            AnimationComponent.Play();
-
-    //            // Update the animation with deltaTime
-    //            AnimationComponent.Update(static_cast<float>(deltaTime));
-
-    //            // Get the current frame index
-    //            int currentFrame = AnimationComponent.GetCurrentFrame();
-
-    //            // Calculate the texture offset based on the current frame
-    //            float frameWidth = 1.0f / horizontalFrames;
-    //            float frameHeight = 1.0f / verticalFrames;
-    //            float texCoordX = currentFrame * frameWidth;
-    //            //float texCoordY = currentRow * frameHeight;
-
-
-    //            // Set the texture offset in the shader
-    //            shader.SetUniform1f("texCoordX", texCoordX);
-    //            //shader.SetUniform1f("texCoordY", texCoordY);
-    //            shader.SetUniform1f("u_FrameCount", horizontalFrames);
-    //            shader.SetUniform1f("u_FrameWidth", frameWidth);
-    //            shader.SetUniform1f("u_FrameHeight", frameHeight);
-    //            shader.SetUniform1i("u_CurrentFrame", currentFrame);
-    //        }
-    //            glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
-    //            shader.SetUniformMat4f("u_MVP", result);
-
-    //            // Debugging: Print out the values
-    //           // std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
-    //          /*  va.Bind();
-    //            ib.Bind();*/
-
-    //            // Render the entity
-    //            renderer.Draw(va, ib, shader);
-
-    //            // Unbind the texture and shader
-    //            textureA.Unbind();
-    //        }
-
-    //    shader.Unbind();
-    //}
-
-    
 
 
     /*!
@@ -578,6 +526,9 @@ namespace Engine
         // std::cout << "S Key State: " << currentSState << std::endl;
 
          // Check if there's a change in the 'S' key state
+        //std::cout << "S Key State: " << currentSState << std::endl;
+        
+        // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
         {
             // Toggle the shader state
@@ -600,7 +551,7 @@ namespace Engine
                     if (!transform)
                     {
                         // Log the error using your existing Logger
-                        GraphicsLogger.Log(LogLevel::Error, "Transform component not found for an entity.");
+                        Logger::GetInstance().Log(LogLevel::Error, "Transform component not found for an entity.");
                         continue; // Continue processing other entities
                     }
 
@@ -622,10 +573,9 @@ namespace Engine
                      // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                    //RenderBackground(mvpA);
-
-                    if (entity->HasComponent(ComponentType::Physics))
+                    if (entity->HasComponent(ComponentType::Texture))
                     {
+                        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
                         // Check if there's a change in the 'P' key state
                         if (currentPState && !previousPState)
@@ -639,11 +589,12 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                          
-                           // RenderTexturedEntity(mvpA,entities);
-                            RenderTexturedEntity(mvpA);
-                            RenderLines(mvpA);
-                          
+                            if(texture->textureClass == Background)
+                                RenderBackground(mvpA);
+                            else {
+                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                                RenderLines(mvpA);
+                            }
                         }
                         else
                         {
@@ -651,19 +602,14 @@ namespace Engine
 
                         }
                     }
-                    else
-                    {
-                        RenderBackground(mvpA); //Assuming background only has Transform
-
-                    }
-
+                    
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
                 }
                 catch (const std::exception& ex)
                 {
-                    GraphicsLogger.Log(LogLevel::Error, "Graphics error: " + std::string(ex.what()));
+                    Logger::GetInstance().Log(LogLevel::Error, ("Graphics error: " + std::string(ex.what())).c_str());
                 }
             }
         }

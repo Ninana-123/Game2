@@ -20,6 +20,8 @@ namespace Engine
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
+		
+		CollisionSystem::AABB aabb;
 
 		int minX = 0;
 		int minY = 0;
@@ -53,10 +55,10 @@ namespace Engine
 			cloneComponent->c_Width = c_Width;
 			cloneComponent->c_Height = c_Height;
 			cloneComponent->isColliding = isColliding;
-			cloneComponent->minX = minX;
-			cloneComponent->maxX = maxX;
-			cloneComponent->minY = minY;
-			cloneComponent->maxY = maxY;
+			cloneComponent->aabb.min.x = aabb.min.x;
+			cloneComponent->aabb.max.x = aabb.max.x;
+			cloneComponent->aabb.min.y = aabb.min.y;
+			cloneComponent->aabb.max.y = aabb.max.y;
 
 			return cloneComponent;
 		}
@@ -65,10 +67,10 @@ namespace Engine
 			outputStream << "c_Width: " << c_Width << '\n';
 			outputStream << "c_Height: " <<  c_Height << '\n';
 			outputStream << "isColliding: " << isColliding << '\n';
-			outputStream << "Min X: " << minX << '\n';
-			outputStream << "Min Y: " << minY << '\n';
-			outputStream << "Max X: " << maxX << '\n';
-			outputStream << "Max Y: " << maxY << '\n';
+			outputStream << "Min X: " << aabb.min.x << '\n';
+			outputStream << "Min Y: " << aabb.min.y << '\n';
+			outputStream << "Max X: " << aabb.max.x << '\n';
+			outputStream << "Max Y: " << aabb.max.y << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
@@ -76,10 +78,10 @@ namespace Engine
 			inputStream >> temp >> c_Width;
 			inputStream >> temp >> c_Height;
 			inputStream >> temp >> isColliding;
-			inputStream >> temp >> minX;
-			inputStream >> temp >> minY;
-			inputStream >> temp >> maxX;
-			inputStream >> temp >> maxY;
+			inputStream >> temp >> aabb.min.x;
+			inputStream >> temp >> aabb.min.y;
+			inputStream >> temp >> aabb.max.x;
+			inputStream >> temp >> aabb.max.y;
 		}
 
 	};

@@ -78,7 +78,9 @@ namespace Engine {
 
             std::string componentType;
             while (sceneFile >> componentType && componentType != "EndEntity") {
-                Component* component = entityPtr->Create(componentType);
+                ComponentType type = ComponentFactory::StringToComponentType(componentType);
+                entityPtr->AddNewComponent(type);
+                Component* component = entityPtr->GetComponent(type);
                 if (component) {
                     component->Deserialize(sceneFile);
                 }
@@ -91,4 +93,76 @@ namespace Engine {
 
         sceneFile.close();
     }
+    
+    void Loader::LoadPrefabs(const std::string& filepath)
+    {
+        std::ifstream PrefabFile(filepath);
+        if (!PrefabFile.is_open()) {
+            std::cerr << "Error: Could not open Prefab file " << filepath << "\n";
+            return;
+        }
+
+        int prefabCount;
+        PrefabFile >> prefabCount;
+        for (int i = 0; i < prefabCount; ++i) {
+            PrefabID prefab = prefabManager->CreatePrefab();
+            Prefab* prefabPtr = prefabManager->GetPrefab(prefab);
+            PrefabFile >> prefabPtr->name;
+
+            std::string componentType;
+            while (PrefabFile >> componentType && componentType != "EndPrefab") {
+                ComponentType type = ComponentFactory::StringToComponentType(componentType);
+                prefabPtr->AddNewComponent(type);
+                Component* component = prefabPtr->GetComponent(type);
+                if (component) {
+                    component->Deserialize(PrefabFile);
+                }
+                else {
+                    std::cerr << "Unknown component type: " << componentType << std::endl;
+                }
+            }
+            std::cout << "Prefab: " << prefabPtr->name << " created\n";
+        }
+
+    }
+
+    void Loader::SavePrefabs(const std::string& filepath)
+    {
+        std::ofstream PrefabFile(filepath);
+
+        if (!PrefabFile.is_open()) {
+            std::cerr << "Error: Could not open Prefab file " << filepath << "\n";
+            return;
+        }
+
+        // Access the PrefabManager and Prefabs
+        auto* prefabs = prefabManager->GetPrefabs();
+
+        // Write the number of prefabs
+        PrefabFile << prefabs->size() << '\n';
+
+        // Iterate through prefabs and serialize each one
+        for (const auto& pair : *prefabs)
+        {
+            // Write the prefab name
+            PrefabFile << pair.second->GetName() << '\n';
+
+            // Serialize each component in the prefab
+            for (const auto& componentPair : pair.second->GetComponents())
+            {
+                const ComponentType type = componentPair.first;
+                const Component* component = componentPair.second;
+
+                // Write the component type
+                PrefabFile << ComponentFactory::ComponentTypeToString(type) << '\n';
+
+                // Serialize the component
+                component->Serialize(PrefabFile);
+            }
+
+            // Write the end of prefab marker
+            PrefabFile << "EndPrefab\n";
+        }
+    }
+
 }

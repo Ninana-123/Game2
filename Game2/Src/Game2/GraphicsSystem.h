@@ -37,6 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Camera.h"
 #include "Animation.h"
 #include "AssetManager.h"
+#include "EntityManager.h"
 
 namespace Engine
 {
@@ -44,7 +45,7 @@ namespace Engine
     {
     public:
         GraphicsSystem();
-        GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager);
+        GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager);
         ~GraphicsSystem();
 
         void Initialize() override;
@@ -53,9 +54,10 @@ namespace Engine
         void InitializeTextures();
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
-        void RenderTexturedEntity(const glm::mat4& mvpMatrix);
+       // void RenderTexturedEntity(const glm::mat4& mvpMatrix);
         //void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
         
+        void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
@@ -72,9 +74,7 @@ namespace Engine
 
     private:
         Shader shader;
-        Texture textureA;
-        Texture textureB;
-        Texture textureC;
+        std::vector<Texture> textures;
 
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
@@ -112,6 +112,7 @@ namespace Engine
         bool previousSState = false;
 
         std::shared_ptr<Engine::AssetManager> assetManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
     };
 }
 #endif // ENGINE_GRAPHICS_H

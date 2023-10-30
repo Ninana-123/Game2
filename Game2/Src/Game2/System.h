@@ -33,8 +33,27 @@ namespace Engine
 
 		virtual ~System() {}
 
+		inline void StartTimer() {
+			startTime = std::chrono::high_resolution_clock::now();
+		}
+
+		inline void StopTimer() {
+			auto endTime = std::chrono::high_resolution_clock::now();
+			elapsedTime += std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
+		}
+
+		inline double GetElapsedTime() const {
+			return elapsedTime / 1000.0; // Convert to milliseconds
+		}
+
+		inline void ResetTimer() {
+			elapsedTime = 0.0;
+		}
+
 	private:
 		SystemState state = SystemState::On;
+		std::chrono::high_resolution_clock::time_point startTime;
+		double elapsedTime = 0.0;
 		
 	};
 }

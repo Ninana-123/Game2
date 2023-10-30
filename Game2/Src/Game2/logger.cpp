@@ -4,7 +4,7 @@
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
-\brief		Implementation of the Logger class for managing log messages 
+\brief		Implementation of the Logger class for managing log messages
             with different log levels.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
@@ -13,80 +13,125 @@ written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 #include "pch.h"
-#include "Game2/logger.h"
+#include "logger.h"
 
 
 namespace Engine {
-    /*!**********************************************************************
-    \brief
-    Constructor for the Logger class.
-    \param[in] logFileName 
-    The name of the log file to be opened.
-    *************************************************************************/
+
+    // Static instance for singleton pattern
+    Logger& Logger::GetInstance() {
+        static Logger instance; // Guaranteed to be destroyed and instantiated on first use
+        return instance;
+    }
+
+    void Logger::Log(LogLevel level, const std::string& message) {
+        try {
+            Log(level, message.c_str()); // delegate to the const char* version
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
     Logger::Logger(const std::string& logFileName) {
-        m_LogFile.open(logFileName, std::ios::out | std::ios::trunc);
-        if (!m_LogFile.is_open()) {
-            throw std::runtime_error("Failed to open log file.");
+        try {
+            // Ensure the directory exists
+            std::filesystem::create_directories("Resource/Logs/");
+
+            std::string fullPath = "Resource/Logs/" + logFileName;
+            m_LogFile.open(fullPath, std::ios::out | std::ios::trunc);
+            if (!m_LogFile.is_open()) {
+                throw std::runtime_error("Failed to open log file.");
+            }
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
         }
     }
-    /*!**********************************************************************
-    \brief
-    Destructor for the Logger class.
-    *************************************************************************/
+
     Logger::~Logger() {
-        if (m_LogFile.is_open()) {
-            m_LogFile.close();
+        try {
+            if (m_LogFile.is_open()) {
+                m_LogFile.flush(); // Flush any buffered content
+                m_LogFile.close();
+            }
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
         }
     }
-    /*!**********************************************************************
-    \brief
-    Logs a message with the specified log level.
-    \param[in] level 
-    The log level of the message.
-    \param[in] message
-    The message to be logged.
-    *************************************************************************/
-    void Engine::Logger::Log(LogLevel level, const std::string& message) {
-        std::string levelStr;
-        switch (level) {
-        case LogLevel::Debug:
-            levelStr = "[DEBUG]";
-            break;
-        case LogLevel::App:
-            levelStr = "[APP]";
-            break;
-        case LogLevel::Event:
-            levelStr = "[EVENT]";
-            break;
-        case LogLevel::Info:
-            levelStr = "[INFO]";
-            break;
-        case LogLevel::Error:
-            levelStr = "[ERROR]";
-            break;
+
+
+    void Logger::Log(LogLevel level, const char* format, ...) {
+        try {
+            std::string levelStr;
+            switch (level) {
+            case LogLevel::Debug:
+                levelStr = "[DEBUG]";
+                break;
+            case LogLevel::App:
+                levelStr = "[APP]";
+                break;
+            case LogLevel::Event:
+                levelStr = "[EVENT]";
+                break;
+            case LogLevel::Info:
+                levelStr = "[INFO]";
+                break;
+            case LogLevel::Error:
+                levelStr = "[ERROR]";
+                break;
+            default:
+                throw std::invalid_argument("Unknown log level");
+            }
+
+            std::time_t now = std::time(nullptr);
+            struct tm timeInfo;
+            localtime_s(&timeInfo, &now);
+
+            char timestamp[64];
+            std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeInfo);
+
+            char logContent[512]; // Adjust size if needed
+            va_list args;
+            va_start(args, format);
+            vsnprintf(logContent, sizeof(logContent), format, args);
+            va_end(args);
+
+            std::string logEntry = std::string(timestamp) + " " + levelStr + " " + logContent;
+            std::cout << logEntry << std::endl;
+
+            std::lock_guard<std::mutex> lock(logMutex); // Ensure thread safety when writing
+            WriteLog(logEntry);
         }
-
-        std::time_t now = std::time(nullptr);
-        struct tm timeInfo;
-        localtime_s(&timeInfo, &now);
-
-        char timestamp[64];
-        std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &timeInfo);
-
-        std::string logEntry = timestamp + levelStr + " " + message;
-        std::cout << logEntry << std::endl;
-        WriteLog(logEntry);
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
     }
-    /*!**********************************************************************
-    \brief
-    Writes a log message to the log file.
-    \param[in] logMessage 
-    The message to be written to the log file.
-    *************************************************************************/
+
     void Logger::WriteLog(const std::string& logMessage) {
-        if (m_LogFile.is_open()) {
-            m_LogFile << logMessage << '\n';
-            m_LogFile.flush();
+        try {
+            if (m_LogFile.is_open()) {
+                m_LogFile << logMessage << '\n';
+                if (!m_LogFile.good()) {
+                    throw std::runtime_error("Failed to write to log file.");
+                }
+                m_LogFile.flush();
+            }
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
         }
     }
+    void Logger::Flush() {
+        try {
+            if (m_LogFile.is_open()) {
+                m_LogFile.flush();
+            }
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+    }
+
 }
