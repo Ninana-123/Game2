@@ -34,14 +34,16 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "AssetManager.h"
+#include "EntityManager.h"
 
 namespace Engine
 {
     class GraphicsSystem : public System
     {
     public:
-
         GraphicsSystem();
+        GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager);
         ~GraphicsSystem();
 
         //void Initialize(const std::vector<float>& positions, const std::vector<unsigned int>& indices) override;
@@ -52,21 +54,16 @@ namespace Engine
         void InitializeTextures();
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
-        void RenderTexturedEntity(const glm::mat4& mvpMatrix);
-        void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,
-            const std::vector<float>& texIndices);
+        void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
-
     private:
         Shader shader;
-        Texture textureA;
-        Texture textureB;
-        Texture textureC;
+        std::vector<Texture> textures;
 
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
@@ -102,6 +99,9 @@ namespace Engine
         bool renderTextureSquare = true;
         bool useShaderSet1 = true;
         bool previousSState = false;
+
+        std::shared_ptr<Engine::AssetManager> assetManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
     };
 }
 #endif // ENGINE_GRAPHICS_H

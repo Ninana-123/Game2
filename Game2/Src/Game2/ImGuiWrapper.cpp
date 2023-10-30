@@ -2,7 +2,11 @@
 /*!
 \file		ImGuiWrapper.cpp
 \author 	Liu Xujie
-\par    	email: l.xujie@digipen.edu
+\co			Tristan Tham Rui Hong
+
+\email		l.xujie@digipen.edu
+			t.tham@digipen.edu
+
 \date   	29/09/2923
 \brief		This file contains the implementation of the ImGuiWrapper class,
 			which encapsulates ImGui functionality for UI rendering and 
@@ -23,7 +27,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <windows.h>
 #include "Matrix3x3Lib.h"
 #include "Input.h"
-
+#include "SystemsManager.h"
+#include "ImGuiFileBrowser.h"
 
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
@@ -37,14 +42,14 @@ namespace Engine {
 	char cloneCountInput[10] = "";  // Buffer to store the input text
 	char createCountInput[10] = "";  // Buffer to store the input text
 	Input InputHandlerImGui;
+	SimpleFileBrowser fileBrowser;
 
 	/*!**********************************************************************
 	\brief
 	Constructor for ImGuiWrapper class.
 	*************************************************************************/
-	ImGuiWrapper::ImGuiWrapper() : entityManager()
+	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
-
 	}
 	/*!**********************************************************************
 	\brief
@@ -209,6 +214,9 @@ namespace Engine {
 		float memoryUsagePercentage = static_cast<float>(status.dwMemoryLoad);
 		return memoryUsagePercentage;
 	}
+	void ImGuiWrapper::Initialize() {
+		fileBrowser.setAssetManagerPtr(assetManager);
+	}
 	/*!**********************************************************************
 	\brief
 	Called when attaching ImGui
@@ -290,7 +298,7 @@ namespace Engine {
 
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui::NewFrame();
-
+			
 			// Start a new ImGui window for debugging info
 			ImGui::Begin("Debug Information", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
@@ -333,6 +341,7 @@ namespace Engine {
 					ImGui::Text("No Keys Pressed");
 				}
 			}
+			DisplaySystemTimes();
 			ImGui::Begin("Game Objects", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
 			if (entityManager)
@@ -376,8 +385,8 @@ namespace Engine {
 					}
 				}
 
-				if (selectedEntityIndex >= static_cast<int>(entityNames.size())) {
-					selectedEntityIndex = static_cast<int>(entityNames.size()) - 1;
+				if (selectedEntityIndex >= entityNames.size()) {
+					selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 				}
 
 				if (!entityNames.empty() && selectedEntityIndex >= 0)
@@ -388,12 +397,20 @@ namespace Engine {
 							if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
 								selectedEntityIndex = i;
 								targetEntity = entityManager->GetEntity(selectedEntityIndex);
-								//std::cout << targetEntity->GetID();
 							}
 							if (isSelected)
 								ImGui::SetItemDefaultFocus();
 						}
 						ImGui::EndCombo();
+					}
+
+					// Clone Entity button
+					if (ImGui::Button("Clone Entity"))
+					{
+						if (selectedEntityIndex)
+						{
+							entityManager->CloneEntity(selectedEntityIndex);							
+						}
 					}
 				}
 				else
@@ -401,16 +418,6 @@ namespace Engine {
 					ImGui::Text("No entities available"); // or handle as appropriate
 				}
 				
-				// Clone Entity button
-				if (ImGui::Button("Clone Entity"))
-				{
-					if (targetEntity)
-					{
-						secondEntity = entityManager->CloneEntity(targetEntity->GetID());
-						targettedEntity = entityManager->GetEntity(secondEntity);
-					}
-				}
-
 				ImGui::Text("Clone Multiple Entities");
 				ImGui::InputText("Clone Count", cloneCountInput, 10);
 				// Clone Multiple Entity button
@@ -447,7 +454,16 @@ namespace Engine {
 						}
 						else if (selectedEntityIndex >= static_cast<int>(entityNames.size()))
 						{
-							selectedEntityIndex = static_cast<int>(entityNames.size()) - 1; // Adjust the selected index
+							selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+							entityManager->nextEntityID--;
+							prefabManager->nextPrefabID--;
+							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+							
+						}
+						else if (selectedEntityIndex < entityNames.size())
+						{
+							entityManager->nextEntityID--;
+							prefabManager->nextPrefabID--;
 							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 						}
 						else
@@ -538,12 +554,448 @@ namespace Engine {
 						}
 					}
 				}
-
 			}
 			else {
 				ImGui::Text("No entity selected.");
 			}
 
+			//Prefab Tool
+			ImGui::Begin("Prefab Tool", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+			if (prefabManager)
+			{
+				// Display a combo box to select the current prefab
+				const auto prefabs = prefabManager->GetPrefabs();
+				static int selectedPrefabIndex = 0;
+
+				std::vector<std::string> prefabNames;
+				for (const auto& pair : *prefabs) 
+				{
+					prefabNames.push_back(pair.second->GetName());
+				}
+
+				if (selectedPrefabIndex >= prefabNames.size()) {
+					selectedPrefabIndex = static_cast<int>(prefabNames.size() - 1);
+				}
+
+				if (!prefabNames.empty() && selectedPrefabIndex >= 0)
+				{
+					if (ImGui::BeginCombo("Select Prefab", prefabNames[selectedPrefabIndex].c_str()))
+					{
+						for (int i = 0; i < prefabNames.size(); ++i)
+						{
+							const bool isSelected = (selectedPrefabIndex == i);
+							if (ImGui::Selectable(prefabNames[i].c_str(), isSelected))
+							{
+								selectedPrefabIndex = i;
+								targetPrefab = prefabManager->GetPrefab(selectedPrefabIndex);
+							}
+							if (isSelected)
+								ImGui::SetItemDefaultFocus();
+						}
+						ImGui::EndCombo();
+					}
+				}
+				
+				//Prefab Property editor
+				if (selectedPrefabIndex >= 0 && selectedPrefabIndex < prefabNames.size()) 
+				{
+					Prefab* selectedPrefab = prefabManager->GetPrefab(prefabNames[selectedPrefabIndex]);
+
+					ImGui::Text("Prefab Properties:");
+					static bool showComponentExistsWarning = false;
+					char newNameBuffer[128];//buffer to hold input name changes
+					strncpy_s(newNameBuffer, selectedPrefab->GetName().c_str(), sizeof(newNameBuffer));
+
+					if (ImGui::InputText("Prefab Name", newNameBuffer, sizeof(newNameBuffer))) 
+					{					
+						selectedPrefab->name = newNameBuffer; //Update name buffer 
+					}
+
+					// display components of the selected prefab
+					ImGui::Text("Components");
+					ImGui::SameLine();
+					ImGui::Spacing();
+					// Dropdown list for adding components					
+					const char* componentTypes[] = {"", "Transform", "Collision", "Physics", "Texture"}; //add texture when working
+					static int selectedComponentType = 0; // Index of the selected component 
+					if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
+					{
+						if (selectedComponentType > 0)
+						{
+							// check if component already exists in buffer
+							ComponentType typeToAdd = ComponentFactory::StringToComponentType(componentTypes[selectedComponentType]);
+							if (!selectedPrefab->HasComponent(typeToAdd))
+							{
+								// Add the selected component type to the selected prefab
+								selectedPrefab->AddNewComponent(typeToAdd);
+								selectedComponentType = 0; // reset the index
+							}
+							else
+							{
+								// Set the flag to show the warning message
+								showComponentExistsWarning = true;
+								selectedComponentType = 0;
+							}							
+						}					
+					}
+					ImGui::Spacing();
+					ImGui::Spacing();
+					if (showComponentExistsWarning)
+					{
+						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already has a %s component!", componentTypes[selectedComponentType]);
+						ImGui::SameLine();
+						
+						if (ImGui::Button("Dismiss")) //confirmation button
+						{
+							showComponentExistsWarning = false;
+						}
+					}
+													
+					const auto components = selectedPrefab->GetComponents();
+					for (const auto& pair : components)
+					{
+						ComponentType component = pair.first;
+						if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(component).c_str()))
+						{
+							ImGui::Indent();
+
+							switch (component)
+							{
+							case ComponentType::Transform:
+							{
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+								float posX = transform->position.x;
+								float posY = transform->position.y;
+								float scaleX = transform->scaleX;
+								float scaleY = transform->scaleY;
+								float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+								rotDeg = fmod(rotDeg, 360.0f);
+
+								// Input boxes for editing TransformComponent properties
+								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.x = posX;
+								}
+
+								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.y = posY;
+								}
+
+								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleX = scaleX;
+								}
+
+								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleY = scaleY;
+								}
+
+								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
+								{
+									transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+								}
+								break;
+							}
+
+							case ComponentType::Collision:
+							{
+								CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+								float width = collision->c_Width;
+								float height = collision->c_Height;
+								bool isColliding = collision->isColliding;
+
+								// Input boxes for editing CollisionComponent properties
+								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Width = width;
+								}
+
+								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Height = height;
+								}
+
+								if (ImGui::Checkbox("Is Colliding", &isColliding))
+								{
+									collision->isColliding = isColliding;
+								}
+								break;
+							}
+							case ComponentType::Physics:
+							{
+								PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+								float velocity_x = physics->velocity.x;
+								float velocity_y = physics->velocity.y;
+
+								if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.x = velocity_x;
+								}
+
+								if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.y = velocity_y;
+								}
+
+								break;
+							}
+							case ComponentType::Texture:
+							{
+								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+								int textureIndex = static_cast<int>(texture->textureClass);
+								if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+								{
+									texture->textureClass = static_cast<TextureClass>(textureIndex);
+								}
+							
+							}
+
+							default:
+								break;
+							}
+
+							ImGui::SameLine();
+							if (ImGui::Button("Remove")) //Delete component
+							{
+								selectedPrefab->components.erase(component);
+							}
+						
+							ImGui::Unindent();
+							ImGui::Spacing();
+						}
+						
+					}
+					ImGui::Spacing();
+							
+					if (ImGui::Button("Spawn"))
+					{
+						if (selectedPrefab)
+						{
+							//Spawn Entity from Prefab
+							entityManager->CreateEntityFromPrefab(*selectedPrefab);
+						}
+					}
+
+					ImGui::SameLine();
+
+					if (ImGui::Button("Delete Prefab")) 
+					{
+						if (selectedPrefab)
+						{
+							prefabManager->DestroyPrefab(selectedPrefab->GetID());
+						}
+					}
+
+					/*
+					ImGui::SameLine();
+
+					if (ImGui::Button("Save Changes"))
+					{
+						loader->SavePrefabs("Resource/Prefabs.txt");
+					}
+					*/
+					
+
+					ImGui::Separator();
+
+					if (ImGui::CollapsingHeader("Prefab Creator"))
+					{
+						static bool ComponentExistsWarning = false;
+						static char newPrefabName[64] = "New Prefab"; // input prefab name
+						ImGui::InputText("New Prefab Name", newPrefabName, sizeof(newPrefabName));
+
+						static Prefab bufferPrefab(0); // buffer prefab to hold changes
+
+						// Dropdown list for adding components
+						const char* creatorComponentTypes[] = {"", "Transform", "Collision", "Physics", "Texture"};
+						static int selectedComponent = 0; // index for component types array
+
+						if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
+						{
+							if (selectedComponent > 0)
+							{
+								// Check if a component of the selected type already exists in the prefab
+								ComponentType typeToAdd = ComponentFactory::StringToComponentType(creatorComponentTypes[selectedComponent]);
+								if (!bufferPrefab.HasComponent(typeToAdd))
+								{
+									// Add the selected component type to the selected prefab
+									bufferPrefab.AddNewComponent(typeToAdd);
+									selectedComponent = 0; // Reset the selected component index
+								}
+								else
+								{
+									// Set the flag to show the warning message
+									ComponentExistsWarning = true;
+									selectedComponent = 0;
+								}								
+							}						
+						}
+
+						if (ComponentExistsWarning)
+						{
+							ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Prefab already has a %s component!", creatorComponentTypes[selectedComponent]);
+							ImGui::SameLine();
+							// Optionally, you can add a button to dismiss the warning
+							if (ImGui::Button("Dismiss"))
+							{
+								ComponentExistsWarning = false;
+							}
+						}
+
+						// iterate through the components in the buffer prefab and display as collapsing headers
+						const auto& bufferComponents = bufferPrefab.GetComponents();
+						for (const auto& pair : bufferComponents)
+						{
+							ComponentType componentType = pair.first;
+							ImGui::PushID(static_cast<int>(componentType));
+
+							if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(componentType).c_str()))
+							{
+								ImGui::Indent();
+
+								switch (componentType)
+								{
+								case ComponentType::Transform:
+								{
+									TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+									float posX = transform->position.x;
+									float posY = transform->position.y;
+									float scaleX = transform->scaleX;
+									float scaleY = transform->scaleY;
+									float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+									rotDeg = fmod(rotDeg, 360.0f);
+
+									// Input boxes for editing TransformComponent properties
+									if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
+									{
+										transform->position.x = posX;
+									}
+
+									if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
+									{
+										transform->position.y = posY;
+									}
+
+									if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
+									{
+										transform->scaleX = scaleX;
+									}
+
+									if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
+									{
+										transform->scaleY = scaleY;
+									}
+
+									if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
+									{
+										transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+									}
+									break;
+								}
+
+								case ComponentType::Collision:
+								{
+									CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+									float width = collision->c_Width;
+									float height = collision->c_Height;
+									bool isColliding = collision->isColliding;
+
+									// Input boxes for editing CollisionComponent properties
+									if (ImGui::InputFloat("Hitbox Width", &width, 1.0f, 5.0f, "%.2f"))
+									{
+										collision->c_Width = width;
+									}
+
+									if (ImGui::InputFloat("Hitbox Height", &height, 1.0f, 5.0f, "%.2f"))
+									{
+										collision->c_Height = height;
+									}
+
+									if (ImGui::Checkbox("Is Colliding", &isColliding))
+									{
+										collision->isColliding = isColliding;
+									}
+									break;
+								}
+
+								case ComponentType::Physics:
+								{
+									PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+									float velocity_x = physics->velocity.x;
+									float velocity_y = physics->velocity.y;
+
+									if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+									{
+										physics->velocity.x = velocity_x;
+									}
+
+									if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+									{
+										physics->velocity.y = velocity_y;
+									}
+
+									break;
+								}
+
+								case ComponentType::Texture:
+								{
+									TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+									int textureIndex = static_cast<int>(texture->textureClass);
+									if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+									{
+										texture->textureClass = static_cast<TextureClass>(textureIndex);
+									}
+									else
+									{
+										texture->textureClass = TextureClass::Warrior;
+									}
+								}
+								
+
+								default:
+									break;
+								}
+
+								ImGui::SameLine();
+								if (ImGui::Button("Remove"))
+								{
+									bufferPrefab.components.erase(componentType);
+								}
+
+								ImGui::Unindent();
+							}
+
+							ImGui::PopID();
+						}
+
+						if (ImGui::Button("Create New Prefab"))
+						{
+							PrefabID newPrefabID = prefabManager->CreatePrefab();
+							Prefab* newPrefab = prefabManager->GetPrefab(newPrefabID);
+							newPrefab->name = newPrefabName;
+
+							// Add each component to the new prefab
+							for (const auto& pair : bufferComponents)
+							{
+								Component* clonedComponent = pair.second->Clone();
+								newPrefab->components.emplace(pair.first, std::unique_ptr<Component>(clonedComponent));
+							}
+						}
+					}												
+				}
+			}
+			if (InputHandlerImGui.IsKeyTriggered(KEY_F3))
+				renderAssetBrowser = !renderAssetBrowser;
+			if(renderAssetBrowser == true)
+				RenderAssetBrowser();
+			ImGui::End(); // End Prefab Tool
+			
 			ImGui::End(); // End the selected entity properties window
 
 			ImGui::End();
@@ -718,6 +1170,57 @@ namespace Engine {
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
 		return false;
+	}
+
+	void ImGuiWrapper::DisplaySystemTimes() {
+		SystemsManager& systemsManager = SystemsManager::GetInstance();
+		auto systemTimes = systemsManager.DisplaySystemTimes(loopTime);
+
+		if (ImGui::CollapsingHeader("System Times")) {
+			for (const auto& [systemName, percentage] : systemTimes) {
+				ImGui::Text("%s: %.2f%% of the total game loop time", systemName.c_str(), percentage);
+			}
+		}
+	}
+
+
+	void ImGuiWrapper::RenderAssetBrowser() {
+
+		ImGui::Begin("Asset Browser");
+
+		if ((InputHandlerImGui.IsKeyPressed(KEY_F9) == true)) {
+			std::vector<int> allTexIDs = assetManager->getAllTextureIDs();
+				for (int texid : allTexIDs) {
+					// Process or print each texid
+					std::cout << "Texture ID: " << texid << std::endl;
+				}
+		}
+		auto& textures = assetManager->GetAllTextures();
+		for (auto& [texid, texture] : textures) {
+			ImGui::PushID(texid);
+
+			std::string texturePath = assetManager->GetTexturePath(texid);
+			texture = (assetManager->getTexture(texid));
+			// Display texture preview
+			ImGui::Image((void*)(intptr_t)(texid+1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::SameLine();
+
+			// Display texture information
+			ImGui::Text("ID: %d\nPath: %s", texid, texturePath.c_str());
+
+			// Replace texture button
+			if (ImGui::Button("Replace")) {
+				fileBrowser.Open("Resource/Texture");
+			}
+
+			ImGui::PopID();
+		}
+
+		ImGui::End();
+
+		if (fileBrowser.isOpen) {
+			fileBrowser.Show();
+		}
 	}
 
 }

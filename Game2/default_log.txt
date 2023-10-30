@@ -1,4 +1,9 @@
-2023-10-30 12:08:45[DEBUG] Loading Scene
-2023-10-30 12:08:45[DEBUG] Scene Loaded
-2023-10-30 12:08:46[APP] Application Running.
-DEBUG] Shader compilation and linking successful.
+2023-10-30 01:09:57 [INFO] Creating Window Game2 Engine (1280, 720)
+2023-10-30 01:09:58 [DEBUG] GLEW successfully initialized
+2023-10-30 01:09:58 [DEBUG] Loading Shader Set 1...
+2023-10-30 01:09:58 [DEBUG] Shader compilation and linking successful.
+2023-10-30 01:09:58 [DEBUG] Loading Scene
+2023-10-30 01:09:58 [DEBUG] Scene Loaded
+2023-10-30 01:09:58 [DEBUG] Loading Prefabs
+2023-10-30 01:09:58 [DEBUG] Prefabs Loaded
+2023-10-30 01:09:58 [APP] Application Running.

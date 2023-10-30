@@ -52,8 +52,6 @@ namespace Engine {
     {
         friend class EventDispatcher;
     public:
-        Event(Logger& logger) : m_Logger(logger) {}
-
         // Functions to be implemented by derived event classes
         virtual EventType GetEventType() const = 0;
         virtual const char* GetName() const = 0;
@@ -62,7 +60,6 @@ namespace Engine {
         virtual void LogEventInfo() const = 0;
         inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
     protected:
-        Logger& m_Logger;
         bool m_Handled = false;
     };
 

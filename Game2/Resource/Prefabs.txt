@@ -1,0 +1,18 @@
+2
+Tank
+Transform
+Position: 172 150
+ScaleX: 1.5
+ScaleY: 1.5
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+Min X: 0
+Min Y: 0
+Max X: 0
+Max Y: 0
+EndPrefab
+
+EndPrefab

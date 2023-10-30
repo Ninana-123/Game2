@@ -18,7 +18,7 @@ namespace Engine
 	{
 	public:
 		EntityManager() {};
-		~EntityManager();
+		~EntityManager() {};
 
 		EntityID CreateEntity();
 		EntityID CreateEntityFromPrefab(const Prefab& prefab);

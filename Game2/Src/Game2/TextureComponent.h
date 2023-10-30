@@ -22,8 +22,7 @@ namespace Engine
 		glm::vec2 textureCoordinates = glm::vec2(0.0f, 0.0f); 
 		int textureIndex{};
 
-		TextureClass textureClass = TextureClass::Null;
-		TextureType textureType = TextureType::Null;
+		TextureClass textureClass;
 
 		/*!*****************************************************************
 
@@ -50,22 +49,18 @@ namespace Engine
 		{
 			TextureComponent* cloneComponent = new TextureComponent();
 			cloneComponent->textureClass = textureClass;
-			cloneComponent->textureType = textureType;
 			return cloneComponent;
 		}
 
 		void Serialize(std::ostream& outputStream) const override {
-			outputStream << "Texture Class: " << static_cast<int>(textureClass) << '\n';
-			outputStream << "Texture Type: " << static_cast<int>(textureType) << '\n';
+			outputStream << "TextureClass: " << static_cast<int>(textureClass) << '\n';
 		}
+
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			int tempVal = 0;
 			inputStream >> temp >> tempVal;
 			textureClass = static_cast<TextureClass>(tempVal);
-			tempVal = 0;
-			inputStream >> temp >> tempVal;
-			textureType = static_cast<TextureType>(tempVal);
 		}
 	};
 }

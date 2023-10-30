@@ -20,8 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\AppEvent.h" />
-    <ClInclude Include="Src\Game2\AssetsManager.h" />
+    <ClInclude Include="Src\Game2\AssetManager.h" />
     <ClInclude Include="Src\Game2\AudioEngine.h" />
+    <ClInclude Include="Src\Game2\Body.h" />
     <ClInclude Include="Src\Game2\CollisionSystem.h" />
     <ClInclude Include="Src\Game2\CollisionComponent.h" />
     <ClInclude Include="Src\Game2\Component.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="Src\Game2\GraphicsSystem.h" />
     <ClInclude Include="Src\Game2\imconfig.h" />
     <ClInclude Include="Src\Game2\imgui.h" />
+    <ClInclude Include="Src\Game2\ImGuiFileBrowser.h" />
     <ClInclude Include="Src\Game2\ImGuiWrapper.h" />
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h" />
     <ClInclude Include="Src\Game2\imgui_internal.h" />
@@ -54,8 +56,10 @@
     <ClInclude Include="Src\Game2\PhysicsComponent.h" />
     <ClInclude Include="Src\Game2\PhysicsSystem.h" />
     <ClInclude Include="Src\Game2\Prefab.h" />
+    <ClInclude Include="Src\Game2\PrefabManager.h" />
     <ClInclude Include="Src\Game2\Renderer.h" />
     <ClInclude Include="Src\Game2\Shader.h" />
+    <ClInclude Include="Src\Game2\ErrorHandler.h" />
     <ClInclude Include="Src\Game2\SoundInfo.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\SystemsManager.h" />
@@ -71,8 +75,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
-    <ClCompile Include="Src\Game2\AssetsManager.cpp" />
+    <ClCompile Include="Src\Game2\AssetManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
+    <ClCompile Include="Src\Game2\Body.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
@@ -96,8 +101,10 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\PhysicsSystem.cpp" />
     <ClCompile Include="Src\Game2\Prefab.cpp" />
+    <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
+    <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

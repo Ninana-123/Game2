@@ -22,8 +22,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
-    Logger GraphicsLogger;
-
     /*!
    * \brief GraphicsSystem constructor.
    *
@@ -34,6 +32,12 @@ namespace Engine
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
                  "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
     {
+    }
+
+    GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"), entityManager(entityManager){
+        // other initialization code
     }
 
     /*!
@@ -48,12 +52,12 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " 
+            Logger::GetInstance().Log(LogLevel::Error, "GLEW failed to initialize: "
                 + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
         else
-            GraphicsLogger.Log(LogLevel::Debug, "GLEW successfully initialized");
+            Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
     /*!
@@ -187,13 +191,13 @@ namespace Engine
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
-            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 1...");
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
         else if (shader.GetCurrentShaderSet() == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
-            GraphicsLogger.Log(LogLevel::Debug, "Loading Shader Set 2...");
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
         else
         {
@@ -214,7 +218,7 @@ namespace Engine
             if (shaderProgram != 0)
             {
                 // Shader compilation and linking successful
-                GraphicsLogger.Log(LogLevel::Debug, "Shader compilation and linking successful.");
+                Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
                 // Store the shader program ID in the shader class based on the shader set being used
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
@@ -247,81 +251,27 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        try {
-            if (!textureA.Load("Resource/Texture/Archer.png")) {
-                throw std::runtime_error("Failed to load Texture A.");
-            }
-            textureA.InitGL();
-            textureA.Bind(0);
-
-            if (!textureB.Load("Resource/Texture/Tank.png")) {
-                throw std::runtime_error("Failed to load Texture B.");
-            }
-            textureB.InitGL();
-            textureB.Bind(1);
-
-            if (!textureC.Load("Resource/Texture/Background.png")) {
-                throw std::runtime_error("Failed to load Texture C.");
-            }
-            textureC.InitGL();
-            textureC.Bind(0);
-        }
-        catch (const std::runtime_error& e) {
-
-            GraphicsLogger.Log(LogLevel::Error, e.what());
-        }
-    }
-
-    void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions,
-        const std::vector<glm::vec2>& texCoords,
-        const std::vector<float>& texIndices) {
-        try {
-            // Ensure that the shader is bound and necessary uniforms are set
-            shader.Bind();
-            vaQuad.Bind();
-            ibQuad.Bind();
-            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-            shader.SetUniform1i("u_Texture", 0);
-
-            // Upload batched data to GPU
-            vaQuad.UpdateBuffer(0, positions.data(), positions.size() * sizeof(glm::vec2)); // Positions
-            vaQuad.UpdateBuffer(1, texCoords.data(), texCoords.size() * sizeof(glm::vec2)); // Texture coordinates
-            vaQuad.UpdateBuffer(2, texIndices.data(), texIndices.size() * sizeof(float));   // Texture indices
-
-            std::cout << "Batched Positions Size: " << positions.size() << std::endl;
-            std::cout << "Batched TexCoords Size: " << texCoords.size() << std::endl;
-            std::cout << "Batched TexIndices Size: " << texIndices.size() << std::endl;
-
-            // Render the batched entities
-            renderer.Draw(vaQuad, ibQuad, shader);
-        }
-        catch (const std::exception& e) {
-            
-            GraphicsLogger.Log(LogLevel::Error, "Render batched entities error: " + std::string(e.what()));
-
+        textures.resize(TextureClassCount);
+        for (int i = 0; i < TextureClassCount; i++) {
+            textures[i] = *(assetManager->getTexture(i));
+            textures[i].InitGL();
+            textures[i].Bind(0);
         }
     }
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
-        try {
-            shader.Bind();
-            textureC.Bind(0);
-            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-            shader.SetUniform1i("u_Texture", 0);
-            shader.SetUniformMat4f("u_MVP", mvpMatrix);
-            vaBackground.Bind(); // Bind the background vertex array
-            ibBackground.Bind(); // Bind the background index buffer
+        shader.Bind();
+        textures[Background].Bind(0);
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture", 0);
+        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+        vaBackground.Bind(); // Bind the background vertex array
+        ibBackground.Bind(); // Bind the background index buffer
 
-            renderer.Draw(vaBackground, ibBackground, shader);
-            textureC.Unbind();
-            shader.Unbind();
-        }
-        catch (const std::exception& e) {
-            
-            GraphicsLogger.Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
-
-        }
+        renderer.Draw(vaBackground, ibBackground, shader);
+        textures[Background].Unbind();
+        shader.Unbind();
     }
 
     /*!
@@ -333,40 +283,31 @@ namespace Engine
      * \param mvpMatrix The Model-View-Projection matrix for rendering.
      */
 
-    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+    void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
     {
-        try {
-            shader.Bind();
+        if (!entity->HasComponent(ComponentType::Texture))
+            return;
 
-            double currentTime = glfwGetTime();
-            double elapsedTime = currentTime - programStartTime;
-            int textureIndex = static_cast<int>(elapsedTime / 3.0) % 2;
+        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-            if (textureIndex)
-            {
-                textureA.Bind(0);
-            }
-            else
-            {
-                textureB.Bind(0);
-            }
-
-            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-            shader.SetUniform1i("u_Texture", 0);
-            shader.SetUniformMat4f("u_MVP", mvpMatrix);
-
-            vaQuad.Bind();
-            ibQuad.Bind();
-
-            // Render the entity
-            renderer.Draw(vaQuad, ibQuad, shader);
-            shader.Unbind();
+        if (texture != nullptr)
+        {
+            textures[texture->textureClass].Bind(0);
         }
-        catch (const std::exception& e) {
-           
-            GraphicsLogger.Log(LogLevel::Error, "Render textured entity error: " + std::string(e.what()));
-        }
+
+        shader.Bind();
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture", 0);
+        shader.SetUniformMat4f("u_MVP", mvpMatrix);
+
+        va.Bind();
+        ib.Bind();
+
+        // Render the entity
+        renderer.Draw(va, ib, shader);
+        shader.Unbind();
     }
+
 
     /*!
      * \brief Render lines.
@@ -484,8 +425,8 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        std::cout << "S Key State: " << currentSState << std::endl;
-
+        //std::cout << "S Key State: " << currentSState << std::endl;
+        
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState) {
             // Toggle the shader state
@@ -512,7 +453,7 @@ namespace Engine
 
                     if (!transform) {
                         // Log the error using your existing Logger
-                        GraphicsLogger.Log(LogLevel::Error, "Transform component not found for an entity.");
+                        Logger::GetInstance().Log(LogLevel::Error, "Transform component not found for an entity.");
                         continue; // Continue processing other entities
                     }
 
@@ -540,7 +481,10 @@ namespace Engine
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                    if (entity->HasComponent(ComponentType::Physics)) {
+                    if (entity->HasComponent(ComponentType::Texture))
+                    {
+                        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
                         // Check if there's a change in the 'P' key state
                         if (currentPState && !previousPState) {
                             // Toggle the rendering mode
@@ -551,16 +495,31 @@ namespace Engine
                         previousPState = currentPState;
                     }
 
+                        if (!renderTexturedSquare)
+                        {
+                            if(texture->textureClass == Background)
+                                RenderBackground(mvpA);
+                            else {
+                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                                RenderLines(mvpA);
+                            }
+                        }
+                        else
+                        {
+                            DrawColoredSquare(mvpA);
+                        }
+                    }
+                    
+                    //RenderSingleLine(mvpA, lineStart, lineEnd
+                    transform->position.x = transA.x;
+                    transform->position.y = transA.y;
                 }
-                catch (const std::exception& ex) {
-                    GraphicsLogger.Log(LogLevel::Error, "Graphics error: " + std::string(ex.what()));
+                catch (const std::exception& ex)
+                {
+                    Logger::GetInstance().Log(LogLevel::Error, ("Graphics error: " + std::string(ex.what())).c_str());
                 }
             }
         }
-
-        // Call the batch rendering function (assuming RenderBatchedEntities is a member function)
-        RenderBatchedEntities(batchedPositions, batchedTexCoords, batchedTexIndices);
-        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
     }
 
     void GraphicsSystem::UpdateViewport(int width, int height)
