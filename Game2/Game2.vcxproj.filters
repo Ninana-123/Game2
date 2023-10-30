@@ -104,6 +104,8 @@
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Camera.cpp" />
+    <ClCompile Include="Src\Game2\Animation.cpp" />
+    <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -266,6 +268,8 @@
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Camera.h" />
+    <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\AnimationComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

@@ -27,7 +27,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 namespace Engine
 {
     // Logger GraphicsLogger;
-    // Input InputController;
+    Input InputController;
 
 
     /*!

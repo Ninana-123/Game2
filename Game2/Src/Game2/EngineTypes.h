@@ -11,7 +11,7 @@ enum class ComponentType { Collision, Transform, Texture, Physics, Animation, Un
 enum TextureClass
 {
     Background,
-    Warrior,
+    Infanty,
     Tank,
     Archer,
     Tower,

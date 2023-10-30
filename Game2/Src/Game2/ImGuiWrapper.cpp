@@ -953,7 +953,7 @@ namespace Engine {
 									}
 									else
 									{
-										texture->textureClass = TextureClass::Warrior;
+										texture->textureClass = TextureClass::Infanty;
 									}
 								}
 								
