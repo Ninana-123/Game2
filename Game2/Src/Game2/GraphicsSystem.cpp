@@ -352,7 +352,7 @@ namespace Engine
         double deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        float frameRate = 1.0f;
+        float frameRate = 24.0f;
         float horizontalFrames = 6.0f; // Number of horizontal frames
         float verticalFrames = 1.0f; // Number of vertical frames
         float Length = 1536.0f; // length of sprite sheet
