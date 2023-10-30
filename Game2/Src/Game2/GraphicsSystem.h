@@ -53,6 +53,9 @@ namespace Engine
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
         void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
+        void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,
+            const std::vector<float>& texIndices);
+        void RenderBatchedData();
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
@@ -73,19 +76,29 @@ namespace Engine
         glm::mat4 mvpMatrixForBackground = glm::mat4(1.0f);
 
         GLFWwindow* Window{};
-        IndexBuffer ib;
-        IndexBuffer ibLines;
-        IndexBuffer ibBackground;
+        IndexBuffer ibQuad{};
+        //IndexBuffer ibLines;
+        IndexBuffer ibBackground{};
 
-        VertexArray vaBackground;
-        VertexArray va;
-        VertexArray vaLines;
-        VertexArray vaSingleLine;
+        VertexArray vaBackground{};
+        VertexArray vaQuad{};
+        VertexArray vaLines{};
 
         Renderer renderer;
 
-        float vtx_positions[16]{};
-        unsigned int indices[6]{};
+        std::vector<float> vtx_positions_quad{};
+        std::vector<unsigned int> indices_quad{};
+        std::vector<float> vtx_positions_lines{};
+        //std::vector<unsigned int> indices_lines;
+        std::vector<float> vtx_positions_background{};
+        std::vector<unsigned int> indices_background{};
+
+        std::vector<glm::vec2> batchedPositions{};
+        std::vector<glm::vec2> batchedTexCoords{};
+        std::vector<float> batchedTexIndices{};
+
+ /*       float vtx_positions[16]{};
+        unsigned int indices[6]{};*/
         double programStartTime = glfwGetTime();
         bool renderTexturedSquare = false;
         bool previousPState = false;
