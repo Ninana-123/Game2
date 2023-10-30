@@ -18,8 +18,6 @@ namespace Engine
     void Animation::Play()
     {
         playing = true;
-        textureXIndex = 0;
-        textureYIndex = 0;
     }
 
     void Animation::Pause()

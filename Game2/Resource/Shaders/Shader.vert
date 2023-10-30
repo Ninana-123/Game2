@@ -10,6 +10,7 @@ uniform float texCoordX; // Offset for sprite animation (in terms of frame numbe
 
 uniform float u_FrameCount; // The total number of frames
 uniform float u_FrameWidth; // The width of a single frame in texture coordinates
+uniform float u_FrameHeight; // The width of a single frame in texture coordinates
 
 void main()
 {
@@ -17,11 +18,11 @@ void main()
 
     // Calculate the current frame based on texCoordX
   
-    float frameStart = texCoordX;
+    float frameStart = texCoordX ;
     float frameEnd = texCoordX + u_FrameWidth;
 
     // Calculate the texture coordinates for the current frame
-    v_TexCoord = texCoord + vec2(clamp(frameStart, frameEnd, texCoord.x), 0.0);
-
+    v_TexCoord = texCoord * vec2(u_FrameWidth, u_FrameHeight) + vec2(texCoordX, 0);
+   
     
 }

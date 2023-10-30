@@ -27,7 +27,7 @@ namespace Engine
 {
     Logger GraphicsLogger;
     Input InputController;
-  
+
 
     /*!
    * \brief GraphicsSystem constructor.
@@ -36,20 +36,20 @@ namespace Engine
    * default shader and textures.
    */
     GraphicsSystem::GraphicsSystem()
-        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
-                  m_Camera(-640.0f, 640.0f , -360.0f, 360.0f)
+        : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
     }
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager)
-        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag") ,
-                m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
+        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
         // other initialization code
     }
 
-  
+
     /*!
    * \brief Initialize the GLEW library.
    *
@@ -62,7 +62,7 @@ namespace Engine
         if (glewInitResult != GLEW_OK)
         {
             // Log the error using your existing Logger
-            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: " 
+            GraphicsLogger.Log(LogLevel::Error, "GLEW failed to initialize: "
                 + std::string(reinterpret_cast<const char*>(glewGetErrorString(glewInitResult))));
             glfwTerminate();
         }
@@ -298,8 +298,8 @@ namespace Engine
 
         textureC = *(assetManager->getTexture("Background"));
         // Handle the error as needed, e.g., return or throw an exception
-            textureC.InitGL();
-            textureC.Bind(0);
+        textureC.InitGL();
+        textureC.Bind(0);
 
     }
 
@@ -312,14 +312,14 @@ namespace Engine
         shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
 
         const glm::mat4& viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
-      /*  std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-               
-                std::cout << viewProjectionMatrix[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }*/
+        /*  std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
+          for (int i = 0; i < 4; i++) {
+              for (int j = 0; j < 4; j++) {
+
+                  std::cout << viewProjectionMatrix[i][j] << " ";
+              }
+              std::cout << std::endl;
+          }*/
 
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
@@ -370,22 +370,26 @@ namespace Engine
         int currentFrame = animation.GetCurrentFrame();
 
         // Calculate the texture offset based on the current frame
-        float frameWidth = Length / horizontalFrames;
+        float frameWidth = 1.0f/horizontalFrames;
+        float frameHeight = 1.0f / verticalFrames;
         float texCoordX = currentFrame * frameWidth;
+        //float texCoordY = currentRow * frameHeight;
 
         // Set the texture offset in the shader
         shader.SetUniform1f("texCoordX", texCoordX);
+        //shader.SetUniform1f("texCoordY", texCoordY);
 
-     
+
         shader.SetUniform1f("u_FrameCount", horizontalFrames);
         shader.SetUniform1f("u_FrameWidth", frameWidth);
+        shader.SetUniform1f("u_FrameHeight", frameHeight);
         shader.SetUniform1i("u_CurrentFrame", currentFrame);
 
         glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
         shader.SetUniformMat4f("u_MVP", result);
 
         // Debugging: Print out the values
-        std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
+        std::cout << "Frame Width: " << frameHeight << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
         va.Bind();
         ib.Bind();
 
@@ -597,13 +601,13 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();    
+        renderer.Clear();
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-       // std::cout << "S Key State: " << currentSState << std::endl;
-        
-        // Check if there's a change in the 'S' key state
+        // std::cout << "S Key State: " << currentSState << std::endl;
+
+         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
         {
             // Toggle the shader state
@@ -641,18 +645,18 @@ namespace Engine
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
                     glm::mat4 mvpA = proj * view * modelA;
-                   // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
-                  
+                    // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
 
 
-                    // Get the current state of the 'P' key
+
+                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                   //RenderBackground(mvpA);
+                    //RenderBackground(mvpA);
 
                     if (entity->HasComponent(ComponentType::Physics))
                     {
-                      
+
                         // Check if there's a change in the 'P' key state
                         if (currentPState && !previousPState)
                         {
@@ -674,26 +678,26 @@ namespace Engine
                             }*/
                             RenderTexturedEntity(mvpA);
                             RenderLines(mvpA);
-                           /* std::cout << "Texmat4: " << std::endl;
-                            for (int i = 0; i < 4; i++) {
-                                for (int j = 0; j < 4; j++) {
-                                    std::cout << mvpA[i][j] << " ";
-                                }
-                                std::cout << std::endl;
-                            }*/
+                            /* std::cout << "Texmat4: " << std::endl;
+                             for (int i = 0; i < 4; i++) {
+                                 for (int j = 0; j < 4; j++) {
+                                     std::cout << mvpA[i][j] << " ";
+                                 }
+                                 std::cout << std::endl;
+                             }*/
                         }
                         else
                         {
                             DrawColoredSquare(mvpA);
-                         
+
                         }
                     }
                     else
                     {
-                       RenderBackground(mvpA); //Assuming background only has Transform
-                       
+                        RenderBackground(mvpA); //Assuming background only has Transform
+
                     }
-                    
+
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
@@ -709,8 +713,8 @@ namespace Engine
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
 
-      
-     
+
+
 
     }
 
@@ -728,11 +732,11 @@ namespace Engine
     void GraphicsSystem::ToggleRenderMode()
     {
         renderTexturedSquare = !renderTexturedSquare;
-        std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl; 
+        std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl;
 
         shader.Bind();
         shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
-        std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl; 
+        std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl;
     }
 
     void GraphicsSystem::ToggleShaderSet()
