@@ -33,6 +33,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Loader.h"
 #include "AssetManager.h"
 
+
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation
@@ -46,8 +47,11 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound("Resource/Audio/mainmenu_song.wav", "01");
-    SoundInfo sound2("Resource/Audio/levelwin.wav", "02");
+    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 1.0f, 0.0f);
+    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
+
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
     std::shared_ptr<Loader> loader = nullptr;
@@ -140,10 +144,15 @@ namespace Engine
             targetEntity = EM->GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
-        audioEngine.loadSound(sound);
-        audioEngine.loadSound(sound2);
-        sound.setLoop();
-        sound2.setLoop();
+        audioEngine.loadSound(sound_BGM);
+        audioEngine.loadSound(sound_Win);
+        audioEngine.loadSound(sound_Arrow);
+        audioEngine.loadSound(sound_Slash);
+
+      /*  sound_BGM.setLoop();
+        sound_Win.setLoop();
+        sound_Arrow.setLoop();
+        sound_Slash.setLoop();*/
 
         // Initialize ImGuiWrapper
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM, assetManager);
@@ -176,8 +185,11 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
+        audioEngine.playSound(sound_BGM);
+
         while (m_Running)
         {
+
             auto loopStartTime = std::chrono::high_resolution_clock::now();
             // Update input, window, delta time, and window title
             InputHandler.Update();
@@ -186,27 +198,38 @@ namespace Engine
             Application::UpdateWindowTitle();
 
             // Audio handling based on key input
-            if (currentlyPlayingSound == false) {
-                if (InputHandler.IsKeyTriggered(KEY_9)) {
-                    audioEngine.playSound(sound);
-                    currentlyPlayingSound = true;
+                if (InputHandler.IsKeyTriggered(KEY_3)) {
+                    audioEngine.playSound(sound_Win);
+                    //currentlyPlayingSound = false;
                 }
-            }
-
-            if (currentlyPlayingSound == false) {
-                if (InputHandler.IsKeyTriggered(KEY_0)) {
-                    audioEngine.playSound(sound2);
-                    currentlyPlayingSound = true;
+ 
+                if (InputHandler.IsKeyTriggered(KEY_5)) {
+                    audioEngine.playSound(sound_Arrow);
+                    //currentlyPlayingSound = false;
                 }
-            }
+   
+                if (InputHandler.IsKeyTriggered(KEY_7)) {
+                    audioEngine.playSound(sound_Slash);
+                    //currentlyPlayingSound = false;
+                }
 
-            if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound)) {
-                audioEngine.stopSound(sound);
+            if (InputHandler.IsKeyTriggered(KEY_9) && audioEngine.soundIsPlaying(sound_BGM)) {
+                audioEngine.stopSound(sound_BGM);
                 currentlyPlayingSound = false;
             }
 
-            if (InputHandler.IsKeyTriggered(KEY_7) && audioEngine.soundIsPlaying(sound2)) {
-                audioEngine.stopSound(sound2);
+            if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
+                audioEngine.stopSound(sound_Win);
+                currentlyPlayingSound = false;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_6) && audioEngine.soundIsPlaying(sound_Arrow)) {
+                audioEngine.stopSound(sound_Arrow);
+                currentlyPlayingSound = false;
+            }
+
+            if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound_Slash)) {
+                audioEngine.stopSound(sound_Slash);
                 currentlyPlayingSound = false;
             }
 
@@ -364,6 +387,8 @@ namespace Engine
                 }
 
             }
+
+            audioEngine.update();
 
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
