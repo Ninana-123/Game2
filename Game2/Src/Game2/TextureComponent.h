@@ -12,12 +12,15 @@
 
 #include "Component.h"
 #include "EngineTypes.h"
+#include <glm/glm.hpp> 
 
 namespace Engine
 {
 	class TextureComponent : public Component
 	{
 	public:
+		glm::vec2 textureCoordinates = glm::vec2(0.0f, 0.0f); 
+		int textureIndex{};
 
 		TextureClass textureClass = TextureClass::Null;
 		TextureType textureType = TextureType::Null;

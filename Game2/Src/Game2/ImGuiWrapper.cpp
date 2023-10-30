@@ -175,7 +175,7 @@ namespace Engine {
 	Total available physical memory in megabytes
 	*************************************************************************/
 	float GetTotalMemoryInMB() {
-		MEMORYSTATUSEX status;
+		MEMORYSTATUSEX status{};
 		status.dwLength = sizeof(status);
 		GlobalMemoryStatusEx(&status);
 		return static_cast<float>(status.ullTotalPhys) / (1024 * 1024);
@@ -188,7 +188,7 @@ namespace Engine {
 	Available physical memory in megabytes
 	*************************************************************************/
 	float GetAvailableMemoryInMB() {
-		MEMORYSTATUSEX status;
+		MEMORYSTATUSEX status{};
 		status.dwLength = sizeof(status);
 		GlobalMemoryStatusEx(&status);
 		return static_cast<float>(status.ullAvailPhys) / (1024 * 1024);
@@ -201,7 +201,7 @@ namespace Engine {
 	Memory usage percentage.
 	*************************************************************************/
 	float GetMemoryUsagePercentage() {
-		MEMORYSTATUSEX status;
+		MEMORYSTATUSEX status{};
 		status.dwLength = sizeof(status);
 		GlobalMemoryStatusEx(&status);
 
@@ -376,8 +376,8 @@ namespace Engine {
 					}
 				}
 
-				if (selectedEntityIndex >= entityNames.size()) {
-					selectedEntityIndex = entityNames.size() - 1;
+				if (selectedEntityIndex >= static_cast<int>(entityNames.size())) {
+					selectedEntityIndex = static_cast<int>(entityNames.size()) - 1;
 				}
 
 				if (!entityNames.empty() && selectedEntityIndex >= 0)
@@ -445,9 +445,9 @@ namespace Engine {
 							selectedEntityIndex = -1; // No entities left, set index to an invalid value
 							targetEntity = nullptr;   // No entity to select
 						}
-						else if (selectedEntityIndex >= entityNames.size())
+						else if (selectedEntityIndex >= static_cast<int>(entityNames.size()))
 						{
-							selectedEntityIndex = entityNames.size() - 1; // Adjust the selected index
+							selectedEntityIndex = static_cast<int>(entityNames.size()) - 1; // Adjust the selected index
 							targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 						}
 						else
