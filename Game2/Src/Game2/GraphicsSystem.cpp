@@ -112,10 +112,10 @@ namespace Engine
         //define vertex array and indices
         float quadPositions[] =
         {
-           -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
-            60.f, -60.f, 1.0f, 0.0f,  // bottom-right
-            60.f,  60.f, 1.0f, 1.0f,  // top-right
-           -60.f,  60.f, 0.0f, 1.0f   // top-left
+           -160.f, -160.f, 0.0f, 0.0f,  // bottom-left
+            160.f, -160.f, 1.0f, 0.0f,  // bottom-right
+            160.f,  160.f, 1.0f, 1.0f,  // top-right
+           -160.f,  160.f, 0.0f, 1.0f   // top-left
         };
 
         // Copy vtx_position into vtx_position member variable
