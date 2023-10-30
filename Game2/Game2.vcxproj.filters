@@ -100,6 +100,9 @@
     <ClCompile Include="Src\Game2\Body.cpp">
       <Filter>Systems\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Pathfinding.cpp">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -255,6 +258,9 @@
     <ClInclude Include="Src\Game2\Body.h">
       <Filter>Systems\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Pathfinding.h">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -343,6 +349,9 @@
     </Filter>
     <Filter Include="Base\AssetsManager">
       <UniqueIdentifier>{9bb45b5c-b999-4dab-9cb3-dbdaf640c5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{8b08b3ee-6279-4868-bc56-24a2b6283c22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
