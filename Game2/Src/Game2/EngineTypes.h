@@ -16,5 +16,12 @@ enum TextureClass
     Archer,
     Tower,
     Castle,
-    TextureClassCount
+    HUD,
+    HUDInfantry,
+    HUDArcher,
+    HUDTank,
+    pauseButton,
+    playButton,
+    settingsButton,
+    TextureClassCount,
 };
