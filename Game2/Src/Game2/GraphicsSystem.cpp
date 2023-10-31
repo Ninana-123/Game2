@@ -152,9 +152,9 @@ namespace Engine
             vaQuad.AddBuffer(vbQuad, layout);
             vaLines.AddBuffer(vbLines, layout);
             vaBackground.AddBuffer(vbBackground, layout);
-
             ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
             ibBackground.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
+            //std::cout << "ibbackground: " << ibBackground.GetCount() << std::endl;
         }
         catch (const std::runtime_error& e) {
             // Handle buffer initialization error
@@ -269,8 +269,8 @@ namespace Engine
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
-
         renderer.Draw(vaBackground, ibBackground, shader);
+        std::cout << "ibBackground: " << ibBackground.GetCount() << std::endl;
         textures[Background].Unbind();
         shader.Unbind();
         }
@@ -304,11 +304,11 @@ namespace Engine
 
             Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
             renderer.Draw(vaQuad, ibQuad, shader);
+        }
+
         textures[batch.textureClass].Unbind();
         ibQuad.Unbind();
         vaQuad.Unbind();
-        }
-
         shader.Unbind();
         batches.clear();
         Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
