@@ -62,25 +62,15 @@ Texture
 TextureClass: 2
 EndEntity
 Transform 
-Position: 300 -290
-ScaleX: 1.0
+Position: 000 -290
+ScaleX: 4.0
 ScaleY: 1.0
 Rotation: 0
-Collision
-c_Width: 45 
-c_Height: 45 
-isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
-Physics
-Velocity: 0 0
 Texture
 TextureClass: 6
 EndEntity
 Transform 
-Position: -200 -290
+Position: -170 -290
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
@@ -98,7 +88,7 @@ Texture
 TextureClass: 7
 EndEntity
 Transform 
-Position: -100 -290
+Position: -70 -290
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
@@ -116,7 +106,7 @@ Texture
 TextureClass: 8
 EndEntity
 Transform 
-Position: 0 -290
+Position: 30 -290
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
