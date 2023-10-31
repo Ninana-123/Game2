@@ -62,6 +62,8 @@ namespace Engine
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+        void SetMaxBatchSize(int maxSize);
+
     private:
         Shader shader;
         std::vector<Texture> textures;
@@ -93,9 +95,15 @@ namespace Engine
         std::vector<float> vtx_positions_background{};
         std::vector<unsigned int> indices_background{};
 
-        std::vector<glm::vec2> batchedPositions{};
-        std::vector<glm::vec2> batchedTexCoords{};
-        std::vector<float> batchedTexIndices{};
+        TextureClass textureClass;
+
+        struct Batch
+        {
+            std::vector<glm::vec2> batchedPositions{};
+            std::vector<glm::vec2> batchedTexCoords{};
+            std::vector<float> batchedTexIndices{};
+            int textureClass{};
+        };
 
  /*       float vtx_positions[16]{};
         unsigned int indices[6]{};*/
@@ -105,9 +113,12 @@ namespace Engine
         bool renderTextureSquare = true;
         bool useShaderSet1 = true;
         bool previousSState = false;
+        int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
 
         std::shared_ptr<Engine::AssetManager> assetManager;
         std::shared_ptr<Engine::EntityManager> entityManager;
+
+        std::vector<Batch> batches;
     };
 }
 #endif // ENGINE_GRAPHICS_H

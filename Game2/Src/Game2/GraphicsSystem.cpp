@@ -30,13 +30,13 @@ namespace Engine
    */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag")
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"), MAX_BATCH_SIZE(100)
     {
     }
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", 
-                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"), entityManager(entityManager)
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"), entityManager(entityManager), MAX_BATCH_SIZE(100)
     {
     }
 
@@ -60,7 +60,7 @@ namespace Engine
             Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
-    /*!
+  /*!
    * \brief Initialize the GraphicsSystem.
    *
    * This function initializes the GraphicsSystem by setting up OpenGL,
@@ -281,56 +281,54 @@ namespace Engine
         }
     }
 
-    void GraphicsSystem::RenderBatchedData() {
-        if (batchedPositions.empty() || batchedTexCoords.empty() || batchedTexIndices.empty()) {
-            Logger::GetInstance().Log(LogLevel::Debug, "Empty batches detected. Skipping rendering.");
-            return; // Nothing to render
-        }
+    void GraphicsSystem::RenderBatchedData()
+    {
+        Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
 
-        try {
-            // Ensure that the shader is bound and necessary uniforms are set
-            shader.Bind();
-            vaQuad.Bind();
-            ibQuad.Bind();
-            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-            shader.SetUniform1i("u_Texture[0]", 0);
+        shader.Bind();
+        vaQuad.Bind();
+        ibQuad.Bind();
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture[0]", 0);
 
-            // Validate batch sizes
-            if (batchedPositions.size() != batchedTexCoords.size() ||
-                batchedPositions.size() % 4 != 0 || batchedTexCoords.size() % 2 != 0) {
-                Logger::GetInstance().Log(LogLevel::Error, "Invalid batch sizes. Cannot render batches.");
-                return; // Handle the error or return early
-            }
+        Batch batch;
 
-            // Upload batched data to GPU
-            vaQuad.UpdateBuffer(0, batchedPositions.data(), batchedPositions.size() * sizeof(glm::vec2)); // Positions
-            vaQuad.UpdateBuffer(1, batchedTexCoords.data(), batchedTexCoords.size() * sizeof(glm::vec2)); // Texture coordinates
-            vaQuad.UpdateBuffer(2, batchedTexIndices.data(), batchedTexIndices.size() * sizeof(float));   // Texture indices
-            
-            // Render the batched data
+        for (const Batch& localBatch : batches)
+        {
+            Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
+
+            textures[batch.textureClass].Bind(0);
+            vaQuad.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
+            vaQuad.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
+            vaQuad.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
+
+            Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
             renderer.Draw(vaQuad, ibQuad, shader);
+        textures[batch.textureClass].Unbind();
+        ibQuad.Unbind();
+        vaQuad.Unbind();
+        }
 
-            // Clear batched data after rendering
-            batchedPositions.clear();
-            batchedTexCoords.clear();
-            batchedTexIndices.clear();
-        }
-        catch (const std::exception& e) {
-            Logger::GetInstance().Log(LogLevel::Error, "Render batched data error: " + std::string(e.what()));
-        }
+        shader.Unbind();
+        batches.clear();
+        Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
     }
 
-    void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices) 
+    void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
     {
-        // Reserve space to avoid reallocations
-        batchedPositions.reserve(batchedPositions.size() + positions.size());
-        batchedTexCoords.reserve(batchedTexCoords.size() + texCoords.size());
-        batchedTexIndices.reserve(batchedTexIndices.size() + texIndices.size());
+        SetMaxBatchSize(200);   
 
-        // Add elements to batch vectors
-        batchedPositions.insert(batchedPositions.end(), positions.begin(), positions.end());
-        batchedTexCoords.insert(batchedTexCoords.end(), texCoords.begin(), texCoords.end());
-        batchedTexIndices.insert(batchedTexIndices.end(), texIndices.begin(), texIndices.end());
+        if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
+        {
+            Batch newBatch;
+            newBatch.textureClass = textureClass;
+            batches.push_back(newBatch);
+        }
+
+        Batch& currentBatch = batches.back();
+        currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
+        currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
+        currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
     }
 
     /*!
@@ -474,6 +472,11 @@ namespace Engine
         }
     }
 
+    void GraphicsSystem::SetMaxBatchSize(int maxSize)
+    {
+        MAX_BATCH_SIZE = maxSize;
+    }
+
     /*!
      * \brief Update the GraphicsSystem.
      *
@@ -532,6 +535,17 @@ namespace Engine
 
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
+
+                    if (entity->HasComponent(ComponentType::Physics)) {
+                        // Check if there's a change in the 'P' key state
+                        if (currentPState && !previousPState) {
+                            // Toggle the rendering mode
+                            ToggleRenderMode();
+                        }
+
+                        // Update the previous 'P' key state
+                        previousPState = currentPState;
+                    }
 
                     if (entity->HasComponent(ComponentType::Texture)) {
                         TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
