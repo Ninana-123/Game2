@@ -536,27 +536,26 @@ namespace Engine
                     if (entity->HasComponent(ComponentType::Texture)) {
                         TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                        // Check if there's a change in the 'P' key state
-                        if (currentPState && !previousPState) {
-                            // Toggle the rendering mode
-                            ToggleRenderMode();
-                        }
-
-                        // Update the previous 'P' key state
-                        previousPState = currentPState;
-
-                        if (!renderTexturedSquare) {
-                            if (texture->textureClass == Background) {
-                                RenderBackground(mvpA);
+                        // Check if texture pointer is not null
+                        if (texture != nullptr) {
+                            // Texture component is valid, proceed with rendering logic
+                            if (!renderTexturedSquare) {
+                                if (texture->textureClass == Background) {
+                                    RenderBackground(mvpA);
+                                }
+                                else {
+                                    localBatchedPositions.push_back(glm::vec2(transA.x, transA.y));
+                                    localBatchedTexCoords.push_back(glm::vec2(0.0f, 0.0f)); // Assuming texture coordinates
+                                    localBatchedTexIndices.push_back(static_cast<float>(texture->textureClass));
+                                }
                             }
                             else {
-                                localBatchedPositions.push_back(glm::vec2(transA.x, transA.y));
-                                localBatchedTexCoords.push_back(glm::vec2(0.0f, 0.0f)); // Assuming texture coordinates
-                                localBatchedTexIndices.push_back(static_cast<float>(texture->textureClass));
+                                DrawColoredSquare(mvpA);
                             }
                         }
                         else {
-                            DrawColoredSquare(mvpA);
+                            // Handle the case when texture pointer is null (log an error, provide a default texture, etc.)
+                            Logger::GetInstance().Log(LogLevel::Error, "TextureComponent is null for the entity!");
                         }
                     }
 
