@@ -19,11 +19,6 @@ namespace Engine
 {
 	EntityID EntityManager::nextEntityID = 0;
 
-	EntityManager::~EntityManager()
-	{
-
-	}
-
 	EntityID EntityManager::CreateEntity()
 	{
 		EntityID entityID = nextEntityID++;
@@ -79,8 +74,7 @@ namespace Engine
 		auto sourceComponents = sourceEntity->GetComponents();
 		for (const auto& pair : sourceComponents) {
 			Component* sourceComponent = pair.second;
-			// You may need to implement a copy constructor or clone method for your components
-			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+			Component* clonedComponent = sourceComponent->Clone();
 
 			// Add the cloned component to the cloned entity
 			clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));

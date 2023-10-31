@@ -265,6 +265,8 @@ void Shader::Bind() const
     {
         std::cerr << "Shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
     }
+
+    
 }
 
 /*!
@@ -310,7 +312,9 @@ void Shader::SetUniform1f(const std::string& name, float value)
  */
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
 {
+   
     GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+   
 }
 
 /*!
@@ -353,6 +357,11 @@ int Shader::GetUniformLocation(const std::string& name)
     return location;
 }
 
+
+void Shader::SetUniform2f(const std::string& name, const glm::vec2& vector)
+{
+    GLCall(glUniform2f(GetUniformLocation(name), vector.x, vector.y));
+}
 void Shader::SetActiveShaderSet(int shaderSet)
 {
     m_CurrentShaderSet = shaderSet;

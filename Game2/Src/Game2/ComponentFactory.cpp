@@ -28,6 +28,7 @@ namespace Engine
         RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>(); });
         RegisterComponent(ComponentType::Texture,   []() { return std::make_unique<TextureComponent>();   });
         RegisterComponent(ComponentType::Physics,   []() { return std::make_unique<PhysicsComponent>();   });
+        //RegisterComponent(ComponentType::Animation, []() { return std::make_unique<AnimationComponent>();  });
 
     }
     /*!**********************************************************************
@@ -70,6 +71,48 @@ namespace Engine
         }
         return nullptr; // Handle unknown component types or add appropriate error handling
     }
+
+    ComponentType ComponentFactory::StringToComponentType(const std::string& typeString)
+    {
+        // Map component type strings to enum values
+        static std::unordered_map<std::string, ComponentType> StringTotypeMap = 
+        {
+            {"Transform", ComponentType::Transform  },
+            {"Collision", ComponentType::Collision  },
+            {"Physics",   ComponentType::Physics    },
+            {"Texture",   ComponentType::Texture    },
+        };
+
+        auto it = StringTotypeMap.find(typeString);
+        if (it != StringTotypeMap.end()) {
+            return it->second;
+        }
+
+        //return invalid
+        return ComponentType::Unknown;
+    }
+
+    std::string ComponentFactory::ComponentTypeToString(ComponentType type)
+    {
+        // Map enum values to component type strings
+        static std::unordered_map<ComponentType, std::string> typeToStringMap =
+        {
+            {ComponentType::Transform, "Transform"},
+            {ComponentType::Collision, "Collision"},
+            {ComponentType::Physics,   "Physics"  },
+            {ComponentType::Texture,   "Texture"  },
+         
+        };
+
+        auto it = typeToStringMap.find(type);
+        if (it != typeToStringMap.end()) {
+            return it->second;
+        }
+
+        //return invalid
+        return "Unknown Component";
+    }
+
 }
 
 

@@ -20,6 +20,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "WindowsWindow.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include "Prefab.h"
+#include "PrefabManager.h"
 
 namespace Engine {
     struct Config {
@@ -30,13 +32,17 @@ namespace Engine {
 
     class Loader {
     public:
-        Loader(EntityManager* entityManager) : entityManager(entityManager) {};
+        Loader(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager) : entityManager(EM), prefabManager(prefabManager) {};
         ~Loader();
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
+        void LoadPrefabs(const std::string& filepath);
+        
+        void SavePrefabs(const std::string& filepath);
         WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
-        Engine::EntityManager* entityManager;
+        std::shared_ptr<Engine::EntityManager> entityManager;
+        Engine::PrefabManager* prefabManager;
     };
 
 }

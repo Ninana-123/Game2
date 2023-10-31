@@ -1,0 +1,83 @@
+4
+Transform 
+Position: 1 0
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+TextureClass: 0
+EndEntity
+
+Transform 
+Position: 200 200
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+Texture
+TextureClass: 3
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
+EndEntity
+
+Transform 
+Position: 100 100
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+Texture
+TextureClass: 1
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
+EndEntity
+
+Transform 
+Position: 300 300
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Physics
+Velocity: 0 0
+Texture
+TextureClass: 2
+Animation
+FrameRate: 1.0
+HorizontalFrames: 6
+VerticalFrames: 1
+PlayMode: 0
+EndEntity
+
+

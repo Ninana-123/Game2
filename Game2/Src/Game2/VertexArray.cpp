@@ -89,6 +89,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		//calculate offset for next attribute based on current element
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
+	
 }
 
 void VertexArray::UpdateBuffer(unsigned int index, const void* data, size_t size) {
