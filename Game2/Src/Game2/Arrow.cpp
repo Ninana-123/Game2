@@ -4,8 +4,9 @@
 
 namespace Engine {
 
-#define ARROW_HALF_X glfwGetFramebufferSize(window, NULL) / 2.0f
-#define ARROW_HALF_Y glfwGetFramebufferSize(window, NULL) / 2.0f
+	WindowsWindow window;
+	float ARROW_HALF_X = window.GetWidth() / 2.0f;
+	float ARROW_HALF_Y = window.GetHeight() / 2.0f;
 
 #define ARROW_BOUNDARY_X (ARROW_HALF_X + 100)
 #define ARROW_BOUNDARY_Y (ARROW_HALF_Y + 100)
@@ -42,7 +43,28 @@ namespace Engine {
 
 	void Init_ArrowPool(ArrowPool& pool) {
 		pool.activeSize = 0;
+		for (int i = 0; i < ARROW_COUNT; i++) {
+			pool.arrow[i].enabled = false;
+			pool.activeArrow[i] = &pool.arrow[i];
+		}
+	}
 
+	void AI_Arrow(ArrowPool& pool) {
+		for (int i = 0; i < pool.activeSize; i++) {
+			pool.activeArrow[i]->transform.position += pool.activeArrow[i]->direction * deltaTime * ARROW_SPEED;
+			if (pool.activeArrow[i]->transform.position.x > ARROW_BOUNDARY_X) {
+				Remove_Arrow(i, pool);
+			}
+			else if (pool.activeArrow[i]->transform.position.x < -ARROW_BOUNDARY_X) {
+				Remove_Arrow(i, pool);
+			}
+			else if (pool.activeArrow[i]->transform.position.y > ARROW_BOUNDARY_Y) {
+				Remove_Arrow(i, pool);
+			}
+			else if (pool.activeArrow[i]->transform.position.y < -ARROW_BOUNDARY_Y) {
+				Remove_Arrow(i, pool);
+			}
+		}
 	}
 
 }
