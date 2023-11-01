@@ -205,6 +205,7 @@ int Shader::GetCurrentShaderSet() const
     return m_CurrentShaderSet;
 }
 
+
 /*!
  * \brief Compile an OpenGL shader.
  * \param type The type of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
@@ -373,4 +374,17 @@ void Shader::SetActiveShaderSet(int shaderSet)
 
 void Shader::SetShaderProgram(int shaderSet, unsigned int programID) {
     m_RendererIDs[shaderSet] = programID;
+}
+
+unsigned int Shader::GetID() const
+{
+    auto it = m_RendererIDs.find(m_CurrentShaderSet);
+    if (it != m_RendererIDs.end()) {
+        return it->second;
+    }
+    else {
+        // Handle the case where the current shader set is not found
+        std::cerr << "Current shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
+        return 0; // Return a default value indicating an error or absence of program ID
+    }
 }

@@ -70,6 +70,8 @@ public:
 
     unsigned int CreateShader(const std::string& VtxShdr, const std::string& FrgShdr);
     int GetCurrentShaderSet() const;
+    unsigned int GetID() const;
+
 private:
     ShaderProgramSource ParseShader(const std::string& filepath);
     unsigned int CompileShader(unsigned int type, const std::string& source);

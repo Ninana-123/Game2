@@ -197,6 +197,9 @@ namespace Engine
         ibBackground.Unbind();
 
         shader.Unbind();
+
+        font.Initialize();
+        font.MakeDisplayList(ft, face);
     }
 
     /*!
@@ -669,12 +672,12 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            if(texture->textureClass == Background)
-                                RenderBackground(mvpA);
-                            else {
-                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
-                                RenderLines(mvpA);
-                            }
+                            //if(texture->textureClass == Background)
+                            //    RenderBackground(mvpA);
+                            //else {
+                            //    RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                            //    RenderLines(mvpA);
+                            //}
                         }
                         else
                         {
@@ -682,7 +685,10 @@ namespace Engine
 
                         }
                     }
-                    
+                    font.RenderText(shader, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+                    font.RenderText(shader, "(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
+
+
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
