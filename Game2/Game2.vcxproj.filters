@@ -103,6 +103,8 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp">
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Tower.cpp" />
+    <ClCompile Include="Src\Game2\Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -264,6 +266,8 @@
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Tower.h" />
+    <ClInclude Include="Src\Game2\Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
