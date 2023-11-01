@@ -40,7 +40,9 @@
     <ClInclude Include="Src\Game2\imgui.h" />
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h" />
     <ClInclude Include="Src\Game2\ImGuiWrapper.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h" />
     <ClInclude Include="Src\Game2\imgui_impl_opengl3.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="Src\Game2\imgui_internal.h" />
     <ClInclude Include="Src\Game2\imstb_rectpack.h" />
     <ClInclude Include="Src\Game2\imstb_textedit.h" />
@@ -93,6 +95,7 @@
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp" />
     <ClCompile Include="Src\Game2\imgui_demo.cpp" />
     <ClCompile Include="Src\Game2\imgui_draw.cpp" />
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp" />
     <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Src\Game2\imgui_tables.cpp" />
     <ClCompile Include="Src\Game2\imgui_widgets.cpp" />
@@ -225,7 +228,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\vendor;$(SolutionDir)Game2\vendor\GLAD\include\glad;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\vendor\imgui;$(SolutionDir)Game2\vendor\GLAD\include\glad;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>

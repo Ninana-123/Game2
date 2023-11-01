@@ -1,4 +1,4 @@
-4
+5
 Transform 
 Position: 1 0
 ScaleX: 1.0
@@ -76,5 +76,10 @@ HorizontalFrames: 6
 VerticalFrames: 1
 PlayMode: 0
 EndEntity
-
-
+Transform 
+Position: 50 50 
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+TextureClass: 6

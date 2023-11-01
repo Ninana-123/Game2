@@ -16,5 +16,6 @@ enum TextureClass
     Archer,
     Tower,
     Castle,
+    HUD,
     TextureClassCount
 };

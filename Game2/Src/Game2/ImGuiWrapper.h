@@ -32,6 +32,8 @@ namespace Engine {
 		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::AssetManager> am) : entityManager(em), prefabManager(pm), assetManager(am) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+		void Begin();
+		void End();
 		void Initialize();
 		void OnAttach();
 		void OnDetach();
@@ -41,6 +43,7 @@ namespace Engine {
 		void DisplaySystemTimes();
 		void RenderAssetBrowser();
 		int selectedEntityIndex = 1;
+		void RenderLevelEditor();
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
@@ -53,8 +56,8 @@ namespace Engine {
 
 
 	private:
+		bool renderDockspace = false;
 		float m_Time = 0.0f;
-		bool renderAssetBrowser = false;
 		std::shared_ptr<Engine::EntityManager> entityManager;
 		Engine::PrefabManager* prefabManager;
 		std::shared_ptr<Engine::AssetManager> assetManager;

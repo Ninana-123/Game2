@@ -48,7 +48,8 @@ namespace Engine {
         {TextureClass::Tank, "Resource/Texture/TankWalking.png"},
         {TextureClass::Archer, "Resource/Texture/ArcherWalking.png"},
         {TextureClass::Tower, "Resource/Texture/Tower.png"},
-        {TextureClass::Castle, "Resource/Texture/Castle.png"}
+        {TextureClass::Castle, "Resource/Texture/Castle.png"},
+        {TextureClass::HUD, "Resource/Texture/HUD.png"}
         };
     };
 }

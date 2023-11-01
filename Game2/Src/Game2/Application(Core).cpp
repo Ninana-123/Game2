@@ -398,8 +398,9 @@ namespace Engine
             //std::cout << "Number of entities: " << EM.entities.size() << std::endl;
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
-
+            m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
+            m_ImGuiWrapper->End();
             systemsManager->ResetSystemTimers();
 
 
