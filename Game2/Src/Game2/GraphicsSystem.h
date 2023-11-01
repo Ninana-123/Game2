@@ -83,9 +83,9 @@ namespace Engine
         IndexBuffer ibBackground{};
 
         VertexArray vaBackground{};
-        VertexArray vaQuad{};
+        VertexArray vaQuadAndBackground{};
         VertexArray vaLines{};
-
+        VertexArray va;
         Renderer renderer;
 
         std::vector<float> vtx_positions_quad{};

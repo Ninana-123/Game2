@@ -103,69 +103,63 @@ namespace Engine
         proj = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
         view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
-        // Define vertex array and indices for the quad
-        std::vector<float> vtx_positions_localquad = {
-           -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
-            60.f, -60.f, 1.0f, 0.0f,  // bottom-right
-            60.f,  60.f, 1.0f, 1.0f,  // top-right
-           -60.f,  60.f, 0.0f, 1.0f   // top-left
-        };
-        vtx_positions_quad.resize(16);
-        std::copy(std::begin(vtx_positions_localquad), std::end(vtx_positions_localquad), std::begin(this->vtx_positions_quad));
+        // Define vertex data for quad and background combined, and lines separately
+        std::vector<float> quadAndBackgroundVertexData = {
+            // Quad vertices
+            -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
+             60.f, -60.f, 1.0f, 0.0f,  // bottom-right
+             60.f,  60.f, 1.0f, 1.0f,  // top-right
+            -60.f,  60.f, 0.0f, 1.0f,  // top-left
 
-        unsigned int localIndices[] = {
+            // Background vertices
+            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
+        };
+        vtx_positions_quad.resize(32);
+        std::copy(std::begin(quadAndBackgroundVertexData), std::end(quadAndBackgroundVertexData), std::begin(this->vtx_positions_quad));
+
+        // Indices for the quad
+        unsigned int quadIndices[] = {
             0, 1, 2,
             2, 3, 0
         };
-        indices_quad.assign(std::begin(localIndices), std::end(localIndices));
+        indices_quad.assign(std::begin(quadIndices), std::end(quadIndices));
 
-        // Define vertex array and indices for lines
-        std::vector<float> vtx_positions_local_lines = {
+        std::vector<float> linesVertexData = {
             -30.0f, -30.0f, 0.0f, 0.0f,
              30.0f, -30.0f, 1.0f, 0.0f,
              30.0f,  30.0f, 1.0f, 1.0f,
             -30.0f,  30.0f, 0.0f, 1.0f
         };
         vtx_positions_lines.resize(16);
-        std::copy(std::begin(vtx_positions_local_lines), std::end(vtx_positions_local_lines), std::begin(this->vtx_positions_lines));
+        std::copy(std::begin(linesVertexData), std::end(linesVertexData), std::begin(this->vtx_positions_lines));
 
-        // Define vertex array and indices for the background
-        std::vector<float> vtx_positions_localbackground = {
-            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
-            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
-        };
-        vtx_positions_background.resize(16);
-        std::copy(std::begin(vtx_positions_localbackground), std::end(vtx_positions_localbackground), std::begin(this->vtx_positions_background));
-
-        // Create vertex buffers and layouts for quad, lines, and background
+        // Create individual vertex buffers and layouts for lines, quad and background
         try {
-            VertexBuffer vbQuad(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+            VertexBuffer vbQuadAndBackground(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
             VertexBuffer vbLines(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
-            VertexBuffer vbBackground(vtx_positions_background.data(), static_cast<unsigned int>(vtx_positions_background.size() * sizeof(float)));
+
+            vbQuadAndBackground.SetData(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+            vbLines.SetData(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
 
             VertexBufferLayout layout;
             layout.Push<float>(2);
             layout.Push<float>(2);
 
-            vaQuad.AddBuffer(vbQuad, layout);
-            vaLines.AddBuffer(vbLines, layout);
-            vaBackground.AddBuffer(vbBackground, layout);
             ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
-            ibBackground.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
-            //std::cout << "ibbackground: " << ibBackground.GetCount() << std::endl;
+            vaQuadAndBackground.AddBuffer(vbQuadAndBackground, layout);
+            vaLines.AddBuffer(vbLines, layout);
         }
         catch (const std::runtime_error& e) {
             // Handle buffer initialization error
             throw std::runtime_error("Buffer initialization failed: " + std::string(e.what()));
         }
 
-        // Unbind buffers and shader
+        // Unbind buffers and shader after drawing
         ibQuad.Unbind();
-        vaQuad.Unbind();
-        ibBackground.Unbind();
-        vaBackground.Unbind();
+        vaQuadAndBackground.Unbind();
         vaLines.Unbind();
         shader.Unbind();
     }
@@ -269,8 +263,8 @@ namespace Engine
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
+        //std::cout << "ibBackground: " << ibBackground.GetCount() << std::endl;
         renderer.Draw(vaBackground, ibBackground, shader);
-        std::cout << "ibBackground: " << ibBackground.GetCount() << std::endl;
         textures[Background].Unbind();
         shader.Unbind();
         }
@@ -282,37 +276,48 @@ namespace Engine
     }
 
     void GraphicsSystem::RenderBatchedData()
-    {
-        Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
-
-        shader.Bind();
-        vaQuad.Bind();
-        ibQuad.Bind();
-        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-        shader.SetUniform1i("u_Texture[0]", 0);
-
-        Batch batch;
-
-        for (const Batch& localBatch : batches)
         {
-            Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
+            Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
 
-            textures[batch.textureClass].Bind(0);
-            vaQuad.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
-            vaQuad.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
-            vaQuad.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
+            // Check if the vertex buffer data is valid
+            if (vtx_positions_quad.empty() || indices_quad.empty() || vtx_positions_quad.size() % 4 != 0 || indices_quad.size() % 6 != 0) {
+                Logger::GetInstance().Log(LogLevel::Error, "Invalid or empty vertex or index buffer data!");
+                return; // Do not proceed with rendering if data is invalid or empty
+            }
 
-            Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
-            renderer.Draw(vaQuad, ibQuad, shader);
+            shader.Bind();
+            vaQuadAndBackground.Bind();
+            vaLines.Bind();
+            ibQuad.Bind();
+            shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+            shader.SetUniform1i("u_Texture[0]", 0);
+
+            Batch batch;
+
+            for (const Batch& localBatch : batches)
+            {
+                Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
+
+                textures[batch.textureClass].Bind(0);
+
+                // Update vertex buffer data for the quad and background
+
+                vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
+                vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
+                vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
+
+                // Draw the quad and background
+                Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
+                renderer.Draw(vaQuadAndBackground, ibQuad, shader);
+            }
+
+            textures[batch.textureClass].Unbind();
+            ibQuad.Unbind();
+            vaQuadAndBackground.Unbind();
+            shader.Unbind();
+            batches.clear();
+            Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
         }
-
-        textures[batch.textureClass].Unbind();
-        ibQuad.Unbind();
-        vaQuad.Unbind();
-        shader.Unbind();
-        batches.clear();
-        Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
-    }
 
     void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
     {
@@ -358,11 +363,11 @@ namespace Engine
         shader.SetUniform1i("u_Texture[0]", 0);
         shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
-        vaQuad.Bind();
+        vaQuadAndBackground.Bind();
         ibQuad.Bind();
 
         // Render the entity
-        renderer.Draw(vaQuad, ibQuad, shader);
+        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
         shader.Unbind();
         }
         catch (const std::exception& e) {
@@ -458,11 +463,11 @@ namespace Engine
             shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
             shader.SetUniformMat4f("u_MVP", mvpMatrix);
 
-            vaQuad.Bind();
+            vaQuadAndBackground.Bind();
             ibQuad.Bind();
 
             // Render the square
-            renderer.Draw(vaQuad, ibQuad, shader);
+            renderer.Draw(vaQuadAndBackground, ibQuad, shader);
             shader.Unbind();
         }
         catch (const std::exception& e) {
@@ -555,7 +560,7 @@ namespace Engine
                             // Texture component is valid, proceed with rendering logic
                             if (!renderTexturedSquare) {
                                 if (texture->textureClass == Background) {
-                                    RenderBackground(mvpA);
+                                   // RenderBackground(mvpA);
                                 }
                                 else {
                                     localBatchedPositions.push_back(glm::vec2(transA.x, transA.y));

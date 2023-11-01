@@ -25,7 +25,7 @@
  * This constructor initializes a VertexArray object with default values.
  */
 VertexArray::VertexArray()
-	: m_RendererID(0)
+	: m_RendererID(0), m_RendererBuffers(3)
 {
 }
 

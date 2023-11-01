@@ -39,5 +39,7 @@ public:
 
 	// Unbinds the vertex buffer.
 	void Unbind() const;
+
+	void SetData(const void* data, unsigned int size);
 };
 #endif ENGINE_VERTEXBUFFER_H
