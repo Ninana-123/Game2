@@ -272,6 +272,8 @@ namespace Engine
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
                 if (collisionTest->isColliding) {
+                    audioEngine.playSound(sound_Slash);
+
                     if (lastKeyPressed == 1) {
                         transformTest->position.y = lastPositionY - 20.f;
                     }
