@@ -32,6 +32,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 #include "AssetManager.h"
+#include "Pathfinding.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -42,6 +43,9 @@ double dt = 0.0;
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
+
+// Variable for getting the path of the pathfinding
+std::vector<std::pair<int, int>> path;
 
 namespace Engine
 {
@@ -159,6 +163,20 @@ namespace Engine
         m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
+
+        // Initializing pathfinding
+        int startX = 0;
+        int startY = 0;
+        int goalX = 200;
+        int goalY = 200;
+
+        Pathfinding pathfinder(720, 1280); // Create an instance of the Pathfinding class
+
+        pathfinder.setStart(startX, startY); // Set the start position
+        pathfinder.setGoal(goalX, goalY); // Set the goal position
+
+        path = pathfinder.findShortestPath(); // Use the Pathfinding class to find the path
+
     }
 
     /*!**********************************************************************
@@ -174,6 +192,7 @@ namespace Engine
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
     }
+
 
     /*!**********************************************************************
     \brief
@@ -268,27 +287,48 @@ namespace Engine
             // Variables for last position
             float lastPositionX = transformTest->position.x;
             float lastPositionY = transformTest->position.y;
+            float nextPositionX = lastPositionX + 1;
+            float nextPositionY = lastPositionY + 1;
 
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
+                if (path.empty()) {
+                    std::cout << "No path found!" << std::endl;
+                }
+                else {
+                    // If a path is found, move the unit towards the next position in the path
+                    std::pair<int, int> nextPosition = path[0]; // Get the next position
+
+                    // Debugging
+                    std::cout << nextPosition.first << std::endl;
+                    std::cout << nextPosition.second << std::endl;
+
+                    // Update the unit's position
+                    transformTest->position.x = nextPosition.first;
+                    transformTest->position.y = nextPosition.second;
+                    
+
+                    // Remove the first position from the path to move to the next one in the next frame
+                    path.erase(path.begin());
+                }
+
                 if (collisionTest->isColliding) {
-                    if (lastKeyPressed == 1) {
-                        transformTest->position.y = lastPositionY - 20.f;
+                    if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
+                        transformTest->position.y = lastPositionY - 10.f;
                     }
-                    if (lastKeyPressed == 2) {
-                        transformTest->position.y = lastPositionY + 20.f;
+                    if (lastKeyPressed == 2 || (lastPositionY > nextPositionY)) {
+                        transformTest->position.y = lastPositionY + 10.f;
                     }
-                    if (lastKeyPressed == 3) {
-                        transformTest->position.x = lastPositionX + 20.f;
+                    if (lastKeyPressed == 3 || (lastPositionX < nextPositionX)) {
+                        transformTest->position.x = lastPositionX + 10.f;
                     }
-                    if (lastKeyPressed == 4) {
-                        transformTest->position.x = lastPositionX - 20.f;
+                    if (lastKeyPressed == 4 || (lastPositionX > nextPositionX)) {
+                        transformTest->position.x = lastPositionX - 10.f;
                     }
                 }
 
                 if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                 {
-                    //lastPositionY = transformTest->position.y;
                     lastPositionY += transformation;
                     transformTest->position.y = lastPositionY;
                     if (physicsTest->velocity.y <= 0.0f) {
@@ -299,10 +339,8 @@ namespace Engine
 
                 else if (InputHandler.IsKeyPressed(KEY_DOWN) && !(collisionTest->isColliding))
                 {
-                    //lastPositionY = transformTest->position.y;
                     lastPositionY -= transformation;
                     transformTest->position.y = lastPositionY;
-                    // transformTest->position.y -= transformation;
                     if (physicsTest->velocity.y >= -0.0f) {
                         physicsTest->velocity.y = -1.0f;
                     }
@@ -311,10 +349,8 @@ namespace Engine
 
                 else if (InputHandler.IsKeyPressed(KEY_LEFT) && !(collisionTest->isColliding))
                 {
-                    //lastPositionX = transformTest->position.x;
                     lastPositionX -= transformation;
                     transformTest->position.x = lastPositionX;
-                    //transformTest->position.x -= transformation;
                     if (physicsTest->velocity.x >= -0.0f) {
                         physicsTest->velocity.x = -1.0f;
                     }
@@ -323,10 +359,8 @@ namespace Engine
 
                 else if (InputHandler.IsKeyPressed(KEY_RIGHT) && !(collisionTest->isColliding))
                 {
-                    //lastPositionX = transformTest->position.x;
                     lastPositionX += transformation;
                     transformTest->position.x = lastPositionX;
-                    //transformTest->position.x += transformation;
                     if (physicsTest->velocity.x <= 0.0f) {
                         physicsTest->velocity.x = 1.0f;
                     }

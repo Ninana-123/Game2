@@ -20,7 +20,7 @@ namespace Engine
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
-		
+		float circleRadius = 0.0f;
 		CollisionSystem::AABB aabb;
 
 		int minX = 0;
@@ -55,6 +55,7 @@ namespace Engine
 			cloneComponent->c_Width = c_Width;
 			cloneComponent->c_Height = c_Height;
 			cloneComponent->isColliding = isColliding;
+			cloneComponent->circleRadius = circleRadius;
 			cloneComponent->aabb.min.x = aabb.min.x;
 			cloneComponent->aabb.max.x = aabb.max.x;
 			cloneComponent->aabb.min.y = aabb.min.y;
@@ -67,6 +68,7 @@ namespace Engine
 			outputStream << "c_Width: " << c_Width << '\n';
 			outputStream << "c_Height: " <<  c_Height << '\n';
 			outputStream << "isColliding: " << isColliding << '\n';
+			outputStream << "circleRadius: " << circleRadius << '\n';
 			outputStream << "Min X: " << aabb.min.x << '\n';
 			outputStream << "Min Y: " << aabb.min.y << '\n';
 			outputStream << "Max X: " << aabb.max.x << '\n';
@@ -78,6 +80,7 @@ namespace Engine
 			inputStream >> temp >> c_Width;
 			inputStream >> temp >> c_Height;
 			inputStream >> temp >> isColliding;
+			//inputStream >> temp >> circleRadius;
 			inputStream >> temp >> aabb.min.x;
 			inputStream >> temp >> aabb.min.y;
 			inputStream >> temp >> aabb.max.x;

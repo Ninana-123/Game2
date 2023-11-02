@@ -85,6 +85,9 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp">
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Pathfinding.cpp">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Game2\Camera.cpp" />
     <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
@@ -249,6 +252,9 @@
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Pathfinding.h">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
     <ClInclude Include="Src\Game2\Camera.h" />
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\AnimationComponent.h" />
@@ -370,6 +376,9 @@
     </Filter>
     <Filter Include="Base\Engine\PrefabManager">
       <UniqueIdentifier>{4a796833-5ab4-4915-9316-b04e94de34ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{8b08b3ee-6279-4868-bc56-24a2b6283c22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

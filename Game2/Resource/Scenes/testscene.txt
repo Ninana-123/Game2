@@ -1,4 +1,4 @@
-5
+12
 Transform 
 Position: 1 0
 ScaleX: 1.0
@@ -16,6 +16,7 @@ Collision
 c_Width: 45 
 c_Height: 45 
 isColliding: 0
+circleRadius: 25
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -36,9 +37,10 @@ ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
 Collision
-c_Width: 45 
+c_Width: 45
 c_Height: 45 
 isColliding: 0
+circleRadius: 25
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -59,9 +61,10 @@ ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
 Collision
-c_Width: 45 
+c_Width: 45
 c_Height: 45 
 isColliding: 0
+circleRadius: 25
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -77,9 +80,78 @@ VerticalFrames: 1
 PlayMode: 0
 EndEntity
 Transform 
-Position: 50 50 
-ScaleX: 1.0
+Position: 000 -290
+ScaleX: 4.0
 ScaleY: 1.0
 Rotation: 0
 Texture
 TextureClass: 6
+EndEntity
+Transform 
+Position: -170 -290
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+TextureClass: 7
+EndEntity
+Transform 
+Position: -70 -290
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+TextureClass: 8
+EndEntity
+Transform 
+Position: 30 -290
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+TextureClass: 9
+EndEntity
+Transform 
+Position: 500 325
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Texture
+TextureClass: 10
+EndEntity
+Transform 
+Position: 550 325
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Texture
+TextureClass: 11
+EndEntity
+Transform 
+Position: 600 325
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Texture
+TextureClass: 12
+EndEntity
+Transform 
+Position: 435 60
+ScaleX: 1.5
+ScaleY: 1.5
+Rotation: 0
+Collision
+c_Width: 45 
+c_Height: 45 
+isColliding: 0
+circleRadius: 20
+MinX: 0 
+MinY: 0
+MaxX: 0
+MaxY: 0
+Texture
+TextureClass: 4
+EndEntity
+
+
+

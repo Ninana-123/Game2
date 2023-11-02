@@ -146,6 +146,8 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 
+		bool IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
+
 		void EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 	};
 }

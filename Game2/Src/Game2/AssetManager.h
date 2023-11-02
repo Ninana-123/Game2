@@ -49,7 +49,13 @@ namespace Engine {
         {TextureClass::Archer, "Resource/Texture/ArcherWalking.png"},
         {TextureClass::Tower, "Resource/Texture/Tower.png"},
         {TextureClass::Castle, "Resource/Texture/Castle.png"},
-        {TextureClass::HUD, "Resource/Texture/HUD.png"}
+        {TextureClass::HUD, "Resource/Texture/HUD.png"},
+        {TextureClass::HUDInfantry, "Resource/Texture/HUDInfantry.png"},
+        {TextureClass::HUDArcher, "Resource/Texture/HUDArcher.png"},
+        {TextureClass::HUDTank, "Resource/Texture/HUDTank.png"},
+        {TextureClass::pauseButton, "Resource/Texture/pausebutton.png"},
+        {TextureClass::playButton, "Resource/Texture/playbutton.png"},
+        {TextureClass::settingsButton, "Resource/Texture/settingsbutton.png" },
         };
     };
 }
