@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		Renderer.cpp
+\file		IndexBuffer.cpp
 \author 	Wayne Kwok Jun Lin
 \par    	email: k.junlinwayne@digipen.edu
 \date   	August 29, 2023

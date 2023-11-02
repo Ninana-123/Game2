@@ -285,36 +285,43 @@ namespace Engine
                 return; // Do not proceed with rendering if data is invalid or empty
             }
 
+            // Bind shader, vertex arrays, and index buffer
             shader.Bind();
             vaQuadAndBackground.Bind();
             vaLines.Bind();
             ibQuad.Bind();
+
+            // Set shader uniforms for rendering textured quads
             shader.SetUniform1i("u_RenderTextured", 1); // Render textured
             shader.SetUniform1i("u_Texture[0]", 0);
 
             Batch batch;
 
+            // Iterate through batches and render each batch
             for (const Batch& localBatch : batches)
             {
                 Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
 
+                // Bind texture for the current batch
                 textures[batch.textureClass].Bind(0);
 
                 // Update vertex buffer data for the quad and background
-
                 vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
                 vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
                 vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
 
-                // Draw the quad and background
+                // Draw the quad and background for current batch
                 Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
                 renderer.Draw(vaQuadAndBackground, ibQuad, shader);
             }
 
+            // Unbind textures, index buffer, vertex arrays, and shader
             textures[batch.textureClass].Unbind();
             ibQuad.Unbind();
             vaQuadAndBackground.Unbind();
             shader.Unbind();
+
+            // Clear the batches after rendering
             batches.clear();
             Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
         }
@@ -323,13 +330,16 @@ namespace Engine
     {
         SetMaxBatchSize(200);   
 
+        // Check if a new batch needs to be created
         if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
         {
+            // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
             Batch newBatch;
             newBatch.textureClass = textureClass;
             batches.push_back(newBatch);
         }
 
+        // Add the provided vertex data to the current batch
         Batch& currentBatch = batches.back();
         currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
         currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
@@ -490,7 +500,8 @@ namespace Engine
      *
      * \param entities A pointer to a map of entities.
      */
-    void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) {
+    void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+    {
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
@@ -498,98 +509,90 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        //std::cout << "S Key State: " << currentSState << std::endl;
 
         // Check if there's a change in the 'S' key state
-        if (currentSState && !previousSState) {
+        if (currentSState && !previousSState)
+        {
             // Toggle the shader state
             ToggleShaderSet();
         }
+
         // Update the previous 'S' key state
         previousSState = currentSState;
 
-        std::vector<glm::vec2> localBatchedPositions;
-        std::vector<glm::vec2> localBatchedTexCoords;
-        std::vector<float> localBatchedTexIndices;
 
-        for (const auto& entityPair : *entities) {
+        // Batched rendering data
+        std::vector<glm::vec2> positions;
+        std::vector<glm::vec2> texCoords;
+        std::vector<float> texIndices;
+
+        for (const auto& entityPair : *entities)
+        {
             Entity* entity = entityPair.second.get();
 
-            if (entity->HasComponent(ComponentType::Transform)) {
-                try {
-                    // Assign reference to transform component
-                    TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+            if (entity->HasComponent(ComponentType::Transform))
+            {
+                TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 
-                    if (!transform) {
-                        // Log the error using your existing Logger
-                        Logger::GetInstance().Log(LogLevel::Error, "Transform component not found for an entity.");
-                        continue; // Continue processing other entities
-                    }
-
+                if (transform)
+                {
                     glm::vec3 transA(transform->position.x, transform->position.y, 0);
                     float rotationA = transform->rot;
                     glm::vec3 localScale(transform->scaleX, transform->scaleY, 1.0f);
 
-                    // Update the line start and end positions based on user input
-                    glm::vec2 lineStart(transA.x, transA.y);
-                    glm::vec2 lineEnd = lineStart + glm::vec2(70.0f, 0.0f); // Adjust as needed
-
-                    // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
                     glm::mat4 mvpA = proj * view * modelA;
-
+                   
                     // Get the current state of the 'P' key
                     bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
-                    if (entity->HasComponent(ComponentType::Physics)) {
+                    if (entity->HasComponent(ComponentType::Physics))
+                    {
                         // Check if there's a change in the 'P' key state
-                        if (currentPState && !previousPState) {
+                        if (currentPState && !previousPState)
+                        {
                             // Toggle the rendering mode
                             ToggleRenderMode();
                         }
 
                         // Update the previous 'P' key state
                         previousPState = currentPState;
-                    }
 
-                    if (entity->HasComponent(ComponentType::Texture)) {
-                        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-
-                        // Check if texture pointer is not null
-                        if (texture != nullptr) {
-                            // Texture component is valid, proceed with rendering logic
-                            if (!renderTexturedSquare) {
-                                if (texture->textureClass == Background) {
-                                   // RenderBackground(mvpA);
-                                }
-                                else {
-                                    localBatchedPositions.push_back(glm::vec2(transA.x, transA.y));
-                                    localBatchedTexCoords.push_back(glm::vec2(0.0f, 0.0f)); // Assuming texture coordinates
-                                    localBatchedTexIndices.push_back(static_cast<float>(texture->textureClass));
-                                }
-                            }
-                            else {
-                                DrawColoredSquare(mvpA);
-                            }
+                        if (!renderTexturedSquare)
+                        {
+                            // Store vertex data for batched rendering
+                            positions.push_back(glm::vec2(mvpA[3][0], mvpA[3][1]));
+                            positions.push_back(glm::vec2(mvpA[3][0] + 70.0f, mvpA[3][1]));
+                            texCoords.push_back(glm::vec2(0.0f, 0.0f));
+                            texCoords.push_back(glm::vec2(1.0f, 0.0f));
+                            texIndices.push_back(0.0f);
                         }
-                        else {
-                            // Handle the case when texture pointer is null (log an error, provide a default texture, etc.)
-                            Logger::GetInstance().Log(LogLevel::Error, "TextureComponent is null for the entity!");
+                        else
+                        {
+                            // Draw colored square directly
+                            DrawColoredSquare(mvpA);
                         }
                     }
+                    else
+                    {
+                        // Draw colored square directly
+                        DrawColoredSquare(mvpA);
+                    }
 
-                    //RenderSingleLine(mvpA, lineStart, lineEnd
+                    // Update the entity's position based on the transformations
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
-                }
-                catch (const std::exception& ex) {
-                    Logger::GetInstance().Log(LogLevel::Error, ("Graphics error: " + std::string(ex.what())).c_str());
                 }
             }
         }
 
-        // Render batched entities
-        RenderBatchedEntities(localBatchedPositions, localBatchedTexCoords, localBatchedTexIndices);
+        // Batched rendering of entities
+        if (!positions.empty())
+        {
+            RenderBatchedEntities(positions, texCoords, texIndices);
+        }
+
+        // Render batched data
         RenderBatchedData();
     }
 

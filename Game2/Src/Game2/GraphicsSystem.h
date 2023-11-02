@@ -117,8 +117,8 @@ namespace Engine
 
         std::shared_ptr<Engine::AssetManager> assetManager;
         std::shared_ptr<Engine::EntityManager> entityManager;
-
         std::vector<Batch> batches;
+
     };
 }
 #endif // ENGINE_GRAPHICS_H
