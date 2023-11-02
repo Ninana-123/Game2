@@ -46,7 +46,7 @@ namespace Engine
 		}
 		else
 		{
-			std::cout << "Failed to add new component." << std::endl;
+			//std::cout << "Failed to add new component." << std::endl;
 		}
 	}
 	/*!**********************************************************************

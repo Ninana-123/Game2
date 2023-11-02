@@ -85,7 +85,7 @@ namespace Engine {
                     component->Deserialize(sceneFile);
                 }
                 else {
-                    std::cerr << "Unknown component type: " << componentType << std::endl;
+                   // std::cerr << "Unknown component type: " << componentType << std::endl;
                 }
             }
             std::cout << "Entity " << i + 1 << " created\n";
@@ -118,7 +118,7 @@ namespace Engine {
                     component->Deserialize(PrefabFile);
                 }
                 else {
-                    std::cerr << "Unknown component type: " << componentType << std::endl;
+                    //std::cerr << "Unknown component type: " << componentType << std::endl;
                 }
             }
             std::cout << "Prefab: " << prefabPtr->name << " created\n";

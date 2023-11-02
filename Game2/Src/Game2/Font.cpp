@@ -57,6 +57,17 @@ namespace Engine
         // Disable byte-alignment restriction
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+        // configure VAO/VBO for texture quads
+        glGenVertexArrays(1, &VAO);
+        glGenBuffers(1, &VBO);
+        glBindVertexArray(VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
         // Now you can call MakeDisplayList to load glyphs
         MakeDisplayList(ft, face);
 
@@ -110,18 +121,8 @@ namespace Engine
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
 
-        // configure VAO/VBO for texture quads
-        // -----------------------------------
+  
 
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
     }
 
 
@@ -177,6 +178,8 @@ namespace Engine
 
             // now advance cursors for next glyph (note that advance is the number of 1/64 pixels)
             x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide the amount of 1/64th pixels by 64 to get the amount of pixels))
+           
+
             std::cout << "Advance: " << x << std::endl;
             std::cout << "------------------------" << std::endl;
 
