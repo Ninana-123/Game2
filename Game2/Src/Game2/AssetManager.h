@@ -44,9 +44,9 @@ namespace Engine {
 
         std::map<int, std::string> textureFilePaths = {
         {TextureClass::Background, "Resource/Texture/Background.png"},
-        {TextureClass::Warrior, "Resource/Texture/Warrior.png"},
-        {TextureClass::Tank, "Resource/Texture/Tank.png"},
-        {TextureClass::Archer, "Resource/Texture/Archer.png"},
+        {TextureClass::Infanty, "Resource/Texture/InfantryWalking.png"},
+        {TextureClass::Tank, "Resource/Texture/TankWalking.png"},
+        {TextureClass::Archer, "Resource/Texture/ArcherWalking.png"},
         {TextureClass::Tower, "Resource/Texture/Tower.png"},
         {TextureClass::Castle, "Resource/Texture/Castle.png"},
         {TextureClass::HUD, "Resource/Texture/HUD.png"},

@@ -1,4 +1,4 @@
-2
+5
 Tank
 Transform
 Position: 172 150
@@ -14,6 +14,12 @@ Min X: 0
 Min Y: 0
 Max X: 0
 Max Y: 0
+EndPrefab
+
+EndPrefab
+
+EndPrefab
+
 EndPrefab
 
 EndPrefab

@@ -34,6 +34,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "CollisionSystem.h"
 #include "Vector2d.h"
+#include "Camera.h"
+#include "Animation.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 
@@ -52,6 +54,9 @@ namespace Engine
         void InitializeTextures();
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
         void UpdateViewport(int width, int height);
+       // void RenderTexturedEntity(const glm::mat4& mvpMatrix);
+       // void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+        
         void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
@@ -59,6 +64,14 @@ namespace Engine
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
+        int screenWidth, screenHeight;
+      
+        double animationStartTime;
+        double frameDuration;
+       
+
+
+
     private:
         Shader shader;
         std::vector<Texture> textures;
@@ -66,7 +79,7 @@ namespace Engine
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
-
+        glm::vec3 objectPosition;
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
         glm::mat4 proj{};
         glm::mat4 view{};
@@ -83,6 +96,11 @@ namespace Engine
         VertexArray vaSingleLine;
 
         Renderer renderer;
+
+        Camera m_Camera;
+        float CameraSpeed = 1.5f;
+        float yOffset = 1.0f;
+       
 
         float vtx_positions[16]{};
         unsigned int indices[6]{};

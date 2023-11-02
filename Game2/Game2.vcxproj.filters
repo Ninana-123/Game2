@@ -34,24 +34,6 @@
     <ClCompile Include="Src\Game2\pch.cpp">
       <Filter>Precompiled</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\imgui.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Systems\Audio</Filter>
     </ClCompile>
@@ -105,6 +87,30 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Pathfinding.cpp">
       <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Camera.cpp" />
+    <ClCompile Include="Src\Game2\Animation.cpp" />
+    <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,18 +177,6 @@
     <ClInclude Include="Src\Game2\pch.h">
       <Filter>Precompiled</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\imconfig.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_internal.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -228,15 +222,6 @@
     <ClInclude Include="Src\Game2\PhysicsSystem.h">
       <Filter>Systems\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_rectpack.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_textedit.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_truetype.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Loader.h">
       <Filter>Base\Serializer</Filter>
     </ClInclude>
@@ -269,6 +254,36 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Pathfinding.h">
       <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Camera.h" />
+    <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\AnimationComponent.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

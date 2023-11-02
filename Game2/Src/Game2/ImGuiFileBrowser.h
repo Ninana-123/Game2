@@ -7,7 +7,7 @@
 #include "SystemsManager.h"
 
 namespace Engine {
-    class SimpleFileBrowser {
+    class FileBrowser {
     public:
         void Show() {
             ImGui::Begin("File Browser");
@@ -16,7 +16,7 @@ namespace Engine {
                 for (size_t i = 0; i < files.size(); ++i) {
                     const bool isSelected = (i == selectedIndex); // Check if this file is the selected one
                     if (ImGui::Selectable(files[i].c_str(), isSelected)) {
-                        selectedIndex = i;
+                        selectedIndex = static_cast<int>(i);
                         selectedFile = files[i];
                     }
 

@@ -22,6 +22,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 extern double loopTime;
 extern double dt;
 
+
 namespace Engine
 {
     // Application class definition
@@ -67,6 +68,8 @@ namespace Engine
 
         // Flag indicating if the application is running
         bool m_Running = true;
+
+        
     };
 
     // Function to create an application instance
