@@ -112,6 +112,10 @@
     <ClCompile Include="Src\Game2\Camera.cpp">
       <Filter>Base\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Pathfinding.cpp" />
+    <ClCompile Include="Src\Game2\EngineTypes.cpp">
+      <Filter>Base\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -288,6 +292,7 @@
     <ClInclude Include="Src\Game2\Camera.h">
       <Filter>Base\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

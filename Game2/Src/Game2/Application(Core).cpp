@@ -242,9 +242,6 @@ namespace Engine
                 stepOneFrame = true;
             }
 
-
-
-
             while (accumulatedTime >= fixedDeltaTime) {
 
                 accumulatedTime -= fixedDeltaTime;
