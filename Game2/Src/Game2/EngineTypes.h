@@ -23,5 +23,5 @@ enum TextureClass
     pauseButton,
     playButton,
     settingsButton,
-    TextureClassCount,
+    TextureClassCount
 };

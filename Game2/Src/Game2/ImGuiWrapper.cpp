@@ -798,7 +798,13 @@ namespace Engine {
 							"Archer",
 							"Tower",
 							"Castle",
-							"HUD"
+							"HUD",
+							"HUDInfantry",
+							"HUDArcher",
+							"HUDTank",
+							"pauseButton",
+							"playButton",
+							"settingsButton",
 						};
 
 						static_assert(sizeof(items) / sizeof(items[0]) == TextureClassCount, "TextureClass enum and items array size mismatch!");
