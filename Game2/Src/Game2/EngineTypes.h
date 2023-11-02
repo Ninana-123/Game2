@@ -18,6 +18,12 @@ enum TextureClass
     Tower,
     Castle,
     HUD,
+    HUDInfantry,
+    HUDArcher,
+    HUDTank,
+    pauseButton,
+    playButton,
+    settingsButton,
     TextureClassCount
 };
 

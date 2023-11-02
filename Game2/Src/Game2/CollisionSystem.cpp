@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Entity.h"
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
+#include "Input.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
@@ -330,6 +331,18 @@ namespace Engine
 		}
 	}
 
+	// Function to check if the area is being touched/clicked
+	bool CollisionSystem::IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
+	{
+		if (click_x > area_center_x - (area_width / 2) && click_x < area_center_x + (area_width / 2)
+			&& click_y < area_center_y + (area_height / 2) && click_y > area_center_y - (area_height / 2))
+		{
+			return true;
+		}
+
+		return false ;
+	}
+
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
 		// Iterate through all pairs of entities
@@ -343,11 +356,21 @@ namespace Engine
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
 				AABB aabb1;
+				Circle circle1;
+				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
+				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
+
+				Input::GetMousePosition();
+				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
+					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
+					std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+				}
 
 				if (collisionComponent1)
 				{				
 					aabb1 = collisionComponent1->aabb;
+					// circle1 = meow;
 				}
 
 				if (entity1->HasComponent(ComponentType::Physics))
@@ -374,6 +397,9 @@ namespace Engine
 							TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 
 							AABB aabb2;
+							Circle circle2;
+							circle2.center = VECTORMATH::Vec2(435, 60);
+							circle2.radius = 0.f;
 							VECTORMATH::Vec2 vel2;
 							
 							if (collisionComponent2)
@@ -396,6 +422,12 @@ namespace Engine
 								isColliding = true;
 								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 							}
+
+							if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
+								//isColliding = true;
+								std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+							}
+
 						}
 					}
 				}
@@ -408,7 +440,9 @@ namespace Engine
 
 				if (!isColliding)
 				{
-					std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+					//std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+					//std::cout << Input::GetMouseX() << std::endl;
+					//std::cout << Input::GetMouseY() << std::endl;
 				}
 
 				//update AABB coordinates in entity1
@@ -423,8 +457,11 @@ namespace Engine
 					float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
 					collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);					 				
+					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);		
+
 				}
+
+	
 			}
 		}
 	}
