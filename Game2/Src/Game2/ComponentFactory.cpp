@@ -81,7 +81,7 @@ namespace Engine
             {"Collision", ComponentType::Collision  },
             {"Physics",   ComponentType::Physics    },
             {"Texture",   ComponentType::Texture    },
-            {"Sprite",    ComponentType::Sprite    },
+            {"Sprite",    ComponentType::Sprite     },
         };
 
         auto it = StringTotypeMap.find(typeString);
