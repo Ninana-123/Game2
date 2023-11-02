@@ -29,6 +29,8 @@ namespace Engine {
 		GLuint VAO{}, VBO{};
 		FT_Face face{};
 		FT_Library ft{};
+		const float fscreenWidth = 1280.0f;
+		const float fscreenHeight = 720.0f;
 
 	public:
 

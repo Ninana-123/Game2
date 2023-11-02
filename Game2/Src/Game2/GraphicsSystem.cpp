@@ -38,13 +38,16 @@ namespace Engine
    */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
         m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
     }
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
-        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+        : assetManager(assetManager), 
+        shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
             entityManager(entityManager),
              m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
@@ -199,7 +202,7 @@ namespace Engine
         shader.Unbind();
 
         font.Initialize();
-        font.MakeDisplayList(ft, face);
+        //font.MakeDisplayList(ft, face);
     }
 
     /*!
@@ -231,6 +234,12 @@ namespace Engine
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
+       /* else if (shader.GetCurrentShaderSet() == 3)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader3.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader3.frag";
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
+        }*/
         else
         {
             throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
@@ -606,10 +615,18 @@ namespace Engine
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        // std::cout << "S Key State: " << currentSState << std::endl;
 
-         // Check if there's a change in the 'S' key state
-        //std::cout << "S Key State: " << currentSState << std::endl;
+        // Save the current shader state
+        int previousShaderSet = shader.GetCurrentShaderSet();
+        shader.Bind();
+
+        // Render the text with shader set 3
+        font.RenderText(shader, "Sample", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
+        font.RenderText(shader, "Hello,World!", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
+
+        // Restore the previous shader state
+        shader.SetActiveShaderSet(previousShaderSet);
+        shader.Bind();
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -685,8 +702,6 @@ namespace Engine
 
                         }
                     }
-                    font.RenderText(shader, "This is sample text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-                    font.RenderText(shader, "(C) LearnOpenGL.com", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
 
 
                     //RenderSingleLine(mvpA, lineStart, lineEnd

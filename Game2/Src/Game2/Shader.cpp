@@ -27,9 +27,10 @@
 //    : m_FilePath(filepath), m_FilePath2(filepath2), m_RendererID(0), m_IsInitialized(false)
 //{
 //}
-Shader::Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4)
+Shader::Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4, const std::string& filepath5, const std::string& filepath6)
     : m_FilePath1(filepath1), m_FilePath2(filepath2), 
-      m_FilePath3(filepath3), m_FilePath4(filepath4), 
+      m_FilePath3(filepath3), m_FilePath4(filepath4),
+        m_FilePath5(filepath5), m_FilePath6(filepath6),
       m_IsInitialized(false), m_CurrentShaderSet(1)
 {
 }
@@ -85,24 +86,32 @@ void Shader::Initialize()
     // Load vertex shader source code from file
     std::string vertexShaderSource1 = LoadShaderSource(m_FilePath1);
     std::string vertexShaderSource2 = LoadShaderSource(m_FilePath3);
+    std::string vertexShaderSource3 = LoadShaderSource(m_FilePath5);
 
     // Load fragment shader source code from file
     std::string fragmentShaderSource1 = LoadShaderSource(m_FilePath2);
     std::string fragmentShaderSource2 = LoadShaderSource(m_FilePath4);
+    std::string fragmentShaderSource3 = LoadShaderSource(m_FilePath6);
+
 
     // Create and compile shader programs for both sets
     unsigned int program1 = CreateShader(vertexShaderSource1, fragmentShaderSource1);
     unsigned int program2 = CreateShader(vertexShaderSource2, fragmentShaderSource2);
+    unsigned int program3 = CreateShader(vertexShaderSource3, fragmentShaderSource3);
 
     // Check for shader compilation and linking errors for the first shader program
     CheckShaderCompilation(program1, "ShaderSet1");
 
     // Check for shader compilation and linking errors for the second shader program
     CheckShaderCompilation(program2, "ShaderSet2");
+    
+    // Check for shader compilation and linking errors for the second shader program
+    CheckShaderCompilation(program3, "ShaderSet3");
 
     // Store shader program IDs in the map
     m_RendererIDs[1] = program1;
     m_RendererIDs[2] = program2;
+    m_RendererIDs[3] = program3;
 
     m_IsInitialized = true;
 }

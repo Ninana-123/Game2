@@ -15,18 +15,16 @@ namespace Engine
 
         // compile and setup the shader
         // ----------------------------
-        const float fscreenWidth = 1280.0f;
-        const float fscreenHeight = 720.0f;
-        Shader shaderSet1("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag");
-        glOrtho(0, fscreenWidth, 0, fscreenHeight, -1, 1);
-        shaderSet1.Initialize();
-        shaderSet1.Bind();
+        Shader shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag", "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag", "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag");
+        shader.SetActiveShaderSet(3);
+        shader.Initialize();
+        shader.Bind();
+
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight), -1.0f, 1.0f);
-        glUniformMatrix4fv(glGetUniformLocation(shaderSet1.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
      
 
         // FreeType
-        FT_Library ft;
         if (FT_Init_FreeType(&ft))
         {
             std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
@@ -48,7 +46,6 @@ namespace Engine
         }
 
         // Load first 128 characters of ASCII set
-        FT_Face face;
         if (FT_New_Face(ft, font_name.c_str(), 0, &face)) {
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
             exit(-1);
@@ -66,15 +63,18 @@ namespace Engine
        
     }
 
-        void font::MakeDisplayList(FT_Library ft, FT_Face face) {     // Load first 128 characters of ASCII set
+    void font::MakeDisplayList(FT_Library ft, FT_Face face) 
+    {   
        
        
         // Load first 128 characters of ASCII set
-            for (unsigned char c = 'A'; c <= 'Z'; c++) {
-                if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-                    std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character '" << c << "'" << std::endl;
-                    continue;
-                }
+        for (unsigned char c = 'A'; c <= 'Z'; c++) 
+        {
+            if (FT_Load_Char(face, c, FT_LOAD_RENDER)) 
+            {
+                std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character '" << c << "'" << std::endl;
+                continue;
+            }
 
             // generate texture
             unsigned int texture;
@@ -125,11 +125,10 @@ namespace Engine
     }
 
 
-    // render line of text
-    // -------------------
     void font::RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
     {
         // activate corresponding render state	
+        shader.SetActiveShaderSet(3);
         shader.Bind();
         glUniform3f(glGetUniformLocation(shader.GetID(), "textColor"), color.x, color.y, color.z);
         glActiveTexture(GL_TEXTURE0);
@@ -141,49 +140,52 @@ namespace Engine
         {
             Character ch = Characters[*c];
 
+            float xpos = x + (ch.Bearing.x) * scale;
+            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
 
-            float xpos = x + (ch.Bearing.x >> 6) * scale;
-            float ypos = y - (ch.Size.y >> 6 - ch.Bearing.y >> 6) * scale;
+            float width = (ch.Size.x) * scale;
+            float height = (ch.Size.y) * scale;
+
+            // Debugging lines
+            std::cout << "Character: " << *c << std::endl;
             std::cout << "Position: x=" << xpos << ", y=" << ypos << std::endl;
+            std::cout << "Width: " << width << ", Height: " << height << std::endl;
+            std::cout << "Color: R=" << color.x << ", G=" << color.y << ", B=" << color.z << std::endl;
 
-            float w = (ch.Size.x >> 6) * scale;
-            float h = (ch.Size.y >> 6) * scale;
-            std::cout << "Width: x=" << w << ",Height: y=" << h << std::endl;
-
-
-           
             // update VBO for each character
             float vertices[6][4] = {
-                { xpos,     ypos + h,   0.0f, 0.0f },
-                { xpos,     ypos,       0.0f, 1.0f },
-                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos,         ypos + height,   0.0f, 0.0f },
+                { xpos,         ypos,            0.0f, 1.0f },
+                { xpos + width, ypos,            1.0f, 1.0f },
 
-                { xpos,     ypos + h,   0.0f, 0.0f },
-                { xpos + w, ypos,       1.0f, 1.0f },
-                { xpos + w, ypos + h,   1.0f, 0.0f }
+                { xpos,         ypos + height,   0.0f, 0.0f },
+                { xpos + width, ypos,            1.0f, 1.0f },
+                { xpos + width, ypos + height,   1.0f, 0.0f }
             };
+
             // render glyph texture over quad
+            std::cout << "Binding Texture for Character: " << *c << std::endl;
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-            // update content of VBO memory
+
+            std::cout << "Updating VBO for Character: " << *c << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // be sure to use glBufferSubData and not glBufferData
-
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            // render quad
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-            x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
 
-            std::cout << "Position: x=" << xpos << ", y=" << ypos << std::endl;
-            std::cout << "Character: " << *c << std::endl;
-            std::cout << "Text: " << text << std::endl;
+            std::cout << "Drawing Character: " << *c << std::endl;
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            // now advance cursors for next glyph (note that advance is the number of 1/64 pixels)
+            x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide the amount of 1/64th pixels by 64 to get the amount of pixels))
+            std::cout << "Advance: " << x << std::endl;
+            std::cout << "------------------------" << std::endl;
 
         }
+
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
-
-
     }
+
 
 
     void font::CleanupFreeType() 

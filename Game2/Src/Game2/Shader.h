@@ -34,6 +34,8 @@ private:
     std::string m_FilePath2;
     std::string m_FilePath3;
     std::string m_FilePath4;
+    std::string m_FilePath5;
+    std::string m_FilePath6;
     //unsigned int m_RendererID1;          // Shader program ID
     //unsigned int m_RendererID2;
     bool m_IsInitialized;               // Flag to track initialization
@@ -43,7 +45,7 @@ private:
 
 public:
     //Shader(const std::string& filepath, const std::string& filepath2);
-    Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4);
+    Shader(const std::string& filepath1, const std::string& filepath2, const std::string& filepath3, const std::string& filepath4, const std::string& filepath5, const std::string& filepath6);
     ~Shader();
 
     //void LoadShader(const std::string& filepath);
