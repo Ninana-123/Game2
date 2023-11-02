@@ -611,7 +611,7 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();
+       renderer.Clear();
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
@@ -621,12 +621,11 @@ namespace Engine
         shader.Bind();
 
         // Render the text with shader set 3
-        font.RenderText(shader, "Sample", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-        font.RenderText(shader, "Hello,World!", 540.0f, 570.0f, 0.5f, glm::vec3(0.3, 0.7f, 0.9f));
+        font.RenderText(shader, "Sample", 0.0f, 0.0f, 1.0f, glm::vec3( 0.0f, 0.0f, 0.0f));
+       // font.RenderText(shader, "Hello,World!", -0.5f, 0.0f, 25.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
         // Restore the previous shader state
         shader.SetActiveShaderSet(previousShaderSet);
-        shader.Bind();
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)

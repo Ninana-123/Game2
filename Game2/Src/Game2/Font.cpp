@@ -22,7 +22,6 @@ namespace Engine
 
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight), -1.0f, 1.0f);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-     
 
         // FreeType
         if (FT_Init_FreeType(&ft))
@@ -32,21 +31,19 @@ namespace Engine
         }
 
         // find path to font
-        std::string relativePath = "Resource/Fonts/arial.ttf";
-        std::filesystem::path fontPath = std::filesystem::canonical(relativePath);
-        std::string font_name = fontPath.string();
-
-        if (std::filesystem::exists(fontPath)) {
-            font_name = fontPath.string();
-            std::cout << "Font file path: " << font_name << std::endl;
-        }
-        else {
-            std::cout << "ERROR::FREETYPE: Failed to load font file path" << std::endl;
+        pathName = "Resource/Fonts/arial.ttf";
+        if (!std::filesystem::exists(pathName)) {
+            std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
             exit(-1);
         }
+        else 
+        {
+        std::cout << "Font file path: " << pathName << std::endl;
+        }
 
+    
         // Load first 128 characters of ASCII set
-        if (FT_New_Face(ft, font_name.c_str(), 0, &face)) {
+        if (FT_New_Face(ft, pathName.c_str(), 0, &face)) {
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
             exit(-1);
         }
@@ -69,17 +66,17 @@ namespace Engine
         glBindVertexArray(0);
 
         // Now you can call MakeDisplayList to load glyphs
-        MakeDisplayList(ft, face);
+        MakeDisplayList(pathName);
 
-       
+        shader.Unbind();
     }
 
-    void font::MakeDisplayList(FT_Library ft, FT_Face face) 
+    void font::MakeDisplayList(const std::string pathname) 
     {   
        
        
         // Load first 128 characters of ASCII set
-        for (unsigned char c = 'A'; c <= 'Z'; c++) 
+        for (unsigned char c = 0; c <= 128; c++) 
         {
             if (FT_Load_Char(face, c, FT_LOAD_RENDER)) 
             {
@@ -121,8 +118,6 @@ namespace Engine
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
 
-  
-
     }
 
 
@@ -135,11 +130,11 @@ namespace Engine
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
 
+
         // iterate through all characters
-        std::string::const_iterator c;
-        for (c = text.begin(); c != text.end(); c++)
+        for (char c : text)
         {
-            Character ch = Characters[*c];
+            Character ch = Characters[c];
 
             float xpos = x + (ch.Bearing.x) * scale;
             float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
@@ -148,7 +143,7 @@ namespace Engine
             float height = (ch.Size.y) * scale;
 
             // Debugging lines
-            std::cout << "Character: " << *c << std::endl;
+            std::cout << "Character: " << c << std::endl;
             std::cout << "Position: x=" << xpos << ", y=" << ypos << std::endl;
             std::cout << "Width: " << width << ", Height: " << height << std::endl;
             std::cout << "Color: R=" << color.x << ", G=" << color.y << ", B=" << color.z << std::endl;
@@ -165,15 +160,19 @@ namespace Engine
             };
 
             // render glyph texture over quad
-            std::cout << "Binding Texture for Character: " << *c << std::endl;
+            std::cout << "Binding Texture for Character: " << c << std::endl;
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
-            std::cout << "Updating VBO for Character: " << *c << std::endl;
+            std::cout << "Updating VBO for Character: " << c << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
+            if (glIsBuffer(VBO))
+            {
+                std::cout << "ok\n";
+            }
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-            std::cout << "Drawing Character: " << *c << std::endl;
+            std::cout << "Drawing Character: " << c << std::endl;
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             // now advance cursors for next glyph (note that advance is the number of 1/64 pixels)
@@ -187,6 +186,7 @@ namespace Engine
 
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
+        shader.Unbind();
     }
 
 

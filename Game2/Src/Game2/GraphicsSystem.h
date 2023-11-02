@@ -97,9 +97,7 @@ namespace Engine
         VertexArray vaSingleLine;
 
         font font;
-        FT_Face face{};
-        FT_Library ft{};
-
+   
 
 
 
