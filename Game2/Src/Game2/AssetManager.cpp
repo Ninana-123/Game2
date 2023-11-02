@@ -45,6 +45,7 @@ namespace Engine {
         TextureKey key{ mainIndex, subIndex };
         auto texture = std::make_shared<Texture>(filePath);
         textures[key] = texture;
+        textureFilePaths[key] = filePath;
         return texture;
     }
 
@@ -59,7 +60,7 @@ namespace Engine {
     }
 
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
-        TextureKey key{ mainIndex, subIndex };  // Assuming subIndex is always 0 for textureFilePaths
+        TextureKey key{ mainIndex, subIndex }; 
         auto it = textureFilePaths.find(key);
         if (it != textureFilePaths.end()) {
             it->second = newFilePath;
@@ -67,6 +68,11 @@ namespace Engine {
         else {
             std::cerr << "Texture mainIndex not found: " << mainIndex << std::endl;
         }
+    }
+
+    std::shared_ptr<Texture> AssetManager::reloadAllTexture()
+    {
+        return std::shared_ptr<Texture>();
     }
 
     /*

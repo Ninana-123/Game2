@@ -35,7 +35,7 @@ namespace Engine {
         void updateTextureFilePath(int mainIndex, int subIndex, const std::string& newFilePath);
 
         // Update the function signature
-        //std::shared_ptr<Texture> reloadTexture(int mainIndex, int subIndex);
+        std::shared_ptr<Texture> reloadAllTexture();
 
         // Use a vector of TextureKey instead of int for the function signature
         std::vector<TextureKey> GetAllTextureKeys() const;
@@ -47,6 +47,11 @@ namespace Engine {
             return textures;
         }
 
+        const std::map<TextureKey, std::string>& GetTextureFilePaths() const {
+            return textureFilePaths;
+        }
+
+    private:
         // Use the TextureKey structure instead of int for the map
         std::map<TextureKey, std::string> textureFilePaths = {
             { {TextureClass::Background, 0}, "Resource/Texture/Background.png" },

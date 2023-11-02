@@ -298,6 +298,7 @@ namespace Engine
                     if (textures[i].size() > j) {
                         textures[i][j].InitGL();
                         textures[i][j].Bind(0);
+                        std::cout << "Texture ID: " << i << ", SubIndex: " << j << ", Texture OpenGL ID: " << textures[i][j].GetTextureID() << std::endl;
                     }
                     else {
                         // Handle the case where the texture is nullptr (empty subindex)

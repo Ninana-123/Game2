@@ -458,7 +458,7 @@ namespace Engine {
 	void ImGuiWrapper::RenderAssetBrowser() {
 
 		auto& textures = assetManager->GetAllTextures(); //buffer
-
+		int imgIDCounter = 0;
 		if (ImGui::BeginTabItem("Asset Browser")) {
 			if (InputHandlerImGui.IsKeyPressed(KEY_F9)) {
 				// Iterate through main indexes
@@ -475,7 +475,7 @@ namespace Engine {
 				}
 			}
 
-			// Render ImGui based on the nested loop
+			// When rendering ImGui images
 			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
 				// Iterate through subindexes for each main index
 				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
@@ -483,20 +483,22 @@ namespace Engine {
 
 					auto it = textures.find(textureKey);
 					if (it != textures.end()) {
-						ImGui::PushID(textureKey.mainIndex * 1000 + textureKey.subIndex);
+						imgIDCounter++;
+						ImGui::PushID(imgIDCounter);
 
 						std::string texturePath = assetManager->GetTexturePath(textureKey);
+						ImTextureID imgID = (void*)(intptr_t)imgIDCounter;
 
-						ImGui::Image((void*)(intptr_t)(textureKey.mainIndex * 1000 + textureKey.subIndex + 1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+						ImGui::Image(imgID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
 						ImGui::SameLine();
 
 						ImGui::Text("Main Index: %d\nSub Index: %d\nPath: %s", textureKey.mainIndex, textureKey.subIndex, texturePath.c_str());
 
 						if (ImGui::Button("Replace")) {
-							fileBrowser.Open("Resource/Texture");
+							fileBrowser.Open("Resource/Texture", mainIndex, subIndex);
 						}
 
-						ImGui::PopID();
+						ImGui::PopID();					
 					}
 				}
 			}
@@ -633,8 +635,6 @@ namespace Engine {
 			ImGui::PlotLines("FPS", fpsValues, FPSCount, 0, NULL, 0.0f, 240.0f, ImVec2(0, 80)); // Assuming max FPS as 240 for Y-axis bounds
 			DisplaySystemTimes();
 		}
-
-
 
 		if (ImGui::CollapsingHeader("Memory Usage")) {
 			ImGui::Text("Total Memory: %.2f MB", GetTotalMemoryInMB());

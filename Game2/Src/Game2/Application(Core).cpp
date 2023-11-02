@@ -126,9 +126,19 @@ namespace Engine
         // Systems Manager & Asset Manager Initialization
         assetManager = std::make_shared<Engine::AssetManager>();
 
-        for (int i = 0; i < TextureClassCount; i++) {
-            for (int subIndex = 0; subIndex <= 2; subIndex++) {
-                assetManager->loadTexture(i, subIndex);
+        // Get the textureFilePaths map from the asset manager
+        const auto& textureFilePaths = assetManager->GetTextureFilePaths();
+
+        // Find the maximum mainIndex from textureFilePaths map
+        int maxMainIndex = 0;
+        for (const auto& entry : textureFilePaths) {
+            maxMainIndex = std::max(maxMainIndex, entry.first.mainIndex);
+        }
+
+        // Load textures for each mainIndex and subIndex
+        for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
+            for (int subIndex = 0; subIndex <= 2; ++subIndex) {
+                assetManager->loadTexture(mainIndex, subIndex);
             }
         }
 

@@ -38,7 +38,7 @@ namespace Engine {
                 }
                 else if (!selectedFile.empty() && currentDirectory == "Resource/Texture") {
                     Engine::Logger::GetInstance().Log(Engine::LogLevel::Debug, selectedFile);
-                    am->loadTexture(2, selectedFile);
+                    am->loadTexture(t_mainIndex, selectedFile, t_subIndex);
                     Engine::SystemsManager& systemsManager = Engine::SystemsManager::GetInstance();
                     Engine::GraphicsSystem& graphicsSystem = systemsManager.GetSystem<Engine::GraphicsSystem>();
                     graphicsSystem.InitializeTextures();
@@ -59,7 +59,14 @@ namespace Engine {
             ImGui::End();
         }
 
-        void Open(const std::string& directory) {
+        void Open(const std::string& directory) {         
+            currentDirectory = directory;
+            files = GetFilesInDirectory(directory);
+            isOpen = true;
+        }
+        void Open(const std::string& directory, int mainIndex, int subIndex) {
+            t_mainIndex = mainIndex;
+            t_subIndex = subIndex;
             currentDirectory = directory;
             files = GetFilesInDirectory(directory);
             isOpen = true;
@@ -117,6 +124,8 @@ namespace Engine {
         PrefabManager* pm = nullptr;
         Entity* targetEntity = nullptr;
         int selectedEntityIndex;
+        int t_mainIndex;
+        int t_subIndex;
 
         void CloseBrowser() {
             isOpen = false;
