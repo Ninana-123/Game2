@@ -28,8 +28,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Input.h"
 #include "SystemsManager.h"
 #include "ImGuiFileBrowser.h"
-#include "imgui/backends/imgui_impl_glfw.h"
-#include "imgui/backends/imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
