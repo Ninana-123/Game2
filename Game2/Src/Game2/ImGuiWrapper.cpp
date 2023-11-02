@@ -517,6 +517,33 @@ namespace Engine {
 			}
 			ImGui::EndMenuBar();
 		}
+		if (isPaused) {
+			if (ImGui::Button("Play")) {
+				isPaused = false;
+			}
+		}
+		else {
+			if (ImGui::Button("Pause")) {
+				isPaused = true;
+			}
+		}
+
+		ImGui::SameLine();
+
+		// Add Step Frame button, only enabled when paused
+		if (isPaused) {
+			if (ImGui::Button("Step Frame")) {
+				// Code to step the frame forward
+				// This could be setting a flag that your main loop checks to step the simulation forward by one frame
+				stepOneFrame = true; // You will need to handle this flag in your update loop
+			}
+		}
+		else {
+			// Disable the button when the simulation is not paused
+			ImGui::BeginDisabled();
+			ImGui::Button("Step Frame");
+			ImGui::EndDisabled();
+		}
 
 
 		// Inside your update loop or render loop
@@ -531,6 +558,7 @@ namespace Engine {
 
 			// Display the FPS graph
 			ImGui::PlotLines("FPS", fpsValues, FPSCount, 0, NULL, 0.0f, 240.0f, ImVec2(0, 80)); // Assuming max FPS as 240 for Y-axis bounds
+			DisplaySystemTimes();
 		}
 
 
