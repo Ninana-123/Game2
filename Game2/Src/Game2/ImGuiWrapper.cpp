@@ -853,19 +853,10 @@ namespace Engine {
 					if (ImGui::CollapsingHeader("Component List")) {
 						for (const auto& pair : components) {
 							ComponentType type = pair.first;
-							// Display component-specific properties here
-							if (type == ComponentType::Transform) {
-								ImGui::Text("Entity has Transform component.");
-							}
-							if (type == ComponentType::Texture) {
-								ImGui::Text("Entity has Texture component.");
-							}
-							if (type == ComponentType::Physics) {
-								ImGui::Text("Entity has Physics component.");
-							}
-							if (type == ComponentType::Collision) {
-								ImGui::Text("Entity has Collision component.");
-							}
+							std::string buffer = ComponentFactory::ComponentTypeToString(type);
+
+							// Display component-specific properties here							
+							ImGui::Text("Entity has %s component.", buffer.c_str());							
 						}
 					}
 				}
@@ -932,7 +923,7 @@ namespace Engine {
 						ImGui::SameLine();
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture" }; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{
