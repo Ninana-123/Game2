@@ -139,3 +139,33 @@ void Texture::SetRenderPos(float posX, float posY)
     m_RenderPosX = posX;
     m_RenderPosY = posY;
 }
+
+Texture& Texture::operator=(const Texture& other)
+{
+    if (this != &other) {
+        // Check if the other texture has valid data
+        if (other.m_LocalBuffer != nullptr) {
+            // Free existing local buffer
+            if (m_LocalBuffer) {
+                stbi_image_free(m_LocalBuffer);
+            }
+
+            // Copy other's data
+            m_Filepath = other.m_Filepath;
+            m_Width = other.m_Width;
+            m_Height = other.m_Height;
+            m_BPP = other.m_BPP;
+            m_RenderPosX = other.m_RenderPosX;
+            m_RenderPosY = other.m_RenderPosY;
+
+            // Allocate and copy local buffer
+            m_LocalBuffer = stbi_load(other.m_Filepath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+        }
+        else {
+            // If other's local buffer is nullptr, set local buffer to nullptr as well
+            m_LocalBuffer = nullptr;
+        }
+    }
+
+    return *this;
+}

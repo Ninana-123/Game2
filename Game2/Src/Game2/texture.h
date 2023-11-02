@@ -20,6 +20,12 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Renderer.h"
 #include <string>
 
+struct SubTextureData {
+    int width;
+    int height;
+    int bpp;
+    unsigned char* localBuffer;
+};
 
 class Texture
 {
@@ -42,7 +48,7 @@ public:
     unsigned int GetTextureID() const {
         return m_RendererID;
     }
-
+    Texture& operator=(const Texture& other);
 private:
     float m_RenderPosX, m_RenderPosY; // Position for rendering
 

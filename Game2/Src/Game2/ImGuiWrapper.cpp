@@ -446,39 +446,51 @@ namespace Engine {
 		}
 	}
 
-
 	void ImGuiWrapper::RenderAssetBrowser() {
 
+		auto& textures = assetManager->GetAllTextures(); //buffer
+
 		if (ImGui::BeginTabItem("Asset Browser")) {
-
-			if ((InputHandlerImGui.IsKeyPressed(KEY_F9) == true)) {
-				std::vector<int> allTexIDs = assetManager->getAllTextureIDs();
-					for (int texid : allTexIDs) {
-						// Process or print each texid
-						std::cout << "Texture ID: " << texid << std::endl;
+			if (InputHandlerImGui.IsKeyPressed(KEY_F9)) {
+				// Iterate through main indexes
+				for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
+					// Iterate through subindexes for each main index
+					for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
+						TextureKey textureKey{ mainIndex, subIndex };
+						
+						auto it = textures.find(textureKey);
+						if (it != textures.end()) {
+							std::cout << "Texture Key: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
+						}
 					}
-			}
-			auto& textures = assetManager->GetAllTextures();
-				for (auto& [texid, texture] : textures) {
-					ImGui::PushID(texid);
-
-					std::string texturePath = assetManager->GetTexturePath(texid);
-					texture = (assetManager->getTexture(texid));
-					// Display texture preview
-					ImGui::Image((void*)(intptr_t)(texid + 1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
-					ImGui::SameLine();
-
-					// Display texture information
-					ImGui::Text("ID: %d\nPath: %s", texid, texturePath.c_str());
-
-					// Replace texture button
-					if (ImGui::Button("Replace")) {
-						fileBrowser.Open("Resource/Texture");
-					}
-
-					ImGui::PopID();
 				}
+			}
 
+			// Render ImGui based on the nested loop
+			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
+				// Iterate through subindexes for each main index
+				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
+					TextureKey textureKey{ mainIndex, subIndex };
+
+					auto it = textures.find(textureKey);
+					if (it != textures.end()) {
+						ImGui::PushID(textureKey.mainIndex * 1000 + textureKey.subIndex);
+
+						std::string texturePath = assetManager->GetTexturePath(textureKey);
+
+						ImGui::Image((void*)(intptr_t)(textureKey.mainIndex * 1000 + textureKey.subIndex + 1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+						ImGui::SameLine();
+
+						ImGui::Text("Main Index: %d\nSub Index: %d\nPath: %s", textureKey.mainIndex, textureKey.subIndex, texturePath.c_str());
+
+						if (ImGui::Button("Replace")) {
+							fileBrowser.Open("Resource/Texture");
+						}
+
+						ImGui::PopID();
+					}
+				}
+			}
 			ImGui::EndTabItem();
 		}
 
@@ -486,8 +498,6 @@ namespace Engine {
 			fileBrowser.Show();
 		}
 	}
-
-
 
 	void ImGuiWrapper::RenderLevelEditor()
 	{
@@ -788,25 +798,43 @@ namespace Engine {
 							ImGui::Text("No collision detected.");
 					}
 
-					if (texture != nullptr) {
-						static int current_item = texture->textureClass;  // initialize with the current value
+					//Texture display
+					if (texture != nullptr) { 
+						std::vector<std::string> textureMainIndexList;
+						auto& textures = assetManager->GetAllTextures();
+						int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
+						int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
 
-						const char* items[] = {
-							"Background",
-							"Infanty",
-							"Tank",
-							"Archer",
-							"Tower",
-							"Castle",
-							"HUD"
-						};
+						// Find the maximum mainIndex dynamically
+						int maxMainIndex = -1;
+						for (const auto& [textureKey, texture] : textures) {
+							maxMainIndex = std::max(maxMainIndex, static_cast<int>(textureKey.mainIndex));
+						}
+						maxMainIndex++;
 
-						static_assert(sizeof(items) / sizeof(items[0]) == TextureClassCount, "TextureClass enum and items array size mismatch!");
+						// Combo box for MainIndex
+						if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str())) {
+							for (int i = 0; i < maxMainIndex; ++i) {
+								ImGui::PushID(i);  // Set a unique ID for each Selectable
+								const bool isSelected = (textureMainIndex == i);
+								if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
+									textureMainIndex = i;
+									texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+								}
+								if (isSelected) {
+									ImGui::SetItemDefaultFocus();
+								}
+								ImGui::PopID();
+							}
+							ImGui::EndCombo();
+						}
 
-						if (ImGui::Combo("Texture Class", &current_item, items, TextureClassCount)) {
-							texture->textureClass = static_cast<TextureClass>(current_item);
+						// Combo box for SubIndex
+						if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 1, 2)) {
+							texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
 						}
 					}
+
 					if (physics != nullptr) {
 						
 						float veloX = physics->velocity.x;
@@ -1033,11 +1061,26 @@ namespace Engine {
 								}
 								case ComponentType::Texture:
 								{
+									auto& textures = assetManager->GetAllTextures();
 									TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
-									int textureIndex = static_cast<int>(texture->textureClass);
-									if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+									int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
+									int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+
+									// Assuming textures is an unordered_map with key as TextureKey
+									int maxMainIndex = static_cast<int>(textures.size()) - 1;
+
+									if (ImGui::InputInt("Texture MainIndex", &textureMainIndex, 1, maxMainIndex))
 									{
-										texture->textureClass = static_cast<TextureClass>(textureIndex);
+										texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+									}
+
+									if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 0, 2))
+									{
+										texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
+									}
+									else
+									{
+										texture->textureKey = { TextureClass::Infanty, 0 };
 									}
 
 								}
@@ -1234,14 +1277,21 @@ namespace Engine {
 									case ComponentType::Texture:
 									{
 										TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
-										int textureIndex = static_cast<int>(texture->textureClass);
-										if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
+										
+										int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
+										int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+										if (ImGui::InputInt("Texture MainIndex", &textureMainIndex, 1, 7))
 										{
-											texture->textureClass = static_cast<TextureClass>(textureIndex);
+											texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+										}
+
+										if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 0, 2))
+										{
+											texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
 										}
 										else
 										{
-											texture->textureClass = TextureClass::Infanty;
+											texture->textureKey = { TextureClass::Infanty, 0 };
 										}
 									}
 

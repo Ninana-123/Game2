@@ -47,7 +47,7 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 1.0f, 0.0f);
+    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 0.0f, 0.0f);
     SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
     SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
     SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
@@ -116,8 +116,11 @@ namespace Engine
 
         // Systems Manager & Asset Manager Initialization
         assetManager = std::make_shared<Engine::AssetManager>();
+
         for (int i = 0; i < TextureClassCount; i++) {
-            assetManager->loadTexture(i, assetManager->textureFilePaths.at(i));
+            for (int subIndex = 0; subIndex <= 2; subIndex++) {
+                assetManager->loadTexture(i, subIndex);
+            }
         }
 
         EM = std::make_shared<Engine::EntityManager>();

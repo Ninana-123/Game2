@@ -65,6 +65,7 @@ std::string Shader::LoadShaderSource(const std::string& filepath)
     }
     else
     {
+        std::cout << "Current Working Directory: " << std::filesystem::current_path() << std::endl;
         std::cerr << "Failed to open shader file: " << filepath << std::endl;
     }
 

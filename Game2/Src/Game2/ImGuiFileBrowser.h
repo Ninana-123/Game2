@@ -32,7 +32,6 @@ namespace Engine {
                 if (!selectedFile.empty()) {
                     Engine::Logger::GetInstance().Log(Engine::LogLevel::Debug, selectedFile);
                     am->loadTexture(2, selectedFile);
-                    am->reloadTexture(2);
                     Engine::SystemsManager& systemsManager = Engine::SystemsManager::GetInstance();
                     Engine::GraphicsSystem& graphicsSystem = systemsManager.GetSystem<Engine::GraphicsSystem>();
                     graphicsSystem.InitializeTextures();

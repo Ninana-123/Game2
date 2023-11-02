@@ -70,11 +70,9 @@ namespace Engine
         double frameDuration;
        
 
-
-
     private:
         Shader shader;
-        std::vector<Texture> textures;
+        std::vector<std::vector<Texture>> textures;
 
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};

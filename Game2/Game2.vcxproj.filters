@@ -86,8 +86,6 @@
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Camera.cpp" />
-    <ClCompile Include="Src\Game2\Animation.cpp" />
-    <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
     <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -109,6 +107,7 @@
     <ClCompile Include="Src\Game2\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Animation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -251,7 +250,6 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\Camera.h" />
     <ClInclude Include="Src\Game2\Animation.h" />
-    <ClInclude Include="Src\Game2\AnimationComponent.h" />
     <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -278,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SpriteComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

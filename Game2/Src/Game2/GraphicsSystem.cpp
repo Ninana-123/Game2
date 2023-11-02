@@ -20,7 +20,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "Vector2d.h"
 #include "Input.h"
-#include "AnimationComponent.h"
 #include "Animation.h"
 
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
@@ -280,45 +279,49 @@ namespace Engine
     */
     void GraphicsSystem::InitializeTextures()
     {
-        //if (!textureA.Load("Resource/Texture/InfantryWalking.png")) // Check for texture loading errors
-        //{
-        //    GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture A.");
-        //    // Handle the error as needed, e.g., return or throw an exception
-        //}
-        //else {
-        //    textureA.InitGL();
-        //    textureA.Bind(0);
-        //}
-
-        //if (!textureB.Load("Resource/Texture/Tank.png")) // Check for texture loading errors
-        //{
-        //    GraphicsLogger.Log(LogLevel::Error, "Failed to load Texture B.");
-        //    // Handle the error as needed, e.g., return or throw an exception
-        //}
-        //else {
-        //    textureB.InitGL();
-        //    textureB.Bind(1); // Bind the texture to a different texture unit (e.g., unit 1)
-        //}
-
-        //textureC = *(assetManager->getTexture("Background"));
-        //// Handle the error as needed, e.g., return or throw an exception
-        //textureC.InitGL();
-        //textureC.Bind(0);
-
         textures.resize(TextureClassCount);
+
         for (int i = 0; i < TextureClassCount; i++) {
-            textures[i] = *(assetManager->getTexture(i));
-            textures[i].InitGL();
-            textures[i].Bind(0);
+              // Adjust this based on your requirements
+
+            textures[i].resize(MAX_SUBINDEX + 1);  // Resize the vector for subindexes
+
+            for (int j = 0; j <= MAX_SUBINDEX; j++) {
+                // Get the texture pointer
+                std::shared_ptr<Texture> texturePtr = assetManager->getTexture(i, j);
+
+                // Check if the texture pointer is valid before assigning
+                if (texturePtr) {
+                    textures[i][j] = *texturePtr;
+
+                    // Check if the texture is valid (not nullptr) before calling InitGL and Bind
+                    if (textures[i].size() > j) {
+                        textures[i][j].InitGL();
+                        textures[i][j].Bind(0);
+                    }
+                    else {
+                        // Handle the case where the texture is nullptr (empty subindex)
+                        std::cout << "Texture ID: " << i << ", SubIndex: " << j << " is empty" << std::endl;
+                    }
+                }
+                else {
+                    // Handle the case where texturePtr is nullptr
+                    std::cout << "Texture ID: " << i << ", SubIndex: " << j << " is nullptr" << std::endl;
+                }
+            }
         }
     }
 
+    //Render Background
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         shader.Bind();
-        textures[Background].Bind(0);
-        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-        shader.SetUniform1i("u_Texture", 0);
+        textures[Background][0].Bind(0);
+        shader.SetUniform1f("texCoordX", 0.0f);
+        shader.SetUniform1f("u_FrameCount", 1.0f);
+        shader.SetUniform1f("u_FrameWidth", 1.0f);
+        shader.SetUniform1f("u_FrameHeight", 1.0f);
+     
         shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
 
         const glm::mat4& viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
@@ -335,12 +338,9 @@ namespace Engine
         ibBackground.Bind(); // Bind the background index buffer
 
         renderer.Draw(vaBackground, ibBackground, shader);
-        textures[Background].Unbind();
+        textures[Background][0].Unbind();
         shader.Unbind();
     }
-
-
-
 
     /*!
      * \brief Render a textured entity.
@@ -361,57 +361,72 @@ namespace Engine
 
         if (texture != nullptr)
         {
-            textures[texture->textureClass].Bind(0);
+            // Attempt to bind the texture based on the subindex
+            auto& textureVector = textures[texture->textureKey.mainIndex];
+
+            if (texture->textureKey.subIndex < textureVector.size())
+            {
+                // Texture with the specified subindex exists, bind it
+                textureVector[texture->textureKey.subIndex].Bind(0);
+            }
+            else if (!textureVector.empty())
+            {
+                // Texture with the specified subindex does not exist, default to subindex 0
+                textureVector[0].Bind(0);
+            }
+            // You might want to add an else case to handle the situation where textureVector is empty
         }
 
         shader.Bind();
-        //textureA.Bind(0);
+        
+        //If Sprite present
+        if ((texture->textureKey.subIndex > 0) && entity->HasComponent(ComponentType::Sprite))
+        {
+            // Calculate deltaTime (time since the last frame)
+            static double lastTime = glfwGetTime();
+            double currentTime = glfwGetTime();
+            double deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+            float frameRate = 10.0f;
+            float horizontalFrames = 6.0f; // Number of horizontal frames
+            float verticalFrames = 1.0f; // Number of vertical frames
+            float Length = 1536.0f; // length of sprite sheet
+            Anim_Mode playMode = Anim_Mode::LOOP;
 
-        // Calculate deltaTime (time since the last frame)
-        static double lastTime = glfwGetTime();
-        double currentTime = glfwGetTime();
-        double deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
+            // Create a static animation object if not created already
+            static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+            // Play the animation
+            animation.Play();
+            // Update the animation with deltaTime
+            animation.Update(static_cast<float>(deltaTime));
+            // Get the current frame index
+            int currentFrame = animation.GetCurrentFrame();
 
-        float frameRate = 10.0f;
-        float horizontalFrames = 6.0f; // Number of horizontal frames
-        float verticalFrames = 1.0f; // Number of vertical frames
-        float Length = 1536.0f; // length of sprite sheet
-        Anim_Mode playMode = Anim_Mode::LOOP;
+            // Calculate the texture offset based on the current frame
+            float frameWidth = 1.0f / horizontalFrames;
+            float frameHeight = 1.0f / verticalFrames;
+            float texCoordX = currentFrame * frameWidth;
+            //float texCoordY = currentRow * frameHeight;
 
-        // Create a static animation object if not created already
-        static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-
-        // Play the animation
-        animation.Play();
-
-        // Update the animation with deltaTime
-        animation.Update(static_cast<float>(deltaTime));
-
-        // Get the current frame index
-        int currentFrame = animation.GetCurrentFrame();
-
-        // Calculate the texture offset based on the current frame
-        float frameWidth = 1.0f/horizontalFrames;
-        float frameHeight = 1.0f / verticalFrames;
-        float texCoordX = currentFrame * frameWidth;
-        //float texCoordY = currentRow * frameHeight;
-
-        // Set the texture offset in the shader
-        shader.SetUniform1f("texCoordX", texCoordX);
-        //shader.SetUniform1f("texCoordY", texCoordY);
-
-
-        shader.SetUniform1f("u_FrameCount", horizontalFrames);
-        shader.SetUniform1f("u_FrameWidth", frameWidth);
-        shader.SetUniform1f("u_FrameHeight", frameHeight);
-        shader.SetUniform1i("u_CurrentFrame", currentFrame);
+            // Set the texture offset in the shader
+            shader.SetUniform1f("texCoordX", texCoordX);
+            shader.SetUniform1f("u_FrameCount", horizontalFrames);
+            shader.SetUniform1f("u_FrameWidth", frameWidth);
+            shader.SetUniform1f("u_FrameHeight", frameHeight);
+            shader.SetUniform1i("u_CurrentFrame", currentFrame);
+        }
+        else //render as static
+        {
+            textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
+            shader.SetUniform1f("texCoordX", 0.0f);
+            shader.SetUniform1f("u_FrameCount", 1.0f);
+            shader.SetUniform1f("u_FrameWidth", 1.0f);
+            shader.SetUniform1f("u_FrameHeight", 1.0f);
+        }
 
         glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
         shader.SetUniformMat4f("u_MVP", result);
 
-        // Debugging: Print out the values
-        std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
         va.Bind();
         ib.Bind();
 
@@ -419,7 +434,6 @@ namespace Engine
         renderer.Draw(va, ib, shader);
 
         // Unbind the texture and shader
-       // textureA.Unbind();
         shader.Unbind();
     }
     //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
@@ -669,7 +683,7 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            if(texture->textureClass == Background)
+                            if(texture->textureKey.mainIndex == Background)
                                 RenderBackground(mvpA);
                             else {
                                 RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
@@ -679,7 +693,6 @@ namespace Engine
                         else
                         {
                             DrawColoredSquare(mvpA);
-
                         }
                     }
                     
@@ -697,9 +710,6 @@ namespace Engine
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
-
-
-
 
     }
 
