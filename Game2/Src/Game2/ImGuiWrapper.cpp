@@ -31,6 +31,10 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+bool deleteAllEntity = false;
+bool shouldLoadScene = false;
+std::string sceneToLoad;
+
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
 	bool renderImGuiGUI = false;
@@ -201,6 +205,11 @@ namespace Engine {
 	}
 	void ImGuiWrapper::Initialize() {
 		fileBrowser.setAssetManagerPtr(assetManager);
+		fileBrowser.setEntityManagerPtr(entityManager);
+		fileBrowser.setPrefabManagerPtr(prefabManager);
+		fileBrowser.setSelectedEntityIndexReference(selectedEntityIndex);
+		fileBrowser.setTargetEntityPtr(targetEntity);
+		fileBrowser.setLoader(deserializer);
 	}
 	/*!**********************************************************************
 	\brief
@@ -517,6 +526,70 @@ namespace Engine {
 			}
 			ImGui::EndMenuBar();
 		}
+		ImGui::Text("Save and Load Scene");
+		static char filename[256] = "SavedScene.txt"; // Default filename
+
+		ImGui::Text("Enter the name for the output save file:");
+		ImGui::InputText("Filename", filename, IM_ARRAYSIZE(filename));
+
+		if (ImGui::Button("Save Current Scene")) {
+			const auto entities = entityManager->GetEntities();
+			int entityCount = static_cast<int>(entities->size());
+
+			// Create output stream for file using the provided filename
+			std::ofstream outputStream(std::string("Resource/Scenes/") + filename);
+
+			// Write the number of entities at the start
+			outputStream << entityCount << '\n';
+
+			for (size_t i = 0; i < entities->size(); i++) {
+				// For each component type, if the entity has that component, serialize it.
+
+				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Transform)) {
+					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Transform));
+					outputStream << "Transform" << '\n';
+					transformComp->Serialize(outputStream);
+				}
+
+				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Collision)) {
+					CollisionComponent* collisionComp = dynamic_cast<CollisionComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Collision));
+					outputStream << "Collision" << '\n';
+					collisionComp->Serialize(outputStream);
+				}
+
+				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Physics)) {
+					PhysicsComponent* physicsComp = dynamic_cast<PhysicsComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Physics));
+					outputStream << "Physics" << '\n';
+					physicsComp->Serialize(outputStream);
+				}
+
+				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Sprite)) {
+					SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Sprite));
+					outputStream << "Sprite" << '\n';
+					spriteComp->Serialize(outputStream);
+				}
+
+				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Texture)) {
+					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Texture));
+					outputStream << "Texture" << '\n';
+					textureComp->Serialize(outputStream);
+				}
+
+				// Mark the end of entity serialization
+				outputStream << "EndEntity" << '\n';
+			}
+
+			// Close the file stream
+			outputStream.close();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Load Scene File")) {
+			fileBrowser.Open("Resource/Scenes");
+		}
+
+		ImGui::SeparatorText("Pause/Play");
+
 		if (isPaused) {
 			if (ImGui::Button("Play")) {
 				isPaused = false;
@@ -723,6 +796,53 @@ namespace Engine {
 							}
 						}
 					}
+					
+					
+					if (shouldLoadScene) {
+						// If `deleteAllEntity` is true, delete all entities
+						if (deleteAllEntity == true)
+						{
+							// Retrieve the size of entities list
+							int entityCount = static_cast<int>(entityManager->GetEntities()->size());
+
+							// Loop backwards through the entities and delete each one
+							for (int i = entityCount - 1; i >= 0; --i)
+							{
+								entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+							}
+
+		
+
+							// Reset the selected entity index as there are no entities to select
+							selectedEntityIndex = -1;
+
+							// Set targetEntity to nullptr as there are no entities left
+							targetEntity = nullptr;
+
+							// Reset any other relevant data structures or counters if needed
+							entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
+							prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
+
+							std::cout << "Deleted All Entities" << std::endl;
+							deleteAllEntity = false;
+						}
+
+						// Now load the scene
+						deserializer->LoadScene(sceneToLoad);
+						if (entityManager->GetEntities()->size() >= 2) {
+							selectedEntityIndex = 1;
+						}
+						else if (entityManager->GetEntities()->size() == 1) {
+							selectedEntityIndex = 0;
+						}
+						else
+							selectedEntityIndex = -1;
+						if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
+							targetEntity = entityManager->GetEntity(selectedEntityIndex);
+						}
+						shouldLoadScene = false; // Reset flag
+					}
+
 				}
 				ImGui::EndTabItem();
 			}
@@ -890,6 +1010,48 @@ namespace Engine {
 				}
 				else {
 					ImGui::Text("No entity selected.");
+				}
+				if (shouldLoadScene) {
+					// If `deleteAllEntity` is true, delete all entities
+					if (deleteAllEntity == true)
+					{
+						// Retrieve the size of entities list
+						int entityCount = static_cast<int>(entityManager->GetEntities()->size());
+
+						// Loop backwards through the entities and delete each one
+						for (int i = entityCount - 1; i >= 0; --i)
+						{
+							entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+						}
+
+						// Reset the selected entity index as there are no entities to select
+						selectedEntityIndex = -1;
+
+						// Set targetEntity to nullptr as there are no entities left
+						targetEntity = nullptr;
+
+						// Reset any other relevant data structures or counters if needed
+						entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
+						prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
+
+						std::cout << "Deleted All Entities" << std::endl;
+						deleteAllEntity = false;
+					}
+
+					// Now load the scene
+					deserializer->LoadScene(sceneToLoad);
+					if (entityManager->GetEntities()->size() >= 2) {
+						selectedEntityIndex = 1;
+					}
+					else if (entityManager->GetEntities()->size() == 1) {
+						selectedEntityIndex = 0;
+					}
+					else
+						selectedEntityIndex = -1;
+					if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
+						targetEntity = entityManager->GetEntity(selectedEntityIndex);
+					}
+					shouldLoadScene = false; // Reset flag
 				}
 				ImGui::EndTabItem();
 			}
