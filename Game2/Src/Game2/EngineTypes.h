@@ -27,42 +27,55 @@ enum TextureClass
     TextureClassCount
 };
 
+enum c_state
+{
+    Static,
+    Walking,
+    Idle,
+    Attack
+};
+
+std::string c_stateToString(c_state state);
+
 enum anim_mode
 {
     loop, one_time
 };
 
-struct TextureKey {
+struct TextureKey 
+{
     int mainIndex;
     int subIndex;
 
-    // Constructors and other members...
-
     // Equality operator
-    bool operator==(const TextureKey& other) const {
+    bool operator==(const TextureKey& other) const 
+    {
         return mainIndex == other.mainIndex && subIndex == other.subIndex;
     }
 
     // Inequality operator
-    bool operator!=(const TextureKey& other) const {
+    bool operator!=(const TextureKey& other) const 
+    {
         return !(*this == other);
     }
 
-    bool operator<(const TextureKey& right) const {
-        // Compare based on mainIndex and subIndex, or any other desired criteria
-        if (mainIndex == right.mainIndex) {
+    bool operator<(const TextureKey& right) const 
+    {
+        if (mainIndex == right.mainIndex) 
+        {
             return subIndex < right.subIndex;
         }
         return mainIndex < right.mainIndex;
     }
 
-    static std::size_t hashFunction(const TextureKey& key) {
+    static std::size_t hashFunction(const TextureKey& key) 
+    {
         // Combine the hashes of mainIndex and subIndex
         return std::hash<int>()(key.mainIndex) ^ std::hash<int>()(key.subIndex);
     }
 };
 
-// Specialization of std::hash for TextureKey
+// specialization of std::hash for TextureKey to be used in maps
 template <>
 struct std::hash<TextureKey> {
     std::size_t operator()(const TextureKey& key) const {

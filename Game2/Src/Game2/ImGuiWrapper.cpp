@@ -951,7 +951,7 @@ namespace Engine {
 						std::vector<std::string> textureMainIndexList;
 						auto& textures = assetManager->GetAllTextures();
 						int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-						int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+						c_state textureSubIndexEnum = static_cast<c_state>(texture->textureKey.subIndex);
 
 						// Find the maximum mainIndex dynamically
 						int maxMainIndex = -1;
@@ -977,9 +977,30 @@ namespace Engine {
 							ImGui::EndCombo();
 						}
 
-						// Combo box for SubIndex
-						if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 1, 2)) {
-							texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
+						// Combo box for SubIndex using enum names
+						if (ImGui::BeginCombo("SubIndex", c_stateToString(static_cast<c_state>(texture->textureKey.subIndex)).c_str()))
+						{							
+							// Collect existing subindexes for the current mainIndex
+							std::set<int> existingSubIndexes;
+
+							for (const auto& [key, _] : textures)
+							{
+								if (key.mainIndex == texture->textureKey.mainIndex)
+								{
+									existingSubIndexes.insert(key.subIndex);
+								}
+							}
+
+							// Iterate over the existing subindexes
+							for (int subIndex : existingSubIndexes)
+							{
+								ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
+								if (ImGui::IsItemClicked())
+								{
+									texture->textureKey.subIndex = subIndex;
+								}
+							}
+							ImGui::EndCombo();
 						}
 					}
 
@@ -1250,20 +1271,45 @@ namespace Engine {
 									// Assuming textures is an unordered_map with key as TextureKey
 									int maxMainIndex = static_cast<int>(textures.size()) - 1;
 
-									if (ImGui::InputInt("Texture MainIndex", &textureMainIndex, 1, maxMainIndex))
+									// Combo box for Texture MainIndex
+									if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
 									{
-										texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+										for (int i = 0; i <= maxMainIndex; ++i)
+										{
+											ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
+											if (ImGui::IsItemClicked())
+											{
+												texture->textureKey.mainIndex = static_cast<TextureClass>(i);
+											}
+										}
+										ImGui::EndCombo();
 									}
 
-									if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 0, 2))
+									// Combo box for Texture SubIndex
+									if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
 									{
-										texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
-									}
-									else
-									{
-										texture->textureKey = { TextureClass::Infanty, 0 };
-									}
+										// Collect existing subindexes for the current mainIndex
+										std::set<int> existingSubIndexes;
 
+										for (const auto& [key, _] : textures)
+										{
+											if (key.mainIndex == texture->textureKey.mainIndex)
+											{
+												existingSubIndexes.insert(key.subIndex);
+											}
+										}
+
+										// Iterate over the existing subindexes
+										for (int subIndex : existingSubIndexes)
+										{
+											ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
+											if (ImGui::IsItemClicked())
+											{
+												texture->textureKey.subIndex = subIndex;
+											}
+										}
+										ImGui::EndCombo();
+									}
 								}
 
 								default:
@@ -1457,25 +1503,54 @@ namespace Engine {
 
 									case ComponentType::Texture:
 									{
+										auto& textures = assetManager->GetAllTextures();
 										TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
-										
 										int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
 										int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
-										if (ImGui::InputInt("Texture MainIndex", &textureMainIndex, 1, 7))
+
+										// Assuming textures is an unordered_map with key as TextureKey
+										int maxMainIndex = static_cast<int>(textures.size()) - 1;
+
+										// Combo box for Texture MainIndex
+										if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
 										{
-											texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+											for (int i = 0; i <= maxMainIndex; ++i)
+											{
+												ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
+												if (ImGui::IsItemClicked())
+												{
+													texture->textureKey.mainIndex = static_cast<TextureClass>(i);
+												}
+											}
+											ImGui::EndCombo();
 										}
 
-										if (ImGui::InputInt("Texture SubIndex", &textureSubIndex, 0, 2))
+										// Combo box for Texture SubIndex
+										if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
 										{
-											texture->textureKey.subIndex = static_cast<int>(textureSubIndex);
-										}
-										else
-										{
-											texture->textureKey = { TextureClass::Infanty, 0 };
+											// Collect existing subindexes for the current mainIndex
+											std::set<int> existingSubIndexes;
+
+											for (const auto& [key, _] : textures)
+											{
+												if (key.mainIndex == texture->textureKey.mainIndex)
+												{
+													existingSubIndexes.insert(key.subIndex);
+												}
+											}
+
+											// Iterate over the existing subindexes
+											for (int subIndex : existingSubIndexes)
+											{
+												ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
+												if (ImGui::IsItemClicked())
+												{
+													texture->textureKey.subIndex = subIndex;
+												}
+											}
+											ImGui::EndCombo();
 										}
 									}
-
 
 									default:
 										break;
