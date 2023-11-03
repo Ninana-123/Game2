@@ -120,9 +120,9 @@ namespace Engine {
         std::shared_ptr<Engine::Loader> loader;
         PrefabManager* pm = nullptr;
         Entity* targetEntity = nullptr;
-        int selectedEntityIndex;
-        int t_mainIndex;
-        int t_subIndex;
+        int selectedEntityIndex{};
+        int t_mainIndex{};
+        int t_subIndex{};
 
         void CloseBrowser() {
             isOpen = false;

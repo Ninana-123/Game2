@@ -394,7 +394,7 @@ namespace Engine
 						if (entity2->HasComponent(ComponentType::Collision) && (entity2->HasComponent(ComponentType::Transform)))
 						{
 							CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
-							TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+							//TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 
 							AABB aabb2;
 							Circle circle2;

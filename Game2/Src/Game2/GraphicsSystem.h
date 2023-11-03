@@ -59,20 +59,19 @@ namespace Engine
        // void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
         
         void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
-        void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,
-            const std::vector<float>& texIndices);
-        void RenderBatchedData();
+        //void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,const std::vector<float>& texIndices);
+        //void RenderBatchedData();
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
-        void SetMaxBatchSize(int maxSize);
-        int screenWidth, screenHeight;
+        //void SetMaxBatchSize(int maxSize);
+        int screenWidth{}, screenHeight{};
       
-        double animationStartTime;
-        double frameDuration;
+        double animationStartTime{};
+        double frameDuration{};
        
 
     private:
@@ -82,7 +81,7 @@ namespace Engine
         float rotationAngleA{}, rotationAngleB{};
         glm::vec3 translationA{}, translationB{};
         glm::vec3 scaleA{}, scaleB{};
-        glm::vec3 objectPosition;
+        glm::vec3 objectPosition{};
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
         glm::mat4 proj{};
         glm::mat4 view{};
@@ -109,18 +108,18 @@ namespace Engine
         std::vector<float> vtx_positions_background{};
         std::vector<unsigned int> indices_background{};
 
-        TextureClass textureClass;
+        //TextureClass textureClass;
 
-        struct Batch
-        {
-            std::vector<glm::vec2> batchedPositions{};
-            std::vector<glm::vec2> batchedTexCoords{};
-            std::vector<float> batchedTexIndices{};
-            int textureClass{};
-        };
+        //struct Batch
+        //{
+        //    std::vector<glm::vec2> batchedPositions{};
+        //    std::vector<glm::vec2> batchedTexCoords{};
+        //    std::vector<float> batchedTexIndices{};
+        //    int textureClass{};
+        //};
 
-        int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
-        std::vector<Batch> batches;
+        //int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
+        //std::vector<Batch> batches;
 
         Camera m_Camera;
         EditorCamera m_EditorCamera;
