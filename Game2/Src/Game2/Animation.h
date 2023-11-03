@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 namespace Engine
 {
     enum class Anim_Mode
@@ -30,7 +31,6 @@ namespace Engine
         int frameCount;
         float frameTimer;
         float animTimer;
-        float frameDisplayTime;
         int currentFrame;
         int textureXIndex;
         int textureYIndex;
