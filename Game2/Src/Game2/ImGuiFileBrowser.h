@@ -1,3 +1,18 @@
+/******************************************************************************/
+/*!
+\file		ImGuiFileBrowser.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	01/11/2023
+\brief		Provides a graphical user interface in a game engine for
+            browsing and interacting with the filesystem. It is responsible for
+            displaying files and directories, handling user input, and performing
+            actions such as opening and deleting files
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "imgui.h"
 #include "AssetManager.h"

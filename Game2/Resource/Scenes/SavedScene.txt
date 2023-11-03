@@ -9,7 +9,7 @@ MainIndex: 0
 SubIndex: 0
 EndEntity
 Transform
-Position: -385 -105
+Position: 200 200
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
@@ -17,10 +17,12 @@ Collision
 c_Width: 45
 c_Height: 45
 isColliding: 0
-MinX: -407.5
-MinY: -127.5
-MaxX: -362.5
-MaxY: -82.5
+MinX: 177.5
+MinY: 177.5
+MaxX: 222.5
+MaxY: 222.5
+Radius: 0
+Layer: 2
 Physics
 Velocity: 0 0
 Sprite
@@ -38,7 +40,7 @@ MainIndex: 3
 SubIndex: 0
 EndEntity
 Transform
-Position: 100 100
+Position: -100 100
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
@@ -46,10 +48,12 @@ Collision
 c_Width: 45
 c_Height: 45
 isColliding: 0
-MinX: 77.5
+MinX: -122.5
 MinY: 77.5
-MaxX: 122.5
+MaxX: -77.5
 MaxY: 122.5
+Radius: 0
+Layer: 2
 Physics
 Velocity: 0 0
 Sprite
@@ -67,7 +71,7 @@ MainIndex: 1
 SubIndex: 0
 EndEntity
 Transform
-Position: 300 300
+Position: 400 300
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
@@ -75,10 +79,12 @@ Collision
 c_Width: 45
 c_Height: 45
 isColliding: 0
-MinX: 277.5
+MinX: 377.5
 MinY: 277.5
-MaxX: 322.5
+MaxX: 422.5
 MaxY: 322.5
+Radius: 0
+Layer: 0
 Physics
 Velocity: 0 0
 Texture
@@ -86,7 +92,7 @@ MainIndex: 1
 SubIndex: 0
 EndEntity
 Transform
-Position: 50 50
+Position: -250 -150
 ScaleX: 1
 ScaleY: 1
 Rotation: 0

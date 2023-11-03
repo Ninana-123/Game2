@@ -45,6 +45,7 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
 double dt = 0;
+std::string initScene = "Resource/Scenes/testscene.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -155,7 +156,7 @@ namespace Engine
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(EM, &PM);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene("Resource/Scenes/testscene.txt");
+        loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
         loader->LoadPrefabs("Resource/Prefabs.txt");

@@ -627,6 +627,11 @@ namespace Engine {
 				isPaused = true;
 			}
 		}
+		if (ImGui::Button("Stop")) {
+			deleteAllEntity = true;
+			shouldLoadScene = true; // Set flag indicating a scene should be loaded
+			sceneToLoad = initScene; // Store the name of the scene to be loaded
+		}
 
 		ImGui::SameLine();
 
@@ -1586,6 +1591,7 @@ namespace Engine {
 											}
 											ImGui::EndCombo();
 										}
+										break;
 									}
 
 									default:
