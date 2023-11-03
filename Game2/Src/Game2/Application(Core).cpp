@@ -290,7 +290,7 @@ namespace Engine
             float nextPositionY = lastPositionY + 1;
 
             // Friction
-            const float friction = 0.1f;  // Adjust the friction value as needed
+            const float friction = 0.1f;
 
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {

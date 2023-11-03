@@ -29,20 +29,6 @@ namespace Engine
 
         /**************************************************************************/
         /*!
-        \brief Initialize the pathfinding system for a grid-based map with a specified number of rows and columns.
-
-        \param[in] numRows
-        The number of rows in the grid.
-
-        \param[in] numCols
-        The number of columns in the grid.
-
-        */
-        /**************************************************************************/
-        void InitializePathfinder(int numRows, int numCols); 
-
-        /**************************************************************************/
-        /*!
         \brief Constructor for the PathfindingSystem with a specified number of rows and columns for pathfinding.
 
         \param[in] numRows
