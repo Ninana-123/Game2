@@ -112,7 +112,7 @@ namespace Engine
     *************************************************************************/
     void Application::Initialize()
     {   
-        Init_ArrowPool(arrow);
+        //Init_ArrowPool(arrow);
         // Initialize GLFW
         if (!glfwInit()) {
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -275,10 +275,10 @@ namespace Engine
                     currentlyPlayingSound = false;
                 }
 
-                if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
+              /*  if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
                     audioEngine.stopSound(sound_Win);
                     currentlyPlayingSound = false;
-                }
+                }*/
 
                 if (InputHandler.IsKeyTriggered(KEY_6) && audioEngine.soundIsPlaying(sound_Arrow)) {
                     audioEngine.stopSound(sound_Arrow);
@@ -353,9 +353,13 @@ namespace Engine
                         path.erase(path.begin());
                     }
 
+                    if (InputHandler.IsKeyTriggered(KEY_4)) {
+                        Init_ArrowPool(arrow);
+                    }
             
 
                     if (collisionTest->isColliding) {
+
                         if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
                             transformTest->position.y = lastPositionY - 10.f;
                         }

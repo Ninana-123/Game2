@@ -76,7 +76,7 @@ namespace Engine {
 		auto textureComponent = dynamic_cast<TextureComponent*>(entitymanager.GetEntity(arrowentityID)->GetComponent(ComponentType::Texture));
 		if (textureComponent)
 		{
-			textureComponent->textureKey = { 1, 0 }; // Set the texture key as needed
+			textureComponent->textureKey = { 3, 0 }; // Set the texture key as needed
 		}
 
 		entitymanager.GetEntity(arrowentityID)->AddNewComponent(ComponentType::Collision);
