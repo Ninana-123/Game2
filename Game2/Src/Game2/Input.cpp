@@ -199,13 +199,13 @@ namespace Engine {
         // Check if left mouse button is pressed
         if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
         {
-            std::cout << "Picking Check. " << std::endl;
+            //std::cout << "Picking Check. " << std::endl;
             // Get the mouse position
             VECTORMATH::Vector2D mousePosition = GetMousePosition();
 
             // Normalize the mouse position
-            mousePosition.x -= 1270 / 2;
-            mousePosition.y = 720 / 2 - mousePosition.y;
+            mousePosition.x -= 1270 / 2.0f;
+            mousePosition.y = 720 / 2.0f - mousePosition.y;
 
             if (!isDragging) {
                 // Iterate through all entities only if not currently dragging
@@ -236,7 +236,6 @@ namespace Engine {
 
                 if (pickedEntity) {
                     // Retrieve the CollisionComponent and TransformComponent
-                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(pickedEntity->GetComponent(ComponentType::Collision));
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(pickedEntity->GetComponent(ComponentType::Transform));
 
                     // Update the transform component with the mouse position

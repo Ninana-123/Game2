@@ -14,6 +14,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 /******************************************************************************/
 #pragma once
 #pragma warning(disable : 4251)
+#pragma warning(disable : 4099)
+
 
 #include "pch.h"
 #include "Core.h"
