@@ -170,10 +170,10 @@ namespace Engine
         // Define vertices for the background
         float backgroundPositions[] =
         {
-            -static_cast<float>(screenwidth) / 2.0f, -static_cast<float>(screenheight) / 2.0f, 0.0f, 0.0f,
-             static_cast<float>(screenwidth) / 2.0f, -static_cast<float>(screenheight) / 2.0f, 1.0f, 0.0f,
-             static_cast<float>(screenwidth) / 2.0f,  static_cast<float>(screenheight) / 2.0f, 1.0f, 1.0f,
-            -static_cast<float>(screenwidth) / 2.0f,  static_cast<float>(screenheight) / 2.0f, 0.0f, 1.0f
+            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
         };
 
         // Define indices for the background
