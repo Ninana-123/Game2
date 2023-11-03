@@ -37,7 +37,7 @@ namespace Engine {
         void updateTextureFilePath(int mainIndex, int subIndex, const std::string& newFilePath);
 
         // Update the function signature
-        std::shared_ptr<Texture> reloadAllTexture();
+        //std::shared_ptr<Texture> reloadAllTexture();
 
         // Use a vector of TextureKey instead of int for the function signature
         std::vector<TextureKey> GetAllTextureKeys() const;

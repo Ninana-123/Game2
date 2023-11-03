@@ -89,11 +89,6 @@ namespace Engine {
         }
     }
 
-    std::shared_ptr<Texture> AssetManager::reloadAllTexture()
-    {
-        return std::shared_ptr<Texture>();
-    }
-
     /*
      std::shared_ptr<Texture> AssetManager::reloadTexture(int mainIndex, int subIndex) {
         TextureKey key{ mainIndex, subIndex };  // Assuming subIndex is always 0 for textureFilePaths
