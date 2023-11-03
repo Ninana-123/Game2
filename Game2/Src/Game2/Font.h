@@ -64,8 +64,8 @@ namespace Engine {
 		std::string font_name;
 		unsigned int texture;
 
-		//WindowsWindow* window;
-		GLFWwindow* window{};
+		WindowsWindow* window;
+		//GLFWwindow* window{};
 
 		
 	};

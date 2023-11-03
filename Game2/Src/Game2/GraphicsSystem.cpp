@@ -620,12 +620,8 @@ namespace Engine
         int previousShaderSet = shader.GetCurrentShaderSet();
         shader.Bind();
 
-        // Render the text with shader set 3
-        font.RenderText(shader, "Sample", 0.f, 0.f, 0.01f, glm::vec3( 0.0f, 0.0f, 0.0f));
-       // font.RenderText(shader, "Hello,World!", -0.5f, 0.0f, 25.0f, glm::vec3(0.0f, 0.0f, 0.0f));
-
-        // Restore the previous shader state
-        shader.SetActiveShaderSet(previousShaderSet);
+      
+       
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -688,12 +684,12 @@ namespace Engine
 
                         if (!renderTexturedSquare)
                         {
-                            //if(texture->textureClass == Background)
-                            //    RenderBackground(mvpA);
-                            //else {
-                            //    RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
-                            //    RenderLines(mvpA);
-                            //}
+                            if(texture->textureClass == Background)
+                                RenderBackground(mvpA);
+                            else {
+                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                                RenderLines(mvpA);
+                            }
                         }
                         else
                         {
@@ -713,13 +709,15 @@ namespace Engine
                 }
             }
         }
-        //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
+
+        font.RenderText(shader, "Sample", 0.f, 0.f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
+        //font.RenderText(shader, "Sample", 25.0f, 25.0f, 1.0f, glm::vec3(0.f, 0.f, 0.f));
+
+        // Restore the previous shader state
+        shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
-
-
-
 
     }
 

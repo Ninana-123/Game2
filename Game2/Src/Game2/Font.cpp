@@ -23,20 +23,14 @@ namespace Engine
 
 
 
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight), -1.0f, 1.0f);
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight));
         glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 
-    
-        //int screenWidth, screenHeight;
-        //glfwGetWindowSize(window, &screenWidth, &screenHeight);
-
-        //glm::mat4 view = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
-
-        //// Pass the view matrix to the shader
-        //glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(view));
-
-      
+        //int displayWidth, displayHeight;
+        //glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+        //glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(displayWidth), 0.0f, static_cast<float>(displayHeight));
+        //glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 
         // FreeType
@@ -47,7 +41,8 @@ namespace Engine
         }
 
         // find path to font
-        pathName = "Resource/Fonts/arial.ttf";
+        //pathName = "Resource/Fonts/arial.ttf";
+        pathName = "Resource/Fonts/Inkfree.ttf";
         if (!std::filesystem::exists(pathName)) {
             std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
             exit(-1);
