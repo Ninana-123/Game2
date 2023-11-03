@@ -43,8 +43,8 @@ namespace Engine
 
     private:
         float frameRate;
-        int horizontalFrames;
-        int verticalFrames;
+        float horizontalFrames;
+        float verticalFrames;
         int frameCount;
         float frameTimer;
         float animTimer;

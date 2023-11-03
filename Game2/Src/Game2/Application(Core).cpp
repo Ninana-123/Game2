@@ -39,7 +39,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 double fps = 0.00;
 auto previousTime = std::chrono::high_resolution_clock::now();;  // Previous time for FPS calculation
 double loopTime = 0.0;  // Definition of loopTime
-const double fixedDeltaTime = 1.0 / 80.0;//user defined 
+const double fixedDeltaTime = 1.0 / 60.0;//user defined 
 double accumulatedTime = 0.0;//one time definition
 int currentNumberOfSteps = 0;
 double prevTime = glfwGetTime();
@@ -120,6 +120,7 @@ namespace Engine
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
+     
 
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -351,8 +352,8 @@ namespace Engine
                         std::pair<int, int> nextPosition = path[0]; // Get the next position
 
                         // Debugging
-                        std::cout << nextPosition.first << std::endl;
-                        std::cout << nextPosition.second << std::endl;
+                        //std::cout << nextPosition.first << std::endl;
+                        //std::cout << nextPosition.second << std::endl;
 
                         // Update the unit's position
                         transformTest->position.x = static_cast<float>(nextPosition.first);

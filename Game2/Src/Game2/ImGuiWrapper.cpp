@@ -531,6 +531,7 @@ namespace Engine {
 			{
 				if (ImGui::MenuItem("Dockspace")) {
 					renderDockspace = !renderDockspace;
+			
 				}
 				ImGui::EndMenu();
 			}
@@ -544,6 +545,10 @@ namespace Engine {
 					if (ImGui::MenuItem("Disable Editor Camera")) {
 						useEditorCamera = !useEditorCamera;
 					}
+				}
+
+				if (ImGui::MenuItem("Open File Browser")) {
+					fileBrowser.Open("Resource");
 				}
 				ImGui::EndMenu();
 			}
@@ -569,32 +574,32 @@ namespace Engine {
 				// For each component type, if the entity has that component, serialize it.
 				EntityID entityID = static_cast<EntityID>(i);
 
-				if (entityManager->GetEntity(entityID)->HasComponent(ComponentType::Transform)) {
-					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(entityID)->GetComponent(ComponentType::Transform));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Transform)) {
+					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Transform));
 					outputStream << "Transform" << '\n';
 					transformComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(entityID)->HasComponent(ComponentType::Collision)) {
-					CollisionComponent* collisionComp = dynamic_cast<CollisionComponent*>(entityManager->GetEntity(entityID)->GetComponent(ComponentType::Collision));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Collision)) {
+					CollisionComponent* collisionComp = dynamic_cast<CollisionComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Collision));
 					outputStream << "Collision" << '\n';
 					collisionComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(entityID)->HasComponent(ComponentType::Physics)) {
-					PhysicsComponent* physicsComp = dynamic_cast<PhysicsComponent*>(entityManager->GetEntity(entityID)->GetComponent(ComponentType::Physics));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Physics)) {
+					PhysicsComponent* physicsComp = dynamic_cast<PhysicsComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Physics));
 					outputStream << "Physics" << '\n';
 					physicsComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(entityID)->HasComponent(ComponentType::Sprite)) {
-					SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(entityManager->GetEntity(entityID)->GetComponent(ComponentType::Sprite));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Sprite)) {
+					SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Sprite));
 					outputStream << "Sprite" << '\n';
 					spriteComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(entityID)->HasComponent(ComponentType::Texture)) {
-					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(entityID)->GetComponent(ComponentType::Texture));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
+					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
 					outputStream << "Texture" << '\n';
 					textureComp->Serialize(outputStream);
 				}
@@ -924,7 +929,7 @@ namespace Engine {
 							ImGui::EndCombo();
 						}
 					}
-
+					
 					if (transform != nullptr) {
 						float posX = transform->position.x;
 						float posY = transform->position.y;
@@ -1342,6 +1347,7 @@ namespace Engine {
 										}
 										ImGui::EndCombo();
 									}
+									break;
 								}
 
 								default:

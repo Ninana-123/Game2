@@ -20,12 +20,9 @@
 #include <map>
 #include <string>
 #include "Vector2d.h"
-#include "Window.h"
 
 
 #include <GL/glew.h>
-#include "WindowsWindow.h"
-//#include <GLFW/glfw3.h>
 
 
 #include <glm/glm.hpp>
@@ -80,7 +77,6 @@ namespace Engine {
 		std::string font_name;
 		unsigned int texture;
 
-		WindowsWindow* window;
 		//GLFWwindow* window{};
 
 		
