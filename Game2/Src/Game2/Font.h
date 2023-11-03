@@ -46,10 +46,12 @@ namespace Engine {
 
 	private:
 		GLuint VAO{}, VBO{};
-		FT_Face face{};
+		FT_Face face1{};
+		FT_Face face2{};
 		FT_Library ft{};
 		const float fscreenWidth = 1280.0f;
 		const float fscreenHeight = 720.0f;
+		FT_Face currentFace{};
 
 	public:
 
@@ -73,11 +75,14 @@ namespace Engine {
 		void MakeDisplayList(const std::string pathname);
 		void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
 		void CleanupFreeType();
+		void SwitchFont(int fontIndex);
+		void LoadGlyphsForFace(FT_Face face);
 
-		std::string pathName;
-		std::map <char , Character> Characters;
+		std::string pathName, pathName2;
+		std::map <char , Character> Characters1;
+		std::map <char, Character> Characters2;
 		std::string font_name;
-		unsigned int texture;
+		unsigned int texture = 0;
 
 		//GLFWwindow* window{};
 
