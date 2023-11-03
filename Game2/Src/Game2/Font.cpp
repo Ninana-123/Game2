@@ -3,6 +3,8 @@
 \file		font.cpp
 \author 	Teo Sheen Yeoh
 \par    	email: t.sheenyeoh@digipen.edu
+\co         Tay Jun Feng Vance
+            email: junfengvance.t@digipen.edu
 \date   	August 29, 2023
 \brief		This file provides the implementation for font rendering in the game engine. 
             It contains functions to initialize the font rendering system, load font glyphs, and render text using OpenGL
