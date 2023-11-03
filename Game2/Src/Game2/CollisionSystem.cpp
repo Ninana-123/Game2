@@ -554,15 +554,17 @@ namespace Engine
 								vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
 							}
 							// Check for collision with entity2
-							if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
-							{
-								isColliding = true;
-								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
-							}
+							if (entity2->HasComponent(ComponentType::Collision)) {
+								if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
+								{
+									isColliding = true;
+									//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								}
 
-							if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
-								//isColliding = true;
-								std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
+									//isColliding = true;
+									//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								}
 							}
 
 						}
@@ -606,8 +608,8 @@ namespace Engine
 		// Get the mouse position from the input system
 		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
 
-		mousePosition.x -= 1270 / 2;
-		mousePosition.y = 720 / 2 - mousePosition.y;
+		mousePosition.x -= 1270 / 2.0f;
+		mousePosition.y = 720 / 2.0f - mousePosition.y;
 
 		// Iterate through all entities in the editable layer
 		for (auto it = entities->begin(); it != entities->end(); ++it)
@@ -627,7 +629,7 @@ namespace Engine
 					{
 						// Collision detected, set a flag or perform any actions needed
 						collisionComponent->mColliding = true;
-						std::cout << "Mouse collided with Entity " << entity->GetID();
+						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
 					else
 					{

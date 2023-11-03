@@ -30,7 +30,7 @@ namespace Engine
     * @param mode The animation playback mode (LOOP or ONE_TIME).
     */
     Animation::Animation(float frameRate, float horizontalFrames, float verticalFrames, Anim_Mode mode)
-        : frameRate(frameRate), horizontalFrames(static_cast<int>(horizontalFrames)), verticalFrames(static_cast<int>(verticalFrames)), playMode(mode)
+        : frameRate(frameRate), horizontalFrames(horizontalFrames), verticalFrames(verticalFrames), playMode(mode)
     {
         frameCount = static_cast<int>(horizontalFrames * verticalFrames);
         frameTimer = 1.0f / frameRate;
@@ -40,7 +40,6 @@ namespace Engine
         textureXIndex = 0;
         textureYIndex = 0;
     }
-
 
     /**
      * @brief Start playing the animation.

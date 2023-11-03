@@ -153,10 +153,10 @@ namespace Engine
 
                 //int startX = transformComponent->position.x;
                 //int startY = transformComponent->position.y;
-                int startX = pathfindingComponent->startX;
-                int startY = pathfindingComponent->startY;
-                int goalX = pathfindingComponent->goalX;
-                int goalY = pathfindingComponent->goalY;
+                 startX = pathfindingComponent->startX;
+                 startY = pathfindingComponent->startY;
+                 goalX = pathfindingComponent->goalX;
+                 goalY = pathfindingComponent->goalY;
 
                 //if (!(pathfindingComponent->initialized)) {
                 //    
@@ -190,8 +190,8 @@ namespace Engine
                     std::pair<int, int> nextPosition = pathfindingComponent->path[0];
 
                     // Update the entity's position
-                    transformComponent->position.x = nextPosition.first;
-                    transformComponent->position.y = nextPosition.second;
+                    transformComponent->position.x = static_cast<float>(nextPosition.first);
+                    transformComponent->position.y = static_cast<float>(nextPosition.second);
 
                     // Remove the first position from the path
                     pathfindingComponent->path.erase(pathfindingComponent->path.begin());

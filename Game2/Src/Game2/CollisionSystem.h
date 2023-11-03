@@ -66,7 +66,7 @@ namespace Engine
 		struct Edge
 		{
 			VECTORMATH::Vec2 normal;
-			float min, max = 0.f;
+			float min = 0.f, max = 0.f;
 		};
 
 		/*!*****************************************************************
