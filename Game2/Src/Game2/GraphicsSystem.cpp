@@ -37,14 +37,17 @@ namespace Engine
    */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
         m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
     }
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
-        : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
+        : assetManager(assetManager), 
+        shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
             entityManager(entityManager),
              m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
@@ -206,6 +209,9 @@ namespace Engine
         ibBackground.Unbind();
 
         shader.Unbind();
+
+        font.Initialize();
+        //font.MakeDisplayList(ft, face);
     }
 
     //void GraphicsSystem::Initialize() {
@@ -335,6 +341,12 @@ namespace Engine
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
+       /* else if (shader.GetCurrentShaderSet() == 3)
+        {
+            vertexShaderPath = "Resource/Shaders/Shader3.vert";
+            fragmentShaderPath = "Resource/Shaders/Shader3.frag";
+            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
+        }*/
         else
         {
             throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
@@ -813,14 +825,17 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-        renderer.Clear();
+       renderer.Clear();
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
-        // std::cout << "S Key State: " << currentSState << std::endl;
 
-         // Check if there's a change in the 'S' key state
-        //std::cout << "S Key State: " << currentSState << std::endl;
+        // Save the current shader state
+        int previousShaderSet = shader.GetCurrentShaderSet();
+        shader.Bind();
+
+      
+       
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -893,7 +908,8 @@ namespace Engine
                             DrawColoredSquare(mvpA);
                         }
                     }
-                    
+
+
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
@@ -912,6 +928,16 @@ namespace Engine
         else {
             m_Camera.UpdatePosition(InputController, CameraSpeed);
         }
+
+        font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
+        font.RenderText(shader, "Hellp World",  0.f, 0.9f, 0.001f, glm::vec3(0.f, 0.f, 0.f));
+
+        // Restore the previous shader state
+        shader.SetActiveShaderSet(previousShaderSet);
+
+        // CAMERA
+        m_Camera.UpdatePosition(InputController, CameraSpeed);
+
     }
 
     /*!

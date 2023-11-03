@@ -39,6 +39,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "EntityManager.h"
 #include "EditorCamera.h"
+#include "Font.h"
 
 namespace Engine
 {
@@ -98,6 +99,11 @@ namespace Engine
         VertexArray va;
         VertexArray vaLines;
         VertexArray vaSingleLine;
+
+        font font;
+   
+
+
 
         Renderer renderer;
 
