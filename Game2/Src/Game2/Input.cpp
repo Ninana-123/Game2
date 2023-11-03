@@ -116,6 +116,7 @@ namespace Engine {
         {
             s_KeyState[static_cast<KeyCode>(i)] = glfwGetKey(glfwGetCurrentContext(), i) == GLFW_PRESS;
         }
+        Picking();
     }
     /*!**********************************************************************
     \brief
@@ -182,5 +183,52 @@ namespace Engine {
         return deltaY;
     }
 
+    void Input::SetEntityManager(std::shared_ptr<Engine::EntityManager> manager)
+    {
+        entityManager = manager;
+        if (!entityManager)
+        {
+            std::cout << "Failed to Link InputManager to EntityManager." << std::endl;
+        }
+    }
+
+    void Input::Picking()
+    {
+        // Check if left mouse button is pressed
+        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON) )
+        {
+            std::cout << "Picking Check. " << std::endl;
+            // Get the mouse position
+            VECTORMATH::Vector2D mousePosition = GetMousePosition();
+
+            // Normalize the mouse position
+            mousePosition.x -= 1270 / 2;
+            mousePosition.y = 720 / 2 - mousePosition.y;
+
+            // Iterate through all entities
+            for (auto& entityPair : *(entityManager->GetEntities()))
+            {
+                Entity* entity = entityPair.second.get();
+
+                // Check if the entity has a CollisionComponent
+                if (entity->HasComponent(ComponentType::Collision))
+                {
+                    // Retrieve the CollisionComponent and TransformComponent
+                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+
+                    // Check if the entity is colliding with the mouse
+                    if (collisionComponent->mColliding)
+                    {
+                        // Update the transform component with the mouse position
+                        transformComponent->position.x = mousePosition.x;
+                        transformComponent->position.y = mousePosition.y;
+
+                        // Additional logic or flags can be set as needed
+                    }
+                }
+            }
+        }             
+    }
 
 }  // namespace Engine

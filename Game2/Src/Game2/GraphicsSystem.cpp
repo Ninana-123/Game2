@@ -309,8 +309,7 @@ namespace Engine
                     }
                 }
                 else {
-                    // Handle the case where texturePtr is nullptr
-                    std::cout << "Texture ID: " << i << ", SubIndex: " << j << " is nullptr" << std::endl;
+                    // Handle the case where texturePtr is nullptr                   
                 }
             }
         }

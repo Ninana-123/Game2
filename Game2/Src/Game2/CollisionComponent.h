@@ -20,13 +20,10 @@ namespace Engine
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
+		bool mColliding = false;
 		float circleRadius = 0.0f;
 		CollisionSystem::AABB aabb;
-
-		int minX = 0;
-		int minY = 0;
-		int	maxX = 0;
-		int	maxY = 0;
+		Layer layer = Layer::World;
 
 		/*!*****************************************************************
 
@@ -60,6 +57,7 @@ namespace Engine
 			cloneComponent->aabb.max.x = aabb.max.x;
 			cloneComponent->aabb.min.y = aabb.min.y;
 			cloneComponent->aabb.max.y = aabb.max.y;
+			cloneComponent->layer      = layer;
 
 			return cloneComponent;
 		}
@@ -73,10 +71,12 @@ namespace Engine
 			outputStream << "MinY: " << aabb.min.y << '\n';
 			outputStream << "MaxX: " << aabb.max.x << '\n';
 			outputStream << "MaxY: " << aabb.max.y << '\n';
+			outputStream << "Layer: " << static_cast<int>(layer) << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
+			int buffer;
 			inputStream >> temp >> c_Width;
 			inputStream >> temp >> c_Height;
 			inputStream >> temp >> isColliding;
@@ -85,6 +85,8 @@ namespace Engine
 			inputStream >> temp >> aabb.min.y;
 			inputStream >> temp >> aabb.max.x;
 			inputStream >> temp >> aabb.max.y;
+			inputStream >> temp >> buffer;
+			layer = static_cast<Layer>(buffer);
 		}
 
 	};

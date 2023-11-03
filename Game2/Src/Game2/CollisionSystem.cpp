@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "Input.h"
+#include "Window.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
@@ -48,13 +49,69 @@ float dt = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
-	
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-		//May want to process entities container here into smaller containers to send to relevant checks
-		//Potential Conditional Collision check
+		/*
+		// Separate entities based on layers
+		std::unordered_map<EntityID, std::unique_ptr<Entity>> worldLayerEntities;
+		std::unordered_map<EntityID, std::unique_ptr<Entity>> editableLayerEntities;
+
+		// Temporary vector to hold entities to be moved
+		std::vector<std::unordered_map<EntityID, std::unique_ptr<Entity>>::iterator> entitiesToMove;
+
+		// Move entities to separate containers based on layers
+		for (auto it = entities->begin(); it != entities->end(); ++it)
+		{
+			Entity* entity = it->second.get();
+
+			if (entity->HasComponent(ComponentType::Collision))
+			{
+				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+
+				switch (collisionComponent->layer)
+				{
+				case Layer::World:
+					worldLayerEntities[it->first] = std::move(it->second);
+					entitiesToMove.push_back(it); // Add iterator to the list
+					break;
+
+				case Layer::Editable:
+					editableLayerEntities[it->first] = std::move(it->second);
+					entitiesToMove.push_back(it); // Add iterator to the list
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		// Remove moved entities from the original container
+		for (auto& it : entitiesToMove)
+		{
+			entities->erase(it);
+		}
+
+		// Perform collision checks for world layer entities
+		EntityToEntityCollision(&worldLayerEntities);
+
+		// Perform collision checks for editable layer entities
+		EntityToMouseCollision(&editableLayerEntities);
+
+		// Move entities back to the original container
+		for (auto& entityPair : worldLayerEntities)
+		{
+			entities->emplace(std::move(entityPair));
+		}
+
+		for (auto& entityPair : editableLayerEntities)
+		{
+			entities->emplace(std::move(entityPair));
+		}
+		
+		*/
 		EntityToEntityCollision(entities);
-		//potential EntityToMouseCollision
+		EntityToMouseCollision(entities);
 	}
 
 	// Check if this object collides with another object
@@ -350,7 +407,7 @@ namespace Engine
 		{
 			Entity* entity1 = it1->second.get();
 
-			if (entity1->HasComponent(ComponentType::Collision) && (entity1->HasComponent(ComponentType::Transform)))
+			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
@@ -360,13 +417,14 @@ namespace Engine
 				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
-
+				/*
 				Input::GetMousePosition();
 				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
 					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
 					std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 				}
-
+				*/
+				
 				if (collisionComponent1)
 				{				
 					aabb1 = collisionComponent1->aabb;
@@ -391,7 +449,7 @@ namespace Engine
 					{
 						Entity* entity2 = it2->second.get();
 
-						if (entity2->HasComponent(ComponentType::Collision) && (entity2->HasComponent(ComponentType::Transform)))
+						if (entity2->HasComponent(ComponentType::Transform))
 						{
 							CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
 							TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
@@ -459,9 +517,48 @@ namespace Engine
 					collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
 					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);		
 
-				}
+				}	
+			}
+		}
+	}
 
-	
+	void CollisionSystem::EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+	{
+		// Get the mouse position from the input system
+		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
+
+		mousePosition.x -= 1270 / 2;
+		mousePosition.y = 720 / 2 - mousePosition.y;
+
+		// Iterate through all entities in the editable layer
+		for (auto it = entities->begin(); it != entities->end(); ++it)
+		{
+			Entity* entity = it->second.get();
+			
+			// Check if the entity has a CollisionComponent
+			if (entity->HasComponent(ComponentType::Collision))
+			{
+				// Retrieve the CollisionComponent and TransformComponent
+				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+				
+				if (collisionComponent->layer == Layer::Editable)
+				{
+					std::cout << "Mouse X: " << mousePosition.x << " Y: " << mousePosition.y << std::endl;
+					// Check for point-to-rect collision
+					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
+					{
+						// Collision detected, set a flag or perform any actions needed
+						collisionComponent->mColliding = true;
+						std::cout << "Mouse collided with Entity " << entity->GetID();
+					}
+					else
+					{
+						// No collision, reset the flag or perform cleanup
+						collisionComponent->mColliding = false;
+					}
+				}
+				
 			}
 		}
 	}

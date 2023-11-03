@@ -143,7 +143,11 @@ namespace Engine
             }
         }
 
+        //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
+
+        //Attaching Input Handler to EM
+        InputHandler.SetEntityManager(EM);
 
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
@@ -340,7 +344,7 @@ namespace Engine
                 if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
                     if (path.empty()) {
-                        std::cout << "No path found!" << std::endl;
+                        //std::cout << "No path found!" << std::endl;
                     }
                     else {
                         // If a path is found, move the unit towards the next position in the path

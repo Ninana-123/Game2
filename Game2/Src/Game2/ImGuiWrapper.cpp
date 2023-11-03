@@ -961,10 +961,20 @@ namespace Engine {
 						}
 					}
 					if (collision != nullptr) {
+						// Display the current collision status
 						if (collision->isColliding == true)
 							ImGui::Text("Collision with another entity detected.");
 						else if (collision->isColliding == false)
 							ImGui::Text("No collision detected.");
+
+						// Dropdown list for selecting the Layer
+						ImGui::Text("Select Layer:");
+						const char* layerNames[] = { "World", "Interactive", "Editable" };
+						int currentLayerIndex = static_cast<int>(collision->layer);
+						if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) {
+							// Handle layer change here
+							collision->layer = static_cast<Layer>(currentLayerIndex);
+						}
 					}
 
 					//Texture display

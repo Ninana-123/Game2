@@ -6,8 +6,12 @@ constexpr EntityID EMPTY_ID = 0;
 const int MAX_SUBINDEX = 2;
 
 typedef unsigned int ComponentID;
-
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Unknown };
+
+enum c_state { Static, Walking, Idle, Attack };
+std::string c_stateToString(c_state state);
+
+enum class Layer { World, Interactive, Editable };
 
 enum TextureClass
 {
@@ -25,21 +29,6 @@ enum TextureClass
     playButton,
     settingsButton,
     TextureClassCount
-};
-
-enum c_state
-{
-    Static,
-    Walking,
-    Idle,
-    Attack
-};
-
-std::string c_stateToString(c_state state);
-
-enum anim_mode
-{
-    loop, one_time
 };
 
 struct TextureKey 
@@ -81,4 +70,9 @@ struct std::hash<TextureKey> {
     std::size_t operator()(const TextureKey& key) const {
         return TextureKey::hashFunction(key);
     }
+};
+
+enum anim_mode
+{
+    loop, one_time
 };
