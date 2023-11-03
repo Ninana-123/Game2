@@ -1,25 +1,73 @@
 #pragma once
+
+#include <iostream>
+#include <map>
+#include <string>
+#include "Vector2d.h"
+#include "Window.h"
+
+
+#include <GL/glew.h>
+#include "WindowsWindow.h"
+//#include <GLFW/glfw3.h>
+
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <GL/glew.h>
 
+#include "Shader.h"
 
-    class Font
-    {
-    public:
-        struct font_data
-        {
-            float fontSize;             // Holds The Height Of The Font.
-            GLuint* characterTextures;    // Holds The Texture Id's
-            GLuint displayListBase;    // Holds The First Display List Id
+#ifndef FONT_H
+#define FONT_H
 
-        
-            void init(const char* fname, unsigned int h);
+namespace Engine {
 
-            // Free All The Resources Associated With The Font.
-            void clean();
-        };
+	class font 
+	{
 
-      
-        void print(const font_data& fontData, float positionX, float positionY, const char* text);
-    };
+	private:
+		GLuint VAO{}, VBO{};
+		FT_Face face{};
+		FT_Library ft{};
+		const float fscreenWidth = 1280.0f;
+		const float fscreenHeight = 720.0f;
+
+	public:
+
+		struct Character {
+			unsigned int TextureID; // ID handle of the glyph texture
+			glm::ivec2   Size;      // Size of glyph
+			glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
+			unsigned int Advance;   // Horizontal offset to advance to next glyph
+		};
+
+		struct TextInfo
+		{
+			std::string text;
+			glm::ivec2 pos;
+			int scale;
+			glm::ivec2 color;
+		};
+
+		void Initialize();
+		//void MakeDisplayList(const std::string font);
+		void MakeDisplayList(const std::string pathname);
+		void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
+		void CleanupFreeType();
+
+		std::string pathName;
+		std::map <char , Character> Characters;
+		std::string font_name;
+		unsigned int texture;
+
+		WindowsWindow* window;
+		//GLFWwindow* window{};
+
+		
+	};
+}
+#endif // FONT_H
