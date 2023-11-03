@@ -45,6 +45,7 @@ int currentNumberOfSteps = 0;
 double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
+double dt = 0;
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -251,6 +252,7 @@ namespace Engine
             if (isPaused && InputHandler.IsKeyTriggered(KEY_F8)) {
                 stepOneFrame = true;
             }
+            //std::cout << InputHandler.GetMousePosition().x << " x "<< InputHandler.GetMousePosition().y << std::endl;  
 
             while (accumulatedTime >= fixedDeltaTime) {
 
@@ -535,7 +537,7 @@ namespace Engine
         static int frameCount = 0;
         // Calculate delta time (time between frames)
         double currentTime = glfwGetTime();
-        double dt = 0;
+        
         dt = currentTime - prevTime;
         frameCount++;
         if (dt >= 1.0)
