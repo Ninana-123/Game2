@@ -289,19 +289,6 @@ namespace Engine
             float nextPositionX = lastPositionX + 1;
             float nextPositionY = lastPositionY + 1;
 
-            //CollisionSystem::Circle circle1;
-            //circle1.center = VECTORMATH::Vec2(transformTest->position.x, transformTest->position.y);
-            //circle1.radius = 5.f;
-            //VECTORMATH::Vec2 vel1;
-            //vel1.x = 1;
-            //vel1.y = 1;
-
-            //CollisionSystem::Circle circle2;
-            //circle2.center = VECTORMATH::Vec2(435, 60);
-            //circle2.radius = 10.f;
-            //VECTORMATH::Vec2 vel2;
-            //vel2.x = 0;
-            //vel2.y = 0;
 
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {

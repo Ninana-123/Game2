@@ -438,12 +438,9 @@ namespace Engine
 				Circle circle1;
 				VECTORMATH::Vec2 vel1;
 
-				//debug
-				std::cout << Input::GetMouseX << " " << Input::GetMouseY << std::endl;
-				std::cout << Input::GetMousePosition().x << " " << Input::GetMousePosition().y << std::endl;
 				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
 					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMousePosition().x, Input::GetMousePosition().y)) {
-					std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+					std::cout << "Mouse detected within button." << std::endl;
 				}
 
 				if (collisionComponent1)
