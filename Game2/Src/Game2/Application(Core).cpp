@@ -33,6 +33,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Loader.h"
 #include "AssetManager.h"
 #include "Pathfinding.h"
+#include "Arrow.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -78,6 +79,10 @@ namespace Engine
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
+    EntityID arrowID = 4;
+    VECTORMATH::Vector2D initialPosition(0.0f, 0.0f);
+    VECTORMATH::Vector2D initialVelocity(1.0f, 0.0f);
+    ArrowPool arrow;
 
     float scalar = 0.1f;
     float rotation = 0.125f;
@@ -106,7 +111,8 @@ namespace Engine
     for the application to run.
     *************************************************************************/
     void Application::Initialize()
-    {
+    {   
+        Init_ArrowPool(arrow);
         // Initialize GLFW
         if (!glfwInit()) {
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
@@ -346,6 +352,8 @@ namespace Engine
                         // Remove the first position from the path to move to the next one in the next frame
                         path.erase(path.begin());
                     }
+
+            
 
                     if (collisionTest->isColliding) {
                         if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
