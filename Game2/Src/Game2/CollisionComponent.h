@@ -11,6 +11,7 @@
  /******************************************************************************/
 #include "Component.h"
 #include "CollisionSystem.h"
+#include "EngineTypes.h"
 
 namespace Engine
 {
@@ -22,6 +23,7 @@ namespace Engine
 		bool isColliding = false;
 		float circleRadius = 0.0f;
 		CollisionSystem::AABB aabb;
+		CollisionSystem::Circle circle;
 
 		int minX = 0;
 		int minY = 0;
@@ -80,7 +82,7 @@ namespace Engine
 			inputStream >> temp >> c_Width;
 			inputStream >> temp >> c_Height;
 			inputStream >> temp >> isColliding;
-			//inputStream >> temp >> circleRadius;
+			inputStream >> temp >> circleRadius;
 			inputStream >> temp >> aabb.min.x;
 			inputStream >> temp >> aabb.min.y;
 			inputStream >> temp >> aabb.max.x;

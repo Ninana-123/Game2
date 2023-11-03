@@ -14,6 +14,7 @@
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
+#include "PathfindingSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 
@@ -86,6 +87,8 @@ namespace Engine
         std::shared_ptr<Engine::EntityManager> entityManager;
         static SystemsManager* instance;
 
+        int numRows = 720;
+        int numCols = 1280;
     };
 
 }  // namespace Engine

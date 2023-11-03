@@ -399,4 +399,11 @@ namespace VECTORMATH
 	*/
 	/**************************************************************************/
 	float	Vector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1);
+
+	void setVector2D(Vector2D& vec, float x, float y);
+
+	void getVector2D(const Vector2D& vec, float& x, float& y);
+
+	void rotateVector2D(Vector2D& vec, float angleRadians);
+
 }

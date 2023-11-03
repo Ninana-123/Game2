@@ -85,7 +85,7 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp">
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Pathfinding.cpp">
+    <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
       <Filter>Systems\Pathfinding</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Camera.cpp" />
@@ -252,7 +252,7 @@
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Pathfinding.h">
+    <ClInclude Include="Src\Game2\PathfindingSystem.h">
       <Filter>Systems\Pathfinding</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\Camera.h" />
@@ -284,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
       <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

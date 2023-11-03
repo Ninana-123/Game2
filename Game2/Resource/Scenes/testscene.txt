@@ -16,7 +16,7 @@ Collision
 c_Width: 45 
 c_Height: 45 
 isColliding: 0
-circleRadius: 25
+circleRadius: 0
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -30,6 +30,11 @@ FrameRate: 1.0
 HorizontalFrames: 6
 VerticalFrames: 1
 PlayMode: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 200
+goalY: 200
 EndEntity
 Transform 
 Position: 100 100
@@ -40,7 +45,7 @@ Collision
 c_Width: 45
 c_Height: 45 
 isColliding: 0
-circleRadius: 25
+circleRadius: 0
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -64,7 +69,7 @@ Collision
 c_Width: 45
 c_Height: 45 
 isColliding: 0
-circleRadius: 25
+circleRadius: 0
 MinX: 0 
 MinY: 0
 MaxX: 0
@@ -144,7 +149,7 @@ Collision
 c_Width: 45 
 c_Height: 45 
 isColliding: 0
-circleRadius: 20
+circleRadius: 0
 MinX: 0 
 MinY: 0
 MaxX: 0

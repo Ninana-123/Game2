@@ -32,7 +32,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 #include "AssetManager.h"
-#include "Pathfinding.h"
+#include "PathfindingSystem.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -43,9 +43,6 @@ double dt = 0.0;
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
-
-// Variable for getting the path of the pathfinding
-std::vector<std::pair<int, int>> path;
 
 namespace Engine
 {
@@ -72,6 +69,7 @@ namespace Engine
     TransformComponent* transformTest;
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
+    PathfindingComponent* pathfindingTest;
     ComponentFactory CF;
 
     float scalar = 0.1f;
@@ -143,6 +141,7 @@ namespace Engine
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
+            pathfindingTest = dynamic_cast<PathfindingComponent*>(targetEntity->GetComponent(ComponentType::Pathfinding));
         }
         else
             targetEntity = EM->GetEntity(0);
@@ -164,18 +163,18 @@ namespace Engine
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
 
-        // Initializing pathfinding
-        int startX = 0;
-        int startY = 0;
-        int goalX = 200;
-        int goalY = 200;
+        //// Initializing pathfinding
+        //int startX = 0;
+        //int startY = 0;
+        //int goalX = 200;
+        //int goalY = 200;
 
-        Pathfinding pathfinder(720, 1280); // Create an instance of the Pathfinding class
+        //PathfindingSystem pathfinder(720, 1280); // Create an instance of the Pathfinding class
 
-        pathfinder.setStart(startX, startY); // Set the start position
-        pathfinder.setGoal(goalX, goalY); // Set the goal position
+        //pathfinder.setStart(startX, startY); // Set the start position
+        //pathfinder.setGoal(goalX, goalY); // Set the goal position
 
-        path = pathfinder.findShortestPath(); // Use the Pathfinding class to find the path
+        //path = pathfinder.findShortestPath(); // Use the Pathfinding class to find the path
 
     }
 
@@ -290,39 +289,34 @@ namespace Engine
             float nextPositionX = lastPositionX + 1;
             float nextPositionY = lastPositionY + 1;
 
+            //CollisionSystem::Circle circle1;
+            //circle1.center = VECTORMATH::Vec2(transformTest->position.x, transformTest->position.y);
+            //circle1.radius = 5.f;
+            //VECTORMATH::Vec2 vel1;
+            //vel1.x = 1;
+            //vel1.y = 1;
+
+            //CollisionSystem::Circle circle2;
+            //circle2.center = VECTORMATH::Vec2(435, 60);
+            //circle2.radius = 10.f;
+            //VECTORMATH::Vec2 vel2;
+            //vel2.x = 0;
+            //vel2.y = 0;
+
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
-                if (path.empty()) {
-                    std::cout << "No path found!" << std::endl;
-                }
-                else {
-                    // If a path is found, move the unit towards the next position in the path
-                    std::pair<int, int> nextPosition = path[0]; // Get the next position
-
-                    // Debugging
-                    std::cout << nextPosition.first << std::endl;
-                    std::cout << nextPosition.second << std::endl;
-
-                    // Update the unit's position
-                    transformTest->position.x = nextPosition.first;
-                    transformTest->position.y = nextPosition.second;
-                    
-
-                    // Remove the first position from the path to move to the next one in the next frame
-                    path.erase(path.begin());
-                }
 
                 if (collisionTest->isColliding) {
-                    if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
+                    if (lastKeyPressed == 1) {
                         transformTest->position.y = lastPositionY - 10.f;
                     }
-                    if (lastKeyPressed == 2 || (lastPositionY > nextPositionY)) {
+                    if (lastKeyPressed == 2) {
                         transformTest->position.y = lastPositionY + 10.f;
                     }
-                    if (lastKeyPressed == 3 || (lastPositionX < nextPositionX)) {
+                    if (lastKeyPressed == 3) {
                         transformTest->position.x = lastPositionX + 10.f;
                     }
-                    if (lastKeyPressed == 4 || (lastPositionX > nextPositionX)) {
+                    if (lastKeyPressed == 4) {
                         transformTest->position.x = lastPositionX - 10.f;
                     }
                 }

@@ -331,6 +331,85 @@ namespace Engine
 		}
 	}
 
+	// Function to project a polygon onto an axis (edge normal)
+	void CollisionSystem::ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max) {
+		min = max = Vector2DDotProduct(polygon[0], axis);
+		for (size_t i = 1; i < polygon.size(); i++) {
+			float dot = Vector2DDotProduct(polygon[i], axis);
+			if (dot < min) {
+				min = dot;
+			}
+			if (dot > max) {
+				max = dot;
+			}
+		}
+	}
+
+	// Function to check for intersection between two convex polygons using the SAT
+	bool CollisionSystem::PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2,
+		float rotationAngle1, float rotationAngle2) {
+		// Create rotated copies of the input polygons
+		std::vector<VECTORMATH::Vec2> rotatedPolygon1, rotatedPolygon2;
+
+		// Rotate and update the vertices of polygon1
+		for (const VECTORMATH::Vec2& vertex : polygon1) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle1); // Call the member function on the copied vertex
+			rotatedPolygon1.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Rotate and update the vertices of polygon2
+		for (const VECTORMATH::Vec2& vertex : polygon2) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle2); // Rotate the copied vertex
+			rotatedPolygon2.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Calculate the edges and normals for both rotated polygons
+		std::vector<Edge> edges1, edges2;
+		for (size_t i = 0; i < rotatedPolygon1.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon1.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon1[j] - rotatedPolygon1[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon1, normal, e.min, e.max);
+			edges1.push_back(e);
+		}
+		for (size_t i = 0; i < rotatedPolygon2.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon2.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon2[j] - rotatedPolygon2[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon2, normal, e.min, e.max);
+			edges2.push_back(e);
+		}
+
+		// Test for separation along each axis (edge normal)
+		for (const Edge& edge : edges1) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+		for (const Edge& edge : edges2) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+
+		// If no separation occurs along any axis, there is intersection
+		return true;
+	}
+
 	// Function to check if the area is being touched/clicked
 	bool CollisionSystem::IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 	{
@@ -357,20 +436,20 @@ namespace Engine
 
 				AABB aabb1;
 				Circle circle1;
-				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
-				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
 
-				Input::GetMousePosition();
+				//debug
+				std::cout << Input::GetMouseX << " " << Input::GetMouseY << std::endl;
+				std::cout << Input::GetMousePosition().x << " " << Input::GetMousePosition().y << std::endl;
 				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
-					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
+					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMousePosition().x, Input::GetMousePosition().y)) {
 					std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 				}
 
 				if (collisionComponent1)
 				{				
 					aabb1 = collisionComponent1->aabb;
-					// circle1 = meow;
+					circle1 = collisionComponent1->circle;
 				}
 
 				if (entity1->HasComponent(ComponentType::Physics))
@@ -398,13 +477,17 @@ namespace Engine
 
 							AABB aabb2;
 							Circle circle2;
-							circle2.center = VECTORMATH::Vec2(435, 60);
-							circle2.radius = 0.f;
+							circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
+							circle2.radius = collisionComponent2->circleRadius;
 							VECTORMATH::Vec2 vel2;
+
+							std::cout << "circle2.center x: " << transformComponent2->position.x << " circle2.center y: " << transformComponent2->position.y
+								<< " circle2.radius: " << circle2.radius << " Vel2.x: " << vel2.x << " Vel2.y: " << vel2.y << std::endl;
 							
 							if (collisionComponent2)
 							{
 								aabb2 = collisionComponent2->aabb;
+								circle2 = collisionComponent2->circle;
 							}
 											
 							if (entity2->HasComponent(ComponentType::Physics))
@@ -423,9 +506,10 @@ namespace Engine
 								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 							}
 
-							if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
+							else if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
 								//isColliding = true;
 								std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+
 							}
 
 						}
@@ -445,9 +529,10 @@ namespace Engine
 					//std::cout << Input::GetMouseY() << std::endl;
 				}
 
-				//update AABB coordinates in entity1
+				//update AABB coordinates and circle coordinates in entity1
 				if (collisionComponent1)
 				{
+					// aabb
 					float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
 					float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
 
@@ -457,7 +542,13 @@ namespace Engine
 					float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
 					collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);		
+					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);	
+
+					// circle
+					collisionComponent1->circle.center = VECTORMATH::Vec2(435, 60);
+					collisionComponent1->circle.radius = collisionComponent1->circleRadius;
+					std::cout << "circle1.center x: " << transformComponent1->position.x << " circle1.center y: " << transformComponent1->position.y
+						<< "circle1.radius: " << circle1.radius << " Vel1.x: " << vel1.x << " Vel1.y " << vel1.y << std::endl;
 
 				}
 

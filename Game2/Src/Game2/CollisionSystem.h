@@ -19,7 +19,6 @@ Technology is prohibited.
 
 #include "System.h"
 #include "Vector2d.h"
-#include "EngineTypes.h"
 
 
 #ifndef CSD1130_COLLISION_H_
@@ -61,6 +60,12 @@ namespace Engine
 		{
 			VECTORMATH::Vec2 center;
 			float radius;
+		};
+
+		// Define a struct to represent an edge of a polygon
+		struct Edge {
+			VECTORMATH::Vec2 normal;
+			float min, max;
 		};
 
 		/*!*****************************************************************
@@ -147,6 +152,13 @@ namespace Engine
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 
 		bool IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
+
+		void ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max);
+
+		bool PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2,
+			float rotationAngle1, float rotationAngle2);
+
+		void RotatePolygon(std::vector<VECTORMATH::Vec2>& polygon, float angle, VECTORMATH::Vec2 center);
 
 		void EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 	};
