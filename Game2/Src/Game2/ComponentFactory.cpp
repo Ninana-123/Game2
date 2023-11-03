@@ -2,7 +2,7 @@
 /*!
 \file		ComponentFactory.h
 \author 	Tristan Tham Rui Hong
-\par    	email: t.tham@digipen
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Definition of the ComponentFactory class.
 
@@ -28,6 +28,7 @@ namespace Engine
         RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>(); });
         RegisterComponent(ComponentType::Texture,   []() { return std::make_unique<TextureComponent>();   });
         RegisterComponent(ComponentType::Physics,   []() { return std::make_unique<PhysicsComponent>();   });
+        RegisterComponent(ComponentType::Sprite,    []() { return std::make_unique<SpriteComponent>();    });
 
     }
     /*!**********************************************************************
@@ -70,6 +71,49 @@ namespace Engine
         }
         return nullptr; // Handle unknown component types or add appropriate error handling
     }
+
+    ComponentType ComponentFactory::StringToComponentType(const std::string& typeString)
+    {
+        // Map component type strings to enum values
+        static std::unordered_map<std::string, ComponentType> StringTotypeMap = 
+        {
+            {"Transform", ComponentType::Transform  },
+            {"Collision", ComponentType::Collision  },
+            {"Physics",   ComponentType::Physics    },
+            {"Texture",   ComponentType::Texture    },
+            {"Sprite",    ComponentType::Sprite     },
+        };
+
+        auto it = StringTotypeMap.find(typeString);
+        if (it != StringTotypeMap.end()) {
+            return it->second;
+        }
+
+        //return invalid
+        return ComponentType::Unknown;
+    }
+
+    std::string ComponentFactory::ComponentTypeToString(ComponentType type)
+    {
+        // Map enum values to component type strings
+        static std::unordered_map<ComponentType, std::string> typeToStringMap =
+        {
+            {ComponentType::Transform, "Transform"},
+            {ComponentType::Collision, "Collision"},
+            {ComponentType::Physics,   "Physics"  },
+            {ComponentType::Texture,   "Texture"  },
+            {ComponentType::Sprite,    "Sprite"  },
+        };
+
+        auto it = typeToStringMap.find(type);
+        if (it != typeToStringMap.end()) {
+            return it->second;
+        }
+
+        //return invalid
+        return "Unknown Component";
+    }
+
 }
 
 

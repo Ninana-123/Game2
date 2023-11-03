@@ -19,11 +19,6 @@ namespace Engine
 {
 	EntityID EntityManager::nextEntityID = 0;
 
-	EntityManager::~EntityManager()
-	{
-
-	}
-
 	EntityID EntityManager::CreateEntity()
 	{
 		EntityID entityID = nextEntityID++;
@@ -79,8 +74,7 @@ namespace Engine
 		auto sourceComponents = sourceEntity->GetComponents();
 		for (const auto& pair : sourceComponents) {
 			Component* sourceComponent = pair.second;
-			// You may need to implement a copy constructor or clone method for your components
-			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+			Component* clonedComponent = sourceComponent->Clone();
 
 			// Add the cloned component to the cloned entity
 			clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
@@ -93,19 +87,26 @@ namespace Engine
 	{
 		auto it = entities.find(entity);
 		if (it != entities.end())
-		{	
+		{
 			entities.erase(it);
-			// After removing the entity, reassign EntityIDs to close gaps
+
+			// create a buffer to hold new entities
+			std::unordered_map<EntityID, std::unique_ptr<Entity>> updatedEntities;
+
+			// reassign IDs and populate the new map
+			EntityID newID = 0;
 			for (auto& pair : entities)
 			{
-				if (pair.first > entity) //check if ID is greater than the target ID
+				if (pair.first != entity)
 				{
-					EntityID newID = pair.first - 1; // -1 and reassign entity ptr in map
-					entities[newID] = std::move(pair.second);
-					entities.erase(pair.first);
 					pair.second->id = newID;
+					updatedEntities[newID] = std::move(pair.second);
+					++newID;
 				}
 			}
+
+			// update original map with buffer map
+			entities = std::move(updatedEntities);
 		}
 	}
 }

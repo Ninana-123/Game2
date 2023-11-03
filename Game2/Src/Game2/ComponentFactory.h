@@ -2,7 +2,7 @@
 /*!
 \file		ComponentFactory.h
 \author 	Tristan Tham Rui Hong 
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the ComponentFactory class.
 
@@ -18,6 +18,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionComponent.h"
 #include "TextureComponent.h"
 #include "PhysicsComponent.h"
+#include "SpriteComponent.h"
 
 namespace Engine
 {
@@ -33,6 +34,9 @@ namespace Engine
 		static void RegisterComponent(ComponentType type, CreationFunction function);
 
 		static std::unique_ptr<Component> CreateComponent(ComponentType type);
+
+		static ComponentType StringToComponentType(const std::string& typeString);
+		static std::string ComponentTypeToString(ComponentType type);
 
 	private:
 		static std::unordered_map<ComponentType, CreationFunction>& componentRegistry();

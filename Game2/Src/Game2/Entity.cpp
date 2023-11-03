@@ -2,7 +2,7 @@
 /*!
 \file		Entity.cpp
 \author 	Tristan Tham Rui Hong
-\par    	email: l.xujie@digipen.edu
+\par    	email: t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Definition of the Entity class.
 
@@ -27,6 +27,7 @@ namespace Engine
 	{
 		components.emplace(component->GetType(), std::move(component));
 	}
+
 	/*!**********************************************************************
 	\brief
 	Adds a new component of the specified type to the entity.

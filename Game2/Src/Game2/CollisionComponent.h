@@ -20,6 +20,8 @@ namespace Engine
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
+		float circleRadius = 0.0f;
+		CollisionSystem::AABB aabb;
 
 		int minX = 0;
 		int minY = 0;
@@ -53,12 +55,37 @@ namespace Engine
 			cloneComponent->c_Width = c_Width;
 			cloneComponent->c_Height = c_Height;
 			cloneComponent->isColliding = isColliding;
-			cloneComponent->minX = minX;
-			cloneComponent->maxX = maxX;
-			cloneComponent->minY = minY;
-			cloneComponent->maxY = maxY;
+			cloneComponent->circleRadius = circleRadius;
+			cloneComponent->aabb.min.x = aabb.min.x;
+			cloneComponent->aabb.max.x = aabb.max.x;
+			cloneComponent->aabb.min.y = aabb.min.y;
+			cloneComponent->aabb.max.y = aabb.max.y;
 
 			return cloneComponent;
 		}
+
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "c_Width: " << c_Width << '\n';
+			outputStream << "c_Height: " <<  c_Height << '\n';
+			outputStream << "isColliding: " << isColliding << '\n';
+			//outputStream << "circleRadius: " << circleRadius << '\n';
+			outputStream << "MinX: " << aabb.min.x << '\n';
+			outputStream << "MinY: " << aabb.min.y << '\n';
+			outputStream << "MaxX: " << aabb.max.x << '\n';
+			outputStream << "MaxY: " << aabb.max.y << '\n';
+		}
+
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> c_Width;
+			inputStream >> temp >> c_Height;
+			inputStream >> temp >> isColliding;
+			//inputStream >> temp >> circleRadius;
+			inputStream >> temp >> aabb.min.x;
+			inputStream >> temp >> aabb.min.y;
+			inputStream >> temp >> aabb.max.x;
+			inputStream >> temp >> aabb.max.y;
+		}
+
 	};
 }

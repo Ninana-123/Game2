@@ -87,6 +87,24 @@ namespace Engine
 		bool CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
 			const AABB& aabb2, const VECTORMATH::Vec2& vel2);
 
+
+		/*!*****************************************************************
+
+		 \brief
+			The logic of point and AABB collision.
+
+		\param[in] point
+			Point coordinate.
+
+		\param[in] aabb
+			The bound of the rectangle.
+
+		\return  boolean
+			Returns true if there is a collision, false is there is not.
+
+		********************************************************************/
+		bool CollisionIntersection_PointRect(const VECTORMATH::Vec2& point, const AABB& aabb);
+
 		/**************************************************************************/
 		/*!
 		\brief Determines if there is an intersection between two moving circles.
@@ -128,5 +146,8 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 
+		bool IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
+
+		void EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 	};
 }

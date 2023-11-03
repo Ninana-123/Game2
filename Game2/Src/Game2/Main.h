@@ -19,11 +19,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Application.h" 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
+#include "AssetManager.h"
+#include "ErrorHandler.h"
+Engine::ErrorHandler errorHandler;
 
 int main(int argc, char** argv)
 {
     UNREFERENCED_PARAMETER(argc);
     UNREFERENCED_PARAMETER(argv);
+    errorHandler.Initialize();
     auto app = Engine::CreateApplication();
     app->Initialize();
     app->Run();

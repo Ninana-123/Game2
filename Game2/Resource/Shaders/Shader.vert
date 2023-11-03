@@ -23,6 +23,5 @@ void main()
 
     // Calculate the texture coordinates for the current frame
     v_TexCoord = texCoord * vec2(u_FrameWidth, u_FrameHeight) + vec2(texCoordX, 0);
-   
     
 }

@@ -10,6 +10,7 @@
  /******************************************************************************/
 #include "pch.h"
 #include "SystemsManager.h"
+#include "Application.h"
 
 namespace Engine
 {
@@ -17,18 +18,22 @@ namespace Engine
 
 	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
 	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>(); 
-		template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
+	template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
 
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
 	
+	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
+		: assetManager(assetManager), entityManager(entityManager) {
+	}
+
 	void SystemsManager::Initialize()
 	{
 		//add systems into systems container
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
-		all_systems.push_back(new GraphicsSystem());
+		all_systems.push_back(new GraphicsSystem(assetManager, entityManager));
 
 		//initialize each system
 		for (auto system : all_systems)
@@ -39,15 +44,32 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-
 		for (auto system : all_systems)
 		{
 			if (system->GetSystemState() == SystemState::On)
 			{
-				system->Update(entities);
+				// If the application is paused, update only the GraphicsSystem.
+				if (isPaused)
+				{
+					GraphicsSystem* graphicsSystem = dynamic_cast<GraphicsSystem*>(system);
+					if (graphicsSystem)
+					{
+						graphicsSystem->StartTimer();
+						graphicsSystem->Update(entities);
+						graphicsSystem->StopTimer();
+						break; // Break out of the loop after updating the GraphicsSystem.
+					}
+				}
+				else // If the application is not paused, update all systems as usual.
+				{
+					system->StartTimer();
+					system->Update(entities);
+					system->StopTimer();
+				}
 			}
 		}
 	}
+
 
 	template <typename T>
 	T& SystemsManager::GetSystem()
@@ -101,5 +123,42 @@ namespace Engine
 		// Handle error case (e.g., system not found)
 		throw std::runtime_error("System not found");
 	}
+
+
+
+	std::unordered_map<std::string, double> SystemsManager::DisplaySystemTimes(double loop) {
+		std::unordered_map<std::string, double> systemTimes;
+
+		for (auto system : all_systems) {
+			double systemTime = system->GetElapsedTime();
+			double percentage = (systemTime / loop) * 100.0;
+			std::string systemName = typeid(*system).name(); // or any other way to get the system name
+			systemTimes[systemName] = percentage;
+		}
+		return systemTimes;
+	}
+
+
+	void SystemsManager::ResetSystemTimers()
+	{
+		for (auto system : all_systems)
+		{
+			system->ResetTimer();
+		}
+	}
+
+	SystemsManager* SystemsManager::instance = nullptr;
+
+	SystemsManager& SystemsManager::GetInstance()
+	{
+		return *instance;
+	}
+
+	void SystemsManager::DeleteInstance()
+	{
+		delete instance;
+		instance = nullptr;
+	}
+
 	
 }

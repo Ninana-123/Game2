@@ -12,6 +12,7 @@
 
 #include "Component.h"
 #include "EngineTypes.h"
+#include "Vector2d.h"
 
 namespace Engine
 {
@@ -19,9 +20,10 @@ namespace Engine
 	class TransformComponent : public Component
 	{
 	public:
-		int x = 0, y = 0;
-		float scaleX =1.0f, scaleY = 1.0f;
+		VECTORMATH::Vector2D position = VECTORMATH::Vector2D(0, 0); // Initialize position with (0, 0)
+		float scaleX = 1.0f, scaleY = 1.0f;
 		float rot = 0.0f;
+
 		/*!*****************************************************************
 
 		\brief
@@ -35,7 +37,6 @@ namespace Engine
 		ComponentType GetType() const override { return ComponentType::Transform; }
 
 		/*!*****************************************************************
-
 		\brief
 		Cloner for this component
 
@@ -46,9 +47,25 @@ namespace Engine
 		Component* Clone() const override
 		{
 			TransformComponent* cloneComponent = new TransformComponent();
-			cloneComponent->x = x;
-			cloneComponent->y = y;
+			cloneComponent->position = position;
+			cloneComponent->scaleX = scaleX;
+			cloneComponent->scaleY = scaleY;
+			cloneComponent->rot = rot;
 			return cloneComponent;
+		}
+
+		void Serialize(std::ostream& outputStream) const override {
+			outputStream << "Position: " << position.x << ' ' << position.y << '\n';
+			outputStream << "ScaleX: " << scaleX << '\n';
+			outputStream << "ScaleY: " << scaleY << '\n';
+			outputStream << "Rotation: " << rot << '\n';
+		}
+		void Deserialize(std::istream& inputStream) override {
+			std::string temp;
+			inputStream >> temp >> position.x >> position.y; // Assuming format is "Position: x y"
+			inputStream >> temp >> scaleX;
+			inputStream >> temp >> scaleY;
+			inputStream >> temp >> rot;
 		}
 	};
 }

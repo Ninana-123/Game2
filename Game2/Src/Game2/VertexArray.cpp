@@ -25,7 +25,7 @@
  * This constructor initializes a VertexArray object with default values.
  */
 VertexArray::VertexArray()
-	: m_RendererID(0)
+	: m_RendererID(0), m_RendererBuffers(3)
 {
 }
 
@@ -88,6 +88,19 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 			element.normalized, layout.GetStride(), reinterpret_cast<const void*>(static_cast<uintptr_t>(offset))));
 		//calculate offset for next attribute based on current element
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
+	}
+	
+}
+
+void VertexArray::UpdateBuffer(unsigned int index, const void* data, size_t size)
+{
+	if (index < m_RendererBuffers.size()) {
+		Bind(); // Bind the VAO to make it active
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererBuffers[index]); // Bind the specific buffer
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data); // Update the buffer data
+	}
+	else {
+		std::cerr << "Error: Invalid buffer index " << index << std::endl;
 	}
 }
 

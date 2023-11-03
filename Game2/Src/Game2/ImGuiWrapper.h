@@ -2,7 +2,10 @@
 /*!
 \file		ImGuiWrapper.h
 \author 	Liu Xujie
+\co			Tristan Tham Rui Hong
+
 \par    	email: l.xujie@digipen.edu
+				   t.tham@digipen.edu
 \date   	29/09/2923
 \brief		Contains the declaration of the ImGuiWrapper class.
 			This file declares the ImGuiWrapper class, which provides 
@@ -18,20 +21,36 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "InputEvent.h"
 #include "AppEvent.h"
 #include "EntityManager.h"
+#include "PrefabManager.h"
+#include "AssetManager.h"
+#include "Loader.h"
+
+extern bool deleteAllEntity;
+extern bool shouldLoadScene;
+extern std::string sceneToLoad;
+extern bool useEditorCamera;
 
 namespace Engine {
+
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
-		ImGuiWrapper(Engine::EntityManager* em) : entityManager(em) {}
+		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::AssetManager> am
+		, std::shared_ptr<Engine::Loader> loader) : entityManager(em), prefabManager(pm), assetManager(am), deserializer(loader) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+		void Begin();
+		void End();
+		void Initialize();
 		void OnAttach();
 		void OnDetach();
 		void OnUpdate();
 		void OnEvent(Event& event);
 		inline Entity* TargetEntityGetter() { return targetEntity; }
+		void DisplaySystemTimes();
+		void RenderAssetBrowser();
 		int selectedEntityIndex = 1;
+		void RenderLevelEditor();
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
@@ -44,9 +63,15 @@ namespace Engine {
 
 
 	private:
+		bool renderDockspace = false;
 		float m_Time = 0.0f;
-		Engine::EntityManager* entityManager;
+		float editorCameraSpeed = 1.5f;
+		std::shared_ptr<Engine::EntityManager> entityManager;
+		Engine::PrefabManager* prefabManager;
+		std::shared_ptr<Engine::AssetManager> assetManager;
+		std::shared_ptr<Engine::Loader> deserializer;
 		Entity* targetEntity = nullptr;
+		Prefab* targetPrefab = nullptr;
 
 	};
 }
