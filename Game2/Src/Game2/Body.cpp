@@ -32,7 +32,7 @@ void Rigidbody::update(float time_step) {
     force_accumulator = VECTORMATH::Vec2(0.0f, 0.0f);
 }
 
-void Rigidbody::handle_collision(Rigidbody& other_object) {
+void Rigidbody::handle_collision(Rigidbody& /*other_object*/) {
     // Handle collision response with another object (e.g., apply forces to both objects)
 }
 

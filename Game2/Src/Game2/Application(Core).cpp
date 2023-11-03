@@ -351,9 +351,8 @@ namespace Engine
                         std::cout << nextPosition.second << std::endl;
 
                         // Update the unit's position
-                        transformTest->position.x = nextPosition.first;
-                        transformTest->position.y = nextPosition.second;
-
+                        transformTest->position.x = static_cast<float>(nextPosition.first);
+                        transformTest->position.y = static_cast<float>(nextPosition.second);
 
                         // Remove the first position from the path to move to the next one in the next frame
                         path.erase(path.begin());
