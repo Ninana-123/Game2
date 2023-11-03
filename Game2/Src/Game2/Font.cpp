@@ -143,17 +143,29 @@ namespace Engine
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
 
+        float halfWidth;
+        float lengthWidth{};
+        for (char c : text)
+        {
+            Character ch = Characters[c];
+            lengthWidth += (ch.Advance >> 6) * scale ;
+            
+        }
+
+        halfWidth = lengthWidth / 2.0f;
+        float newx =  x- halfWidth;
 
         // iterate through all characters
         for (char c : text)
         {
+            
             Character ch = Characters[c];
 
-            float xpos = x + (ch.Bearing.x) * scale;
-            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
+            float xpos = newx + ch.Bearing.x * scale ;
+            float ypos = y - (ch.Size.y - ch.Bearing.y) * scale ;
 
-            float width = (ch.Size.x) * scale;
-            float height = (ch.Size.y) * scale;
+            float width = ch.Size.x * scale ;
+            float height = (ch.Size.y) * scale ;
 
             // Debugging lines
             std::cout << "Character: " << c << std::endl;
@@ -189,10 +201,10 @@ namespace Engine
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             // now advance cursors for next glyph (note that advance is the number of 1/64 pixels)
-            x += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide the amount of 1/64th pixels by 64 to get the amount of pixels))
+            newx += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide the amount of 1/64th pixels by 64 to get the amount of pixels))
            
 
-            std::cout << "Advance: " << x << std::endl;
+            std::cout << "Advance: " << newx << std::endl;
             std::cout << "------------------------" << std::endl;
 
         }

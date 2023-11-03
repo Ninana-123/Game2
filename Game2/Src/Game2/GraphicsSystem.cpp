@@ -710,8 +710,8 @@ namespace Engine
             }
         }
 
-        font.RenderText(shader, "Sample", 0.f, 0.f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        //font.RenderText(shader, "Sample", 25.0f, 25.0f, 1.0f, glm::vec3(0.f, 0.f, 0.f));
+        font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
+        font.RenderText(shader, "Hellp World",  0.f, 0.9f, 0.001f, glm::vec3(0.f, 0.f, 0.f));
 
         // Restore the previous shader state
         shader.SetActiveShaderSet(previousShaderSet);
