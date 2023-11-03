@@ -86,7 +86,7 @@ namespace Engine
         std::shared_ptr<Engine::AssetManager> assetManager;
         std::shared_ptr<Engine::EntityManager> entityManager;
         static SystemsManager* instance;
-
+       
     };
 
 }  // namespace Engine

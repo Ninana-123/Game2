@@ -18,7 +18,7 @@ namespace Engine
     public:
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
     
-        PathfindingSystem() {};
+        PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false) {}
         PathfindingSystem(int numRows, int numCols);
 
         void setStart(int x, int y);

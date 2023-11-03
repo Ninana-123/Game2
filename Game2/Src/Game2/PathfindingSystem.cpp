@@ -7,9 +7,9 @@
 namespace Engine
 {
 
-    // Variable for getting the path of the pathfinding
-    std::vector<std::pair<int, int>> path;
-
+    // iterator for entities
+    int i = 0;
+ 
     // Function to check if a cell is within the bounds of the grid
     bool PathfindingSystem::isValid(int x, int y) {
         // Check if x and y are within the grid's bounds
@@ -39,6 +39,7 @@ namespace Engine
         goalY = 0;
         initialized = false;
     }
+
 
     PathfindingSystem::Node::Node(int _x, int _y, double _cost) {
         x = _x;
@@ -117,56 +118,67 @@ namespace Engine
 
     void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
+        
 
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities) 
         {
             Entity* entity = it.second.get();
+            
 
             if (entity->HasComponent(ComponentType::Pathfinding) && entity->HasComponent(ComponentType::Transform) 
                 && entity->HasComponent(ComponentType::Collision))
             {
+
                 PathfindingComponent* pathfindingComponent = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
                 TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 
+                //int startX = transformComponent->position.x;
+                //int startY = transformComponent->position.y;
                 int startX = pathfindingComponent->startX;
                 int startY = pathfindingComponent->startY;
                 int goalX = pathfindingComponent->goalX;
                 int goalY = pathfindingComponent->goalY;
 
-                if (!initialized) {
-                    
+                //if (!(pathfindingComponent->initialized)) {
+                //    
+                //    PathfindingSystem pathfinder(720, 1280);
+                //    pathfinder.setStart(startX, startY);
+                //    pathfinder.setGoal(goalX, goalY);
+                //    pathfindingComponent->path = pathfinder.findShortestPath();
+                //    //path = pathfinder.findShortestPath();
+                //    pathfindingComponent->initialized = true;
+
+                //}
+
+                if (2 > i) {
+
                     PathfindingSystem pathfinder(720, 1280);
                     pathfinder.setStart(startX, startY);
                     pathfinder.setGoal(goalX, goalY);
-                    path = pathfinder.findShortestPath();
-                    initialized = true;
-
+                    pathfindingComponent->path = pathfinder.findShortestPath();
+                    //path = pathfinder.findShortestPath();
+                    //pathfindingComponent->initialized = true;
+                    i++;
                 }
 
-                // Handling the pathfinding results
-                if (path.empty()) 
-                {
-                    std::cout << "No path found!" << std::endl;
+   /*             std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
+                for (const auto& point : pathfindingComponent->path) {
+                    std::cout << "(" << point.first << ", " << point.second << ") ";
                 }
-                else 
+                std::cout << std::endl;*/
+
+                if (!pathfindingComponent->path.empty()) 
                 {
-                    std::cout << "Pathfinding..." << std::endl;
-                    // If a path is found, move the unit towards the next position in the path
-                    std::pair<int, int> nextPosition = path[0]; // Get the next position
+                    std::pair<int, int> nextPosition = pathfindingComponent->path[0];
 
-                    // Debugging
-                    std::cout << nextPosition.first << std::endl;
-                    std::cout << nextPosition.second << std::endl;
-
-                    // Update the unit's position
+                    // Update the entity's position
                     transformComponent->position.x = nextPosition.first;
                     transformComponent->position.y = nextPosition.second;
 
-
-                    // Remove the first position from the path to move to the next one in the next frame
-                    path.erase(path.begin());
+                    // Remove the first position from the path
+                    pathfindingComponent->path.erase(pathfindingComponent->path.begin());
                 }
 
                 // Testing for collision 
