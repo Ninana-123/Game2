@@ -45,7 +45,7 @@ namespace Engine
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), 
-        shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+     shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
             "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
             entityManager(entityManager),
@@ -929,8 +929,8 @@ namespace Engine
             m_Camera.UpdatePosition(InputController, CameraSpeed);
         }
 
-        font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        font.RenderText(shader, "Hellp World",  0.f, 0.9f, 0.001f, glm::vec3(0.f, 0.f, 0.f));
+        //font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
+        font.RenderText(shader, "Samurai Kitties",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
 
         // Restore the previous shader state
         shader.SetActiveShaderSet(previousShaderSet);
