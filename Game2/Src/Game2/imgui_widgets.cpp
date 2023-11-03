@@ -2227,7 +2227,7 @@ TYPE ImGui::RoundScalarWithFormatT(const char* format, ImGuiDataType data_type, 
     fmt_start = fmt_sanitized;
 
     // Format value with our rounding, and read back
-    char v_str[64];
+    char v_str[64] = { 0 };
     ImFormatString(v_str, IM_ARRAYSIZE(v_str), fmt_start, v);
     const char* p = v_str;
     while (*p == ' ')
@@ -2490,7 +2490,7 @@ bool ImGui::DragScalar(const char* label, ImGuiDataType data_type, void* p_data,
         MarkItemEdited(id);
 
     // Display value using user-provided display format so user can add prefix/suffix/decorations to the value.
-    char value_buf[64];
+    char value_buf[64] = { 0 };
     const char* value_buf_end = value_buf + DataTypeFormatString(value_buf, IM_ARRAYSIZE(value_buf), data_type, p_data, format);
     if (g.LogEnabled)
         LogSetNextTextDecoration("{", "}");
@@ -3077,7 +3077,7 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_dat
         window->DrawList->AddRectFilled(grab_bb.Min, grab_bb.Max, GetColorU32(g.ActiveId == id ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab), style.GrabRounding);
 
     // Display value using user-provided display format so user can add prefix/suffix/decorations to the value.
-    char value_buf[64];
+    char value_buf[64] = { 0 };
     const char* value_buf_end = value_buf + DataTypeFormatString(value_buf, IM_ARRAYSIZE(value_buf), data_type, p_data, format);
     if (g.LogEnabled)
         LogSetNextTextDecoration("{", "}");
@@ -3227,7 +3227,7 @@ bool ImGui::VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType d
 
     // Display value using user-provided display format so user can add prefix/suffix/decorations to the value.
     // For the vertical slider we allow centered text to overlap the frame padding
-    char value_buf[64];
+    char value_buf[64] = { 0 };
     const char* value_buf_end = value_buf + DataTypeFormatString(value_buf, IM_ARRAYSIZE(value_buf), data_type, p_data, format);
     RenderTextClipped(ImVec2(frame_bb.Min.x, frame_bb.Min.y + style.FramePadding.y), frame_bb.Max, value_buf, value_buf_end, NULL, ImVec2(0.5f, 0.0f));
     if (label_size.x > 0.0f)
@@ -3944,8 +3944,8 @@ static bool InputTextFilterCharacter(ImGuiContext* ctx, unsigned int* p_char, Im
     if (c < 0x20)
     {
         bool pass = false;
-        pass |= (c == '\n' && (flags & ImGuiInputTextFlags_Multiline)); // Note that an Enter KEY will emit \r and be ignored (we poll for KEY in InputText() code)
-        pass |= (c == '\t' && (flags & ImGuiInputTextFlags_AllowTabInput));
+        pass |= (c == '\n' & (flags & ImGuiInputTextFlags_Multiline)); // Note that an Enter KEY will emit \r and be ignored (we poll for KEY in InputText() code)
+        pass |= (c == '\t' & (flags & ImGuiInputTextFlags_AllowTabInput));
         if (!pass)
             return false;
         apply_named_filters = false; // Override named filters below so newline and tabs can still be inserted.
@@ -4044,7 +4044,8 @@ static void InputTextReconcileUndoStateAfterUserCallback(ImGuiInputTextState* st
     const ImWchar* old_buf = state->TextW.Data;
     const int old_length = state->CurLenW;
     const int new_length = ImTextCountCharsFromUtf8(new_buf_a, new_buf_a + new_length_a);
-    g.TempBuffer.reserve_discard((new_length + 1) * sizeof(ImWchar));
+    std::size_t sizeRequired = static_cast<std::size_t>(new_length + 1) * sizeof(ImWchar);
+    g.TempBuffer.reserve_discard(sizeRequired);
     ImWchar* new_buf = (ImWchar*)(void*)g.TempBuffer.Data;
     ImTextStrFromUtf8(new_buf, new_length + 1, new_buf_a, new_buf_a + new_length_a);
 
@@ -4619,7 +4620,7 @@ bool ImGui::InputTextEx(const char* label, const char* hint, char* buf, int buf_
                 apply_new_text = "";
                 apply_new_text_length = 0;
                 value_changed = true;
-                STB_TEXTEDIT_CHARTYPE empty_string;
+                STB_TEXTEDIT_CHARTYPE empty_string = '\0';
                 stb_textedit_replace(state, &state->Stb, &empty_string, 0);
             }
             else if (strcmp(buf, state->InitialTextA.Data) != 0)

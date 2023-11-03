@@ -421,7 +421,7 @@ namespace Engine
 				Input::GetMousePosition();
 				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
 					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
-					std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+					//std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 				}
 				*/
 				
