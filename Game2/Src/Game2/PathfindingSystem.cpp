@@ -1,3 +1,20 @@
+/******************************************************************************/
+/*!
+\file		PathfindingSystem.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+
+\par		a.junshengaloysius@digipen.edu
+
+\date		10/10/2023
+
+\brief		Contains the definitions for the logic of the pathfinding system.
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "PathfindingSystem.h"
 #include "TransformComponent.h"

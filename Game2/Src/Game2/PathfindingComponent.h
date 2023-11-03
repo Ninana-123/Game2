@@ -1,4 +1,14 @@
 #pragma once
+/******************************************************************************/
+/*!
+\file		PathfindingComponent.h
+\author		Ang Jun Sheng Aloysius, 2201807
+\par		a.junshengaloysius@digipen.edu
+\date		30/10/2023
+\brief		Contains the interface of the Physics Component
+
+ */
+ /******************************************************************************/
 #include "Component.h"
 #include "PathfindingSystem.h"
 #include "EngineTypes.h"

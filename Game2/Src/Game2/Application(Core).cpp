@@ -50,9 +50,6 @@ std::string initScene = "Resource/Scenes/testscene.txt";
 // Variable for last key pressed
 int lastKeyPressed = 0;
 
-// Variable for getting the path of the pathfinding
-std::vector<std::pair<int, int>> path;
-
 namespace Engine
 {
     // Audio file paths and SoundInfo objects
@@ -329,26 +326,11 @@ namespace Engine
                     nextPositionY = lastPositionY + 1;
                 }
 
+                // Friction
+                const float friction = 0.1f;
+
                 if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
-                    if (path.empty()) {
-                        //std::cout << "No path found!" << std::endl;
-                    }
-                    else {
-                        // If a path is found, move the unit towards the next position in the path
-                        std::pair<int, int> nextPosition = path[0]; // Get the next position
-
-                        // Debugging
-                        //std::cout << nextPosition.first << std::endl;
-                        //std::cout << nextPosition.second << std::endl;
-
-                        // Update the unit's position
-                        transformTest->position.x = static_cast<float>(nextPosition.first);
-                        transformTest->position.y = static_cast<float>(nextPosition.second);
-
-                        // Remove the first position from the path to move to the next one in the next frame
-                        path.erase(path.begin());
-                    }
 
                     if (collisionTest->isColliding) {
                         audioEngine.playSound(sound_Slash);
@@ -371,7 +353,7 @@ namespace Engine
                         lastPositionY += transformation;
                         transformTest->position.y = lastPositionY;
                         if (physicsTest->velocity.y <= 0.0f) {
-                            physicsTest->velocity.y = 1.0f;
+                            physicsTest->velocity.y = 1.0f - friction;
                         }
                         lastKeyPressed = 1;
                     }
@@ -381,7 +363,7 @@ namespace Engine
                         lastPositionY -= transformation;
                         transformTest->position.y = lastPositionY;
                         if (physicsTest->velocity.y >= -0.0f) {
-                            physicsTest->velocity.y = -1.0f;
+                            physicsTest->velocity.y = -1.0f + friction;
                         }
                         lastKeyPressed = 2;
                     }
@@ -391,7 +373,7 @@ namespace Engine
                         lastPositionX -= transformation;
                         transformTest->position.x = lastPositionX;
                         if (physicsTest->velocity.x >= -0.0f) {
-                            physicsTest->velocity.x = -1.0f;
+                            physicsTest->velocity.x = -1.0f + friction;
                         }
                         lastKeyPressed = 3;
                     }
@@ -401,10 +383,11 @@ namespace Engine
                         lastPositionX += transformation;
                         transformTest->position.x = lastPositionX;
                         if (physicsTest->velocity.x <= 0.0f) {
-                            physicsTest->velocity.x = 1.0f;
+                            physicsTest->velocity.x = 1.0f - friction;
                         }
                         lastKeyPressed = 4;
                     }
+
                     else if (InputHandler.IsKeyPressed(KEY_R))
                     {
                         transformTest->rot += rotation; //Rotate counterclockwise
