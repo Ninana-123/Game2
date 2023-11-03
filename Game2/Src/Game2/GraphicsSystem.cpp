@@ -519,7 +519,7 @@ namespace Engine
         shader.Bind();
         textures[Background][0].Bind(0);
         shader.SetUniform1f("texCoordX", 0.0f);
-        shader.SetUniform1f("u_FrameCount", 1.0f);
+        //shader.SetUniform1f("u_FrameCount", 1.0f);
         shader.SetUniform1f("u_FrameWidth", 1.0f);
         shader.SetUniform1f("u_FrameHeight", 1.0f);
 
