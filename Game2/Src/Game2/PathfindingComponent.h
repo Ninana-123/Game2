@@ -13,6 +13,8 @@ namespace Engine
 		int startY = 0; // Start point X
 		int goalX = 0; // End point X
 		int goalY = 0; // End point Y
+		std::vector<std::pair<int, int>> path; // Store the path as a list of points
+		// bool initialized = false;
 
 		ComponentType GetType() const override { return ComponentType::Pathfinding; }
 
@@ -23,6 +25,8 @@ namespace Engine
 			cloneComponent->startY = startY;
 			cloneComponent->goalX= goalX;
 			cloneComponent->goalY = goalY;
+			cloneComponent->path = path;
+			//cloneComponent->initialized = initialized;
 			return cloneComponent;
 		}
 
@@ -31,14 +35,20 @@ namespace Engine
 			outputStream << "startY: " << startY << '\n';
 			outputStream << "goalX: " << goalX << '\n';
 			outputStream << "goalY: " << goalY << '\n';
+			//outputStream << "initialized: " << initialized << '\n';
+			//outputStream << "path: " << path.x << ' ' << path.y << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
+			//int buffer;
 			inputStream >> temp >> startX;
 			inputStream >> temp >> startY;
 			inputStream >> temp >> goalX;
 			inputStream >> temp >> goalY;
+			//inputStream >> temp >> buffer;
+			//initialized = static_cast <bool>(buffer);
+			//inputStream >> temp >> path.x >> path.y; 
 		}
 
 	};

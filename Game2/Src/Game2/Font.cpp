@@ -57,7 +57,7 @@ namespace Engine
         // FreeType
         if (FT_Init_FreeType(&ft))
         {
-            std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+            //std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
             exit(-1);
         }
 
@@ -65,18 +65,18 @@ namespace Engine
         //pathName = "Resource/Fonts/arial.ttf";
         pathName = "Resource/Fonts/Inkfree.ttf";
         if (!std::filesystem::exists(pathName)) {
-            std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
+            //std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
             exit(-1);
         }
         else 
         {
-        std::cout << "Font file path: " << pathName << std::endl;
+        //std::cout << "Font file path: " << pathName << std::endl;
         }
 
     
         // Load first 128 characters of ASCII set
         if (FT_New_Face(ft, pathName.c_str(), 0, &face)) {
-            std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+            //std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
             exit(-1);
         }
 
@@ -119,7 +119,7 @@ namespace Engine
         {
             if (FT_Load_Char(face, c, FT_LOAD_RENDER)) 
             {
-                std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character '" << c << "'" << std::endl;
+                //std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character '" << c << "'" << std::endl;
                 continue;
             }
 
@@ -203,10 +203,10 @@ namespace Engine
             float height = (ch.Size.y) * scale ;
 
             // Debugging lines
-            std::cout << "Character: " << c << std::endl;
-            std::cout << "Position: x=" << xpos << ", y=" << ypos << std::endl;
-            std::cout << "Width: " << width << ", Height: " << height << std::endl;
-            std::cout << "Color: R=" << color.x << ", G=" << color.y << ", B=" << color.z << std::endl;
+            //std::cout << "Character: " << c << std::endl;
+            //std::cout << "Position: x=" << xpos << ", y=" << ypos << std::endl;
+            //std::cout << "Width: " << width << ", Height: " << height << std::endl;
+            //std::cout << "Color: R=" << color.x << ", G=" << color.y << ", B=" << color.z << std::endl;
 
             // update VBO for each character
             float vertices[6][4] = {
@@ -220,10 +220,10 @@ namespace Engine
             };
 
             // render glyph texture over quad
-            std::cout << "Binding Texture for Character: " << c << std::endl;
+            //std::cout << "Binding Texture for Character: " << c << std::endl;
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
-            std::cout << "Updating VBO for Character: " << c << std::endl;
+            //std::cout << "Updating VBO for Character: " << c << std::endl;
             glBindBuffer(GL_ARRAY_BUFFER, VBO);
             if (glIsBuffer(VBO))
             {
@@ -232,15 +232,15 @@ namespace Engine
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-            std::cout << "Drawing Character: " << c << std::endl;
+            //std::cout << "Drawing Character: " << c << std::endl;
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             // now advance cursors for next glyph (note that advance is the number of 1/64 pixels)
             newx += (ch.Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide the amount of 1/64th pixels by 64 to get the amount of pixels))
            
 
-            std::cout << "Advance: " << newx << std::endl;
-            std::cout << "------------------------" << std::endl;
+            //std::cout << "Advance: " << newx << std::endl;
+            //std::cout << "------------------------" << std::endl;
 
         }
 

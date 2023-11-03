@@ -496,13 +496,13 @@ namespace Engine
 				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
-				/*
+				
 				Input::GetMousePosition();
 				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
 					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
 					//std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 				}
-				*/
+				
 				
 				if (collisionComponent1)
 				{				
