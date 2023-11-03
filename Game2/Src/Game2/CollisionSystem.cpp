@@ -540,7 +540,6 @@ namespace Engine
 			{
 				// Retrieve the CollisionComponent and TransformComponent
 				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
 				
 				if (collisionComponent->layer == Layer::Editable)
 				{

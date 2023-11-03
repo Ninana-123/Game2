@@ -572,8 +572,6 @@ namespace Engine {
 
 			for (size_t i = 0; i < entities->size(); i++) {
 				// For each component type, if the entity has that component, serialize it.
-				EntityID entityID = static_cast<EntityID>(i);
-
 				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Transform)) {
 					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Transform));
 					outputStream << "Transform" << '\n';
