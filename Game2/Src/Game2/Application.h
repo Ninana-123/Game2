@@ -25,6 +25,7 @@ extern int currentNumberOfSteps;
 extern bool isPaused;
 extern bool stepOneFrame;
 extern double dt;
+extern std::string initScene;
 
 
 namespace Engine

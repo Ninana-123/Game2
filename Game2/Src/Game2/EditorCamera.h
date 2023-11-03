@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		EditorCamera.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	01/11/2923
+\brief		This file contains the implementation of the Asset Manager which
+			handles the assets used by the engine.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #pragma once
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
@@ -28,7 +42,14 @@ namespace Engine
 			RecalculateViewMatrix();
 		}
 		*/
+		/*!*********************************************************************
+			\brief
+			Applies a rotation to the camera's current orientation.
 
+			\param delta
+			The amount by which to change the camera's rotation.
+
+		*************************************************************************/
 		void Rotate(float delta)
 		{
 			m_Rotation += delta;
@@ -40,14 +61,37 @@ namespace Engine
 		}
 
 
+		/*!*********************************************************************
+			\brief
+			Moves the camera's position based on a 2D translation vector.
 
+			\param translation
+			The glm::vec2 translation vector indicating how far to move the camera along the x and y axes.
+
+		*************************************************************************/
 		void Pan(const glm::vec2& translation)
 		{
 			m_Position.x += translation.x;
 			m_Position.y += translation.y;
 			RecalculateViewMatrix();
 		}
+		/*!*********************************************************************
+			\brief
+			Resets the camera's projection and view matrices to default values.
 
+			\param left
+			The left boundary of the orthographic projection.
+
+			\param right
+			The right boundary of the orthographic projection.
+
+			\param bottom
+			The bottom boundary of the orthographic projection.
+
+			\param top
+			The top boundary of the orthographic projection.
+
+		*************************************************************************/
 		void ResetCameraPos(float left, float right, float bottom, float top) {
 			m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 			m_ViewMatrix = glm::mat4(1.0f);
