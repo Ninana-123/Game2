@@ -326,7 +326,7 @@ namespace Engine
                     lastPositionY -= transformation;
                     transformTest->position.y = lastPositionY;
                     if (physicsTest->velocity.y >= -0.0f) {
-                        physicsTest->velocity.y = -1.0f - friction;
+                        physicsTest->velocity.y = -1.0f + friction;
                     }
                     lastKeyPressed = 2;
                 }
@@ -336,7 +336,7 @@ namespace Engine
                     lastPositionX -= transformation;
                     transformTest->position.x = lastPositionX;
                     if (physicsTest->velocity.x >= -0.0f) {
-                        physicsTest->velocity.x = -1.0f - friction;
+                        physicsTest->velocity.x = -1.0f + friction;
                     }
                     lastKeyPressed = 3;
                 }

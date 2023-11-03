@@ -400,10 +400,52 @@ namespace VECTORMATH
 	/**************************************************************************/
 	float	Vector2DCrossProductMag(const Vector2D& pVec0, const Vector2D& pVec1);
 
+	/**************************************************************************/
+	/*!
+	\brief Set the values of a 2D vector with the specified x and y components.
+
+	\param[in] vec
+	A reference to the 2D vector to be modified.
+
+	\param[in] x
+	The new x-component value.
+
+	\param[in] y
+	The new y-component value.
+
+	*/
+	/**************************************************************************/
 	void setVector2D(Vector2D& vec, float x, float y);
 
+	/**************************************************************************/
+	/*!
+	\brief Get the components of a 2D vector and store them in the specified variables.
+
+	\param[in] vec
+	A constant reference to the 2D vector from which to retrieve the components.
+
+	\param[out] x
+	A reference to store the x-component of the vector.
+
+	\param[out] y
+	A reference to store the y-component of the vector.
+
+	*/
+	/**************************************************************************/
 	void getVector2D(const Vector2D& vec, float& x, float& y);
 
+	/**************************************************************************/
+	/*!
+	\brief Rotate a 2D vector by the specified angle in radians.
+
+	\param[in] vec
+	A reference to the 2D vector to be rotated.
+
+	\param[in] angleRadians
+	The angle in radians by which to rotate the vector.
+
+	*/
+	/**************************************************************************/
 	void rotateVector2D(Vector2D& vec, float angleRadians);
 
 }
