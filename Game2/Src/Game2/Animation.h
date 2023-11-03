@@ -1,3 +1,20 @@
+/******************************************************************************/
+/*!
+\file		font.cpp
+\author 	Teo Sheen Yeoh
+\par    	email: t.sheenyeoh@digipen.edu
+\date   	August 29, 2023
+\brief       This file declares the member functions of the Animation class, 
+            which is responsible for managing sprite animations in the game engine. 
+            It includes functions to control animation playback, calculate texture coordinates,
+            and update animation frames based on the specified frame rate and playback mode.
+
+            Copyright (C) 2023 DigiPen Institute of Technology.
+            Reproduction or disclosure of this file or its contents without the prior
+            written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #pragma once
 
 #include <fstream>
