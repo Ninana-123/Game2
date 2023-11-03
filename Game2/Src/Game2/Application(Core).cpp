@@ -358,6 +358,7 @@ namespace Engine
                     }
 
                     if (collisionTest->isColliding) {
+                        audioEngine.playSound(sound_Slash);
                         if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
                             transformTest->position.y = lastPositionY - 10.f;
                         }
