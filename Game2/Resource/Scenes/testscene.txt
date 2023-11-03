@@ -111,7 +111,7 @@ MainIndex: 1
 SubIndex: 0
 EndEntity
 Transform
-Position: -615 335
+Position: 610 335
 ScaleX: 0.5
 ScaleY: 0.5
 Rotation: 0
