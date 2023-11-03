@@ -1,9 +1,37 @@
+/******************************************************************************/
+/*!
+\file		Camera.cpp
+\author 	Teo Sheen Yeoh
+\par    	email: t.sheenyeoh@digipen.edu
+\date   	August 29, 2023
+\brief       This file defines the member functions of the Camera class, 
+            which is responsible for managing the camera's view and projection matrices 
+            in the game engine. It includes functions to set up the orthographic projection matrix,
+            recalculate the view matrix based on the camera's position and rotation, 
+            and update the camera's position using input controls.
+          
+
+            Copyright (C) 2023 DigiPen Institute of Technology.
+            Reproduction or disclosure of this file or its contents without the prior
+            written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
+
 #include "pch.h"
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine
 {
+    /**
+     * @brief Constructs a Camera object with the specified orthographic projection parameters.
+     *
+     * @param left The left coordinate of the projection volume.
+     * @param right The right coordinate of the projection volume.
+     * @param bottom The bottom coordinate of the projection volume.
+     * @param top The top coordinate of the projection volume.
+     */
     Camera::Camera(float left, float right, float bottom, float top)
         : m_ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_ViewMatrix(1.0f), m_Zoom(1.0f)
     {
@@ -13,6 +41,9 @@ namespace Engine
        
     }
 
+    /**
+    * @brief Recalculates the view matrix based on the camera's position and rotation.
+    */
     void Camera::RecalculateViewMatrix()
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
@@ -35,6 +66,13 @@ namespace Engine
     //    RecalculateViewMatrix();
     //}
 
+
+     /**
+     * @brief Updates the camera's position based on input controls.
+     *
+     * @param input Reference to the Input object for processing user input.
+     * @param CameraSpeed The movement speed of the camera.
+     */
     void Camera::UpdatePosition(const Input& input, float CameraSpeed)
     {
         glm::vec3 translation(0.0f);
