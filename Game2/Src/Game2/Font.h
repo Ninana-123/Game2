@@ -77,7 +77,7 @@ namespace Engine {
 		std::string pathName;
 		std::map <char , Character> Characters;
 		std::string font_name;
-		unsigned int texture;
+		// unsigned int texture;
 
 		//GLFWwindow* window{};
 
