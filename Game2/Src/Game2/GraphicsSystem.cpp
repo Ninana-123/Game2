@@ -914,6 +914,15 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Updates the viewport and projection matrix.
+     *
+     * This function updates the OpenGL viewport to match the specified width and height.
+     * It also updates the projection matrix to maintain the correct aspect ratio.
+     *
+     * \param width The width of the viewport.
+     * \param height The height of the viewport.
+     */
     void GraphicsSystem::UpdateViewport(int width, int height)
     {
         glViewport(0, 0, width, height);
@@ -941,6 +950,16 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Toggles between two shader sets.
+     *
+     * This function toggles between Shader Set 1 and Shader Set 2. If the current active shader set
+     * is Shader Set 1, it switches to Shader Set 2, and vice versa. After toggling, it attempts to
+     * reinitialize the shaders based on the new active set.
+     *
+     * \note This function assumes that the shader object is properly initialized before calling it.
+     *
+     */
     void GraphicsSystem::ToggleShaderSet()
     {
         try {

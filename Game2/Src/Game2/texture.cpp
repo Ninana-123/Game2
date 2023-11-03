@@ -104,6 +104,13 @@ void Texture::Unbind() const
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
+/*!
+ * \brief Load texture data from the specified file path.
+ *
+ * This function loads the texture data from the specified file path, enabling vertical flipping of loaded images.
+ *
+ * \return True if the texture data is loaded successfully, false otherwise.
+ */
 bool Texture::Load()
 {
     // Enable vertical flipping of loaded images
@@ -151,6 +158,11 @@ void Texture::SetRenderPos(float posX, float posY)
     m_RenderPosY = posY;
 }
 
+/*!
+ * \brief Set the file path for the texture.
+ *
+ * \param path The file path to set.
+ */
 void Texture::SetFilePath(const std::string& path)
 {
     m_Filepath = path;
@@ -169,6 +181,14 @@ void Texture::UpdateBufferData()
 
 }
 
+/*!
+ * \brief Assignment operator for texture objects.
+ *
+ * This operator copies the data from another texture object.
+ *
+ * \param other The texture object to copy data from.
+ * \return Reference to the modified texture object.
+ */
 Texture& Texture::operator=(const Texture& other)
 {
     if (this != &other) {
