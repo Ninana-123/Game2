@@ -254,6 +254,8 @@ namespace Engine
 
                 // Check for additional shader compilation errors (if any)
                 shader.CheckShaderCompilation(shaderProgram, "Shader Set");
+
+                GLCall(glUseProgram(shaderProgram));
             }
             else
             {

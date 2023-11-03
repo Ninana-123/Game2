@@ -34,6 +34,8 @@ public:
 	// Destructor for VertexBuffer.
 	~VertexBuffer();
 
+	void SetData(const void* data, unsigned int size);
+
 	// Binds the vertex buffer.
 	void Bind() const;
 
