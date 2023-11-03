@@ -132,7 +132,7 @@
       <Command>xcopy "$(SolutionDir)bin\Debug-x64\Game2\Game2.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
 xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodL.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
 xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodstudioL.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y
-</Command>
+xcopy "$(SolutionDir)Game2\vendor\freetype\freetype.dll" "$(SolutionDir)bin\Debug-x64\Sandbox" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,7 +160,7 @@ xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodstudioL.dll" "$(SolutionDir
       <Command>xcopy "$(SolutionDir)bin\Release-x64\Game2\Game2.dll" "$(SolutionDir)bin\Release-x64\Sandbox" /y
 xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodL.dll" "$(SolutionDir)bin\Release-x64\Sandbox" /y
 xcopy "$(SolutionDir)Game2\vendor\FMOD\Libraries\fmodstudioL.dll" "$(SolutionDir)bin\Release-x64\Sandbox" /y
-</Command>
+xcopy "$(SolutionDir)Game2\vendor\freetype\freetype.dll" "$(SolutionDir)bin\Release-x64\Sandbox" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

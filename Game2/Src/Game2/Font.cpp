@@ -1,10 +1,31 @@
+/******************************************************************************/
+/*!
+\file		font.cpp
+\author 	Teo Sheen Yeoh
+\par    	email: t.sheenyeoh@digipen.edu
+\co         Tay Jun Feng Vance
+            email: junfengvance.t@digipen.edu
+\date   	August 29, 2023
+\brief		This file provides the implementation for font rendering in the game engine. 
+            It contains functions to initialize the font rendering system, load font glyphs, and render text using OpenGL
+
+            Copyright (C) 2023 DigiPen Institute of Technology.
+            Reproduction or disclosure of this file or its contents without the prior
+            written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Font.h"
 
 
 namespace Engine
 {
-
+    /**
+    * @brief Initializes the font rendering system.
+    *
+    * This function initializes OpenGL state, compiles shaders, and sets up FreeType library.
+    */
     void font::Initialize() {
       
 
@@ -84,6 +105,11 @@ namespace Engine
         shader.Unbind();
     }
 
+    /**
+     * @brief Loads the glyphs of the specified font and creates display lists for rendering text.
+     *
+     * @param pathname Path to the font file.
+     */
     void font::MakeDisplayList(const std::string pathname) 
     {   
        
@@ -132,7 +158,16 @@ namespace Engine
 
     }
 
-
+    /**
+    * @brief Renders the specified text at the given position, scale, and color using the provided shader.
+    *
+    * @param shader Shader program to use for rendering.
+    * @param text Text to render.
+    * @param x X-coordinate of the starting position.
+    * @param y Y-coordinate of the starting position.
+    * @param scale Scale factor for the text.
+    * @param color Color of the text.
+    */
     void font::RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
     {
         // activate corresponding render state	
@@ -215,7 +250,11 @@ namespace Engine
     }
 
 
-
+    /**
+    * @brief Cleans up the FreeType library resources.
+    *
+    * This function should be called to release resources acquired by FreeType library.
+    */
     void font::CleanupFreeType() 
     {
         FT_Done_Face(face);

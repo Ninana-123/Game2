@@ -394,5 +394,8 @@
     <Filter Include="Base\Camera">
       <UniqueIdentifier>{c9d024f3-c758-4c7d-a1c4-634bfc9ec9f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Font">
+      <UniqueIdentifier>{07888523-3ed5-4ee5-9fee-4fb8079b3aae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

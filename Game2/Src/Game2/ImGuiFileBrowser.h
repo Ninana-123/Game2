@@ -16,19 +16,39 @@ namespace Engine {
 
             if (ImGui::BeginListBox("##files")) {
                 for (size_t i = 0; i < files.size(); ++i) {
-                    const bool isSelected = (i == selectedIndex); // Check if this file is the selected one
+                    const bool isSelected = (i == selectedIndex);
                     if (ImGui::Selectable(files[i].c_str(), isSelected)) {
                         selectedIndex = static_cast<int>(i);
                         selectedFile = files[i];
+
+                        if (selectedFile.substr(0, 6) == "[DIR] ") {
+                            std::string directoryPath = selectedFile.substr(6);
+                            Open(directoryPath);
+                            continue;
+                        }
+                        if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+                            // Set payload to contain the scene file path
+                            ImGui::SetDragDropPayload("SCENE_PATH", files[i].c_str(), (files[i].size() + 1) * sizeof(char));
+
+                            // Display preview (could be text, image, etc.)
+                            ImGui::Text("Load %s", files[i].c_str());
+                            ImGui::EndDragDropSource();
+                        }
                     }
 
-                    // Set the default selected item
                     if (isSelected) {
                         ImGui::SetItemDefaultFocus();
                     }
                 }
                 ImGui::EndListBox();
             }
+
+            if (selectedFile.substr(0, 6) == "[DIR] ") {
+                selectedIndex = -1;
+                selectedFile.clear();
+            }
+
+
 
             if (ImGui::Button("Open")) {
                 if (!selectedFile.empty() && currentDirectory == "Resource/Scenes") {
@@ -50,10 +70,12 @@ namespace Engine {
             }
 
             if (ImGui::Button("Cancel")) {
-                CloseBrowser(); // Close the browser and clear the files vector
+                CloseBrowser();
             }
 
-            ImGui::End();
+            
+                ImGui::End();
+          
         }
 
         void Open(const std::string& directory) {         
@@ -75,9 +97,13 @@ namespace Engine {
                 if (entry.is_regular_file()) {
                     files.push_back(entry.path().string());
                 }
+                else if (entry.is_directory()) {
+                    files.push_back("[DIR] " + entry.path().string()); // or any other formatting you prefer
+                }
             }
             return files;
         }
+
         bool isOpen = false;
         inline void setAssetManagerPtr(std::shared_ptr<Engine::AssetManager> assetsManager) {
             am = assetsManager;
