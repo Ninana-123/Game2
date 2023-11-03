@@ -39,7 +39,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 double fps = 0.00;
 auto previousTime = std::chrono::high_resolution_clock::now();;  // Previous time for FPS calculation
 double loopTime = 0.0;  // Definition of loopTime
-const double fixedDeltaTime = 1.0 / 80.0;//user defined 
+const double fixedDeltaTime = 1.0 / 60.0;//user defined 
 double accumulatedTime = 0.0;//one time definition
 int currentNumberOfSteps = 0;
 double prevTime = glfwGetTime();
