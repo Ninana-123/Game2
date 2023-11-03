@@ -1,6 +1,18 @@
-// ErrorHandler.h
+/******************************************************************************/
+/*!
+\file		ErrorHandler.h
+\author 	Liu Xujie
+\par    	email: l.xujie@digipen.edu
+\date   	01/11/2923
+\brief		This file contains the declaration of ErrorHandler Class
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+#pragma once
 
-#include "Game2/logger.h"
+#include "logger.h"
 #include <Windows.h>
 #include <string>
 

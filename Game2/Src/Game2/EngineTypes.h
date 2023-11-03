@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file		EngineTypes.h
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		Declaration of types to be used in the custom engine
+
+ */
+ /******************************************************************************/
 #pragma once
 
 typedef unsigned int EntityID;
