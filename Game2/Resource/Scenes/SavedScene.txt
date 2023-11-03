@@ -1,4 +1,4 @@
-5
+7
 Transform
 Position: 1 0
 ScaleX: 1
@@ -40,7 +40,7 @@ MainIndex: 3
 SubIndex: 0
 EndEntity
 Transform
-Position: -100 100
+Position: 300 0
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
@@ -48,10 +48,10 @@ Collision
 c_Width: 45
 c_Height: 45
 isColliding: 0
-MinX: -122.5
-MinY: 77.5
-MaxX: -77.5
-MaxY: 122.5
+MinX: 277.5
+MinY: -22.5
+MaxX: 322.5
+MaxY: 22.5
 Radius: 0
 Layer: 2
 Physics
@@ -84,7 +84,7 @@ MinY: 277.5
 MaxX: 422.5
 MaxY: 322.5
 Radius: 0
-Layer: 0
+Layer: 2
 Physics
 Velocity: 0 0
 Texture
@@ -108,5 +108,23 @@ playing: 0
 playmode: 0
 Texture
 MainIndex: 1
+SubIndex: 0
+EndEntity
+Transform
+Position: 610 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Texture
+MainIndex: 10
+SubIndex: 0
+EndEntity
+Transform
+Position: -15 -295
+ScaleX: 3.2
+ScaleY: 1
+Rotation: 0
+Texture
+MainIndex: 6
 SubIndex: 0
 EndEntity

@@ -1,4 +1,4 @@
-1
+2
 Tank
 Transform
 Position: 172 150
@@ -16,4 +16,23 @@ MaxY: 0
 Radius: 0
 Layer: 0
 EndPrefab
-
+HUDInfantry
+Transform
+Position: 0 0
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+Texture
+MainIndex: 0
+SubIndex: 0
+EndPrefab
