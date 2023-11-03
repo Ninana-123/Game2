@@ -388,6 +388,85 @@ namespace Engine
 		}
 	}
 
+	// Function to project a polygon onto an axis (edge normal)
+	void CollisionSystem::ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max) {
+		min = max = Vector2DDotProduct(polygon[0], axis);
+		for (size_t i = 1; i < polygon.size(); i++) {
+			float dot = Vector2DDotProduct(polygon[i], axis);
+			if (dot < min) {
+				min = dot;
+			}
+			if (dot > max) {
+				max = dot;
+			}
+		}
+	}
+
+	// Function to check for intersection between two convex polygons using the SAT
+	bool CollisionSystem::PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2,
+		float rotationAngle1, float rotationAngle2) {
+		// Create rotated copies of the input polygons
+		std::vector<VECTORMATH::Vec2> rotatedPolygon1, rotatedPolygon2;
+
+		// Rotate and update the vertices of polygon1
+		for (const VECTORMATH::Vec2& vertex : polygon1) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle1); // Call the member function on the copied vertex
+			rotatedPolygon1.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Rotate and update the vertices of polygon2
+		for (const VECTORMATH::Vec2& vertex : polygon2) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle2); // Rotate the copied vertex
+			rotatedPolygon2.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Calculate the edges and normals for both rotated polygons
+		std::vector<Edge> edges1, edges2;
+		for (size_t i = 0; i < rotatedPolygon1.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon1.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon1[j] - rotatedPolygon1[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon1, normal, e.min, e.max);
+			edges1.push_back(e);
+		}
+		for (size_t i = 0; i < rotatedPolygon2.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon2.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon2[j] - rotatedPolygon2[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon2, normal, e.min, e.max);
+			edges2.push_back(e);
+		}
+
+		// Test for separation along each axis (edge normal)
+		for (const Edge& edge : edges1) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+		for (const Edge& edge : edges2) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+
+		// If no separation occurs along any axis, there is intersection
+		return true;
+	}
+
 	// Function to check if the area is being touched/clicked
 	bool CollisionSystem::IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
 	{
@@ -542,8 +621,7 @@ namespace Engine
 				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 				
 				if (collisionComponent->layer == Layer::Editable)
-				{
-					std::cout << "Mouse X: " << mousePosition.x << " Y: " << mousePosition.y << std::endl;
+				{				
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{

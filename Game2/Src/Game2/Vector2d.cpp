@@ -266,4 +266,24 @@ namespace VECTORMATH {
         return crossProductMagnitude;
     }
 
+    void setVector2D(Vector2D& vec, float x, float y) {
+        vec.x = x;
+        vec.y = y;
+    }
+
+    // Function to get the x and y components of a Vector2D
+    void getVector2D(const Vector2D& vec, float& x, float& y) {
+        x = vec.x;
+        y = vec.y;
+    }
+
+    void rotateVector2D(Vector2D& vec, float angleRadians) {
+        float cosA = std::cos(angleRadians);
+        float sinA = std::sin(angleRadians);
+        float newX = vec.x * cosA - vec.y * sinA;
+        float newY = vec.x * sinA + vec.y * cosA;
+        vec.x = newX;
+        vec.y = newY;
+    }
+
 } // namespace VECTORMATH

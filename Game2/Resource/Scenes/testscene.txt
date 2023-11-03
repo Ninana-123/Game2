@@ -21,6 +21,7 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
 Layer: 2
 Physics
 Velocity: 0 0
@@ -37,6 +38,11 @@ texturexindex: 0
 textureyindex:  0
 playing: 0
 playmode: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 200
+goalY: 200
 EndEntity
 Transform 
 Position: -100 100
@@ -51,6 +57,7 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
 Layer: 2
 Physics
 Velocity: 0 0
@@ -81,6 +88,7 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
 Layer: 0
 Physics
 Velocity: 0 0

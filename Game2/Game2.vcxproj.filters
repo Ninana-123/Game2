@@ -112,9 +112,12 @@
     <ClCompile Include="Src\Game2\Camera.cpp">
       <Filter>Base\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Pathfinding.cpp" />
     <ClCompile Include="Src\Game2\EngineTypes.cpp">
       <Filter>Base\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Font.cpp" />
+    <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
+      <Filter>Systems\Pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,9 +295,15 @@
     <ClInclude Include="Src\Game2\Camera.h">
       <Filter>Base\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Pathfinding.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h">
       <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Font.h" />
+    <ClInclude Include="Src\Game2\PathfindingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingSystem.h">
+      <Filter>Systems\Pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -396,6 +405,9 @@
     </Filter>
     <Filter Include="Base\Font">
       <UniqueIdentifier>{07888523-3ed5-4ee5-9fee-4fb8079b3aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{9533f091-e860-4507-a04f-7a3e911113d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

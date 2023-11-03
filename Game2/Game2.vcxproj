@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
+    <ClInclude Include="Src\Game2\PathfindingComponent.h" />
+    <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
@@ -59,7 +61,6 @@
     <ClInclude Include="Src\Game2\Application.h" />
     <ClInclude Include="Src\Game2\Matrix3x3Lib.h" />
     <ClInclude Include="Src\Game2\MouseButtonCodes.h" />
-    <ClInclude Include="Src\Game2\Pathfinding.h" />
     <ClInclude Include="Src\Game2\pch.h" />
     <ClInclude Include="Src\Game2\PhysicsComponent.h" />
     <ClInclude Include="Src\Game2\PhysicsSystem.h" />
@@ -108,7 +109,7 @@
     <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
     <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp" />
-    <ClCompile Include="Src\Game2\Pathfinding.cpp" />
+    <ClCompile Include="Src\Game2\PathfindingSystem.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

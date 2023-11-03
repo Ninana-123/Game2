@@ -32,7 +32,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 #include "AssetManager.h"
-#include "Pathfinding.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -187,19 +186,6 @@ namespace Engine
         m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
-
-        // Initializing pathfinding
-        int startX = 0;
-        int startY = 0;
-        int goalX = 200;
-        int goalY = 200;
-
-        Pathfinding pathfinder(720, 1280); // Create an instance of the Pathfinding class
-
-        pathfinder.setStart(startX, startY); // Set the start position
-        pathfinder.setGoal(goalX, goalY); // Set the goal position
-
-        path = pathfinder.findShortestPath(); // Use the Pathfinding class to find the path
 
     }
 

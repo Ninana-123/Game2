@@ -14,6 +14,7 @@
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
+#include "PathfindingSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 

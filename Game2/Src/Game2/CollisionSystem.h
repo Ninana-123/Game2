@@ -60,7 +60,13 @@ namespace Engine
 		struct Circle 
 		{
 			VECTORMATH::Vec2 center;
-			float radius;
+			float radius = 0.f;
+		};
+
+		struct Edge
+		{
+			VECTORMATH::Vec2 normal;
+			float min, max = 0.f;
 		};
 
 		/*!*****************************************************************
@@ -145,7 +151,8 @@ namespace Engine
 		*/
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
-
+		void ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max);
+		bool PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2, float rotationAngle1, float rotationAngle2);
 		bool IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
 
 		void EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
