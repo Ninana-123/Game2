@@ -194,8 +194,10 @@ namespace Engine {
 
     void Input::Picking()
     {
+        static EntityID pickedEntityID = 0;
+        static bool isDragging = false;
         // Check if left mouse button is pressed
-        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON) )
+        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
         {
             std::cout << "Picking Check. " << std::endl;
             // Get the mouse position
@@ -205,30 +207,50 @@ namespace Engine {
             mousePosition.x -= 1270 / 2;
             mousePosition.y = 720 / 2 - mousePosition.y;
 
-            // Iterate through all entities
-            for (auto& entityPair : *(entityManager->GetEntities()))
-            {
-                Entity* entity = entityPair.second.get();
-
-                // Check if the entity has a CollisionComponent
-                if (entity->HasComponent(ComponentType::Collision))
+            if (!isDragging) {
+                // Iterate through all entities only if not currently dragging
+                for (auto& entityPair : *(entityManager->GetEntities()))
                 {
-                    // Retrieve the CollisionComponent and TransformComponent
-                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+                    Entity* entity = entityPair.second.get();
 
-                    // Check if the entity is colliding with the mouse
-                    if (collisionComponent->mColliding)
+                    // Check if the entity has a CollisionComponent
+                    if (entity->HasComponent(ComponentType::Collision))
                     {
-                        // Update the transform component with the mouse position
-                        transformComponent->position.x = mousePosition.x;
-                        transformComponent->position.y = mousePosition.y;
+                        // Retrieve the CollisionComponent and TransformComponent
+                        CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 
-                        // Additional logic or flags can be set as needed
+                        // Check if the entity is colliding with the mouse
+                        if (collisionComponent->mColliding)
+                        {
+                            // Store the ID of the colliding entity
+                            pickedEntityID = entity->GetID();
+                            isDragging = true; // Start dragging mode
+                            break; // Exit the loop after finding the first colliding entity
+                        }
                     }
                 }
             }
-        }             
+            if (isDragging) {
+                // Use the stored ID to find the entity
+                Entity* pickedEntity = entityManager->GetEntity(pickedEntityID);
+
+                if (pickedEntity) {
+                    // Retrieve the CollisionComponent and TransformComponent
+                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(pickedEntity->GetComponent(ComponentType::Collision));
+                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(pickedEntity->GetComponent(ComponentType::Transform));
+
+                    // Update the transform component with the mouse position
+                    transformComponent->position.x = mousePosition.x;
+                    transformComponent->position.y = mousePosition.y;
+
+                    // Additional logic or flags can be set as needed
+                }
+            }
+        }
+        else
+        {
+            isDragging = false;
+        }
     }
 
 }  // namespace Engine
