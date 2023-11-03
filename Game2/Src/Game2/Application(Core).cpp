@@ -289,6 +289,8 @@ namespace Engine
             float nextPositionX = lastPositionX + 1;
             float nextPositionY = lastPositionY + 1;
 
+            // Friction
+            const float friction = 0.1f;  // Adjust the friction value as needed
 
             if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
             {
@@ -308,12 +310,13 @@ namespace Engine
                     }
                 }
 
+
                 if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                 {
                     lastPositionY += transformation;
                     transformTest->position.y = lastPositionY;
                     if (physicsTest->velocity.y <= 0.0f) {
-                        physicsTest->velocity.y = 1.0f;
+                        physicsTest->velocity.y = 1.0f - friction;
                     }
                     lastKeyPressed = 1;
                 }
@@ -323,7 +326,7 @@ namespace Engine
                     lastPositionY -= transformation;
                     transformTest->position.y = lastPositionY;
                     if (physicsTest->velocity.y >= -0.0f) {
-                        physicsTest->velocity.y = -1.0f;
+                        physicsTest->velocity.y = -1.0f - friction;
                     }
                     lastKeyPressed = 2;
                 }
@@ -333,7 +336,7 @@ namespace Engine
                     lastPositionX -= transformation;
                     transformTest->position.x = lastPositionX;
                     if (physicsTest->velocity.x >= -0.0f) {
-                        physicsTest->velocity.x = -1.0f;
+                        physicsTest->velocity.x = -1.0f - friction;
                     }
                     lastKeyPressed = 3;
                 }
@@ -343,7 +346,7 @@ namespace Engine
                     lastPositionX += transformation;
                     transformTest->position.x = lastPositionX;
                     if (physicsTest->velocity.x <= 0.0f) {
-                        physicsTest->velocity.x = 1.0f;
+                        physicsTest->velocity.x = 1.0f - friction;
                     }
                     lastKeyPressed = 4;
                 }
