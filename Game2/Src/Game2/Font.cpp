@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Font.h"
 
+
 namespace Engine
 {
 
@@ -20,8 +21,23 @@ namespace Engine
         shader.Initialize();
         shader.Bind();
 
+
+
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight), -1.0f, 1.0f);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+
+    
+        //int screenWidth, screenHeight;
+        //glfwGetWindowSize(window, &screenWidth, &screenHeight);
+
+        //glm::mat4 view = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
+
+        //// Pass the view matrix to the shader
+        //glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(view));
+
+      
+
 
         // FreeType
         if (FT_Init_FreeType(&ft))
@@ -68,6 +84,8 @@ namespace Engine
         // Now you can call MakeDisplayList to load glyphs
         MakeDisplayList(pathName);
 
+
+
         shader.Unbind();
     }
 
@@ -85,7 +103,6 @@ namespace Engine
             }
 
             // generate texture
-            unsigned int texture;
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_2D, texture);
             glTexImage2D(
@@ -127,6 +144,7 @@ namespace Engine
         shader.SetActiveShaderSet(3);
         shader.Bind();
         glUniform3f(glGetUniformLocation(shader.GetID(), "textColor"), color.x, color.y, color.z);
+        glBindTexture(GL_TEXTURE_2D, texture);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
 

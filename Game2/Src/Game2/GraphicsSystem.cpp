@@ -621,7 +621,7 @@ namespace Engine
         shader.Bind();
 
         // Render the text with shader set 3
-        font.RenderText(shader, "Sample", 0.0f, 0.0f, 1.0f, glm::vec3( 0.0f, 0.0f, 0.0f));
+        font.RenderText(shader, "Sample", 0.f, 0.f, 0.01f, glm::vec3( 0.0f, 0.0f, 0.0f));
        // font.RenderText(shader, "Hello,World!", -0.5f, 0.0f, 25.0f, glm::vec3(0.0f, 0.0f, 0.0f));
 
         // Restore the previous shader state
