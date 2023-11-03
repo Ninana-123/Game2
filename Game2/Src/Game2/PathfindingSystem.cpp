@@ -117,7 +117,6 @@ namespace Engine
 
     void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
-
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities) 
         {
@@ -144,7 +143,6 @@ namespace Engine
                     initialized = true;
 
                 }
-
                 // Handling the pathfinding results
                 if (path.empty()) 
                 {
@@ -163,7 +161,6 @@ namespace Engine
                     // Update the unit's position
                     transformComponent->position.x = nextPosition.first;
                     transformComponent->position.y = nextPosition.second;
-
 
                     // Remove the first position from the path to move to the next one in the next frame
                     path.erase(path.begin());
