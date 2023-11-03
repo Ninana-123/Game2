@@ -41,7 +41,7 @@ namespace Engine
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
-			int buffer;
+			//int buffer;
 			inputStream >> temp >> startX;
 			inputStream >> temp >> startY;
 			inputStream >> temp >> goalX;

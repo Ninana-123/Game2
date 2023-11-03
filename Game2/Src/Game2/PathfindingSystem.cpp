@@ -169,22 +169,15 @@ namespace Engine
                 }
                 std::cout << std::endl;*/
 
-                if (!pathfindingComponent->path.empty()) 
-                else 
-                else 
-                else 
-                {
+                if (!pathfindingComponent->path.empty()) {
                     std::pair<int, int> nextPosition = pathfindingComponent->path[0];
 
                     // Update the entity's position
+                    transformComponent->position.x = nextPosition.first;
+                    transformComponent->position.y = nextPosition.second;
+
                     // Remove the first position from the path
                     pathfindingComponent->path.erase(pathfindingComponent->path.begin());
-                    // Remove the first position from the path to move to the next one in the next frame
-                    path.erase(path.begin());
-                    // Remove the first position from the path to move to the next one in the next frame
-                    path.erase(path.begin());
-                    // Remove the first position from the path to move to the next one in the next frame
-                    path.erase(path.begin());
                 }
 
                 // Testing for collision 
