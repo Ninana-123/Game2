@@ -92,6 +92,15 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	
 }
 
+/*!
+ * \brief Update the buffer data in the vertex array.
+ *
+ * This function updates the data of a specific buffer in the vertex array.
+ *
+ * \param index The index of the buffer to be updated.
+ * \param data A pointer to the new data to be copied into the buffer.
+ * \param size The size of the data in bytes.
+ */
 void VertexArray::UpdateBuffer(unsigned int index, const void* data, size_t size)
 {
 	if (index < m_RendererBuffers.size()) {
