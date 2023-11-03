@@ -401,7 +401,7 @@ namespace Engine
                 float frameRate = 10.0f;
                 float horizontalFrames = 6.0f; // Number of horizontal frames
                 float verticalFrames = 1.0f; // Number of vertical frames
-                float Length = 1536.0f; // length of sprite sheet
+                //float Length = 1536.0f; // length of sprite sheet
                 Anim_Mode playMode = Anim_Mode::LOOP;
 
                 // Create a static animation object if not created already
@@ -448,7 +448,7 @@ namespace Engine
             float frameRate = 10.0f;
             float horizontalFrames = 6.0f; // Number of horizontal frames
             float verticalFrames = 1.0f; // Number of vertical frames
-            float Length = 1536.0f; // length of sprite sheet
+            //float Length = 1536.0f; // length of sprite sheet
             Anim_Mode playMode = Anim_Mode::LOOP;
 
             // Create a static animation object if not created already
