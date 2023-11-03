@@ -557,12 +557,12 @@ namespace Engine
 							if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
 							{
 								isColliding = true;
-								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 							}
 
 							if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
 								//isColliding = true;
-								std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 							}
 
 						}
@@ -627,7 +627,7 @@ namespace Engine
 					{
 						// Collision detected, set a flag or perform any actions needed
 						collisionComponent->mColliding = true;
-						std::cout << "Mouse collided with Entity " << entity->GetID();
+						std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
 					else
 					{
