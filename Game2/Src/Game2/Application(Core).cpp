@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 
 
+
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 double previousTime = glfwGetTime();  // Previous time for FPS calculation

@@ -200,8 +200,10 @@ namespace Engine
         ibBackground.Unbind();
 
         shader.Unbind();
-
-        font.Initialize();
+        
+      //  font.Initialize("Resource/Fonts/arial.ttf");
+        font.Initialize("Resource/Fonts/Inkfree.ttf");
+        font.Initialize("Resource/Fonts/arial.ttf");
         //font.MakeDisplayList(ft, face);
     }
 

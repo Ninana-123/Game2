@@ -107,6 +107,7 @@
     <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
     <ClCompile Include="Src\Game2\Font.cpp" />
+    <ClCompile Include="Src\Game2\FontManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -272,6 +273,7 @@
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\AnimationComponent.h" />
     <ClInclude Include="Src\Game2\Font.h" />
+    <ClInclude Include="Src\Game2\FontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

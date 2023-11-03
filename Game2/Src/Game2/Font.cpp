@@ -5,7 +5,7 @@
 namespace Engine
 {
 
-    void font::Initialize() {
+    void font::Initialize(std::string filepath) {
       
 
         // OpenGL state
@@ -40,23 +40,23 @@ namespace Engine
             exit(-1);
         }
 
-        // find path to font
+        //// find path to font
         //pathName = "Resource/Fonts/arial.ttf";
-        pathName = "Resource/Fonts/Inkfree.ttf";
-        if (!std::filesystem::exists(pathName)) {
-            std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
-            exit(-1);
-        }
-        else 
-        {
-        std::cout << "Font file path: " << pathName << std::endl;
-        }
+        //pathName = "Resource/Fonts/Inkfree.ttf";
+        //if (!std::filesystem::exists(pathName)) {
+        //    std::cout << "ERROR::FREETYPE: Font file does not exist at path: " << pathName << std::endl;
+        //    exit(-1);
+        //}
+        //else 
+        //{
+        //std::cout << "Font file path: " << pathName << std::endl;
+        //}
 
     
         // Load first 128 characters of ASCII set
-        if (FT_New_Face(ft, pathName.c_str(), 0, &face)) {
+        if (FT_New_Face(ft, filepath.c_str(), 0, &face)) {
             std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-            exit(-1);
+            return;
         }
 
         // Set size to load glyphs as
@@ -65,39 +65,37 @@ namespace Engine
         // Disable byte-alignment restriction
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        // configure VAO/VBO for texture quads
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+        
 
         // Now you can call MakeDisplayList to load glyphs
-        MakeDisplayList(pathName);
+        MakeDisplayList(filepath);
 
 
 
         shader.Unbind();
+
+        //FontManager::GetInstance();
+        //FontManager::GetInstance()->setFont(filepath);
     }
 
-    void font::MakeDisplayList(const std::string pathname) 
-    {   
-       
-       
+
+
+    void font::MakeDisplayList(const std::string pathname)
+    {
+        font_name = pathname;
+        FontManager::GetInstance()->setFont(pathname);
+
         // Load first 128 characters of ASCII set
-        for (unsigned char c = 0; c <= 128; c++) 
+        for (unsigned char c = 0; c < 128; c++)
         {
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER)) 
+            if (FT_Load_Char(face, c, FT_LOAD_RENDER))
             {
                 std::cout << "ERROR::FREETYTPE: Failed to load Glyph for character '" << c << "'" << std::endl;
                 continue;
             }
 
-            // generate texture
+            // Generate texture for this character
+            unsigned int texture;
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_2D, texture);
             glTexImage2D(
@@ -111,12 +109,14 @@ namespace Engine
                 GL_UNSIGNED_BYTE,
                 face->glyph->bitmap.buffer
             );
-            // set texture options
+
+            // Set texture options
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            // now store character for later use
+
+            // Store character for later use
             Character character = {
                 texture,
                 glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
@@ -125,12 +125,15 @@ namespace Engine
             };
             Characters.insert(std::pair<char, Character>(c, character));
         }
+
+        // Unbind the last texture to avoid potential issues
         glBindTexture(GL_TEXTURE_2D, 0);
-        // destroy FreeType once we're finished
+
+        // Destroy FreeType once we're finished
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
-
     }
+
 
 
     void font::RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
@@ -141,7 +144,7 @@ namespace Engine
         glUniform3f(glGetUniformLocation(shader.GetID(), "textColor"), color.x, color.y, color.z);
         glBindTexture(GL_TEXTURE_2D, texture);
         glActiveTexture(GL_TEXTURE0);
-        glBindVertexArray(VAO);
+        glBindVertexArray(FontManager::GetInstance()->GetVAO());
 
         float halfWidth;
         float lengthWidth{};
@@ -189,8 +192,8 @@ namespace Engine
             glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
             std::cout << "Updating VBO for Character: " << c << std::endl;
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
-            if (glIsBuffer(VBO))
+            glBindBuffer(GL_ARRAY_BUFFER, FontManager::GetInstance()->GetVBO());
+            if (glIsBuffer(FontManager::GetInstance()->GetVBO()))
             {
                 std::cout << "ok\n";
             }

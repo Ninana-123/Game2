@@ -5,6 +5,7 @@
 #include <string>
 #include "Vector2d.h"
 #include "Window.h"
+#include "FontManager.h"
 
 
 #include <GL/glew.h>
@@ -30,7 +31,7 @@ namespace Engine {
 	{
 
 	private:
-		GLuint VAO{}, VBO{};
+		
 		FT_Face face{};
 		FT_Library ft{};
 		const float fscreenWidth = 1280.0f;
@@ -53,7 +54,7 @@ namespace Engine {
 			glm::ivec2 color;
 		};
 
-		void Initialize();
+		void Initialize(std::string filepath);
 		//void MakeDisplayList(const std::string font);
 		void MakeDisplayList(const std::string pathname);
 		void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
@@ -66,6 +67,8 @@ namespace Engine {
 
 		WindowsWindow* window;
 		//GLFWwindow* window{};
+
+		
 
 		
 	};
