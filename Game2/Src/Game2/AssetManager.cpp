@@ -49,6 +49,25 @@ namespace Engine {
         return texture;
     }
 
+    void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
+    {
+        TextureKey textureKey{ mainIndex, subIndex };
+        auto textureIter = textures.find(textureKey);
+
+        if (textureIter != textures.end()) {
+            // The texture already exists, update its filepath
+            updateTextureFilePath(mainIndex, subIndex, filePath);
+            std::shared_ptr<Texture> texture = textureIter->second;
+            texture->SetFilePath(filePath);
+            texture->Load();
+            texture->UpdateBufferData();
+        }
+        else {
+            // The texture doesn't exist, create a new one
+            loadTexture(mainIndex, filePath, subIndex);
+        }
+    }
+
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
         TextureKey key{ mainIndex, subIndex };
         auto it = textures.find(key);

@@ -27,6 +27,8 @@ namespace Engine {
         // Update the function signature
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const int subIndex = 0);
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const std::string& filePath, const int subIndex = 0); //Overload that takes in custom filepath
+        
+        void UpdateTexture(int mainIndex, const std::string& filePath, int subIndex);
 
         // Update the function signature
         std::shared_ptr<Texture> getTexture(int mainIndex, int subIndex = 0) const;

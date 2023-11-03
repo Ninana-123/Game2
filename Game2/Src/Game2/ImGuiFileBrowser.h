@@ -38,10 +38,7 @@ namespace Engine {
                 }
                 else if (!selectedFile.empty() && currentDirectory == "Resource/Texture") {
                     Engine::Logger::GetInstance().Log(Engine::LogLevel::Debug, selectedFile);
-                    am->loadTexture(t_mainIndex, selectedFile, t_subIndex);
-                    Engine::SystemsManager& systemsManager = Engine::SystemsManager::GetInstance();
-                    Engine::GraphicsSystem& graphicsSystem = systemsManager.GetSystem<Engine::GraphicsSystem>();
-                    graphicsSystem.InitializeTextures();
+                    am->UpdateTexture(t_mainIndex, selectedFile, t_subIndex);//Update buffer                 
                 }
                 CloseBrowser(); // Close the browser and clear the files vector
             }

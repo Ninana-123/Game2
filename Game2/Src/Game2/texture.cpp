@@ -104,6 +104,17 @@ void Texture::Unbind() const
     GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
+bool Texture::Load()
+{
+    // Enable vertical flipping of loaded images
+    stbi_set_flip_vertically_on_load(1);
+
+    // Load the image data from data member m_Filepath
+    m_LocalBuffer = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+
+    return m_LocalBuffer != nullptr;
+}
+
 /*!
  * \brief Load a new texture from a file.
  * \param path The file path to the new texture image.
@@ -138,6 +149,24 @@ void Texture::SetRenderPos(float posX, float posY)
 {
     m_RenderPosX = posX;
     m_RenderPosY = posY;
+}
+
+void Texture::SetFilePath(const std::string& path)
+{
+    m_Filepath = path;
+}
+
+/*!
+ * \brief update texture with new buffer
+ *
+ * This function updates the texture with the new loaded buffer
+ */
+void Texture::UpdateBufferData()
+{
+    // Upload image data to OpenGL texture
+    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
+    glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 Texture& Texture::operator=(const Texture& other)

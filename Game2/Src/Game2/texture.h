@@ -43,12 +43,16 @@ public:
     void InitGL();  // Initialize OpenGL components
     void Bind(unsigned int slot) const;
     void Unbind() const;
+    bool Load(); // Load texture from member path
     bool Load(const std::string& path); // Load texture from file
     void SetRenderPos(float posX, float posY); // Set rendering position
     unsigned int GetTextureID() const {
         return m_RendererID;
     }
+    void SetFilePath(const std::string& path);
+    void UpdateBufferData();
     Texture& operator=(const Texture& other);
+    
 private:
     float m_RenderPosX, m_RenderPosY; // Position for rendering
 
