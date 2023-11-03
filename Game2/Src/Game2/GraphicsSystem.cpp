@@ -432,12 +432,7 @@ namespace Engine
                 shader.SetUniform1f("u_FrameWidth", 1.0f);
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
-        }
-<<<<<<< Updated upstream
-       
-        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
-=======
-
+        }       
         shader.Bind();
         
         //If Sprite present
@@ -491,7 +486,6 @@ namespace Engine
         else {
             result = mvpMatrix * m_Camera.GetViewMatrix();
         }
->>>>>>> Stashed changes
         shader.SetUniformMat4f("u_MVP", result);
 
         va.Bind();
