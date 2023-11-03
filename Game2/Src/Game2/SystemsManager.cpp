@@ -47,32 +47,19 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
+		int i = 0;
 		for (auto system : all_systems)
 		{
+			
 			if (system->GetSystemState() == SystemState::On)
 			{
-				// If the application is paused, update only the GraphicsSystem.
-				if (isPaused)
-				{
-					GraphicsSystem* graphicsSystem = dynamic_cast<GraphicsSystem*>(system);
-					if (graphicsSystem)
-					{
-						graphicsSystem->StartTimer();
-						graphicsSystem->Update(entities);
-						graphicsSystem->StopTimer();
-						break; // Break out of the loop after updating the GraphicsSystem.
-					}
-				}
-				else // If the application is not paused, update all systems as usual.
-				{
-					system->StartTimer();
-					system->Update(entities);
-					system->StopTimer();
-				}
+				system->StartTimer();
+				system->Update(entities);
+				system->StopTimer();
+				i++;
 			}
-		}
+		}		
 	}
-
 
 	template <typename T>
 	T& SystemsManager::GetSystem()

@@ -21,109 +21,52 @@ written consent of DigiPen Institute of Technology is prohibited.
 namespace Engine {
 
 
-    std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
-        TextureKey key{ mainIndex, subIndex };
+        std::shared_ptr<Texture> AssetManager::loadTexture(const int texid, const std::string& filePath) {
+            auto texture = std::make_shared<Texture>(filePath);
+            textures[texid] = texture;
+            textureFilePaths[texid] = filePath;
+            return texture;
+        }
 
-        // Check if the key exists in the map
-        auto it = textureFilePaths.find(key);
-        if (it == textureFilePaths.end()) {
-            std::cerr << "Loading: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+        std::shared_ptr<Texture> AssetManager::getTexture(const int texid) const {
+            auto it = textures.find(texid);
+            if (it != textures.end()) {
+                return it->second;
+            }
+            std::cerr << "Texture ID not found: " << texid << std::endl;
             return nullptr;
         }
 
-        auto texture = std::make_shared<Texture>(it->second);
-        if (!texture) {
-            std::cerr << "Failed to load texture at MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
-            return nullptr;
+        void AssetManager::updateTextureFilePath(int texid, const std::string& newFilePath) {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                it->second = newFilePath;
+            }
+            else {
+                std::cerr << "Texture ID not found: " << texid << std::endl;
+            }
         }
 
-        textures[key] = texture;
-        return texture;
-    }
-
-    std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
-        TextureKey key{ mainIndex, subIndex };
-        auto texture = std::make_shared<Texture>(filePath);
-        textures[key] = texture;
-        textureFilePaths[key] = filePath;
-        return texture;
-    }
-
-    void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
-    {
-        TextureKey textureKey{ mainIndex, subIndex };
-        auto textureIter = textures.find(textureKey);
-
-        if (textureIter != textures.end()) {
-            // The texture already exists, update its filepath
-            updateTextureFilePath(mainIndex, subIndex, filePath);
-            std::shared_ptr<Texture> texture = textureIter->second;
-            texture->SetFilePath(filePath);
-            texture->Load();
-            texture->UpdateBufferData();
-        }
-        else {
-            // The texture doesn't exist, create a new one
-            loadTexture(mainIndex, filePath, subIndex);
-        }
-    }
-
-    std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
-        TextureKey key{ mainIndex, subIndex };
-        auto it = textures.find(key);
-        if (it != textures.end()) {
-            return it->second;
-        }
-        std::cerr << "Retrieving: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
-        return nullptr;
-    }
-
-    void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
-        TextureKey key{ mainIndex, subIndex }; 
-        auto it = textureFilePaths.find(key);
-        if (it != textureFilePaths.end()) {
-            it->second = newFilePath;
-        }
-        else {
-            std::cerr << "Texture mainIndex not found: " << mainIndex << std::endl;
-        }
-    }
-
-    std::shared_ptr<Texture> AssetManager::reloadAllTexture()
-    {
-        return std::shared_ptr<Texture>();
-    }
-
-    /*
-     std::shared_ptr<Texture> AssetManager::reloadTexture(int mainIndex, int subIndex) {
-        TextureKey key{ mainIndex, subIndex };  // Assuming subIndex is always 0 for textureFilePaths
-        auto it = textureFilePaths.find(key);
-        if (it != textureFilePaths.end()) {
-            return loadTexture(mainIndex, it->second);
-        }
-        else {
-            std::cerr << "Texture main Index not found: " << mainIndex << std::endl;
-            return nullptr;
+        std::shared_ptr<Texture> AssetManager::reloadTexture(int texid) {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                return loadTexture(texid, it->second);
+            }
+            else {
+                std::cerr << "Texture ID not found: " << texid << std::endl;
+                return nullptr;
+            }
         }
 
-    }
-    */
-    
-    std::vector<TextureKey> AssetManager::GetAllTextureKeys() const {
-        std::vector<TextureKey> keys;
-        for (const auto& pair : textures) {
-            keys.push_back(pair.first);
+        const std::string& AssetManager::GetTexturePath(int texid) const {
+            auto it = textureFilePaths.find(texid);
+            if (it != textureFilePaths.end()) {
+                return it->second;
+            }
+            static const std::string emptyString = "";
+            std::cerr << "Texture ID not found: " << texid << std::endl;
+            return emptyString;
         }
-        return keys;
-    }
 
-    const std::string& AssetManager::GetTexturePath(const TextureKey& textureKey) const {
-        auto it = textureFilePaths.find(textureKey);
-        if (it != textureFilePaths.end()) {
-            return it->second;
-        }
-        static const std::string emptyString = "";
-        std::cerr << "Texture Key not found: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
-        return emptyString;
-    }
+
 }

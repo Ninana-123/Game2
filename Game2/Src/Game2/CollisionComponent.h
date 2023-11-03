@@ -70,11 +70,11 @@ namespace Engine
 			outputStream << "c_Width: " << c_Width << '\n';
 			outputStream << "c_Height: " <<  c_Height << '\n';
 			outputStream << "isColliding: " << isColliding << '\n';
-			//outputStream << "circleRadius: " << circleRadius << '\n';
-			outputStream << "MinX: " << aabb.min.x << '\n';
-			outputStream << "MinY: " << aabb.min.y << '\n';
-			outputStream << "MaxX: " << aabb.max.x << '\n';
-			outputStream << "MaxY: " << aabb.max.y << '\n';
+			outputStream << "circleRadius: " << circleRadius << '\n';
+			outputStream << "Min X: " << aabb.min.x << '\n';
+			outputStream << "Min Y: " << aabb.min.y << '\n';
+			outputStream << "Max X: " << aabb.max.x << '\n';
+			outputStream << "Max Y: " << aabb.max.y << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {

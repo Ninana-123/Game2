@@ -18,7 +18,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionComponent.h"
 #include "TextureComponent.h"
 #include "PhysicsComponent.h"
-#include "SpriteComponent.h"
+#include "AnimationComponent.h"
 #include "PathfindingComponent.h"
 
 namespace Engine

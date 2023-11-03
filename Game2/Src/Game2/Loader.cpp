@@ -19,7 +19,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Loader.h"
 #include "Component.h"
 #include "ComponentFactory.h"
-#include <filesystem>
+
 
 namespace Engine {
     void Config::LoadConfig(const std::string& filePath)
@@ -27,9 +27,7 @@ namespace Engine {
         std::ifstream configFile(filePath);
         if (!configFile.is_open())
         {
-            std::cout << "Current Working Directory: " << std::filesystem::current_path() << std::endl;
             std::cerr << "Error: Could not open config file " << filePath << "\n";
-            std::cerr << "Stream state: " << configFile.rdstate() << "\n";
             return;
         }
 
@@ -59,8 +57,6 @@ namespace Engine {
 
         // Use default values if properties are not found in the config file
         std::string title = config.properties["Title"];
-        std::cout << config.properties["Width"] << std::endl;
-        std::cout << config.properties["Height"] << std::endl;
         unsigned int width = std::stoi(config.properties["Width"]);
         unsigned int height = std::stoi(config.properties["Height"]);
 

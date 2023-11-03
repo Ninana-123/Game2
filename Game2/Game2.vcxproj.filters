@@ -88,6 +88,9 @@
     <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
       <Filter>Systems\Pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Camera.cpp" />
+    <ClCompile Include="Src\Game2\Animation.cpp" />
+    <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
     <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
@@ -108,16 +111,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\imgui_widgets.cpp">
       <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Animation.cpp">
-      <Filter>Base\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Camera.cpp">
-      <Filter>Base\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\Pathfinding.cpp" />
-    <ClCompile Include="Src\Game2\EngineTypes.cpp">
-      <Filter>Base\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +252,12 @@
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingSystem.h">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Camera.h" />
+    <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\AnimationComponent.h" />
     <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
       <Filter>ImGui</Filter>
     </ClInclude>
@@ -288,19 +287,6 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\PathfindingComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\SpriteComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\Animation.h">
-      <Filter>Base\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\Camera.h">
-      <Filter>Base\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\PathfindingSystem.h" />
-    <ClInclude Include="Src\Game2\EditorCamera.h">
-      <Filter>Base\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -394,11 +380,8 @@
     <Filter Include="Base\Engine\PrefabManager">
       <UniqueIdentifier>{4a796833-5ab4-4915-9316-b04e94de34ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Sprite">
-      <UniqueIdentifier>{30a2c830-6e6b-4ee3-914b-ba8f444b2c42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Camera">
-      <UniqueIdentifier>{c9d024f3-c758-4c7d-a1c4-634bfc9ec9f8}</UniqueIdentifier>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{8b08b3ee-6279-4868-bc56-24a2b6283c22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

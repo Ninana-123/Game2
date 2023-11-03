@@ -16,7 +16,8 @@
 #include "pch.h"
 #include "PhysicsSystem.h"
 #include "AudioEngine.h"
-#include "Application.h"
+
+extern double dt;
 
 namespace Engine
 {      
@@ -40,58 +41,56 @@ namespace Engine
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
         //std::cout << "Physics Checking" << std::endl;
-        for (int step = 0; step < currentNumberOfSteps; ++step)
+
+        for (const auto& entityPair : *entities)
         {
-            for (const auto& entityPair : *entities)
+            Entity* entity = entityPair.second.get();
+
+            if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)))
             {
-                Entity* entity = entityPair.second.get();
+                TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+                PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
 
-                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)))
+                //Store Local variables for processing
+                float previousX = transformComponent->position.x;
+                float previousY = transformComponent->position.y;
+
+                float currentX = transformComponent->position.x;
+                float currentY = transformComponent->position.y;
+
+                float l_velocityX = physicsComponent->velocity.x;
+                float l_velocityY = physicsComponent->velocity.y;
+
+                // Update the object's position using the equations of motion
+                //l_velocityX += static_cast<float>(accelerationX * dt);
+                //l_velocityY += static_cast<float>(accelerationY * dt);
+
+                currentX += static_cast<int>(l_velocityX * dt);
+                currentY += static_cast<int>(l_velocityY * dt);
+
+                if (entity->HasComponent(ComponentType::Collision))
                 {
-                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-                    PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
-
-                    //Store Local variables for processing
-                    float previousX = transformComponent->position.x;
-                    float previousY = transformComponent->position.y;
-
-                    float currentX = transformComponent->position.x;
-                    float currentY = transformComponent->position.y;
-
-                    float l_velocityX = physicsComponent->velocity.x;
-                    float l_velocityY = physicsComponent->velocity.y;
-
-                    // Update the object's position using the equations of motion
-                    //l_velocityX += static_cast<float>(accelerationX * dt);
-                    //l_velocityY += static_cast<float>(accelerationY * dt);
-
-                    currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
-                    currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
-
-                    if (entity->HasComponent(ComponentType::Collision))
+                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+            
+                    if (collisionComponent->isColliding)
                     {
-                        CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+                        //Update position to previous position (Stopping)
+                        transformComponent->position.x = previousX;
+                        transformComponent->position.y = previousY;
 
-                        if (collisionComponent->isColliding)
-                        {
-                            //Update position to previous position (Stopping)
-                            transformComponent->position.x = previousX;
-                            transformComponent->position.y = previousY;
-
-                            physicsComponent->velocity.x = 0.0f;
-                            physicsComponent->velocity.y = 0.0f;
-
-                        }
-                        else
-                        {
-                            //Update position after acceleration model
-                            transformComponent->position.x = currentX;
-                            transformComponent->position.y = currentY;
-                            physicsComponent->velocity.x = l_velocityX;
-                            physicsComponent->velocity.y = l_velocityY;
-                        }
+                        physicsComponent->velocity.x = 0.0f;
+                        physicsComponent->velocity.y = 0.0f;
+                   
                     }
-                }
+                    else
+                    {
+                        //Update position after acceleration model
+                        transformComponent->position.x = currentX;
+                        transformComponent->position.y = currentY;
+                        physicsComponent->velocity.x = l_velocityX;
+                        physicsComponent->velocity.y = l_velocityY;
+                    }
+                }            
             }
         }
     }

@@ -26,11 +26,6 @@ namespace Engine {
     static std::unordered_map<KeyCode, bool> s_KeyStatePrev;  // Previous key states
     static std::unordered_map<KeyCode, std::chrono::steady_clock::time_point> s_KeyCooldown;  // Cooldown time for key triggers
 
-
-    static float s_PrevMouseX = 0.0f;
-    static float s_ScrollOffsetY = 0.0f;
-    static float s_PrevScrollOffsetY = 0.0f;
-
     /*!**********************************************************************
     \brief
     Checks if the specified keyboard key is currently pressed.
@@ -165,22 +160,5 @@ namespace Engine {
     {
         return GetMousePosition().y;
     }
-
-    float Input::GetMouseDeltaX() const 
-    {
-        float currentMouseX = GetMouseX();
-        float deltaX = currentMouseX - s_PrevMouseX;
-        s_PrevMouseX = currentMouseX;  // Update the previous X position for the next frame
-        return deltaX;
-    }
-
-
-    float Input::GetMouseScrollDelta() const
-    {
-        float deltaY = s_ScrollOffsetY - s_PrevScrollOffsetY;
-        s_PrevScrollOffsetY = s_ScrollOffsetY;  // Update the previous scroll offset for the next frame
-        return deltaY;
-    }
-
 
 }  // namespace Engine

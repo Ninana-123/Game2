@@ -31,11 +31,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-bool deleteAllEntity = false;
-bool shouldLoadScene = false;
-std::string sceneToLoad;
-bool useEditorCamera = false;
-
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
 	bool renderImGuiGUI = false;
@@ -206,11 +201,6 @@ namespace Engine {
 	}
 	void ImGuiWrapper::Initialize() {
 		fileBrowser.setAssetManagerPtr(assetManager);
-		fileBrowser.setEntityManagerPtr(entityManager);
-		fileBrowser.setPrefabManagerPtr(prefabManager);
-		fileBrowser.setSelectedEntityIndexReference(selectedEntityIndex);
-		fileBrowser.setTargetEntityPtr(targetEntity);
-		fileBrowser.setLoader(deserializer);
 	}
 	/*!**********************************************************************
 	\brief
@@ -263,19 +253,9 @@ namespace Engine {
 	*************************************************************************/
 	void ImGuiWrapper::OnUpdate()
 	{
+
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
 			renderImGuiGUI = !renderImGuiGUI;
-		}
-		if (useEditorCamera == true) {
-			ImGui::Begin("Editor Camera Instructions");
-			ImGui::Text("Instructions for using the Editor Camera:");
-			ImGui::Text("Pan Right: L");
-			ImGui::Text("Pan Left: J");
-			ImGui::Text("Pan Up: I");
-			ImGui::Text("Pan Down: K");
-			ImGui::Text("Reset Camera Position: SPACE");
-			ImGui::Text("Rotate Camera: U");
-			ImGui::End();
 		}
 		if (renderImGuiGUI == true) {
 			ImGuiIO& io = ImGui::GetIO();
@@ -466,53 +446,39 @@ namespace Engine {
 		}
 	}
 
+
 	void ImGuiWrapper::RenderAssetBrowser() {
 
-		auto& textures = assetManager->GetAllTextures(); //buffer
-		int imgIDCounter = 0;
 		if (ImGui::BeginTabItem("Asset Browser")) {
-			if (InputHandlerImGui.IsKeyPressed(KEY_F9)) {
-				// Iterate through main indexes
-				for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
-					// Iterate through subindexes for each main index
-					for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-						TextureKey textureKey{ mainIndex, subIndex };
-						
-						auto it = textures.find(textureKey);
-						if (it != textures.end()) {
-							std::cout << "Texture Key: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
-						}
+
+			if ((InputHandlerImGui.IsKeyPressed(KEY_F9) == true)) {
+				std::vector<int> allTexIDs = assetManager->getAllTextureIDs();
+					for (int texid : allTexIDs) {
+						// Process or print each texid
+						std::cout << "Texture ID: " << texid << std::endl;
 					}
-				}
 			}
+			auto& textures = assetManager->GetAllTextures();
+				for (auto& [texid, texture] : textures) {
+					ImGui::PushID(texid);
 
-			// When rendering ImGui images
-			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
-				// Iterate through subindexes for each main index
-				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-					TextureKey textureKey{ mainIndex, subIndex };
+					std::string texturePath = assetManager->GetTexturePath(texid);
+					texture = (assetManager->getTexture(texid));
+					// Display texture preview
+					ImGui::Image((void*)(intptr_t)(texid + 1), ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+					ImGui::SameLine();
 
-					auto it = textures.find(textureKey);
-					if (it != textures.end()) {
-						imgIDCounter++;
-						ImGui::PushID(imgIDCounter);
+					// Display texture information
+					ImGui::Text("ID: %d\nPath: %s", texid, texturePath.c_str());
 
-						std::string texturePath = assetManager->GetTexturePath(textureKey);
-						ImTextureID imgID = (void*)(intptr_t)imgIDCounter;
-
-						ImGui::Image(imgID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
-						ImGui::SameLine();
-
-						ImGui::Text("Main Index: %d\nSub Index: %d\nPath: %s", textureKey.mainIndex, textureKey.subIndex, texturePath.c_str());
-
-						if (ImGui::Button("Replace")) {
-							fileBrowser.Open("Resource/Texture", mainIndex, subIndex);
-						}
-
-						ImGui::PopID();					
+					// Replace texture button
+					if (ImGui::Button("Replace")) {
+						fileBrowser.Open("Resource/Texture");
 					}
+
+					ImGui::PopID();
 				}
-			}
+
 			ImGui::EndTabItem();
 		}
 
@@ -520,6 +486,8 @@ namespace Engine {
 			fileBrowser.Show();
 		}
 	}
+
+
 
 	void ImGuiWrapper::RenderLevelEditor()
 	{
@@ -535,110 +503,9 @@ namespace Engine {
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Tools")) {
-				if (useEditorCamera == false) {
-					if (ImGui::MenuItem("Enable Editor Camera")) {
-						useEditorCamera = !useEditorCamera;
-					}
-				}
-				else {
-					if (ImGui::MenuItem("Disable Editor Camera")) {
-						useEditorCamera = !useEditorCamera;
-					}
-				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenuBar();
-		}
-		ImGui::Text("Save and Load Scene");
-		static char filename[256] = "SavedScene.txt"; // Default filename
-
-		ImGui::Text("Enter the name for the output save file:");
-		ImGui::InputText("Filename", filename, IM_ARRAYSIZE(filename));
-
-		if (ImGui::Button("Save Current Scene")) {
-			const auto entities = entityManager->GetEntities();
-			int entityCount = static_cast<int>(entities->size());
-
-			// Create output stream for file using the provided filename
-			std::ofstream outputStream(std::string("Resource/Scenes/") + filename);
-
-			// Write the number of entities at the start
-			outputStream << entityCount << '\n';
-
-			for (size_t i = 0; i < entities->size(); i++) {
-				// For each component type, if the entity has that component, serialize it.
-
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Transform)) {
-					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Transform));
-					outputStream << "Transform" << '\n';
-					transformComp->Serialize(outputStream);
-				}
-
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Collision)) {
-					CollisionComponent* collisionComp = dynamic_cast<CollisionComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Collision));
-					outputStream << "Collision" << '\n';
-					collisionComp->Serialize(outputStream);
-				}
-
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Physics)) {
-					PhysicsComponent* physicsComp = dynamic_cast<PhysicsComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Physics));
-					outputStream << "Physics" << '\n';
-					physicsComp->Serialize(outputStream);
-				}
-
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Sprite)) {
-					SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Sprite));
-					outputStream << "Sprite" << '\n';
-					spriteComp->Serialize(outputStream);
-				}
-
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
-					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Texture));
-					outputStream << "Texture" << '\n';
-					textureComp->Serialize(outputStream);
-				}
-
-				// Mark the end of entity serialization
-				outputStream << "EndEntity" << '\n';
-			}
-
-			// Close the file stream
-			outputStream.close();
-		}
-
-		ImGui::SameLine();
-		if (ImGui::Button("Load Scene File")) {
-			fileBrowser.Open("Resource/Scenes");
-		}
-
-		ImGui::SeparatorText("Pause/Play");
-
-		if (isPaused) {
-			if (ImGui::Button("Play")) {
-				isPaused = false;
-			}
-		}
-		else {
-			if (ImGui::Button("Pause")) {
-				isPaused = true;
-			}
-		}
-
-		ImGui::SameLine();
-
-		// Add Step Frame button, only enabled when paused
-		if (isPaused) {
-			if (ImGui::Button("Step Frame")) {
-				// Code to step the frame forward
-				// This could be setting a flag that your main loop checks to step the simulation forward by one frame
-				stepOneFrame = true; // You will need to handle this flag in your update loop
-			}
-		}
-		else {
-			// Disable the button when the simulation is not paused
-			ImGui::BeginDisabled();
-			ImGui::Button("Step Frame");
-			ImGui::EndDisabled();
 		}
 
 
@@ -654,8 +521,9 @@ namespace Engine {
 
 			// Display the FPS graph
 			ImGui::PlotLines("FPS", fpsValues, FPSCount, 0, NULL, 0.0f, 240.0f, ImVec2(0, 80)); // Assuming max FPS as 240 for Y-axis bounds
-			DisplaySystemTimes();
 		}
+
+
 
 		if (ImGui::CollapsingHeader("Memory Usage")) {
 			ImGui::Text("Total Memory: %.2f MB", GetTotalMemoryInMB());
@@ -817,53 +685,6 @@ namespace Engine {
 							}
 						}
 					}
-					
-					
-					if (shouldLoadScene) {
-						// If `deleteAllEntity` is true, delete all entities
-						if (deleteAllEntity == true)
-						{
-							// Retrieve the size of entities list
-							int entityCount = static_cast<int>(entityManager->GetEntities()->size());
-
-							// Loop backwards through the entities and delete each one
-							for (int i = entityCount - 1; i >= 0; --i)
-							{
-								entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
-							}
-
-		
-
-							// Reset the selected entity index as there are no entities to select
-							selectedEntityIndex = -1;
-
-							// Set targetEntity to nullptr as there are no entities left
-							targetEntity = nullptr;
-
-							// Reset any other relevant data structures or counters if needed
-							entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
-							prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
-
-							std::cout << "Deleted All Entities" << std::endl;
-							deleteAllEntity = false;
-						}
-
-						// Now load the scene
-						deserializer->LoadScene(sceneToLoad);
-						if (entityManager->GetEntities()->size() >= 2) {
-							selectedEntityIndex = 1;
-						}
-						else if (entityManager->GetEntities()->size() == 1) {
-							selectedEntityIndex = 0;
-						}
-						else
-							selectedEntityIndex = -1;
-						if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
-							targetEntity = entityManager->GetEntity(selectedEntityIndex);
-						}
-						shouldLoadScene = false; // Reset flag
-					}
-
 				}
 				ImGui::EndTabItem();
 			}
@@ -967,64 +788,31 @@ namespace Engine {
 							ImGui::Text("No collision detected.");
 					}
 
-					//Texture display
-					if (texture != nullptr) { 
-						std::vector<std::string> textureMainIndexList;
-						auto& textures = assetManager->GetAllTextures();
-						int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-						c_state textureSubIndexEnum = static_cast<c_state>(texture->textureKey.subIndex);
+					if (texture != nullptr) {
+						static int current_item = texture->textureClass;  // initialize with the current value
 
-						// Find the maximum mainIndex dynamically
-						int maxMainIndex = -1;
-						for (const auto& [textureKey, texture] : textures) {
-							maxMainIndex = std::max(maxMainIndex, static_cast<int>(textureKey.mainIndex));
-						}
-						maxMainIndex++;
+						const char* items[] = {
+							"Background",
+							"Infanty",
+							"Tank",
+							"Archer",
+							"Tower",
+							"Castle",
+							"HUD",
+							"HUDInfantry",
+							"HUDArcher",
+							"HUDTank",
+							"pauseButton",
+							"playButton",
+							"settingsButton",
+						};
 
-						// Combo box for MainIndex
-						if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str())) {
-							for (int i = 0; i < maxMainIndex; ++i) {
-								ImGui::PushID(i);  // Set a unique ID for each Selectable
-								const bool isSelected = (textureMainIndex == i);
-								if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
-									textureMainIndex = i;
-									texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
-								}
-								if (isSelected) {
-									ImGui::SetItemDefaultFocus();
-								}
-								ImGui::PopID();
-							}
-							ImGui::EndCombo();
-						}
+						static_assert(sizeof(items) / sizeof(items[0]) == TextureClassCount, "TextureClass enum and items array size mismatch!");
 
-						// Combo box for SubIndex using enum names
-						if (ImGui::BeginCombo("SubIndex", c_stateToString(static_cast<c_state>(texture->textureKey.subIndex)).c_str()))
-						{							
-							// Collect existing subindexes for the current mainIndex
-							std::set<int> existingSubIndexes;
-
-							for (const auto& [key, _] : textures)
-							{
-								if (key.mainIndex == texture->textureKey.mainIndex)
-								{
-									existingSubIndexes.insert(key.subIndex);
-								}
-							}
-
-							// Iterate over the existing subindexes
-							for (int subIndex : existingSubIndexes)
-							{
-								ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
-								if (ImGui::IsItemClicked())
-								{
-									texture->textureKey.subIndex = subIndex;
-								}
-							}
-							ImGui::EndCombo();
+						if (ImGui::Combo("Texture Class", &current_item, items, TextureClassCount)) {
+							texture->textureClass = static_cast<TextureClass>(current_item);
 						}
 					}
-
 					if (physics != nullptr) {
 						
 						float veloX = physics->velocity.x;
@@ -1043,57 +831,24 @@ namespace Engine {
 					if (ImGui::CollapsingHeader("Component List")) {
 						for (const auto& pair : components) {
 							ComponentType type = pair.first;
-							std::string buffer = ComponentFactory::ComponentTypeToString(type);
-
-							// Display component-specific properties here							
-							ImGui::Text("Entity has %s component.", buffer.c_str());							
+							// Display component-specific properties here
+							if (type == ComponentType::Transform) {
+								ImGui::Text("Entity has Transform component.");
+							}
+							if (type == ComponentType::Texture) {
+								ImGui::Text("Entity has Texture component.");
+							}
+							if (type == ComponentType::Physics) {
+								ImGui::Text("Entity has Physics component.");
+							}
+							if (type == ComponentType::Collision) {
+								ImGui::Text("Entity has Collision component.");
+							}
 						}
 					}
 				}
 				else {
 					ImGui::Text("No entity selected.");
-				}
-				if (shouldLoadScene) {
-					// If `deleteAllEntity` is true, delete all entities
-					if (deleteAllEntity == true)
-					{
-						// Retrieve the size of entities list
-						int entityCount = static_cast<int>(entityManager->GetEntities()->size());
-
-						// Loop backwards through the entities and delete each one
-						for (int i = entityCount - 1; i >= 0; --i)
-						{
-							entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
-						}
-
-						// Reset the selected entity index as there are no entities to select
-						selectedEntityIndex = -1;
-
-						// Set targetEntity to nullptr as there are no entities left
-						targetEntity = nullptr;
-
-						// Reset any other relevant data structures or counters if needed
-						entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
-						prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
-
-						std::cout << "Deleted All Entities" << std::endl;
-						deleteAllEntity = false;
-					}
-
-					// Now load the scene
-					deserializer->LoadScene(sceneToLoad);
-					if (entityManager->GetEntities()->size() >= 2) {
-						selectedEntityIndex = 1;
-					}
-					else if (entityManager->GetEntities()->size() == 1) {
-						selectedEntityIndex = 0;
-					}
-					else
-						selectedEntityIndex = -1;
-					if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
-						targetEntity = entityManager->GetEntity(selectedEntityIndex);
-					}
-					shouldLoadScene = false; // Reset flag
 				}
 				ImGui::EndTabItem();
 			}
@@ -1155,7 +910,7 @@ namespace Engine {
 						ImGui::SameLine();
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture" }; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{
@@ -1284,53 +1039,13 @@ namespace Engine {
 								}
 								case ComponentType::Texture:
 								{
-									auto& textures = assetManager->GetAllTextures();
 									TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
-									int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-									int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
-
-									// Assuming textures is an unordered_map with key as TextureKey
-									int maxMainIndex = static_cast<int>(textures.size()) - 1;
-
-									// Combo box for Texture MainIndex
-									if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
+									int textureIndex = static_cast<int>(texture->textureClass);
+									if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
 									{
-										for (int i = 0; i <= maxMainIndex; ++i)
-										{
-											ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
-											if (ImGui::IsItemClicked())
-											{
-												texture->textureKey.mainIndex = static_cast<TextureClass>(i);
-											}
-										}
-										ImGui::EndCombo();
+										texture->textureClass = static_cast<TextureClass>(textureIndex);
 									}
 
-									// Combo box for Texture SubIndex
-									if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
-									{
-										// Collect existing subindexes for the current mainIndex
-										std::set<int> existingSubIndexes;
-
-										for (const auto& [key, _] : textures)
-										{
-											if (key.mainIndex == texture->textureKey.mainIndex)
-											{
-												existingSubIndexes.insert(key.subIndex);
-											}
-										}
-
-										// Iterate over the existing subindexes
-										for (int subIndex : existingSubIndexes)
-										{
-											ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
-											if (ImGui::IsItemClicked())
-											{
-												texture->textureKey.subIndex = subIndex;
-											}
-										}
-										ImGui::EndCombo();
-									}
 								}
 
 								default:
@@ -1524,54 +1239,18 @@ namespace Engine {
 
 									case ComponentType::Texture:
 									{
-										auto& textures = assetManager->GetAllTextures();
 										TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
-										int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-										int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
-
-										// Assuming textures is an unordered_map with key as TextureKey
-										int maxMainIndex = static_cast<int>(textures.size()) - 1;
-
-										// Combo box for Texture MainIndex
-										if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
+										int textureIndex = static_cast<int>(texture->textureClass);
+										if (ImGui::InputInt("Texture Type", &textureIndex, 1, 3))
 										{
-											for (int i = 0; i <= maxMainIndex; ++i)
-											{
-												ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
-												if (ImGui::IsItemClicked())
-												{
-													texture->textureKey.mainIndex = static_cast<TextureClass>(i);
-												}
-											}
-											ImGui::EndCombo();
+											texture->textureClass = static_cast<TextureClass>(textureIndex);
 										}
-
-										// Combo box for Texture SubIndex
-										if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
+										else
 										{
-											// Collect existing subindexes for the current mainIndex
-											std::set<int> existingSubIndexes;
-
-											for (const auto& [key, _] : textures)
-											{
-												if (key.mainIndex == texture->textureKey.mainIndex)
-												{
-													existingSubIndexes.insert(key.subIndex);
-												}
-											}
-
-											// Iterate over the existing subindexes
-											for (int subIndex : existingSubIndexes)
-											{
-												ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
-												if (ImGui::IsItemClicked())
-												{
-													texture->textureKey.subIndex = subIndex;
-												}
-											}
-											ImGui::EndCombo();
+											texture->textureClass = TextureClass::Infanty;
 										}
 									}
+
 
 									default:
 										break;

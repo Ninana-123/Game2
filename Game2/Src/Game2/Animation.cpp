@@ -81,6 +81,7 @@ namespace Engine
         textureYIndex = currentFrame / static_cast<int>(horizontalFrames);
     }
 
+    
     void Animation::Update(float deltaTime)
     {
         if (!playing) {
