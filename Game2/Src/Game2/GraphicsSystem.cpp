@@ -91,8 +91,8 @@ namespace Engine
         // Clear the color buffer
         glClear(GL_COLOR_BUFFER_BIT);
 
-        int screenWidth, screenHeight;
-        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+        int screenwidth, screenheight;
+        glfwGetWindowSize(Window, &screenwidth, &screenheight);
         //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
 
         // load and initialize the shader
@@ -161,10 +161,10 @@ namespace Engine
         // Define vertices for the background
         float backgroundPositions[] =
         {
-            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
-            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
+            -static_cast<float>(screenwidth) / 2.0f, -static_cast<float>(screenheight) / 2.0f, 0.0f, 0.0f,
+             static_cast<float>(screenwidth) / 2.0f, -static_cast<float>(screenheight) / 2.0f, 1.0f, 0.0f,
+             static_cast<float>(screenwidth) / 2.0f,  static_cast<float>(screenheight) / 2.0f, 1.0f, 1.0f,
+            -static_cast<float>(screenwidth) / 2.0f,  static_cast<float>(screenheight) / 2.0f, 0.0f, 1.0f
         };
 
         // Define indices for the background
@@ -755,11 +755,11 @@ namespace Engine
      */
     glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
-        int screenWidth, screenHeight;
-        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+        int screenwidth, screenheight;
+        glfwGetWindowSize(Window, &screenwidth, &screenheight);
 
         // Calculate the position for your object at the center of the screen
-        glm::vec3 objectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
+        this->objectPosition = glm::vec3(static_cast<float>(screenwidth) / 2.0f, static_cast<float>(screenheight) / 2.0f, 0.0f);
 
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
 
