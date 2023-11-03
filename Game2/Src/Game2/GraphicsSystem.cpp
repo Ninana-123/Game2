@@ -832,9 +832,6 @@ namespace Engine
         // Save the current shader state
         int previousShaderSet = shader.GetCurrentShaderSet();
         shader.Bind();
-
-      
-       
         
         // Check if there's a change in the 'S' key state
         if (currentSState && !previousSState)
@@ -907,7 +904,6 @@ namespace Engine
                             DrawColoredSquare(mvpA);
                         }
                     }
-
 
                     //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;

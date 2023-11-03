@@ -204,8 +204,8 @@ namespace Engine {
             VECTORMATH::Vector2D mousePosition = GetMousePosition();
 
             // Normalize the mouse position
-            mousePosition.x -= 1270 / 2.0f;
-            mousePosition.y = 720 / 2.0f - mousePosition.y;
+            mousePosition.x -= 1270.0f / 2.0f;
+            mousePosition.y = 720.0f / 2.0f - static_cast<float>(mousePosition.y);
 
             if (!isDragging) {
                 // Iterate through all entities only if not currently dragging
@@ -236,6 +236,7 @@ namespace Engine {
 
                 if (pickedEntity) {
                     // Retrieve the CollisionComponent and TransformComponent
+                   //CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(pickedEntity->GetComponent(ComponentType::Collision));
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(pickedEntity->GetComponent(ComponentType::Transform));
 
                     // Update the transform component with the mouse position
