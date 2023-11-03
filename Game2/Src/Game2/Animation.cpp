@@ -41,7 +41,6 @@ namespace Engine
         textureYIndex = 0;
     }
 
-
     /**
      * @brief Start playing the animation.
      */

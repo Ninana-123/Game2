@@ -16,4 +16,3 @@ MaxY: 0
 Radius: 0
 Layer: 0
 EndPrefab
-
