@@ -90,12 +90,12 @@ namespace Engine
 				ResetCameraPos(-640.0f, 640.0f, -360.0f, 360.0f);
 			}
 
-			// Rotate camera continuously while 'U' key is held down.
-			if (input.IsKeyPressed(KEY_U)) {
-				float deltaTime = dt;  // Assuming your Input class has a method to get the time since the last frame.
-				float rotationAngle = m_RotationSpeed * static_cast<float>(fixedDeltaTime);
-				Rotate(rotationAngle);
-			}
+			//// Rotate camera continuously while 'U' key is held down.
+			//if (input.IsKeyPressed(KEY_U)) {
+			//	//float deltaTime = (float)dt;  // Assuming your Input class has a method to get the time since the last frame.
+			//	float rotationAngle = m_RotationSpeed * static_cast<float>(fixedDeltaTime);
+			//	Rotate(rotationAngle);
+			//}
 
 			/*
 			if (input.IsKeyPressed(KEY_Y)) {

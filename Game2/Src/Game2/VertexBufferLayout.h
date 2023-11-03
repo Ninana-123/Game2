@@ -17,8 +17,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #define ENGINE_VERTEXBUFFERLAYOUT_H
 
 #include"Renderer.h"
-#include <vector>
 #include <GL/glew.h>
+#include <vector>
 #include <stdexcept>
 
 // Represents an element within the vertex buffer layout, specifying data type, count, and normalization.

@@ -4,9 +4,9 @@
 namespace Engine
 {
     Animation::Animation(float frameRate, float horizontalFrames, float verticalFrames, Anim_Mode mode)
-        : frameRate(frameRate), horizontalFrames(horizontalFrames), verticalFrames(verticalFrames), playMode(mode)
+        : frameRate(frameRate), horizontalFrames(static_cast<int>(horizontalFrames)), verticalFrames(static_cast<int>(verticalFrames)), playMode(mode)
     {
-        frameCount = horizontalFrames * verticalFrames;
+        frameCount = static_cast<int>(horizontalFrames * verticalFrames);
         frameTimer = 1.0f / frameRate;
         playing = false;
         currentFrame = 0;

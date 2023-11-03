@@ -121,8 +121,8 @@ namespace Engine {
         PrefabManager* pm = nullptr;
         Entity* targetEntity = nullptr;
         int selectedEntityIndex = -1;
-        int t_mainIndex = 0;
-        int t_subIndex = 0;
+        int t_mainIndex{};
+        int t_subIndex{};
 
         void CloseBrowser() {
             isOpen = false;
