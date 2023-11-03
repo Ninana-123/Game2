@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		Body.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+
+\par		a.junshengaloysius@digipen.edu
+
+\date		17/10/2023
+\brief		Contains the definitions of the Rigidbody.
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Body.h"
 
