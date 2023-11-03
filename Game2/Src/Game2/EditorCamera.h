@@ -3,7 +3,7 @@
 \file		EditorCamera.h
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
-\date   	01/11/2923
+\date   	01/11/2023
 \brief		This file contains the implementation of the Asset Manager which
 			handles the assets used by the engine.
 
@@ -106,7 +106,16 @@ namespace Engine
 			RecalculateViewMatrix();
 		}
 
-		// Override the UpdatePosition function to handle editor-specific controls.
+		/*!*********************************************************************
+			\brief
+			Updates the camera's position based on user input and specific editor controls.
+			\param input
+			The Input object containing the current state of user inputs.
+
+			\param CameraSpeed
+			The speed at which the camera should move or zoom.
+
+		**************************************************************************/
 		void UpdatePosition(const Input& input, float CameraSpeed) override
 		{
 			// Default camera position update functionality.

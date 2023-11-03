@@ -1,5 +1,14 @@
 #pragma once
+/******************************************************************************/
+/*!
+\file		SpriteComponent.h
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		01/11/2023
+\brief		Contains the interface of the Sprite Component
 
+ */
+ /******************************************************************************/
 #include "Animation.h"
 #include "Component.h"
 #include "EngineTypes.h"
@@ -19,9 +28,25 @@ namespace Engine
         int textureyindex = 0;
         bool playing = false;
         anim_mode playmode = anim_mode::loop;
+        /*!*****************************************************************
 
+		\brief
+		Getter for this Components enum
+
+		\return  ComponentType
+		Returns an enum of the component Type
+
+		********************************************************************/
         ComponentType GetType() const override { return ComponentType::Sprite; }
-        
+        /*!*****************************************************************
+
+        \brief
+        Cloner for this component
+
+        \return  Component*
+        Clone component with cloned data members
+
+        ********************************************************************/
         Component* Clone() const override
         {
             SpriteComponent* clonecomponent = new SpriteComponent;

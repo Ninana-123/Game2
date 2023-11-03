@@ -1,4 +1,13 @@
-//System.h 
+/******************************************************************************/
+/*!
+\file		System.h
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		9/09/2023
+\brief		System class declaration
+
+ */
+/******************************************************************************/
 #include "pch.h"
 #include "EngineTypes.h"
 

@@ -115,9 +115,11 @@
     <ClCompile Include="Src\Game2\EngineTypes.cpp">
       <Filter>Base\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Font.cpp" />
     <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
       <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Font.cpp">
+      <Filter>Base\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,12 +300,14 @@
     <ClInclude Include="Src\Game2\EditorCamera.h">
       <Filter>Base\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Font.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\PathfindingSystem.h">
       <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Font.h">
+      <Filter>Base\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

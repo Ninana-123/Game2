@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file		EngineTypes.cpp
+\author		Tristan Tham Rui Hong
+\par		t.tham@digipen.edu
+\date		01/11/2023
+\brief		Definition of functions declared in engineTypes.h
+
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "EngineTypes.h"
 

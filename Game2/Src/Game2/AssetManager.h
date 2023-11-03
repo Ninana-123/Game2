@@ -2,8 +2,9 @@
 /*!
 \file		AssetManager.h
 \author 	Liu Xujie
+\co         Tristan Tham Rui Hong 
 \par    	email: l.xujie@digipen.edu
-\date   	29/09/2923
+\date   	29/09/2023
 \brief		This file contains the declaration of the main Assets Manager
 
 Copyright (C) 2023 DigiPen Institute of Technology.
