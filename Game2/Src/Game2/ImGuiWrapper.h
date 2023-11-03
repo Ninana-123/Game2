@@ -28,6 +28,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 extern bool deleteAllEntity;
 extern bool shouldLoadScene;
 extern std::string sceneToLoad;
+extern bool useEditorCamera;
 
 namespace Engine {
 
@@ -64,6 +65,7 @@ namespace Engine {
 	private:
 		bool renderDockspace = false;
 		float m_Time = 0.0f;
+		float editorCameraSpeed = 1.5f;
 		std::shared_ptr<Engine::EntityManager> entityManager;
 		Engine::PrefabManager* prefabManager;
 		std::shared_ptr<Engine::AssetManager> assetManager;

@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 bool deleteAllEntity = false;
 bool shouldLoadScene = false;
 std::string sceneToLoad;
+bool useEditorCamera = false;
 
 namespace Engine {
 #ifdef NDEBUG // Check if we are in release mode
@@ -262,9 +263,19 @@ namespace Engine {
 	*************************************************************************/
 	void ImGuiWrapper::OnUpdate()
 	{
-
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
 			renderImGuiGUI = !renderImGuiGUI;
+		}
+		if (useEditorCamera == true) {
+			ImGui::Begin("Editor Camera Instructions");
+			ImGui::Text("Instructions for using the Editor Camera:");
+			ImGui::Text("Pan Right: L");
+			ImGui::Text("Pan Left: J");
+			ImGui::Text("Pan Up: I");
+			ImGui::Text("Pan Down: K");
+			ImGui::Text("Reset Camera Position: SPACE");
+			ImGui::Text("Rotate Camera: U");
+			ImGui::End();
 		}
 		if (renderImGuiGUI == true) {
 			ImGuiIO& io = ImGui::GetIO();
@@ -524,6 +535,16 @@ namespace Engine {
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Tools")) {
+				if (useEditorCamera == false) {
+					if (ImGui::MenuItem("Enable Editor Camera")) {
+						useEditorCamera = !useEditorCamera;
+					}
+				}
+				else {
+					if (ImGui::MenuItem("Disable Editor Camera")) {
+						useEditorCamera = !useEditorCamera;
+					}
+				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenuBar();
@@ -547,31 +568,31 @@ namespace Engine {
 			for (size_t i = 0; i < entities->size(); i++) {
 				// For each component type, if the entity has that component, serialize it.
 
-				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Transform)) {
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Transform)) {
 					TransformComponent* transformComp = dynamic_cast<TransformComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Transform));
 					outputStream << "Transform" << '\n';
 					transformComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Collision)) {
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Collision)) {
 					CollisionComponent* collisionComp = dynamic_cast<CollisionComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Collision));
 					outputStream << "Collision" << '\n';
 					collisionComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Physics)) {
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Physics)) {
 					PhysicsComponent* physicsComp = dynamic_cast<PhysicsComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Physics));
 					outputStream << "Physics" << '\n';
 					physicsComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Sprite)) {
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Sprite)) {
 					SpriteComponent* spriteComp = dynamic_cast<SpriteComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Sprite));
 					outputStream << "Sprite" << '\n';
 					spriteComp->Serialize(outputStream);
 				}
 
-				if (entityManager->GetEntity(i)->HasComponent(ComponentType::Texture)) {
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
 					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(i)->GetComponent(ComponentType::Texture));
 					outputStream << "Texture" << '\n';
 					textureComp->Serialize(outputStream);

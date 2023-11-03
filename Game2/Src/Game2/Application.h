@@ -24,6 +24,7 @@ extern const double fixedDeltaTime;
 extern int currentNumberOfSteps;
 extern bool isPaused;
 extern bool stepOneFrame;
+extern double dt;
 
 
 namespace Engine

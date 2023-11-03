@@ -38,6 +38,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Animation.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
+#include "EditorCamera.h"
 
 namespace Engine
 {
@@ -96,6 +97,8 @@ namespace Engine
         Renderer renderer;
 
         Camera m_Camera;
+        EditorCamera m_EditorCamera;
+
         float CameraSpeed = 1.5f;
         float yOffset = 1.0f;
        

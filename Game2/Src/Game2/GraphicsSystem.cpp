@@ -21,6 +21,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Vector2d.h"
 #include "Input.h"
 #include "Animation.h"
+#include "ImGuiWrapper.h"
 
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
@@ -38,14 +39,14 @@ namespace Engine
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
-        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
+        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
     }
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag"),
             entityManager(entityManager),
-             m_Camera(-640.0f, 640.0f, -360.0f, 360.0f)
+             m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
     {
 
   
@@ -322,18 +323,26 @@ namespace Engine
         shader.SetUniform1f("u_FrameCount", 1.0f);
         shader.SetUniform1f("u_FrameWidth", 1.0f);
         shader.SetUniform1f("u_FrameHeight", 1.0f);
-     
-        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
 
-        const glm::mat4& viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
-        /*  std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
-          for (int i = 0; i < 4; i++) {
-              for (int j = 0; j < 4; j++) {
+        glm::mat4 viewProjectionMatrix;
+        if (useEditorCamera) {
+            viewProjectionMatrix = m_EditorCamera.GetViewProjectionMatrix();
+        }
+        else {
+            viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
+        }
 
-                  std::cout << viewProjectionMatrix[i][j] << " ";
-              }
-              std::cout << std::endl;
-          }*/
+        shader.SetUniformMat4f("u_MVP", viewProjectionMatrix);
+
+        /* Printing Matrix (Uncomment if needed)
+        std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                std::cout << viewProjectionMatrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        */
 
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
@@ -342,6 +351,7 @@ namespace Engine
         textures[Background][0].Unbind();
         shader.Unbind();
     }
+
 
     /*!
      * \brief Render a textured entity.
@@ -423,8 +433,65 @@ namespace Engine
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
         }
+<<<<<<< Updated upstream
        
         glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
+=======
+
+        shader.Bind();
+        
+        //If Sprite present
+        if ((texture->textureKey.subIndex > 0) && entity->HasComponent(ComponentType::Sprite))
+        {
+            // Calculate deltaTime (time since the last frame)
+            static double lastTime = glfwGetTime();
+            double currentTime = glfwGetTime();
+            double deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+            float frameRate = 10.0f;
+            float horizontalFrames = 6.0f; // Number of horizontal frames
+            float verticalFrames = 1.0f; // Number of vertical frames
+            float Length = 1536.0f; // length of sprite sheet
+            Anim_Mode playMode = Anim_Mode::LOOP;
+
+            // Create a static animation object if not created already
+            static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+            // Play the animation
+            animation.Play();
+            // Update the animation with deltaTime
+            animation.Update(static_cast<float>(deltaTime));
+            // Get the current frame index
+            int currentFrame = animation.GetCurrentFrame();
+
+            // Calculate the texture offset based on the current frame
+            float frameWidth = 1.0f / horizontalFrames;
+            float frameHeight = 1.0f / verticalFrames;
+            float texCoordX = currentFrame * frameWidth;
+            //float texCoordY = currentRow * frameHeight;
+
+            // Set the texture offset in the shader
+            shader.SetUniform1f("texCoordX", texCoordX);
+            shader.SetUniform1f("u_FrameCount", horizontalFrames);
+            shader.SetUniform1f("u_FrameWidth", frameWidth);
+            shader.SetUniform1f("u_FrameHeight", frameHeight);
+            shader.SetUniform1i("u_CurrentFrame", currentFrame);
+        }
+        else //render as static
+        {
+            textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
+            shader.SetUniform1f("texCoordX", 0.0f);
+            shader.SetUniform1f("u_FrameCount", 1.0f);
+            shader.SetUniform1f("u_FrameWidth", 1.0f);
+            shader.SetUniform1f("u_FrameHeight", 1.0f);
+        }
+        glm::mat4 result;
+        if (useEditorCamera) {
+            result = mvpMatrix * m_EditorCamera.GetViewMatrix();
+        }
+        else {
+            result = mvpMatrix * m_Camera.GetViewMatrix();
+        }
+>>>>>>> Stashed changes
         shader.SetUniformMat4f("u_MVP", result);
 
         va.Bind();
@@ -436,86 +503,6 @@ namespace Engine
         // Unbind the texture and shader
         shader.Unbind();
     }
-    //void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
-    //{
-    //  
-
-    //        if (!entity->HasComponent(ComponentType::Texture))
-    //        {
-    //            return;
-    //        }
-    //        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-
-    //        if (texture != nullptr)
-    //        {
-    //            textures[texture->textureClass].Bind(0);
-    //        }
-
-    //        shader.Bind();
-    //        va.Bind();
-    //        ib.Bind();
-
-    //        // Check if the entity has an AnimationComponent
-    //        if (entity->HasComponent(ComponentType::Animation))
-    //        {
-    //            AnimationComponent* Animation = dynamic_cast<AnimationComponent*>(entity->GetComponent(ComponentType:: Animation));
-    //            // Calculate deltaTime (time since the last frame)
-    //            static double lastTime = glfwGetTime();
-    //            double currentTime = glfwGetTime();
-    //            double deltaTime = currentTime - lastTime;
-    //            lastTime = currentTime;
-
-    //            float frameRate = 1.0f;
-    //            float horizontalFrames = 6.0f; // Number of horizontal frames
-    //            float verticalFrames = 1.0f; // Number of vertical frames
-    //            float Length = 1536.0f; // length of sprite sheet
-    //            Anim_Mode playMode = Anim_Mode::LOOP;
-
-    //            // Create a static animation object if not created already
-    //            static AnimationComponent AnimationComponent(frameRate, horizontalFrames, verticalFrames, playMode);
-
-    //            // Play the animation
-    //            AnimationComponent.Play();
-
-    //            // Update the animation with deltaTime
-    //            AnimationComponent.Update(static_cast<float>(deltaTime));
-
-    //            // Get the current frame index
-    //            int currentFrame = AnimationComponent.GetCurrentFrame();
-
-    //            // Calculate the texture offset based on the current frame
-    //            float frameWidth = 1.0f / horizontalFrames;
-    //            float frameHeight = 1.0f / verticalFrames;
-    //            float texCoordX = currentFrame * frameWidth;
-    //            //float texCoordY = currentRow * frameHeight;
-
-    //            // Set the texture offset in the shader
-    //            shader.SetUniform1f("texCoordX", texCoordX);
-    //            //shader.SetUniform1f("texCoordY", texCoordY);
-    //            shader.SetUniform1f("u_FrameCount", horizontalFrames);
-    //            shader.SetUniform1f("u_FrameWidth", frameWidth);
-    //            shader.SetUniform1f("u_FrameHeight", frameHeight);
-    //            shader.SetUniform1i("u_CurrentFrame", currentFrame);
-    //        }
-
-    //        glm::mat4 result = mvpMatrix * m_Camera.GetViewMatrix();
-    //        shader.SetUniformMat4f("u_MVP", result);
-
-    //        // Debugging: Print out the values
-    //        // std::cout << "Frame Width: " << frameWidth << "TexCoordX: " << texCoordX << "Current Frame: " << currentFrame << std::endl;
-    //        /*  va.Bind();
-    //        ib.Bind();*/
-
-    //        // Render the entity
-    //        renderer.Draw(va, ib, shader);
-
-    //        // Unbind the texture and shader
-    //        //textureA.Unbind();
-    //    
-    //    shader.Unbind();
-    //}
-
-
 
     /*!
      * \brief Render lines.
@@ -591,7 +578,13 @@ namespace Engine
         // Bind the shader and set uniforms
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+
+        if (useEditorCamera) {
+            shader.SetUniformMat4f("u_MVP", m_EditorCamera.GetViewProjectionMatrix());
+        }
+        else {
+            shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
+        }
 
         va.Bind();
         ib.Bind();
@@ -709,7 +702,12 @@ namespace Engine
         //GraphicsLogger.Log(LogLevel::Debug, "Currently updating graphics");
 
         // CAMERA
-        m_Camera.UpdatePosition(InputController, CameraSpeed);
+        if (useEditorCamera) {
+            m_EditorCamera.UpdatePosition(InputController, CameraSpeed);
+        }
+        else {
+            m_Camera.UpdatePosition(InputController, CameraSpeed);
+        }
 
     }
 

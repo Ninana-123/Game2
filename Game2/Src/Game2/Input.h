@@ -25,7 +25,7 @@ namespace Engine {
 	{
 	public:
 		static bool IsKeyPressed(KeyCode key);
-        bool IsKeyTriggered(const KeyCode key);
+        static bool IsKeyTriggered(const KeyCode key);
         bool IsKeyDown(const KeyCode key);
         bool IsKeyReleased(const KeyCode key);
         void UpdateKeyStates();
@@ -34,5 +34,7 @@ namespace Engine {
 		static VECTORMATH::Vector2D GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
+		float GetMouseDeltaX() const;
+		float GetMouseScrollDelta() const;
 	};
 }
