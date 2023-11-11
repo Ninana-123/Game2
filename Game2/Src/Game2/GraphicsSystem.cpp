@@ -53,7 +53,7 @@ namespace Engine
     {
     }
 
-    /*!
+  /*!
    * \brief Initialize the GLEW library.
    *
    * This function initializes the GLEW (OpenGL Extension Wrangler Library)
@@ -74,7 +74,7 @@ namespace Engine
             Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
-    /*!
+  /*!
    * \brief Initialize the GraphicsSystem.
    *
    * This function initializes the GraphicsSystem by setting up OpenGL,
@@ -434,26 +434,24 @@ namespace Engine
         }
     }
 
-    //void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
+    //void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
     //{
-    //    try {
-    //        shader.Bind();
-    //        textures[Background].Bind(0);
-    //        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-    //        shader.SetUniform1i("u_Texture[0]", 0);
-    //        shader.SetUniformMat4f("u_MVP", mvpMatrix);
-    //        vaBackground.Bind(); // Bind the background vertex array
-    //        ibBackground.Bind(); // Bind the background index buffer
-    //        //std::cout << "ibBackground: " << ibBackground.GetCount() << std::endl;
-    //        renderer.Draw(vaBackground, ibBackground, shader);
-    //        textures[Background].Unbind();
-    //        shader.Unbind();
-    //    }
-    //    catch (const std::exception& e) {
+    //    SetMaxBatchSize(200);
 
-    //        Logger::GetInstance().Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
-
+    //    // Check if a new batch needs to be created
+    //    if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
+    //    {
+    //        // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
+    //        Batch newBatch;
+    //        newBatch.textureClass = textureClass;
+    //        batches.push_back(newBatch);
     //    }
+
+    //    // Add the provided vertex data to the current batch
+    //    Batch& currentBatch = batches.back();
+    //    currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
+    //    currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
+    //    currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
     //}
 
     //void GraphicsSystem::RenderBatchedData()
