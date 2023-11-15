@@ -151,7 +151,7 @@ namespace Engine
         systemsManager->Initialize();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(EM, &PM);
+        loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");

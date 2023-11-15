@@ -21,6 +21,7 @@ namespace Engine
 	{
 	public:
 		VECTORMATH::Vector2D position = VECTORMATH::Vector2D(0, 0); // Initialize position with (0, 0)
+
 		float scaleX = 1.0f, scaleY = 1.0f;
 		float rot = 0.0f;
 

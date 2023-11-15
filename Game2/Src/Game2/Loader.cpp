@@ -16,6 +16,7 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 
 #include "pch.h"
+#include "AssetManager.h"
 #include "Loader.h"
 #include "Component.h"
 #include "ComponentFactory.h"
@@ -87,6 +88,16 @@ namespace Engine {
                 Component* component = entityPtr->GetComponent(type);
                 if (component) {
                     component->Deserialize(sceneFile);
+                    TextureComponent* texture = dynamic_cast<TextureComponent*>(entityPtr->GetComponent(ComponentType::Texture));
+                    if (texture != nullptr) {
+                        TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
+
+                        float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
+                        float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
+                        float aspectRatio = texWidth / texHeight;
+                        transform->scaleX = transform->scaleX * aspectRatio;
+                        transform->scaleY = transform->scaleY * (1 / aspectRatio);
+                    }
                 }
                 else {
                    // std::cerr << "Unknown component type: " << componentType << std::endl;

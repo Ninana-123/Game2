@@ -1008,6 +1008,13 @@ namespace Engine {
 								if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
 									textureMainIndex = i;
 									texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+
+									float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
+									float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
+									float aspectRatio = texWidth / texHeight;
+									transform->scaleX = 1.f * aspectRatio;
+									transform->scaleY = 1.f * (1 / aspectRatio);
+
 								}
 								if (isSelected) {
 									ImGui::SetItemDefaultFocus();

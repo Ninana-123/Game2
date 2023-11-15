@@ -22,6 +22,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "EntityManager.h"
 #include "Prefab.h"
 #include "PrefabManager.h"
+#include "AssetManager.h"
+
 
 namespace Engine {
     struct Config {
@@ -32,7 +34,7 @@ namespace Engine {
 
     class Loader {
     public:
-        Loader(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager) : entityManager(EM), prefabManager(prefabManager) {};
+        Loader(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) : entityManager(EM), prefabManager(prefabManager), assetManager(AM) {};
         ~Loader();
         // Load the scene from a data file and create entities with properties
         void LoadScene(const std::string& filePath);
@@ -43,6 +45,7 @@ namespace Engine {
     private:
         std::shared_ptr<Engine::EntityManager> entityManager;
         Engine::PrefabManager* prefabManager;
+        std::shared_ptr<Engine::AssetManager> assetManager;
     };
 
 }
