@@ -17,6 +17,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "TextureComponent.h"
 #include "logger.h"
+#include "TransformComponent.h"
 
 
 namespace Engine {
@@ -52,6 +53,8 @@ namespace Engine {
         }
 
         textures[key] = texture;
+        Logger::GetInstance().Log(LogLevel::Debug, std::to_string(texture->GetWidth()));
+        Logger::GetInstance().Log(LogLevel::Debug, std::to_string(texture->GetHeight()));
         return texture;
     }
     /*!*********************************************************************
@@ -105,6 +108,7 @@ namespace Engine {
             texture->SetFilePath(filePath);
             texture->Load();
             texture->UpdateBufferData();
+
         }
         else {
             // The texture doesn't exist, create a new one

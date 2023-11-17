@@ -52,6 +52,12 @@ public:
     void SetFilePath(const std::string& path);
     void UpdateBufferData();
     Texture& operator=(const Texture& other);
+    inline int GetWidth() {
+        return m_Width;
+    }
+    inline int GetHeight() {
+        return m_Height;
+    }
     
 private:
     float m_RenderPosX, m_RenderPosY; // Position for rendering
