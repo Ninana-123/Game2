@@ -20,7 +20,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "PhysicsComponent.h"
 #include "SpriteComponent.h"
 #include "PathfindingComponent.h"
-#include "inGameGUIComponent.h"
 
 namespace Engine
 {

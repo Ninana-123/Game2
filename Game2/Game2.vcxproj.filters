@@ -121,7 +121,7 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\inGameGUISystem.cpp">
+    <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -312,11 +312,8 @@
     <ClInclude Include="Src\Game2\Font.h">
       <Filter>Base\Font</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\inGameGUISystem.h">
+    <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\inGameGUIComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

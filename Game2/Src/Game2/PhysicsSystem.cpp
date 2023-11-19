@@ -48,8 +48,7 @@ namespace Engine
                 Entity* entity = entityPair.second.get();
 
 
-                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)) && !(entity->HasComponent(ComponentType::Pathfinding))
-                    && entity->HasComponent(ComponentType::inGameGUI))
+                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)) && !(entity->HasComponent(ComponentType::Pathfinding)))
                 {
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                     PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
