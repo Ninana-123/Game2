@@ -8,7 +8,7 @@ out vec2 v_TexCoord; // Pass texture coordinates to the fragment shader
 uniform mat4 u_MVP;
 uniform float texCoordX; // Offset for sprite animation (in terms of frame number)
 
-uniform float u_FrameCount; // The total number of frames
+//uniform float u_FrameCount; // The total number of frames
 uniform float u_FrameWidth; // The width of a single frame in texture coordinates
 uniform float u_FrameHeight; // The width of a single frame in texture coordinates
 

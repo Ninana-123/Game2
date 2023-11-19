@@ -323,7 +323,6 @@ namespace Engine
         // Initialize the shader object (load shader source files and compile them)
         shader.Initialize();
         shader.Bind();
-        //GraphicsLogger.Log(LogLevel::Debug, "Current Shader Set: " + std::to_string(shader.m_CurrentShaderSet));
 
         std::string vertexShaderPath;
         std::string fragmentShaderPath;
@@ -341,12 +340,6 @@ namespace Engine
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
-       /* else if (shader.GetCurrentShaderSet() == 3)
-        {
-            vertexShaderPath = "Resource/Shaders/Shader3.vert";
-            fragmentShaderPath = "Resource/Shaders/Shader3.frag";
-            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
-        }*/
         else
         {
             throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
@@ -365,16 +358,23 @@ namespace Engine
             // Check for shader compilation and linking errors
             if (shaderProgram != 0)
             {
+                // Unbind the previous shader program
+                shader.Unbind();
+
                 // Shader compilation and linking successful
                 Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
                 // Store the shader program ID in the shader class based on the shader set being used
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
 
-                // Check for additional shader compilation errors (if any)
-                shader.CheckShaderCompilation(shaderProgram, "Shader Set");
+                // Bind the new shader program
+                shader.Bind();
 
-                GLCall(glUseProgram(shaderProgram));
+                // Set uniform values (adjust as needed)
+                shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+                // Unbind the shader program after setting up uniforms
+                shader.Unbind();
             }
             else
             {
@@ -387,11 +387,6 @@ namespace Engine
             // Shader source files were not loaded successfully
             throw std::runtime_error("Failed to load shader source files.");
         }
-
-        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-        // Unbind the shader program after setting up uniforms
-        shader.Unbind();
     }
 
     /*!
@@ -624,7 +619,7 @@ namespace Engine
 
                 // Set the texture offset in the shader
                 shader.SetUniform1f("texCoordX", texCoordX);
-                shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                 shader.SetUniform1f("u_FrameWidth", frameWidth);
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
@@ -633,7 +628,7 @@ namespace Engine
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
                 shader.SetUniform1f("texCoordX", 0.0f);
-                shader.SetUniform1f("u_FrameCount", 1.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
                 shader.SetUniform1f("u_FrameWidth", 1.0f);
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
@@ -672,7 +667,7 @@ namespace Engine
 
                 // Set the texture offset in the shader
                 shader.SetUniform1f("texCoordX", texCoordX);
-                shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                 shader.SetUniform1f("u_FrameWidth", frameWidth);
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
@@ -682,7 +677,7 @@ namespace Engine
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
                 shader.SetUniform1f("texCoordX", 0.0f);
-                shader.SetUniform1f("u_FrameCount", 1.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
                 shader.SetUniform1f("u_FrameWidth", 1.0f);
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
@@ -939,6 +934,23 @@ namespace Engine
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
 
+    }
+
+    void GraphicsSystem::UpdateShaderSet()
+    {
+        try {
+            std::cout << "UpdateShaderSet() called!" << std::endl;
+
+            // Reinitialize shaders based on the new set
+           // InitializeShader();
+
+            std::cout << "Shader Set Updated: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+
+        }
+        catch (const std::exception& e) {
+
+            Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
+        }
     }
 
     /*!
