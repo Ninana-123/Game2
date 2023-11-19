@@ -24,6 +24,7 @@ namespace Engine
     PhysicsSystem::PhysicsSystem()
         : x(0.0f), y(0.0f), velocityX(0.0f), velocityY(0.0f), accelerationX(0.0f), accelerationY(0.0f) {}
 
+
     // Sets the velocity of the physics system.
     void PhysicsSystem::setVelocity(float vx, float vy) {
         velocityX = vx;
@@ -46,14 +47,28 @@ namespace Engine
             {
                 Entity* entity = entityPair.second.get();
 
-                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)))
+
+                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)) && !(entity->HasComponent(ComponentType::Pathfinding)))
                 {
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                     PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
 
+                    Rigidbody rigidbody = createRigidbodyFromPhysicsComponent(physicsComponent, transformComponent);
+                    
+
+                    //std::cout << transformComponent->position.x << " " << transformComponent->position.y << std::endl;
+                    //std::cout << rigidbody.position.x << " " << rigidbody.position.y << std::endl;
+
                     //Store Local variables for processing
                     float previousX = transformComponent->position.x;
                     float previousY = transformComponent->position.y;
+
+                    // Update the Rigidbody
+                    rigidbody.update(fixedDeltaTime);
+
+                    // Update the entity's position based on the Rigidbody's position
+                    transformComponent->position.x = rigidbody.position.x;
+                    transformComponent->position.y = rigidbody.position.y;
 
                     float currentX = transformComponent->position.x;
                     float currentY = transformComponent->position.y;
@@ -124,5 +139,15 @@ namespace Engine
     // Gets the acceleration of x of the object's position.
     float PhysicsSystem::getAccelerationY() const {
         return accelerationY;
+    }
+
+    Rigidbody PhysicsSystem::createRigidbodyFromPhysicsComponent(PhysicsComponent* physicsComponent, TransformComponent* transformComponent) {
+        return Rigidbody(
+            physicsComponent->mass,
+            VECTORMATH::Vec2(transformComponent->position.x, transformComponent->position.y),
+            VECTORMATH::Vec2(physicsComponent->velocity.x, physicsComponent->velocity.y),
+            VECTORMATH::Vec2(physicsComponent->acceleration.x, physicsComponent->acceleration.y),
+            physicsComponent->friction
+        );
     }
 }

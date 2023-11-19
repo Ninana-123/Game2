@@ -24,7 +24,10 @@ MaxY: 0
 Radius: 0
 Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
 MainIndex: 3
 SubIndex: 0
@@ -39,10 +42,10 @@ textureyindex:  0
 playing: 0
 playmode: 0
 Pathfinding
-startX: 0
-startY: 0
-goalX: 200
-goalY: 200
+StartX: 200
+StartY: 200
+GoalX: 200
+GoalY: 200
 EndEntity
 Transform 
 Position: 100 100
@@ -60,7 +63,10 @@ MaxY: 0
 Radius: 0
 Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
 MainIndex: 1
 SubIndex: 0
@@ -74,11 +80,6 @@ texturexindex: 0
 textureyindex:  0
 playing: 0
 playmode: 0
-Pathfinding
-startX: 200
-startY: 0
-goalX: 300
-goalY: 0
 EndEntity
 Transform 
 Position: 400 300
@@ -96,10 +97,18 @@ MaxY: 0
 Radius: 0
 Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
 MainIndex: 1
 SubIndex: 0
+Pathfinding
+StartX = 400
+StartY = 300
+GoalX = 400
+GoalY = 300
 EndEntity
 Transform 
 Position: -250 -150 

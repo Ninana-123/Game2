@@ -20,6 +20,9 @@ namespace Engine
 	public:
 		
 		VECTORMATH::Vector2D velocity = VECTORMATH::Vector2D(0.f, 0.f);
+		VECTORMATH::Vector2D acceleration = VECTORMATH::Vector2D(0.f, 0.f);
+		float mass = 0.0;
+		float friction = 0.0;
 
 		/*!*****************************************************************
 
@@ -46,15 +49,24 @@ namespace Engine
 		{
 			PhysicsComponent* cloneComponent = new PhysicsComponent();
 			cloneComponent->velocity = velocity;
+			cloneComponent->acceleration = acceleration;
+			cloneComponent->mass = mass;
+			cloneComponent->friction = friction;
 			
 			return cloneComponent;
 		}
 		void Serialize(std::ostream& outputStream) const override {
 			outputStream << "Velocity: " << velocity.x << ' ' << velocity.y << '\n';
+			outputStream << "Acceleration: " << acceleration.x << ' ' << acceleration.y << '\n';
+			outputStream << "Mass: " << mass << '\n';
+			outputStream << "friction: " << friction << '\n';
 		}
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			inputStream >> temp >> velocity.x >> velocity.y; // Assuming format is "Position: x y"
+			inputStream >> temp >> acceleration.x >> acceleration.y;
+			inputStream >> temp >> mass;
+			inputStream >> temp >> friction;
 		}
 	};
 }

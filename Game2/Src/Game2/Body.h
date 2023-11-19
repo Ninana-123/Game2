@@ -24,7 +24,6 @@ public:
     VECTORMATH::Vec2 position;
     VECTORMATH::Vec2 velocity;
     VECTORMATH::Vec2 acceleration;
-    float restitution;
     float friction;
     VECTORMATH::Vec2 force_accumulator;
 
@@ -52,8 +51,7 @@ public:
 
     */
     /**************************************************************************/
-    Rigidbody(float mass, VECTORMATH::Vec2 position, VECTORMATH::Vec2 velocity, VECTORMATH::Vec2 acceleration, 
-        float restitution, float friction);
+    Rigidbody(float mass, VECTORMATH::Vec2 position, VECTORMATH::Vec2 velocity, VECTORMATH::Vec2 acceleration, float friction);
 
     /**************************************************************************/
     /*!
@@ -87,6 +85,8 @@ public:
     */
     /**************************************************************************/
     void handle_collision(Rigidbody& other_object);
+
+    void setPosition(VECTORMATH::Vec2 pos);
 };
 
 #endif // RIGIDBODY_H

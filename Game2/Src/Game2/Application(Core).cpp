@@ -246,6 +246,7 @@ namespace Engine
             while (accumulatedTime >= fixedDeltaTime) {
 
                 accumulatedTime -= fixedDeltaTime;
+                currentNumberOfSteps++;
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
