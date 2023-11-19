@@ -201,7 +201,6 @@ namespace Engine
         for (const auto& it : *entities) 
         {
             Entity* entity = it.second.get();
-            
 
             if (entity->HasComponent(ComponentType::Pathfinding) && entity->HasComponent(ComponentType::Transform) 
                 && entity->HasComponent(ComponentType::Collision))

@@ -16,7 +16,7 @@ constexpr EntityID EMPTY_ID = 0;
 const int MAX_SUBINDEX = 2;
 
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, inGameGUI, Unknown };
 
 enum c_state { Static, Walking, Idle, Attack };
 std::string c_stateToString(c_state state);

@@ -46,6 +46,7 @@ StartX: 200
 StartY: 200
 GoalX: 200
 GoalY: 200
+IngameGUI
 EndEntity
 Transform 
 Position: 100 100
@@ -80,6 +81,7 @@ texturexindex: 0
 textureyindex:  0
 playing: 0
 playmode: 0
+inGameGUI
 EndEntity
 Transform 
 Position: 400 300
@@ -109,6 +111,7 @@ StartX = 400
 StartY = 300
 GoalX = 400
 GoalY = 300
+inGameGUI
 EndEntity
 Transform 
 Position: -250 -150 

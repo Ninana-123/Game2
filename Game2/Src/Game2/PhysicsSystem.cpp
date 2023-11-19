@@ -40,7 +40,7 @@ namespace Engine
     // Updates the object's position based on physics calculations.
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
-        //std::cout << "Physics Checking" << std::endl;
+        // std::cout << "Physics Checking" << std::endl;
         for (int step = 0; step < currentNumberOfSteps; ++step)
         {
             for (const auto& entityPair : *entities)
@@ -48,7 +48,8 @@ namespace Engine
                 Entity* entity = entityPair.second.get();
 
 
-                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)) && !(entity->HasComponent(ComponentType::Pathfinding)))
+                if (entity->HasComponent(ComponentType::Transform) && (entity->HasComponent(ComponentType::Physics)) && !(entity->HasComponent(ComponentType::Pathfinding))
+                    && entity->HasComponent(ComponentType::inGameGUI))
                 {
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                     PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));
@@ -83,29 +84,29 @@ namespace Engine
                     currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
                     currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
 
-                    if (entity->HasComponent(ComponentType::Collision))
-                    {
-                        CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+                    //if (entity->HasComponent(ComponentType::Collision))
+                    //{
+                    //    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 
-                        if (collisionComponent->isColliding)
-                        {
-                            //Update position to previous position (Stopping)
-                            transformComponent->position.x = previousX;
-                            transformComponent->position.y = previousY;
+                    //    if (collisionComponent->isColliding)
+                    //    {
+                    //        //Update position to previous position (Stopping)
+                    //        transformComponent->position.x = previousX;
+                    //        transformComponent->position.y = previousY;
 
-                            physicsComponent->velocity.x = 0.0f;
-                            physicsComponent->velocity.y = 0.0f;
+                    //        physicsComponent->velocity.x = 0.0f;
+                    //        physicsComponent->velocity.y = 0.0f;
 
-                        }
-                        else
-                        {
-                            //Update position after acceleration model
-                            transformComponent->position.x = currentX;
-                            transformComponent->position.y = currentY;
-                            physicsComponent->velocity.x = l_velocityX;
-                            physicsComponent->velocity.y = l_velocityY;
-                        }
-                    }
+                    //    }
+                    //    else
+                    //    {
+                    //        //Update position after acceleration model
+                    //        transformComponent->position.x = currentX;
+                    //        transformComponent->position.y = currentY;
+                    //        physicsComponent->velocity.x = l_velocityX;
+                    //        physicsComponent->velocity.y = l_velocityY;
+                    //    }
+                    //}
                 }
             }
         }

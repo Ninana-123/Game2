@@ -121,6 +121,9 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\inGameGUISystem.cpp">
+      <Filter>Systems\inGameGUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -309,6 +312,12 @@
     <ClInclude Include="Src\Game2\Font.h">
       <Filter>Base\Font</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\inGameGUISystem.h">
+      <Filter>Systems\inGameGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\inGameGUIComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -412,6 +421,9 @@
     </Filter>
     <Filter Include="Systems\Pathfinding">
       <UniqueIdentifier>{9533f091-e860-4507-a04f-7a3e911113d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\inGameGUI">
+      <UniqueIdentifier>{e817c0f9-bbac-4f77-91c1-d751193f768a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
+    <ClInclude Include="Src\Game2\inGameGUIComponent.h" />
+    <ClInclude Include="Src\Game2\inGameGUISystem.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
@@ -105,6 +107,7 @@
     <ClCompile Include="Src\Game2\imgui_tables.cpp" />
     <ClCompile Include="Src\Game2\imgui_widgets.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
+    <ClCompile Include="Src\Game2\inGameGUISystem.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />

@@ -30,6 +30,7 @@ namespace Engine
         RegisterComponent(ComponentType::Physics,   []()    { return std::make_unique<PhysicsComponent>();         });
         RegisterComponent(ComponentType::Sprite,    []()    { return std::make_unique<SpriteComponent>();          });
         RegisterComponent(ComponentType::Pathfinding, []()  { return std::make_unique<PathfindingComponent>();     });
+        RegisterComponent(ComponentType::inGameGUI, []()    { return std::make_unique<inGameGUIComponent>();       });
 
     }
     /*!**********************************************************************
@@ -84,6 +85,7 @@ namespace Engine
             {"Texture",     ComponentType::Texture    },
             {"Sprite",      ComponentType::Sprite     },
             {"Pathfinding", ComponentType::Pathfinding},
+            {"inGameGUI",   ComponentType::inGameGUI  },
         };
 
         auto it = StringTotypeMap.find(typeString);
@@ -100,12 +102,13 @@ namespace Engine
         // Map enum values to component type strings
         static std::unordered_map<ComponentType, std::string> typeToStringMap =
         {
-            {ComponentType::Transform,  "Transform"},
-            {ComponentType::Collision,  "Collision"},
-            {ComponentType::Physics,    "Physics"  },
-            {ComponentType::Texture,    "Texture"  },
-            {ComponentType::Sprite,     "Sprite"  },
-            {ComponentType::Pathfinding,"Pathfinding"  },
+            {ComponentType::Transform,   "Transform"   },
+            {ComponentType::Collision,   "Collision"   },
+            {ComponentType::Physics,     "Physics"     },
+            {ComponentType::Texture,     "Texture"     },
+            {ComponentType::Sprite,      "Sprite"      },
+            {ComponentType::Pathfinding, "Pathfinding" },
+            {ComponentType::inGameGUI,   "inGameGUI"   },
         };
 
         auto it = typeToStringMap.find(type);
