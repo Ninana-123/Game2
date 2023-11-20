@@ -53,7 +53,7 @@ namespace Engine
     {
     }
 
-    /*!
+  /*!
    * \brief Initialize the GLEW library.
    *
    * This function initializes the GLEW (OpenGL Extension Wrangler Library)
@@ -74,7 +74,7 @@ namespace Engine
             Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
-    /*!
+  /*!
    * \brief Initialize the GraphicsSystem.
    *
    * This function initializes the GraphicsSystem by setting up OpenGL,
@@ -323,33 +323,28 @@ namespace Engine
         // Initialize the shader object (load shader source files and compile them)
         shader.Initialize();
         shader.Bind();
-        //GraphicsLogger.Log(LogLevel::Debug, "Current Shader Set: " + std::to_string(shader.m_CurrentShaderSet));
 
+        // Determine which set of shaders to use
         std::string vertexShaderPath;
         std::string fragmentShaderPath;
 
-        // Determine which set of shaders to use
-        if (shader.GetCurrentShaderSet() == 1)
+        int currentShaderSet = shader.GetCurrentShaderSet();
+
+        if (currentShaderSet == 1)
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
-        else if (shader.GetCurrentShaderSet() == 2)
+        else if (currentShaderSet == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
         }
-       /* else if (shader.GetCurrentShaderSet() == 3)
-        {
-            vertexShaderPath = "Resource/Shaders/Shader3.vert";
-            fragmentShaderPath = "Resource/Shaders/Shader3.frag";
-            Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 2...");
-        }*/
         else
         {
-            throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
+            throw std::runtime_error("Invalid shader set specified: " + std::to_string(currentShaderSet));
         }
 
         // Load shader source code from files
@@ -368,13 +363,12 @@ namespace Engine
                 // Shader compilation and linking successful
                 Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
-                // Store the shader program ID in the shader class based on the shader set being used
+                // Store the shader program ID in the shader class
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
+                std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << ", Program ID: " << shader.GetID() << std::endl;
 
                 // Check for additional shader compilation errors (if any)
                 shader.CheckShaderCompilation(shaderProgram, "Shader Set");
-
-                GLCall(glUseProgram(shaderProgram));
             }
             else
             {
@@ -388,6 +382,7 @@ namespace Engine
             throw std::runtime_error("Failed to load shader source files.");
         }
 
+        // Set uniform values (adjust as needed)
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
         // Unbind the shader program after setting up uniforms
@@ -434,26 +429,24 @@ namespace Engine
         }
     }
 
-    //void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
+    //void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
     //{
-    //    try {
-    //        shader.Bind();
-    //        textures[Background].Bind(0);
-    //        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-    //        shader.SetUniform1i("u_Texture[0]", 0);
-    //        shader.SetUniformMat4f("u_MVP", mvpMatrix);
-    //        vaBackground.Bind(); // Bind the background vertex array
-    //        ibBackground.Bind(); // Bind the background index buffer
-    //        //std::cout << "ibBackground: " << ibBackground.GetCount() << std::endl;
-    //        renderer.Draw(vaBackground, ibBackground, shader);
-    //        textures[Background].Unbind();
-    //        shader.Unbind();
-    //    }
-    //    catch (const std::exception& e) {
+    //    SetMaxBatchSize(200);
 
-    //        Logger::GetInstance().Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
-
+    //    // Check if a new batch needs to be created
+    //    if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
+    //    {
+    //        // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
+    //        Batch newBatch;
+    //        newBatch.textureClass = textureClass;
+    //        batches.push_back(newBatch);
     //    }
+
+    //    // Add the provided vertex data to the current batch
+    //    Batch& currentBatch = batches.back();
+    //    currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
+    //    currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
+    //    currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
     //}
 
     //void GraphicsSystem::RenderBatchedData()
@@ -626,7 +619,7 @@ namespace Engine
 
                 // Set the texture offset in the shader
                 shader.SetUniform1f("texCoordX", texCoordX);
-                shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                 shader.SetUniform1f("u_FrameWidth", frameWidth);
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
@@ -635,7 +628,7 @@ namespace Engine
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
                 shader.SetUniform1f("texCoordX", 0.0f);
-                shader.SetUniform1f("u_FrameCount", 1.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
                 shader.SetUniform1f("u_FrameWidth", 1.0f);
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
@@ -674,7 +667,7 @@ namespace Engine
 
                 // Set the texture offset in the shader
                 shader.SetUniform1f("texCoordX", texCoordX);
-                shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                 shader.SetUniform1f("u_FrameWidth", frameWidth);
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
@@ -684,7 +677,7 @@ namespace Engine
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
                 shader.SetUniform1f("texCoordX", 0.0f);
-                shader.SetUniform1f("u_FrameCount", 1.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
                 shader.SetUniform1f("u_FrameWidth", 1.0f);
                 shader.SetUniform1f("u_FrameHeight", 1.0f);
             }
@@ -936,11 +929,30 @@ namespace Engine
         font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         */
         // Restore the previous shader state
-        shader.SetActiveShaderSet(previousShaderSet);
+        //shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
 
+    }
+
+    void GraphicsSystem::UpdateShaderSet()
+    {
+        try {
+            std::cout << "UpdateShaderSet() called!" << std::endl;
+
+            // Print the current shader set before reinitializing shaders
+            std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << std::endl;
+
+            // Reinitialize shaders based on the new set
+            InitializeShader();
+
+            // Print the shader set after reinitializing shaders
+            std::cout << "Shader Set Updated: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+        }
+        catch (const std::exception& e) {
+            Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
+        }
     }
 
     /*!
@@ -991,21 +1003,20 @@ namespace Engine
      */
     void GraphicsSystem::ToggleShaderSet()
     {
-        try {
+        try
+        {
             std::cout << "ToggleShaderSet() called!" << std::endl;
-            if (shader.GetCurrentShaderSet() == 1) {
-                shader.SetActiveShaderSet(2);
-            }
-            else {
-                shader.SetActiveShaderSet(1);
-            }
-            std::cout << "Shader Set Toggled: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
 
-            // Attempt to reinitialize shaders based on the new set
-            InitializeShader();
+            int newShaderSet = (shader.GetCurrentShaderSet() == 1) ? 2 : 1;
+            shader.SetActiveShaderSet(newShaderSet);
+
+            std::cout << "Shader Set Toggled: " << (newShaderSet == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+
+            // Update shader properties based on the new set
+            UpdateShaderSet();
         }
-        catch (const std::exception& e) {
-
+        catch (const std::exception& e)
+        {
             Logger::GetInstance().Log(LogLevel::Error, "Shader set toggle error: " + std::string(e.what()));
         }
     }
