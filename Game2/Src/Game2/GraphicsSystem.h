@@ -73,8 +73,7 @@ namespace Engine
         int screenWidth{}, screenHeight{};
       
         double animationStartTime{};
-        double frameDuration{};
-       
+        double frameDuration{}; 
 
     private:
         Shader shader;
@@ -102,9 +101,6 @@ namespace Engine
         VertexArray vaSingleLine;
 
         font font;
-   
-
-
 
         Renderer renderer;
 

@@ -324,17 +324,19 @@ namespace Engine
         shader.Initialize();
         shader.Bind();
 
+        // Determine which set of shaders to use
         std::string vertexShaderPath;
         std::string fragmentShaderPath;
 
-        // Determine which set of shaders to use
-        if (shader.GetCurrentShaderSet() == 1)
+        int currentShaderSet = shader.GetCurrentShaderSet();
+
+        if (currentShaderSet == 1)
         {
             vertexShaderPath = "Resource/Shaders/Shader.vert";
             fragmentShaderPath = "Resource/Shaders/Shader.frag";
             Logger::GetInstance().Log(LogLevel::Debug, "Loading Shader Set 1...");
         }
-        else if (shader.GetCurrentShaderSet() == 2)
+        else if (currentShaderSet == 2)
         {
             vertexShaderPath = "Resource/Shaders/Shader2.vert";
             fragmentShaderPath = "Resource/Shaders/Shader2.frag";
@@ -342,7 +344,7 @@ namespace Engine
         }
         else
         {
-            throw std::runtime_error("Invalid shader set specified: " + std::to_string(shader.GetCurrentShaderSet()));
+            throw std::runtime_error("Invalid shader set specified: " + std::to_string(currentShaderSet));
         }
 
         // Load shader source code from files
@@ -358,23 +360,15 @@ namespace Engine
             // Check for shader compilation and linking errors
             if (shaderProgram != 0)
             {
-                // Unbind the previous shader program
-                shader.Unbind();
-
                 // Shader compilation and linking successful
                 Logger::GetInstance().Log(LogLevel::Debug, "Shader compilation and linking successful.");
 
-                // Store the shader program ID in the shader class based on the shader set being used
+                // Store the shader program ID in the shader class
                 shader.SetShaderProgram(useShaderSet1 ? 1 : 2, shaderProgram);
+                std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << ", Program ID: " << shader.GetID() << std::endl;
 
-                // Bind the new shader program
-                shader.Bind();
-
-                // Set uniform values (adjust as needed)
-                shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-                // Unbind the shader program after setting up uniforms
-                shader.Unbind();
+                // Check for additional shader compilation errors (if any)
+                shader.CheckShaderCompilation(shaderProgram, "Shader Set");
             }
             else
             {
@@ -387,6 +381,12 @@ namespace Engine
             // Shader source files were not loaded successfully
             throw std::runtime_error("Failed to load shader source files.");
         }
+
+        // Set uniform values (adjust as needed)
+        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+        // Unbind the shader program after setting up uniforms
+        shader.Unbind();
     }
 
     /*!
@@ -929,7 +929,7 @@ namespace Engine
         font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         */
         // Restore the previous shader state
-        shader.SetActiveShaderSet(previousShaderSet);
+        //shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
@@ -941,14 +941,16 @@ namespace Engine
         try {
             std::cout << "UpdateShaderSet() called!" << std::endl;
 
+            // Print the current shader set before reinitializing shaders
+            std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << std::endl;
+
             // Reinitialize shaders based on the new set
-           // InitializeShader();
+            InitializeShader();
 
+            // Print the shader set after reinitializing shaders
             std::cout << "Shader Set Updated: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
-
         }
         catch (const std::exception& e) {
-
             Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
         }
     }
@@ -1001,21 +1003,20 @@ namespace Engine
      */
     void GraphicsSystem::ToggleShaderSet()
     {
-        try {
+        try
+        {
             std::cout << "ToggleShaderSet() called!" << std::endl;
-            if (shader.GetCurrentShaderSet() == 1) {
-                shader.SetActiveShaderSet(2);
-            }
-            else {
-                shader.SetActiveShaderSet(1);
-            }
-            std::cout << "Shader Set Toggled: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
 
-            // Attempt to reinitialize shaders based on the new set
-            InitializeShader();
+            int newShaderSet = (shader.GetCurrentShaderSet() == 1) ? 2 : 1;
+            shader.SetActiveShaderSet(newShaderSet);
+
+            std::cout << "Shader Set Toggled: " << (newShaderSet == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
+
+            // Update shader properties based on the new set
+            UpdateShaderSet();
         }
-        catch (const std::exception& e) {
-
+        catch (const std::exception& e)
+        {
             Logger::GetInstance().Log(LogLevel::Error, "Shader set toggle error: " + std::string(e.what()));
         }
     }
