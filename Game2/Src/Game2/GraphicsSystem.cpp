@@ -80,147 +80,20 @@ namespace Engine
    * This function initializes the GraphicsSystem by setting up OpenGL,
    * loading shaders, and initializing textures.
    */
-    void GraphicsSystem::Initialize() {
-
-        Window = glfwGetCurrentContext();
-
-        GraphicsSystem::InitializeGLEW();
-
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-        // Clear the color buffer
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        //int screenWidth, screenHeight;
-        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
-        //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
-
-        // Load and initialize the shader
-        try {
-            InitializeShader();
-        }
-        catch (const std::runtime_error& e) {
-            // Handle shader initialization error
-            throw std::runtime_error("Shader initialization failed: " + std::string(e.what()));
-        }
-
-        // Initialize and bind textures
-        try {
-            InitializeTextures();
-        }
-        catch (const std::runtime_error& e) {
-            // Handle texture initialization error
-            throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
-        }
-
-        //enable blending for transparency
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-        const float fscreenWidth = 1280.0f;
-        const float fscreenHeight = 720.0f;
-
-        // set up projection and view matrices
-        GraphicsSystem::proj = glm::ortho(0.0f, fscreenWidth, 0.0f, fscreenHeight, -1.0f, 1.0f);
-        GraphicsSystem::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
-
-        /**************************************************************************************************/
-        //define vertex array and indices
-        float quadPositions[] =
-        {
-           -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
-            50.f, -50.f, 1.0f, 0.0f,  // bottom-right
-            50.f,  50.f, 1.0f, 1.0f,  // top-right
-           -50.f,  50.f, 0.0f, 1.0f   // top-left
-        };
-
-        // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(quadPositions), std::end(quadPositions), std::begin(this->vtx_positions));
-
-        unsigned int localIndices[] =
-        {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        std::copy(std::begin(localIndices), std::end(localIndices), std::begin(this->indices));
-        VertexBuffer vb(quadPositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-
-        GraphicsSystem::ib.SetData(localIndices, 6);
-
-        /**************************************************************************************************/
-        // Define vertex array and indices for lines
-        float linePositions[] =
-        {
-           -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
-            50.f, -50.f, 1.0f, 0.0f,  // bottom-right
-            50.f,  50.f, 1.0f, 1.0f,  // top-right
-           -50.f,  50.f, 0.0f, 1.0f   // top-left
-        };
-
-        VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layoutLines;
-        layoutLines.Push<float>(2);
-        layoutLines.Push<float>(2);
-        GraphicsSystem::vaLines.AddBuffer(vbLines, layoutLines);
-
-        /**************************************************************************************************/
-        // Define vertices for the background
-        float backgroundPositions[] =
-        {
-            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
-            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
-        };
-
-        // Define indices for the background
-        unsigned int backgroundIndices[] =
-        {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        VertexBuffer vbBackground(backgroundPositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layoutBackground;
-        layoutBackground.Push<float>(2);
-        layoutBackground.Push<float>(2);
-
-        GraphicsSystem::va.AddBuffer(vb, layout);
-
-        GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
-        GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
-
-        /**************************************************************************************************/
-
-        ib.Unbind();
-        va.Unbind();
-        vb.Unbind();
-
-        vbLines.Unbind();
-
-        vaBackground.Unbind();
-        ibBackground.Unbind();
-
-        shader.Unbind();
-
-        font.Initialize();
-        //font.MakeDisplayList(ft, face);
-    }
-
     //void GraphicsSystem::Initialize() {
+
     //    Window = glfwGetCurrentContext();
 
-    //    InitializeGLEW();
+    //    GraphicsSystem::InitializeGLEW();
 
     //    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+    //    // Clear the color buffer
     //    glClear(GL_COLOR_BUFFER_BIT);
+
+    //    //int screenWidth, screenHeight;
+    //    glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+    //    //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
 
     //    // Load and initialize the shader
     //    try {
@@ -240,77 +113,206 @@ namespace Engine
     //        throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
     //    }
 
-    //    // Enable blending for transparency
+    //    //enable blending for transparency
     //    GLCall(glEnable(GL_BLEND));
     //    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    //    int screenWidth, screenHeight;
-    //    glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+    //    const float fscreenWidth = 1280.0f;
+    //    const float fscreenHeight = 720.0f;
 
-    //    // Set up projection and view matrices
-    //    proj = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
-    //    view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+    //    // set up projection and view matrices
+    //    GraphicsSystem::proj = glm::ortho(0.0f, fscreenWidth, 0.0f, fscreenHeight, -1.0f, 1.0f);
+    //    GraphicsSystem::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
 
-    //    // Define vertex data for quad and background combined, and lines separately
-    //    std::vector<float> quadAndBackgroundVertexData = {
-    //        // Quad vertices
-    //        -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
-    //         60.f, -60.f, 1.0f, 0.0f,  // bottom-right
-    //         60.f,  60.f, 1.0f, 1.0f,  // top-right
-    //        -60.f,  60.f, 0.0f, 1.0f,  // top-left
+    //    /**************************************************************************************************/
+    //    //define vertex array and indices
+    //    float quadPositions[] =
+    //    {
+    //       -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
+    //        50.f, -50.f, 1.0f, 0.0f,  // bottom-right
+    //        50.f,  50.f, 1.0f, 1.0f,  // top-right
+    //       -50.f,  50.f, 0.0f, 1.0f   // top-left
+    //    };
 
-    //        // Background vertices
+    //    // Copy vtx_position into vtx_position member variable
+    //    std::copy(std::begin(quadPositions), std::end(quadPositions), std::begin(this->vtx_positions));
+
+    //    unsigned int localIndices[] =
+    //    {
+    //        0, 1, 2,
+    //        2, 3, 0
+    //    };
+
+    //    std::copy(std::begin(localIndices), std::end(localIndices), std::begin(this->indices));
+    //    VertexBuffer vb(quadPositions, 4 * 4 * sizeof(float));
+
+    //    VertexBufferLayout layout;
+    //    layout.Push<float>(2);
+    //    layout.Push<float>(2);
+
+    //    GraphicsSystem::ib.SetData(localIndices, 6);
+
+    //    /**************************************************************************************************/
+    //    // Define vertex array and indices for lines
+    //    float linePositions[] =
+    //    {
+    //       -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
+    //        50.f, -50.f, 1.0f, 0.0f,  // bottom-right
+    //        50.f,  50.f, 1.0f, 1.0f,  // top-right
+    //       -50.f,  50.f, 0.0f, 1.0f   // top-left
+    //    };
+
+    //    VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
+
+    //    VertexBufferLayout layoutLines;
+    //    layoutLines.Push<float>(2);
+    //    layoutLines.Push<float>(2);
+    //    GraphicsSystem::vaLines.AddBuffer(vbLines, layoutLines);
+
+    //    /**************************************************************************************************/
+    //    // Define vertices for the background
+    //    float backgroundPositions[] =
+    //    {
     //        -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
     //         static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
     //         static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
     //        -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
     //    };
-    //    vtx_positions_quad.resize(32);
-    //    std::copy(std::begin(quadAndBackgroundVertexData), std::end(quadAndBackgroundVertexData), std::begin(this->vtx_positions_quad));
 
-    //    // Indices for the quad
-    //    unsigned int quadIndices[] = {
+    //    // Define indices for the background
+    //    unsigned int backgroundIndices[] =
+    //    {
     //        0, 1, 2,
     //        2, 3, 0
     //    };
-    //    indices_quad.assign(std::begin(quadIndices), std::end(quadIndices));
 
-    //    std::vector<float> linesVertexData = {
-    //        -30.0f, -30.0f, 0.0f, 0.0f,
-    //         30.0f, -30.0f, 1.0f, 0.0f,
-    //         30.0f,  30.0f, 1.0f, 1.0f,
-    //        -30.0f,  30.0f, 0.0f, 1.0f
-    //    };
-    //    vtx_positions_lines.resize(16);
-    //    std::copy(std::begin(linesVertexData), std::end(linesVertexData), std::begin(this->vtx_positions_lines));
+    //    VertexBuffer vbBackground(backgroundPositions, 4 * 4 * sizeof(float));
 
-    //    // Create individual vertex buffers and layouts for lines, quad and background
-    //    try {
-    //        VertexBuffer vbQuadAndBackground(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
-    //        VertexBuffer vbLines(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+    //    VertexBufferLayout layoutBackground;
+    //    layoutBackground.Push<float>(2);
+    //    layoutBackground.Push<float>(2);
 
-    //        vbQuadAndBackground.SetData(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
-    //        vbLines.SetData(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+    //    GraphicsSystem::va.AddBuffer(vb, layout);
 
-    //        VertexBufferLayout layout;
-    //        layout.Push<float>(2);
-    //        layout.Push<float>(2);
+    //    GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
+    //    GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
 
-    //        ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
-    //        vaQuadAndBackground.AddBuffer(vbQuadAndBackground, layout);
-    //        vaLines.AddBuffer(vbLines, layout);
-    //    }
-    //    catch (const std::runtime_error& e) {
-    //        // Handle buffer initialization error
-    //        throw std::runtime_error("Buffer initialization failed: " + std::string(e.what()));
-    //    }
+    //    /**************************************************************************************************/
 
-    //    // Unbind buffers and shader after drawing
-    //    ibQuad.Unbind();
-    //    vaQuadAndBackground.Unbind();
-    //    vaLines.Unbind();
+    //    ib.Unbind();
+    //    va.Unbind();
+    //    vb.Unbind();
+
+    //    vbLines.Unbind();
+
+    //    vaBackground.Unbind();
+    //    ibBackground.Unbind();
+
     //    shader.Unbind();
+
+    //    font.Initialize();
+    //    //font.MakeDisplayList(ft, face);
     //}
+
+    void GraphicsSystem::Initialize() {
+        Window = glfwGetCurrentContext();
+
+        InitializeGLEW();
+
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Load and initialize the shader
+        try {
+            InitializeShader();
+        }
+        catch (const std::runtime_error& e) {
+            // Handle shader initialization error
+            throw std::runtime_error("Shader initialization failed: " + std::string(e.what()));
+        }
+
+        // Initialize and bind textures
+        try {
+            InitializeTextures();
+        }
+        catch (const std::runtime_error& e) {
+            // Handle texture initialization error
+            throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
+        }
+
+        // Enable blending for transparency
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+        int screenWidth, screenHeight;
+        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+
+        // Set up projection and view matrices
+        proj = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
+        view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+
+        // Define vertex data for quad and background combined, and lines separately
+        std::vector<float> quadAndBackgroundVertexData = {
+            // Quad vertices
+            -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
+             60.f, -60.f, 1.0f, 0.0f,  // bottom-right
+             60.f,  60.f, 1.0f, 1.0f,  // top-right
+            -60.f,  60.f, 0.0f, 1.0f,  // top-left
+
+            // Background vertices
+            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
+        };
+        vtx_positions_quad.resize(32);
+        std::copy(std::begin(quadAndBackgroundVertexData), std::end(quadAndBackgroundVertexData), std::begin(this->vtx_positions_quad));
+
+        // Indices for the quad
+        unsigned int quadIndices[] = {
+            0, 1, 2,
+            2, 3, 0
+        };
+        indices_quad.assign(std::begin(quadIndices), std::end(quadIndices));
+
+        std::vector<float> linesVertexData = {
+            -30.0f, -30.0f, 0.0f, 0.0f,
+             30.0f, -30.0f, 1.0f, 0.0f,
+             30.0f,  30.0f, 1.0f, 1.0f,
+            -30.0f,  30.0f, 0.0f, 1.0f
+        };
+        vtx_positions_lines.resize(16);
+        std::copy(std::begin(linesVertexData), std::end(linesVertexData), std::begin(this->vtx_positions_lines));
+
+        // Create individual vertex buffers and layouts for lines, quad and background
+        try {
+            VertexBuffer vbQuadAndBackground(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+            VertexBuffer vbLines(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+
+            vbQuadAndBackground.SetData(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+            vbLines.SetData(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+
+
+            VertexBufferLayout layout;
+            layout.Push<float>(2);
+            layout.Push<float>(2);
+
+            ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
+            vaQuadAndBackground.AddBuffer(vbQuadAndBackground, layout);
+            vaLines.AddBuffer(vbLines, layout);
+        }
+        catch (const std::runtime_error& e) {
+            // Handle buffer initialization error
+            throw std::runtime_error("Buffer initialization failed: " + std::string(e.what()));
+        }
+
+        // Unbind buffers and shader after drawing
+        ibQuad.Unbind();
+        vaQuadAndBackground.Unbind();
+        vaLines.Unbind();
+        shader.Unbind();
+        font.Initialize();
+    }
 
     /*!
     * \brief Initialize the shader used for rendering.
@@ -429,88 +431,92 @@ namespace Engine
         }
     }
 
-    //void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
-    //{
-    //    SetMaxBatchSize(200);
+    void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
+    {
+        SetMaxBatchSize(200);
 
-    //    // Check if a new batch needs to be created
-    //    if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
-    //    {
-    //        // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
-    //        Batch newBatch;
-    //        newBatch.textureClass = textureClass;
-    //        batches.push_back(newBatch);
-    //    }
+        // Check if a new batch needs to be created
+        if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
+        {
+            // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
+            Batch newBatch;
+            newBatch.textureClass = textureClass;
+            batches.push_back(newBatch);
+        }
 
-    //    // Add the provided vertex data to the current batch
-    //    Batch& currentBatch = batches.back();
-    //    currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
-    //    currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
-    //    currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
-    //}
+        // Add the provided vertex data to the current batch
+        Batch& currentBatch = batches.back();
+        currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
+        currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
+        currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
+    }
 
-    //void GraphicsSystem::RenderBatchedData()
-    //{
-    //    Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
+    void GraphicsSystem::RenderBatchedData()
+    {
+        Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
 
-    //    // Check if the vertex buffer data is valid
-    //    if (vtx_positions_quad.empty() || indices_quad.empty() || vtx_positions_quad.size() % 4 != 0 || indices_quad.size() % 6 != 0) {
-    //        Logger::GetInstance().Log(LogLevel::Error, "Invalid or empty vertex or index buffer data!");
-    //        return; // Do not proceed with rendering if data is invalid or empty
-    //    }
+        // Check if the vertex buffer data is valid
+        if (vtx_positions_quad.empty() || indices_quad.empty() || vtx_positions_quad.size() % 4 != 0 || indices_quad.size() % 6 != 0) {
+            Logger::GetInstance().Log(LogLevel::Error, "Invalid or empty vertex or index buffer data!");
+            return; // Do not proceed with rendering if data is invalid or empty
+        }
 
-    //    // Bind shader, vertex arrays, and index buffer
-    //    shader.Bind();
-    //    vaQuadAndBackground.Bind();
-    //    vaLines.Bind();
-    //    ibQuad.Bind();
+        // Bind shader, vertex arrays, and index buffer
+        shader.Bind();
+        vaQuadAndBackground.Bind();
+        vaLines.Bind();
+        ibQuad.Bind();
 
-    //    // Set shader uniforms for rendering textured quads
-    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-    //    shader.SetUniform1i("u_Texture[0]", 0);
+        // Set shader uniforms for rendering textured quads
+        shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+        shader.SetUniform1i("u_Texture[0]", 0);
 
-    //    Batch batch;
+       
+        // Iterate through batches and render each batch
+        for (const Batch& localBatch : batches)
+        {
+            Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
 
-    //    // Iterate through batches and render each batch
-    //    for (const Batch& localBatch : batches)
-    //    {
-    //        Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
+            // Bind texture for the current batch
+            textures[batch.textureClass][0].Bind(0);
 
-    //        // Bind texture for the current batch
-    //        textures[batch.textureClass].Bind(0);
+            // Update vertex buffer data for the quad and background
+            vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
+            vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
+            vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
 
-    //        // Update vertex buffer data for the quad and background
-    //        vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
-    //        vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
-    //        vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
+            // Draw the quad and background for current batch
+            Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
+            renderer.Draw(vaQuadAndBackground, ibQuad, shader);
+        }
 
-    //        // Draw the quad and background for current batch
-    //        Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
-    //        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
-    //    }
+        // Unbind textures, index buffer, vertex arrays, and shader
+        textures[batch.textureClass][0].Unbind();
+        ibQuad.Unbind();
+        vaQuadAndBackground.Unbind();
+        shader.Unbind();
 
-    //    // Unbind textures, index buffer, vertex arrays, and shader
-    //    textures[batch.textureClass].Unbind();
-    //    ibQuad.Unbind();
-    //    vaQuadAndBackground.Unbind();
-    //    shader.Unbind();
-
-    //    // Clear the batches after rendering
-    //    batches.clear();
-    //    Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
-    //}
+        // Clear the batches after rendering
+        batches.clear();
+        Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
+    }
     
-    /*void GraphicsSystem::SetMaxBatchSize(int maxSize)
+    void GraphicsSystem::SetMaxBatchSize(int maxSize)
     {
         MAX_BATCH_SIZE = maxSize;
-    }*/
+    }
 
     //Render Background
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         try {
+
+      
+
         shader.Bind();
-        textures[Background][0].Bind(0);
+        vaQuadAndBackground.Bind();
+        //textures[Background][0].Bind(0);
+        textures[batch.textureClass][0].Bind(0);
         shader.SetUniform1f("texCoordX", 0.0f);
         //shader.SetUniform1f("u_FrameCount", 1.0f);
         shader.SetUniform1f("u_FrameWidth", 1.0f);
@@ -536,12 +542,17 @@ namespace Engine
         }
         */
 
-        vaBackground.Bind(); // Bind the background vertex array
-        ibBackground.Bind(); // Bind the background index buffer
+        vaQuadAndBackground.Bind();  // Bind the background vertex array
+        ibQuad.Bind(); // Bind the background index buffer
 
-        renderer.Draw(vaBackground, ibBackground, shader);
-        textures[Background][0].Unbind();
+        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
+        textures[batch.textureClass][0].Unbind();
+
+        //textures[Background][0].Unbind();
         shader.Unbind();
+        ibQuad.Unbind();
+        vaQuadAndBackground.Unbind();
+
         }
         catch (const std::exception& e) {
 
@@ -691,11 +702,11 @@ namespace Engine
         }
         shader.SetUniformMat4f("u_MVP", result);
 
-        va.Bind();
-        ib.Bind();
+        vaQuadAndBackground.Bind();
+        ibQuad.Bind();
 
         // Render the entity
-        renderer.Draw(va, ib, shader);
+        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
 
         // Unbind the texture and shader
         shader.Unbind();
@@ -794,10 +805,10 @@ namespace Engine
             shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
         }
 
-        va.Bind();
-        ib.Bind();
+        vaQuadAndBackground.Bind();
+        ibQuad.Bind();
         // Render the square
-        renderer.Draw(va, ib, shader);
+        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
         shader.Unbind();
         }
         catch (const std::exception& e) {
@@ -826,7 +837,7 @@ namespace Engine
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
         // Save the current shader state
-        int previousShaderSet = shader.GetCurrentShaderSet();
+        //int previousShaderSet = shader.GetCurrentShaderSet();
         shader.Bind();
         
         // Check if there's a change in the 'S' key state

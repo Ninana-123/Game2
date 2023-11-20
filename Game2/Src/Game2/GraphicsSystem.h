@@ -61,15 +61,15 @@ namespace Engine
        // void RenderTexturedEntity(const glm::mat4& mvpMatrix, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
         
         void RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity);
-        //void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,const std::vector<float>& texIndices);
-        //void RenderBatchedData();
+        void RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords,const std::vector<float>& texIndices);
+        void RenderBatchedData();
         void RenderBackground(const glm::mat4& mvpMatrix);
         void RenderLines(const glm::mat4& mvpMatrix);
         void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
         void ToggleRenderMode();
         void ToggleShaderSet();
         void DrawColoredSquare(const glm::mat4& mvpMatrix);
-        //void SetMaxBatchSize(int maxSize);
+        void SetMaxBatchSize(int maxSize);
         int screenWidth{}, screenHeight{};
       
         double animationStartTime{};
@@ -90,15 +90,15 @@ namespace Engine
 
         GLFWwindow* Window{};
         IndexBuffer ibQuad{};
-        IndexBuffer ib;
-        IndexBuffer ibLines;
-        IndexBuffer ibBackground;
+       /* IndexBuffer ib;*/
+    /*    IndexBuffer ibLines;
+        IndexBuffer ibBackground;*/
 
         VertexArray vaBackground;
         VertexArray vaQuadAndBackground{};
-        VertexArray va;
+       /* VertexArray va;*/
         VertexArray vaLines;
-        VertexArray vaSingleLine;
+        //VertexArray vaSingleLine;
 
         font font;
 
@@ -111,18 +111,18 @@ namespace Engine
         std::vector<float> vtx_positions_background{};
         std::vector<unsigned int> indices_background{};
 
-        //TextureClass textureClass;
+        TextureClass textureClass;
 
-        //struct Batch
-        //{
-        //    std::vector<glm::vec2> batchedPositions{};
-        //    std::vector<glm::vec2> batchedTexCoords{};
-        //    std::vector<float> batchedTexIndices{};
-        //    int textureClass{};
-        //};
+        struct Batch
+        {
+            std::vector<glm::vec2> batchedPositions{};
+            std::vector<glm::vec2> batchedTexCoords{};
+            std::vector<float> batchedTexIndices{};
+            int textureClass{};
+        };
 
-        //int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
-        //std::vector<Batch> batches;
+        int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
+        std::vector<Batch> batches;
 
         Camera m_Camera;
         EditorCamera m_EditorCamera;
@@ -130,7 +130,7 @@ namespace Engine
         float CameraSpeed = 1.5f;
         float yOffset = 1.0f;
        
-
+        Batch batch;
         float vtx_positions[16]{};
         unsigned int indices[6]{};
         double programStartTime = glfwGetTime();
