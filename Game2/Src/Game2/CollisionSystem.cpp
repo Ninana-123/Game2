@@ -21,9 +21,11 @@ Technology is prohibited.
 #include "PhysicsComponent.h"
 #include "Input.h"
 #include "Window.h"
+#include "inGameGUI.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
+bool buttonCollision = false;
 
 /*!*****************************************************************
 
@@ -49,7 +51,10 @@ float dt = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
+
+
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+
 	{
 		/*
 		// Separate entities based on layers
@@ -476,7 +481,7 @@ namespace Engine
 			return true;
 		}
 
-		return false ;
+		return false;
 	}
 
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
@@ -485,6 +490,31 @@ namespace Engine
 		for (auto it1 = entities->begin(); it1 != entities->end(); ++it1)
 		{
 			Entity* entity1 = it1->second.get();
+
+			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision) && !(entity1->HasComponent(ComponentType::Physics))) {
+
+				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
+				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
+
+				Input::GetMousePosition();
+				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y,
+					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())
+					&& Input::IsMouseButtonPressed(LEFT_MOUSE_BUTTON)) 
+				{
+					// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+					buttonCollision = true;
+					//collisionComponent1->mColliding = true;
+					std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+					//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
+				}
+
+				else 
+				{
+					// buttonCollision = false;
+					//collisionComponent1->mColliding = false;
+				}
+
+			}
 
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
@@ -497,11 +527,11 @@ namespace Engine
 				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
 				
-				Input::GetMousePosition();
-				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
-					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
-					//std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-				}
+				//Input::GetMousePosition();
+				//if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
+				//	collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
+				//	std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+				//}
 				
 				
 				if (collisionComponent1)

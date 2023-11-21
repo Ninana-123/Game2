@@ -63,12 +63,12 @@ namespace Engine
                     float previousX = transformComponent->position.x;
                     float previousY = transformComponent->position.y;
 
-                    // Update the Rigidbody
-                    rigidbody.update(fixedDeltaTime);
+                    //// Update the Rigidbody
+                    //rigidbody.update(fixedDeltaTime);
 
-                    // Update the entity's position based on the Rigidbody's position
-                    transformComponent->position.x = rigidbody.position.x;
-                    transformComponent->position.y = rigidbody.position.y;
+                    //// Update the entity's position based on the Rigidbody's position
+                    //transformComponent->position.x = rigidbody.position.x;
+                    //transformComponent->position.y = rigidbody.position.y;
 
                     float currentX = transformComponent->position.x;
                     float currentY = transformComponent->position.y;
@@ -80,8 +80,8 @@ namespace Engine
                     //l_velocityX += static_cast<float>(accelerationX * dt);
                     //l_velocityY += static_cast<float>(accelerationY * dt);
 
-                    currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
-                    currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
+                    //currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
+                    //currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
 
                     //if (entity->HasComponent(ComponentType::Collision))
                     //{

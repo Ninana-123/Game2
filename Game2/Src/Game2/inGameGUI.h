@@ -3,20 +3,33 @@
 #ifndef INGAMEGUISYSTEM_H
 #define INGAMEGUISYSTEM_H
 
-#include "System.h"
-#include "Entity.h"
+#include "TransformComponent.h"
+#include "CollisionComponent.h"
+#include "CollisionSystem.h"
+#include "input.h"
+#include "PrefabManager.h"
 
 namespace Engine
 {
-    class inGameGUISystem : public System 
+
+    class inGameGUI
     {
     public:
-        void Update();
 
+        inGameGUI();
+        inGameGUI(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+        inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+        inline Entity* TargetEntityGetter() { return targetEntity; }
+        void Initialize();
+
+        void Update(bool CollisionCheck);
+
+        // ~inGameGUI();
 
     private:
-        int xPos = 0;
-        int yPos = 0;
+        std::shared_ptr<Engine::EntityManager> entityManager;
+        Engine::PrefabManager* prefabManager;
+        Entity* targetEntity = nullptr;
     };
 }
 

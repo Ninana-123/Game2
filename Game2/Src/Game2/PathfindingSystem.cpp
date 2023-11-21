@@ -25,7 +25,7 @@ namespace Engine
 {
 
     // iterator for entities
-    int i = 0;
+    int iter = 0;
  
     // Function to check if a cell is within the bounds of the grid
     bool PathfindingSystem::isValid(int x, int y) {
@@ -228,7 +228,7 @@ namespace Engine
                 //}
 
 
-                if (2 > i) {
+                if (2 > iter) {
 
                     PathfindingSystem pathfinder(720, 1280);
                     pathfinder.setStart(startX, startY);
@@ -236,7 +236,7 @@ namespace Engine
                     pathfindingComponent->path = pathfinder.findShortestPath();
                     //path = pathfinder.findShortestPath();
                     //pathfindingComponent->initialized = true;
-                    i++;
+                    iter++;
                 }
 
                 //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
