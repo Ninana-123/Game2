@@ -26,6 +26,7 @@ Technology is prohibited.
 
 float dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
+int lastCollidingEntity = 0;
 
 /*!*****************************************************************
 
@@ -52,6 +53,7 @@ bool buttonCollision = false;
 namespace Engine
 {
 
+	Input inputManager;
 
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 
@@ -118,6 +120,8 @@ namespace Engine
 		EntityToEntityCollision(entities);
 		EntityToMouseCollision(entities);
 	}
+
+	EntityID CollisionSystem::GetLastCollidingEntityID() { return lastCollidingEntityID; }
 
 	// Check if this object collides with another object
 	bool CollisionSystem::CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
@@ -491,30 +495,24 @@ namespace Engine
 		{
 			Entity* entity1 = it1->second.get();
 
-			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision) && !(entity1->HasComponent(ComponentType::Physics))) {
+			//if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision) && !(entity1->HasComponent(ComponentType::Physics))) {
 
-				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
-				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
+			//	CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
+			//	TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
-				Input::GetMousePosition();
-				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y,
-					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())
-					&& Input::IsMouseButtonPressed(LEFT_MOUSE_BUTTON)) 
-				{
-					// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-					buttonCollision = true;
-					//collisionComponent1->mColliding = true;
-					std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-					//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
-				}
+			//	Input::GetMousePosition();
+			//	if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y,
+			//		collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())
+			//		&& Input::IsMouseButtonPressed(LEFT_MOUSE_BUTTON)) 
+			//	{
+			//		// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+			//		buttonCollision = true;
+			//		//collisionComponent1->mColliding = true;
+			//		std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+			//		//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
+			//	}
 
-				else 
-				{
-					// buttonCollision = false;
-					//collisionComponent1->mColliding = false;
-				}
-
-			}
+			//}
 
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
@@ -668,6 +666,46 @@ namespace Engine
 					}
 				}
 				
+			}
+
+			// Button collision logic
+			if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Collision) && !(entity->HasComponent(ComponentType::Physics))) 
+			{
+				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+
+				if (collisionComponent->layer == Layer::inGameGUI) 
+				{
+					Input::GetMousePosition();
+					if (IsAreaClicked(transformComponent->position.x + 640.f, 360.f - transformComponent->position.y,
+						collisionComponent->c_Width, collisionComponent->c_Height, Input::GetMouseX(), Input::GetMouseY())
+						&& Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
+					{
+						// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+						buttonCollision = true;
+						lastCollidingEntity = entity->GetID();
+						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+						std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
+						//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
+					}
+				}
+
+				if (collisionComponent->layer == Layer::BeforeSpawn)
+				{
+					// Check for point-to-rect collision
+					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
+					{
+						// Collision detected, set a flag or perform any actions needed
+						collisionComponent->mColliding = true;
+						//collisionComponent->layer == Layer::World;
+						//std::cout << "Mouse collided with Entity " << entity->GetID();
+					}
+					else
+					{
+						// No collision, reset the flag or perform cleanup
+						collisionComponent->mColliding = false;
+					}
+				}
 			}
 		}
 	}

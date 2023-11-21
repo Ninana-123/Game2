@@ -978,7 +978,7 @@ namespace Engine {
 
 						// Dropdown list for selecting the Layer
 						ImGui::Text("Select Layer:");
-						const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI"};
+						const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn"};
 						int currentLayerIndex = static_cast<int>(collision->layer);
 						if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) {
 							// Handle layer change here

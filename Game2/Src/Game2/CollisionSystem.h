@@ -38,13 +38,14 @@ Technology is prohibited.
 
 // Variable to check for button Collision
 extern bool buttonCollision;
-
+extern int lastCollidingEntity;
 namespace Engine
 {
 	class CollisionSystem : public System //CollisionSystem class, Child class of System base class
 	{
 	public:
 		
+		EntityID GetLastCollidingEntityID();
 
 		/*!*****************************************************************
 
@@ -252,5 +253,8 @@ namespace Engine
 		*/
 		/**************************************************************************/
 		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+
+		private:
+		EntityID lastCollidingEntityID;
 	};
 }

@@ -12,27 +12,48 @@ namespace Engine
 
 	}
 
-	inGameGUI::inGameGUI() : entityManager(), prefabManager()
+	inGameGUI::inGameGUI() : entityManager(), prefabManager(), collisionSystem()
 	{
 	}
 
 	void inGameGUI::Update(bool CollisionCheck)
 	{
 
-		std::cout << CollisionCheck << std::endl;
+		//std::cout << "Before reset flag: " << CollisionCheck << std::endl;
+
+		// Access the last colliding entity ID from the CollisionSystem
+		EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
+		std::cout << "inGameGUI Mouse collided with Entity " << lastCollidingEntity << std::endl;
+		
+		// Entity 5 is archer, 6 is tank, 9 is infantry
 		if (CollisionCheck) 
 		{
-			//// Get the coresponding entity type
 			Prefab* infantryPrefab = prefabManager->GetPrefab(0);
 			Prefab* archerPrefab = prefabManager->GetPrefab(1);
 			Prefab* tankPrefab = prefabManager->GetPrefab(2);
-			if (i < 1) {
+
+			if (lastCollidingEntity == 9) 
+			{
 				entityManager->CreateEntityFromPrefab(*infantryPrefab);
-				entityManager->CreateEntityFromPrefab(*archerPrefab);
-				entityManager->CreateEntityFromPrefab(*tankPrefab);
-				i++;
+				lastCollidingEntity = 0;
 			}
+
+			else if (lastCollidingEntity == 5) 
+			{
+				entityManager->CreateEntityFromPrefab(*archerPrefab);
+				lastCollidingEntity = 0;
+			}
+			
+			else if (lastCollidingEntity == 6) 
+			{
+				entityManager->CreateEntityFromPrefab(*tankPrefab);
+				lastCollidingEntity = 0;
+			}
+
 		}
+		// Reset flag
+		CollisionCheck = false;
+		//std::cout << "After reset flag: " << CollisionCheck << std::endl;
     }
 
 

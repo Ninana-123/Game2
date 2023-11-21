@@ -14,7 +14,7 @@ MinY: 0
 MaxX: 0
 MaxY: 0
 Radius: 0
-Layer: 0
+Layer: 4
 Texture
 MainIndex: 1
 SubIndex: 0
@@ -34,7 +34,7 @@ MinY: 0
 MaxX: 0
 MaxY: 0
 Radius: 0
-Layer: 0
+Layer: 4
 Texture
 MainIndex: 3
 SubIndex: 0
@@ -54,7 +54,7 @@ MinY: 0
 MaxX: 0
 MaxY: 0
 Radius: 0
-Layer: 0
+Layer: 4
 Texture
 MainIndex: 2
 SubIndex: 0

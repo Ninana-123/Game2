@@ -472,8 +472,8 @@ namespace Engine
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
-            std::cout << "This is Application(core)'s buttonCollision: " << buttonCollision << std::endl;
-            std::cout << "This is Application(core)'s mColliding: " << collisionTest->mColliding << std::endl;
+            //std::cout << "This is Application(core)'s buttonCollision: " << buttonCollision << std::endl;
+            //std::cout << "This is Application(core)'s mColliding: " << collisionTest->mColliding << std::endl;
             m_inGameGUI->Update(buttonCollision);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))

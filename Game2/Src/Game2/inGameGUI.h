@@ -30,6 +30,7 @@ namespace Engine
         std::shared_ptr<Engine::EntityManager> entityManager;
         Engine::PrefabManager* prefabManager;
         Entity* targetEntity = nullptr;
+        CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
     };
 }
 
