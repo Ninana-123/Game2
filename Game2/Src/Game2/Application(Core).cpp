@@ -32,6 +32,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 #include "AssetManager.h"
+#include "inGameGUI.h"
+#include "CollisionSystem.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -50,6 +52,7 @@ std::string initScene = "Resource/Scenes/testscene.txt";
 // Variable for last key pressed
 int lastKeyPressed = 0;
 
+
 namespace Engine
 {
     // Audio file paths and SoundInfo objects
@@ -65,6 +68,7 @@ namespace Engine
     Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("Resource/Config/config.txt");
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
+    std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
 
     // Entity-related instances and properties
     GraphicsSystem graphicsSystem;
@@ -185,6 +189,9 @@ namespace Engine
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
 
+        // Initialize inGameGUI
+        m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
+
     }
 
     /*!**********************************************************************
@@ -246,7 +253,7 @@ namespace Engine
             while (accumulatedTime >= fixedDeltaTime) {
 
                 accumulatedTime -= fixedDeltaTime;
-                currentNumberOfSteps++;
+                //currentNumberOfSteps++;
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
@@ -310,6 +317,11 @@ namespace Engine
                     }
                 }
 
+                //// Getting collision component data to m_inGameGUI
+                //if (m_inGameGUI->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
+                //    collisionTest = dynamic_cast<CollisionComponent*>(m_inGameGUI->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+                //}
+
                 // Define a threshold for the minimum and maximum scales
                 const float minScale = 0.5f; // Adjust this value as needed
                 const float maxScale = 2.0f; // Adjust this value as needed
@@ -329,6 +341,10 @@ namespace Engine
 
                 // Friction
                 const float friction = 0.1f;
+
+                //if (collisionTest->mColliding) {
+                //    std::cout << "Hello" << std::endl;
+                //}
 
                 if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
@@ -456,6 +472,9 @@ namespace Engine
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
+            std::cout << "This is Application(core)'s buttonCollision: " << buttonCollision << std::endl;
+            std::cout << "This is Application(core)'s mColliding: " << collisionTest->mColliding << std::endl;
+            m_inGameGUI->Update(buttonCollision);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

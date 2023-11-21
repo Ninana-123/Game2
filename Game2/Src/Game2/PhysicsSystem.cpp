@@ -40,7 +40,7 @@ namespace Engine
     // Updates the object's position based on physics calculations.
     void PhysicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
-        //std::cout << "Physics Checking" << std::endl;
+        // std::cout << "Physics Checking" << std::endl;
         for (int step = 0; step < currentNumberOfSteps; ++step)
         {
             for (const auto& entityPair : *entities)
@@ -63,12 +63,12 @@ namespace Engine
                     float previousX = transformComponent->position.x;
                     float previousY = transformComponent->position.y;
 
-                    // Update the Rigidbody
-                    rigidbody.update(fixedDeltaTime);
+                    //// Update the Rigidbody
+                    //rigidbody.update(fixedDeltaTime);
 
-                    // Update the entity's position based on the Rigidbody's position
-                    transformComponent->position.x = rigidbody.position.x;
-                    transformComponent->position.y = rigidbody.position.y;
+                    //// Update the entity's position based on the Rigidbody's position
+                    //transformComponent->position.x = rigidbody.position.x;
+                    //transformComponent->position.y = rigidbody.position.y;
 
                     float currentX = transformComponent->position.x;
                     float currentY = transformComponent->position.y;
@@ -80,32 +80,32 @@ namespace Engine
                     //l_velocityX += static_cast<float>(accelerationX * dt);
                     //l_velocityY += static_cast<float>(accelerationY * dt);
 
-                    currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
-                    currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
+                    //currentX += static_cast<int>(l_velocityX * fixedDeltaTime);
+                    //currentY += static_cast<int>(l_velocityY * fixedDeltaTime);
 
-                    if (entity->HasComponent(ComponentType::Collision))
-                    {
-                        CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+                    //if (entity->HasComponent(ComponentType::Collision))
+                    //{
+                    //    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 
-                        if (collisionComponent->isColliding)
-                        {
-                            //Update position to previous position (Stopping)
-                            transformComponent->position.x = previousX;
-                            transformComponent->position.y = previousY;
+                    //    if (collisionComponent->isColliding)
+                    //    {
+                    //        //Update position to previous position (Stopping)
+                    //        transformComponent->position.x = previousX;
+                    //        transformComponent->position.y = previousY;
 
-                            physicsComponent->velocity.x = 0.0f;
-                            physicsComponent->velocity.y = 0.0f;
+                    //        physicsComponent->velocity.x = 0.0f;
+                    //        physicsComponent->velocity.y = 0.0f;
 
-                        }
-                        else
-                        {
-                            //Update position after acceleration model
-                            transformComponent->position.x = currentX;
-                            transformComponent->position.y = currentY;
-                            physicsComponent->velocity.x = l_velocityX;
-                            physicsComponent->velocity.y = l_velocityY;
-                        }
-                    }
+                    //    }
+                    //    else
+                    //    {
+                    //        //Update position after acceleration model
+                    //        transformComponent->position.x = currentX;
+                    //        transformComponent->position.y = currentY;
+                    //        physicsComponent->velocity.x = l_velocityX;
+                    //        physicsComponent->velocity.y = l_velocityY;
+                    //    }
+                    //}
                 }
             }
         }
