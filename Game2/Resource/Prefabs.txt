@@ -13,177 +13,26 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+CircleMidX: 0
+CircleMidY: 4
 Radius: 0
-Layer: 4
-Texture
-MainIndex: 1
-SubIndex: 0
-Pathfinding
-startX: 0
-startY: 0
-goalX: -200
-goalY: -200
-initialized: 0
+Layer: -858993460
+CollisionVelX: 0
+CollisionVelY: 0
 EndPrefab
-Archer
-Transform
-Position: 0 -300
-ScaleX: 1
-ScaleY: 1
-Rotation: 0
-Collision
-c_Width: 45
-c_Height: 45
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 4
-Texture
-MainIndex: 3
-SubIndex: 0
-Pathfinding
-startX: 0
-startY: 0
-goalX: 200
-goalY: 200
-initialized: 0
 EndPrefab
-Tank
-Transform
-Position: 135 -300
-ScaleX: 1
-ScaleY: 1
-Rotation: 0
-Collision
-c_Width: 45
-c_Height: 45
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 4
-Texture
-MainIndex: 2
-SubIndex: 0
-Pathfinding
-startX: 0
-startY: 0
-goalX: 300
-goalY: 0
-initialized: 0
 EndPrefab
-HUDArcher
-Transform
-Position: 0 0
-ScaleX: 1
-ScaleY: 1
-Rotation: 0
-Texture
-MainIndex: 8
-SubIndex: 0
-Collision
-c_Width: 0
-c_Height: 0
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 0
 EndPrefab
-HUDTank
-Transform
-Position: -100 -100
-ScaleX: 1
-ScaleY: 1
-Rotation: 0
-Texture
-MainIndex: 9
-SubIndex: 0
-Collision
-c_Width: 0
-c_Height: 0
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 0
 EndPrefab
-Pausebutton
-Transform
-Position: 0 0
-ScaleX: 0.5
-ScaleY: 0.5
-Rotation: 0
-Collision
-c_Width: 0
-c_Height: 0
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 0
-Texture
-MainIndex: 10
-SubIndex: 0
 EndPrefab
-Settingsbutton
-Transform
-Position: 0 0
-ScaleX: 0.5
-ScaleY: 0.5
-Rotation: 0
-Collision
-c_Width: 0
-c_Height: 0
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 0
-Texture
-MainIndex: 12
-SubIndex: 0
 EndPrefab
-HUDInfantry
-Transform
-Position: 0 0
-ScaleX: 1
-ScaleY: 1
-Rotation: 0
-Collision
-c_Width: 0
-c_Height: 0
-isColliding: 0
-MinX: 0
-MinY: 0
-MaxX: 0
-MaxY: 0
-Radius: 0
-Layer: 0
-Texture
-MainIndex: 7
-SubIndex: 0
 EndPrefab
-HUD
-Transform
-Position: 0 0
-ScaleX: 0.25
-ScaleY: 4
-Rotation: 0
-Texture
-MainIndex: 6
-SubIndex: 0
+EndPrefab
+EndPrefab
+EndPrefab
+EndPrefab
+EndPrefab
+EndPrefab
+EndPrefab
+EndPrefab
 EndPrefab

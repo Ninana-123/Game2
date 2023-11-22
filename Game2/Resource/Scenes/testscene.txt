@@ -21,8 +21,12 @@ MinX: 197.5
 MinY: 142.5
 MaxX: 242.5
 MaxY: 187.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 2
+CollisionVelX: 0
+CollisionVelY: 0
 Physics
 Velocity: 0 0
 Acceleration: 0.1 0.1
@@ -55,8 +59,12 @@ MinX: 77.5
 MinY: 77.5
 MaxX: 122.5
 MaxY: 122.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 2
+CollisionVelX: 0
+CollisionVelY: 0
 Physics
 Velocity: 1 1
 Acceleration: 0.1 0.1
@@ -89,8 +97,12 @@ MinX: -22.5
 MinY: -22.5
 MaxX: 22.5
 MaxY: 22.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 2
+CollisionVelX: 0
+CollisionVelY: 0
 Physics
 Velocity: 1 1
 Acceleration: 0.1 0.1
@@ -122,8 +134,12 @@ MinX: -22.5
 MinY: -322.5
 MaxX: 22.5
 MaxY: -277.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 3
+CollisionVelX: 0
+CollisionVelY: 0
 Texture
 MainIndex: 8
 SubIndex: 0
@@ -141,8 +157,12 @@ MinX: 112.5
 MinY: -322.5
 MaxX: 157.5
 MaxY: -277.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 3
+CollisionVelX: 0
+CollisionVelY: 0
 Texture
 MainIndex: 9
 SubIndex: 0
@@ -160,8 +180,12 @@ MinX: 560
 MinY: 335
 MaxX: 560
 MaxY: 335
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 3
+CollisionVelX: 0
+CollisionVelY: 0
 Texture
 MainIndex: 10
 SubIndex: 0
@@ -179,8 +203,12 @@ MinX: 610
 MinY: 335
 MaxX: 610
 MaxY: 335
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 3
+CollisionVelX: 0
+CollisionVelY: 0
 Texture
 MainIndex: 12
 SubIndex: 0
@@ -198,8 +226,12 @@ MinX: -157.5
 MinY: -322.5
 MaxX: -112.5
 MaxY: -277.5
+CircleMidX: 0
+CircleMidY: 0
 Radius: 0
 Layer: 3
+CollisionVelX: 0
+CollisionVelY: 0
 Texture
 MainIndex: 7
 SubIndex: 0
