@@ -5,27 +5,24 @@ layout(location = 0) out vec4 color;
 in vec2 v_TexCoord;
 in vec3 v_Normal; // Example: receive the normal attribute from the vertex shader
 
-uniform vec4 u_Color;
-uniform sampler2D u_Texture;
-uniform bool u_RenderTextured;
+uniform vec4        u_Color;
+uniform sampler2D   u_Texture;
+uniform bool        u_RenderTextured;
 
 void main()
 {
     vec3 normal = normalize(v_Normal);
-    
-    float lightIntensity = dot(normal, vec3(0.0, 0.0, 1.0)); // Simple directional light along z-axis
-    lightIntensity = clamp(lightIntensity, 0.2, 1.0); // Clamp the intensity
-    
-    vec4 finalColor;
+
+    // Batch rendering logic
     if (u_RenderTextured)
     {
         vec4 texColor = texture(u_Texture, v_TexCoord);
-        finalColor = texColor * vec4(lightIntensity, lightIntensity, lightIntensity, 1.0);
+        color = texColor;
     }
     else
     {
-        finalColor = u_Color * vec4(lightIntensity, lightIntensity, lightIntensity, 1.0);
+        float lightIntensity = dot(normal, vec3(0.0, 0.0, 1.0)); // Simple directional light along z-axis
+        lightIntensity = clamp(lightIntensity, 0.2, 1.0);        // Clamp the intensity
+        color = u_Color * vec4(lightIntensity, lightIntensity, lightIntensity, 1.0);
     }
-
-    color = finalColor;
 }

@@ -37,19 +37,21 @@ namespace Engine
    */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
-            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
-        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+                 "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
+          m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f),
+          MAX_BATCH_SIZE(50)
     {
     }
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
         : assetManager(assetManager), 
-     shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
-            "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
-            "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
-            entityManager(entityManager),
-             m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
+          shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
+                 "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
+                 "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
+          entityManager(entityManager),
+          m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f),
+          MAX_BATCH_SIZE(50)
     {
     }
 
@@ -244,7 +246,6 @@ namespace Engine
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-        int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
         // Set up projection and view matrices
@@ -294,12 +295,13 @@ namespace Engine
 
 
             VertexBufferLayout layout;
-            layout.Push<float>(2);
-            layout.Push<float>(2);
+            layout.Push<float>(2); // location 0: position
+            layout.Push<float>(2); // location 1: texture coordinates
 
             ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
             vaQuadAndBackground.AddBuffer(vbQuadAndBackground, layout);
             vaLines.AddBuffer(vbLines, layout);
+            vaLines.UpdateBuffer(0, vtx_positions_lines.data(), vtx_positions_lines.size() * sizeof(float));
         }
         catch (const std::runtime_error& e) {
             // Handle buffer initialization error
@@ -469,33 +471,52 @@ namespace Engine
 
         // Set shader uniforms for rendering textured quads
         shader.SetUniform1i("u_RenderTextured", 1); // Render textured
-        shader.SetUniform1i("u_Texture[0]", 0);
+        shader.SetUniform1i("u_Texture", 0);
 
-       
         // Iterate through batches and render each batch
         for (const Batch& localBatch : batches)
         {
             Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
 
             // Bind texture for the current batch
-            textures[batch.textureClass][0].Bind(0);
+            textures[localBatch.textureClass][0].Bind(0);
+
+            // Check the size of localBatch.batchedTexCoords
+            if (localBatch.batchedTexCoords.size() % 2 != 0) {
+                // Print an error message or handle the issue
+                std::cerr << "Error: batchedTexCoords size is not a multiple of 2!" << std::endl;
+            }
+
+            // Set shader uniforms for rendering textured quads
+            shader.SetUniform1i("u_BatchSize", static_cast<int>(localBatch.batchedPositions.size() / 2));
+
+            // Check if the size passed to SetUniform2fv is correct
+            if (localBatch.batchedTexCoords.size() % 2 != 0) {
+                // Print an error message or handle the issue
+                std::cerr << "Error: batchedTexCoords size is not a multiple of 2!" << std::endl;
+            }
+            else {
+                // Set the uniform
+                shader.SetUniform2fv("u_BatchTexCoords", static_cast<GLsizei>(localBatch.batchedTexCoords.size() / 2), localBatch.batchedTexCoords);
+            }
 
             // Update vertex buffer data for the quad and background
             vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
             vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
             vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
 
-            // Draw the quad and background for current batch
+
+            // Draw the quad and background for the current batch
             Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
             renderer.Draw(vaQuadAndBackground, ibQuad, shader);
         }
 
         // Unbind textures, index buffer, vertex arrays, and shader
-        textures[batch.textureClass][0].Unbind();
+        textures[batches.back().textureClass][0].Unbind(); // Use the texture class of the last batch
         ibQuad.Unbind();
         vaQuadAndBackground.Unbind();
         shader.Unbind();
-
+            
         // Clear the batches after rendering
         batches.clear();
         Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
@@ -511,14 +532,11 @@ namespace Engine
     {
         try {
 
-      
-
         shader.Bind();
         vaQuadAndBackground.Bind();
         //textures[Background][0].Bind(0);
         textures[batch.textureClass][0].Bind(0);
         shader.SetUniform1f("texCoordX", 0.0f);
-        //shader.SetUniform1f("u_FrameCount", 1.0f);
         shader.SetUniform1f("u_FrameWidth", 1.0f);
         shader.SetUniform1f("u_FrameHeight", 1.0f);
 
@@ -729,8 +747,13 @@ namespace Engine
             shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
 
             // Draw the lines directly without an IBO
-            GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
-
+            //GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
+            glDrawArrays(GL_LINE_LOOP, 0, 4);
+            int result = glGetError();
+            if (result != 0)
+            {
+                std::cout << result << '\n';
+            }
             shader.SetUniform1i("u_RenderTextured", 1);
             vaLines.Unbind();
             shader.Unbind();
@@ -831,7 +854,7 @@ namespace Engine
         int width, height;
         glfwGetWindowSize(Window, &width, &height);
         UpdateViewport(width, height);
-       renderer.Clear();
+        renderer.Clear();
 
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;

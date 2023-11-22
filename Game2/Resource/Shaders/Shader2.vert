@@ -6,7 +6,7 @@ layout(location = 1) in vec2 texCoord;
 out vec2 v_TexCoord;
 out vec3 v_Normal; // Example: add a normal attribute
 
-uniform mat4 u_MVP;
+uniform mat4  u_MVP;
 uniform float texCoordX;
 uniform float u_FrameWidth;
 uniform float u_FrameHeight;

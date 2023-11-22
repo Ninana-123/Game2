@@ -19,6 +19,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #include <string>
 #include <unordered_map>
+#include <GL/glew.h>  
+#include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
 
 struct ShaderProgramSource
@@ -67,6 +69,7 @@ public:
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
     void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
     void SetUniform2f(const std::string& name, const glm::vec2& vector);
+    void SetUniform2fv(const std::string& name, GLsizei count, const std::vector<glm::vec2>& values);
 
     void SetShaderProgram(int shaderSet, unsigned int programID);
 

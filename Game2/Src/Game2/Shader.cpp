@@ -384,6 +384,19 @@ void Shader::SetActiveShaderSet(int shaderSet)
     m_CurrentShaderSet = shaderSet;
 }
 
+/*!
+ * \brief Set a uniform 2-component float vector in the shader program.
+ * \param name The name of the uniform variable.
+ * \param count The number of 2-component float vectors in the array.
+ * \param values Pointer to the array of 2-component float vectors.
+ *
+ * This function sets a uniform 2-component float vector array in the shader program.
+ */
+void Shader::SetUniform2fv(const std::string& name, GLsizei count, const std::vector<glm::vec2>& values)
+{
+    GLCall(glUniform2fv(GetUniformLocation(name), count, &values[0][0]));
+}
+
 void Shader::SetShaderProgram(int shaderSet, unsigned int programID) {
     m_RendererIDs[shaderSet] = programID;
 }
