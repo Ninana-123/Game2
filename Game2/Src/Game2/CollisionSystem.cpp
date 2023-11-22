@@ -500,20 +500,24 @@ namespace Engine
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
-				if (collisionComponent1->layer != Layer::inGameGUI) {
+				if (collisionComponent1->layer != Layer::inGameGUI) 
+				{
 					AABB aabb1;
 					Circle circle1;
-					//circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 					circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
-					circle1.radius = 45.f;
+					//circle1.radius = 45.f;
 					VECTORMATH::Vec2 vel1;
 					VECTORMATH::Vec2 circleVel1 = VECTORMATH::Vec2(collisionComponent1->collisionVel.x, collisionComponent1->collisionVel.y);
 
+					if (collisionComponent1->layer == Layer::Tower)
+					{
+						circle1.radius = 100.f;
+
+					}
 
 					if (collisionComponent1)
 					{
 						aabb1 = collisionComponent1->aabb;
-						// circle1 = collisionComponent1->circle;
 					}
 
 					if (entity1->HasComponent(ComponentType::Physics))
@@ -542,7 +546,7 @@ namespace Engine
 								AABB aabb2;
 								Circle circle2;
 								circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
-								circle2.radius = 45.f;
+								circle2.radius = 100.f;
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
 
@@ -576,7 +580,7 @@ namespace Engine
 									// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
 
 									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
-										&& collisionComponent2->layer != Layer::inGameGUI) {
+										&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower) {
 										// isColliding = true;
 										std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 											<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
