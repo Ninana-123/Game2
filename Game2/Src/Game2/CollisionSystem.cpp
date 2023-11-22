@@ -495,138 +495,128 @@ namespace Engine
 		{
 			Entity* entity1 = it1->second.get();
 
-			//if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision) && !(entity1->HasComponent(ComponentType::Physics))) {
-
-			//	CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
-			//	TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
-
-			//	Input::GetMousePosition();
-			//	if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y,
-			//		collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())
-			//		&& Input::IsMouseButtonPressed(LEFT_MOUSE_BUTTON)) 
-			//	{
-			//		// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-			//		buttonCollision = true;
-			//		//collisionComponent1->mColliding = true;
-			//		std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-			//		//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
-			//	}
-
-			//}
-
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
-				AABB aabb1;
-				Circle circle1;
-				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
-				circle1.radius = 0.f;
-				VECTORMATH::Vec2 vel1;
-				
-				//Input::GetMousePosition();
-				//if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
-				//	collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
-				//	std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-				//}
-				
-				
-				if (collisionComponent1)
-				{				
-					aabb1 = collisionComponent1->aabb;
-					// circle1 = meow;
-				}
+				if (collisionComponent1->layer != Layer::inGameGUI) {
+					AABB aabb1;
+					Circle circle1;
+					//circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
+					circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
+					circle1.radius = 45.f;
+					VECTORMATH::Vec2 vel1;
+					VECTORMATH::Vec2 circleVel1 = VECTORMATH::Vec2(collisionComponent1->collisionVel.x, collisionComponent1->collisionVel.y);
 
-				if (entity1->HasComponent(ComponentType::Physics))
-				{
-					PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
-					vel1 = VECTORMATH::Vec2(physicsComponent1->velocity.x, physicsComponent1->velocity.y);
-				}
-				else
-				{
-					vel1 = VECTORMATH::Vec2(0.0f, 0.0f);
-				}
 
-				bool isColliding = false; // Flag to check if entity1 is colliding with any other entity
-
-				for (auto it2 = entities->begin(); it2 != entities->end(); ++it2)
-				{
-					if (it1 != it2) // Avoid self-collision check
+					if (collisionComponent1)
 					{
-						Entity* entity2 = it2->second.get();
+						aabb1 = collisionComponent1->aabb;
+						// circle1 = collisionComponent1->circle;
+					}
 
-						if (entity2->HasComponent(ComponentType::Transform))
+					if (entity1->HasComponent(ComponentType::Physics))
+					{
+						PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
+						vel1 = VECTORMATH::Vec2(physicsComponent1->velocity.x, physicsComponent1->velocity.y);
+					}
+					else
+					{
+						vel1 = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
+					}
+
+					bool isColliding = false; // Flag to check if entity1 is colliding with any other entity
+
+					for (auto it2 = entities->begin(); it2 != entities->end(); ++it2)
+					{
+						if (it1 != it2) // Avoid self-collision check
 						{
-							CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
-							//TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+							Entity* entity2 = it2->second.get();
 
-							AABB aabb2;
-							Circle circle2;
-							circle2.center = VECTORMATH::Vec2(435, 60);
-							circle2.radius = 0.f;
-							VECTORMATH::Vec2 vel2;
-							
-							if (collisionComponent2)
+							if (entity2->HasComponent(ComponentType::Transform))
 							{
-								aabb2 = collisionComponent2->aabb;
-							}
-											
-							if (entity2->HasComponent(ComponentType::Physics))
-							{
-								PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
-								vel2 = VECTORMATH::Vec2(physicsComponent2->velocity.x, physicsComponent2->velocity.y);
-							}
-							else
-							{
-								vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
-							}
-							// Check for collision with entity2
-							if (entity2->HasComponent(ComponentType::Collision)) {
-								if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
+								CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
+								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+
+								AABB aabb2;
+								Circle circle2;
+								circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
+								circle2.radius = 45.f;
+								VECTORMATH::Vec2 vel2;
+								VECTORMATH::Vec2 circleVel2;
+
+								if (collisionComponent2)
 								{
-									isColliding = true;
-									//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+									aabb2 = collisionComponent2->aabb;
+									// circle2 = collisionComponent2->circle;
 								}
 
-								if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
-									//isColliding = true;
-									//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								if (entity2->HasComponent(ComponentType::Physics))
+								{
+									PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
+									vel2 = VECTORMATH::Vec2(physicsComponent2->velocity.x, physicsComponent2->velocity.y);
 								}
+								else
+								{
+									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
+								}
+								// Check for collision with entity2
+								if (entity2->HasComponent(ComponentType::Collision)) {
+
+									circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
+
+									if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2) 
+										&& collisionComponent2->layer != Layer::inGameGUI)
+									{
+										isColliding = true;
+										//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+									}
+
+									// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
+
+									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
+										&& collisionComponent2->layer != Layer::inGameGUI) {
+										// isColliding = true;
+										std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+											<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+
+									}
+								}
+
 							}
-
 						}
 					}
+
+					// Set the collision flag based on whether there was any collision
+					if (collisionComponent1)
+					{
+						collisionComponent1->isColliding = isColliding;
+					}
+
+					if (!isColliding)
+					{
+						//std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+						//std::cout << Input::GetMouseX() << std::endl;
+						//std::cout << Input::GetMouseY() << std::endl;
+					}
+
+					//update AABB coordinates in entity1
+					if (collisionComponent1)
+					{
+						float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
+						float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
+
+						float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
+						float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
+						float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
+						float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
+
+						collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
+						collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+
+					}
 				}
-
-				// Set the collision flag based on whether there was any collision
-				if (collisionComponent1)
-				{
-					collisionComponent1->isColliding = isColliding;
-				}
-
-				if (!isColliding)
-				{
-					//std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
-					//std::cout << Input::GetMouseX() << std::endl;
-					//std::cout << Input::GetMouseY() << std::endl;
-				}
-
-				//update AABB coordinates in entity1
-				if (collisionComponent1)
-				{
-					float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
-					float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
-
-					float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
-
-					collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);		
-
-				}	
 			}
 		}
 	}
