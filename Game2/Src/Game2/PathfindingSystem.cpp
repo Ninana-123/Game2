@@ -20,13 +20,17 @@ Technology is prohibited.
 #include "TransformComponent.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include <GLFW/glfw3.h>
 
 namespace Engine
 {
 
     // iterator for entities
     int iter = 0;
- 
+
+    // Declaration for window width and height
+    int displayWidth, displayHeight;
+
     // Function to check if a cell is within the bounds of the grid
     bool PathfindingSystem::isValid(int x, int y) {
         // Check if x and y are within the grid's bounds
@@ -55,6 +59,7 @@ namespace Engine
         goalX = 0;
         goalY = 0;
         initialized = false;
+
     }
 
 
@@ -78,68 +83,14 @@ namespace Engine
         goalY = y;
     }
 
-    //// Dijkstra's algorithm to find the shortest path
-    //std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath() {
-    //    std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
-    //    std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
-    //    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
+    std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath(int windowWidth, int windowHeight) 
+    {
 
-    //    distanceGrid[startX][startY] = 0;
-    //    pq.push(Node(startX, startY, 0));
-
-    //    while (!pq.empty()) {
-    //        Node current = pq.top();
-    //        pq.pop();
-
-    //        int x = current.x;
-    //        int y = current.y;
-    //        double cost = current.cost;
-
-    //        if (x == goalX && y == goalY) {
-    //            // We have reached the goal, reconstruct the path
-    //            std::vector<std::pair<int, int>> path;
-    //            while (x != -1 && y != -1) {
-    //                path.push_back({ x, y });
-    //                int newX = parent[x][y].first;
-    //                int newY = parent[x][y].second;
-    //                x = newX;
-    //                y = newY;
-    //            }
-    //            std::reverse(path.begin(), path.end());
-    //            return path;
-    //        }
-
-    //        // Explore neighbors (up, down, left, right)
-    //        int dx[] = { -1, 1, 0, 0 };
-    //        int dy[] = { 0, 0, -1, 1 };
-
-    //        for (int i = 0; i < 4; i++) {
-    //            int newX = x + dx[i];
-    //            int newY = y + dy[i];
-
-    //            if (isValid(newX, newY)) {
-    //                double newCost = cost + distance(x, y, newX, newY);
-
-    //                if (newCost < distanceGrid[newX][newY]) {
-    //                    distanceGrid[newX][newY] = newCost;
-    //                    parent[newX][newY] = { x, y };
-    //                    pq.push(Node(newX, newY, newCost));
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    // No path found
-    //    return {};
-    //}
-
-    std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath() {
         // Adjusted the indexing to handle negative coordinates
-        int adjustedStartX = startX + 360;
-        int adjustedStartY = startY + 640;
-        int adjustedGoalX = goalX + 360;
-        int adjustedGoalY = goalY + 640;
-
+        int adjustedStartX = startX + static_cast<int>(windowWidth/2);
+        int adjustedStartY = startY + static_cast<int>(windowHeight/2);
+        int adjustedGoalX = goalX + static_cast<int>(windowWidth/2);
+        int adjustedGoalY = goalY + static_cast<int>(windowHeight/2);
         std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
         std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
         std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
@@ -159,7 +110,7 @@ namespace Engine
                 // We have reached the goal, reconstruct the path
                 std::vector<std::pair<int, int>> path;
                 while (x != -1 && y != -1) {
-                    path.push_back({ x - 360, y - 640 });
+                    path.push_back({ x - static_cast<int>(windowWidth/2), y - static_cast<int>(windowHeight/2) });
                     int newX = parent[x][y].first;
                     int newY = parent[x][y].second;
                     x = newX;
@@ -195,7 +146,10 @@ namespace Engine
 
     void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
-        
+
+        glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight); // Initialize window width and height
+
+        std::cout << "displayWidth: " << displayWidth << " displayHeight: " << displayHeight << std::endl;
 
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities) 
@@ -218,11 +172,10 @@ namespace Engine
 
                     if (!(pathfindingComponent->initialized)) {
                         
-                        PathfindingSystem pathfinder(720, 1280);
+                        PathfindingSystem pathfinder(displayWidth, displayHeight);
                         pathfinder.setStart(startX, startY);
                         pathfinder.setGoal(goalX, goalY);
-                        pathfindingComponent->path = pathfinder.findShortestPath();
-                        //path = pathfinder.findShortestPath();
+                        pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
                         pathfindingComponent->initialized = true;
 
                     }

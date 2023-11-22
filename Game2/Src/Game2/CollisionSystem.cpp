@@ -686,7 +686,6 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
-					std::cout << "Layer before release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{

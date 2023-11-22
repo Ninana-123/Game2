@@ -107,9 +107,8 @@ namespace Engine
 
         */
         /**************************************************************************/
-        std::vector<std::pair<int, int>> findShortestPath();
+        std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
-        bool bellmanFord();
 
     private:
         struct Node {
