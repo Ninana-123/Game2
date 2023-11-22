@@ -47,7 +47,7 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
 double dt = 0;
-std::string initScene = "Resource/Scenes/testscene.txt";
+std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -476,8 +476,6 @@ namespace Engine
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
-            //std::cout << "This is Application(core)'s buttonCollision: " << buttonCollision << std::endl;
-            //std::cout << "This is Application(core)'s mColliding: " << collisionTest->mColliding << std::endl;
             m_inGameGUI->Update(buttonCollision);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))

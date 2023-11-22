@@ -505,10 +505,10 @@ namespace Engine
 					AABB aabb1;
 					Circle circle1;
 					circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
-					//circle1.radius = 45.f;
 					VECTORMATH::Vec2 vel1;
 					VECTORMATH::Vec2 circleVel1 = VECTORMATH::Vec2(collisionComponent1->collisionVel.x, collisionComponent1->collisionVel.y);
 
+					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower)
 					{
 						circle1.radius = 100.f;
@@ -695,7 +695,7 @@ namespace Engine
 						{
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
-							std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
+							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}

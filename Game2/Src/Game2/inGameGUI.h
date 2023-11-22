@@ -8,6 +8,8 @@
 #include "CollisionSystem.h"
 #include "input.h"
 #include "PrefabManager.h"
+#include "EngineTypes.h"
+#include "AssetManager.h"
 
 namespace Engine
 {
@@ -31,6 +33,11 @@ namespace Engine
         Engine::PrefabManager* prefabManager;
         Entity* targetEntity = nullptr;
         CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
+        TextureComponent* textureCheck;
+
+        // Helper function to check if the given textureKey corresponds to a specific texture type
+        bool IsEntityTextureType(const TextureKey& textureKey, TextureClass textureClass);
+
     };
 }
 

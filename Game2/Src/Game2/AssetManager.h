@@ -53,7 +53,7 @@ namespace Engine {
         const std::map<TextureKey, std::string>& GetTextureFilePaths() const {
             return textureFilePaths;
         }
-        
+
 
     private:
         // Use the TextureKey structure instead of int for the map
