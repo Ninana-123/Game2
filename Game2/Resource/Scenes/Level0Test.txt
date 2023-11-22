@@ -151,7 +151,7 @@ MinY: -35
 MaxX: -275
 MaxY: -35
 Radius: 0
-Layer: 0
+Layer: 5
 CollisionVel: -275 -35
 Texture
 MainIndex: 4

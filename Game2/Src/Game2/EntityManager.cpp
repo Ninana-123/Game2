@@ -109,5 +109,16 @@ namespace Engine
 			entities = std::move(updatedEntities);
 		}
 	}
+
+	//TextureClass EntityManager::GetTextureClassFromEntityID(EntityID entityID) const
+	//{
+	//	Entity* entity = GetEntity(entityID);
+	//	if (entity) {
+	//		// Assuming there is a function in the Entity class to get the TextureClass
+	//		return entity->GetTextureClass();
+	//	}
+	//	// Return an appropriate default value or handle the case where the entity is not found
+	//	return TextureClass::TextureClassCount;
+	//}
 }
 
