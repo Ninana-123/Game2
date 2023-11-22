@@ -78,14 +78,74 @@ namespace Engine
         goalY = y;
     }
 
-    // Dijkstra's algorithm to find the shortest path
+    //// Dijkstra's algorithm to find the shortest path
+    //std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath() {
+    //    std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
+    //    std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
+    //    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
+
+    //    distanceGrid[startX][startY] = 0;
+    //    pq.push(Node(startX, startY, 0));
+
+    //    while (!pq.empty()) {
+    //        Node current = pq.top();
+    //        pq.pop();
+
+    //        int x = current.x;
+    //        int y = current.y;
+    //        double cost = current.cost;
+
+    //        if (x == goalX && y == goalY) {
+    //            // We have reached the goal, reconstruct the path
+    //            std::vector<std::pair<int, int>> path;
+    //            while (x != -1 && y != -1) {
+    //                path.push_back({ x, y });
+    //                int newX = parent[x][y].first;
+    //                int newY = parent[x][y].second;
+    //                x = newX;
+    //                y = newY;
+    //            }
+    //            std::reverse(path.begin(), path.end());
+    //            return path;
+    //        }
+
+    //        // Explore neighbors (up, down, left, right)
+    //        int dx[] = { -1, 1, 0, 0 };
+    //        int dy[] = { 0, 0, -1, 1 };
+
+    //        for (int i = 0; i < 4; i++) {
+    //            int newX = x + dx[i];
+    //            int newY = y + dy[i];
+
+    //            if (isValid(newX, newY)) {
+    //                double newCost = cost + distance(x, y, newX, newY);
+
+    //                if (newCost < distanceGrid[newX][newY]) {
+    //                    distanceGrid[newX][newY] = newCost;
+    //                    parent[newX][newY] = { x, y };
+    //                    pq.push(Node(newX, newY, newCost));
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    // No path found
+    //    return {};
+    //}
+
     std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath() {
+        // Adjusted the indexing to handle negative coordinates
+        int adjustedStartX = startX + 360;
+        int adjustedStartY = startY + 640;
+        int adjustedGoalX = goalX + 360;
+        int adjustedGoalY = goalY + 640;
+
         std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
         std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
         std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
 
-        distanceGrid[startX][startY] = 0;
-        pq.push(Node(startX, startY, 0));
+        distanceGrid[adjustedStartX][adjustedStartY] = 0;
+        pq.push(Node(adjustedStartX, adjustedStartY, 0));
 
         while (!pq.empty()) {
             Node current = pq.top();
@@ -95,11 +155,11 @@ namespace Engine
             int y = current.y;
             double cost = current.cost;
 
-            if (x == goalX && y == goalY) {
+            if (x == adjustedGoalX && y == adjustedGoalY) {
                 // We have reached the goal, reconstruct the path
                 std::vector<std::pair<int, int>> path;
                 while (x != -1 && y != -1) {
-                    path.push_back({ x, y });
+                    path.push_back({ x - 360, y - 640 });
                     int newX = parent[x][y].first;
                     int newY = parent[x][y].second;
                     x = newX;
@@ -133,66 +193,6 @@ namespace Engine
         return {};
     }
 
-    bool PathfindingSystem::bellmanFord() {
-        std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
-        std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
-
-        distanceGrid[startX][startY] = 0;
-
-        // Relax edges repeatedly
-        for (int k = 0; k < numRows * numCols - 1; k++) {
-            for (int i = 0; i < numRows; i++) {
-                for (int j = 0; j < numCols; j++) {
-                    if (distanceGrid[i][j] != INFINITY) {
-                        // Explore neighbors (up, down, left, right)
-                        int dx[] = { -1, 1, 0, 0 };
-                        int dy[] = { 0, 0, -1, 1 };
-
-                        for (int l = 0; l < 4; l++) {
-                            int newX = i + dx[l];
-                            int newY = j + dy[l];
-
-                            if (isValid(newX, newY)) {
-                                double newCost = distanceGrid[i][j] + distance(i, j, newX, newY);
-
-                                if (newCost < distanceGrid[newX][newY]) {
-                                    distanceGrid[newX][newY] = newCost;
-                                    parent[newX][newY] = { i, j };
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Check for negative cycles
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
-                if (distanceGrid[i][j] != INFINITY) {
-                    int dx[] = { -1, 1, 0, 0 };
-                    int dy[] = { 0, 0, -1, 1 };
-
-                    for (int l = 0; l < 4; l++) {
-                        int newX = i + dx[l];
-                        int newY = j + dy[l];
-
-                        if (isValid(newX, newY)) {
-                            double newCost = distanceGrid[i][j] + distance(i, j, newX, newY);
-
-                            if (newCost < distanceGrid[newX][newY]) {
-                                // Negative cycle detected
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
     void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
     {
         
@@ -210,50 +210,41 @@ namespace Engine
                 TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 
-                //int startX = transformComponent->position.x;
-                //int startY = transformComponent->position.y;
-                startX = pathfindingComponent->startX;
-                startY = pathfindingComponent->startY;
-                goalX = pathfindingComponent->goalX;
-                goalY = pathfindingComponent->goalY;
-                //if (!(pathfindingComponent->initialized)) {
-                //    
-                //    PathfindingSystem pathfinder(720, 1280);
-                //    pathfinder.setStart(startX, startY);
-                //    pathfinder.setGoal(goalX, goalY);
-                //    pathfindingComponent->path = pathfinder.findShortestPath();
-                //    //path = pathfinder.findShortestPath();
-                //    pathfindingComponent->initialized = true;
+                if (collisionComponent->layer == Layer::World) {
+                    startX = transformComponent->position.x;
+                    startY = transformComponent->position.y;
+                    goalX = pathfindingComponent->goalX;
+                    goalY = pathfindingComponent->goalY;
 
-                //}
+                    if (!(pathfindingComponent->initialized)) {
+                        
+                        PathfindingSystem pathfinder(720, 1280);
+                        pathfinder.setStart(startX, startY);
+                        pathfinder.setGoal(goalX, goalY);
+                        pathfindingComponent->path = pathfinder.findShortestPath();
+                        //path = pathfinder.findShortestPath();
+                        pathfindingComponent->initialized = true;
+
+                    }
+
+                    // Debug print for pathfinding
+                    //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
+                    //for (const auto& point : pathfindingComponent->path) {
+                    //    std::cout << "(" << point.first << ", " << point.second << ") ";
+                    //}
+                    //std::cout << std::endl;
 
 
-                if (2 > iter) {
+                    if (!pathfindingComponent->path.empty()) {
+                        std::pair<int, int> nextPosition = pathfindingComponent->path[0];
 
-                    PathfindingSystem pathfinder(720, 1280);
-                    pathfinder.setStart(startX, startY);
-                    pathfinder.setGoal(goalX, goalY);
-                    pathfindingComponent->path = pathfinder.findShortestPath();
-                    //path = pathfinder.findShortestPath();
-                    //pathfindingComponent->initialized = true;
-                    iter++;
-                }
+                        // Update the entity's position
+                        transformComponent->position.x = static_cast<float>(nextPosition.first);
+                        transformComponent->position.y = static_cast<float>(nextPosition.second);
 
-                //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
-                //for (const auto& point : pathfindingComponent->path) {
-                //    std::cout << "(" << point.first << ", " << point.second << ") ";
-                //}
-                //std::cout << std::endl;
-
-                if (!pathfindingComponent->path.empty()) {
-                    std::pair<int, int> nextPosition = pathfindingComponent->path[0];
-
-                    // Update the entity's position
-                    transformComponent->position.x = static_cast<float>(nextPosition.first);
-                    transformComponent->position.y = static_cast<float>(nextPosition.second);
-
-                    // Remove the first position from the path
-                    pathfindingComponent->path.erase(pathfindingComponent->path.begin());
+                        // Remove the first position from the path
+                        pathfindingComponent->path.erase(pathfindingComponent->path.begin());
+                    }
                 }
 
                 // Testing for collision 

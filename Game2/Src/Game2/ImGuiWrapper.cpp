@@ -1181,7 +1181,7 @@ namespace Engine {
 						ImGui::SameLine();
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{

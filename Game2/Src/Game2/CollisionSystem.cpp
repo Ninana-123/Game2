@@ -685,19 +685,25 @@ namespace Engine
 						buttonCollision = true;
 						lastCollidingEntity = entity->GetID();
 						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-						std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
-						//std::cout << "This is CollisionSystem's mColliding: " << collisionComponent1->mColliding << std::endl;
+						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
+
 				}
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
+					std::cout << "Layer before release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
 						// Collision detected, set a flag or perform any actions needed
 						collisionComponent->mColliding = true;
-						//collisionComponent->layer == Layer::World;
+						if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
+						{
+							collisionComponent->layer = Layer::World;
+							collisionComponent->mColliding = false;
+							std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
+						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
 					else

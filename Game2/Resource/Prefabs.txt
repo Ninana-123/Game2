@@ -18,6 +18,12 @@ Layer: 4
 Texture
 MainIndex: 1
 SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: -200
+goalY: -200
+initialized: 0
 EndPrefab
 Archer
 Transform
@@ -38,6 +44,12 @@ Layer: 4
 Texture
 MainIndex: 3
 SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 200
+goalY: 200
+initialized: 0
 EndPrefab
 Tank
 Transform
@@ -58,6 +70,12 @@ Layer: 4
 Texture
 MainIndex: 2
 SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 300
+goalY: 0
+initialized: 0
 EndPrefab
 HUDArcher
 Transform

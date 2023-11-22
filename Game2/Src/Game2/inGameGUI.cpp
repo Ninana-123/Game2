@@ -19,11 +19,9 @@ namespace Engine
 	void inGameGUI::Update(bool CollisionCheck)
 	{
 
-		//std::cout << "Before reset flag: " << CollisionCheck << std::endl;
-
 		// Access the last colliding entity ID from the CollisionSystem
 		EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
-		std::cout << "inGameGUI Mouse collided with Entity " << lastCollidingEntity << std::endl;
+		// std::cout << "inGameGUI Mouse collided with Entity " << lastCollidingEntity << std::endl;
 		
 		// Entity 5 is archer, 6 is tank, 9 is infantry
 		if (CollisionCheck) 
