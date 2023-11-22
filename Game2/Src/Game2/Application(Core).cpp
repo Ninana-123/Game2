@@ -368,7 +368,6 @@ namespace Engine
                     if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                     {
                         lastPositionY += transformation;
-                        collisionTest->collisionVel.y += transformation;
                         transformTest->position.y = lastPositionY;
                         if (physicsTest->velocity.y <= 0.0f) {
                             physicsTest->velocity.y = 1.0f - friction;
@@ -379,7 +378,6 @@ namespace Engine
                     else if (InputHandler.IsKeyPressed(KEY_DOWN) && !(collisionTest->isColliding))
                     {
                         lastPositionY -= transformation;
-                        collisionTest->collisionVel.y -= transformation;
                         transformTest->position.y = lastPositionY;
                         if (physicsTest->velocity.y >= -0.0f) {
                             physicsTest->velocity.y = -1.0f + friction;
@@ -390,7 +388,6 @@ namespace Engine
                     else if (InputHandler.IsKeyPressed(KEY_LEFT) && !(collisionTest->isColliding))
                     {
                         lastPositionX -= transformation;
-                        collisionTest->collisionVel.x -= transformation;
                         transformTest->position.x = lastPositionX;
                         if (physicsTest->velocity.x >= -0.0f) {
                             physicsTest->velocity.x = -1.0f + friction;
@@ -401,7 +398,6 @@ namespace Engine
                     else if (InputHandler.IsKeyPressed(KEY_RIGHT) && !(collisionTest->isColliding))
                     {
                         lastPositionX += transformation;
-                        collisionTest->collisionVel.x += transformation;
                         transformTest->position.x = lastPositionX;
                         if (physicsTest->velocity.x <= 0.0f) {
                             physicsTest->velocity.x = 1.0f - friction;
