@@ -57,12 +57,9 @@ namespace Engine
 			cloneComponent->aabb.max.x = aabb.max.x;
 			cloneComponent->aabb.min.y = aabb.min.y;
 			cloneComponent->aabb.max.y = aabb.max.y;
-			cloneComponent->circle.center.x = circle.center.x;
-			cloneComponent->circle.center.y = circle.center.y;
 			cloneComponent->circle.radius = circle.radius;
 			cloneComponent->layer      = layer;
-			cloneComponent->collisionVel.x = collisionVel.x;
-			cloneComponent->collisionVel.y = collisionVel.y;
+			cloneComponent->collisionVel = collisionVel;
 
 			return cloneComponent;
 		}
@@ -75,12 +72,9 @@ namespace Engine
 			outputStream << "MinY: " << aabb.min.y << '\n';
 			outputStream << "MaxX: " << aabb.max.x << '\n';
 			outputStream << "MaxY: " << aabb.max.y << '\n';
-			outputStream << "CircleMidX: " << circle.center.x << '\n';
-			outputStream << "CircleMidY: " << circle.center.y << '\n';
 			outputStream << "Radius: " << circle.radius << '\n';
 			outputStream << "Layer: " << static_cast<int>(layer) << '\n';
-			outputStream << "CollisionVelX: " << collisionVel.x << '\n';
-			outputStream << "CollisionVelY: " << collisionVel.y << '\n';
+			outputStream << "CollisionVel: " << collisionVel.x << ' ' << collisionVel.y << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
@@ -93,13 +87,10 @@ namespace Engine
 			inputStream >> temp >> aabb.min.y;
 			inputStream >> temp >> aabb.max.x;
 			inputStream >> temp >> aabb.max.y;
-			inputStream >> temp >> circle.center.x;
-			inputStream >> temp >> circle.center.y;
 			inputStream >> temp >> circle.radius;
 			inputStream >> temp >> buffer;
 			layer = static_cast<Layer>(buffer);
-			inputStream >> temp >> collisionVel.x;
-			inputStream >> temp >> collisionVel.y;
+			inputStream >> temp >> collisionVel.x >> collisionVel.y;
 		}
 	};
 }

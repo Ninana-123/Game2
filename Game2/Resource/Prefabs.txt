@@ -15,8 +15,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 4
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 1
 SubIndex: 0
@@ -43,8 +42,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 4
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 3
 SubIndex: 0
@@ -71,8 +69,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 4
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 2
 SubIndex: 0
@@ -102,8 +99,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 0
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 EndPrefab
 HUDTank
 Transform
@@ -124,8 +120,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 0
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 EndPrefab
 Pausebutton
 Transform
@@ -143,8 +138,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 0
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 10
 SubIndex: 0
@@ -165,8 +159,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 0
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 12
 SubIndex: 0
@@ -187,8 +180,7 @@ MaxX: 0
 MaxY: 0
 Radius: 0
 Layer: 0
-CollisionVelX: 0
-CollisionVelY: 0
+CollisionVel: 0 0
 Texture
 MainIndex: 7
 SubIndex: 0
