@@ -149,8 +149,6 @@ namespace Engine
 
         glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight); // Initialize window width and height
 
-        std::cout << "displayWidth: " << displayWidth << " displayHeight: " << displayHeight << std::endl;
-
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities) 
         {
