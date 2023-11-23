@@ -13,7 +13,7 @@
 typedef unsigned int EntityID;
 typedef unsigned int PrefabID;
 constexpr EntityID EMPTY_ID = 0;
-const int MAX_SUBINDEX = 3;
+const int MAX_SUBINDEX = 2;
 
 typedef unsigned int ComponentID;
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Unknown };
@@ -38,14 +38,6 @@ enum TextureClass
     pauseButton,
     playButton,
     settingsButton,
-    pausePressed,
-    playPressed,
-    settingsPressed,
-    mainMenuBG,
-    mainMenuPlay,
-    mainMenuGameInfo,
-    mainMenuCredits,
-    Logo,
     TextureClassCount
 };
 

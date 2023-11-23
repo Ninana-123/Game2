@@ -61,13 +61,10 @@ namespace Engine {
             { {TextureClass::Background, 0}, "Resource/Texture/Background.png" },
             { {TextureClass::Infanty, 0}, "Resource/Texture/Warrior.png" },
             { {TextureClass::Infanty, 1}, "Resource/Texture/WarriorWalking.png" },
-            { {TextureClass::Infanty, 2}, "Resource/Texture/WarriorAttack.png" },
             { {TextureClass::Tank, 0}, "Resource/Texture/Tank.png" },
             { {TextureClass::Tank, 1}, "Resource/Texture/TankWalking.png" },
-            { {TextureClass::Tank, 2}, "Resource/Texture/TankAttack.png" },
             { {TextureClass::Archer, 0}, "Resource/Texture/Archer.png" },
             { {TextureClass::Archer, 1}, "Resource/Texture/ArcherWalking.png" },
-            { {TextureClass::Archer, 2}, "Resource/Texture/ArcherAttack.png" },
             { {TextureClass::Tower, 0}, "Resource/Texture/Tower.png" },
             { {TextureClass::Castle, 0}, "Resource/Texture/Castle.png" },
             { {TextureClass::HUD, 0}, "Resource/Texture/HUD.png" },
@@ -77,14 +74,6 @@ namespace Engine {
             { {TextureClass::pauseButton, 0}, "Resource/Texture/pausebutton.png"},
             { {TextureClass::playButton, 0}, "Resource/Texture/playbutton.png"},
             { {TextureClass::settingsButton, 0}, "Resource/Texture/settingsbutton.png"},
-            { {TextureClass::pausePressed, 0}, "Resource/Texture/pausePressed.png"},
-            { {TextureClass::playPressed, 0}, "Resource/Texture/playPressed.png"},
-            { {TextureClass::settingsPressed, 0}, "Resource/Texture/settingsPressed.png"},
-            { {TextureClass::mainMenuBG, 0}, "Resource/Texture/mainMenuBG.jpg"},
-            { {TextureClass::mainMenuPlay, 0}, "Resource/Texture/mmPlay.png"},
-            { {TextureClass::mainMenuGameInfo, 0}, "Resource/Texture/mmGameInfo.png"},
-            { {TextureClass::mainMenuCredits, 0}, "Resource/Texture/mmCredits.png"},
-            { {TextureClass::Logo, 0}, "Resource/Texture/Logo.png"},
         };
 
 
