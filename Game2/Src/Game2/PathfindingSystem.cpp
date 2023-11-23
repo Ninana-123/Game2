@@ -20,6 +20,7 @@ Technology is prohibited.
 #include "TransformComponent.h"
 #include "Entity.h"
 #include "EntityManager.h"
+#include "inGameGUI.h"
 #include <GLFW/glfw3.h>
 
 namespace Engine
@@ -29,7 +30,15 @@ namespace Engine
     int iter = 0;
 
     // Declaration for window width and height
-    int displayWidth, displayHeight;
+    int displayWidth = 0;
+    int displayHeight = 0;
+
+    // Declaration for cat's prev textures
+    int prevTexture = 0;
+    std::vector<int> prevTextures;
+
+    // Declaration for isWalking
+    bool isWalking = false;
 
     // Function to check if a cell is within the bounds of the grid
     bool PathfindingSystem::isValid(int x, int y) {
@@ -161,14 +170,17 @@ namespace Engine
                 PathfindingComponent* pathfindingComponent = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
                 TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+                TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                if (collisionComponent->layer == Layer::World) {
+                if (collisionComponent->layer == Layer::World) 
+                {
                     startX = transformComponent->position.x;
                     startY = transformComponent->position.y;
                     goalX = pathfindingComponent->goalX;
                     goalY = pathfindingComponent->goalY;
 
-                    if (!(pathfindingComponent->initialized)) {
+                    if (!(pathfindingComponent->initialized)) 
+                    {
                         
                         PathfindingSystem pathfinder(displayWidth, displayHeight);
                         pathfinder.setStart(startX, startY);
@@ -178,15 +190,53 @@ namespace Engine
 
                     }
 
-                    // Debug print for pathfinding
+                    //// Debug print for pathfinding
                     //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
                     //for (const auto& point : pathfindingComponent->path) {
                     //    std::cout << "(" << point.first << ", " << point.second << ") ";
                     //}
                     //std::cout << std::endl;
 
+                    // If path is not empty, execute path finding logic
+                    if (!pathfindingComponent->path.empty()) 
+                    {
 
-                    if (!pathfindingComponent->path.empty()) {
+                        // Infantry switch to walking mode
+                        if ((pathfindingEntityTexture == 7))
+                        {
+                            if (textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 1, 1 };
+                            }
+                            prevTextures.push_back(pathfindingEntityTexture);
+                            prevTexture = pathfindingEntityTexture;
+                            isWalking = true;
+                        }
+
+                        // Archer switch to walking mode
+                        else if ((pathfindingEntityTexture == 8))
+                        {
+                            if (textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 3, 1 };
+                            }
+                            prevTextures.push_back(pathfindingEntityTexture);
+                            prevTexture = pathfindingEntityTexture;
+                            isWalking = true;
+                        }
+
+                        // Tank switch to walking mode
+                        else if ((pathfindingEntityTexture == 9))
+                        {
+                            if (textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 2, 1 };
+                            }
+                            prevTextures.push_back(pathfindingEntityTexture);
+                            prevTexture = pathfindingEntityTexture;
+                            isWalking = true;
+                        }
+
                         std::pair<int, int> nextPosition = pathfindingComponent->path[0];
 
                         // Update the entity's position
@@ -196,6 +246,33 @@ namespace Engine
                         // Remove the first position from the path
                         pathfindingComponent->path.erase(pathfindingComponent->path.begin());
                     }
+
+                    // Switch back to idle mode
+                    else
+                    {
+                        // Infantry
+                        if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "infantry here" << std::endl;
+                            textureComponent->textureKey = { 1, 0 };
+                        }
+
+                        // Archer
+                        if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "archer here" << std::endl;
+                            textureComponent->textureKey = { 3, 0 };
+                        }
+
+                        // Tank
+                        if (prevTexture != 7 && prevTexture != 8 && textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "tank here" << std::endl;
+                            textureComponent->textureKey = { 2, 0 };
+                        }
+                        
+                    }
+
                 }
 
                 // Testing for collision 
