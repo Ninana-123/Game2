@@ -476,7 +476,7 @@ namespace Engine {
 				for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
 					// Iterate through subindexes for each main index
 					for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-						TextureKey textureKey{"", mainIndex, subIndex};
+						TextureKey textureKey{"Background", mainIndex, subIndex};
 						
 						auto it = textures.find(textureKey);
 						if (it != textures.end()) {
@@ -490,7 +490,7 @@ namespace Engine {
 			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
 				// Iterate through subindexes for each main index
 				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-					TextureKey textureKey{"", mainIndex, subIndex};
+					TextureKey textureKey{"Background", mainIndex, subIndex};
 
 					auto it = textures.find(textureKey);
 					if (it != textures.end()) {

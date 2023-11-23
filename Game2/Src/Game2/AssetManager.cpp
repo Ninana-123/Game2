@@ -41,20 +41,24 @@ namespace Engine {
         could not be loaded.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
-        TextureKey key{ "", mainIndex, subIndex};
+        TextureKey key{ "Background", mainIndex, subIndex };
 
         // Check if the key exists in the map
         auto it = textureFilePaths.find(key);
+
         if (it == textureFilePaths.end()) {
             std::cerr << "Loading: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
             return nullptr;
         }
+        std::cerr << "File path: " << it->second << std::endl;
+        std::shared_ptr<Texture> texture;  
 
+        try {
+            texture = std::make_shared<Texture>(it->second);
+        }
+        catch (const std::bad_alloc& e) {
+            Logger::GetInstance().Log(LogLevel::Error, "Failed to allocate memory for texture: " + std::string(e.what()));
 
-        auto texture = std::make_shared<Texture>(it->second);
-        std::cerr << "Loading Texture from Path: " << it->second << std::endl;
-        if (!texture) {
-            std::cerr << "Failed to load texture at MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
             return nullptr;
         }
 
@@ -63,6 +67,7 @@ namespace Engine {
         Logger::GetInstance().Log(LogLevel::Debug, "Texture dimensions: Width: " + std::to_string(texture->GetWidth()) + ", Height: " + std::to_string(texture->GetHeight()));
         return texture;
     }
+
     /*!*********************************************************************
     \brief
     Loads a texture from the specified file path and associates it with main and sub indices.
@@ -80,7 +85,7 @@ namespace Engine {
     A shared pointer to the newly loaded Texture.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
-        TextureKey key{"", mainIndex, subIndex};
+        TextureKey key{"Background", mainIndex, subIndex};
         auto texture = std::make_shared<Texture>(filePath);
         textures[key] = texture;
         textureFilePaths[key] = filePath;
@@ -104,7 +109,7 @@ namespace Engine {
     *************************************************************************/
     void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
     {
-        TextureKey textureKey{"", mainIndex, subIndex};
+        TextureKey textureKey{"Background", mainIndex, subIndex};
         auto textureIter = textures.find(textureKey);
 
         if (textureIter != textures.end()) {
@@ -139,7 +144,7 @@ namespace Engine {
 
     **************************************************************************/
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
-        TextureKey key{"", mainIndex, subIndex};
+        TextureKey key{"Background", mainIndex, subIndex};
         auto it = textures.find(key);
         if (it != textures.end()) {
             return it->second;
@@ -165,7 +170,7 @@ namespace Engine {
 
     **************************************************************************/
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
-        TextureKey key{"", mainIndex, subIndex};
+        TextureKey key{"Background", mainIndex, subIndex};
         auto it = textureFilePaths.find(key);
         if (it != textureFilePaths.end()) {
             it->second = newFilePath;
@@ -266,9 +271,9 @@ namespace Engine {
         }
 
         // Debug output to check the contents of textureFilePaths
-        //std::cout << "Texture File Paths:\n";
-        //for (const auto& pair : textureFilePaths) {
-        //    std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
-        //}
+        std::cout << "Texture File Paths:\n";
+        for (const auto& pair : textureFilePaths) {
+            std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
+        }
     }
 }
