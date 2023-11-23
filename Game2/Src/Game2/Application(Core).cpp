@@ -132,7 +132,14 @@ namespace Engine
         // Load texture paths from JSON
         assetManager->LoadTexturePathsFromJson("Resource/textures.json");
 
+        // Check if the loaded JSON data is valid
         const auto& loadedJsonData = assetManager->GetLoadedJsonData();
+        if (loadedJsonData.is_object()) {
+            Logger::GetInstance().Log(LogLevel::Debug, "Successfully loaded texture paths from JSON.");
+        }
+        else {
+            Logger::GetInstance().Log(LogLevel::Error, "Failed to load texture paths from JSON.");
+        }
 
         // Find the maximum mainIndex from the loaded JSON data
         int maxMainIndex = 0;

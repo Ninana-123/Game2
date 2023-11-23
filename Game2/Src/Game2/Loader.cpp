@@ -48,7 +48,6 @@ namespace Engine {
         configFile.close();
     }
 
-
     Loader::~Loader()
     {
     }
@@ -146,7 +145,6 @@ namespace Engine {
             }
             std::cout << "Prefab: " << prefabPtr->name << " created\n";
         }
-
     }
 
     void Loader::SavePrefabs(const std::string& filepath)

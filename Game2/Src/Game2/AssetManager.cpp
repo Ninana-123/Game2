@@ -22,6 +22,10 @@ written consent of DigiPen Institute of Technology is prohibited.
 using json = nlohmann::json;
 namespace Engine {
 
+    AssetManager::AssetManager() {
+        LoadTexturePathsFromJson("Resource/textures.json");
+    }
+
     /*!*********************************************************************
         \brief
         Loads a texture based on main and sub indices.
@@ -46,15 +50,17 @@ namespace Engine {
             return nullptr;
         }
 
+
         auto texture = std::make_shared<Texture>(it->second);
+        std::cerr << "Loading Texture from Path: " << it->second << std::endl;
         if (!texture) {
             std::cerr << "Failed to load texture at MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
             return nullptr;
         }
 
         textures[key] = texture;
-        Logger::GetInstance().Log(LogLevel::Debug, std::to_string(texture->GetWidth()));
-        Logger::GetInstance().Log(LogLevel::Debug, std::to_string(texture->GetHeight()));
+        Logger::GetInstance().Log(LogLevel::Debug, "Texture loaded successfully: MainID: " + std::to_string(mainIndex) + ", SubIndex: " + std::to_string(subIndex));
+        Logger::GetInstance().Log(LogLevel::Debug, "Texture dimensions: Width: " + std::to_string(texture->GetWidth()) + ", Height: " + std::to_string(texture->GetHeight()));
         return texture;
     }
     /*!*********************************************************************
@@ -205,10 +211,12 @@ namespace Engine {
 
 
        \param textureKey
-        The TextureKey structure that contains the main index and sub index identifying the texture.
+        The TextureKey structure that contains the main index and sub index 
+        identifying the texture.
 
         \return
-        A constant reference to the file path string associated with the texture key, or an empty string if the key is not found.
+        A constant reference to the file path string associated with the 
+        texture key, or an empty string if the key is not found.
 
     **************************************************************************/
     const std::string& AssetManager::GetTexturePath(const TextureKey& textureKey) const {
@@ -235,7 +243,7 @@ namespace Engine {
             return;
         }
 
-        std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
+        //std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
 
         // Parse the JSON data and initialize textureFilePaths
         for (const auto& textureData : loadedJsonData["textures"]) {
@@ -256,5 +264,11 @@ namespace Engine {
                 std::cerr << "Invalid JSON structure in textures array." << std::endl;
             }
         }
+
+        // Debug output to check the contents of textureFilePaths
+        //std::cout << "Texture File Paths:\n";
+        //for (const auto& pair : textureFilePaths) {
+        //    std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
+        //}
     }
 }

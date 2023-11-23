@@ -29,6 +29,8 @@ namespace Engine {
 
         nlohmann::json loadedJsonData;
     public:
+        AssetManager();
+
         // Update the function signature
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const int subIndex = 0);
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const std::string& filePath, const int subIndex = 0); //Overload that takes in custom filepath
@@ -84,6 +86,6 @@ namespace Engine {
 
     void LoadTexturePathsFromJson(const std::string& jsonFilePath);
     friend class Application;
+    
     };
-
 }

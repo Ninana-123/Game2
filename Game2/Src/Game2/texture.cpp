@@ -44,6 +44,9 @@ Texture::Texture(const std::string& path)
 
     // Load the image data from the file using stb_image
     m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+
+    std::cout << "Loading texture from file: " << path << std::endl;
+
 }
 
 /*!
