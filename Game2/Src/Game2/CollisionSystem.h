@@ -39,6 +39,7 @@ Technology is prohibited.
 // Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
+extern int lastCollidingEntityTexture;
 
 namespace Engine
 {
