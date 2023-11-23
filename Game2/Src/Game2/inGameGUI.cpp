@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "inGameGUI.h"
 
+int pathfindingEntityTexture = 0;
 
 namespace Engine
 {
@@ -31,6 +32,7 @@ namespace Engine
 			{
 				Prefab* infantryPrefab = prefabManager->GetPrefab(0);
 				entityManager->CreateEntityFromPrefab(*infantryPrefab);
+				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 			}
@@ -40,6 +42,7 @@ namespace Engine
 			{
 				Prefab* archerPrefab = prefabManager->GetPrefab(1);
 				entityManager->CreateEntityFromPrefab(*archerPrefab);
+				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 			}
@@ -49,6 +52,7 @@ namespace Engine
 			{
 				Prefab* tankPrefab = prefabManager->GetPrefab(2);
 				entityManager->CreateEntityFromPrefab(*tankPrefab);
+				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 			}

@@ -253,7 +253,7 @@ namespace Engine
             while (accumulatedTime >= fixedDeltaTime) {
 
                 accumulatedTime -= fixedDeltaTime;
-                //currentNumberOfSteps++;
+                currentNumberOfSteps++;
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
@@ -339,8 +339,6 @@ namespace Engine
                     nextPositionY = lastPositionY + 1;
                 }
 
-                // Friction
-                const float friction = 0.1f;
 
                 //if (collisionTest->mColliding) {
                 //    std::cout << "Hello" << std::endl;
@@ -370,9 +368,9 @@ namespace Engine
                         lastPositionY += transformation;
                         collisionTest->collisionVel.y += transformation;
                         transformTest->position.y = lastPositionY;
-                        if (physicsTest->velocity.y <= 0.0f) {
-                            physicsTest->velocity.y = 1.0f - friction;
-                        }
+                        //if (physicsTest->velocity.y <= 0.0f) {
+                        //    physicsTest->velocity.y = 1.0f - friction;
+                        //}
                         lastKeyPressed = 1;
                     }
 
@@ -381,9 +379,9 @@ namespace Engine
                         lastPositionY -= transformation;
                         collisionTest->collisionVel.y -= transformation;
                         transformTest->position.y = lastPositionY;
-                        if (physicsTest->velocity.y >= -0.0f) {
-                            physicsTest->velocity.y = -1.0f + friction;
-                        }
+                        //if (physicsTest->velocity.y >= -0.0f) {
+                        //    physicsTest->velocity.y = -1.0f + friction;
+                        //}
                         lastKeyPressed = 2;
                     }
 
@@ -392,9 +390,9 @@ namespace Engine
                         lastPositionX -= transformation;
                         collisionTest->collisionVel.x -= transformation;
                         transformTest->position.x = lastPositionX;
-                        if (physicsTest->velocity.x >= -0.0f) {
-                            physicsTest->velocity.x = -1.0f + friction;
-                        }
+                        //if (physicsTest->velocity.x >= -0.0f) {
+                        //    physicsTest->velocity.x = -1.0f + friction;
+                        //}
                         lastKeyPressed = 3;
                     }
 
@@ -402,10 +400,10 @@ namespace Engine
                     {
                         lastPositionX += transformation;
                         collisionTest->collisionVel.x += transformation;
-                        transformTest->position.x = lastPositionX;
-                        if (physicsTest->velocity.x <= 0.0f) {
-                            physicsTest->velocity.x = 1.0f - friction;
-                        }
+                        //transformTest->position.x = lastPositionX;
+                        //if (physicsTest->velocity.x <= 0.0f) {
+                        //    physicsTest->velocity.x = 1.0f - friction;
+                        //}
                         lastKeyPressed = 4;
                     }
 

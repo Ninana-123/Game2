@@ -168,6 +168,7 @@ namespace Engine
         int goalY = 0;
 
         bool initialized; // A flag to check if the pathfinder has been initialized
+        bool isWalking;
     };
 }
 

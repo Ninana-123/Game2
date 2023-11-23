@@ -554,7 +554,6 @@ namespace Engine
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
-									// circle2 = collisionComponent2->circle;
 								}
 
 								if (entity2->HasComponent(ComponentType::Physics))

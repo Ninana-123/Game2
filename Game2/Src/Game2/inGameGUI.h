@@ -11,6 +11,9 @@
 #include "EngineTypes.h"
 #include "AssetManager.h"
 
+// Extern to save texture for pathfinding
+extern int pathfindingEntityTexture;
+
 namespace Engine
 {
 
