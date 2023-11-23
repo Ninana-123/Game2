@@ -1,0 +1,20 @@
+{
+  "textures": [
+    {"key": {"class": "Background", "index": 0}, "path": "Resource/Texture/Background.png"},
+    {"key": {"class": "Infantry", "index": 0}, "path": "Resource/Texture/Warrior.png"},
+    {"key": {"class": "Infantry", "index": 1}, "path": "Resource/Texture/WarriorWalking.png"},
+    {"key": {"class": "Tank", "index": 0}, "path": "Resource/Texture/Tank.png"},
+    {"key": {"class": "Tank", "index": 1}, "path": "Resource/Texture/TankWalking.png"},
+    {"key": {"class": "Archer", "index": 0}, "path": "Resource/Texture/Archer.png"},
+    {"key": {"class": "Archer", "index": 1}, "path": "Resource/Texture/ArcherWalking.png"},
+    {"key": {"class": "Tower", "index": 0}, "path": "Resource/Texture/Tower.png"},
+    {"key": {"class": "Castle", "index": 0}, "path": "Resource/Texture/Castle.png"},
+    {"key": {"class": "HUD", "index": 0}, "path": "Resource/Texture/HUD.png"},
+    {"key": {"class": "HUDInfantry", "index": 0}, "path": "Resource/Texture/HUDInfantry.png"},
+    {"key": {"class": "HUDArcher", "index": 0}, "path": "Resource/Texture/HUDArcher.png"},
+    {"key": {"class": "HUDTank", "index": 0}, "path": "Resource/Texture/HUDTank.png"},
+    {"key": {"class": "pauseButton", "index": 0}, "path": "Resource/Texture/pausebutton.png"},
+    {"key": {"class": "playButton", "index": 0}, "path": "Resource/Texture/playbutton.png"},
+    {"key": {"class": "settingsButton", "index": 0}, "path": "Resource/Texture/settingsbutton.png"}
+  ]
+}

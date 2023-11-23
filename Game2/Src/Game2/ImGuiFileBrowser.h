@@ -63,8 +63,6 @@ namespace Engine {
                 selectedFile.clear();
             }
 
-
-
             if (ImGui::Button("Open")) {
                 if (!selectedFile.empty() && currentDirectory == "Resource/Scenes") {
                     deleteAllEntity = true;
@@ -87,10 +85,7 @@ namespace Engine {
             if (ImGui::Button("Cancel")) {
                 CloseBrowser();
             }
-
-            
-                ImGui::End();
-          
+                ImGui::End();      
         }
 
         void Open(const std::string& directory) {         

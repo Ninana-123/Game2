@@ -19,7 +19,7 @@ namespace Engine
 	{
 	public:
 
-		TextureKey textureKey = { 0, 0 };
+		TextureKey textureKey = {"", 0, 0};
 
 		/*!*****************************************************************
 
@@ -60,7 +60,7 @@ namespace Engine
 			int subIndex = 0;
 			inputStream >> temp >> mainIndex;
 			inputStream >> temp >> subIndex;
-			textureKey = { mainIndex, subIndex };
+			textureKey = {"", mainIndex, subIndex};
 		}
 	};
 }

@@ -92,11 +92,19 @@ namespace Engine {
                     if (texture != nullptr) {
                         TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
 
-                        float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
-                        float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
-                        float aspectRatio = texWidth / texHeight;
-                        transform->scaleX = transform->scaleX * aspectRatio;
-                        transform->scaleY = transform->scaleY * (1 / aspectRatio);
+                        // Check if the texture exists in the assetManager
+                        std::shared_ptr<Texture> textureObj = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex);
+                        if (textureObj != nullptr) {
+                            float texWidth = textureObj->GetWidth();
+                            float texHeight = textureObj->GetHeight();
+                            float aspectRatio = texWidth / texHeight;
+                            transform->scaleX = transform->scaleX * aspectRatio;
+                            transform->scaleY = transform->scaleY * (1 / aspectRatio);
+                        }
+                        else {
+                            // Handle the case where the texture is not found
+                            std::cerr << "Error: Texture not found for entity.\n";
+                        }
                     }
                 }
                 else {

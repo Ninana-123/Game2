@@ -19,7 +19,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "logger.h"
 #include "TransformComponent.h"
 
-
+using json = nlohmann::json;
 namespace Engine {
 
     /*!*********************************************************************
@@ -37,7 +37,7 @@ namespace Engine {
         could not be loaded.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
-        TextureKey key{ mainIndex, subIndex };
+        TextureKey key{ "", mainIndex, subIndex};
 
         // Check if the key exists in the map
         auto it = textureFilePaths.find(key);
@@ -74,7 +74,7 @@ namespace Engine {
     A shared pointer to the newly loaded Texture.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
-        TextureKey key{ mainIndex, subIndex };
+        TextureKey key{"", mainIndex, subIndex};
         auto texture = std::make_shared<Texture>(filePath);
         textures[key] = texture;
         textureFilePaths[key] = filePath;
@@ -98,7 +98,7 @@ namespace Engine {
     *************************************************************************/
     void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
     {
-        TextureKey textureKey{ mainIndex, subIndex };
+        TextureKey textureKey{"", mainIndex, subIndex};
         auto textureIter = textures.find(textureKey);
 
         if (textureIter != textures.end()) {
@@ -133,7 +133,7 @@ namespace Engine {
 
     **************************************************************************/
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
-        TextureKey key{ mainIndex, subIndex };
+        TextureKey key{"", mainIndex, subIndex};
         auto it = textures.find(key);
         if (it != textures.end()) {
             return it->second;
@@ -159,7 +159,7 @@ namespace Engine {
 
     **************************************************************************/
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
-        TextureKey key{ mainIndex, subIndex }; 
+        TextureKey key{"", mainIndex, subIndex};
         auto it = textureFilePaths.find(key);
         if (it != textureFilePaths.end()) {
             it->second = newFilePath;
@@ -219,5 +219,42 @@ namespace Engine {
         static const std::string emptyString = "";
         std::cerr << "Texture Key not found: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
         return emptyString;
+    }
+
+    void AssetManager::LoadTexturePathsFromJson(const std::string& jsonFilePath) {
+        // Read the JSON data from the file
+        std::ifstream jsonFile(jsonFilePath);
+
+        if (jsonFile.is_open()) {
+            jsonFile >> loadedJsonData;
+            jsonFile.close();
+        }
+        else {
+            // Handle file opening error
+            std::cerr << "Error: Unable to open JSON file: " << jsonFilePath << std::endl;
+            return;
+        }
+
+        std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
+
+        // Parse the JSON data and initialize textureFilePaths
+        for (const auto& textureData : loadedJsonData["textures"]) {
+            if (textureData.contains("key") &&
+                textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                TextureKey textureKey{
+                    textureData["key"]["class"].get<std::string>(),
+                    textureData["key"]["index"].get<int>(),
+                    0
+                };
+                std::string texturePath = textureData["path"];
+                textureFilePaths[textureKey] = texturePath;
+            }
+            else {
+                // Handle the case where the structure is not as expected
+                std::cerr << "Invalid JSON structure in textures array." << std::endl;
+            }
+        }
     }
 }

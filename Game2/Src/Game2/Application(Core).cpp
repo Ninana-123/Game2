@@ -129,13 +129,31 @@ namespace Engine
         // Systems Manager & Asset Manager Initialization
         assetManager = std::make_shared<Engine::AssetManager>();
 
-        // Get the textureFilePaths map from the asset manager
-        const auto& textureFilePaths = assetManager->GetTextureFilePaths();
+        // Load texture paths from JSON
+        assetManager->LoadTexturePathsFromJson("Resource/textures.json");
 
-        // Find the maximum mainIndex from textureFilePaths map
+        const auto& loadedJsonData = assetManager->GetLoadedJsonData();
+
+        // Find the maximum mainIndex from the loaded JSON data
         int maxMainIndex = 0;
-        for (const auto& entry : textureFilePaths) {
-            maxMainIndex = std::max(maxMainIndex, entry.first.mainIndex);
+
+        // Iterate over the loaded JSON data
+        for (const auto& textureData : loadedJsonData["textures"]) {
+            // Check if the "key" object and its "class" and "index" keys exist
+            if (textureData.contains("key") &&
+                textureData["key"].contains("class") &&
+                textureData["key"].contains("index")) {
+
+                std::string classValue = textureData["key"]["class"];
+                int indexValue = textureData["key"]["index"];
+                std::string pathValue = textureData["path"];
+
+                // Rest of your code...
+            }
+            else {
+                // Handle the case where the structure is not as expected
+                std::cerr << "Invalid JSON structure in textures array." << std::endl;
+            }
         }
 
         // Load textures for each mainIndex and subIndex
@@ -557,5 +575,4 @@ namespace Engine
         std::string title_str = windowProps.Title +" | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
-    
 }
