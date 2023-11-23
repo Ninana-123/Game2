@@ -63,6 +63,7 @@ namespace Engine {
             return loadedJsonData;
         }
 
+        std::string findTextureClass(int mainIndex, int subIndex) const;
     private:
         // Use the TextureKey structure instead of int for the map
     //    std::map<TextureKey, std::string> textureFilePaths = {

@@ -41,24 +41,7 @@ namespace Engine {
         could not be loaded.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
-        // Dynamically determine the texture class from the JSON data
-        std::string textureClass;
-
-        // Retrieve the texture class from the JSON data based on the mainIndex
-        auto jsonIterator = loadedJsonData.find("textures");
-        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
-            for (const auto& textureData : *jsonIterator) {
-                if (textureData.contains("key") &&
-                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
-
-                    if (textureData["key"]["index"].get<int>() == mainIndex) {
-                        textureClass = textureData["key"]["class"].get<std::string>();
-                        break;
-                    }
-                }
-            }
-        }
+        std::string textureClass = findTextureClass(mainIndex, subIndex);
 
         if (textureClass.empty()) {
             std::cerr << "Loading: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
@@ -109,24 +92,7 @@ namespace Engine {
     A shared pointer to the newly loaded Texture.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
-        // Dynamically determine the texture class from the JSON data
-        std::string textureClass;
-
-        // Retrieve the texture class from the JSON data based on the mainIndex
-        auto jsonIterator = loadedJsonData.find("textures");
-        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
-            for (const auto& textureData : *jsonIterator) {
-                if (textureData.contains("key") &&
-                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
-
-                    if (textureData["key"]["index"].get<int>() == mainIndex) {
-                        textureClass = textureData["key"]["class"].get<std::string>();
-                        break;
-                    }
-                }
-            }
-        }
+        std::string textureClass = findTextureClass(mainIndex, subIndex);
 
         if (textureClass.empty()) {
             std::cerr << "Loading: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
@@ -157,23 +123,7 @@ namespace Engine {
     identifying the texture to update, default is 0.
     *************************************************************************/
     void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex) {
-        // Dynamically determine the texture class from the JSON data
-        std::string textureClass;
-
-        // Retrieve the texture class from the JSON data based on the mainIndex
-        auto jsonIterator = loadedJsonData.find("textures");
-        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
-            for (const auto& textureData : *jsonIterator) {
-                if (textureData.contains("class") && textureData["class"].is_string() &&
-                    textureData.contains("index") && textureData["index"].is_number()) {
-
-                    if (textureData["index"].get<int>() == mainIndex) {
-                        textureClass = textureData["class"].get<std::string>();
-                        break;
-                    }
-                }
-            }
-        }
+        std::string textureClass = findTextureClass(mainIndex, subIndex);
 
         if (textureClass.empty()) {
             std::cerr << "UpdateTexture: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
@@ -215,24 +165,7 @@ namespace Engine {
 
     **************************************************************************/
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
-        // Dynamically determine the texture class from the JSON data
-        std::string textureClass;
-
-        // Retrieve the texture class from the JSON data based on the mainIndex
-        auto jsonIterator = loadedJsonData.find("textures");
-        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
-            for (const auto& textureData : *jsonIterator) {
-                if (textureData.contains("key") &&
-                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
-
-                    if (textureData["key"]["index"].get<int>() == mainIndex) {
-                        textureClass = textureData["key"]["class"].get<std::string>();
-                        break;
-                    }
-                }
-            }
-        }
+        std::string textureClass = findTextureClass(mainIndex, subIndex);
 
         if (textureClass.empty()) {
             std::cerr << "getTexture: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
@@ -266,24 +199,7 @@ namespace Engine {
 
     **************************************************************************/
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex, const std::string& newFilePath) {
-        // Dynamically determine the texture class from the JSON data
-        std::string textureClass;
-
-        // Retrieve the texture class from the JSON data based on the mainIndex
-        auto jsonIterator = loadedJsonData.find("textures");
-        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
-            for (const auto& textureData : *jsonIterator) {
-                if (textureData.contains("key") &&
-                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
-
-                    if (textureData["key"]["index"].get<int>() == mainIndex) {
-                        textureClass = textureData["key"]["class"].get<std::string>();
-                        break;
-                    }
-                }
-            }
-        }
+        std::string textureClass = findTextureClass(mainIndex, subIndex);
 
         if (textureClass.empty()) {
             std::cerr << "updateTextureFilePath: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
@@ -354,6 +270,13 @@ namespace Engine {
         return emptyString;
     }
 
+    /*!*********************************************************************
+        \brief
+        Loads texture paths from a JSON file and initializes textureFilePaths.
+
+        \param jsonFilePath
+        The file path of the JSON file containing texture information.
+    **************************************************************************/
     void AssetManager::LoadTexturePathsFromJson(const std::string& jsonFilePath) {
         // Read the JSON data from the file
         std::ifstream jsonFile(jsonFilePath);
@@ -368,8 +291,8 @@ namespace Engine {
             return;
         }
 
-        std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
-        
+        //std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
+
         // Debug output for reading the JSON file
         std::cout << "Reading JSON file: " << jsonFilePath << std::endl;
 
@@ -379,13 +302,18 @@ namespace Engine {
                 textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
                 textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
 
+                // Assume subIndex is 0 unless explicitly stated in the JSON data
+                int subIndexFromJson = textureData["key"].contains("subIndex") ? textureData["key"]["subIndex"].get<int>() : 0;
+
                 TextureKey textureKey{
                     textureData["key"]["class"].get<std::string>(),
                     textureData["key"]["index"].get<int>(),
-                    0
+                    subIndexFromJson
                 };
                 std::string texturePath = textureData["path"];
                 textureFilePaths[textureKey] = texturePath;
+
+                std::cout << "Loaded texture with key: {" << textureKey.textureClass << ", " << textureKey.mainIndex << ", " << textureKey.subIndex << "}, Path: " << texturePath << "\n";
             }
             else {
                 // Handle the case where the structure is not as expected
@@ -398,5 +326,33 @@ namespace Engine {
         for (const auto& pair : textureFilePaths) {
             std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
         }
+    }
+
+    std::string AssetManager::findTextureClass(int mainIndex, int subIndex) const {
+        std::string textureClass;
+
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("key") &&
+                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                    int subIndexFromJson = textureData["key"].contains("subIndex") ? textureData["key"]["subIndex"].get<int>() : 0;
+
+                    if (textureData["key"]["index"].get<int>() == mainIndex &&
+                        subIndexFromJson == subIndex) {
+                        textureClass = textureData["key"]["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+        }
+
+        return textureClass;
     }
 }

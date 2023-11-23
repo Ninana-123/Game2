@@ -467,97 +467,37 @@ namespace Engine {
 	}
 
 	void ImGuiWrapper::RenderAssetBrowser() {
-		auto& textures = assetManager->GetAllTextures(); //buffer
+		auto textureKeys = assetManager->GetAllTextureKeys(); // Changed to GetAllTextureKeys
 		int imgIDCounter = 0;
+
 		if (ImGui::BeginTabItem("Asset Browser")) {
 			if (InputHandlerImGui.IsKeyPressed(KEY_F9)) {
-				// Iterate through main indexes
-				for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
-					// Iterate through subindexes for each main index
-					for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-						// Dynamically determine the texture class from the JSON data
-						std::string textureClass;
+				for (const auto& textureKey : textureKeys) {
+					// Accessing each texture key directly from the vector
 
-						// Retrieve the texture class from the JSON data based on the mainIndex
-						auto jsonIterator = assetManager->GetLoadedJsonData().find("textures");
-						if (jsonIterator != assetManager->GetLoadedJsonData().end() && jsonIterator->is_array()) {
-							for (const auto& textureData : *jsonIterator) {
-								if (textureData.contains("key") &&
-									textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-									textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
-
-									if (textureData["key"]["index"].get<int>() == mainIndex) {
-										textureClass = textureData["key"]["class"].get<std::string>();
-										break;
-									}
-								}
-							}
-						}
-
-						if (textureClass.empty()) {
-							std::cerr << "RenderAssetBrowser: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
-							continue;
-						}
-
-						TextureKey textureKey{ textureClass, mainIndex, subIndex };
-						auto it = textures.find(textureKey);
-						if (it != textures.end()) {
-							std::cout << "Texture Key: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
-						}
-					}
+					std::cout << "Texture Key: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
 				}
 			}
 
-			// When rendering ImGui images
-			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
-				// Iterate through subindexes for each main index
-				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-					// Dynamically determine the texture class from the JSON data
-					std::string textureClass;
+			for (const auto& textureKey : textureKeys) {
+				std::string texturePath = assetManager->GetTexturePath(textureKey);
+				imgIDCounter++;
+				ImGui::PushID(imgIDCounter);
 
-					// Retrieve the texture class from the JSON data based on the mainIndex
-					auto jsonIterator = assetManager->GetLoadedJsonData().find("textures");
-					if (jsonIterator != assetManager->GetLoadedJsonData().end() && jsonIterator->is_array()) {
-						for (const auto& textureData : *jsonIterator) {
-							if (textureData.contains("key") &&
-								textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
-								textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+				ImTextureID imgID = (void*)(intptr_t)imgIDCounter;
 
-								if (textureData["key"]["index"].get<int>() == mainIndex) {
-									textureClass = textureData["key"]["class"].get<std::string>();
-									break;
-								}
-							}
-						}
-					}
+				ImGui::Image(imgID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+				ImGui::SameLine();
 
-					if (textureClass.empty()) {
-						std::cerr << "RenderAssetBrowser: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
-						continue;
-					}
+				ImGui::Text("Main Index: %d\nSub Index: %d\nPath: %s", textureKey.mainIndex, textureKey.subIndex, texturePath.c_str());
 
-					TextureKey textureKey{ textureClass, mainIndex, subIndex };
-					auto it = textures.find(textureKey);
-					if (it != textures.end()) {
-						imgIDCounter++;
-						ImGui::PushID(imgIDCounter);
-
-						std::string texturePath = assetManager->GetTexturePath(textureKey);
-						ImTextureID imgID = (void*)(intptr_t)imgIDCounter;
-
-						ImGui::Image(imgID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
-						ImGui::SameLine();
-
-						ImGui::Text("Main Index: %d\nSub Index: %d\nPath: %s", textureKey.mainIndex, textureKey.subIndex, texturePath.c_str());
-
-						if (ImGui::Button("Replace")) {
-							fileBrowser.Open("Resource/Texture", mainIndex, subIndex);
-						}
-
-						ImGui::PopID();
-					}
+				if (ImGui::Button("Replace")) {
+					fileBrowser.Open("Resource/Texture", textureKey.mainIndex, textureKey.subIndex);
 				}
+
+				ImGui::PopID();
 			}
+
 			ImGui::EndTabItem();
 		}
 
