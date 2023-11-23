@@ -197,7 +197,6 @@ namespace Engine
                     //}
                     //std::cout << std::endl;
 
-
                     // If path is not empty, execute path finding logic
                     if (!pathfindingComponent->path.empty()) 
                     {
@@ -205,31 +204,37 @@ namespace Engine
                         // Infantry switch to walking mode
                         if ((pathfindingEntityTexture == 7))
                         {
-                            textureComponent->textureKey = { 1, 1 };
+                            if (textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 1, 1 };
+                            }
                             prevTextures.push_back(pathfindingEntityTexture);
                             prevTexture = pathfindingEntityTexture;
                             isWalking = true;
-                            //pathfindingEntityTexture = 0;
                         }
 
                         // Archer switch to walking mode
                         else if ((pathfindingEntityTexture == 8))
                         {
-                            textureComponent->textureKey = { 3, 1 };
+                            if (textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 3, 1 };
+                            }
                             prevTextures.push_back(pathfindingEntityTexture);
                             prevTexture = pathfindingEntityTexture;
                             isWalking = true;
-                            //pathfindingEntityTexture = 0;
                         }
 
                         // Tank switch to walking mode
                         else if ((pathfindingEntityTexture == 9))
                         {
-                            textureComponent->textureKey = { 2, 1 };
+                            if (textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0) 
+                            {
+                                textureComponent->textureKey = { 2, 1 };
+                            }
                             prevTextures.push_back(pathfindingEntityTexture);
                             prevTexture = pathfindingEntityTexture;
                             isWalking = true;
-                            //pathfindingEntityTexture = 0;
                         }
 
                         std::pair<int, int> nextPosition = pathfindingComponent->path[0];
@@ -242,37 +247,31 @@ namespace Engine
                         pathfindingComponent->path.erase(pathfindingComponent->path.begin());
                     }
 
-                    //// Switch back to idle mode
-                    //else
-                    //{
+                    // Switch back to idle mode
+                    else
+                    {
+                        // Infantry
+                        if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "infantry here" << std::endl;
+                            textureComponent->textureKey = { 1, 0 };
+                        }
 
-                    //    for (std::vector<int>::iterator it = prevTextures.begin(); it != prevTextures.end(); ++it) 
-                    //    {
-                    //        std::cout << *it << " ";
-                    //        // Infantry
-                    //        if (*it == 7)
-                    //        {
-                    //            textureComponent->textureKey = { 1, 0 };
-                    //            pathfindingEntityTexture = 0;
-                    //        }
+                        // Archer
+                        if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "archer here" << std::endl;
+                            textureComponent->textureKey = { 3, 0 };
+                        }
 
-                    //        // Archer
-                    //        if (*it == 8)
-                    //        {
-                    //            textureComponent->textureKey = { 3, 0 };
-                    //            pathfindingEntityTexture = 0;
-                    //        }
-
-                    //        // Tank
-                    //        if (*it == 9)
-                    //        {
-                    //            textureComponent->textureKey = { 2, 0 };
-                    //            pathfindingEntityTexture = 0;
-                    //        }
-                    //    }
-                    //    //std::cout << "hello" << std::endl;
-                    //    
-                    //}
+                        // Tank
+                        if (prevTexture != 7 && prevTexture != 8 && textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 1)
+                        {
+                            std::cout << "tank here" << std::endl;
+                            textureComponent->textureKey = { 2, 0 };
+                        }
+                        
+                    }
 
                 }
 
