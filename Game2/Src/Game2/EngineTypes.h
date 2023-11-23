@@ -13,12 +13,12 @@
 typedef unsigned int EntityID;
 typedef unsigned int PrefabID;
 constexpr EntityID EMPTY_ID = 0;
-const int MAX_SUBINDEX = 2;
+const int MAX_SUBINDEX = 3;
 
 typedef unsigned int ComponentID;
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Unknown };
 
-enum c_state { Static, Walking, Idle, Attack };
+enum c_state { Static, Walking, Attack, Idle };
 std::string c_stateToString(c_state state);
 
 enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower };
@@ -38,6 +38,14 @@ enum TextureClass
     pauseButton,
     playButton,
     settingsButton,
+    pausePressed,
+    playPressed,
+    settingsPressed,
+    mainMenuBG,
+    mainMenuPlay,
+    mainMenuGameInfo,
+    mainMenuCredits,
+    Logo,
     TextureClassCount
 };
 
