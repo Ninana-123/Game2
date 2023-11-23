@@ -467,7 +467,6 @@ namespace Engine {
 	}
 
 	void ImGuiWrapper::RenderAssetBrowser() {
-
 		auto& textures = assetManager->GetAllTextures(); //buffer
 		int imgIDCounter = 0;
 		if (ImGui::BeginTabItem("Asset Browser")) {
@@ -476,8 +475,31 @@ namespace Engine {
 				for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
 					// Iterate through subindexes for each main index
 					for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-						TextureKey textureKey{"Background", mainIndex, subIndex};
-						
+						// Dynamically determine the texture class from the JSON data
+						std::string textureClass;
+
+						// Retrieve the texture class from the JSON data based on the mainIndex
+						auto jsonIterator = assetManager->GetLoadedJsonData().find("textures");
+						if (jsonIterator != assetManager->GetLoadedJsonData().end() && jsonIterator->is_array()) {
+							for (const auto& textureData : *jsonIterator) {
+								if (textureData.contains("key") &&
+									textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+									textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+									if (textureData["key"]["index"].get<int>() == mainIndex) {
+										textureClass = textureData["key"]["class"].get<std::string>();
+										break;
+									}
+								}
+							}
+						}
+
+						if (textureClass.empty()) {
+							std::cerr << "RenderAssetBrowser: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+							continue;
+						}
+
+						TextureKey textureKey{ textureClass, mainIndex, subIndex };
 						auto it = textures.find(textureKey);
 						if (it != textures.end()) {
 							std::cout << "Texture Key: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
@@ -490,8 +512,31 @@ namespace Engine {
 			for (int mainIndex = 0; mainIndex < TextureClassCount; ++mainIndex) {
 				// Iterate through subindexes for each main index
 				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
-					TextureKey textureKey{"Background", mainIndex, subIndex};
+					// Dynamically determine the texture class from the JSON data
+					std::string textureClass;
 
+					// Retrieve the texture class from the JSON data based on the mainIndex
+					auto jsonIterator = assetManager->GetLoadedJsonData().find("textures");
+					if (jsonIterator != assetManager->GetLoadedJsonData().end() && jsonIterator->is_array()) {
+						for (const auto& textureData : *jsonIterator) {
+							if (textureData.contains("key") &&
+								textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+								textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+								if (textureData["key"]["index"].get<int>() == mainIndex) {
+									textureClass = textureData["key"]["class"].get<std::string>();
+									break;
+								}
+							}
+						}
+					}
+
+					if (textureClass.empty()) {
+						std::cerr << "RenderAssetBrowser: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+						continue;
+					}
+
+					TextureKey textureKey{ textureClass, mainIndex, subIndex };
 					auto it = textures.find(textureKey);
 					if (it != textures.end()) {
 						imgIDCounter++;
@@ -509,7 +554,7 @@ namespace Engine {
 							fileBrowser.Open("Resource/Texture", mainIndex, subIndex);
 						}
 
-						ImGui::PopID();					
+						ImGui::PopID();
 					}
 				}
 			}

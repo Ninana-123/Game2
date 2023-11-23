@@ -41,7 +41,31 @@ namespace Engine {
         could not be loaded.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
-        TextureKey key{ "Background", mainIndex, subIndex };
+        // Dynamically determine the texture class from the JSON data
+        std::string textureClass;
+
+        // Retrieve the texture class from the JSON data based on the mainIndex
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("key") &&
+                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                    if (textureData["key"]["index"].get<int>() == mainIndex) {
+                        textureClass = textureData["key"]["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "Loading: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+            return nullptr;
+        }
+
+        TextureKey key{ textureClass, mainIndex, subIndex };
 
         // Check if the key exists in the map
         auto it = textureFilePaths.find(key);
@@ -50,15 +74,15 @@ namespace Engine {
             std::cerr << "Loading: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
             return nullptr;
         }
+
         std::cerr << "File path: " << it->second << std::endl;
-        std::shared_ptr<Texture> texture;  
+        std::shared_ptr<Texture> texture;
 
         try {
             texture = std::make_shared<Texture>(it->second);
         }
         catch (const std::bad_alloc& e) {
             Logger::GetInstance().Log(LogLevel::Error, "Failed to allocate memory for texture: " + std::string(e.what()));
-
             return nullptr;
         }
 
@@ -85,12 +109,37 @@ namespace Engine {
     A shared pointer to the newly loaded Texture.
     *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
-        TextureKey key{"Background", mainIndex, subIndex};
+        // Dynamically determine the texture class from the JSON data
+        std::string textureClass;
+
+        // Retrieve the texture class from the JSON data based on the mainIndex
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("key") &&
+                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                    if (textureData["key"]["index"].get<int>() == mainIndex) {
+                        textureClass = textureData["key"]["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "Loading: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+            return nullptr;
+        }
+
+        TextureKey key{ textureClass, mainIndex, subIndex };
         auto texture = std::make_shared<Texture>(filePath);
         textures[key] = texture;
         textureFilePaths[key] = filePath;
         return texture;
     }
+
     /*!*********************************************************************
     \brief
     Updates an existing texture or loads a new one if it doesn't exist.
@@ -107,9 +156,31 @@ namespace Engine {
     The sub index for the texture which is part of the key used for 
     identifying the texture to update, default is 0.
     *************************************************************************/
-    void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
-    {
-        TextureKey textureKey{"Background", mainIndex, subIndex};
+    void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex) {
+        // Dynamically determine the texture class from the JSON data
+        std::string textureClass;
+
+        // Retrieve the texture class from the JSON data based on the mainIndex
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("class") && textureData["class"].is_string() &&
+                    textureData.contains("index") && textureData["index"].is_number()) {
+
+                    if (textureData["index"].get<int>() == mainIndex) {
+                        textureClass = textureData["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "UpdateTexture: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+            return;
+        }
+
+        TextureKey textureKey{ textureClass, mainIndex, subIndex };
         auto textureIter = textures.find(textureKey);
 
         if (textureIter != textures.end()) {
@@ -119,13 +190,13 @@ namespace Engine {
             texture->SetFilePath(filePath);
             texture->Load();
             texture->UpdateBufferData();
-
         }
         else {
             // The texture doesn't exist, create a new one
             loadTexture(mainIndex, filePath, subIndex);
         }
     }
+
     /*!*********************************************************************
         \brief
         Retrieves a shared pointer to a Texture object if it exists.
@@ -144,7 +215,31 @@ namespace Engine {
 
     **************************************************************************/
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
-        TextureKey key{"Background", mainIndex, subIndex};
+        // Dynamically determine the texture class from the JSON data
+        std::string textureClass;
+
+        // Retrieve the texture class from the JSON data based on the mainIndex
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("key") &&
+                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                    if (textureData["key"]["index"].get<int>() == mainIndex) {
+                        textureClass = textureData["key"]["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "getTexture: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+            return nullptr;
+        }
+
+        TextureKey key{ textureClass, mainIndex, subIndex };
         auto it = textures.find(key);
         if (it != textures.end()) {
             return it->second;
@@ -152,6 +247,7 @@ namespace Engine {
         std::cerr << "Retrieving: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
         return nullptr;
     }
+
     /*!*********************************************************************
         \brief
         Updates the file path of an existing texture in the asset manager.
@@ -169,14 +265,38 @@ namespace Engine {
         The new file path to associate with the texture.
 
     **************************************************************************/
-    void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
-        TextureKey key{"Background", mainIndex, subIndex};
+    void AssetManager::updateTextureFilePath(int mainIndex, int subIndex, const std::string& newFilePath) {
+        // Dynamically determine the texture class from the JSON data
+        std::string textureClass;
+
+        // Retrieve the texture class from the JSON data based on the mainIndex
+        auto jsonIterator = loadedJsonData.find("textures");
+        if (jsonIterator != loadedJsonData.end() && jsonIterator->is_array()) {
+            for (const auto& textureData : *jsonIterator) {
+                if (textureData.contains("key") &&
+                    textureData["key"].contains("class") && textureData["key"]["class"].is_string() &&
+                    textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
+
+                    if (textureData["key"]["index"].get<int>() == mainIndex) {
+                        textureClass = textureData["key"]["class"].get<std::string>();
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (textureClass.empty()) {
+            std::cerr << "updateTextureFilePath: Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
+            return;
+        }
+
+        TextureKey key{ textureClass, mainIndex, subIndex };
         auto it = textureFilePaths.find(key);
         if (it != textureFilePaths.end()) {
             it->second = newFilePath;
         }
         else {
-            std::cerr << "Texture mainIndex not found: " << mainIndex << std::endl;
+            std::cerr << "updateTextureFilePath: Texture mainIndex not found: " << mainIndex << std::endl;
         }
     }
 
@@ -248,7 +368,10 @@ namespace Engine {
             return;
         }
 
-        //std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
+        std::cout << loadedJsonData.dump(4) << std::endl; // Adjust the indentation level as needed
+        
+        // Debug output for reading the JSON file
+        std::cout << "Reading JSON file: " << jsonFilePath << std::endl;
 
         // Parse the JSON data and initialize textureFilePaths
         for (const auto& textureData : loadedJsonData["textures"]) {

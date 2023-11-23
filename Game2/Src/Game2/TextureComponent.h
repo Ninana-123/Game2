@@ -19,7 +19,7 @@ namespace Engine
 	{
 	public:
 
-		TextureKey textureKey = {"Archer", 0, 0};
+		TextureKey textureKey = {"", 0, 0};
 
 		/*!*****************************************************************
 
