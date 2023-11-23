@@ -328,6 +328,14 @@ namespace Engine {
         }
     }
 
+    /*!*********************************************************************
+     * @brief Finds the texture class for a given MainID and SubIndex by searching
+     * through the loaded JSON data and prints the result.
+     *
+     * @param mainIndex The MainID of the texture.
+     * @param subIndex The SubIndex of the texture.
+     * @return std::string The texture class if found, an empty string otherwise.
+     ***********************************************************************/
     std::string AssetManager::findTextureClass(int mainIndex, int subIndex) const {
         std::string textureClass;
 
@@ -339,6 +347,10 @@ namespace Engine {
                     textureData["key"].contains("index") && textureData["key"]["index"].is_number()) {
 
                     int subIndexFromJson = textureData["key"].contains("subIndex") ? textureData["key"]["subIndex"].get<int>() : 0;
+                    std::cout << "Comparing: MainID: " << mainIndex << ", SubIndex: " << subIndex 
+                              << ", JSON Class: " << textureData["key"]["class"].get<std::string>() 
+                              << ", JSON Index: " << textureData["key"]["index"].get<int>() << ", JSON SubIndex: " 
+                              << subIndexFromJson << std::endl;
 
                     if (textureData["key"]["index"].get<int>() == mainIndex &&
                         subIndexFromJson == subIndex) {
@@ -348,6 +360,9 @@ namespace Engine {
                 }
             }
         }
+
+        // Print the result of texture class lookup
+       //std::cout << "MainID: " << mainIndex << ", SubIndex: " << subIndex << ", TextureClass: " << textureClass << std::endl;
 
         if (textureClass.empty()) {
             std::cerr << "Texture class not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
