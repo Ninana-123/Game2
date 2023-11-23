@@ -22,33 +22,35 @@ namespace Engine
 		// Access the last colliding entity ID from the CollisionSystem
 		EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
 
-		// std::cout << "inGameGUI Mouse collided with Entity " << lastCollidingEntity << std::endl;
 		
-		// Entity 5 is archer, 6 is tank, 9 is infantry
+		// Texture 8 is archer, 9 is tank, 7 is infantry
 		if (CollisionCheck) 
-		{
-			Prefab* infantryPrefab = prefabManager->GetPrefab(0);
-			Prefab* archerPrefab = prefabManager->GetPrefab(1);
-			Prefab* tankPrefab = prefabManager->GetPrefab(2);
-
-			// Was 9
-			if (lastCollidingEntity == 6) 
+		{	
+			
+			if (lastCollidingEntityTexture == 7)
 			{
+				Prefab* infantryPrefab = prefabManager->GetPrefab(0);
 				entityManager->CreateEntityFromPrefab(*infantryPrefab);
 				lastCollidingEntity = 0;
+				lastCollidingEntityTexture = 0;
 			}
 
-			// Was 5
-			else if (lastCollidingEntity == 2) 
+			
+			else if (lastCollidingEntityTexture == 8)
 			{
+				Prefab* archerPrefab = prefabManager->GetPrefab(1);
 				entityManager->CreateEntityFromPrefab(*archerPrefab);
 				lastCollidingEntity = 0;
+				lastCollidingEntityTexture = 0;
 			}
 			
-			else if (lastCollidingEntity == 3) 
+			
+			else if (lastCollidingEntityTexture == 9)
 			{
+				Prefab* tankPrefab = prefabManager->GetPrefab(2);
 				entityManager->CreateEntityFromPrefab(*tankPrefab);
 				lastCollidingEntity = 0;
+				lastCollidingEntityTexture = 0;
 			}
 
 		}

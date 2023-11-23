@@ -27,6 +27,7 @@ Technology is prohibited.
 float dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
+int lastCollidingEntityTexture = 0;
 
 /*!*****************************************************************
 
@@ -667,6 +668,7 @@ namespace Engine
 			{
 				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+				TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
 				if (collisionComponent->layer == Layer::inGameGUI) 
 				{
@@ -678,6 +680,8 @@ namespace Engine
 						// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 						buttonCollision = true;
 						lastCollidingEntity = entity->GetID();
+						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;
+						// std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
 						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
 						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
