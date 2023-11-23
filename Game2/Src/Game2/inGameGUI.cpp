@@ -23,7 +23,6 @@ namespace Engine
 		// Access the last colliding entity ID from the CollisionSystem
 		EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
 
-		
 		// Texture 8 is archer, 9 is tank, 7 is infantry
 		if (CollisionCheck) 
 		{	
