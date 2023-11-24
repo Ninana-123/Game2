@@ -41,6 +41,8 @@ namespace Engine {
 
 		void SetEntityManager(std::shared_ptr<Engine::EntityManager> manager);
 		void Picking();
+		static bool IsMouseButtonReleased(const MouseCode button);
+		static bool IsMouseClicked(const MouseCode button);
 	private:
 		std::shared_ptr<EntityManager> entityManager;
 	};

@@ -132,6 +132,28 @@ namespace Engine {
         auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
         return state == GLFW_PRESS;
     }
+
+    bool Input::IsMouseButtonReleased(const MouseCode button)
+    {
+        auto* window = glfwGetCurrentContext();
+        auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
+        return state == GLFW_RELEASE;
+    }
+
+    bool Input::IsMouseClicked(MouseCode button)
+    {
+        static std::unordered_map<MouseCode, bool> prevMouseState;
+        bool currentMouseState = IsMouseButtonPressed(button);
+
+        // Check if the button was pressed in the current frame and released in the previous frame
+        bool mouseClicked = currentMouseState && !prevMouseState[button];
+
+        // Update the previous mouse state for the next frame
+        prevMouseState[button] = currentMouseState;
+
+        return mouseClicked;
+    }
+
     /*!**********************************************************************
     \brief
     Gets the current mouse position.
@@ -251,6 +273,7 @@ namespace Engine {
         {
             isDragging = false;
         }
+
     }
 
 }  // namespace Engine

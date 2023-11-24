@@ -978,7 +978,7 @@ namespace Engine {
 
 						// Dropdown list for selecting the Layer
 						ImGui::Text("Select Layer:");
-						const char* layerNames[] = { "World", "Interactive", "Editable" };
+						const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower"};
 						int currentLayerIndex = static_cast<int>(collision->layer);
 						if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) {
 							// Handle layer change here
@@ -1181,7 +1181,7 @@ namespace Engine {
 						ImGui::SameLine();
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{
