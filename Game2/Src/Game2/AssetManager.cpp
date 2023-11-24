@@ -307,8 +307,8 @@ namespace Engine {
 
                 TextureKey textureKey{
                     textureData["key"]["class"].get<std::string>(),
-                    textureData["key"]["index"].get<int>(),
-                    subIndexFromJson
+                    subIndexFromJson,
+                    textureData["key"]["index"].get<int>()
                 };
                 std::string texturePath = textureData["path"];
                 textureFilePaths[textureKey] = texturePath;
@@ -322,10 +322,10 @@ namespace Engine {
         }
 
         // Debug output to check the contents of textureFilePaths
-        std::cout << "Texture File Paths:\n";
-        for (const auto& pair : textureFilePaths) {
-            std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
-        }
+        //std::cout << "Texture File Paths:\n";
+        //for (const auto& pair : textureFilePaths) {
+        //    std::cout << "Key: {" << pair.first.textureClass << ", " << pair.first.mainIndex << ", " << pair.first.subIndex << "}, Path: " << pair.second << "\n";
+        //}
     }
 
     /*!*********************************************************************
