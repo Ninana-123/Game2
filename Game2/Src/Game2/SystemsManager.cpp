@@ -19,12 +19,13 @@ namespace Engine
 	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
 	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>(); 
 	template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
-
+	template PathfindingSystem& SystemsManager::GetSystem<PathfindingSystem>();
 
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
-
+	template void SystemsManager::ToggleSystemState<PathfindingSystem>();
+	
 	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
 		: assetManager(assetManager), entityManager(entityManager) {
 	}
@@ -35,6 +36,7 @@ namespace Engine
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
 		all_systems.push_back(new GraphicsSystem(assetManager, entityManager));
+		all_systems.push_back(new PathfindingSystem());
 
 		//initialize each system
 		for (auto system : all_systems)
@@ -45,19 +47,32 @@ namespace Engine
 
 	void SystemsManager::UpdateSystems(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-		int i = 0;
 		for (auto system : all_systems)
 		{
-			
 			if (system->GetSystemState() == SystemState::On)
 			{
-				system->StartTimer();
-				system->Update(entities);
-				system->StopTimer();
-				i++;
+				// If the application is paused, update only the GraphicsSystem.
+				if (isPaused)
+				{
+					GraphicsSystem* graphicsSystem = dynamic_cast<GraphicsSystem*>(system);
+					if (graphicsSystem)
+					{
+						graphicsSystem->StartTimer();
+						graphicsSystem->Update(entities);
+						graphicsSystem->StopTimer();
+						break; // Break out of the loop after updating the GraphicsSystem.
+					}
+				}
+				else // If the application is not paused, update all systems as usual.
+				{
+					system->StartTimer();
+					system->Update(entities);
+					system->StopTimer();
+				}
 			}
-		}		
+		}
 	}
+
 
 	template <typename T>
 	T& SystemsManager::GetSystem()

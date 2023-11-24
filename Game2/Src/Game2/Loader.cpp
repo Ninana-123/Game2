@@ -16,10 +16,11 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 
 #include "pch.h"
+#include "AssetManager.h"
 #include "Loader.h"
 #include "Component.h"
 #include "ComponentFactory.h"
-
+#include <filesystem>
 
 namespace Engine {
     void Config::LoadConfig(const std::string& filePath)
@@ -27,7 +28,9 @@ namespace Engine {
         std::ifstream configFile(filePath);
         if (!configFile.is_open())
         {
+            std::cout << "Current Working Directory: " << std::filesystem::current_path() << std::endl;
             std::cerr << "Error: Could not open config file " << filePath << "\n";
+            std::cerr << "Stream state: " << configFile.rdstate() << "\n";
             return;
         }
 
@@ -57,6 +60,8 @@ namespace Engine {
 
         // Use default values if properties are not found in the config file
         std::string title = config.properties["Title"];
+        std::cout << config.properties["Width"] << std::endl;
+        std::cout << config.properties["Height"] << std::endl;
         unsigned int width = std::stoi(config.properties["Width"]);
         unsigned int height = std::stoi(config.properties["Height"]);
 
@@ -83,6 +88,16 @@ namespace Engine {
                 Component* component = entityPtr->GetComponent(type);
                 if (component) {
                     component->Deserialize(sceneFile);
+                    TextureComponent* texture = dynamic_cast<TextureComponent*>(entityPtr->GetComponent(ComponentType::Texture));
+                    if (texture != nullptr) {
+                        TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
+
+                        float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
+                        float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
+                        float aspectRatio = texWidth / texHeight;
+                        transform->scaleX = transform->scaleX * aspectRatio;
+                        transform->scaleY = transform->scaleY * (1 / aspectRatio);
+                    }
                 }
                 else {
                    // std::cerr << "Unknown component type: " << componentType << std::endl;

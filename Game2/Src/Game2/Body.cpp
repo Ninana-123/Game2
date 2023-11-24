@@ -1,11 +1,24 @@
+/******************************************************************************/
+/*!
+\file		Body.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+
+\par		a.junshengaloysius@digipen.edu
+
+\date		17/10/2023
+\brief		Contains the definitions of the Rigidbody.
+
+ */
+ /******************************************************************************/
+
 #include "pch.h"
 #include "Body.h"
 
 extern float dt;
 
 
-Rigidbody::Rigidbody(float mass, VECTORMATH::Vec2 position, VECTORMATH::Vec2 velocity, VECTORMATH::Vec2 acceleration, float restitution = 0.5, float friction = 0.5)
-    : mass(mass), position(position), velocity(velocity), acceleration(acceleration), restitution(restitution), friction(friction) {
+Rigidbody::Rigidbody(float mass, VECTORMATH::Vec2 position, VECTORMATH::Vec2 velocity, VECTORMATH::Vec2 acceleration, float friction = 0.5)
+    : mass(mass), position(position), velocity(velocity), acceleration(acceleration), friction(friction) {
     force_accumulator = VECTORMATH::Vec2(0.0f, 0.0f);
 }
 
@@ -32,10 +45,9 @@ void Rigidbody::update(float time_step) {
     force_accumulator = VECTORMATH::Vec2(0.0f, 0.0f);
 }
 
-void Rigidbody::handle_collision(Rigidbody& other_object) {
+void Rigidbody::handle_collision(Rigidbody& /*other_object*/) {
     // Handle collision response with another object (e.g., apply forces to both objects)
 }
-
 
 
 

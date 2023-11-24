@@ -19,7 +19,7 @@ namespace Engine
 	{
 	public:
 
-		TextureClass textureClass;
+		TextureKey textureKey = { 0, 0 };
 
 		/*!*****************************************************************
 
@@ -45,19 +45,22 @@ namespace Engine
 		Component* Clone() const override
 		{
 			TextureComponent* cloneComponent = new TextureComponent();
-			cloneComponent->textureClass = textureClass;
+			cloneComponent->textureKey = textureKey;
 			return cloneComponent;
 		}
 
 		void Serialize(std::ostream& outputStream) const override {
-			outputStream << "TextureClass: " << static_cast<int>(textureClass) << '\n';
+			outputStream << "MainIndex: " << textureKey.mainIndex << '\n';
+			outputStream << "SubIndex: " << textureKey.subIndex << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
-			int tempVal = 0;
-			inputStream >> temp >> tempVal;
-			textureClass = static_cast<TextureClass>(tempVal);
+			int mainIndex = 0;
+			int subIndex = 0;
+			inputStream >> temp >> mainIndex;
+			inputStream >> temp >> subIndex;
+			textureKey = { mainIndex, subIndex };
 		}
 	};
 }

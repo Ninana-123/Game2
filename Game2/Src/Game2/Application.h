@@ -20,7 +20,12 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "EntityManager.h"
 
 extern double loopTime;
+extern const double fixedDeltaTime;
+extern int currentNumberOfSteps;
+extern bool isPaused;
+extern bool stepOneFrame;
 extern double dt;
+extern std::string initScene;
 
 
 namespace Engine
@@ -57,6 +62,7 @@ namespace Engine
 
         std::shared_ptr<Engine::AssetManager> assetManager;
         std::shared_ptr<Engine::EntityManager> EM;        
+
     private:
         // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);

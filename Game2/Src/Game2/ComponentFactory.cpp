@@ -24,11 +24,12 @@ namespace Engine
     ComponentFactory::ComponentFactory()
     {
         // Register components with predefined ComponentType values
-        RegisterComponent(ComponentType::Transform, []() { return std::make_unique<TransformComponent>(); });
-        RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>(); });
-        RegisterComponent(ComponentType::Texture,   []() { return std::make_unique<TextureComponent>();   });
-        RegisterComponent(ComponentType::Physics,   []() { return std::make_unique<PhysicsComponent>();   });
-        //RegisterComponent(ComponentType::Animation, []() { return std::make_unique<AnimationComponent>();  });
+        RegisterComponent(ComponentType::Transform, []()    { return std::make_unique<TransformComponent>();       });
+        RegisterComponent(ComponentType::Collision, []()    { return std::make_unique<CollisionComponent>();       });
+        RegisterComponent(ComponentType::Texture,   []()    { return std::make_unique<TextureComponent>();         });
+        RegisterComponent(ComponentType::Physics,   []()    { return std::make_unique<PhysicsComponent>();         });
+        RegisterComponent(ComponentType::Sprite,    []()    { return std::make_unique<SpriteComponent>();          });
+        RegisterComponent(ComponentType::Pathfinding, []()  { return std::make_unique<PathfindingComponent>();     });
 
     }
     /*!**********************************************************************
@@ -77,10 +78,12 @@ namespace Engine
         // Map component type strings to enum values
         static std::unordered_map<std::string, ComponentType> StringTotypeMap = 
         {
-            {"Transform", ComponentType::Transform  },
-            {"Collision", ComponentType::Collision  },
-            {"Physics",   ComponentType::Physics    },
-            {"Texture",   ComponentType::Texture    },
+            {"Transform",   ComponentType::Transform  },
+            {"Collision",   ComponentType::Collision  },
+            {"Physics",     ComponentType::Physics    },
+            {"Texture",     ComponentType::Texture    },
+            {"Sprite",      ComponentType::Sprite     },
+            {"Pathfinding", ComponentType::Pathfinding},
         };
 
         auto it = StringTotypeMap.find(typeString);
@@ -97,11 +100,12 @@ namespace Engine
         // Map enum values to component type strings
         static std::unordered_map<ComponentType, std::string> typeToStringMap =
         {
-            {ComponentType::Transform, "Transform"},
-            {ComponentType::Collision, "Collision"},
-            {ComponentType::Physics,   "Physics"  },
-            {ComponentType::Texture,   "Texture"  },
-         
+            {ComponentType::Transform,  "Transform"},
+            {ComponentType::Collision,  "Collision"},
+            {ComponentType::Physics,    "Physics"  },
+            {ComponentType::Texture,    "Texture"  },
+            {ComponentType::Sprite,     "Sprite"  },
+            {ComponentType::Pathfinding,"Pathfinding"  },
         };
 
         auto it = typeToStringMap.find(type);

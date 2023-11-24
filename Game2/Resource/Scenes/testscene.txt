@@ -1,11 +1,12 @@
-4
+5
 Transform 
 Position: 1 0
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
 Texture
-TextureClass: 0
+MainIndex: 0
+SubIndex: 0
 EndEntity
 Transform 
 Position: 200 200
@@ -20,15 +21,31 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
+Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
-TextureClass: 3
-Animation
-FrameRate: 1.0
-HorizontalFrames: 6
-VerticalFrames: 1
-PlayMode: 0
+MainIndex: 3
+SubIndex: 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex:  0
+playing: 0
+playmode: 0
+Pathfinding
+StartX: 200
+StartY: 200
+GoalX: 200
+GoalY: 200
 EndEntity
 Transform 
 Position: 100 100
@@ -43,18 +60,29 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
+Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
-TextureClass: 1
-Animation
-FrameRate: 1.0
-HorizontalFrames: 6
-VerticalFrames: 1
-PlayMode: 0
+MainIndex: 1
+SubIndex: 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex:  0
+playing: 0
+playmode: 0
 EndEntity
 Transform 
-Position: 300 300
+Position: 400 300
 ScaleX: 1.0
 ScaleY: 1.0
 Rotation: 0
@@ -66,15 +94,38 @@ MinX: 0
 MinY: 0
 MaxX: 0
 MaxY: 0
+Radius: 0
+Layer: 2
 Physics
-Velocity: 0 0
+Velocity: 1 1
+Acceleration: 0.1 0.1
+Mass: 0.2
+Friction: 0.1
 Texture
-TextureClass: 2
-Animation
-FrameRate: 1.0
-HorizontalFrames: 6
-VerticalFrames: 1
-PlayMode: 0
+MainIndex: 1
+SubIndex: 0
+Pathfinding
+StartX = 400
+StartY = 300
+GoalX = 400
+GoalY = 300
 EndEntity
-
-
+Transform 
+Position: -250 -150 
+ScaleX: 1.0
+ScaleY: 1.0
+Rotation: 0
+Texture
+MainIndex: 1
+SubIndex: 0 
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex:  0
+playing: 0
+playmode: 0
+EndEntity

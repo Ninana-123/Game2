@@ -14,7 +14,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "Entity.h"
 #include "Component.h"
-#include "AnimationComponent.h"  
 
 namespace Engine
 {

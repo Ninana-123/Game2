@@ -1,0 +1,130 @@
+7
+Transform
+Position: 1 0
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Texture
+MainIndex: 0
+SubIndex: 0
+EndEntity
+Transform
+Position: 200 200
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 177.5
+MinY: 177.5
+MaxX: 222.5
+MaxY: 222.5
+Radius: 0
+Layer: 2
+Physics
+Velocity: 0 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 3
+SubIndex: 0
+EndEntity
+Transform
+Position: 300 0
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 277.5
+MinY: -22.5
+MaxX: 322.5
+MaxY: 22.5
+Radius: 0
+Layer: 2
+Physics
+Velocity: 0 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 1
+SubIndex: 0
+EndEntity
+Transform
+Position: 400 300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 377.5
+MinY: 277.5
+MaxX: 422.5
+MaxY: 322.5
+Radius: 0
+Layer: 2
+Physics
+Velocity: 0 0
+Texture
+MainIndex: 1
+SubIndex: 0
+EndEntity
+Transform
+Position: -250 -150
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 1
+SubIndex: 0
+EndEntity
+Transform
+Position: 610 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Texture
+MainIndex: 10
+SubIndex: 0
+EndEntity
+Transform
+Position: -15 -295
+ScaleX: 3.2
+ScaleY: 1
+Rotation: 0
+Texture
+MainIndex: 6
+SubIndex: 0
+EndEntity

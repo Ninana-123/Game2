@@ -64,7 +64,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
     void AudioEngine::playSound(SoundInfo soundInfo) {
         if (!soundInfo.isLoaded()) {
-            std::cout << "Playing Sound\n";
+            //std::cout << "Playing Sound\n";
             FMOD::Channel* channel;
             // start play in 'paused' state
             ERRCHECK(lowLevelSystem->playSound(sounds[soundInfo.getUniqueID()], 0, true /* start paused */, &channel));

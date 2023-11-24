@@ -14,6 +14,7 @@
 #include "GraphicsSystem.h"
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
+#include "PathfindingSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 #include "FontManager.h"
@@ -85,7 +86,7 @@ namespace Engine
         std::shared_ptr<Engine::AssetManager> assetManager;
         std::shared_ptr<Engine::EntityManager> entityManager;
         static SystemsManager* instance;
-
+       
     };
 
 }  // namespace Engine

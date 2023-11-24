@@ -45,6 +45,20 @@ VertexBuffer::~VertexBuffer()
 }
 
 /*!
+ * \brief Set the data for the vertex buffer.
+ *
+ * This function binds the vertex buffer and sets its data with the specified data and size.
+ *
+ * \param data A pointer to the data to be copied into the buffer.
+ * \param size The size of the data in bytes.
+ */
+void VertexBuffer::SetData(const void* data, unsigned int size)
+{
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+}
+
+/*!
  * \brief Binds the vertex buffer for rendering.
  *
  * This function binds the vertex buffer for rendering, allowing it to be used in drawing operations.

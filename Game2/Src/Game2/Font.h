@@ -1,16 +1,30 @@
+/******************************************************************************/
+/*!
+\file		font.cpp
+\author 	Teo Sheen Yeoh
+\par    	email: t.sheenyeoh@digipen.edu
+\co         Tay Jun Feng Vance
+			email: junfengvance.t@digipen.edu
+\date   	August 29, 2023
+\brief		This file provides the implementation for font rendering in the game engine. 
+            It contains functions to initialize the font rendering system, load font glyphs, and render text using OpenGL
+
+			Copyright (C) 2023 DigiPen Institute of Technology.
+			Reproduction or disclosure of this file or its contents without the prior
+			written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
+
 #pragma once
 
 #include <iostream>
 #include <map>
 #include <string>
 #include "Vector2d.h"
-#include "Window.h"
-#include "FontManager.h"
 
 
 #include <GL/glew.h>
-#include "WindowsWindow.h"
-//#include <GLFW/glfw3.h>
 
 
 #include <glm/glm.hpp>
@@ -31,11 +45,13 @@ namespace Engine {
 	{
 
 	private:
-		
-		FT_Face face{};
+		GLuint VAO{}, VBO{};
+		FT_Face face1{};
+		FT_Face face2{};
 		FT_Library ft{};
 		const float fscreenWidth = 1280.0f;
 		const float fscreenHeight = 720.0f;
+		FT_Face currentFace{};
 
 	public:
 
@@ -54,21 +70,21 @@ namespace Engine {
 			glm::ivec2 color;
 		};
 
-		void Initialize(std::string filepath);
+		void Initialize();
 		//void MakeDisplayList(const std::string font);
 		void MakeDisplayList(const std::string pathname);
 		void RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color);
 		void CleanupFreeType();
+		void SwitchFont(int fontIndex);
+		void LoadGlyphsForFace(FT_Face face);
 
-		std::string pathName;
-		std::map <char , Character> Characters;
+		std::string pathName, pathName2;
+		std::map <char , Character> Characters1;
+		std::map <char, Character> Characters2;
 		std::string font_name;
-		unsigned int texture;
+		unsigned int texture = 0;
 
-		WindowsWindow* window;
 		//GLFWwindow* window{};
-
-		
 
 		
 	};

@@ -23,15 +23,24 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "EntityManager.h"
 #include "PrefabManager.h"
 #include "AssetManager.h"
+#include "Loader.h"
+
+extern bool deleteAllEntity;
+extern bool shouldLoadScene;
+extern std::string sceneToLoad;
+extern bool useEditorCamera;
 
 namespace Engine {
 
 	class GAME2_API ImGuiWrapper {
 	public:
 		ImGuiWrapper();
-		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::AssetManager> am) : entityManager(em), prefabManager(pm), assetManager(am) {}
+		ImGuiWrapper(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::AssetManager> am
+		, std::shared_ptr<Engine::Loader> loader) : entityManager(em), prefabManager(pm), assetManager(am), deserializer(loader) {}
 		~ImGuiWrapper();
 		inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+		void Begin();
+		void End();
 		void Initialize();
 		void OnAttach();
 		void OnDetach();
@@ -41,6 +50,7 @@ namespace Engine {
 		void DisplaySystemTimes();
 		void RenderAssetBrowser();
 		int selectedEntityIndex = 1;
+		void RenderLevelEditor();
 	private:
 		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& e);
 		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
@@ -53,11 +63,13 @@ namespace Engine {
 
 
 	private:
+		bool renderDockspace = false;
 		float m_Time = 0.0f;
-		bool renderAssetBrowser = false;
+		float editorCameraSpeed = 1.5f;
 		std::shared_ptr<Engine::EntityManager> entityManager;
 		Engine::PrefabManager* prefabManager;
 		std::shared_ptr<Engine::AssetManager> assetManager;
+		std::shared_ptr<Engine::Loader> deserializer;
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
 

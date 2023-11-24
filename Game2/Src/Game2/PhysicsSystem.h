@@ -14,6 +14,7 @@
 #include "System.h"
 #include "Entity.h"
 #include "PhysicsComponent.h"
+#include "Body.h"
 
 namespace Engine
 {
@@ -141,5 +142,8 @@ namespace Engine
         float x, y;            // Position
         float velocityX, velocityY; // Velocity
         float accelerationX, accelerationY; // Acceleration
+
+        // Add a member variable for the Rigidbody object
+        Rigidbody createRigidbodyFromPhysicsComponent(PhysicsComponent* physicsComponent, TransformComponent* transformComponent);
     };
 }

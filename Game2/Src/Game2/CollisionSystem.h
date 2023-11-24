@@ -60,7 +60,13 @@ namespace Engine
 		struct Circle 
 		{
 			VECTORMATH::Vec2 center;
-			float radius;
+			float radius = 0.f;
+		};
+
+		struct Edge
+		{
+			VECTORMATH::Vec2 normal;
+			float min = 0.f, max = 0.f;
 		};
 
 		/*!*****************************************************************
@@ -146,6 +152,99 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 
+		/**************************************************************************/
+
+		/**************************************************************************/
+		/*!
+		\brief Project a polygon onto an axis and determine the minimum and maximum values of the projection.
+
+		\param[in] polygon
+		A vector containing 2D vertices of the polygon to be projected.
+
+		\param[in] axis
+		The axis onto which the polygon is projected.
+
+		\param[out] min
+		The minimum value of the projection.
+
+		\param[out] max
+		The maximum value of the projection.
+
+		*/
+		/**************************************************************************/
+		void ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max);
+
+		/**************************************************************************/
+		/*!
+		\brief Determine if two polygons intersect using the Separating Axis Theorem (SAT) method.
+
+		\param[in] polygon1
+		A vector containing 2D vertices of the first polygon.
+
+		\param[in] polygon2
+		A vector containing 2D vertices of the second polygon.
+
+		\param[in] rotationAngle1
+		The rotation angle of the first polygon.
+
+		\param[in] rotationAngle2
+		The rotation angle of the second polygon.
+
+		\return
+		`true` if the polygons intersect; otherwise, `false`.
+
+		*/
+		/**************************************************************************/
+		bool PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2, float rotationAngle1, float rotationAngle2);
+
+		/*!
+		\brief Check if a specific area defined by its center, width, and height has been clicked.
+
+		\param[in] area_center_x
+		The x-coordinate of the center of the area.
+
+		\param[in] area_center_y
+		The y-coordinate of the center of the area.
+
+		\param[in] area_width
+		The width of the area.
+
+		\param[in] area_height
+		The height of the area.
+
+		\param[in] click_x
+		The x-coordinate of the click.
+
+		\param[in] click_y
+		The y-coordinate of the click.
+
+		\return
+		`true` if the area has been clicked; otherwise, `false`.
+
+		*/
+		/**************************************************************************/
+		bool IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y);
+
+		/**************************************************************************/
+		/*!
+		\brief Check for collisions between entities in a collection and update their states as needed.
+
+		\param[in] entities
+		A pointer to an `std::unordered_map` containing entities associated with unique IDs.
+
+		*/
+		/**************************************************************************/
 		void EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+
+		/**************************************************************************/
+		/*!
+		\brief Check for collisions between entities within a collection and the mouse cursor, updating entity states as necessary.
+
+		\param[in] entities
+		A pointer to an `std::unordered_map` containing entities associated with unique IDs.
+
+		*/
+		/**************************************************************************/
+		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 	};
 }

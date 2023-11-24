@@ -19,6 +19,8 @@ Technology is prohibited.
 #include "Entity.h"
 #include "CollisionComponent.h"
 #include "PhysicsComponent.h"
+#include "Input.h"
+#include "Window.h"
 
 
 float dt = 0.0;  // Time difference between frames (delta time)
@@ -47,13 +49,69 @@ float dt = 0.0;  // Time difference between frames (delta time)
 
 namespace Engine
 {
-	
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-		//May want to process entities container here into smaller containers to send to relevant checks
-		//Potential Conditional Collision check
+		/*
+		// Separate entities based on layers
+		std::unordered_map<EntityID, std::unique_ptr<Entity>> worldLayerEntities;
+		std::unordered_map<EntityID, std::unique_ptr<Entity>> editableLayerEntities;
+
+		// Temporary vector to hold entities to be moved
+		std::vector<std::unordered_map<EntityID, std::unique_ptr<Entity>>::iterator> entitiesToMove;
+
+		// Move entities to separate containers based on layers
+		for (auto it = entities->begin(); it != entities->end(); ++it)
+		{
+			Entity* entity = it->second.get();
+
+			if (entity->HasComponent(ComponentType::Collision))
+			{
+				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+
+				switch (collisionComponent->layer)
+				{
+				case Layer::World:
+					worldLayerEntities[it->first] = std::move(it->second);
+					entitiesToMove.push_back(it); // Add iterator to the list
+					break;
+
+				case Layer::Editable:
+					editableLayerEntities[it->first] = std::move(it->second);
+					entitiesToMove.push_back(it); // Add iterator to the list
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		// Remove moved entities from the original container
+		for (auto& it : entitiesToMove)
+		{
+			entities->erase(it);
+		}
+
+		// Perform collision checks for world layer entities
+		EntityToEntityCollision(&worldLayerEntities);
+
+		// Perform collision checks for editable layer entities
+		EntityToMouseCollision(&editableLayerEntities);
+
+		// Move entities back to the original container
+		for (auto& entityPair : worldLayerEntities)
+		{
+			entities->emplace(std::move(entityPair));
+		}
+
+		for (auto& entityPair : editableLayerEntities)
+		{
+			entities->emplace(std::move(entityPair));
+		}
+		
+		*/
 		EntityToEntityCollision(entities);
-		//potential EntityToMouseCollision
+		EntityToMouseCollision(entities);
 	}
 
 	// Check if this object collides with another object
@@ -330,6 +388,97 @@ namespace Engine
 		}
 	}
 
+	// Function to project a polygon onto an axis (edge normal)
+	void CollisionSystem::ProjectPolygon(const std::vector<VECTORMATH::Vec2>& polygon, const VECTORMATH::Vec2& axis, float& min, float& max) {
+		min = max = Vector2DDotProduct(polygon[0], axis);
+		for (size_t i = 1; i < polygon.size(); i++) {
+			float dot = Vector2DDotProduct(polygon[i], axis);
+			if (dot < min) {
+				min = dot;
+			}
+			if (dot > max) {
+				max = dot;
+			}
+		}
+	}
+
+	// Function to check for intersection between two convex polygons using the SAT
+	bool CollisionSystem::PolygonIntersectionSAT(const std::vector<VECTORMATH::Vec2>& polygon1, const std::vector<VECTORMATH::Vec2>& polygon2,
+		float rotationAngle1, float rotationAngle2) {
+		// Create rotated copies of the input polygons
+		std::vector<VECTORMATH::Vec2> rotatedPolygon1, rotatedPolygon2;
+
+		// Rotate and update the vertices of polygon1
+		for (const VECTORMATH::Vec2& vertex : polygon1) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle1); // Call the member function on the copied vertex
+			rotatedPolygon1.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Rotate and update the vertices of polygon2
+		for (const VECTORMATH::Vec2& vertex : polygon2) {
+			VECTORMATH::Vec2 rotatedVertex = vertex; // Copy the vertex
+			rotateVector2D(rotatedVertex, rotationAngle2); // Rotate the copied vertex
+			rotatedPolygon2.push_back(rotatedVertex); // Add the rotated vertex to the rotated polygon
+		}
+
+		// Calculate the edges and normals for both rotated polygons
+		std::vector<Edge> edges1, edges2;
+		for (size_t i = 0; i < rotatedPolygon1.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon1.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon1[j] - rotatedPolygon1[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon1, normal, e.min, e.max);
+			edges1.push_back(e);
+		}
+		for (size_t i = 0; i < rotatedPolygon2.size(); i++) {
+			size_t j = (i + 1) % rotatedPolygon2.size();
+			VECTORMATH::Vec2 edge = rotatedPolygon2[j] - rotatedPolygon2[i];
+			VECTORMATH::Vec2 normal = edge; // No need to normalize here
+			Edge e;
+			e.normal = normal;
+			ProjectPolygon(rotatedPolygon2, normal, e.min, e.max);
+			edges2.push_back(e);
+		}
+
+		// Test for separation along each axis (edge normal)
+		for (const Edge& edge : edges1) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+		for (const Edge& edge : edges2) {
+			float min1, max1, min2, max2;
+			ProjectPolygon(rotatedPolygon1, edge.normal, min1, max1);
+			ProjectPolygon(rotatedPolygon2, edge.normal, min2, max2);
+			if (max1 < min2 || max2 < min1) {
+				// There is separation, no intersection
+				return false;
+			}
+		}
+
+		// If no separation occurs along any axis, there is intersection
+		return true;
+	}
+
+	// Function to check if the area is being touched/clicked
+	bool CollisionSystem::IsAreaClicked(float area_center_x, float area_center_y, float area_width, float area_height, float click_x, float click_y)
+	{
+		if (click_x > area_center_x - (area_width / 2) && click_x < area_center_x + (area_width / 2)
+			&& click_y < area_center_y + (area_height / 2) && click_y > area_center_y - (area_height / 2))
+		{
+			return true;
+		}
+
+		return false ;
+	}
+
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
 		// Iterate through all pairs of entities
@@ -337,17 +486,28 @@ namespace Engine
 		{
 			Entity* entity1 = it1->second.get();
 
-			if (entity1->HasComponent(ComponentType::Collision) && (entity1->HasComponent(ComponentType::Transform)))
+			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
 				AABB aabb1;
+				Circle circle1;
+				circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
+				circle1.radius = 0.f;
 				VECTORMATH::Vec2 vel1;
-
+				
+				Input::GetMousePosition();
+				if (IsAreaClicked(transformComponent1->position.x + 640.f, 360.f - transformComponent1->position.y, 
+					collisionComponent1->c_Width, collisionComponent1->c_Height, Input::GetMouseX(), Input::GetMouseY())) {
+					//std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+				}
+				
+				
 				if (collisionComponent1)
 				{				
 					aabb1 = collisionComponent1->aabb;
+					// circle1 = meow;
 				}
 
 				if (entity1->HasComponent(ComponentType::Physics))
@@ -368,12 +528,15 @@ namespace Engine
 					{
 						Entity* entity2 = it2->second.get();
 
-						if (entity2->HasComponent(ComponentType::Collision) && (entity2->HasComponent(ComponentType::Transform)))
+						if (entity2->HasComponent(ComponentType::Transform))
 						{
 							CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
-							TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+							//TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 
 							AABB aabb2;
+							Circle circle2;
+							circle2.center = VECTORMATH::Vec2(435, 60);
+							circle2.radius = 0.f;
 							VECTORMATH::Vec2 vel2;
 							
 							if (collisionComponent2)
@@ -391,11 +554,19 @@ namespace Engine
 								vel2 = VECTORMATH::Vec2(0.0f, 0.0f);
 							}
 							// Check for collision with entity2
-							if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
-							{
-								isColliding = true;
-								std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+							if (entity2->HasComponent(ComponentType::Collision)) {
+								if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2))
+								{
+									isColliding = true;
+									//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								}
+
+								if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, vel1, circle2, vel2)) {
+									//isColliding = true;
+									//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+								}
 							}
+
 						}
 					}
 				}
@@ -408,7 +579,9 @@ namespace Engine
 
 				if (!isColliding)
 				{
-					std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+					//std::cout << "No Collision Detected for Entity" << static_cast<int>(entity1->GetID()) << std::endl;
+					//std::cout << Input::GetMouseX() << std::endl;
+					//std::cout << Input::GetMouseY() << std::endl;
 				}
 
 				//update AABB coordinates in entity1
@@ -423,8 +596,48 @@ namespace Engine
 					float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
 					collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);					 				
+					collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);		
+
+				}	
+			}
+		}
+	}
+
+	void CollisionSystem::EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
+	{
+		// Get the mouse position from the input system
+		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
+
+		mousePosition.x -= 1270 / 2.0f;
+		mousePosition.y = 720 / 2.0f - mousePosition.y;
+
+		// Iterate through all entities in the editable layer
+		for (auto it = entities->begin(); it != entities->end(); ++it)
+		{
+			Entity* entity = it->second.get();
+			
+			// Check if the entity has a CollisionComponent
+			if (entity->HasComponent(ComponentType::Collision))
+			{
+				// Retrieve the CollisionComponent and TransformComponent
+				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+				
+				if (collisionComponent->layer == Layer::Editable)
+				{				
+					// Check for point-to-rect collision
+					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
+					{
+						// Collision detected, set a flag or perform any actions needed
+						collisionComponent->mColliding = true;
+						//std::cout << "Mouse collided with Entity " << entity->GetID();
+					}
+					else
+					{
+						// No collision, reset the flag or perform cleanup
+						collisionComponent->mColliding = false;
+					}
 				}
+				
 			}
 		}
 	}

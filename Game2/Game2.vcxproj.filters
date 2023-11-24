@@ -34,24 +34,6 @@
     <ClCompile Include="Src\Game2\pch.cpp">
       <Filter>Precompiled</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\imgui.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\AudioEngine.cpp">
       <Filter>Systems\Audio</Filter>
     </ClCompile>
@@ -103,11 +85,42 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp">
       <Filter>Base\Engine\PrefabManager</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Camera.cpp" />
-    <ClCompile Include="Src\Game2\Animation.cpp" />
-    <ClCompile Include="Src\Game2\AnimationComponent.cpp" />
-    <ClCompile Include="Src\Game2\Font.cpp" />
-    <ClCompile Include="Src\Game2\FontManager.cpp" />
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Animation.cpp">
+      <Filter>Base\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Camera.cpp">
+      <Filter>Base\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EngineTypes.cpp">
+      <Filter>Base\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Font.cpp">
+      <Filter>Base\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -173,18 +186,6 @@
     <ClInclude Include="Src\Game2\pch.h">
       <Filter>Precompiled</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\imconfig.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_internal.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -230,15 +231,6 @@
     <ClInclude Include="Src\Game2\PhysicsSystem.h">
       <Filter>Systems\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_rectpack.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_textedit.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\imstb_truetype.h">
-      <Filter>ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\Loader.h">
       <Filter>Base\Serializer</Filter>
     </ClInclude>
@@ -269,11 +261,54 @@
     <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
       <Filter>ImGuiWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\Camera.h" />
-    <ClInclude Include="Src\Game2\Animation.h" />
-    <ClInclude Include="Src\Game2\AnimationComponent.h" />
-    <ClInclude Include="Src\Game2\Font.h" />
-    <ClInclude Include="Src\Game2\FontManager.h" />
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SpriteComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Animation.h">
+      <Filter>Base\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Camera.h">
+      <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EditorCamera.h">
+      <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingSystem.h">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Font.h">
+      <Filter>Base\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -365,6 +400,18 @@
     </Filter>
     <Filter Include="Base\Engine\PrefabManager">
       <UniqueIdentifier>{4a796833-5ab4-4915-9316-b04e94de34ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Sprite">
+      <UniqueIdentifier>{30a2c830-6e6b-4ee3-914b-ba8f444b2c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Camera">
+      <UniqueIdentifier>{c9d024f3-c758-4c7d-a1c4-634bfc9ec9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Font">
+      <UniqueIdentifier>{07888523-3ed5-4ee5-9fee-4fb8079b3aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{9533f091-e860-4507-a04f-7a3e911113d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

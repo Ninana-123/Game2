@@ -26,6 +26,11 @@ namespace Engine {
     static std::unordered_map<KeyCode, bool> s_KeyStatePrev;  // Previous key states
     static std::unordered_map<KeyCode, std::chrono::steady_clock::time_point> s_KeyCooldown;  // Cooldown time for key triggers
 
+
+    static float s_PrevMouseX = 0.0f;
+    static float s_ScrollOffsetY = 0.0f;
+    static float s_PrevScrollOffsetY = 0.0f;
+
     /*!**********************************************************************
     \brief
     Checks if the specified keyboard key is currently pressed.
@@ -111,6 +116,7 @@ namespace Engine {
         {
             s_KeyState[static_cast<KeyCode>(i)] = glfwGetKey(glfwGetCurrentContext(), i) == GLFW_PRESS;
         }
+        Picking();
     }
     /*!**********************************************************************
     \brief
@@ -159,6 +165,92 @@ namespace Engine {
     float Input::GetMouseY()
     {
         return GetMousePosition().y;
+    }
+
+    float Input::GetMouseDeltaX() const 
+    {
+        float currentMouseX = GetMouseX();
+        float deltaX = currentMouseX - s_PrevMouseX;
+        s_PrevMouseX = currentMouseX;  // Update the previous X position for the next frame
+        return deltaX;
+    }
+
+
+    float Input::GetMouseScrollDelta() const
+    {
+        float deltaY = s_ScrollOffsetY - s_PrevScrollOffsetY;
+        s_PrevScrollOffsetY = s_ScrollOffsetY;  // Update the previous scroll offset for the next frame
+        return deltaY;
+    }
+
+    void Input::SetEntityManager(std::shared_ptr<Engine::EntityManager> manager)
+    {
+        entityManager = manager;
+        if (!entityManager)
+        {
+            std::cout << "Failed to Link InputManager to EntityManager." << std::endl;
+        }
+    }
+
+    void Input::Picking()
+    {
+        static EntityID pickedEntityID = 0;
+        static bool isDragging = false;
+        // Check if left mouse button is pressed
+        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
+        {
+            //std::cout << "Picking Check. " << std::endl;
+            // Get the mouse position
+            VECTORMATH::Vector2D mousePosition = GetMousePosition();
+
+            // Normalize the mouse position
+            mousePosition.x -= 1270.0f / 2.0f;
+            mousePosition.y = 720.0f / 2.0f - static_cast<float>(mousePosition.y);
+
+            if (!isDragging) {
+                // Iterate through all entities only if not currently dragging
+                for (auto& entityPair : *(entityManager->GetEntities()))
+                {
+                    Entity* entity = entityPair.second.get();
+
+                    // Check if the entity has a CollisionComponent
+                    if (entity->HasComponent(ComponentType::Collision))
+                    {
+                        // Retrieve the CollisionComponent and TransformComponent
+                        CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+
+                        // Check if the entity is colliding with the mouse
+                        if (collisionComponent->mColliding)
+                        {
+                            // Store the ID of the colliding entity
+                            pickedEntityID = entity->GetID();
+                            isDragging = true; // Start dragging mode
+                            break; // Exit the loop after finding the first colliding entity
+                        }
+                    }
+                }
+            }
+            if (isDragging) {
+                // Use the stored ID to find the entity
+                Entity* pickedEntity = entityManager->GetEntity(pickedEntityID);
+
+                if (pickedEntity) {
+                    // Retrieve the CollisionComponent and TransformComponent
+                   //CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(pickedEntity->GetComponent(ComponentType::Collision));
+                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(pickedEntity->GetComponent(ComponentType::Transform));
+
+                    // Update the transform component with the mouse position
+                    transformComponent->position.x = mousePosition.x;
+                    transformComponent->position.y = mousePosition.y;
+
+                    // Additional logic or flags can be set as needed
+                }
+            }
+        }
+        else
+        {
+            isDragging = false;
+        }
     }
 
 }  // namespace Engine

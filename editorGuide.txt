@@ -1,0 +1,71 @@
+When you first open the Level Editor, you'll see a menu bar with several options:
+Menu Bar
+
+    Options:
+        Dockspace: Toggle the dockable windows feature on or off.
+    Tools:
+        Enable/Disable Editor Camera: Switch between using the editor's camera or the game's default view.
+        Open File Browser: Opens a dialog to browse and select files.
+
+Saving and Loading Scenes
+
+    Save Current Scene: Save the current state of your scene to a file. By default, the file is named SavedScene.txt but can be changed in the text input box below this option.
+    Load Scene File: Load an existing scene from a file. This opens a file browser where you can navigate to the scene you wish to load.
+
+Scene Controls
+
+    Play: Resume the scene if it is paused.
+    Pause: Pause the scene's simulation.
+    Stop: Completely stop the scene and clear all entities and reinitialize the scene from the start.
+    Step Frame: When the scene is paused, advance the simulation by a single frame.
+
+Debugging and Performance
+
+    FPS Counter: Displays the current frames per second and frame time.
+    Memory Usage: Shows information about the total, available, and used memory.
+    Graphics Information: Outputs graphics card and driver information.
+    Input: Lists the current state of keyboard and mouse inputs.
+    List System Times: Show the amount of % loop time each system update is taking up
+
+Entities Management
+Tabs
+
+    Game Objects: Manage entities within your scene.
+
+Entities
+
+    Create Entity: Add a new entity to the scene.
+    Create Multiple Entities: Input a number to create multiple entities at once.
+    Clone Entity: Create a duplicate of the selected entity.
+    Delete selected entity: Remove the currently selected entity from the scene.
+
+Entity Selection
+
+Select an entity from the drop-down menu to view or edit its properties. If you delete an entity, the selection will update automatically.
+Scene Management
+
+If you decide to load a new scene, you can clear all existing entities and reset their IDs to load the scene cleanly.
+
+Property Editor
+
+Select the entity you want to edit
+
+Lists all the components and its members 
+
+Edit the members from the GUI
+
+Prefab tool
+
+Able to create entities from prefab
+
+Edit prefabs
+
+Save prefabs
+
+And load prefabs
+
+Assets browser
+
+Lists all assets currently loaded
+
+Able to replace current textures loaded with any texture of choice within the Resource/Texture Directory
