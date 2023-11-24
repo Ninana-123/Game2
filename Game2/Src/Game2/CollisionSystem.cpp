@@ -685,6 +685,22 @@ namespace Engine
 						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
 
+					// Slotting logic for ingameGUI temporarily until logic system gets put in place
+					if (lastCollidingEntityTexture == 10)
+					{
+						if (textureCheck->textureKey.mainIndex == 10 && textureCheck->textureKey.subIndex == 0)
+						{
+							textureCheck->textureKey = { 11, 0 };
+						}
+					}
+					if (lastCollidingEntityTexture == 11) 
+					{
+						if (textureCheck->textureKey.mainIndex == 11 && textureCheck->textureKey.subIndex == 0)
+						{
+							textureCheck->textureKey = { 10, 0 };
+						}
+					}
+
 				}
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
