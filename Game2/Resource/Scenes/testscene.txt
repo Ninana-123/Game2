@@ -100,7 +100,7 @@ Acceleration: 0.1 0.1
 Mass: 0.2
 friction: 0.1
 Texture
-MainIndex: 1
+MainIndex: 2
 SubIndex: 0
 EndEntity
 Transform

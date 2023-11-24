@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Game2\FontManager.h" />
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Src\Game2\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Game2\FontManager.cpp" />
     <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
     <ClCompile Include="Src\Game2\AssetManager.cpp" />
