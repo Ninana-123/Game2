@@ -743,8 +743,9 @@ namespace Engine {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 					}
 
-					if (!entityNames.empty() && selectedEntityIndex >= 0)
+					if (!entityNames.empty() && selectedEntityIndex >= 0 && targetEntity)
 					{
+						selectedEntityIndex = targetEntity->GetID();
 						if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
 							for (int i = 0; i < entityNames.size(); ++i) {
 								const bool isSelected = (selectedEntityIndex == i);
@@ -793,7 +794,7 @@ namespace Engine {
 
 					if (ImGui::Button("Delete selected entity"))
 					{
-						if (!entityNames.empty())
+						if (!entityNames.empty() && (selectedEntityIndex >= 1))
 						{
 							entityManager->DestroyEntity(selectedEntityIndex);
 							entityNames.erase(entityNames.begin() + selectedEntityIndex);
@@ -912,6 +913,8 @@ namespace Engine {
 							entityNames.push_back("Entity " + std::to_string(entity.first));
 						}
 					}
+
+					selectedEntityIndex = targetEntity->GetID();
 
 					if (selectedEntityIndex >= entityNames.size()) {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
