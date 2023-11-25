@@ -120,6 +120,8 @@ namespace Engine
 
         bool hasCollision(int x, int y);
 
+        std::pair<int, int> findClosestFreeCell(int x, int y);
+
     private:
         struct Node {
             int x, y;

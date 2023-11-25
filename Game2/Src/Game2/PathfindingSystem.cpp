@@ -40,11 +40,13 @@ namespace Engine
     // Declaration for isWalking
     bool isWalking = false;
 
-    // Assuming you have a vector to store tower entities
+    // Variables to try to get pathfinding to work from b to c and onwards
     std::vector<std::pair<float, float>> towerPositions = { {-275, -35}, {-70, 245} };
     std::pair<int, int> closestTower = { 0 ,0 };
     std::pair<int, int> firstTower = { 0 ,0 };
     std::pair<int, int> currentClosestTower = { 0 ,0 };
+    int endPointX = 0;
+    int endPointY = 0;
 
     // Define the collision map as a dynamically allocated 2D array
     int** collisionMap = nullptr;
@@ -56,7 +58,7 @@ namespace Engine
 
         // Add obstacles to the vector (example with two obstacles)
         obstacles.push_back({ {190, -60}, {640, 360} });
-        obstacles.push_back({ {-640, 0}, {10, -220} });
+        obstacles.push_back({ {-640, -360}, {10, 0} });
         obstacles.push_back({ {10, -220}, {640, -220} });
         obstacles.push_back({ {-640, 150}, {5, 360} });
         
@@ -167,10 +169,66 @@ namespace Engine
         startY = y;
     }
 
+    //void PathfindingSystem::setStart(int x, int y) {
+    //    if (hasCollision(x, y)) {
+    //        // Starting point is inside a collided area, find the closest free cell
+    //        std::pair<int, int> newStart = findClosestFreeCell(x, y);
+    //        startX = newStart.first;
+    //        startY = newStart.second;
+    //    }
+    //    else {
+    //        startX = x;
+    //        startY = y;
+    //    }
+
+    //}
+
     void PathfindingSystem::setGoal(int x, int y) {
         goalX = x;
         goalY = y;
     }
+
+    //void PathfindingSystem::setGoal(int x, int y) {
+    //    if (hasCollision(x, y)) {
+    //        // Ending point is inside a collided area, find the closest free cell
+    //        std::pair<int, int> newGoal = findClosestFreeCell(x, y);
+    //        goalX = newGoal.first;
+    //        goalY = newGoal.second;
+    //    }
+    //    else {
+    //        goalX = x;
+    //        goalY = y;
+    //    }
+    //}
+
+    //std::pair<int, int> PathfindingSystem::findClosestFreeCell(int x, int y) {
+    //    // Define the search area as a rectangle with a given width and height
+    //    const int SEARCH_WIDTH = 500;
+    //    const int SEARCH_HEIGHT = 500;
+
+    //    // Iterate through the cells in the rectangular search area
+    //    for (int i = -SEARCH_WIDTH / 2; i <= SEARCH_WIDTH / 2; ++i) {
+    //        for (int j = -SEARCH_HEIGHT / 2; j <= SEARCH_HEIGHT / 2; ++j) {
+    //            int newX = x + i;
+    //            int newY = y + j;
+
+    //            // Check if the current cell is within the bounds of the collision map
+    //            if (isValid(newX, newY)) {
+    //                // Check if the current cell is not colliding
+    //                if (!hasCollision(newX, newY)) {
+    //                    std::cout << "newGoal.first: " << newX << "newGoal.second: " << newY << std::endl;
+    //                    return { newX, newY };  // Found a free cell
+    //                }
+    //            }
+    //        }
+    //    }
+    //    
+    //    std::cout << "function did nothing " << std::endl;
+    //    // If no free cell is found in the search area, return the original point
+    //    return { x, y };
+    //}
+
+
 
     std::pair<float, float> PathfindingSystem::getClosestPair(float startX, float startY, const std::vector<std::pair<float, float>>& towersPositions) 
     {
@@ -186,8 +244,12 @@ namespace Engine
                 closestTower = tower;
             }
         }
-
-        if (towersPositions.size() > 1 && startX == closestTower.first && startY == closestTower.second) 
+        if (startX == closestTower.first && startY == closestTower.second) 
+        {
+            endPointX = startX;
+            endPointY = startY;
+        }
+        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second) 
         {
             if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
             {
@@ -203,6 +265,7 @@ namespace Engine
             return closestTower;
         }   
     }
+
 
     std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath(int windowWidth, int windowHeight)
     {
@@ -270,7 +333,7 @@ namespace Engine
 
         glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight); // Initialize window width and height
 
-        std::cout << "MouseX: " << Input::GetMouseX() << "MouseY: " << Input::GetMouseY() << std::endl;
+        // std::cout << "MouseX: " << Input::GetMouseX() << "MouseY: " << Input::GetMouseY() << std::endl;
 
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities)
@@ -332,12 +395,15 @@ namespace Engine
 
                         closestTower = getClosestPair(startX, startY, towerPositions);
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
-                        goalX = closestTower.first;
-                        goalY = closestTower.second;
+                        if (endPointX != closestTower.first && endPointY != closestTower.second) 
+                        {
+                            goalX = closestTower.first;
+                            goalY = closestTower.second;
+                        }
                         
                         //if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
                         //{
-                        //    std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
+                        //    std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
                         //    goalX = currentClosestTower.first;
                         //    goalY = currentClosestTower.second;
 
@@ -345,23 +411,34 @@ namespace Engine
                         //    pathfindingComponent->initialized = false;
                         //}
 
+                        
                         if (!(pathfindingComponent->initialized))
                         {
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
+                            // If tower 1
+                            if (goalX == -275 && goalY == -35) 
+                            {
+                                goalY = goalY + 80;
+                            }
+                            // If tower 2
+                            if (goalX == -70 && goalY == 245)
+                            {
+                                goalY = goalY - 105;
+                            }
+                            pathfinder.setGoal(goalX, goalY);
                             std::cout << "inside goalX: " << goalX << "inside goalY: " << goalY << std::endl;
-                            pathfinder.setGoal(345, -75);
                             pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
                             pathfindingComponent->initialized = true;
 
                         }
 
-                        //// Debug print for pathfinding
-                        //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
-                        //for (const auto& point : pathfindingComponent->path) {
-                        //    std::cout << "(" << point.first << ", " << point.second << ") ";
-                        //}
-                        //std::cout << std::endl;
+                        // Debug print for pathfinding
+                        std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
+                        for (const auto& point : pathfindingComponent->path) {
+                            std::cout << "(" << point.first << ", " << point.second << ") ";
+                        }
+                        std::cout << std::endl;
 
                         // If path is not empty, execute path finding logic
                         if (!pathfindingComponent->path.empty())
