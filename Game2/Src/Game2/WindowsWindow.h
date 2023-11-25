@@ -28,13 +28,14 @@ namespace Engine {
 		inline  unsigned int GetWidth()  const { return m_Data.Width; }
 		inline  unsigned int GetHeight() const { return m_Data.Height; }
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-		inline virtual void* GetNativeWindow() const { return m_Window; } 
+		inline virtual void* GetNativeWindow() const { return m_Window; }
 		void MinimizeWindow();
 		void RestoreWindow();
 
 	private:
 		virtual void Init(const WindowConfig& props);
 		virtual void Shutdown();
+
 	private:
 		GLFWwindow* m_Window;
 		struct WindowData {
@@ -45,6 +46,8 @@ namespace Engine {
 			EventCallbackFn EventCallback;
 		};
 
-		 WindowData m_Data;
+		WindowData m_Data;
+		bool m_IsMaximized = false;
+		bool m_IsFocused = true;
 	};
 }
