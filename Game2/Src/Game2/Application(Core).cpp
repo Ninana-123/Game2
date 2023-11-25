@@ -148,10 +148,7 @@ namespace Engine
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
-
-        //Attaching Input Handler to EM
-        InputHandler.SetEntityManager(EM);
-
+   
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
 
@@ -193,6 +190,9 @@ namespace Engine
         // Initialize inGameGUI
         m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
 
+        //Attaching Input Handler to EM
+        InputHandler.SetEntityManager(EM);
+        InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
     }
 
     /*!**********************************************************************
