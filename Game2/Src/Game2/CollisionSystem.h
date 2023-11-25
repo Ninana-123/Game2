@@ -41,6 +41,8 @@ extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
 
+extern bool isShooting;
+
 namespace Engine
 {
 	class CollisionSystem : public System //CollisionSystem class, Child class of System base class

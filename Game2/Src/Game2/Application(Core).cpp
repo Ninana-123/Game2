@@ -34,6 +34,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
+#include "Arrow.h"
+#include "fmod.hpp"
 
 
 // Global variables for frames per second (fps) calculation
@@ -57,10 +59,11 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 0.0f, 0.0f);
-    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
+    SoundInfo sound_BGM("Resource/Audio/level_bgm.wav", "01", false, true, 1.0f, 0.0f);
+    SoundInfo sound_Ambience("Resource/Audio/forest_ambience.wav", "02", false, true, 0.5f, 0.0f);
+    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "03", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "04", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "05", false, false, 0.5f, 0.0f);
 
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
@@ -69,6 +72,7 @@ namespace Engine
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
+    std::shared_ptr<ShootingSystem> shootingSystem = nullptr;
 
     // Entity-related instances and properties
     GraphicsSystem graphicsSystem;
@@ -174,6 +178,7 @@ namespace Engine
         // Initialize audio files and load sounds
         audioEngine.init();
         audioEngine.loadSound(sound_BGM);
+        audioEngine.loadSound(sound_Ambience);
         audioEngine.loadSound(sound_Win);
         audioEngine.loadSound(sound_Arrow);
         audioEngine.loadSound(sound_Slash);
@@ -191,7 +196,7 @@ namespace Engine
 
         // Initialize inGameGUI
         m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
-
+        shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM);
     }
 
     /*!**********************************************************************
@@ -220,6 +225,7 @@ namespace Engine
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
         audioEngine.playSound(sound_BGM);
+        audioEngine.playSound(sound_Ambience);
         previousTime = std::chrono::high_resolution_clock::now();
 
         while (m_Running)
@@ -259,12 +265,14 @@ namespace Engine
 
                 // Audio handling based on key input
                 if (InputHandler.IsKeyTriggered(KEY_3)) {
-                    audioEngine.playSound(sound_Win);
+                    audioEngine.pauseAllAudio();
+                    //audioEngine.playSound(sound_Win);
                     //currentlyPlayingSound = false;
                 }
 
                 if (InputHandler.IsKeyTriggered(KEY_5)) {
-                    audioEngine.playSound(sound_Arrow);
+                    audioEngine.resumeAllAudio();
+                    //audioEngine.playSound(sound_Arrow);
                     //currentlyPlayingSound = false;
                 }
 
@@ -477,6 +485,7 @@ namespace Engine
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
             m_inGameGUI->Update(buttonCollision);
+            shootingSystem->Update(deltaTime, isShooting);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

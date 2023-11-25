@@ -100,6 +100,82 @@ written consent of DigiPen Institute of Technology is prohibited.
             std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";
     }
 
+    void AudioEngine::pauseAllAudio() {
+        for (const auto& pair : loopsPlaying) {
+            const auto& channel = pair.second; // Use the channel directly       
+            bool isPaused;
+            channel->getPaused(&isPaused);
+            channel->setPaused(!isPaused);
+        }
+    }
+
+    void AudioEngine::resumeAllAudio() {
+        for (const auto& pair : loopsPlaying) {
+            const auto& channel = pair.second; // Use the channel directly      
+            bool isPaused;
+            channel->getPaused(&isPaused);
+            if (isPaused) {
+                channel->setPaused(false);
+            }
+        }
+    }
+
+    void AudioEngine::pauseSound(SoundInfo soundInfo) {
+        // Check if the sound is loaded
+        if (!soundLoaded(soundInfo)) {
+            std::cerr << "Error: Sound not loaded. Cannot pause." << std::endl;
+            return;
+        }
+
+        // Get the unique key for the sound
+        std::string uniqueKey = soundInfo.getUniqueID();
+
+        // Check if the sound is playing
+        auto it = loopsPlaying.find(uniqueKey);
+        if (it != loopsPlaying.end()) {
+            FMOD::Channel* channel = it->second;
+
+            // Pause the sound
+            bool isPaused;
+            channel->getPaused(&isPaused);
+            channel->setPaused(!isPaused);
+        }
+        else {
+            std::cerr << "Error: Sound not playing. Cannot pause." << std::endl;
+        }
+    }
+
+    void AudioEngine::resumeSound(SoundInfo soundInfo) {
+        // Check if the sound is loaded
+        if (!soundLoaded(soundInfo)) {
+            std::cerr << "Error: Sound not loaded. Cannot resume." << std::endl;
+            return;
+        }
+
+        // Get the unique key for the sound
+        std::string uniqueKey = soundInfo.getUniqueID();
+
+        // Check if the sound is playing and paused
+        auto it = loopsPlaying.find(uniqueKey);
+        if (it != loopsPlaying.end()) {
+            FMOD::Channel* channel = it->second;
+
+            // Check if the sound is paused
+            bool isPaused;
+            channel->getPaused(&isPaused);
+            if (isPaused) {
+                // Resume the sound
+                channel->setPaused(false);
+            }
+            else {
+                std::cerr << "Error: Sound is not paused. Cannot resume." << std::endl;
+            }
+        }
+        else {
+            std::cerr << "Error: Sound not playing. Cannot resume." << std::endl;
+        }
+    }
+
     void AudioEngine::updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, unsigned int fadeSampleLength) 
     {
         if (soundIsPlaying(soundInfo)) {

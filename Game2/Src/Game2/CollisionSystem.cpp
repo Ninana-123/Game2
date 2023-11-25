@@ -22,12 +22,15 @@ Technology is prohibited.
 #include "Input.h"
 #include "Window.h"
 #include "inGameGUI.h"
+#include "Arrow.h"
 
 
-float dt = 0.0;  // Time difference between frames (delta time)
+float delta = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
+bool isShooting = false;
+
 
 /*!*****************************************************************
 
@@ -52,8 +55,8 @@ int lastCollidingEntityTexture = 0;
 ********************************************************************/
 
 namespace Engine
-{
-
+{	
+	ShootingSystem shooting;
 	Input inputManager;
 
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
@@ -171,7 +174,7 @@ namespace Engine
 
 		VECTORMATH::Vec2 relVelocity = { 0, 0 };
 		VECTORMATH::Vec2 tFirst = { 0, 0 };
-		VECTORMATH::Vec2 tLast = { dt, dt };
+		VECTORMATH::Vec2 tLast = { delta, delta };
 		VECTORMATH::Vec2 tTemp = { 0, 0 };
 		relVelocity.x = vel2.x - vel1.x;
 		relVelocity.y = vel2.y - vel1.y;
@@ -582,7 +585,8 @@ namespace Engine
 
 									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
 										&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower) {
-										// isColliding = true;
+										// isColliding = true
+										isShooting = true;
 										std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 											<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 

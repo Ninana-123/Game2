@@ -48,6 +48,7 @@ written consent of DigiPen Institute of Technology is prohibited.
          */
         AudioEngine();
 
+
         /**
          * Initializes Audio Engine Studio and Core systems to default values.
          */
@@ -71,6 +72,10 @@ written consent of DigiPen Institute of Technology is prohibited.
          */
         void loadSound(SoundInfo soundInfo);
 
+        void resumeAllAudio();
+
+        void pauseAllAudio();
+
         /**
         * Plays a sound file using FMOD's low level audio system. If the sound file has not been
         * previously loaded using loadSoundFile(), a console message is displayed
@@ -84,6 +89,16 @@ written consent of DigiPen Institute of Technology is prohibited.
          * Stops a looping sound if it's currently playing.
          */
         void stopSound(SoundInfo soundInfo);
+
+        /**
+        * Pauses a playing sound.
+        */
+        void pauseSound(SoundInfo soundInfo);
+
+        /**
+        * Resumes a paused sound.
+        */
+        void resumeSound(SoundInfo soundInfo);
 
         /**
          * Method that updates the volume of a soundloop that is playing. This can be used to create audio 'fades'

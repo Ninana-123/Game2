@@ -74,6 +74,7 @@ namespace Engine {
             { {TextureClass::pauseButton, 0}, "Resource/Texture/pausebutton.png"},
             { {TextureClass::playButton, 0}, "Resource/Texture/playbutton.png"},
             { {TextureClass::settingsButton, 0}, "Resource/Texture/settingsbutton.png"},
+            { {TextureClass::Arrow, 0}, "Resource/Texture/Arrow.png"},
         };
 
 
