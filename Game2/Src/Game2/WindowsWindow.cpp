@@ -59,7 +59,6 @@ namespace Engine {
 		Init(props);
 	}
 
-
 	/*!**********************************************************************
 	\brief
 	Destructor for the WindowsWindow class.
@@ -75,14 +74,12 @@ namespace Engine {
 	\param[in] props
 	The WindowConfig containing the window properties.
 	*************************************************************************/
-
 	void WindowsWindow::Init(const WindowConfig& props) {
 		// Initialize window properties
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-
-
+		audio.init();
 
 		// Log window creation information
 		Logger::GetInstance().Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
@@ -126,12 +123,14 @@ namespace Engine {
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 			});
+
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
 			data.EventCallback(event);
 
 			});
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			UNREFERENCED_PARAMETER(scancode);
 			UNREFERENCED_PARAMETER(mods);
@@ -229,9 +228,8 @@ namespace Engine {
 		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 		// Check if the window has lost focus and minimize if needed
-		if (!m_IsFocused) {
+		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
 			MinimizeWindow();
-			audio.pauseAllAudio();
 		}
 		else {
 			// Check if the window has gained focus and restore if needed
@@ -241,6 +239,8 @@ namespace Engine {
 			audio.resumeAllAudio();
 		}
 
+		audio.update();
+
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
@@ -248,6 +248,11 @@ namespace Engine {
 	void WindowsWindow::MinimizeWindow() {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
+
+			audio.pauseAllAudio();
+			// Add log statement here
+			Logger::GetInstance().Log(LogLevel::Info, "Number of channels in loopsPlaying: " + std::to_string(audio.getLoopsPlayingSize()));
+
 			glfwIconifyWindow(m_Window);
 		}
 	}

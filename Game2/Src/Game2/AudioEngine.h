@@ -194,6 +194,7 @@ public:
     // The audio sampling rate of the audio engine
     static const int AUDIO_SAMPLE_RATE = 44100;
 
+    size_t getLoopsPlayingSize() const { return loopsPlaying.size(); }
 private:
 
     /**
@@ -259,6 +260,7 @@ private:
      * TODO Refactor to use numeric UID as key
      */
     std::map<std::string, FMOD::Sound*> sounds;
+
 
     /*
      * Map which stores the current playback channels of any playing sound loop
