@@ -70,6 +70,9 @@ namespace Engine
         /**************************************************************************/
         PathfindingSystem(int numRows, int numCols);
 
+        PathfindingSystem(int numRows, int numCols, const std::vector<std::pair<float, float>>& _towerPositions);
+
+
         /**************************************************************************/
         /*!
         \brief Set the starting point for pathfinding in the grid.
@@ -109,6 +112,13 @@ namespace Engine
         /**************************************************************************/
         std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
+        std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight, const std::vector<std::pair<float, float>>& towers);
+
+        void createLogicalCollisionMap();
+
+        void initializeCollisionMap();
+
+        bool hasCollision(int x, int y);
 
     private:
         struct Node {
@@ -160,6 +170,8 @@ namespace Engine
         /**************************************************************************/
         double distance(int x1, int y1, int x2, int y2);
 
+        std::pair<float, float> getClosestPair(float startPosX, float startPosY, const std::vector<std::pair<float, float>>& towerPositions);
+
         int numRows = 0;
         int numCols = 0;
         int startX = 0;
@@ -169,7 +181,6 @@ namespace Engine
 
         bool initialized; // A flag to check if the pathfinder has been initialized
         bool isWalking;
-
     };
 }
 

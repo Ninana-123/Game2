@@ -40,6 +40,73 @@ namespace Engine
     // Declaration for isWalking
     bool isWalking = false;
 
+    // Assuming you have a vector to store tower entities
+    std::vector<std::pair<float, float>> towerPositions = { {-275, -35}, {-70, 245} };
+    std::pair<int, int> closestTower = { 0 ,0 };
+    std::pair<int, int> firstTower = { 0 ,0 };
+    std::pair<int, int> currentClosestTower = { 0 ,0 };
+
+    // Define the collision map as a dynamically allocated 2D array
+    int** collisionMap = nullptr;
+
+    void PathfindingSystem::createLogicalCollisionMap() 
+    {
+        // Vector to store obstacle rectangles
+        std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> obstacles;
+
+        // Add obstacles to the vector (example with two obstacles)
+        obstacles.push_back({ {190, -60}, {640, 360} });
+        obstacles.push_back({ {-640, 0}, {10, -220} });
+        obstacles.push_back({ {10, -220}, {640, -220} });
+        obstacles.push_back({ {-640, 150}, {5, 360} });
+        
+        for (int i = 0; i < displayWidth; ++i) 
+        {
+            for (int j = 0; j < displayHeight; ++j) 
+            {
+                // Check if the cell is within any obstacle region
+                bool isObstacle = false;
+                for (const auto& obstacle : obstacles) {
+                    if (i >= (displayWidth / 2) + obstacle.first.first && i < (displayWidth / 2) + obstacle.second.first &&
+                        j >= (displayHeight / 2) + obstacle.first.second && j < (displayHeight / 2) + obstacle.second.second) 
+                    {
+                        isObstacle = true;
+                        break;
+                    }
+                }
+
+                // Set to 1 for obstacles, 0 for free cells
+                collisionMap[i][j] = isObstacle ? 1 : 0;
+            }
+        }
+    }
+
+    void PathfindingSystem::initializeCollisionMap() 
+    {
+        // Set the size of the collision map based on displayWidth and displayHeight
+        collisionMap = new int* [displayWidth];
+        for (int i = 0; i < displayWidth; ++i) 
+        {
+            collisionMap[i] = new int[displayHeight];
+        }
+
+        // Create a logical collision map
+        createLogicalCollisionMap();
+    }
+
+    // Check if a specific cell has collision
+    bool PathfindingSystem::hasCollision(int x, int y) 
+    {
+        // Ensure the coordinates are within the grid bounds
+        if (x >= 0 && x < displayWidth && y >= 0 && y < displayHeight) 
+        {
+            // Return true if the cell has collision
+            return collisionMap[x][y] == 1;
+        }
+        // If the coordinates are outside the grid, consider it as having collision
+        return true;
+    }
+
     // Function to check if a cell is within the bounds of the grid
     bool PathfindingSystem::isValid(int x, int y) {
         // Check if x and y are within the grid's bounds
@@ -47,7 +114,7 @@ namespace Engine
         bool isYWithinBounds = y >= 0 && y < numCols;
 
         // The cell is valid if both x and y are within bounds
-        return isXWithinBounds && isYWithinBounds;
+        return isXWithinBounds && isYWithinBounds && !hasCollision(x, y);
     }
 
     // Function to calculate the Euclidean distance between two points
@@ -69,8 +136,21 @@ namespace Engine
         goalY = 0;
         initialized = false;
 
+        // Call initializeCollisionMap only once in the constructor
+        if (!collisionMap) {
+            initializeCollisionMap();
+        }
     }
 
+    //PathfindingSystem::~PathfindingSystem() {
+    //    // Release the memory for the collision map
+    //    if (collisionMap != nullptr) {
+    //        for (int i = 0; i < 1280; ++i) {
+    //            delete[] collisionMap[i];
+    //        }
+    //        delete[] collisionMap;
+    //    }
+    //}
 
     PathfindingSystem::Node::Node(int _x, int _y, double _cost) {
         x = _x;
@@ -92,7 +172,39 @@ namespace Engine
         goalY = y;
     }
 
-    std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath(int windowWidth, int windowHeight) 
+    std::pair<float, float> PathfindingSystem::getClosestPair(float startX, float startY, const std::vector<std::pair<float, float>>& towersPositions) 
+    {
+        double minDistance = std::numeric_limits<double>::max();
+
+        for (const auto& tower : towersPositions) 
+        {
+            double currentDistance = distance(startX, startY, tower.first, tower.second);
+            // std::cout << "tower.first : " << tower.first << "tower.second: " << tower.second << std::endl;
+            if (currentDistance < minDistance) 
+            {
+                minDistance = currentDistance;
+                closestTower = tower;
+            }
+        }
+
+        if (towersPositions.size() > 1 && startX == closestTower.first && startY == closestTower.second) 
+        {
+            if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
+            {
+                currentClosestTower = towerPositions[1];
+            }
+            else 
+            {
+                currentClosestTower = towerPositions[0];
+            }
+        }
+        else 
+        {
+            return closestTower;
+        }   
+    }
+
+    std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath(int windowWidth, int windowHeight)
     {
 
         // Adjusted the indexing to handle negative coordinates
@@ -153,18 +265,17 @@ namespace Engine
         return {};
     }
 
-    void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
+    void PathfindingSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
 
         glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight); // Initialize window width and height
 
         // Iterate through entities that require pathfinding updates.
-        for (const auto& it : *entities) 
+        for (const auto& it : *entities)
         {
             Entity* entity = it.second.get();
 
-            if (entity->HasComponent(ComponentType::Pathfinding) && entity->HasComponent(ComponentType::Transform) 
-                && entity->HasComponent(ComponentType::Collision))
+            if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Collision))
             {
 
                 PathfindingComponent* pathfindingComponent = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
@@ -172,130 +283,191 @@ namespace Engine
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                if (collisionComponent->layer == Layer::World) 
+                //if (collisionComponent->layer == Layer::Castle)
+                //{
+                //    goalX = transformComponent->position.x;
+                //    goalY = transformComponent->position.y;
+                //}
+
+                if (entity->HasComponent(ComponentType::Pathfinding))
                 {
-                    startX = transformComponent->position.x;
-                    startY = transformComponent->position.y;
-                    goalX = pathfindingComponent->goalX;
-                    goalY = pathfindingComponent->goalY;
 
-                    if (!(pathfindingComponent->initialized)) 
-                    {
-                        
-                        PathfindingSystem pathfinder(displayWidth, displayHeight);
-                        pathfinder.setStart(startX, startY);
-                        pathfinder.setGoal(goalX, goalY);
-                        pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
-                        pathfindingComponent->initialized = true;
+                    //if (collisionComponent->layer == Layer::Tower)
+                    //{
+                    //    // Add tower entity to the vector
+                    //    // towers.push_back(entity);
 
-                    }
+                    //    float towerX = transformComponent->position.x;
+                    //    float towerY = transformComponent->position.y;
 
-                    //// Debug print for pathfinding
-                    //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
-                    //for (const auto& point : pathfindingComponent->path) {
-                    //    std::cout << "(" << point.first << ", " << point.second << ") ";
+                    //    // Calculate distance to the tower
+                    //    double distanceToTower = distance(startX, startY, towerX, towerY);
+
+                    //    // Check if this tower is closer than the current minimum distance
+                    //    if (distanceToTower < minDistanceToTower)
+                    //    {
+                    //        // Update the minimum distance and set the tower as the new goal
+                    //        minDistanceToTower = distanceToTower;
+                    //        closestTowerX = towerX;
+                    //        closestTowerY = towerY;
+
+                    //    }
+
+                    //    //std::cout << "closestTowerX: " << closestTowerX << "closestTowerY: " << closestTowerY << std::endl;
+                    //    // Update the goal after iterating through all towers
+                    //    goalX = towerX;
+                    //    goalY = towerY;
+                    //    //std::cout << "outside goalX: " << goalX << "outside goalY: " << goalY << std::endl;
+                    //    
                     //}
-                    //std::cout << std::endl;
+                    
 
-                    // If path is not empty, execute path finding logic
-                    if (!pathfindingComponent->path.empty()) 
+                    if (collisionComponent->layer == Layer::World)
                     {
 
-                        // Infantry switch to walking mode
-                        if ((pathfindingEntityTexture == 7))
-                        {
-                            if (textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0) 
-                            {
-                                textureComponent->textureKey = { 1, 1 };
-                            }
-                            prevTextures.push_back(pathfindingEntityTexture);
-                            prevTexture = pathfindingEntityTexture;
-                            isWalking = true;
-                        }
+                        startX = transformComponent->position.x;
+                        startY = transformComponent->position.y;
 
-                        // Archer switch to walking mode
-                        else if ((pathfindingEntityTexture == 8))
-                        {
-                            if (textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0) 
-                            {
-                                textureComponent->textureKey = { 3, 1 };
-                            }
-                            prevTextures.push_back(pathfindingEntityTexture);
-                            prevTexture = pathfindingEntityTexture;
-                            isWalking = true;
-                        }
-
-                        // Tank switch to walking mode
-                        else if ((pathfindingEntityTexture == 9))
-                        {
-                            if (textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0) 
-                            {
-                                textureComponent->textureKey = { 2, 1 };
-                            }
-                            prevTextures.push_back(pathfindingEntityTexture);
-                            prevTexture = pathfindingEntityTexture;
-                            isWalking = true;
-                        }
-
-                        std::pair<int, int> nextPosition = pathfindingComponent->path[0];
-
-                        // Update the entity's position
-                        transformComponent->position.x = static_cast<float>(nextPosition.first);
-                        transformComponent->position.y = static_cast<float>(nextPosition.second);
-
-                        // Remove the first position from the path
-                        pathfindingComponent->path.erase(pathfindingComponent->path.begin());
-                    }
-
-                    // Switch back to idle mode
-                    else
-                    {
-                        // Infantry
-                        if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
-                        {
-                            // std::cout << "infantry here" << std::endl;
-                            textureComponent->textureKey = { 1, 0 };
-                        }
-
-                        // Archer
-                        if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
-                        {
-                            // std::cout << "archer here" << std::endl;
-                            textureComponent->textureKey = { 3, 0 };
-                        }
-
-                        // Tank
-                        if (prevTexture != 7 && prevTexture != 8 && textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 1)
-                        {
-                            // std::cout << "tank here" << std::endl;
-                            textureComponent->textureKey = { 2, 0 };
-                        }
+                        closestTower = getClosestPair(startX, startY, towerPositions);
+                        // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
+                        goalX = closestTower.first;
+                        goalY = closestTower.second;
                         
-                    }
+                        //if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
+                        //{
+                        //    std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
+                        //    goalX = currentClosestTower.first;
+                        //    goalY = currentClosestTower.second;
 
+                        //    // Mark the pathfinding component as not initialized to recalculate the path
+                        //    pathfindingComponent->initialized = false;
+                        //}
+
+                        if (!(pathfindingComponent->initialized))
+                        {
+                            PathfindingSystem pathfinder(displayWidth, displayHeight);
+                            pathfinder.setStart(startX,startY);
+                            std::cout << "inside goalX: " << goalX << "inside goalY: " << goalY << std::endl;
+                            pathfinder.setGoal(345, -75);
+                            pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
+                            pathfindingComponent->initialized = true;
+
+                        }
+
+                        //// Debug print for pathfinding
+                        //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
+                        //for (const auto& point : pathfindingComponent->path) {
+                        //    std::cout << "(" << point.first << ", " << point.second << ") ";
+                        //}
+                        //std::cout << std::endl;
+
+                        // If path is not empty, execute path finding logic
+                        if (!pathfindingComponent->path.empty())
+                        {
+
+                            // Infantry switch to walking mode
+                            if ((pathfindingEntityTexture == 7))
+                            {
+                                if (textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0)
+                                {
+                                    textureComponent->textureKey = { 1, 1 };
+                                }
+                                prevTextures.push_back(pathfindingEntityTexture);
+                                prevTexture = pathfindingEntityTexture;
+                                isWalking = true;
+                            }
+
+                            // Archer switch to walking mode
+                            else if ((pathfindingEntityTexture == 8))
+                            {
+                                if (textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0)
+                                {
+                                    textureComponent->textureKey = { 3, 1 };
+                                }
+                                prevTextures.push_back(pathfindingEntityTexture);
+                                prevTexture = pathfindingEntityTexture;
+                                isWalking = true;
+                            }
+
+                            // Tank switch to walking mode
+                            else if ((pathfindingEntityTexture == 9))
+                            {
+                                if (textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0)
+                                {
+                                    textureComponent->textureKey = { 2, 1 };
+                                }
+                                prevTextures.push_back(pathfindingEntityTexture);
+                                prevTexture = pathfindingEntityTexture;
+                                isWalking = true;
+                            }
+
+                            std::pair<int, int> nextPosition = pathfindingComponent->path[0];
+
+                            // Update the entity's position
+                            transformComponent->position.x = static_cast<float>(nextPosition.first);
+                            transformComponent->position.y = static_cast<float>(nextPosition.second);
+
+                            // Remove the first position from the path
+                            pathfindingComponent->path.erase(pathfindingComponent->path.begin());
+
+                        }
+
+                        // Switch back to idle mode
+                        else
+                        {
+                            // Infantry
+                            if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
+                            {
+                                // std::cout << "infantry here" << std::endl;
+                                textureComponent->textureKey = { 1, 0 };
+                            }
+
+                            // Archer
+                            if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
+                            {
+                                // std::cout << "archer here" << std::endl;
+                                textureComponent->textureKey = { 3, 0 };
+                            }
+
+                            // Tank
+                            if (prevTexture != 7 && prevTexture != 8 && textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 1)
+                            {
+                                // std::cout << "tank here" << std::endl;
+                                textureComponent->textureKey = { 2, 0 };
+                            }
+
+                        }
+
+                    }
                 }
 
-                // Testing for collision 
-                // Variables for last position
-                float lastPositionX = transformComponent->position.x;
-                float lastPositionY = transformComponent->position.y;
-                float nextPositionX = lastPositionX + 1;
-                float nextPositionY = lastPositionY + 1;
 
-                if (collisionComponent->isColliding) {
-                    if (lastPositionY < nextPositionY) {
-                        transformComponent->position.y = lastPositionY - 5.f;
-                    }
-                    if ((lastPositionY > nextPositionY)) {
-                        transformComponent->position.y = lastPositionY + 5.f;
-                    }
-                    if ((lastPositionX < nextPositionX)) {
-                        transformComponent->position.x = lastPositionX + 5.f;
-                    }
-                    if ((lastPositionX > nextPositionX)) {
-                        transformComponent->position.x = lastPositionX - 5.f;
-                    }
-                }
+                //// Testing for collision 
+                //// Variables for last position
+                //float lastPositionX = transformComponent->position.x;
+                //float lastPositionY = transformComponent->position.y;
+                //float nextPositionX = lastPositionX + 1;
+                //float nextPositionY = lastPositionY + 1;
+
+                //if (collisionComponent->isColliding) 
+                //{
+                //    if (lastPositionY < nextPositionY) 
+                //    {
+                //        transformComponent->position.y = lastPositionY - 5.f;
+                //    }
+                //    if ((lastPositionY > nextPositionY)) 
+                //    {
+                //        transformComponent->position.y = lastPositionY + 5.f;
+                //    }
+                //    if ((lastPositionX < nextPositionX)) 
+                //    {
+                //        transformComponent->position.x = lastPositionX + 5.f;
+                //    }
+                //    if ((lastPositionX > nextPositionX)) 
+                //    {
+                //        transformComponent->position.x = lastPositionX - 5.f;
+                //    }
+                //}
             }
         }
     }
