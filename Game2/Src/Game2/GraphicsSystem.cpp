@@ -852,7 +852,7 @@ namespace Engine
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
         // Save the current shader state
-        int previousShaderSet = shader.GetCurrentShaderSet();
+        //int previousShaderSet = shader.GetCurrentShaderSet();
         shader.Bind();
         
         // Check if there's a change in the 'S' key state

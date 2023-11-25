@@ -59,9 +59,9 @@ namespace Engine {
         // Use the TextureKey structure instead of int for the map
         std::map<TextureKey, std::string> textureFilePaths = {
             { {TextureClass::Background, 0}, "Resource/Texture/Background.png" },
-            { {TextureClass::Infanty, 0}, "Resource/Texture/Warrior.png" },
-            { {TextureClass::Infanty, 1}, "Resource/Texture/WarriorWalking.png" },
-            { {TextureClass::Infanty, 2}, "Resource/Texture/WarriorAttack.png" },
+            { {TextureClass::Infantry, 0}, "Resource/Texture/Warrior.png" },
+            { {TextureClass::Infantry, 1}, "Resource/Texture/WarriorWalking.png" },
+            { {TextureClass::Infantry, 2}, "Resource/Texture/WarriorAttack.png" },
             { {TextureClass::Tank, 0}, "Resource/Texture/Tank.png" },
             { {TextureClass::Tank, 1}, "Resource/Texture/TankWalking.png" },
             { {TextureClass::Tank, 2}, "Resource/Texture/TankAttack.png" },

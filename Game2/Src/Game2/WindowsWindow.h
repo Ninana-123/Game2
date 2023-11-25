@@ -15,6 +15,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 
 #include "Window.h"
+#include "AudioEngine.h"
 #include <GLFW/glfw3.h>
 
 namespace Engine {
@@ -35,6 +36,7 @@ namespace Engine {
 	private:
 		virtual void Init(const WindowConfig& props);
 		virtual void Shutdown();
+
 	private:
 		GLFWwindow* m_Window;
 		struct WindowData {
@@ -45,6 +47,9 @@ namespace Engine {
 			EventCallbackFn EventCallback;
 		};
 
+		 AudioEngine audio;
 		 WindowData m_Data;
+		 bool m_IsMaximized = false;
+		 bool m_IsFocused = true;
 	};
 }

@@ -58,7 +58,7 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 0.0f, 0.0f);
+    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 1.0f, 0.0f);
     SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
     SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
     SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
@@ -221,7 +221,6 @@ namespace Engine
            }
        }
     }
-
 
     /*!**********************************************************************
     \brief
@@ -479,7 +478,6 @@ namespace Engine
 
             }
 
-
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
@@ -504,6 +502,7 @@ namespace Engine
         }
             
     }
+
     /*!**********************************************************************
     \brief
     Handles the window close event.
@@ -522,6 +521,7 @@ namespace Engine
         m_Running = false;
         return true;
     }
+
     /*!**********************************************************************
     \brief
     Handles the window resize event.
@@ -536,6 +536,7 @@ namespace Engine
 
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
+
     /*!**********************************************************************
     \brief
     Updates the delta time and calculates frames per second (FPS).
@@ -556,6 +557,7 @@ namespace Engine
             prevTime = currentTime;
         }
     }
+
     /*!**********************************************************************
     \brief
     Updates the window title to display FPS.
@@ -569,5 +571,4 @@ namespace Engine
         std::string title_str = windowProps.Title +" | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
-    
 }

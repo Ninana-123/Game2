@@ -16,8 +16,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "WindowsWindow.h"
 #include "AppEvent.h"
 #include "InputEvent.h"
-
-
+#include "AudioEngine.h"
 
 namespace Engine {
 	// Static flag to check if GLFW is initialized
@@ -81,6 +80,8 @@ namespace Engine {
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
+
+
 
 		// Log window creation information
 		Logger::GetInstance().Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
@@ -177,12 +178,14 @@ namespace Engine {
 			}
 			}
 			});
+
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
 			data.EventCallback(event);
 			});
+
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -190,35 +193,68 @@ namespace Engine {
 			data.EventCallback(event);
 			});
 
+		glfwSetWindowFocusCallback(m_Window, [](GLFWwindow* window, int focused) {
+			WindowsWindow* wnd = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+			if (wnd) {
+				Logger::GetInstance().Log(LogLevel::Info, "Window focus callback triggered");
+				// Update focus state using GLFW function
+				wnd->m_IsFocused = focused;
+			}
+			});
+
+		glfwSetWindowMaximizeCallback(m_Window, [](GLFWwindow* window, int maximized) {
+			WindowsWindow* wnd = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+			if (wnd) {
+				Logger::GetInstance().Log(LogLevel::Info, "Window maximize callback triggered");
+				wnd->m_IsMaximized = maximized;
+			}
+			});
 	}
 
 	/*!**********************************************************************
 	\brief
 	Shuts down the WindowsWindow, destroying the GLFW window.
 	*************************************************************************/
-
 	void WindowsWindow::Shutdown() {
 		glfwDestroyWindow(m_Window);
 	}
+
 	/*!**********************************************************************
 	\brief
 	Updates the WindowsWindow by processing events and swapping buffers.
 	*************************************************************************/
 	void WindowsWindow::OnUpdate() {
+
+		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
+
+		// Check if the window has lost focus and minimize if needed
+		if (!m_IsFocused) {
+			MinimizeWindow();
+			audio.pauseAllAudio();
+		}
+		else {
+		// Check if the window has gained focus and restore if needed
+			if (m_IsMaximized) {
+				RestoreWindow();
+			}
+			audio.resumeAllAudio();
+		}
+			
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-
 	void WindowsWindow::MinimizeWindow() {
 		if (m_Window) {
-			glfwIconifyWindow(m_Window); // Minimize the window
+			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
+			glfwIconifyWindow(m_Window);
 		}
 	}
 
 	void WindowsWindow::RestoreWindow() {
 		if (m_Window) {
-			glfwRestoreWindow(m_Window); // Restore the window if minimized
+			Logger::GetInstance().Log(LogLevel::Info, "Restoring Window");
+			glfwRestoreWindow(m_Window);
 		}
 	}
 }
