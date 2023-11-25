@@ -433,12 +433,12 @@ namespace Engine
 
                         }
 
-                        // Debug print for pathfinding
-                        std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
-                        for (const auto& point : pathfindingComponent->path) {
-                            std::cout << "(" << point.first << ", " << point.second << ") ";
-                        }
-                        std::cout << std::endl;
+                        //// Debug print for pathfinding
+                        //std::cout << "Shortest Path for Entity " << entity->GetID() << ": ";
+                        //for (const auto& point : pathfindingComponent->path) {
+                        //    std::cout << "(" << point.first << ", " << point.second << ") ";
+                        //}
+                        //std::cout << std::endl;
 
                         // If path is not empty, execute path finding logic
                         if (!pathfindingComponent->path.empty())
