@@ -270,8 +270,6 @@ namespace Engine
 
         glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight); // Initialize window width and height
 
-        std::cout << "MouseX: " << Input::GetMouseX() << "MouseY: " << Input::GetMouseY() << std::endl;
-
         // Iterate through entities that require pathfinding updates.
         for (const auto& it : *entities)
         {

@@ -48,7 +48,7 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
 double dt = 0;
-std::string initScene = "Resource/Scenes/testscene.txt";
+std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
