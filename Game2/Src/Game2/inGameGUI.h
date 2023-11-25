@@ -38,9 +38,6 @@ namespace Engine
         CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
         TextureComponent* textureCheck;
 
-        // Helper function to check if the given textureKey corresponds to a specific texture type
-        bool IsEntityTextureType(const TextureKey& textureKey, TextureClass textureClass);
-
     };
 }
 

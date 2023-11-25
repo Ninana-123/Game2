@@ -344,7 +344,7 @@ namespace Engine
                 //    std::cout << "Hello" << std::endl;
                 //}
 
-                if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
+                if (collisionTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
 
                     if (collisionTest->isColliding) {
@@ -400,7 +400,7 @@ namespace Engine
                     {
                         lastPositionX += transformation;
                         collisionTest->collisionVel.x += transformation;
-                        //transformTest->position.x = lastPositionX;
+                        transformTest->position.x = lastPositionX;
                         //if (physicsTest->velocity.x <= 0.0f) {
                         //    physicsTest->velocity.x = 1.0f - friction;
                         //}
@@ -455,11 +455,11 @@ namespace Engine
                             scalingDown = true; // Continue scaling down
                         }
                     }
-                    else
-                    {
-                        physicsTest->velocity.x = 0.0f;
-                        physicsTest->velocity.y = 0.0f;
-                    }
+                    //else
+                    //{
+                    //    physicsTest->velocity.x = 0.0f;
+                    //    physicsTest->velocity.y = 0.0f;
+                    //}
 
                 }
 
