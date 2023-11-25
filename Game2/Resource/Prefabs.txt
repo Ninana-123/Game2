@@ -32,8 +32,8 @@ SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: -200
-goalY: -200
+goalX: 0
+goalY: 0
 initialized: 0
 EndPrefab
 Archer
@@ -69,8 +69,8 @@ SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: 200
-goalY: 200
+goalX: 0
+goalY: 0
 initialized: 0
 EndPrefab
 Tank
@@ -106,7 +106,7 @@ SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: 300
+goalX: 0
 goalY: 0
 initialized: 0
 EndPrefab

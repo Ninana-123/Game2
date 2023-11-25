@@ -21,7 +21,7 @@ enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathf
 enum c_state { Static, Walking, Attack, Death, Idle };
 std::string c_stateToString(c_state state);
 
-enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower };
+enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, Castle };
 
 enum TextureClass
 {
