@@ -107,9 +107,8 @@ namespace Engine
 
         */
         /**************************************************************************/
-        std::vector<std::pair<int, int>> findShortestPath();
+        std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
-        bool bellmanFord();
 
     private:
         struct Node {
@@ -169,6 +168,8 @@ namespace Engine
         int goalY = 0;
 
         bool initialized; // A flag to check if the pathfinder has been initialized
+        bool isWalking;
+
     };
 }
 

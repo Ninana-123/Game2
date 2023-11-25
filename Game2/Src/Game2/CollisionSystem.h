@@ -17,13 +17,15 @@ Technology is prohibited.
 
 #pragma once
 
+#ifndef CSD1130_COLLISION_H_
+#define CSD1130_COLLISION_H_
+
 #include "System.h"
 #include "Vector2d.h"
 #include "EngineTypes.h"
 
 
-#ifndef CSD1130_COLLISION_H_
-#define CSD1130_COLLISION_H_
+
 
 /**************************************************************************/
 /*!
@@ -31,15 +33,22 @@ Technology is prohibited.
 */
 /**************************************************************************/
 
-#pragma once
 
 #endif // CSD1130_COLLISION_H_
+
+// Variable to check for button Collision
+extern bool buttonCollision;
+extern int lastCollidingEntity;
+extern int lastCollidingEntityTexture;
 
 namespace Engine
 {
 	class CollisionSystem : public System //CollisionSystem class, Child class of System base class
 	{
 	public:
+		
+		EntityID GetLastCollidingEntityID();
+
 		/*!*****************************************************************
 
 		 \brief
@@ -246,5 +255,8 @@ namespace Engine
 		*/
 		/**************************************************************************/
 		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+
+		private:
+		EntityID lastCollidingEntityID;
 	};
 }

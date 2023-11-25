@@ -30,6 +30,8 @@ namespace Engine
 
 		std::unordered_map<EntityID, std::unique_ptr<Entity>> entities;
 		static EntityID nextEntityID;
+
+
 	private:
 		
 	};

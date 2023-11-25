@@ -117,6 +117,8 @@ namespace Engine {
             s_KeyState[static_cast<KeyCode>(i)] = glfwGetKey(glfwGetCurrentContext(), i) == GLFW_PRESS;
         }
         Picking();
+        Dragging();
+        Delete();
     }
     /*!**********************************************************************
     \brief
@@ -132,6 +134,28 @@ namespace Engine {
         auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
         return state == GLFW_PRESS;
     }
+
+    bool Input::IsMouseButtonReleased(const MouseCode button)
+    {
+        auto* window = glfwGetCurrentContext();
+        auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
+        return state == GLFW_RELEASE;
+    }
+
+    bool Input::IsMouseClicked(MouseCode button)
+    {
+        static std::unordered_map<MouseCode, bool> prevMouseState;
+        bool currentMouseState = IsMouseButtonPressed(button);
+
+        // Check if the button was pressed in the current frame and released in the previous frame
+        bool mouseClicked = currentMouseState && !prevMouseState[button];
+
+        // Update the previous mouse state for the next frame
+        prevMouseState[button] = currentMouseState;
+
+        return mouseClicked;
+    }
+
     /*!**********************************************************************
     \brief
     Gets the current mouse position.
@@ -192,23 +216,22 @@ namespace Engine {
         }
     }
 
-    void Input::Picking()
+    void Input::SetImGuiWrapper(std::shared_ptr<Engine::ImGuiWrapper> ImGui)
     {
-        static EntityID pickedEntityID = 0;
-        static bool isDragging = false;
-        // Check if left mouse button is pressed
-        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
+        ImGuiWrapper = ImGui;
+        if (!ImGuiWrapper)
         {
-            //std::cout << "Picking Check. " << std::endl;
-            // Get the mouse position
-            VECTORMATH::Vector2D mousePosition = GetMousePosition();
+            std::cout << "Failed to Link InputManager to ImGuiWrapper." << std::endl;
+        }
+    }
 
-            // Normalize the mouse position
-            mousePosition.x -= 1270.0f / 2.0f;
-            mousePosition.y = 720.0f / 2.0f - static_cast<float>(mousePosition.y);
-
-            if (!isDragging) {
-                // Iterate through all entities only if not currently dragging
+    void Input::Picking()
+    {      
+        if (IsMouseClicked(LEFT_MOUSE_BUTTON))
+        {
+            //std::cout << "Picking Check. " << std::endl;           
+            if (isDragging == false)
+            {
                 for (auto& entityPair : *(entityManager->GetEntities()))
                 {
                     Entity* entity = entityPair.second.get();
@@ -223,34 +246,75 @@ namespace Engine {
                         if (collisionComponent->mColliding)
                         {
                             // Store the ID of the colliding entity
-                            pickedEntityID = entity->GetID();
-                            isDragging = true; // Start dragging mode
+                            targetEntityID = entity->GetID();
+                            ImGuiWrapper->SetTargetEntity(entityManager->GetEntity(targetEntityID));
+                            //isDragging = true; // Start dragging mode                         
                             break; // Exit the loop after finding the first colliding entity
+                        }
+                        else
+                        {
+                            targetEntityID = -1;
                         }
                     }
                 }
-            }
-            if (isDragging) {
-                // Use the stored ID to find the entity
-                Entity* pickedEntity = entityManager->GetEntity(pickedEntityID);
+            }          
+        }
+        //std::cout << static_cast<int>(targetEntityID) << std::endl;
+    }
 
-                if (pickedEntity) {
-                    // Retrieve the CollisionComponent and TransformComponent
-                   //CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(pickedEntity->GetComponent(ComponentType::Collision));
-                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(pickedEntity->GetComponent(ComponentType::Transform));
+    void Input::Dragging()
+    {
+        //target entity selected
+        if (targetEntityID != -1)
+        {
+            if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
+            {         
+                isDragging = true;
 
-                    // Update the transform component with the mouse position
+                Entity* DragEntity = entityManager->GetEntity(targetEntityID);
+
+                VECTORMATH::Vector2D mousePosition = GetMousePosition();
+
+                // Normalize the mouse position
+                mousePosition.x -= 1270.0f / 2.0f;
+                mousePosition.y = 720.0f / 2.0f - static_cast<float>(mousePosition.y);
+               
+                if (DragEntity && isDragging)
+                {
+                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(DragEntity->GetComponent(ComponentType::Collision));
+                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(DragEntity->GetComponent(ComponentType::Transform));
                     transformComponent->position.x = mousePosition.x;
                     transformComponent->position.y = mousePosition.y;
-
-                    // Additional logic or flags can be set as needed
                 }
+            }  
+            else
+            {
+                isDragging = false;
             }
         }
-        else
-        {
-            isDragging = false;
-        }
+    }
+
+    void Input::Delete()
+    {      
+        
+            if (IsKeyTriggered(KEY_DELETE))
+            {
+                Entity* deleteEntity = ImGuiWrapper->TargetEntityGetter();
+                targetEntityID = deleteEntity->GetID();
+                if (deleteEntity)
+                {                                                                                  
+                    if (targetEntityID >= 1)
+                    {
+                        std::cout << targetEntityID << std::endl;
+                        entityManager->DestroyEntity(targetEntityID);
+                        ImGuiWrapper->SetTargetEntity(entityManager->GetEntity(--targetEntityID));
+                    }                   
+                }
+                else
+                {
+                    targetEntityID = -1;
+                }             
+            }             
     }
 
 }  // namespace Engine

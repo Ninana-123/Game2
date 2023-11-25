@@ -24,6 +24,7 @@ namespace Engine
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;
+		VECTORMATH::Vector2D collisionVel = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************
 
@@ -56,10 +57,9 @@ namespace Engine
 			cloneComponent->aabb.max.x = aabb.max.x;
 			cloneComponent->aabb.min.y = aabb.min.y;
 			cloneComponent->aabb.max.y = aabb.max.y;
-			cloneComponent->circle.center.x = circle.center.x;
-			cloneComponent->circle.center.y = circle.center.y;
 			cloneComponent->circle.radius = circle.radius;
 			cloneComponent->layer      = layer;
+			cloneComponent->collisionVel = collisionVel;
 
 			return cloneComponent;
 		}
@@ -74,6 +74,7 @@ namespace Engine
 			outputStream << "MaxY: " << aabb.max.y << '\n';
 			outputStream << "Radius: " << circle.radius << '\n';
 			outputStream << "Layer: " << static_cast<int>(layer) << '\n';
+			outputStream << "CollisionVel: " << collisionVel.x << ' ' << collisionVel.y << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
@@ -89,6 +90,7 @@ namespace Engine
 			inputStream >> temp >> circle.radius;
 			inputStream >> temp >> buffer;
 			layer = static_cast<Layer>(buffer);
+			inputStream >> temp >> collisionVel.x >> collisionVel.y;
 		}
 	};
 }

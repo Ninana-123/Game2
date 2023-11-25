@@ -743,8 +743,9 @@ namespace Engine {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 					}
 
-					if (!entityNames.empty() && selectedEntityIndex >= 0)
+					if (!entityNames.empty() && selectedEntityIndex >= 0 && targetEntity)
 					{
+						selectedEntityIndex = targetEntity->GetID();
 						if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
 							for (int i = 0; i < entityNames.size(); ++i) {
 								const bool isSelected = (selectedEntityIndex == i);
@@ -793,7 +794,7 @@ namespace Engine {
 
 					if (ImGui::Button("Delete selected entity"))
 					{
-						if (!entityNames.empty())
+						if (!entityNames.empty() && (selectedEntityIndex >= 1))
 						{
 							entityManager->DestroyEntity(selectedEntityIndex);
 							entityNames.erase(entityNames.begin() + selectedEntityIndex);
@@ -913,6 +914,8 @@ namespace Engine {
 						}
 					}
 
+					selectedEntityIndex = targetEntity->GetID();
+
 					if (selectedEntityIndex >= entityNames.size()) {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 					}
@@ -978,7 +981,7 @@ namespace Engine {
 
 						// Dropdown list for selecting the Layer
 						ImGui::Text("Select Layer:");
-						const char* layerNames[] = { "World", "Interactive", "Editable" };
+						const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower"};
 						int currentLayerIndex = static_cast<int>(collision->layer);
 						if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) {
 							// Handle layer change here
@@ -1181,7 +1184,7 @@ namespace Engine {
 						ImGui::SameLine();
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{

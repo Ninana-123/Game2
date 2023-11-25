@@ -1,75 +1,69 @@
-5
-Transform 
+11
+Transform
 Position: 1 0
-ScaleX: 1.0
-ScaleY: 1.0
+ScaleX: 2065.55
+ScaleY: 0.000484132
 Rotation: 0
 Texture
 MainIndex: 0
 SubIndex: 0
 EndEntity
-Transform 
-Position: 200 200
-ScaleX: 1.0
-ScaleY: 1.0
+Transform
+Position: 220 165
+ScaleX: 1
+ScaleY: 1
 Rotation: 0
 Collision
-c_Width: 45 
-c_Height: 45 
+c_Width: 45
+c_Height: 45
 isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
+MinX: 197.5
+MinY: 142.5
+MaxX: 242.5
+MaxY: 187.5
 Radius: 0
 Layer: 2
+CollisionVel: 0 0
 Physics
-Velocity: 1 1
+Velocity: 0 0
 Acceleration: 0.1 0.1
 Mass: 0.2
-Friction: 0.1
+friction: 0.1
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
 Texture
 MainIndex: 3
 SubIndex: 0
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex:  0
-playing: 0
-playmode: 0
-Pathfinding
-StartX: 200
-StartY: 200
-GoalX: 200
-GoalY: 200
 EndEntity
-Transform 
+Transform
 Position: 100 100
-ScaleX: 1.0
-ScaleY: 1.0
+ScaleX: 1
+ScaleY: 1
 Rotation: 0
 Collision
-c_Width: 45 
-c_Height: 45 
+c_Width: 45
+c_Height: 45
 isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
+MinX: 77.5
+MinY: 77.5
+MaxX: 122.5
+MaxY: 122.5
 Radius: 0
 Layer: 2
+CollisionVel: 0 0
 Physics
 Velocity: 1 1
 Acceleration: 0.1 0.1
 Mass: 0.2
-Friction: 0.1
-Texture
-MainIndex: 1
-SubIndex: 0
+friction: 0.1
 Sprite
 framerate: 0
 horizontalframes: 0
@@ -77,55 +71,164 @@ verticalframes: 0
 animtimer: 0
 currentframe: 0
 texturexindex: 0
-textureyindex:  0
+textureyindex: 0
 playing: 0
 playmode: 0
+Texture
+MainIndex: 1
+SubIndex: 0
 EndEntity
-Transform 
-Position: 400 300
-ScaleX: 1.0
-ScaleY: 1.0
+Transform
+Position: 0 0
+ScaleX: 1
+ScaleY: 1
 Rotation: 0
 Collision
-c_Width: 45 
-c_Height: 45 
+c_Width: 60
+c_Height: 60
 isColliding: 0
-MinX: 0 
-MinY: 0
-MaxX: 0
-MaxY: 0
+MinX: -30
+MinY: -30
+MaxX: 30
+MaxY: 30
 Radius: 0
 Layer: 2
+CollisionVel: 0 0
 Physics
 Velocity: 1 1
 Acceleration: 0.1 0.1
 Mass: 0.2
-Friction: 0.1
+friction: 0.1
 Texture
-MainIndex: 1
+MainIndex: 2
 SubIndex: 0
-Pathfinding
-StartX = 400
-StartY = 300
-GoalX = 400
-GoalY = 300
 EndEntity
-Transform 
-Position: -250 -150 
-ScaleX: 1.0
-ScaleY: 1.0
+Transform
+Position: 0 -300
+ScaleX: 1.1
+ScaleY: 4
 Rotation: 0
 Texture
-MainIndex: 1
-SubIndex: 0 
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex:  0
-playing: 0
-playmode: 0
+MainIndex: 6
+SubIndex: 0
+EndEntity
+Transform
+Position: 0 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 60
+c_Height: 60
+isColliding: 0
+MinX: -22.5
+MinY: -322.5
+MaxX: 22.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 -15
+Texture
+MainIndex: 8
+SubIndex: 0
+EndEntity
+Transform
+Position: 135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 60
+c_Height: 60
+isColliding: 0
+MinX: 112.5
+MinY: -322.5
+MaxX: 157.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 9
+SubIndex: 0
+EndEntity
+Transform
+Position: 560 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Collision
+c_Width: 25
+c_Height: 25
+isColliding: 0
+MinX: 560
+MinY: 335
+MaxX: 560
+MaxY: 335
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 10
+SubIndex: 0
+EndEntity
+Transform
+Position: 610 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Collision
+c_Width: 25
+c_Height: 25
+isColliding: 0
+MinX: 610
+MinY: 335
+MaxX: 610
+MaxY: 335
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 12
+SubIndex: 0
+EndEntity
+Transform
+Position: -135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: -157.5
+MinY: -322.5
+MaxX: -112.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 7
+SubIndex: 0
+EndEntity
+Transform
+Position: -80 215
+ScaleX: 2
+ScaleY: 2
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: -80
+MinY: 215
+MaxX: -80
+MaxY: 215
+Radius: 0
+Layer: 5
+CollisionVel: -120 255
+Texture
+MainIndex: 4
+SubIndex: 0
 EndEntity

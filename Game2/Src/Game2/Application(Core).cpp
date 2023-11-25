@@ -32,6 +32,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include "Loader.h"
 #include "AssetManager.h"
+#include "inGameGUI.h"
+#include "CollisionSystem.h"
+#include "WindowsWindow.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -50,6 +53,7 @@ std::string initScene = "Resource/Scenes/testscene.txt";
 // Variable for last key pressed
 int lastKeyPressed = 0;
 
+
 namespace Engine
 {
     // Audio file paths and SoundInfo objects
@@ -65,6 +69,7 @@ namespace Engine
     Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("Resource/Config/config.txt");
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
+    std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
 
     // Entity-related instances and properties
     GraphicsSystem graphicsSystem;
@@ -76,7 +81,7 @@ namespace Engine
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
-
+ 
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -136,17 +141,14 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 2; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
-
-        //Attaching Input Handler to EM
-        InputHandler.SetEntityManager(EM);
-
+   
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
 
@@ -185,6 +187,12 @@ namespace Engine
         m_ImGuiWrapper->OnAttach();
         m_ImGuiWrapper->SetTargetEntity(targetEntity);
 
+        // Initialize inGameGUI
+        m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
+
+        //Attaching Input Handler to EM
+        InputHandler.SetEntityManager(EM);
+        InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
     }
 
     /*!**********************************************************************
@@ -199,6 +207,19 @@ namespace Engine
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
+
+       if (e.GetEventType() == EventType::KeyPressed)
+       {
+           KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+
+           // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
+           if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
+               keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
+               keyPressedEvent.GetKeyCode() == KEY_DELETE)
+           {
+               window.MinimizeWindow();
+           }
+       }
     }
 
 
@@ -310,6 +331,11 @@ namespace Engine
                     }
                 }
 
+                //// Getting collision component data to m_inGameGUI
+                //if (m_inGameGUI->TargetEntityGetter()->HasComponent(ComponentType::Collision)) {
+                //    collisionTest = dynamic_cast<CollisionComponent*>(m_inGameGUI->TargetEntityGetter()->GetComponent(ComponentType::Collision));
+                //}
+
                 // Define a threshold for the minimum and maximum scales
                 const float minScale = 0.5f; // Adjust this value as needed
                 const float maxScale = 2.0f; // Adjust this value as needed
@@ -327,8 +353,10 @@ namespace Engine
                     nextPositionY = lastPositionY + 1;
                 }
 
-                // Friction
-                const float friction = 0.1f;
+
+                //if (collisionTest->mColliding) {
+                //    std::cout << "Hello" << std::endl;
+                //}
 
                 if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
@@ -352,40 +380,44 @@ namespace Engine
                     if (InputHandler.IsKeyPressed(KEY_UP) && !(collisionTest->isColliding))
                     {
                         lastPositionY += transformation;
+                        collisionTest->collisionVel.y += transformation;
                         transformTest->position.y = lastPositionY;
-                        if (physicsTest->velocity.y <= 0.0f) {
-                            physicsTest->velocity.y = 1.0f - friction;
-                        }
+                        //if (physicsTest->velocity.y <= 0.0f) {
+                        //    physicsTest->velocity.y = 1.0f - friction;
+                        //}
                         lastKeyPressed = 1;
                     }
 
                     else if (InputHandler.IsKeyPressed(KEY_DOWN) && !(collisionTest->isColliding))
                     {
                         lastPositionY -= transformation;
+                        collisionTest->collisionVel.y -= transformation;
                         transformTest->position.y = lastPositionY;
-                        if (physicsTest->velocity.y >= -0.0f) {
-                            physicsTest->velocity.y = -1.0f + friction;
-                        }
+                        //if (physicsTest->velocity.y >= -0.0f) {
+                        //    physicsTest->velocity.y = -1.0f + friction;
+                        //}
                         lastKeyPressed = 2;
                     }
 
                     else if (InputHandler.IsKeyPressed(KEY_LEFT) && !(collisionTest->isColliding))
                     {
                         lastPositionX -= transformation;
+                        collisionTest->collisionVel.x -= transformation;
                         transformTest->position.x = lastPositionX;
-                        if (physicsTest->velocity.x >= -0.0f) {
-                            physicsTest->velocity.x = -1.0f + friction;
-                        }
+                        //if (physicsTest->velocity.x >= -0.0f) {
+                        //    physicsTest->velocity.x = -1.0f + friction;
+                        //}
                         lastKeyPressed = 3;
                     }
 
                     else if (InputHandler.IsKeyPressed(KEY_RIGHT) && !(collisionTest->isColliding))
                     {
                         lastPositionX += transformation;
-                        transformTest->position.x = lastPositionX;
-                        if (physicsTest->velocity.x <= 0.0f) {
-                            physicsTest->velocity.x = 1.0f - friction;
-                        }
+                        collisionTest->collisionVel.x += transformation;
+                        //transformTest->position.x = lastPositionX;
+                        //if (physicsTest->velocity.x <= 0.0f) {
+                        //    physicsTest->velocity.x = 1.0f - friction;
+                        //}
                         lastKeyPressed = 4;
                     }
 
@@ -456,6 +488,7 @@ namespace Engine
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
+            m_inGameGUI->Update(buttonCollision);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

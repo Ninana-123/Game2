@@ -1,0 +1,179 @@
+10
+Transform
+Position: 1 0
+ScaleX: 3672.09
+ScaleY: 0.000272324
+Rotation: 0
+Texture
+MainIndex: 0
+SubIndex: 0
+EndEntity
+Transform
+Position: 0 -300
+ScaleX: 1
+ScaleY: 4
+Rotation: 0
+Texture
+MainIndex: 6
+SubIndex: 0
+EndEntity
+Transform
+Position: 0 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 60
+c_Height: 60
+isColliding: 0
+MinX: -22.5
+MinY: -322.5
+MaxX: 22.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 -15
+Texture
+MainIndex: 8
+SubIndex: 0
+EndEntity
+Transform
+Position: 135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 60
+c_Height: 60
+isColliding: 0
+MinX: 112.5
+MinY: -322.5
+MaxX: 157.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 9
+SubIndex: 0
+EndEntity
+Transform
+Position: 560 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Collision
+c_Width: 25
+c_Height: 25
+isColliding: 0
+MinX: 560
+MinY: 335
+MaxX: 560
+MaxY: 335
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 10
+SubIndex: 0
+EndEntity
+Transform
+Position: 610 335
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Collision
+c_Width: 25
+c_Height: 25
+isColliding: 0
+MinX: 610
+MinY: 335
+MaxX: 610
+MaxY: 335
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 12
+SubIndex: 0
+EndEntity
+Transform
+Position: -135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: -157.5
+MinY: -322.5
+MaxX: -112.5
+MaxY: -277.5
+Radius: 0
+Layer: 3
+CollisionVel: 0 0
+Texture
+MainIndex: 7
+SubIndex: 0
+EndEntity
+Transform
+Position: -70 245
+ScaleX: 2
+ScaleY: 2
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: -70
+MinY: 245
+MaxX: -70
+MaxY: 245
+Radius: 0
+Layer: 5
+CollisionVel: -120 255
+Texture
+MainIndex: 4
+SubIndex: 0
+EndEntity
+Transform
+Position: -275 -35
+ScaleX: 2
+ScaleY: 2
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: -275
+MinY: -35
+MaxX: -275
+MaxY: -35
+Radius: 0
+Layer: 5
+CollisionVel: -275 -35
+Texture
+MainIndex: 4
+SubIndex: 0
+EndEntity
+Transform
+Position: 345 75
+ScaleX: 2.5
+ScaleY: 3
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 345
+MinY: 75
+MaxX: 345
+MaxY: 75
+Radius: 0
+Layer: 0
+CollisionVel: 345 75
+Texture
+MainIndex: 5
+SubIndex: 0
+EndEntity
