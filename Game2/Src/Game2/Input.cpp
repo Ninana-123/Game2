@@ -227,7 +227,7 @@ namespace Engine {
 
     void Input::Picking()
     {      
-        if (IsMouseClicked(LEFT_MOUSE_BUTTON))
+        if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
         {
             //std::cout << "Picking Check. " << std::endl;           
             if (isDragging == false)
