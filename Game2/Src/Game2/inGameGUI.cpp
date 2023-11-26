@@ -1,3 +1,16 @@
+/******************************************************************************/
+/*!
+\file		inGameGUI.cpp
+\author 	
+\par    	email: 
+\date   	
+\brief		
+
+			Copyright (C) 2023 DigiPen Institute of Technology.
+			Reproduction or disclosure of this file or its contents without the prior
+			written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "inGameGUI.h"
 #include "Application.h"
@@ -43,7 +56,6 @@ namespace Engine
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 			}
-
 			
 			if (lastCollidingEntityTexture == 8)
 			{
@@ -52,8 +64,7 @@ namespace Engine
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
-			}
-			
+			}			
 			
 			if (lastCollidingEntityTexture == 9)
 			{
@@ -90,8 +101,4 @@ namespace Engine
 		CollisionCheck = false;
 		
     }
-
-
-
-
 }

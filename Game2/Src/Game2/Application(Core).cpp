@@ -86,28 +86,14 @@ namespace Engine
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
 
-    /*!**********************************************************************
-    \brief
-    Constructor for the Application class
-    *************************************************************************/
     Application::Application()
     {
     }   
 
-    /*!**********************************************************************
-    \brief
-    Destructor for the Application class
-    *************************************************************************/
     Application::~Application()
     {
     }
 
-    /*!**********************************************************************
-    \brief
-    Initialize the application
-    This function initializes various components and systems needed 
-    for the application to run.
-    *************************************************************************/
     void Application::Initialize()
     {
         // Initialize GLFW
@@ -194,11 +180,6 @@ namespace Engine
         InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
     }
 
-    /*!**********************************************************************
-    \brief
-    Event handler for processing events
-    This function handles incoming events and dispatches them accordingly.
-    *************************************************************************/
     void Application::OnEvent(Event& e)
     {
         // Event handler
@@ -221,12 +202,6 @@ namespace Engine
        }
     }
 
-    /*!**********************************************************************
-    \brief
-    Run the application
-    This function runs the main loop of the application, handling input,
-    updating systems, and rendering.
-    *************************************************************************/
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
@@ -498,16 +473,6 @@ namespace Engine
         }           
     }
 
-    /*!**********************************************************************
-    \brief
-    Handles the window close event.
-    This function handles the event triggered when the application's
-    window is closed.
-    \param[in] e 
-    WindowCloseEvent object containing event information.
-    \return
-    True if the window close event was handled successfully, false otherwise.
-    *************************************************************************/
     bool Application::OnWindowClose(WindowCloseEvent& e)
     {
         UNREFERENCED_PARAMETER(e);
@@ -517,14 +482,6 @@ namespace Engine
         return true;
     }
 
-    /*!**********************************************************************
-    \brief
-    Handles the window resize event.
-    This function handles the event triggered when the application's
-    window is resized.
-    \param[in] e
-    WindowResizeEvent object containing event information.
-    *************************************************************************/
     void Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
@@ -532,10 +489,6 @@ namespace Engine
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
 
-    /*!**********************************************************************
-    \brief
-    Updates the delta time and calculates frames per second (FPS).
-    *************************************************************************/
     void Application::UpdateDeltaTime()
     {
         static int frameCount = 0;
@@ -553,10 +506,6 @@ namespace Engine
         }
     }
 
-    /*!**********************************************************************
-    \brief
-    Updates the window title to display FPS.
-    *************************************************************************/
     void Application::UpdateWindowTitle() 
     {
         // Update the window title with FPS

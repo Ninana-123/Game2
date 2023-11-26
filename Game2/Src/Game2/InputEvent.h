@@ -23,7 +23,11 @@ namespace Engine {
 
     // Keyboard Inputs
 
-    // Base class for keyboard events
+    /*!
+     * \brief Base class for keyboard events.
+     *
+     * This class serves as the base class for keyboard events and provides common functionality.
+     */
     class GAME2_API KeyEvent : public Event {
     public:
         inline KeyCode GetKeyCode() const { return m_KeyCode; }
@@ -35,7 +39,11 @@ namespace Engine {
         KeyCode m_KeyCode;
     };
 
-    // Event for a key being pressed
+    /*!
+     * \brief Event for a key being pressed.
+     *
+     * This class represents an event that occurs when a key is pressed.
+     */
     class GAME2_API KeyPressedEvent : public KeyEvent {
     public:
         KeyPressedEvent(KeyCode keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
@@ -49,6 +57,7 @@ namespace Engine {
             ss << "KeyPressedEvent: " << keyName << " ( " << m_RepeatCount << " repeats)";
             return ss.str();
         }
+
         void LogEventInfo() const
         {
             Logger::GetInstance().Log(LogLevel::Event, ("Event Type: " + ToString()).c_str());
@@ -59,7 +68,11 @@ namespace Engine {
         int m_RepeatCount;
     };
 
-    // Event for a key being released
+    /*!
+     * \brief Event for a key being released.
+     *
+     * This class represents an event that occurs when a key is released.
+     */
     class GAME2_API KeyReleasedEvent : public KeyEvent {
     public:
         KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
@@ -78,6 +91,11 @@ namespace Engine {
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
+    /*!
+     * \brief Event for a key being typed.
+     *
+     * This class represents an event that occurs when a key is typed.
+     */
     class GAME2_API KeyTypedEvent : public KeyEvent {
     public:
         KeyTypedEvent(KeyCode keycode) : KeyEvent(keycode) {}
@@ -99,7 +117,11 @@ namespace Engine {
     // Mouse Inputs
 
 
-    // Event for mouse movement
+    /*!
+     * \brief Event for mouse movement.
+     *
+     * This class represents an event that occurs when the mouse is moved.
+     */
     class GAME2_API MouseMovedEvent : public Event {
     public:
         MouseMovedEvent(float x, float y) : Event(), m_MouseX(x), m_MouseY(y) {}
@@ -123,7 +145,11 @@ namespace Engine {
         float m_MouseX, m_MouseY;
     };
 
-    // Event for mouse scroll
+    /*!
+     * \brief Event for mouse scroll.
+     *
+     * This class represents an event that occurs when the mouse is scrolled.
+     */
     class GAME2_API MouseScrolledEvent : public Event {
     public:
         MouseScrolledEvent(float xOffset, float yOffset) : Event(), m_XOffset(xOffset), m_YOffset(yOffset) {}
@@ -147,7 +173,11 @@ namespace Engine {
         float m_XOffset, m_YOffset;
     };
 
-    // Base class for mouse button events
+    /*!
+     * \brief Base class for mouse button events.
+     *
+     * This class serves as the base class for mouse button events and provides common functionality.
+     */
     class GAME2_API MouseButtonEvent : public Event {
     public:
         inline int GetMouseButton() const { return m_Button; }
@@ -161,7 +191,11 @@ namespace Engine {
         int m_Button;
     };
 
-    // Event for mouse button being pressed
+    /*!
+      * \brief Event for mouse button being pressed.
+      *
+      * This class represents an event that occurs when a mouse button is pressed.
+      */
     class GAME2_API MouseButtonPressedEvent : public MouseButtonEvent {
     public:
         MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
@@ -180,7 +214,11 @@ namespace Engine {
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    // Event for mouse button being released
+    /*!
+     * \brief Event for mouse button being released.
+     *
+     * This class represents an event that occurs when a mouse button is released.
+     */
     class GAME2_API MouseButtonReleasedEvent : public MouseButtonEvent {
     public:
         MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}

@@ -16,22 +16,13 @@
             written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-
 #include "pch.h"
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine
 {
-    /**
-     * @brief Constructs a Camera object with the specified orthographic projection parameters.
-     *
-     * @param left The left coordinate of the projection volume.
-     * @param right The right coordinate of the projection volume.
-     * @param bottom The bottom coordinate of the projection volume.
-     * @param top The top coordinate of the projection volume.
-     */
+
     Camera::Camera(float left, float right, float bottom, float top)
         : m_ProjectionMatrix(glm::ortho(left, right, bottom, top, -1.0f, 1.0f)), m_ViewMatrix(1.0f), m_Zoom(1.0f)
     {
@@ -41,14 +32,13 @@ namespace Engine
        
     }
 
-    /**
-    * @brief Recalculates the view matrix based on the camera's position and rotation.
-    */
     void Camera::RecalculateViewMatrix()
     {
+        // Recalculate the view matrix based on the camera's position and rotation
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), m_Position) *
             glm::rotate(glm::mat4(1.0f), m_Rotation, glm::vec3(0, 0, 1));
 
+        // Update the view matrix and view-projection matrix
         m_ViewMatrix = glm::inverse(transform);
         m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
     }
@@ -66,15 +56,9 @@ namespace Engine
     //    RecalculateViewMatrix();
     //}
 
-
-     /**
-     * @brief Updates the camera's position based on input controls.
-     *
-     * @param input Reference to the Input object for processing user input.
-     * @param CameraSpeed The movement speed of the camera.
-     */
     void Camera::UpdatePosition(const Input& input, float CameraSpeed)
     {
+        // Update the camera's position based on input controls
         glm::vec3 translation(0.0f);
 
         bool CameraLeft = input.IsKeyPressed(KEY_J);

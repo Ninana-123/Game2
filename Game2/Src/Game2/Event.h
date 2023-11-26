@@ -5,7 +5,7 @@
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
 \brief		Defines event-related classes and enums for the Game2 Engine.
-            This file contains the declaration of event-related classes, enums, 
+            This file contains the declaration of event-related classes, enums,
             and macros.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
@@ -13,6 +13,7 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+
 #pragma once
 
 #include "pch.h"
@@ -21,7 +22,10 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine {
 
-    // Enum for event types
+    /*!
+    \enum EventType
+    \brief Enum for different event types.
+    */
     enum class EventType {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowMoved,
@@ -29,7 +33,10 @@ namespace Engine {
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-    // Enum for event categories
+    /*!
+    \enum EventCategory
+    \brief Enum for different event categories.
+    */
     enum EventCategory {
         None = 0,
         EventCategoryApplication = BIT(0),
@@ -39,41 +46,121 @@ namespace Engine {
         EventCategoryMouseButton = BIT(4)
     };
 
-    // Macro to define event type and related functions
+    /*!
+    \def EVENT_CLASS_TYPE(type)
+    \brief Macro to define event type and related functions.
+    */
 #define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::##type;}\
                                virtual EventType GetEventType() const override {return GetStaticType();}\
                                virtual const char* GetName() const override {return #type; }
 
-    // Macro to define event category
+    /*!
+    \def EVENT_CLASS_CATEGORY(category)
+    \brief Macro to define event category.
+    */
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override {return category; }
 
-    // Base event class
+    /*!
+    \class Event
+    \brief Base event class providing common functionality for derived event classes.
+    */
     class GAME2_API Event
     {
         friend class EventDispatcher;
     public:
         // Functions to be implemented by derived event classes
+
+        /*!
+        \brief
+        Gets the event type.
+
+        \return
+        The event type.
+        */
         virtual EventType GetEventType() const = 0;
+
+        /*!
+        \brief
+        Gets the name of the event.
+
+        \return
+        The name of the event.
+        */
         virtual const char* GetName() const = 0;
+
+        /*!
+        \brief
+        Gets the category flags of the event.
+
+        \return
+        The category flags of the event.
+        */
         virtual int GetCategoryFlags() const = 0;
+
+        /*!
+        \brief
+        Converts the event information to a string.
+
+        \return
+        A string representing the event information.
+        */
         virtual std::string ToString() const { return GetName(); }
+
+        /*!
+        \brief
+        Logs information about the event.
+        */
         virtual void LogEventInfo() const = 0;
+
+        /*!
+        \brief
+        Checks if the event has been handled.
+
+        \note
+        This is for internal use and should not be called directly.
+
+        \return
+        True if the event has been handled, false otherwise.
+        */
         inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
     protected:
-        bool m_Handled = false;
+        bool m_Handled = false; //!< Flag indicating whether the event has been handled.
     };
 
-    // Event dispatcher to handle event functions
+    /*!
+    \class EventDispatcher
+    \brief Event dispatcher to handle event functions.
+    */
     class EventDispatcher
     {
         template<typename T>
         using EventFn = std::function<bool(T&)>;
     public:
+
+        /*!
+        \brief
+        Constructor for the EventDispatcher.
+
+        \param event
+        The event to be dispatched.
+        */
         EventDispatcher(Event& event) : m_Event(event)
         {
         }
 
-        // Dispatch event function based on event type
+        /*!
+        \brief
+        Dispatches event function based on event type.
+
+        \tparam T
+        The type of the event.
+
+        \param func
+        The event function to be dispatched.
+
+        \return
+        True if the event function is dispatched successfully, false otherwise.
+        */
         template<typename T>
         bool Dispatch(EventFn<T> func) {
             if (m_Event.GetEventType() == T::GetStaticType())
@@ -85,10 +172,22 @@ namespace Engine {
                 return false;
         }
     private:
-        Event& m_Event;
+        Event& m_Event; //!< The event to be dispatched.
     };
 
-    // Operator to print event to an output stream
+    /*!
+    \brief
+    Operator to print event to an output stream.
+
+    \param os
+    The output stream.
+
+    \param e
+    The event to be printed.
+
+    \return
+    The output stream after printing the event.
+    */
     inline std::ostream& operator<<(std::ostream& os, const Event& e) {
         return os << e.ToString();
     }

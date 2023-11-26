@@ -1,3 +1,19 @@
+/******************************************************************************/
+/*!
+\file		FontManager.cpp
+\author 	Teo Sheen Yeoh
+\par    	email: t.sheenyeoh@digipen.edu
+\co         Tay Jun Feng Vance
+            email: junfengvance.t@digipen.edu
+\date   	August 29, 2023
+\brief		This file provides the implementation for font rendering in the game engine.
+            It contains functions to initialize the font rendering system, load font glyphs, and render text using OpenGL
+
+            Copyright (C) 2023 DigiPen Institute of Technology.
+            Reproduction or disclosure of this file or its contents without the prior
+            written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "FontManager.h"
 
@@ -17,9 +33,7 @@ namespace Engine
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
         
-    }
-
-    
+    }  
 
    unsigned int FontManager::GetVBO()
     {
@@ -36,5 +50,4 @@ namespace Engine
       // fontType[i] = fontPath;
        fontType.push_back(fontPath);
    }
-
 }

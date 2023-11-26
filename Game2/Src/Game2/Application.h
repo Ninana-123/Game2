@@ -35,21 +35,43 @@ namespace Engine
     class GAME2_API Application
     {
     public:
-        // Constructor
+
+        /*!**********************************************************************
+        \brief
+        Constructor for the Application class
+        *************************************************************************/
         Application();
 
-        // Destructor
+        /*!**********************************************************************
+        \brief
+        Destructor for the Application class
+        *************************************************************************/
         virtual ~Application();
 
+        /*!**********************************************************************
+        \brief
+        Initialize the application
+        This function initializes various components and systems needed
+        for the application to run.
+        *************************************************************************/
         void Initialize();
 
-        // Run the application
+        /*!**********************************************************************
+        \brief
+        Run the application
+        This function runs the main loop of the application, handling input,
+        updating systems, and rendering.
+        *************************************************************************/
         void Run();
 
-        // Event handler
+        /*!**********************************************************************
+        \brief
+        Event handler for processing events
+        This function handles incoming events and dispatches them accordingly.
+        *************************************************************************/
         void OnEvent(Event& e);
 
-       
+        // Window instance
         WindowsWindow window;
 
         // Get a reference to the application instance (Singleton pattern)
@@ -59,28 +81,63 @@ namespace Engine
             return instance;
         }
 
+        /*!**********************************************************************
+        \brief
+        Updates the delta time and calculates frames per second (FPS).
+        *************************************************************************/
         void UpdateDeltaTime();
+
+        /*!**********************************************************************
+        \brief
+        Updates the window title to display FPS.
+        *************************************************************************/
         void UpdateWindowTitle();
 
+        // Asset manager instance
         std::shared_ptr<Engine::AssetManager> assetManager;
+
+        // Entity manager instance
         std::shared_ptr<Engine::EntityManager> EM;        
 
     private:
-        // Handle the window close event
+
+        /*!**********************************************************************
+        \brief
+        Handles the window close event.
+        This function handles the event triggered when the application's
+        window is closed.
+        \param[in] e
+        WindowCloseEvent object containing event information.
+        \return
+        True if the window close event was handled successfully, false otherwise.
+        *************************************************************************/
         bool OnWindowClose(WindowCloseEvent& e);
 
+        /*!**********************************************************************
+        \brief
+        Handles the window resize event.
+        This function handles the event triggered when the application's
+        window is resized.
+        \param[in] e
+        WindowResizeEvent object containing event information.
+        *************************************************************************/
         void OnWindowResize(WindowResizeEvent& e);
 
-        // Window instance (ownership managed by a smart pointer)
+        // Window instance 
         std::unique_ptr<Window> m_Window;
 
         // Flag indicating if the application is running
         bool m_Running = true;
-
-        
+    
     };
 
-    // Function to create an application instance
+    /*!
+    ***********************************************************************
+    \brief
+    Function to create an application instance.
+    \return
+    A pointer to the created Application instance.
+    ***********************************************************************/
     Application* CreateApplication();
 
 } // End of namespace Engine

@@ -2,6 +2,7 @@
 /*!
 \file		AudioEngine.cpp
 \author 	Tay Jun Feng Vance
+\co         Wayne Kwok Jun Lin (10%)
 \par    	email: junfengvance.t@digipen.edu
 \date       29/09/2023
 \brief		This file contains the definition of all functions related to the FMOD
@@ -24,12 +25,19 @@ AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
 eventDescriptions(), eventInstances(), reverb() {}
 
 void AudioEngine::init() {
+    // Initialize FMOD Studio and Core systems
     ERRCHECK(FMOD::Studio::System::create(&studioSystem));
     ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
+
+    // Set software format and 3D settings
     ERRCHECK(lowLevelSystem->setSoftwareFormat(AUDIO_SAMPLE_RATE, FMOD_SPEAKERMODE_STEREO, 0));
     ERRCHECK(lowLevelSystem->set3DSettings(0.0, DISTANCEFACTOR, 0.0f));
+
+    // Initialize the audio engine
     ERRCHECK(studioSystem->initialize(MAX_AUDIO_CHANNELS, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
     ERRCHECK(lowLevelSystem->getMasterChannelGroup(&mastergroup));
+
+    // Initialize reverb effect
     initReverb();
 }
 
