@@ -75,6 +75,8 @@ namespace Engine
         double animationStartTime{};
         double frameDuration{}; 
 
+        Camera m_Camera;
+        EditorCamera m_EditorCamera;
     private:
         Shader shader;
         std::vector<std::vector<Texture>> textures;
@@ -86,6 +88,7 @@ namespace Engine
         glm::mat4 SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale);
         glm::mat4 proj{};
         glm::mat4 view{};
+        glm::mat4 ndc{};
         glm::mat4 mvpMatrixForBackground = glm::mat4(1.0f);
 
         GLFWwindow* Window{};
@@ -124,8 +127,7 @@ namespace Engine
         //int MAX_BATCH_SIZE; // Maximum number of vertices in a batch
         //std::vector<Batch> batches;
 
-        Camera m_Camera;
-        EditorCamera m_EditorCamera;
+        
 
         float CameraSpeed = 1.5f;
         float yOffset = 1.0f;

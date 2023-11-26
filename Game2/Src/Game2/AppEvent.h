@@ -56,6 +56,6 @@ namespace Engine {
 			Logger::GetInstance().Log(LogLevel::Event, "Event Type: " + ToString());
 		}
 		EVENT_CLASS_TYPE(WindowClose) // Set the event type
-			EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
+		EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
 	};
 }

@@ -27,7 +27,8 @@ extern bool isPaused;
 extern bool stepOneFrame;
 extern double dt;
 extern std::string initScene;
-
+extern int e_Width;
+extern int e_Height;
 
 namespace Engine
 {
@@ -69,7 +70,7 @@ namespace Engine
         // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);
 
-        void OnWindowResize(WindowResizeEvent& e);
+        bool OnWindowResize(WindowResizeEvent& e);
 
         // Window instance (ownership managed by a smart pointer)
         std::unique_ptr<Window> m_Window;

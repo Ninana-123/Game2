@@ -273,12 +273,20 @@ namespace Engine {
 
                 Entity* DragEntity = entityManager->GetEntity(targetEntityID);
 
-                VECTORMATH::Vector2D mousePosition = GetMousePosition();
+                // Get the mouse position from the input system
+                VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
+
+                int displayWidth, displayHeight;
+                glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+                float scaleX = static_cast<float>(1280.f / displayWidth);
+                float scaleY = static_cast<float>(720.f / displayHeight);
 
                 // Normalize the mouse position
-                mousePosition.x -= 1270.0f / 2.0f;
-                mousePosition.y = 720.0f / 2.0f - static_cast<float>(mousePosition.y);
-               
+                mousePosition.x = mousePosition.x * scaleX - 1280.f / 2.0f;
+                mousePosition.y = 720.f / 2.0f - mousePosition.y * scaleY;
+
+                //std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
+                
                 if (DragEntity && isDragging)
                 {
                     CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(DragEntity->GetComponent(ComponentType::Collision));

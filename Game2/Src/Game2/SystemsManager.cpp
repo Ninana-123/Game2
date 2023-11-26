@@ -16,10 +16,10 @@ namespace Engine
 {
 	std::vector<System*> SystemsManager::all_systems;
 
-	template GraphicsSystem& SystemsManager::GetSystem<GraphicsSystem>();
-	template CollisionSystem& SystemsManager::GetSystem<CollisionSystem>(); 
-	template PhysicsSystem& SystemsManager::GetSystem<PhysicsSystem>();
-	template PathfindingSystem& SystemsManager::GetSystem<PathfindingSystem>();
+	template GraphicsSystem* SystemsManager::GetSystem<GraphicsSystem>();
+	template CollisionSystem* SystemsManager::GetSystem<CollisionSystem>(); 
+	template PhysicsSystem* SystemsManager::GetSystem<PhysicsSystem>();
+	template PathfindingSystem* SystemsManager::GetSystem<PathfindingSystem>();
 
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
@@ -73,15 +73,14 @@ namespace Engine
 		}
 	}
 
-
 	template <typename T>
-	T& SystemsManager::GetSystem()
+	T* SystemsManager::GetSystem()
 	{
 		for (System* system : all_systems)
 		{
 			if (dynamic_cast<T*>(system) != nullptr)
 			{
-				return *static_cast<T*>(system);
+				return static_cast<T*>(system);
 			}
 		}
 		// Handle error case (e.g., system not found)

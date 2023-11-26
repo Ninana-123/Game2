@@ -98,7 +98,7 @@ void AudioEngine::stopSound(SoundInfo soundInfo)
 }
 
 void AudioEngine::pauseAllAudio() {
-    Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing all audio.");
+    //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing all audio.");
     for (const auto& pair : loopsPlaying) {
         const auto& channel = pair.second; // Use the channel directly
         bool isPaused;

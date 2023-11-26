@@ -51,7 +51,7 @@ namespace Engine
         \return Reference to the specified system type.
         ********************************************************************/
         template <typename T>
-        T& GetSystem();
+        T* GetSystem();
 
         /*!*****************************************************************
         \brief Sets the state of a specific system in the container.

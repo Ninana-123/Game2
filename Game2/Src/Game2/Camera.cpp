@@ -37,7 +37,7 @@ namespace Engine
     {
         // vertex pos * world matrix(world) * view matrix * projection matrix
         // camera  =  view * projection
-        m_ViewProjectionMatrix = m_ViewMatrix * m_ProjectionMatrix;
+        m_ViewProjectionMatrix =  m_ProjectionMatrix * m_ViewMatrix;
        
     }
 
@@ -51,6 +51,11 @@ namespace Engine
 
         m_ViewMatrix = glm::inverse(transform);
         m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+    }
+
+    void Camera::RecalculateProjectionMatrix(int width, int height)
+    {
+        m_ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
     //void Camera::HandleMouseScroll(float yOffset)

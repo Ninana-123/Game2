@@ -710,11 +710,23 @@ namespace Engine
        
         glm::mat4 result;
         if (useEditorCamera) {
-            result = mvpMatrix * m_EditorCamera.GetViewMatrix();
+            result =  m_EditorCamera.GetViewProjectionMatrix() * mvpMatrix;
         }
         else {
-            result = mvpMatrix * m_Camera.GetViewMatrix();
+            result =  m_Camera.GetViewProjectionMatrix() * mvpMatrix;
         }
+
+        /*
+        // Extract translation part (last column) of the MVP matrix
+        glm::vec4 transformedPosition = result[3];
+
+        std::cout << "Entity: " << static_cast<int>(entity->GetID()) << std::endl;
+        // Print the transformed coordinates
+        std::cout << "Transformed Coordinates: (" << transformedPosition.x << ", "
+            << transformedPosition.y << ", "
+            << transformedPosition.z << ")\n";
+        */
+        
         shader.SetUniformMat4f("u_MVP", result);
 
         va.Bind();
@@ -843,11 +855,11 @@ namespace Engine
      */
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-        int width, height;
-        glfwGetWindowSize(Window, &width, &height);
-        UpdateViewport(width, height);
-       renderer.Clear();
-
+        //int width, height;
+        //glfwGetWindowSize(Window, &width, &height);   
+        //UpdateViewport(width, height);
+        renderer.Clear();    
+   
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
@@ -892,7 +904,7 @@ namespace Engine
 
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
-                    glm::mat4 mvpA = proj * view * modelA;
+                    
                     // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
 
                     // Get the current state of the 'P' key
@@ -915,16 +927,16 @@ namespace Engine
                         if (!renderTexturedSquare)
                         {
                             if(texture->textureKey.mainIndex == Background)
-                                RenderBackground(mvpA);
+                                RenderBackground(modelA);
                             else {
-                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
+                                RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
 
-                                RenderLines(mvpA); 
+                                RenderLines(modelA);
                             }
                         }
                         else
                         {
-                            DrawColoredSquare(mvpA);
+                            DrawColoredSquare(modelA);
                         }
                     }
 
@@ -993,7 +1005,6 @@ namespace Engine
     void GraphicsSystem::UpdateViewport(int width, int height)
     {
         glViewport(0, 0, width, height);
-        proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
     /*!
@@ -1065,12 +1076,12 @@ namespace Engine
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
         // Calculate the position for your object at the center of the screen
-        glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
+        //glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
 
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
 
         // Translate the object to the calculated center position
-        model = glm::translate(model, MobjectPosition);
+        //model = glm::translate(model, MobjectPosition);
 
         // Apply the provided translation, scale, and rotation
         model = glm::translate(model, translation);

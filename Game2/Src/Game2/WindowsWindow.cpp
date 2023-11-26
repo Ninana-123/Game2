@@ -125,6 +125,7 @@ namespace Engine {
 
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
+		
 			});
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -230,7 +231,7 @@ namespace Engine {
 
 		// Check if the window has lost focus and minimize if needed
 		if (!m_IsFocused) {
-			MinimizeWindow();
+			//MinimizeWindow();
 			audio.pauseAllAudio();
 		}
 		else {

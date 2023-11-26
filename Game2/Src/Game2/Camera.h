@@ -51,6 +51,8 @@ namespace Engine
 			RecalculateViewMatrix();
 		}
 
+		void RecalculateProjectionMatrix(int width, int height);
+
 		const glm::mat4& GetProjectionMatrix()const 
 		{
 			return m_ProjectionMatrix; 

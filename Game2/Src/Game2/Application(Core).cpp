@@ -35,7 +35,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
-
+#include "Input.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -44,6 +44,8 @@ double loopTime = 0.0;  // Definition of loopTime
 const double fixedDeltaTime = 1.0 / 60.0;//user defined 
 double accumulatedTime = 0.0;//one time definition
 int currentNumberOfSteps = 0;
+int e_Width = 0;
+int e_Height = 0;
 double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
@@ -72,7 +74,7 @@ namespace Engine
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
 
     // Entity-related instances and properties
-    GraphicsSystem graphicsSystem;
+    GraphicsSystem* graphicsSystem;
     std::shared_ptr<EntityManager> EM;
     Engine::PrefabManager PM;
     EntityID cloneEntity;
@@ -123,6 +125,8 @@ namespace Engine
             return; // Handle the window creation error
         }
      
+        e_Width = m_Window->GetWidth();
+        e_Height = m_Window->GetHeight();
 
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -151,6 +155,7 @@ namespace Engine
    
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
+        graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
@@ -205,6 +210,7 @@ namespace Engine
         // Event handler
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+       dispatcher.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
 
@@ -477,9 +483,8 @@ namespace Engine
 
                 }
 
-            }
-
-
+            }         
+            
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
@@ -530,11 +535,23 @@ namespace Engine
     \param[in] e
     WindowResizeEvent object containing event information.
     *************************************************************************/
-    void Application::OnWindowResize(WindowResizeEvent& e)
+    bool Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
+        float previousWidth = e_Width;
+        float previousHeight = e_Height;
+        int newWidth = e.GetWidth();
+        int newHeight = e.GetHeight();
+        //float scaleWidth = (newWidth / previousWidth);
+        //float scaleHeight = (newHeight / previousHeight);
+        //VECTORMATH::Vector2D scale = {  scaleWidth, scaleHeight };
 
-        graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
+        graphicsSystem->UpdateViewport(newWidth, newHeight);  
+
+        //std::cout << scaleWidth << ", " << scaleHeight << std::endl;
+        //std::cout << newWidth << ", " << newHeight << std::endl;
+
+        return true;
     }
     /*!**********************************************************************
     \brief

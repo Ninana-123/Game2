@@ -514,7 +514,7 @@ namespace Engine
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower)
 					{
-						circle1.radius = 100.f;
+						circle1.radius = 100.f; //retrieve from component pl0x
 
 					}
 
@@ -549,7 +549,7 @@ namespace Engine
 								AABB aabb2;
 								Circle circle2;
 								circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
-								circle2.radius = 100.f;
+								circle2.radius = 100.f;//retrieve from component pl0x
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
 
@@ -632,8 +632,14 @@ namespace Engine
 		// Get the mouse position from the input system
 		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
 
-		mousePosition.x -= 1270 / 2.0f;
-		mousePosition.y = 720 / 2.0f - mousePosition.y;
+		int displayWidth, displayHeight;
+		glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+		float scaleX = static_cast<float>( 1280.f / displayWidth);
+		float scaleY = static_cast<float>( 720.f / displayHeight);
+
+		// Normalize the mouse position
+		mousePosition.x = mousePosition.x * scaleX - 1280.f / 2.0f;
+		mousePosition.y = 720.f / 2.0f - mousePosition.y * scaleY;
 
 		// Iterate through all entities in the editable layer
 		for (auto it = entities->begin(); it != entities->end(); ++it)
@@ -646,6 +652,7 @@ namespace Engine
 				// Retrieve the CollisionComponent and TransformComponent
 				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+				TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
 				if (collisionComponent->layer == Layer::Editable)
 				{				
@@ -663,34 +670,9 @@ namespace Engine
 					}
 				}
 
-				if (collisionComponent)
+				if (collisionComponent->layer == Layer::inGameGUI)
 				{
-					float halfWidth_1 = collisionComponent->c_Width / 2.0f;
-					float halfHeight_1 = collisionComponent->c_Height / 2.0f;
-
-					float minX_1 = static_cast<float>(transformComponent->position.x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent->position.x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent->position.y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent->position.y) + halfHeight_1;
-
-					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
-				}			
-			}
-
-			// Button collision logic
-			if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Collision) && !(entity->HasComponent(ComponentType::Physics))) 
-			{
-				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-				TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-
-				if (collisionComponent->layer == Layer::inGameGUI) 
-				{
-					Input::GetMousePosition();
-					if (IsAreaClicked(transformComponent->position.x + 640.f, 360.f - transformComponent->position.y,
-						collisionComponent->c_Width, collisionComponent->c_Height, Input::GetMouseX(), Input::GetMouseY())
-						&& Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
+					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb) && Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
 					{
 						// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 						buttonCollision = true;
@@ -709,18 +691,18 @@ namespace Engine
 							textureCheck->textureKey = { 11, 0 };
 						}
 					}
-					if (lastCollidingEntityTexture == 11) 
+					if (lastCollidingEntityTexture == 11)
 					{
 						if (textureCheck->textureKey.mainIndex == 11 && textureCheck->textureKey.subIndex == 0)
 						{
 							textureCheck->textureKey = { 10, 0 };
 						}
 					}
-
 				}
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
+					std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
@@ -753,7 +735,7 @@ namespace Engine
 
 					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
 					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
-				}
+				}			
 			}
 		}
 	}
