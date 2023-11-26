@@ -1,5 +1,3 @@
-//BehaviourComponent.h
-#pragma once
 /******************************************************************************/
 /*!
 \file		BehaviourComponent.h
@@ -11,6 +9,7 @@
  */
  /******************************************************************************/
 
+#pragma once
 #include "Component.h"
 #include "EngineTypes.h"
 #include "Vector2d.h"
