@@ -922,14 +922,14 @@ namespace Engine
         }
 
         //font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        /*
+        
         font.SwitchFont(1);
         font.RenderText(shader, "Samurai Cat",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         font.SwitchFont(2);
         font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        */
+        
         // Restore the previous shader state
-        //shader.SetActiveShaderSet(previousShaderSet);
+        shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
