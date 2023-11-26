@@ -1134,9 +1134,11 @@ namespace Engine {
 							case ComponentType::Texture:
 							{
 								std::vector<std::string> textureMainIndexList;
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
 								auto& textures = assetManager->GetAllTextures();
 								int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-								//c_state textureSubIndexEnum = static_cast<c_state>(texture->textureKey.subIndex);
+								int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
 
 								// Find the maximum mainIndex dynamically
 								int maxMainIndex = -1;
