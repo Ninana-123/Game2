@@ -29,18 +29,50 @@ namespace Engine {
     struct Config {
         std::unordered_map<std::string, std::string> properties;
 
+        /*!
+         * \brief Load configuration data from a file.
+         * \param filePath The path to the configuration file.
+         */
         void LoadConfig(const std::string& filePath);
     };
 
     class Loader {
     public:
+        /*!
+         * \brief Constructor for the Loader class.
+         * \param EM Shared pointer to the EntityManager.
+         * \param prefabManager Pointer to the PrefabManager.
+         * \param AM Shared pointer to the AssetManager.
+         */
         Loader(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) : entityManager(EM), prefabManager(prefabManager), assetManager(AM) {};
-        ~Loader();
-        // Load the scene from a data file and create entities with properties
-        void LoadScene(const std::string& filePath);
-        void LoadPrefabs(const std::string& filepath);
         
+        /*!
+         * \brief Destructor for the Loader class.
+         */
+        ~Loader();
+        /*!
+         * \brief Load a scene from a data file and create entities with properties.
+         * \param filePath The path to the scene data file.
+         */
+        void LoadScene(const std::string& filePath);
+
+        /*!
+         * \brief Load prefabs from a data file.
+         * \param filepath The path to the prefab data file.
+         */
+        void LoadPrefabs(const std::string& filepath);
+
+        /*!
+         * \brief Save prefabs to a data file.
+         * \param filepath The path to the prefab data file.
+         */
         void SavePrefabs(const std::string& filepath);
+
+        /*!
+         * \brief Load window properties from a configuration file.
+         * \param filePath The path to the configuration file.
+         * \return WindowConfig The window configuration settings.
+         */
         WindowConfig LoadWindowPropsFromConfig(const std::string& filePath);
     private:
         std::shared_ptr<Engine::EntityManager> entityManager;

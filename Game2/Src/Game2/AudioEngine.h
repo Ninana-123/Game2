@@ -2,6 +2,7 @@
 /*!
 \file		AudioEngine.h
 \author 	Tay Jun Feng Vance
+\co         Wayne Kwok Jun Lin (10%)
 \par    	email: junfengvance.t@digipen.edu
 \date       29/09/2023
 \brief		This file contains the declaration of all functions related to the FMOD
@@ -46,7 +47,6 @@ public:
      */
     AudioEngine();
 
-
     /**
      * Initializes Audio Engine Studio and Core systems to default values.
      */
@@ -84,6 +84,9 @@ public:
      */
     void stopSound(SoundInfo soundInfo);
 
+    /**
+     * @brief Pauses all audio playback.
+     */
     void pauseAllAudio();
 
     /**
@@ -91,6 +94,9 @@ public:
     */
     void pauseSound(SoundInfo soundInfo);
 
+    /**
+     * @brief Resumes all paused audio playback.
+     */
     void resumeAllAudio();
 
     /**
@@ -117,7 +123,6 @@ public:
      * Checks if a looping sound is playing.
      */
     bool soundIsPlaying(SoundInfo soundInfo);
-
 
     /**
      * Sets the position of the listener in the 3D scene.
@@ -194,6 +199,10 @@ public:
     // The audio sampling rate of the audio engine
     static const int AUDIO_SAMPLE_RATE = 44100;
 
+    /**
+     * @brief Gets the size of the loops currently playing.
+     */
+    size_t getLoopsPlayingSize() const { return loopsPlaying.size(); }
 private:
 
     /**
@@ -259,6 +268,7 @@ private:
      * TODO Refactor to use numeric UID as key
      */
     std::map<std::string, FMOD::Sound*> sounds;
+
 
     /*
      * Map which stores the current playback channels of any playing sound loop

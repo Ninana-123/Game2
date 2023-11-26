@@ -25,24 +25,123 @@ namespace Engine {
         std::unordered_map<TextureKey, std::shared_ptr<Texture>> textures;
 
     public:
-        // Update the function signature
+        /*!*********************************************************************
+        \brief
+        Loads a texture based on main and sub indices.
+
+        \param mainIndex
+        The main index used to look up the texture in the map.
+
+        \param subIndex
+        The sub index used to look up the texture in the map, default is 0.
+
+        \return
+        A shared pointer to the loaded Texture, or nullptr if the texture
+        could not be loaded.
+        *************************************************************************/
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const int subIndex = 0);
+
+        /*!*********************************************************************
+        \brief
+        Loads a texture from the specified file path and associates it with main and sub indices.
+
+        \param mainIndex
+        The main index for the texture which is part of the key used for storing the texture.
+
+        \param filePath
+        The file path of the texture to be loaded.
+
+        \param subIndex
+        The sub index for the texture which is part of the key used for storing the texture, default is 0.
+
+        \return
+        A shared pointer to the newly loaded Texture.
+        *************************************************************************/
         std::shared_ptr<Texture> loadTexture(const int mainIndex, const std::string& filePath, const int subIndex = 0); //Overload that takes in custom filepath
         
+        /*!*********************************************************************
+        \brief
+        Updates an existing texture or loads a new one if it doesn't exist.
+
+        \param mainIndex
+        The main index for the texture which is part of the key used for
+        identifying the texture to update.
+
+        \param filePath
+        The new file path of the texture to be used for updating or loading
+        the texture.
+
+        \param subIndex
+        The sub index for the texture which is part of the key used for
+        identifying the texture to update, default is 0.
+        *************************************************************************/
         void UpdateTexture(int mainIndex, const std::string& filePath, int subIndex);
 
-        // Update the function signature
+        /*!*********************************************************************
+        \brief
+        Retrieves a shared pointer to a Texture object if it exists.
+
+
+        \param mainIndex
+        The main index for the texture which is part of the key used for
+        identifying the texture to retrieve.
+
+        \param subIndex
+        The sub index for the texture which is part of the key used for
+        identifying the texture to retrieve, default is 0.
+
+        \return
+        A shared pointer to the Texture if found; otherwise, nullptr.
+
+        **************************************************************************/
         std::shared_ptr<Texture> getTexture(int mainIndex, int subIndex = 0) const;
 
-        // Update the function signature
+        /*!*********************************************************************
+        \brief
+        Updates the file path of an existing texture in the asset manager.
+
+
+        \param mainIndex
+        The main index for the texture, used as part of the key to
+        locate the texture in the map.
+
+        \param subIndex
+        The sub index for the texture, used as part of the key to
+        locate the texture in the map.
+
+        \param newFilePath
+        The new file path to associate with the texture.
+
+        **************************************************************************/
         void updateTextureFilePath(int mainIndex, int subIndex, const std::string& newFilePath);
 
         // Update the function signature
         //std::shared_ptr<Texture> reloadAllTexture();
 
-        // Use a vector of TextureKey instead of int for the function signature
+        /*!*********************************************************************
+        \brief
+        Retrieves all texture keys from the asset manager.
+
+
+        \return
+        A std::vector containing all the texture keys present in the asset manager.
+
+        **************************************************************************/
         std::vector<TextureKey> GetAllTextureKeys() const;
 
+        /*!*********************************************************************
+        \brief
+        Gets the file path of a texture associated with a specific texture key.
+
+
+       \param textureKey
+        The TextureKey structure that contains the main index and sub index identifying the texture.
+
+        \return
+        A constant reference to the file path string associated with the texture key, 
+        or an empty string if the key is not found.
+
+        **************************************************************************/
         const std::string& GetTexturePath(const TextureKey& textureKey) const;
 
         // Update the function signature
@@ -53,7 +152,6 @@ namespace Engine {
         const std::map<TextureKey, std::string>& GetTextureFilePaths() const {
             return textureFilePaths;
         }
-
 
     private:
         // Use the TextureKey structure instead of int for the map
@@ -87,7 +185,5 @@ namespace Engine {
             { {TextureClass::mainMenuCredits, 0}, "Resource/Texture/mmCredits.png"},
             { {TextureClass::Logo, 0}, "Resource/Texture/Logo.png"},
         };
-
-
     };
 }

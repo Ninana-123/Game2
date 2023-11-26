@@ -23,6 +23,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ErrorHandler.h"
 Engine::ErrorHandler errorHandler;
 
+/*!
+ * \brief Main entry point for the application.
+ * \param argc Number of command-line arguments.
+ * \param argv Array of command-line arguments.
+ * \return int The exit code.
+ *
+ * The main function serves as the entry point for the application. It creates
+ * an instance of the application, initializes it, and starts the application loop.
+ */
 int main(int argc, char** argv)
 {
     UNREFERENCED_PARAMETER(argc);

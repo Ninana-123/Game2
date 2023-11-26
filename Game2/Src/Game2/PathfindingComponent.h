@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		PathfindingComponent.h
@@ -9,6 +8,7 @@
 
  */
  /******************************************************************************/
+#pragma once
 #include "Component.h"
 #include "PathfindingSystem.h"
 #include "EngineTypes.h"
@@ -25,9 +25,19 @@ namespace Engine
 		int goalY = 0; // End point Y
 		std::vector<std::pair<int, int>> path; // Store the path as a list of points
 		bool initialized = false;
+		std::pair<int, int> previousPos1 = { 0, 0 };
+		std::pair<int, int> previousPos2 = { 0, 0 };
 
+		/*!
+		\brief Get the type of the component.
+		\return ComponentType::Pathfinding.
+		*/
 		ComponentType GetType() const override { return ComponentType::Pathfinding; }
 
+		/*!
+		\brief Clone the PathfindingComponent.
+		\return A new instance of PathfindingComponent with copied values.
+		*/
 		Component* Clone() const override
 		{
 			PathfindingComponent* cloneComponent = new PathfindingComponent();
@@ -37,9 +47,15 @@ namespace Engine
 			cloneComponent->goalY = goalY;
 			cloneComponent->path = path;
 			cloneComponent->initialized = initialized;
+			cloneComponent->previousPos1 = previousPos1;
+			cloneComponent->previousPos2 = previousPos2;
 			return cloneComponent;
 		}
 
+		/*!
+		\brief Serialize the component to an output stream.
+		\param outputStream The output stream to write the serialized data to.
+		*/
 		void Serialize(std::ostream& outputStream) const override {
 			outputStream << "startX: " << startX << '\n';
 			outputStream << "startY: " << startY << '\n';
@@ -49,6 +65,10 @@ namespace Engine
 			//outputStream << "path: " << path.x << ' ' << path.y << '\n';
 		}
 
+		/*!
+	   \brief Deserialize the component from an input stream.
+	   \param inputStream The input stream to read the serialized data from.
+	   */
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			//int buffer;
@@ -61,6 +81,5 @@ namespace Engine
 			//initialized = static_cast <bool>(buffer);
 			//inputStream >> temp >> path.x >> path.y; 
 		}
-
 	};
 }

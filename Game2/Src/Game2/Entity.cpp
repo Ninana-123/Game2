@@ -17,23 +17,11 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
-	/*!**********************************************************************
-	\brief
-	Adds a component to the entity.
-	\param
-	component to add 
-	*************************************************************************/
 	void Entity::AddComponent(std::unique_ptr<Component> component)
 	{
 		components.emplace(component->GetType(), std::move(component));
 	}
 
-	/*!**********************************************************************
-	\brief
-	Adds a new component of the specified type to the entity.
-	\param
-	type of component to add
-	*************************************************************************/
 	void Entity::AddNewComponent(ComponentType type)
 	{
 		auto newComponent = ComponentFactory::CreateComponent(type);
@@ -48,12 +36,7 @@ namespace Engine
 			//std::cout << "Failed to add new component." << std::endl;
 		}
 	}
-	/*!**********************************************************************
-	\brief
-	GetComponent of entity
-	\param
-	type of component to get
-	*************************************************************************/
+
 	Component* Entity::GetComponent(ComponentType type) const
 	{
 		auto it = components.find(type);
@@ -64,10 +47,7 @@ namespace Engine
 		}
 		else return nullptr;
 	}
-	/*!**********************************************************************
-	\brief
-	GetComponents from map
-	*************************************************************************/
+
 	std::unordered_map<ComponentType, Component*> Entity::GetComponents() const
 	{
 		std::unordered_map<ComponentType, Component*> result;
@@ -76,15 +56,9 @@ namespace Engine
 		}
 		return result;
 	}
-	/*!**********************************************************************
-	\brief
-	check for component
-	\return
-	true if have
-	*************************************************************************/
+
 	bool Entity::HasComponent(ComponentType type) const
 	{
 		return components.find(type) != components.end();
 	}
-
 }

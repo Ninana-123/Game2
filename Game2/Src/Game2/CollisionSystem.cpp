@@ -28,6 +28,7 @@ float dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
+bool isStartingPoint = true;
 
 /*!*****************************************************************
 
@@ -581,11 +582,12 @@ namespace Engine
 
 									// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
 
+									// Check if tower radius is colliding with the player's radius
 									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
 										&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower) {
 										// isColliding = true;
-										std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
-											<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+										//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+											//<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 
 									}
 								}
@@ -702,17 +704,30 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
-					std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
+					
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
-						// Collision detected, set a flag or perform any actions needed
+						// Collision detected, set mColliding to true, enable dragging
 						collisionComponent->mColliding = true;
-						if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
-						{
+
+						// If released at either starting points
+						if ((Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= -640 && mousePosition.x <= -550
+							&& mousePosition.y >= -10 && mousePosition.y <= 150) 
+							|| (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= 5 && mousePosition.x <= 185
+								&& mousePosition.y >= 295 && mousePosition.y <= 360))
+						{			
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
+							isStartingPoint = true;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
+							
+						}
+						
+						// If released elsewhere
+						else if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
+						{
+							isStartingPoint = false;
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}

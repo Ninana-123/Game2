@@ -2,6 +2,7 @@
 /*!
 \file		WindowsWindow.cpp
 \author 	Liu Xujie
+\co			Kwok Jun Lin Wayne (20%)
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
 \brief		Implementation of the WindowsWindow class, derived from the
@@ -36,53 +37,27 @@ namespace Engine {
 		Logger::GetInstance().Log(Engine::LogLevel::Error, description);
 	}
 
-	/*!**********************************************************************
-	\brief
-	Factory method to create a Window object based on the
-	provided WindowConfig properties.
-	\param[in] props
-	The WindowConfig containing the window properties.
-	\return
-	A pointer to the created Window object.
-	*************************************************************************/
+	// Factory method to create a new WindowsWindow
 	Window* Window::Create(const WindowConfig& props) {
 		return new WindowsWindow(props);
 	}
 
-	/*!**********************************************************************
-	\brief
-	Constructor for the WindowsWindow class.
-	\param[in] props
-	The WindowConfig containing the window properties.
-	*************************************************************************/
+	// Constructor for the WindowsWindow class
 	WindowsWindow::WindowsWindow(const WindowConfig& props) {
 		Init(props);
 	}
 
-
-	/*!**********************************************************************
-	\brief
-	Destructor for the WindowsWindow class.
-	*************************************************************************/
+	// Destructor for the WindowsWindow class
 	WindowsWindow::~WindowsWindow() {
+		// Perform any necessary cleanup
 	}
 
-	/*!**********************************************************************
-	\brief
-	Initializes the WindowsWindow using the provided WindowConfig properties.
-	It sets up the GLFW window and sets appropriate GLFW hints
-	for window creation.
-	\param[in] props
-	The WindowConfig containing the window properties.
-	*************************************************************************/
-
+	// Initialize the WindowsWindow using provided WindowConfig properties
 	void WindowsWindow::Init(const WindowConfig& props) {
 		// Initialize window properties
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-
-
 
 		// Log window creation information
 		Logger::GetInstance().Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
@@ -127,12 +102,14 @@ namespace Engine {
 			data.EventCallback(event);
 		
 			});
+
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
 			data.EventCallback(event);
 
 			});
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			UNREFERENCED_PARAMETER(scancode);
 			UNREFERENCED_PARAMETER(mods);
@@ -211,52 +188,60 @@ namespace Engine {
 				wnd->m_IsMaximized = maximized;
 			}
 			});
+
+		// Initialize the AudioEngine
+		audio.init();
 	}
 
-	/*!**********************************************************************
-	\brief
-	Shuts down the WindowsWindow, destroying the GLFW window.
-	*************************************************************************/
+	// Shutdown the WindowsWindow, destroying the GLFW window
 	void WindowsWindow::Shutdown() {
 		glfwDestroyWindow(m_Window);
 	}
 
-	/*!**********************************************************************
-	\brief
-	Updates the WindowsWindow by processing events and swapping buffers.
-	*************************************************************************/
+	// Update the WindowsWindow by processing events and swapping buffers
 	void WindowsWindow::OnUpdate() {
 
 		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 		// Check if the window has lost focus and minimize if needed
-		if (!m_IsFocused) {
-			//MinimizeWindow();
-			audio.pauseAllAudio();
+		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
+			MinimizeWindow();
 		}
 		else {
 			// Check if the window has gained focus and restore if needed
 			if (m_IsMaximized) {
 				RestoreWindow();
 			}
-			audio.resumeAllAudio();
 		}
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
+	// Minimize the window
 	void WindowsWindow::MinimizeWindow() {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
+
+			// Pause audio before minimizing
+			audio.pauseAllAudio();
+
+			// Iconify (minimize) the GLFW window
 			glfwIconifyWindow(m_Window);
 		}
 	}
 
+	// Restore the window
 	void WindowsWindow::RestoreWindow() {
 		if (m_Window) {
+			// Log information
 			Logger::GetInstance().Log(LogLevel::Info, "Restoring Window");
+
+			// Resume audio after restoring
+			audio.resumeAllAudio();
+
+			// Restore the GLFW window
 			glfwRestoreWindow(m_Window);
 		}
 	}
-}
+} // namespace Engine

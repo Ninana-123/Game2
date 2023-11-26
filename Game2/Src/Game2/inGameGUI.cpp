@@ -1,8 +1,23 @@
+/******************************************************************************/
+/*!
+\file		inGameGUI.cpp
+\author 	
+\par    	email: 
+\date   	
+\brief		
+
+			Copyright (C) 2023 DigiPen Institute of Technology.
+			Reproduction or disclosure of this file or its contents without the prior
+			written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "inGameGUI.h"
 #include "Application.h"
 
 int pathfindingEntityTexture = 0;
+bool isGamePaused = false;
+bool inSettings = false;
 
 namespace Engine
 {
@@ -43,7 +58,6 @@ namespace Engine
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 			}
-
 			
 			if (lastCollidingEntityTexture == 8)
 			{
@@ -52,8 +66,7 @@ namespace Engine
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
-			}
-			
+			}			
 			
 			if (lastCollidingEntityTexture == 9)
 			{
@@ -67,21 +80,29 @@ namespace Engine
 			// Logic for the pause/play and setting buttons
 			if (lastCollidingEntityTexture == 10)
 			{
-				std::cout << "Colliding with pause button" << std::endl;
-				//isPaused = true;
+				//std::cout << "Colliding with pause button" << std::endl;
+				isGamePaused = true;
 				lastCollidingEntityTexture = 0;
 			}
 
 			if (lastCollidingEntityTexture == 11)
 			{
-				std::cout << "Colliding with play button" << std::endl;
-				//isPaused = false;
+				//std::cout << "Colliding with play button" << std::endl;
+				isGamePaused = false;
 				lastCollidingEntityTexture = 0;
 			}
 
 			if (lastCollidingEntityTexture == 12)
 			{
-				std::cout << "Colliding with settings button" << std::endl;
+				//std::cout << "Colliding with settings button" << std::endl;
+				if (inSettings) 
+				{
+					inSettings = false;
+				}
+				else 
+				{
+					inSettings = true;
+				}
 				lastCollidingEntityTexture = 0;
 			}
 
@@ -90,8 +111,4 @@ namespace Engine
 		CollisionCheck = false;
 		
     }
-
-
-
-
 }

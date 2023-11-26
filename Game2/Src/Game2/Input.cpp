@@ -31,28 +31,13 @@ namespace Engine {
     static float s_ScrollOffsetY = 0.0f;
     static float s_PrevScrollOffsetY = 0.0f;
 
-    /*!**********************************************************************
-    \brief
-    Checks if the specified keyboard key is currently pressed.
-    \param[in] key 
-    key code of the keyboard key to check.
-    \return 
-    true if the key is currently pressed, false otherwise.
-    *************************************************************************/
     bool Input::IsKeyPressed(const KeyCode key)
     {
         auto* window = glfwGetCurrentContext();
         auto state = glfwGetKey(window, static_cast<int32_t>(key));
         return state == GLFW_PRESS;
     }
-    /*!**********************************************************************
-    \brief
-    Checks if the specified keyboard key is triggered (pressed with a cooldown).
-    \param[in] key
-    key code of the keyboard key to check.
-    \return
-    true if the key is currently triggered, false otherwise.
-    *************************************************************************/
+
     bool Input::IsKeyTriggered(const KeyCode key)
     {
         auto currentTime = std::chrono::steady_clock::now();
@@ -68,34 +53,17 @@ namespace Engine {
 
         return false;
     }
-    /*!**********************************************************************
-    \brief
-    Checks if the specified keyboard key is currently down (pressed).
-    \param[in] key
-    key code of the keyboard key to check.
-    \return
-    true if the key is currently down, false otherwise.
-    *************************************************************************/
+
     bool Input::IsKeyDown(const KeyCode key)
     {
         return IsKeyPressed(key);
     }
-    /*!**********************************************************************
-    \brief
-    Checks if the specified keyboard key is released
-    \param[in] key
-    key code of the keyboard key to check.
-    \return
-    true if the key is released, false otherwise.
-    *************************************************************************/
+
     bool Input::IsKeyReleased(const KeyCode key)
     {
         return !IsKeyPressed(key) && s_KeyStatePrev[key];
     }
-    /*!**********************************************************************
-    \brief
-    Updates the previous key states with the current key states.
-    *************************************************************************/
+
     void Input::UpdateKeyStates()
     {
         for (const auto& kvp : s_KeyState)
@@ -104,10 +72,7 @@ namespace Engine {
             s_KeyStatePrev[key] = kvp.second;
         }
     }
-    /*!**********************************************************************
-    \brief
-    Updates the key states based on the current state of each key.
-    *************************************************************************/
+
     void Input::Update()
     {
         // Update key states
@@ -120,14 +85,7 @@ namespace Engine {
         Dragging();
         Delete();
     }
-    /*!**********************************************************************
-    \brief
-    Checks if the specified mouse button is currently pressed.
-    \param[in] button 
-    The mouse button to check.
-    \return
-    True if the mouse button is pressed, false otherwise.
-    *************************************************************************/
+
     bool Input::IsMouseButtonPressed(const MouseCode button)
     {
         auto* window = glfwGetCurrentContext();
@@ -156,12 +114,6 @@ namespace Engine {
         return mouseClicked;
     }
 
-    /*!**********************************************************************
-    \brief
-    Gets the current mouse position.
-    \return
-    The mouse position as a Vector2D.
-    *************************************************************************/
     VECTORMATH::Vector2D Input::GetMousePosition()
     {
         auto* window = glfwGetCurrentContext();
@@ -170,22 +122,12 @@ namespace Engine {
 
         return { (float)xpos, (float)ypos };
     }
-    /*!**********************************************************************
-    \brief
-    Gets the current mouse X position.
-    \return
-    The mouse X position
-    *************************************************************************/
+
     float Input::GetMouseX()
     {
         return GetMousePosition().x;
     }
-    /*!**********************************************************************
-    \brief
-    Gets the current mouse Y position.
-    \return
-    The mouse Y position
-    *************************************************************************/
+
     float Input::GetMouseY()
     {
         return GetMousePosition().y;
