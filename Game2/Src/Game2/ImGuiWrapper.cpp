@@ -273,6 +273,11 @@ namespace Engine {
 		}
 	}
 
+	void ImGuiWrapper::UpdateImGuiInteractionState() {
+			// Check if ImGui wants to capture the mouse or keyboard
+			isImGuiHovered = ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard;
+		}
+
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
@@ -286,8 +291,18 @@ namespace Engine {
 		dispatcher.Dispatch<KeyTypedEvent>(std::bind(&ImGuiWrapper::OnKeyTypedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
+		//UpdateImGuiInteractionState();
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse button pressed event for ImGui interaction
+	This function sets the appropriate flag in ImGuiIO for a mouse button 
+	press event.
+	\param[in] e
+	The mouse button pressed event.
+	\return 
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -502,6 +517,11 @@ namespace Engine {
 				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
 					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
 					outputStream << "Texture" << '\n';
+					textureComp->Serialize(outputStream);
+				}
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
+					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
+					outputStream << "Behaviour" << '\n';
 					textureComp->Serialize(outputStream);
 				}
 
@@ -1113,24 +1133,38 @@ namespace Engine {
 							}
 							case ComponentType::Texture:
 							{
+								std::vector<std::string> textureMainIndexList;
 								auto& textures = assetManager->GetAllTextures();
-								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
 								int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-								int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+								//c_state textureSubIndexEnum = static_cast<c_state>(texture->textureKey.subIndex);
 
-								// Assuming textures is an unordered_map with key as TextureKey
-								int maxMainIndex = static_cast<int>(textures.size()) - 1;
+								// Find the maximum mainIndex dynamically
+								int maxMainIndex = -1;
+								for (const auto& [textureKey, imGuitexture] : textures) {
+									maxMainIndex = std::max(maxMainIndex, static_cast<int>(textureKey.mainIndex));
+								}
+								maxMainIndex++;
 
-								// Combo box for Texture MainIndex
-								if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
-								{
-									for (int i = 0; i <= maxMainIndex; ++i)
-									{
-										ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
-										if (ImGui::IsItemClicked())
-										{
-											texture->textureKey.mainIndex = static_cast<TextureClass>(i);
+								// Combo box for MainIndex
+								if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str())) {
+									for (int i = 0; i < maxMainIndex; ++i) {
+										ImGui::PushID(i);  // Set a unique ID for each Selectable
+										const bool isSelected = (textureMainIndex == i);
+										if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
+											textureMainIndex = i;
+											texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+
+											float texWidth = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth());
+											float texHeight = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight());
+											float aspectRatio = texWidth / texHeight;
+											transform->scaleX = 1.f * aspectRatio;
+											transform->scaleY = 1.f * (1 / aspectRatio);
+
 										}
+										if (isSelected) {
+											ImGui::SetItemDefaultFocus();
+										}
+										ImGui::PopID();
 									}
 									ImGui::EndCombo();
 								}

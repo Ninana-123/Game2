@@ -225,6 +225,7 @@ namespace Engine {
 
 	private:
 		bool renderDockspace = false;
+		bool isImGuiHovered = false;
 		float m_Time = 0.0f;
 		float editorCameraSpeed = 1.5f;
 		std::shared_ptr<Engine::EntityManager> entityManager;
@@ -233,6 +234,7 @@ namespace Engine {
 		std::shared_ptr<Engine::Loader> deserializer;
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
+		void UpdateImGuiInteractionState();
 
 	};
 }

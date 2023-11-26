@@ -20,12 +20,14 @@ namespace Engine
     ComponentFactory::ComponentFactory()
     {
         // Register components with predefined ComponentType values
-        RegisterComponent(ComponentType::Transform, []() { return std::make_unique<TransformComponent>();       });
-        RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>();       });
-        RegisterComponent(ComponentType::Texture, []() { return std::make_unique<TextureComponent>();         });
-        RegisterComponent(ComponentType::Physics, []() { return std::make_unique<PhysicsComponent>();         });
-        RegisterComponent(ComponentType::Sprite, []() { return std::make_unique<SpriteComponent>();          });
-        RegisterComponent(ComponentType::Pathfinding, []() { return std::make_unique<PathfindingComponent>();     });
+        RegisterComponent(ComponentType::Transform, []()    { return std::make_unique<TransformComponent>();       });
+        RegisterComponent(ComponentType::Collision, []()    { return std::make_unique<CollisionComponent>();       });
+        RegisterComponent(ComponentType::Texture,   []()    { return std::make_unique<TextureComponent>();         });
+        RegisterComponent(ComponentType::Physics,   []()    { return std::make_unique<PhysicsComponent>();         });
+        RegisterComponent(ComponentType::Sprite,    []()    { return std::make_unique<SpriteComponent>();          });
+        RegisterComponent(ComponentType::Pathfinding, []()  { return std::make_unique<PathfindingComponent>();     });
+        RegisterComponent(ComponentType::Logic, []()        {return std::make_unique<BehaviourComponent>();               });
+
     }
 
     // Static function to access the componentRegistry
@@ -64,6 +66,7 @@ namespace Engine
             {"Texture",     ComponentType::Texture    },
             {"Sprite",      ComponentType::Sprite     },
             {"Pathfinding", ComponentType::Pathfinding},
+            {"Logic", ComponentType::Logic},
         };
 
         auto it = StringTotypeMap.find(typeString);
@@ -87,6 +90,7 @@ namespace Engine
             {ComponentType::Texture,     "Texture"     },
             {ComponentType::Sprite,      "Sprite"      },
             {ComponentType::Pathfinding, "Pathfinding" },
+            {ComponentType::Logic, "Logic" },
         };
 
         auto it = typeToStringMap.find(type);

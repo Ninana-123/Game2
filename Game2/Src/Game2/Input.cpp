@@ -195,7 +195,7 @@ namespace Engine {
                         }
                         else
                         {
-                            targetEntityID = -1;
+                            targetEntityID = static_cast<EntityID>(-1);
                         }
                     }
                 }
@@ -231,7 +231,7 @@ namespace Engine {
                 
                 if (DragEntity && isDragging)
                 {
-                    CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(DragEntity->GetComponent(ComponentType::Collision));
+                    //CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(DragEntity->GetComponent(ComponentType::Collision));
                     TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(DragEntity->GetComponent(ComponentType::Transform));
                     transformComponent->position.x = mousePosition.x;
                     transformComponent->position.y = mousePosition.y;
@@ -262,7 +262,7 @@ namespace Engine {
                 }
                 else
                 {
-                    targetEntityID = -1;
+                    targetEntityID = static_cast<EntityID>(-1);
                 }             
             }             
     }

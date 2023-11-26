@@ -47,6 +47,8 @@ namespace Engine {
          */
         void RestoreWindow();
 
+        bool IsImGuiHovered() const;
+
         /**
          * @brief Default constructor.
          */
@@ -76,6 +78,16 @@ namespace Engine {
          */
         inline virtual void* GetNativeWindow() const { return m_Window; }
 
+        inline bool IsWindowFocused() const {
+            if (m_Window) {
+                return glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
+            }
+            return false;  // or handle this case as appropriate for your application
+        }
+
+        inline bool IsWindowMaximized() const { return m_IsMaximized; }
+
+        void UpdateFocus();
     private:
         /**
          * @brief Initializes the WindowsWindow using the provided WindowConfig properties.
@@ -88,6 +100,7 @@ namespace Engine {
          * @brief Shuts down the WindowsWindow, destroying the GLFW window.
          */
         virtual void Shutdown();
+
 
     private:
         GLFWwindow* m_Window;
@@ -103,5 +116,6 @@ namespace Engine {
         WindowData m_Data;
         bool m_IsMaximized = false;
         bool m_IsFocused = true;
+        bool isImGuiHovered = false;
     };
 }

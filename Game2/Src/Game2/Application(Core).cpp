@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
+#include "MoveBehaviour.h"
 #include "Input.h"
 
 // Global variables for frames per second (fps) calculation
@@ -58,10 +59,10 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 1.0f, 0.0f);
     SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
     SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
     SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Ambience("Resource/Audio/forest_ambience.wav", "02", false, true, 0.5f, 0.0f);
 
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
@@ -163,7 +164,11 @@ namespace Engine
             targetEntity = EM->GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
-        audioEngine.loadSound(sound_BGM);
+        assetManager->AddAudioPath(AudioKey("level_bgm"), "Resource/Audio/level_bgm.wav");
+        auto sound_BGM = assetManager->loadAudio(AudioKey("level_bgm"));
+        assetManager->getAudio(AudioKey("level_bgm"))->setLoop();
+        audioEngine.loadSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
+        audioEngine.loadSound(sound_Ambience);
         audioEngine.loadSound(sound_Win);
         audioEngine.loadSound(sound_Arrow);
         audioEngine.loadSound(sound_Slash);
@@ -196,26 +201,27 @@ namespace Engine
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
 
-       if (e.GetEventType() == EventType::KeyPressed)
-       {
-           KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-
-           // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
-           if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
-               keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
-               keyPressedEvent.GetKeyCode() == KEY_DELETE)
-           {
-               window.MinimizeWindow();
-           }
-       }
     }
 
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        audioEngine.playSound(sound_BGM);
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
+        audioEngine.playSound(sound_Ambience);
         previousTime = std::chrono::high_resolution_clock::now();
+       /*
+        if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            if (transformTest != nullptr)
+            {
+                auto moveBehaviour = std::make_shared<Game::MoveBehaviour>(transformTest, 5.0f);
+            systemsManager->GetSystem<LogicSystem>().AddBehaviour(static_cast<Engine::BehaviourFCT*>(moveBehaviour.get()));
+            }
+
+        }
+        */
+        
 
         while (m_Running)
         {
@@ -226,6 +232,29 @@ namespace Engine
             previousTime = currentTime;
             UpdateDeltaTime();
             Application::UpdateWindowTitle();
+
+            bool isFirstRun = true;
+            window.UpdateFocus();  // Check and handle focus in the window
+            // Check if the window has lost focus and minimize if needed
+            if (!window.IsWindowFocused()) {
+                window.MinimizeWindow();
+                // Pause audio only if it's not the first run
+                if (!isFirstRun) {
+                    audioEngine.pauseAllAudio();
+                }
+            }
+            else {
+                // Check if the window is not maximized and restore if needed
+                if (!window.IsWindowMaximized()) {
+                    window.RestoreWindow();
+                }
+                // Resume audio only if it's not the first run
+                if (!isFirstRun) {
+                    audioEngine.resumeAllAudio();
+                }
+            }
+            // After the first run, update the flag
+            isFirstRun = false;
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -266,11 +295,6 @@ namespace Engine
                 if (InputHandler.IsKeyTriggered(KEY_7)) {
                     audioEngine.playSound(sound_Slash);
                     //currentlyPlayingSound = false;
-                }
-
-                if (InputHandler.IsKeyTriggered(KEY_9) && audioEngine.soundIsPlaying(sound_BGM)) {
-                    audioEngine.stopSound(sound_BGM);
-                    currentlyPlayingSound = false;
                 }
 
                 if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
@@ -494,8 +518,8 @@ namespace Engine
     bool Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
-        float previousWidth = e_Width;
-        float previousHeight = e_Height;
+        //float previousWidth = e_Width;
+        //float previousHeight = e_Height;
         int newWidth = e.GetWidth();
         int newHeight = e.GetHeight();
         //float scaleWidth = (newWidth / previousWidth);

@@ -125,4 +125,70 @@ namespace Engine {
         std::cerr << "Texture Key not found: {" << textureKey.mainIndex << ", " << textureKey.subIndex << "}\n";
         return emptyString;
     }
+
+
+    std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key) {
+        // Assuming audioFilePaths is a member that holds paths to audio files
+        auto it = audioFilePaths.find(key);
+        if (it != audioFilePaths.end()) {
+            // Create a SoundInfo with all the necessary parameters
+            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, true, 1.0f, 0.0f);       
+            // Store the loaded SoundInfo in the audios map
+            audios[key] = soundInfo;
+            return soundInfo;
+        }
+        else {
+            std::cerr << "Audio file path not found for key: " << key.filename << std::endl;
+            return nullptr;
+        }
+    }
+
+
+
+    void AssetManager::unloadAudio(const AudioKey& key) {
+        auto it = audios.find(key);
+        if (it != audios.end()) {
+            audios.erase(it);
+        }
+        else {
+            std::cerr << "Trying to unload non-existing audio key: " << key.filename << std::endl;
+        }
+    }
+
+    std::shared_ptr<SoundInfo> AssetManager::getAudio(const AudioKey& key) const {
+        auto it = audios.find(key);
+        if (it != audios.end()) {
+            return it->second;
+        }
+        std::cerr << "Audio key not found: " << key.filename << std::endl;
+        return nullptr;
+    }
+
+    void AssetManager::updateAudioFilePath(const AudioKey& key, const std::string& newFilePath) {
+        auto it = audioFilePaths.find(key);
+        if (it != audioFilePaths.end()) {
+            it->second = newFilePath;
+        }
+        else {
+            std::cerr << "Audio key not found for update: " << key.filename << std::endl;
+        }
+    }
+
+    // Get the file path of an audio file
+    const std::string& AssetManager::getAudioPath(const AudioKey& key) const {
+        auto it = audioFilePaths.find(key);
+        if (it != audioFilePaths.end()) {
+            return it->second;
+        }
+        static const std::string emptyString = "";
+        std::cerr << "Audio key not found: " << key.filename << std::endl;
+        return emptyString;
+    }
+
+    void AssetManager::AddAudioPath(const AudioKey& key, const std::string& path) {
+        audioFilePaths[key] = path;
+        std::cout << path<< std::endl;
+    }
+
+
 }

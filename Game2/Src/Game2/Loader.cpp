@@ -92,8 +92,8 @@ namespace Engine {
                     if (texture != nullptr) {
                         TransformComponent* transform = dynamic_cast<TransformComponent*>(entityPtr->GetComponent(ComponentType::Transform));
 
-                        float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
-                        float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
+                        float texWidth = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth());
+                        float texHeight = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight());
                         float aspectRatio = texWidth / texHeight;
                         transform->scaleX = transform->scaleX * aspectRatio;
                         transform->scaleY = transform->scaleY * (1 / aspectRatio);

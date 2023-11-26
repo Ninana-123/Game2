@@ -24,6 +24,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiWrapper.h"
 #include "inGameGUI.h"
 
+
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
@@ -625,8 +626,6 @@ namespace Engine
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
-        // Save the current shader state
-        int previousShaderSet = shader.GetCurrentShaderSet();
         shader.Bind();
         
         // Check if there's a change in the 'S' key state
@@ -637,7 +636,7 @@ namespace Engine
         }
         // Update the previous 'S' key state
         previousSState = currentSState;
-
+        int previousShaderSet = shader.GetCurrentShaderSet();
         for (const auto& entityPair : *entities)
         {
             Entity* entity = entityPair.second.get();
@@ -668,9 +667,6 @@ namespace Engine
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
                     
                     // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
-
-                    // Get the current state of the 'P' key
-                    bool currentPState = glfwGetKey(this->Window, GLFW_KEY_P) == GLFW_PRESS;
 
                     if (entity->HasComponent(ComponentType::Texture))
                     {
@@ -721,15 +717,10 @@ namespace Engine
             m_Camera.UpdatePosition(InputController, CameraSpeed);
         }
 
-        //font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        
-        font.SwitchFont(1);
-        //font.RenderText(shader, "Samurai Cat",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        //font.SwitchFont(2);
-        //font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        
+        font.SwitchFont(2);
+
         // Render text if cat placement is wrong
-        if (!(isStartingPoint)) 
+        if (!(isStartingPoint))
         {
             font.RenderText(shader, "Place unit at the start of the path.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
@@ -744,9 +735,7 @@ namespace Engine
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
 
-        // Restore the previous shader state
         shader.SetActiveShaderSet(previousShaderSet);
-
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
 

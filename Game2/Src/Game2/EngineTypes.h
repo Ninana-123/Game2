@@ -16,8 +16,8 @@ constexpr EntityID EMPTY_ID = 0;
 const int MAX_SUBINDEX = 4; 
 
 // Component IDs and Types
-typedef unsigned int ComponentID; //!< Type for component identifiers.
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Unknown }; 
+typedef unsigned int ComponentID;
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding,Logic, Unknown };
 
 // Character State Enumeration
 enum c_state { Static, Walking, Attack, Death, Idle }; 
@@ -108,8 +108,35 @@ struct std::hash<TextureKey> {
     }
 };
 
+struct AudioKey {
+    std::string filename;
+
+    AudioKey(const std::string& file) : filename(file) {}
+
+    bool operator==(const AudioKey& other) const {
+        return filename == other.filename;
+    }
+
+
+    bool operator<(const AudioKey& other) const {
+        return filename < other.filename;
+    }
+
+
+    friend struct std::hash<AudioKey>;
+};
+
+namespace std {
+    template <>
+    struct hash<AudioKey> {
+        std::size_t operator()(const AudioKey& key) const {
+            return std::hash<std::string>()(key.filename);
+        }
+    };
+}
+
 // Animation Mode Enumeration
-enum anim_mode 
+enum anim_mode
 {
     loop, one_time
 };
