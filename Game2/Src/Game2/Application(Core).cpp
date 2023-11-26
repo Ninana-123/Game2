@@ -58,10 +58,11 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/mainmenu_song.wav", "01", false, true, 1.0f, 0.0f);
-    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
+    SoundInfo sound_BGM("Resource/Audio/level_bgm.wav", "01", false, true, 1.0f, 0.0f);
+    SoundInfo sound_Ambience("Resource/Audio/forest_ambience.wav", "02", false, true, 0.5f, 0.0f);
+    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "03", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "04", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "05", false, false, 0.5f, 0.0f);
 
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
@@ -164,6 +165,7 @@ namespace Engine
         // Initialize audio files and load sounds
         audioEngine.init();
         audioEngine.loadSound(sound_BGM);
+        audioEngine.loadSound(sound_Ambience);
         audioEngine.loadSound(sound_Win);
         audioEngine.loadSound(sound_Arrow);
         audioEngine.loadSound(sound_Slash);
@@ -215,6 +217,7 @@ namespace Engine
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
         audioEngine.playSound(sound_BGM);
+        audioEngine.playSound(sound_Ambience);
         previousTime = std::chrono::high_resolution_clock::now();
 
         while (m_Running)
