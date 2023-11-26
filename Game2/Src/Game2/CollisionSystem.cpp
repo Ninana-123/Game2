@@ -28,6 +28,7 @@ float dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
+bool isStartingPoint = true;
 
 /*!*****************************************************************
 
@@ -706,16 +707,29 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
+					
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
-						// Collision detected, set a flag or perform any actions needed
+						// Collision detected, set mColliding to true, enable dragging
 						collisionComponent->mColliding = true;
-						if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
-						{
+
+						// If released at starting point
+						if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= -640 && mousePosition.x <= -550
+							&& mousePosition.y >= -10 && mousePosition.y <= 150) 
+						{			
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
+							isStartingPoint = true;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
+							
+						}
+						
+						// If released elsewhere
+						else if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
+						{
+							isStartingPoint = false;
+							std::cout << "You have to set the cat at the starting point " << std::endl;
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}

@@ -3,6 +3,8 @@
 #include "Application.h"
 
 int pathfindingEntityTexture = 0;
+bool isGamePaused = false;
+bool inSettings = false;
 
 namespace Engine
 {
@@ -68,20 +70,28 @@ namespace Engine
 			if (lastCollidingEntityTexture == 10)
 			{
 				std::cout << "Colliding with pause button" << std::endl;
-				//isPaused = true;
+				isGamePaused = true;
 				lastCollidingEntityTexture = 0;
 			}
 
 			if (lastCollidingEntityTexture == 11)
 			{
 				std::cout << "Colliding with play button" << std::endl;
-				//isPaused = false;
+				isGamePaused = false;
 				lastCollidingEntityTexture = 0;
 			}
 
 			if (lastCollidingEntityTexture == 12)
 			{
 				std::cout << "Colliding with settings button" << std::endl;
+				if (inSettings) 
+				{
+					inSettings = false;
+				}
+				else 
+				{
+					inSettings = true;
+				}
 				lastCollidingEntityTexture = 0;
 			}
 
