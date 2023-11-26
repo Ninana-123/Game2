@@ -579,11 +579,12 @@ namespace Engine
 
 									// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
 
+									// Check if tower radius is colliding with the player's radius
 									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
 										&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower) {
 										// isColliding = true;
-										std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
-											<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+										//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+											//<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 
 									}
 								}
