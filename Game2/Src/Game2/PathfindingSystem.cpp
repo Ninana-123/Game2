@@ -41,7 +41,7 @@ namespace Engine
     bool isWalking = false;
 
     // Variables to try to get pathfinding to work from b to c and onwards
-    std::vector<std::pair<float, float>> towerPositions = { {-275, -35}, {-70, 245} };
+    std::vector<std::pair<int, int>> towerPositions = { {-275, -35}, {-70, 245} };
     std::pair<int, int> closestTower = { 0 ,0 };
     std::pair<int, int> firstTower = { 0 ,0 };
     std::pair<int, int> currentClosestTower = { 0 ,0 };
@@ -139,6 +139,7 @@ namespace Engine
         goalX = 0;
         goalY = 0;
         initialized = false;
+        isWalking = false;
 
         // Call initializeCollisionMap only once in the constructor
         if (!collisionMap) {
@@ -230,7 +231,7 @@ namespace Engine
         return { x, y };
     }
 
-    std::pair<float, float> PathfindingSystem::getClosestPair(float startX, float startY, const std::vector<std::pair<float, float>>& towersPositions) 
+    std::pair<int, int> PathfindingSystem::getClosestPair(int startX, int startY, const std::vector<std::pair<int, int>>& towersPositions) 
     {
         double minDistance = std::numeric_limits<double>::max();
 

@@ -70,8 +70,6 @@ namespace Engine
         /**************************************************************************/
         PathfindingSystem(int numRows, int numCols);
 
-        PathfindingSystem(int numRows, int numCols, const std::vector<std::pair<float, float>>& _towerPositions);
-
 
         /**************************************************************************/
         /*!
@@ -111,8 +109,6 @@ namespace Engine
         */
         /**************************************************************************/
         std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
-
-        std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight, const std::vector<std::pair<float, float>>& towers);
 
         void createLogicalCollisionMap();
 
@@ -172,7 +168,7 @@ namespace Engine
         /**************************************************************************/
         double distance(int x1, int y1, int x2, int y2);
 
-        std::pair<float, float> getClosestPair(float startPosX, float startPosY, const std::vector<std::pair<float, float>>& towerPositions);
+        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
 
         int numRows = 0;
         int numCols = 0;
