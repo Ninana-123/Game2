@@ -16,6 +16,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "Texture.h"
 #include "EngineTypes.h"
+#include "AudioEngine.h"
+#include <filesystem>
 
 namespace Engine {
 
@@ -23,6 +25,7 @@ namespace Engine {
     private:
         // Change the key type to TextureKey and use the hash function
         std::unordered_map<TextureKey, std::shared_ptr<Texture>> textures;
+        std::unordered_map<AudioKey, std::shared_ptr<SoundInfo>> audios;
 
     public:
         /*!*********************************************************************
@@ -152,8 +155,17 @@ namespace Engine {
         const std::map<TextureKey, std::string>& GetTextureFilePaths() const {
             return textureFilePaths;
         }
+        std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key);
+        void unloadAudio(const AudioKey& key);
+        std::shared_ptr<SoundInfo> getAudio(const AudioKey& key) const;
 
+        void updateAudioFilePath(const AudioKey& key, const std::string& newFilePath);
+        const std::string& getAudioPath(const AudioKey& key) const;
+
+        void AddAudioPath(const AudioKey& key, const std::string& path);
     private:
+
+        std::map<AudioKey, std::string> audioFilePaths;
         // Use the TextureKey structure instead of int for the map
         std::map<TextureKey, std::string> textureFilePaths = {
             { {TextureClass::Background, 0}, "Resource/Texture/Background.png" },

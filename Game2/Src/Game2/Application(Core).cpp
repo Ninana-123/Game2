@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
+#include "MoveBehaviour.h"
 #include "Input.h"
 
 // Global variables for frames per second (fps) calculation
@@ -58,11 +59,10 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_BGM("Resource/Audio/level_bgm.wav", "01", false, true, 1.0f, 0.0f);
+    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
+    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
     SoundInfo sound_Ambience("Resource/Audio/forest_ambience.wav", "02", false, true, 0.5f, 0.0f);
-    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "03", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "04", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "05", false, false, 0.5f, 0.0f);
 
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
@@ -164,7 +164,10 @@ namespace Engine
             targetEntity = EM->GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
-        audioEngine.loadSound(sound_BGM);
+        assetManager->AddAudioPath(AudioKey("level_bgm"), "Resource/Audio/level_bgm.wav");
+        auto sound_BGM = assetManager->loadAudio(AudioKey("level_bgm"));
+        assetManager->getAudio(AudioKey("level_bgm"))->setLoop();
+        audioEngine.loadSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
         audioEngine.loadSound(sound_Ambience);
         audioEngine.loadSound(sound_Win);
         audioEngine.loadSound(sound_Arrow);
@@ -216,9 +219,21 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        audioEngine.playSound(sound_BGM);
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
         audioEngine.playSound(sound_Ambience);
         previousTime = std::chrono::high_resolution_clock::now();
+       /*
+        if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+            if (transformTest != nullptr)
+            {
+                auto moveBehaviour = std::make_shared<Game::MoveBehaviour>(transformTest, 5.0f);
+            systemsManager->GetSystem<LogicSystem>().AddBehaviour(static_cast<Engine::BehaviourFCT*>(moveBehaviour.get()));
+            }
+
+        }
+        */
+        
 
         while (m_Running)
         {
@@ -269,11 +284,6 @@ namespace Engine
                 if (InputHandler.IsKeyTriggered(KEY_7)) {
                     audioEngine.playSound(sound_Slash);
                     //currentlyPlayingSound = false;
-                }
-
-                if (InputHandler.IsKeyTriggered(KEY_9) && audioEngine.soundIsPlaying(sound_BGM)) {
-                    audioEngine.stopSound(sound_BGM);
-                    currentlyPlayingSound = false;
                 }
 
                 if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {

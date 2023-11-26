@@ -287,7 +287,16 @@ namespace Engine {
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
 	}
-
+	/*!**********************************************************************
+	\brief
+	Handle mouse button pressed event for ImGui interaction
+	This function sets the appropriate flag in ImGuiIO for a mouse button 
+	press event.
+	\param[in] e
+	The mouse button pressed event.
+	\return 
+	False indicating event has been handled.
+	*************************************************************************/
 	bool ImGuiWrapper::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -502,6 +511,11 @@ namespace Engine {
 				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
 					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
 					outputStream << "Texture" << '\n';
+					textureComp->Serialize(outputStream);
+				}
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
+					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
+					outputStream << "Behaviour" << '\n';
 					textureComp->Serialize(outputStream);
 				}
 

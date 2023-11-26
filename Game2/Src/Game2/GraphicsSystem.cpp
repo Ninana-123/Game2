@@ -24,6 +24,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiWrapper.h"
 #include "inGameGUI.h"
 
+
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
@@ -717,15 +718,10 @@ namespace Engine
             m_Camera.UpdatePosition(InputController, CameraSpeed);
         }
 
-        //font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        
-        font.SwitchFont(1);
-        //font.RenderText(shader, "Samurai Cat",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        //font.SwitchFont(2);
-        //font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        
+        font.SwitchFont(2);
+
         // Render text if cat placement is wrong
-        if (!(isStartingPoint)) 
+        if (!(isStartingPoint))
         {
             font.RenderText(shader, "Place unit at the start of the path.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
@@ -740,7 +736,6 @@ namespace Engine
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
 
-        // Restore the previous shader state
         shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA

@@ -200,7 +200,7 @@ namespace Engine {
 
 	// Update the WindowsWindow by processing events and swapping buffers
 	void WindowsWindow::OnUpdate() {
-
+		/*
 		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 		// Check if the window has lost focus and minimize if needed
@@ -213,7 +213,7 @@ namespace Engine {
 				RestoreWindow();
 			}
 		}
-
+		*/
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}

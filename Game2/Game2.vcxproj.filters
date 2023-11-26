@@ -121,6 +121,9 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\LogicSystem.cpp">
+      <Filter>Systems\Logic</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
@@ -315,6 +318,12 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\LogicSystem.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\BehaviourComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -421,6 +430,9 @@
     </Filter>
     <Filter Include="Systems\inGameGUI">
       <UniqueIdentifier>{e817c0f9-bbac-4f77-91c1-d751193f768a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Logic">
+      <UniqueIdentifier>{e25a2196-df20-4c33-9343-e3cd6fed303b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
