@@ -15,7 +15,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #pragma once
 
-
     class SoundInfo {
     public:
         SoundInfo(const std::string& filePath, const std::string& uniqueID, bool is3D = false, bool loop = false,

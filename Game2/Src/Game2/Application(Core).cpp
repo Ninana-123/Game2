@@ -12,8 +12,7 @@ Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
- /******************************************************************************/
-//Includes
+/******************************************************************************/
 #include "pch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -36,7 +35,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 
-
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
 auto previousTime = std::chrono::high_resolution_clock::now();;  // Previous time for FPS calculation
@@ -52,7 +50,6 @@ std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
-
 
 namespace Engine
 {
@@ -88,6 +85,7 @@ namespace Engine
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
+
     /*!**********************************************************************
     \brief
     Constructor for the Application class
@@ -95,6 +93,7 @@ namespace Engine
     Application::Application()
     {
     }   
+
     /*!**********************************************************************
     \brief
     Destructor for the Application class
@@ -102,6 +101,7 @@ namespace Engine
     Application::~Application()
     {
     }
+
     /*!**********************************************************************
     \brief
     Initialize the application
@@ -121,8 +121,7 @@ namespace Engine
         if (!m_Window) {
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
-        }
-     
+        }     
 
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -221,7 +220,6 @@ namespace Engine
            }
        }
     }
-
 
     /*!**********************************************************************
     \brief
@@ -353,7 +351,6 @@ namespace Engine
                     nextPositionY = lastPositionY + 1;
                 }
 
-
                 //if (collisionTest->mColliding) {
                 //    std::cout << "Hello" << std::endl;
                 //}
@@ -474,11 +471,8 @@ namespace Engine
                     //    physicsTest->velocity.x = 0.0f;
                     //    physicsTest->velocity.y = 0.0f;
                     //}
-
                 }
-
             }
-
 
             audioEngine.update();
             //System Updating
@@ -501,9 +495,9 @@ namespace Engine
                 *crashPointer = 42; // This will cause a read access violation, simulating a crash
             }
             */
-        }
-            
+        }           
     }
+
     /*!**********************************************************************
     \brief
     Handles the window close event.
@@ -522,6 +516,7 @@ namespace Engine
         m_Running = false;
         return true;
     }
+
     /*!**********************************************************************
     \brief
     Handles the window resize event.
@@ -536,6 +531,7 @@ namespace Engine
 
         graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
+
     /*!**********************************************************************
     \brief
     Updates the delta time and calculates frames per second (FPS).
@@ -556,6 +552,7 @@ namespace Engine
             prevTime = currentTime;
         }
     }
+
     /*!**********************************************************************
     \brief
     Updates the window title to display FPS.
@@ -568,6 +565,5 @@ namespace Engine
         std::string fps_str = ss.str();
         std::string title_str = windowProps.Title +" | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
-    }
-    
+    }   
 }

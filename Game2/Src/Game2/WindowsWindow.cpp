@@ -230,6 +230,7 @@ namespace Engine {
 		// Check if the window has lost focus and minimize if needed
 		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
 			MinimizeWindow();
+			audio.pauseAllAudio();
 		}
 		else {
 			// Check if the window has gained focus and restore if needed
@@ -238,8 +239,7 @@ namespace Engine {
 			}
 			audio.resumeAllAudio();
 		}
-
-		audio.update();
+		//audio.update();
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
@@ -249,7 +249,6 @@ namespace Engine {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
 
-			audio.pauseAllAudio();
 			// Add log statement here
 			Logger::GetInstance().Log(LogLevel::Info, "Number of channels in loopsPlaying: " + std::to_string(audio.getLoopsPlayingSize()));
 
