@@ -36,14 +36,14 @@ namespace Engine
 	void inGameGUI::Update(bool CollisionCheck)
 	{
 
-		// Access the last colliding entity ID from the CollisionSystem
-		EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
+		//// Access the last colliding entity ID from the CollisionSystem
+		//EntityID lastCollidingEntityID = collisionSystem.GetLastCollidingEntityID();
 
-		// Assume that entity->GetComponent(ComponentType::Texture) returns a pointer to the base class Component
-		Component* component = entityManager->GetEntity(lastCollidingEntityID)->GetComponent(ComponentType::Texture);
+		//// Gets texture component from entity
+		//Component* component = entityManager->GetEntity(lastCollidingEntityID)->GetComponent(ComponentType::Texture);
 
-		// Use dynamic_cast to safely check and cast to TextureComponent
-		TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(component);
+		//// Creates a textureCheck object to check for texture
+		//TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(component);
 
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry

@@ -54,7 +54,7 @@ namespace Engine
 
         */
         /**************************************************************************/
-        PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false) {}
+        PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false), isWalking(false) {}
 
         /**************************************************************************/
         /*!
@@ -69,8 +69,6 @@ namespace Engine
         */
         /**************************************************************************/
         PathfindingSystem(int numRows, int numCols);
-
-        PathfindingSystem(int numRows, int numCols, const std::vector<std::pair<float, float>>& _towerPositions);
 
 
         /**************************************************************************/
@@ -112,8 +110,6 @@ namespace Engine
         /**************************************************************************/
         std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
-        std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight, const std::vector<std::pair<float, float>>& towers);
-
         void createLogicalCollisionMap();
 
         void initializeCollisionMap();
@@ -121,6 +117,8 @@ namespace Engine
         bool hasCollision(int x, int y);
 
         std::pair<int, int> findClosestFreeCell(int x, int y);
+
+        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
 
     private:
         struct Node {
@@ -171,8 +169,6 @@ namespace Engine
         */
         /**************************************************************************/
         double distance(int x1, int y1, int x2, int y2);
-
-        std::pair<float, float> getClosestPair(float startPosX, float startPosY, const std::vector<std::pair<float, float>>& towerPositions);
 
         int numRows = 0;
         int numCols = 0;

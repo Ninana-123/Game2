@@ -63,9 +63,9 @@ namespace Engine
                         //std::cout << transformComponent->position.x << " " << transformComponent->position.y << std::endl;
                         //std::cout << rigidbody.position.x << " " << rigidbody.position.y << std::endl;
 
-                        //Store Local variables for processing
-                        float previousX = transformComponent->position.x;
-                        float previousY = transformComponent->position.y;
+                        ////Store Local variables for processing
+                        //float previousX = transformComponent->position.x;
+                        //float previousY = transformComponent->position.y;
 
                         // Update the Rigidbody
                         rigidbody.update(fixedDeltaTime);
@@ -74,11 +74,11 @@ namespace Engine
                         transformComponent->position.x = rigidbody.position.x;
                         transformComponent->position.y = rigidbody.position.y;
 
-                        float currentX = transformComponent->position.x;
-                        float currentY = transformComponent->position.y;
+                        //float currentX = transformComponent->position.x;
+                        //float currentY = transformComponent->position.y;
 
-                        float l_velocityX = physicsComponent->velocity.x;
-                        float l_velocityY = physicsComponent->velocity.y;
+                        //float l_velocityX = physicsComponent->velocity.x;
+                        //float l_velocityY = physicsComponent->velocity.y;
 
                         // Update the object's position using the equations of motion
                         //l_velocityX += static_cast<float>(accelerationX * dt);

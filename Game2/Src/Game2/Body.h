@@ -73,7 +73,7 @@ public:
 
     */
     /**************************************************************************/
-    void update(float time_step);
+    void update(double time_step);
 
     /**************************************************************************/
     /*!
@@ -84,7 +84,7 @@ public:
 
     */
     /**************************************************************************/
-    void handle_collision(Rigidbody& other_object);
+    // void handle_collision(Rigidbody& other_object);
 
     void setPosition(VECTORMATH::Vec2 pos);
 };

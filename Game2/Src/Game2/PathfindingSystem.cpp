@@ -37,11 +37,8 @@ namespace Engine
     int prevTexture = 0;
     std::vector<int> prevTextures;
 
-    // Declaration for isWalking
-    bool isWalking = false;
-
     // Variables to try to get pathfinding to work from b to c and onwards
-    std::vector<std::pair<float, float>> towerPositions = { {-275, -35}, {-70, 245} };
+    std::vector<std::pair<int, int>> towerPositions = { {-275, -35}, {-70, 245} };
     std::pair<int, int> closestTower = { 0 ,0 };
     std::pair<int, int> firstTower = { 0 ,0 };
     std::pair<int, int> currentClosestTower = { 0 ,0 };
@@ -139,6 +136,7 @@ namespace Engine
         goalX = 0;
         goalY = 0;
         initialized = false;
+        isWalking = false;
 
         // Call initializeCollisionMap only once in the constructor
         if (!collisionMap) {
@@ -230,13 +228,13 @@ namespace Engine
         return { x, y };
     }
 
-    std::pair<float, float> PathfindingSystem::getClosestPair(float startX, float startY, const std::vector<std::pair<float, float>>& towersPositions) 
+    std::pair<int, int> PathfindingSystem::getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towersPositions) 
     {
         double minDistance = std::numeric_limits<double>::max();
 
         for (const auto& tower : towersPositions) 
         {
-            double currentDistance = distance(startX, startY, tower.first, tower.second);
+            double currentDistance = distance(startPosX, startPosY, tower.first, tower.second);
             // std::cout << "tower.first : " << tower.first << "tower.second: " << tower.second << std::endl;
             if (currentDistance < minDistance) 
             {
@@ -254,8 +252,8 @@ namespace Engine
             }
         }
         // Set new current endpoint check
-        endPointX = startX;
-        endPointY = startY;
+        endPointX = startPosX;
+        endPointY = startPosY;
 
         // Change path to other tower if at current tower
         if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80) 
@@ -273,6 +271,7 @@ namespace Engine
                 currentClosestTower = towerPositions[0];
                 prevPos2 = towersPositions[1];
             }
+            return currentClosestTower;
         }
         else 
         {
@@ -368,8 +367,8 @@ namespace Engine
                     if (collisionComponent->layer == Layer::World)
                     {
 
-                        startX = transformComponent->position.x;
-                        startY = transformComponent->position.y;
+                        startX = static_cast<int>(transformComponent->position.x);
+                        startY = static_cast<int>(transformComponent->position.y);
 
                         closestTower = getClosestPair(startX, startY, towerPositions);
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
