@@ -273,6 +273,11 @@ namespace Engine {
 		}
 	}
 
+	void ImGuiWrapper::UpdateImGuiInteractionState() {
+			// Check if ImGui wants to capture the mouse or keyboard
+			isImGuiHovered = ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard;
+		}
+
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
@@ -286,6 +291,7 @@ namespace Engine {
 		dispatcher.Dispatch<KeyTypedEvent>(std::bind(&ImGuiWrapper::OnKeyTypedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
+		//UpdateImGuiInteractionState();
 	}
 
 	bool ImGuiWrapper::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)

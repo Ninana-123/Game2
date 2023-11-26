@@ -740,9 +740,6 @@ namespace Engine
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
 
-        // Restore the previous shader state
-        shader.SetActiveShaderSet(previousShaderSet);
-
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
 
