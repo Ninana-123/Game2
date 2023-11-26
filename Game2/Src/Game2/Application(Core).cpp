@@ -34,7 +34,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
-#include "WindowsWindow.h"
 
 
 // Global variables for frames per second (fps) calculation
@@ -48,7 +47,7 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
 double dt = 0;
-std::string initScene = "Resource/Scenes/testscene.txt";
+std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -81,7 +80,7 @@ namespace Engine
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
- 
+
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -141,7 +140,7 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 2; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
@@ -207,19 +206,6 @@ namespace Engine
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
-
-       if (e.GetEventType() == EventType::KeyPressed)
-       {
-           KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-
-           // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
-           if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
-               keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
-               keyPressedEvent.GetKeyCode() == KEY_DELETE)
-           {
-               window.MinimizeWindow();
-           }
-       }
     }
 
 

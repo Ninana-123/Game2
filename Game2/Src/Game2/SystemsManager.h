@@ -17,7 +17,7 @@
 #include "PathfindingSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
-#include "FontManager.h"
+
 #pragma once
 
 namespace Engine

@@ -17,8 +17,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AppEvent.h"
 #include "InputEvent.h"
 
-
-
 namespace Engine {
 	// Static flag to check if GLFW is initialized
 	static bool s_GLFWInitialized = false;
@@ -58,7 +56,6 @@ namespace Engine {
 	WindowsWindow::WindowsWindow(const WindowConfig& props) {
 		Init(props);
 	}
-
 
 	/*!**********************************************************************
 	\brief
@@ -207,18 +204,5 @@ namespace Engine {
 	void WindowsWindow::OnUpdate() {
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
-	}
-
-
-	void WindowsWindow::MinimizeWindow() {
-		if (m_Window) {
-			glfwIconifyWindow(m_Window); // Minimize the window
-		}
-	}
-
-	void WindowsWindow::RestoreWindow() {
-		if (m_Window) {
-			glfwRestoreWindow(m_Window); // Restore the window if minimized
-		}
 	}
 }

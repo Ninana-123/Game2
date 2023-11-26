@@ -18,7 +18,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AppEvent.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
-#include "WindowsWindow.h"
 
 extern double loopTime;
 extern const double fixedDeltaTime;
@@ -49,8 +48,7 @@ namespace Engine
         // Event handler
         void OnEvent(Event& e);
 
-       
-        WindowsWindow window;
+      
 
         // Get a reference to the application instance (Singleton pattern)
         static Application& Get()
