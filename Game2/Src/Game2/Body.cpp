@@ -27,27 +27,27 @@ void Rigidbody::apply_force(VECTORMATH::Vec2 force) {
     force_accumulator = force_accumulator + force;
 }
 
-void Rigidbody::update(float time_step) {
+void Rigidbody::update(double time_step) {
     // Update the object's position and velocity based on the applied forces and time step
     // 1. Calculate acceleration using F = ma (Newton's second law)
     VECTORMATH::Vec2 object_acceleration = force_accumulator / mass;
 
     // 2. Update velocity using v = u + at (initial velocity + acceleration * time)
-    velocity = velocity + object_acceleration * time_step;
+    velocity = velocity + object_acceleration * static_cast<float>(time_step);
 
     // 3. Update position using s = ut + 0.5at^2 (initial position + velocity * time + 0.5 * acceleration * time^2)
-    position = position + velocity * time_step + 0.5f * object_acceleration * time_step * time_step;
+    position = position + velocity * static_cast<float>(time_step) + 0.5f * object_acceleration * static_cast<float>(time_step) * static_cast<float>(time_step);
 
     // 4. Apply friction to the velocity (optional)
-    velocity = velocity - velocity * friction * time_step;
+    velocity = velocity - velocity * friction * static_cast<float>(time_step);
 
     // 5. Clear the force accumulator for the next frame
     force_accumulator = VECTORMATH::Vec2(0.0f, 0.0f);
 }
 
-void Rigidbody::handle_collision(Rigidbody& otherObject) {
-    // Handle collision response with another object
-}
+//void Rigidbody::handle_collision(Rigidbody& otherObject) {
+//    // Handle collision response with another object
+//}
 
 
 

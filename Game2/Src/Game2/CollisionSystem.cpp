@@ -515,7 +515,7 @@ namespace Engine
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower)
 					{
-						circle1.radius = 100.f; //retrieve from component pl0x
+						circle1.radius = 100.f;
 
 					}
 
@@ -569,27 +569,34 @@ namespace Engine
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 								// Check for collision with entity2
-								if (entity2->HasComponent(ComponentType::Collision)) {
+								if (entity2->HasComponent(ComponentType::Collision)) 
+								{
 
-									circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
-
-									if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2) 
-										&& collisionComponent2->layer != Layer::inGameGUI)
+									if (collisionComponent2 != nullptr)
 									{
-										isColliding = true;
-										//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+										circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
+
+										if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2)
+											&& collisionComponent2->layer != Layer::inGameGUI)
+										{
+											isColliding = true;
+											//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+										}
+
+										// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
+
+										// Check if tower radius is colliding with the player's radius
+										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
+											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
+										{
+											// isColliding = true;
+											std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+												<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+
+										}
 									}
 
-									// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
-
-									// Check if tower radius is colliding with the player's radius
-									if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2) 
-										&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower) {
-										// isColliding = true;
-										//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
-											//<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
-
-									}
+										
 								}
 
 							}
@@ -612,22 +619,23 @@ namespace Engine
 					//update AABB coordinates in entity1
 					if (collisionComponent1)
 					{
-						float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
-						float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
+							float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
+							float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
 
-						float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
-						float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
-						float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
-						float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
+							float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
+							float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
+							float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
+							float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
-						collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-						collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+							collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
+							collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
 
 					}
 				}
 			}
 		}
 	}
+
 
 	void CollisionSystem::EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
