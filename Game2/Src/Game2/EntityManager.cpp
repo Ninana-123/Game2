@@ -83,6 +83,31 @@ namespace Engine
 		return clonedEntityID;
 	}
 
+	EntityID EntityManager::CloneEntity(Entity* sourceEntity) {
+		// Get the source entity to clone
+		if (!sourceEntity)
+		{
+			// Entity not found
+			return UINT_MAX;
+		}
+
+		// Create a new entity as a clone
+		EntityID clonedEntityID = CreateEntity();
+		Entity* clonedEntity = GetEntity(clonedEntityID);
+
+		// Clone the components from the source entity to the cloned entity
+		auto sourceComponents = sourceEntity->GetComponents();
+		for (const auto& pair : sourceComponents) {
+			Component* sourceComponent = pair.second;
+			Component* clonedComponent = sourceComponent->Clone();
+
+			// Add the cloned component to the cloned entity
+			clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+		}
+
+		return clonedEntityID;
+	}
+
 	void EntityManager::DestroyEntity(EntityID entity)
 	{
 		auto it = entities.find(entity);

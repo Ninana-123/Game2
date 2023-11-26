@@ -205,7 +205,7 @@ namespace Engine {
 
 		// Check if the window has lost focus and minimize if needed
 		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
-			MinimizeWindow();
+			//MinimizeWindow();
 		}
 		else {
 			// Check if the window has gained focus and restore if needed

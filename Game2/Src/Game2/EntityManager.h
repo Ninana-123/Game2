@@ -85,6 +85,8 @@ namespace Engine
 		*/
 		EntityID CloneEntity(EntityID sourceEntityID);
 
+		EntityID CloneEntity(Entity* sourceEntity);
+
 		/*!
 		\brief
 		Destroys the entity with the specified unique identifier.
