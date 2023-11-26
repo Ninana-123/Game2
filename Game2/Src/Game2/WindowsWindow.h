@@ -18,6 +18,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 #include <GLFW/glfw3.h>
 
+//extern bool isWindowmin;
+
 namespace Engine {
 	class WindowsWindow : public Window {
 	public:

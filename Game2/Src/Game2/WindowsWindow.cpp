@@ -4,7 +4,7 @@
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
-\brief		Implementation of the WindowsWindow class, derived from the 
+\brief		Implementation of the WindowsWindow class, derived from the
 			Window class.
 
 Copyright (C) 2023 DigiPen Institute of Technology.
@@ -18,16 +18,20 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "InputEvent.h"
 #include "AudioEngine.h"
 
+
+bool isWindowmin = false;
+
 namespace Engine {
 	// Static flag to check if GLFW is initialized
 	static bool s_GLFWInitialized = false;
+	AudioEngine audio;
 
 	/*!**********************************************************************
 	\brief
 	Error callback function for GLFW
 	\param[in] error
 	The error code
-	\param[in] description 
+	\param[in] description
 	Description of the error
 	*************************************************************************/
 	static void GLFWErrorCallback(int error, const char* description) {
@@ -37,9 +41,9 @@ namespace Engine {
 
 	/*!**********************************************************************
 	\brief
-	Factory method to create a Window object based on the 
+	Factory method to create a Window object based on the
 	provided WindowConfig properties.
-	\param[in] props 
+	\param[in] props
 	The WindowConfig containing the window properties.
 	\return
 	A pointer to the created Window object.
@@ -58,11 +62,10 @@ namespace Engine {
 		Init(props);
 	}
 
-
 	/*!**********************************************************************
 	\brief
 	Destructor for the WindowsWindow class.
-	*************************************************************************/	
+	*************************************************************************/
 	WindowsWindow::~WindowsWindow() {
 	}
 
@@ -74,14 +77,12 @@ namespace Engine {
 	\param[in] props
 	The WindowConfig containing the window properties.
 	*************************************************************************/
-
 	void WindowsWindow::Init(const WindowConfig& props) {
 		// Initialize window properties
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-
-
+		audio.init();
 
 		// Log window creation information
 		Logger::GetInstance().Log(Engine::LogLevel::Info, "Creating Window " + props.Title + " (" + std::to_string(props.Width) + ", " + std::to_string(props.Height) + ")");
@@ -125,12 +126,14 @@ namespace Engine {
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 			});
+
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
 			data.EventCallback(event);
 
 			});
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			UNREFERENCED_PARAMETER(scancode);
 			UNREFERENCED_PARAMETER(mods);
@@ -228,26 +231,29 @@ namespace Engine {
 		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 		// Check if the window has lost focus and minimize if needed
-
-		if (!m_IsFocused) {
+		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
 			MinimizeWindow();
-			audio.pauseAllAudio();
+			//audio.pauseAllAudio();
 		}
 		else {
 			// Check if the window has gained focus and restore if needed
 			if (m_IsMaximized) {
 				RestoreWindow();
 			}
-			audio.resumeAllAudio();
+			//audio.resumeAllAudio();
+			audio.update();
+			glfwPollEvents();
+			glfwSwapBuffers(m_Window);
 		}
-			
-		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
 	}
 
 	void WindowsWindow::MinimizeWindow() {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
+			//audio.pauseAllAudio();
+			// Add log statement here
+			Logger::GetInstance().Log(LogLevel::Info, "Number of channels in loopsPlaying: " + std::to_string(audio.getLoopsPlayingSize()));
+			//isWindowmin = true;
 			glfwIconifyWindow(m_Window);
 		}
 	}
@@ -256,6 +262,7 @@ namespace Engine {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Restoring Window");
 			glfwRestoreWindow(m_Window);
+			//isWindowmin = false;
 		}
 	}
 }

@@ -18,13 +18,13 @@ namespace Engine {
 			Prefab* arrowPrefab = prefabManager->GetPrefab(9);
 			entityManager->CreateEntityFromPrefab(*arrowPrefab);
 			entitycreated = true;
-			spawnTimer = 0.0f;
+			//spawnTimer = 0.0f;
 		}
-		if (entitycreated) {
+		/*if (entitycreated) {
 			spawnTimer += deltaTime;
 			if (spawnTimer >= spawnInterval) {
 				entitycreated = false;
 			}
-		}
+		}*/
 	}
 }

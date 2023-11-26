@@ -35,6 +35,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "Arrow.h"
+#include "WindowsWindow.h"
 #include "fmod.hpp"
 
 
@@ -84,6 +85,7 @@ namespace Engine
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
+    WindowsWindow window;
 
     float scalar = 0.1f;
     float rotation = 0.125f;
@@ -255,6 +257,13 @@ namespace Engine
                 stepOneFrame = true;
             }
             //std::cout << InputHandler.GetMousePosition().x << " x "<< InputHandler.GetMousePosition().y << std::endl;  
+
+            /*if (isWindowmin) {
+                audioEngine.stopSound(sound_BGM);
+            }
+            else if (!isWindowmin) {
+                audioEngine.playSound(sound_BGM);
+            }*/
 
             while (accumulatedTime >= fixedDeltaTime) {
 
