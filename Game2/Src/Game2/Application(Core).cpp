@@ -201,18 +201,6 @@ namespace Engine
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
 
-       if (e.GetEventType() == EventType::KeyPressed)
-       {
-           KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-
-           // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
-           if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
-               keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
-               keyPressedEvent.GetKeyCode() == KEY_DELETE)
-           {
-               window.MinimizeWindow();
-           }
-       }
     }
 
     void Application::Run()
@@ -244,6 +232,29 @@ namespace Engine
             previousTime = currentTime;
             UpdateDeltaTime();
             Application::UpdateWindowTitle();
+
+            bool isFirstRun = true;
+            window.UpdateFocus();  // Check and handle focus in the window
+            // Check if the window has lost focus and minimize if needed
+            if (!window.IsWindowFocused()) {
+                window.MinimizeWindow();
+                // Pause audio only if it's not the first run
+                if (!isFirstRun) {
+                    audioEngine.pauseAllAudio();
+                }
+            }
+            else {
+                // Check if the window is not maximized and restore if needed
+                if (!window.IsWindowMaximized()) {
+                    window.RestoreWindow();
+                }
+                // Resume audio only if it's not the first run
+                if (!isFirstRun) {
+                    audioEngine.resumeAllAudio();
+                }
+            }
+            // After the first run, update the flag
+            isFirstRun = false;
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);

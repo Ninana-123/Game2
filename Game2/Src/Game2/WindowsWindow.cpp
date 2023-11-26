@@ -100,7 +100,6 @@ namespace Engine {
 
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
-		
 			});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
@@ -176,8 +175,10 @@ namespace Engine {
 			WindowsWindow* wnd = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
 			if (wnd) {
 				Logger::GetInstance().Log(LogLevel::Info, "Window focus callback triggered");
-				// Update focus state using GLFW function
-				wnd->m_IsFocused = focused;
+				// Update focus state using GLFW function only if not interacting with ImGui
+				if (!wnd->IsImGuiHovered()) {
+					wnd->m_IsFocused = focused;
+				}
 			}
 			});
 
@@ -188,9 +189,6 @@ namespace Engine {
 				wnd->m_IsMaximized = maximized;
 			}
 			});
-
-		// Initialize the AudioEngine
-		audio.init();
 	}
 
 	// Shutdown the WindowsWindow, destroying the GLFW window
@@ -198,22 +196,30 @@ namespace Engine {
 		glfwDestroyWindow(m_Window);
 	}
 
-	// Update the WindowsWindow by processing events and swapping buffers
-	void WindowsWindow::OnUpdate() {
-		/*
-		m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
+	void WindowsWindow::UpdateFocus() {
+		if (m_Window) {
+			m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
-		// Check if the window has lost focus and minimize if needed
-		if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
-			MinimizeWindow();
-		}
-		else {
-			// Check if the window has gained focus and restore if needed
-			if (m_IsMaximized) {
-				RestoreWindow();
+			if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
+				MinimizeWindow();
+			}
+			else {
+				if (m_IsMaximized) {
+					RestoreWindow();
+				}
 			}
 		}
-		*/
+		else {
+			// Handle the case when m_Window is not valid
+			// You may want to log an error or take appropriate action
+		}
+	}
+
+	// Update the WindowsWindow by processing events and swapping buffers
+	void WindowsWindow::OnUpdate() {
+
+		UpdateFocus();
+
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
@@ -223,11 +229,10 @@ namespace Engine {
 		if (m_Window) {
 			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
 
-			// Pause audio before minimizing
-			audio.pauseAllAudio();
-
 			// Iconify (minimize) the GLFW window
 			glfwIconifyWindow(m_Window);
+			m_IsMaximized = false;
+			audio.pauseAllAudio();
 		}
 	}
 
@@ -237,11 +242,12 @@ namespace Engine {
 			// Log information
 			Logger::GetInstance().Log(LogLevel::Info, "Restoring Window");
 
-			// Resume audio after restoring
-			audio.resumeAllAudio();
-
 			// Restore the GLFW window
 			glfwRestoreWindow(m_Window);
 		}
+	}
+
+	bool WindowsWindow::IsImGuiHovered() const {
+		return isImGuiHovered;
 	}
 } // namespace Engine
