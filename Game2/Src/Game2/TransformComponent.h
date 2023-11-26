@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		TransformComponent.h
@@ -9,6 +8,7 @@
 
  */
  /******************************************************************************/
+#pragma once
 
 #include "Component.h"
 #include "EngineTypes.h"
@@ -16,7 +16,6 @@
 
 namespace Engine
 {
-
 	class TransformComponent : public Component
 	{
 	public:
@@ -55,12 +54,29 @@ namespace Engine
 			return cloneComponent;
 		}
 
+		/*!*****************************************************************
+
+		\brief
+		Serializes the TextureComponent data.
+
+		\param outputStream The output stream to write the data to.
+
+		********************************************************************/
 		void Serialize(std::ostream& outputStream) const override {
 			outputStream << "Position: " << position.x << ' ' << position.y << '\n';
 			outputStream << "ScaleX: " << scaleX << '\n';
 			outputStream << "ScaleY: " << scaleY << '\n';
 			outputStream << "Rotation: " << rot << '\n';
 		}
+
+		/*!*****************************************************************
+
+		\brief
+		Deserializes the TextureComponent data.
+
+		\param inputStream The input stream to read the data from.
+
+		********************************************************************/
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			inputStream >> temp >> position.x >> position.y; // Assuming format is "Position: x y"

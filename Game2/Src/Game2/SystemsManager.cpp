@@ -73,7 +73,6 @@ namespace Engine
 		}
 	}
 
-
 	template <typename T>
 	T& SystemsManager::GetSystem()
 	{
@@ -127,8 +126,6 @@ namespace Engine
 		throw std::runtime_error("System not found");
 	}
 
-
-
 	std::unordered_map<std::string, double> SystemsManager::DisplaySystemTimes(double loop) {
 		std::unordered_map<std::string, double> systemTimes;
 
@@ -163,5 +160,4 @@ namespace Engine
 		instance = nullptr;
 	}
 
-	
 }

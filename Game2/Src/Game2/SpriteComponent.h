@@ -38,6 +38,7 @@ namespace Engine
 
 		********************************************************************/
         ComponentType GetType() const override { return ComponentType::Sprite; }
+
         /*!*****************************************************************
 
         \brief
@@ -59,6 +60,13 @@ namespace Engine
             return clonecomponent;
         }      
 
+        /*!*****************************************************************
+        \brief
+        Serialize the SpriteComponent to an output stream.
+
+        \param outputstream
+        The output stream to which the SpriteComponent is serialized.
+        ********************************************************************/
         void Serialize(std::ostream& outputstream) const {
             outputstream << "framerate: " << framerate << '\n';
             outputstream << "horizontalframes: " << horizontalframes << '\n';
@@ -71,6 +79,13 @@ namespace Engine
             outputstream << "playmode: " << static_cast<int>(playmode) << '\n';
         }
 
+        /*!*****************************************************************
+        \brief
+        Deserialize the SpriteComponent from an input stream.
+
+        \param inputstream
+        The input stream from which the SpriteComponent is deserialized.
+        ********************************************************************/
         void Deserialize(std::istream& inputstream) {
             std::string temp;
             inputstream >> temp >> framerate;
