@@ -2,6 +2,7 @@
 /*!
 \file		WindowsWindow.h
 \author 	Liu Xujie
+\co         Wayne Kwok Jun Lin (20%)
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
 \brief		Declaration of the WindowsWindow class, derived from the
@@ -46,12 +47,15 @@ namespace Engine {
 			unsigned int Width = 0;  // Initialize to a default value
 			unsigned int Height = 0; // Initialize to a default value
 
-			EventCallbackFn EventCallback;
-		};
+        /**
+         * @brief Restores the window.
+         */
+        void RestoreWindow();
 
 		AudioEngine audio;
 		WindowData m_Data;
 		bool m_IsMaximized = false;
 		bool m_IsFocused = true;
-	};
+    	};
+    }
 }

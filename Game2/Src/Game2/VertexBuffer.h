@@ -24,22 +24,45 @@ private:
 	//internal openGL Renderer ID (buffer)
 	unsigned int m_RendererID; 
 public:
+
 	/*!
-	 * \brief Constructor for VertexBuffer.
+	 * \brief VertexBuffer constructor.
 	 * \param data Pointer to the vertex data.
 	 * \param size Size of the vertex data.
+	 *
+	 * This constructor generates a new OpenGL vertex buffer and stores the provided vertex data in it.
 	 */
 	VertexBuffer(const void* data, unsigned int size); 
 
-	// Destructor for VertexBuffer.
+	/*!
+	 * \brief VertexBuffer destructor.
+	 *
+	 * This destructor frees up the OpenGL resources associated with the vertex buffer.
+	 */
 	~VertexBuffer();
 
+	/*!
+	 * \brief Set the data for the vertex buffer.
+	 *
+	 * This function binds the vertex buffer and sets its data with the specified data and size.
+	 *
+	 * \param data A pointer to the data to be copied into the buffer.
+	 * \param size The size of the data in bytes.
+	 */
 	void SetData(const void* data, unsigned int size);
 
-	// Binds the vertex buffer.
+	/*!
+	 * \brief Binds the vertex buffer for rendering.
+	 *
+	 * This function binds the vertex buffer for rendering, allowing it to be used in drawing operations.
+	 */
 	void Bind() const;
 
-	// Unbinds the vertex buffer.
+	/*!
+	 * \brief Unbinds the vertex buffer to prevent accidental modification.
+	 *
+	 * This function unbinds the vertex buffer, preventing it from being accidentally modified during other OpenGL operations.
+	 */
 	void Unbind() const;
 };
 #endif ENGINE_VERTEXBUFFER_H

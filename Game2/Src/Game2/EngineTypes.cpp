@@ -19,6 +19,7 @@ std::string c_stateToString(c_state state)
     case c_state::Walking:  return "Walking";
     case c_state::Idle:     return "Idle";
     case c_state::Attack:   return "Attack";
+    case c_state::Death:   return "Death";
     default:                return "Unknown";
     }
 }

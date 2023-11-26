@@ -23,20 +23,71 @@ namespace Engine
     class Entity
     {
     public:
+        /*!
+        \brief
+        Constructor for the Entity class.
+
+        \param id
+        The unique identifier for the entity.
+        */
         Entity(EntityID id) : id(id) {}
+
+        /*!
+        \brief
+        Destructor for the Entity class.
+        */
         ~Entity() { components.clear(); }
 
+        /*!**********************************************************************
+        \brief
+        Adds a component to the entity.
+        \param
+        component to add
+        *************************************************************************/
         void AddComponent(std::unique_ptr<Component> component);
+
+        /*!**********************************************************************
+        \brief
+        Adds a new component of the specified type to the entity.
+        \param
+        type of component to add
+        *************************************************************************/
         void AddNewComponent(ComponentType type);
+
+        /*!**********************************************************************
+        \brief
+        GetComponent of entity
+        \param
+        type of component to get
+        *************************************************************************/
         Component* GetComponent(ComponentType type) const;
+
+        /*!**********************************************************************
+        \brief
+        GetComponents from map
+        *************************************************************************/
         std::unordered_map<ComponentType, Component*> GetComponents() const;
-        EntityID GetID() const { return id; }
+
+        /*!**********************************************************************
+        \brief
+        check for component
+        \return
+        true if have
+        *************************************************************************/
         bool HasComponent(ComponentType type) const;
+
+        /*!**********************************************************************
+        \brief
+        Retrieves the unique identifier of the entity.
+
+        \return
+        The unique identifier of the entity.
+        *************************************************************************/
+        EntityID GetID() const { return id; }
 
         EntityID id;
         std::unordered_map<ComponentType, std::unique_ptr<Component>> components;
+
     private:
-
-
     };
 }

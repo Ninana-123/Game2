@@ -2,6 +2,7 @@
 /*!
 \file		AudioEngine.cpp
 \author 	Tay Jun Feng Vance
+\co         Wayne Kwok Jun Lin (10%)
 \par    	email: junfengvance.t@digipen.edu
 \date       29/09/2023
 \brief		This file contains the definition of all functions related to the FMOD
@@ -14,14 +15,19 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-
 #include "pch.h"
 #include "AudioEngine.h"
 #include <fmod_errors.h>
+#include "logger.h"
 #include <iostream>
 
+AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
+eventDescriptions(), eventInstances(), reverb() {}
 
+void AudioEngine::init() {
+    // Initialize FMOD Studio and Core systems
+    ERRCHECK(FMOD::Studio::System::create(&studioSystem));
+    ERRCHECK(studioSystem->getCoreSystem(&lowLevelSystem));
 
 AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
 eventDescriptions(), eventInstances(), reverb() {}
@@ -83,6 +89,18 @@ void AudioEngine::playSound(SoundInfo soundInfo) {
         // start audio playback
         ERRCHECK(channel->setPaused(false));
 
+        bool isPausedAfter;
+        channel->getPaused(&isPausedAfter);
+        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Resumed channel: " + pair.first + " (WasPaused: " 
+            + (isPausedBefore ? "true" : "false") + ", IsPausedAfter: " + (isPausedAfter ? "true" : "false") + ")");
+    }
+}
+
+void AudioEngine::resumeSound(SoundInfo soundInfo) {
+    // Check if the sound is loaded
+    if (!soundLoaded(soundInfo)) {
+        std::cerr << "Error: Sound not loaded. Cannot resume." << std::endl;
+        return;
     }
     else
         std::cout << "Audio Engine: Can't play, sound was not loaded yet from " << soundInfo.getFilePath() << '\n';

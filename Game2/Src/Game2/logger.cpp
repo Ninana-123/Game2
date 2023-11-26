@@ -15,7 +15,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "logger.h"
 
-
 namespace Engine {
 
     // Static instance for singleton pattern
@@ -60,7 +59,6 @@ namespace Engine {
             std::cerr << "Error: " << e.what() << std::endl;
         }
     }
-
 
     void Logger::Log(LogLevel level, const char* format, ...) {
         try {

@@ -26,6 +26,12 @@ written consent of DigiPen Institute of Technology is prohibited.
 namespace Engine {
     class FileBrowser {
     public:
+        /*!
+         * \brief Displays the file browser window.
+         *
+         * This function creates and displays the file browser window using ImGui. It allows users
+         * to browse files and directories, select files, and perform actions such as opening and deleting files.
+         */
         void Show() {
             ImGui::Begin("File Browser", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
@@ -63,8 +69,6 @@ namespace Engine {
                 selectedFile.clear();
             }
 
-
-
             if (ImGui::Button("Open")) {
                 if (!selectedFile.empty() && currentDirectory == "Resource/Scenes") {
                     deleteAllEntity = true;
@@ -87,17 +91,34 @@ namespace Engine {
             if (ImGui::Button("Cancel")) {
                 CloseBrowser();
             }
-
-            
-                ImGui::End();
           
+                ImGui::End();        
         }
 
+        /*!
+         * \brief Opens the file browser window in the specified directory.
+         *
+         * This function opens the file browser window and populates it with files and directories
+         * from the specified directory.
+         *
+         * \param directory The directory to open in the file browser.
+         */
         void Open(const std::string& directory) {         
             currentDirectory = directory;
             files = GetFilesInDirectory(directory);
             isOpen = true;
         }
+
+        /*!
+        * \brief Opens the file browser window in the specified directory and associates it with a texture index.
+        *
+        * This function opens the file browser window and populates it with files and directories
+        * from the specified directory. It also associates the file browser with a texture index for updating textures.
+        *
+        * \param directory The directory to open in the file browser.
+        * \param mainIndex The main texture index.
+        * \param subIndex The subtexture index.
+        */
         void Open(const std::string& directory, int mainIndex, int subIndex) {
             t_mainIndex = mainIndex;
             t_subIndex = subIndex;
@@ -106,6 +127,15 @@ namespace Engine {
             isOpen = true;
         }
 
+        /*!
+         * \brief Retrieves a list of files in the specified directory.
+         *
+         * This function retrieves a list of files in the specified directory, including both regular files
+         * and subdirectories. It populates the files vector with the paths of the files.
+         *
+         * \param directory The directory to retrieve files from.
+         * \return A vector of strings representing the files in the directory.
+         */
         std::vector<std::string> GetFilesInDirectory(const std::string& directory) {
             files.clear(); // Ensure the files vector is cleared before populating
             for (const auto& entry : std::filesystem::directory_iterator(directory)) {
@@ -120,25 +150,78 @@ namespace Engine {
         }
 
         bool isOpen = false;
+
+        /*!
+         * \brief Sets a pointer to the AssetManager for texture updates.
+         *
+         * This function sets a pointer to the AssetManager, which is used for updating textures.
+         *
+         * \param assetsManager A shared pointer to the AssetManager.
+         */
         inline void setAssetManagerPtr(std::shared_ptr<Engine::AssetManager> assetsManager) {
             am = assetsManager;
         }
+
+        /*!
+         * \brief Sets a pointer to the EntityManager.
+         *
+         * This function sets a pointer to the EntityManager, which is used for managing entities.
+         *
+         * \param entityManager A shared pointer to the EntityManager.
+         */
         inline void setEntityManagerPtr(std::shared_ptr<Engine::EntityManager> entityManager) {
             em = entityManager;
         }
+
+        /*!
+         * \brief Sets a pointer to the PrefabManager.
+         *
+         * This function sets a pointer to the PrefabManager, which is used for managing prefabs.
+         *
+         * \param prefabManager A pointer to the PrefabManager.
+         */
         inline void setPrefabManagerPtr(PrefabManager* prefabManager) {
             pm = prefabManager;
         }
+
+        /*!
+         * \brief Sets a reference to the selected entity index.
+         *
+         * This function sets a reference to the selected entity index, which is used for updating selected entities.
+         *
+         * \param index A reference to the selected entity index.
+         */
         inline void setSelectedEntityIndexReference(int& index) {
             selectedEntityIndex = index;
         }
+
+        /*!
+         * \brief Sets a pointer to the target entity for texture updates.
+         *
+         * This function sets a pointer to the target entity, which is used for updating textures.
+         *
+         * \param target A pointer to the target entity.
+         */
         inline void setTargetEntityPtr(Entity* target) {
             targetEntity = target;
         }
+
+        /*!
+         * \brief Sets a pointer to the Loader for deserialization.
+         *
+         * This function sets a pointer to the Loader, which is used for deserializing scene files.
+         *
+         * \param Deserializer A shared pointer to the Loader.
+         */
         inline void setLoader(std::shared_ptr<Engine::Loader> Deserializer) {
             loader = Deserializer;
         }
 
+        /*!
+         * \brief Deletes the currently selected file.
+         *
+         * This function deletes the currently selected file, updating the file list and resetting the selection.
+         */
         void DeleteSelectedFile() {
             try {
                 std::filesystem::remove(selectedFile);  // Delete the file
@@ -165,6 +248,11 @@ namespace Engine {
         int t_mainIndex{};
         int t_subIndex{};
 
+        /*!
+         * \brief Closes the file browser window.
+         *
+         * This function closes the file browser window, clearing the file list and resetting the selection.
+         */
         void CloseBrowser() {
             isOpen = false;
             files.clear(); // Clear the files vector
