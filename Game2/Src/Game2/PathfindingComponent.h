@@ -25,6 +25,8 @@ namespace Engine
 		int goalY = 0; // End point Y
 		std::vector<std::pair<int, int>> path; // Store the path as a list of points
 		bool initialized = false;
+		std::pair<int, int> previousPos1 = { 0, 0 };
+		std::pair<int, int> previousPos2 = { 0, 0 };
 
 		ComponentType GetType() const override { return ComponentType::Pathfinding; }
 
@@ -37,6 +39,8 @@ namespace Engine
 			cloneComponent->goalY = goalY;
 			cloneComponent->path = path;
 			cloneComponent->initialized = initialized;
+			cloneComponent->previousPos1 = previousPos1;
+			cloneComponent->previousPos2 = previousPos2;
 			return cloneComponent;
 		}
 
