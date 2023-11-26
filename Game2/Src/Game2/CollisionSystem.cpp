@@ -714,9 +714,11 @@ namespace Engine
 						// Collision detected, set mColliding to true, enable dragging
 						collisionComponent->mColliding = true;
 
-						// If released at starting point
-						if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= -640 && mousePosition.x <= -550
+						// If released at either starting points
+						if ((Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= -640 && mousePosition.x <= -550
 							&& mousePosition.y >= -10 && mousePosition.y <= 150) 
+							|| (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= 5 && mousePosition.x <= 185
+								&& mousePosition.y >= 295 && mousePosition.y <= 360))
 						{			
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
@@ -729,7 +731,6 @@ namespace Engine
 						else if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
 						{
 							isStartingPoint = false;
-							std::cout << "You have to set the cat at the starting point " << std::endl;
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
