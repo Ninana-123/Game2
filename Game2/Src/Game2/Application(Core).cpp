@@ -491,7 +491,7 @@ namespace Engine
         return true;
     }
 
-    void Application::OnWindowResize(WindowResizeEvent& e)
+    bool Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
         float previousWidth = e_Width;

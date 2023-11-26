@@ -122,7 +122,7 @@ namespace Engine
         \param[in] e
         WindowResizeEvent object containing event information.
         *************************************************************************/
-        void OnWindowResize(WindowResizeEvent& e);
+        bool OnWindowResize(WindowResizeEvent& e);
 
         // Window instance 
         std::unique_ptr<Window> m_Window;

@@ -43,11 +43,6 @@ namespace Engine
         m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
     }
 
-    void Camera::RecalculateProjectionMatrix(int width, int height)
-    {
-        m_ProjectionMatrix = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
-    }
-
     //void Camera::HandleMouseScroll(float yOffset)
     //{
     //    m_Zoom += yOffset * 0.1f; // Adjust the zoom factor based on the mouse scroll input
