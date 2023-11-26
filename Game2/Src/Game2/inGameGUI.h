@@ -39,7 +39,6 @@ namespace Engine
         Engine::PrefabManager* prefabManager;
         Entity* targetEntity = nullptr;
         CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
-        TextureComponent* textureCheck;
 
     };
 }
