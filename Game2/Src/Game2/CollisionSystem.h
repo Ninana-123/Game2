@@ -25,10 +25,11 @@ Technology is prohibited.
 
 #endif 
 
-// Variable to check for button Collision
+// Global Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
+extern bool isStartingPoint;
 
 namespace Engine
 {
