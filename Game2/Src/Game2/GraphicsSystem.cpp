@@ -22,7 +22,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Input.h"
 #include "Animation.h"
 #include "ImGuiWrapper.h"
-#include "inGameGUI.h"
 
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
@@ -30,6 +29,12 @@ namespace Engine
     // Logger GraphicsLogger;
     Input InputController;
 
+    /*!
+   * \brief GraphicsSystem constructor.
+   *
+   * This constructor initializes a GraphicsSystem object and sets up the
+   * default shader and textures.
+   */
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
@@ -48,7 +53,12 @@ namespace Engine
     {
     }
 
-
+  /*!
+   * \brief Initialize the GLEW library.
+   *
+   * This function initializes the GLEW (OpenGL Extension Wrangler Library)
+   * and logs the initialization result.
+   */
     void GraphicsSystem::InitializeGLEW() {
         // Initialize GLEW
         GLenum glewInitResult = glewInit();
@@ -64,6 +74,12 @@ namespace Engine
             Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
+  /*!
+   * \brief Initialize the GraphicsSystem.
+   *
+   * This function initializes the GraphicsSystem by setting up OpenGL,
+   * loading shaders, and initializing textures.
+   */
     void GraphicsSystem::Initialize() {
 
         Window = glfwGetCurrentContext();
@@ -195,13 +211,113 @@ namespace Engine
         shader.Unbind();
 
         font.Initialize();
-        
-      //  font.Initialize("Resource/Fonts/arial.ttf");
-      /*  font.Initialize("Resource/Fonts/Inkfree.ttf");
-        font.Initialize("Resource/Fonts/arial.ttf");*/
         //font.MakeDisplayList(ft, face);
     }
 
+    //void GraphicsSystem::Initialize() {
+    //    Window = glfwGetCurrentContext();
+
+    //    InitializeGLEW();
+
+    //    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    //    glClear(GL_COLOR_BUFFER_BIT);
+
+    //    // Load and initialize the shader
+    //    try {
+    //        InitializeShader();
+    //    }
+    //    catch (const std::runtime_error& e) {
+    //        // Handle shader initialization error
+    //        throw std::runtime_error("Shader initialization failed: " + std::string(e.what()));
+    //    }
+
+    //    // Initialize and bind textures
+    //    try {
+    //        InitializeTextures();
+    //    }
+    //    catch (const std::runtime_error& e) {
+    //        // Handle texture initialization error
+    //        throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
+    //    }
+
+    //    // Enable blending for transparency
+    //    GLCall(glEnable(GL_BLEND));
+    //    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+    //    int screenWidth, screenHeight;
+    //    glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+
+    //    // Set up projection and view matrices
+    //    proj = glm::ortho(0.0f, static_cast<float>(screenWidth), 0.0f, static_cast<float>(screenHeight), -1.0f, 1.0f);
+    //    view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+
+    //    // Define vertex data for quad and background combined, and lines separately
+    //    std::vector<float> quadAndBackgroundVertexData = {
+    //        // Quad vertices
+    //        -60.f, -60.f, 0.0f, 0.0f,  // bottom-left
+    //         60.f, -60.f, 1.0f, 0.0f,  // bottom-right
+    //         60.f,  60.f, 1.0f, 1.0f,  // top-right
+    //        -60.f,  60.f, 0.0f, 1.0f,  // top-left
+
+    //        // Background vertices
+    //        -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+    //         static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+    //         static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+    //        -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
+    //    };
+    //    vtx_positions_quad.resize(32);
+    //    std::copy(std::begin(quadAndBackgroundVertexData), std::end(quadAndBackgroundVertexData), std::begin(this->vtx_positions_quad));
+
+    //    // Indices for the quad
+    //    unsigned int quadIndices[] = {
+    //        0, 1, 2,
+    //        2, 3, 0
+    //    };
+    //    indices_quad.assign(std::begin(quadIndices), std::end(quadIndices));
+
+    //    std::vector<float> linesVertexData = {
+    //        -30.0f, -30.0f, 0.0f, 0.0f,
+    //         30.0f, -30.0f, 1.0f, 0.0f,
+    //         30.0f,  30.0f, 1.0f, 1.0f,
+    //        -30.0f,  30.0f, 0.0f, 1.0f
+    //    };
+    //    vtx_positions_lines.resize(16);
+    //    std::copy(std::begin(linesVertexData), std::end(linesVertexData), std::begin(this->vtx_positions_lines));
+
+    //    // Create individual vertex buffers and layouts for lines, quad and background
+    //    try {
+    //        VertexBuffer vbQuadAndBackground(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+    //        VertexBuffer vbLines(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+
+    //        vbQuadAndBackground.SetData(vtx_positions_quad.data(), static_cast<unsigned int>(vtx_positions_quad.size() * sizeof(float)));
+    //        vbLines.SetData(vtx_positions_lines.data(), static_cast<unsigned int>(vtx_positions_lines.size() * sizeof(float)));
+
+    //        VertexBufferLayout layout;
+    //        layout.Push<float>(2);
+    //        layout.Push<float>(2);
+
+    //        ibQuad.SetData(indices_quad.data(), static_cast<unsigned int>(indices_quad.size()));
+    //        vaQuadAndBackground.AddBuffer(vbQuadAndBackground, layout);
+    //        vaLines.AddBuffer(vbLines, layout);
+    //    }
+    //    catch (const std::runtime_error& e) {
+    //        // Handle buffer initialization error
+    //        throw std::runtime_error("Buffer initialization failed: " + std::string(e.what()));
+    //    }
+
+    //    // Unbind buffers and shader after drawing
+    //    ibQuad.Unbind();
+    //    vaQuadAndBackground.Unbind();
+    //    vaLines.Unbind();
+    //    shader.Unbind();
+    //}
+
+    /*!
+    * \brief Initialize the shader used for rendering.
+    *
+    * This function loads and initializes the shader used for rendering
+    * and sets its initial uniform values.
+    */
     void GraphicsSystem::InitializeShader()
     {
         // Initialize the shader object (load shader source files and compile them)
@@ -273,6 +389,11 @@ namespace Engine
         shader.Unbind();
     }
 
+    /*!
+    * \brief Initialize textures used for rendering.
+    *
+    * This function loads and initializes textures used for rendering.
+    */
     void GraphicsSystem::InitializeTextures()
     {
         textures.resize(TextureClassCount);
@@ -308,6 +429,83 @@ namespace Engine
         }
     }
 
+    //void GraphicsSystem::RenderBatchedEntities(const std::vector<glm::vec2>& positions, const std::vector<glm::vec2>& texCoords, const std::vector<float>& texIndices)
+    //{
+    //    SetMaxBatchSize(200);
+
+    //    // Check if a new batch needs to be created
+    //    if (batches.empty() || batches.back().textureClass != textureClass || batches.back().batchedPositions.size() >= MAX_BATCH_SIZE)
+    //    {
+    //        // Create a new batch when there are no batches, the texture class changes, or the batch size limit is reached
+    //        Batch newBatch;
+    //        newBatch.textureClass = textureClass;
+    //        batches.push_back(newBatch);
+    //    }
+
+    //    // Add the provided vertex data to the current batch
+    //    Batch& currentBatch = batches.back();
+    //    currentBatch.batchedPositions.insert(currentBatch.batchedPositions.end(), positions.begin(), positions.end());
+    //    currentBatch.batchedTexCoords.insert(currentBatch.batchedTexCoords.end(), texCoords.begin(), texCoords.end());
+    //    currentBatch.batchedTexIndices.insert(currentBatch.batchedTexIndices.end(), texIndices.begin(), texIndices.end());
+    //}
+
+    //void GraphicsSystem::RenderBatchedData()
+    //{
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Rendering batched data...");
+
+    //    // Check if the vertex buffer data is valid
+    //    if (vtx_positions_quad.empty() || indices_quad.empty() || vtx_positions_quad.size() % 4 != 0 || indices_quad.size() % 6 != 0) {
+    //        Logger::GetInstance().Log(LogLevel::Error, "Invalid or empty vertex or index buffer data!");
+    //        return; // Do not proceed with rendering if data is invalid or empty
+    //    }
+
+    //    // Bind shader, vertex arrays, and index buffer
+    //    shader.Bind();
+    //    vaQuadAndBackground.Bind();
+    //    vaLines.Bind();
+    //    ibQuad.Bind();
+
+    //    // Set shader uniforms for rendering textured quads
+    //    shader.SetUniform1i("u_RenderTextured", 1); // Render textured
+    //    shader.SetUniform1i("u_Texture[0]", 0);
+
+    //    Batch batch;
+
+    //    // Iterate through batches and render each batch
+    //    for (const Batch& localBatch : batches)
+    //    {
+    //        Logger::GetInstance().Log(LogLevel::Debug, "Processing batch with texture class: " + std::to_string(localBatch.textureClass));
+
+    //        // Bind texture for the current batch
+    //        textures[batch.textureClass].Bind(0);
+
+    //        // Update vertex buffer data for the quad and background
+    //        vaQuadAndBackground.UpdateBuffer(0, localBatch.batchedPositions.data(), localBatch.batchedPositions.size() * sizeof(glm::vec2));
+    //        vaQuadAndBackground.UpdateBuffer(1, localBatch.batchedTexCoords.data(), localBatch.batchedTexCoords.size() * sizeof(glm::vec2));
+    //        vaQuadAndBackground.UpdateBuffer(2, localBatch.batchedTexIndices.data(), localBatch.batchedTexIndices.size() * sizeof(float));
+
+    //        // Draw the quad and background for current batch
+    //        Logger::GetInstance().Log(LogLevel::Debug, "Drawing batch...");
+    //        renderer.Draw(vaQuadAndBackground, ibQuad, shader);
+    //    }
+
+    //    // Unbind textures, index buffer, vertex arrays, and shader
+    //    textures[batch.textureClass].Unbind();
+    //    ibQuad.Unbind();
+    //    vaQuadAndBackground.Unbind();
+    //    shader.Unbind();
+
+    //    // Clear the batches after rendering
+    //    batches.clear();
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Batched data rendering complete.");
+    //}
+    
+    /*void GraphicsSystem::SetMaxBatchSize(int maxSize)
+    {
+        MAX_BATCH_SIZE = maxSize;
+    }*/
+
+    //Render Background
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
         try {
@@ -352,6 +550,16 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Render a textured entity.
+     *
+     * This function renders a textured entity with the specified MVP matrix and alternates
+     * between two textures based on time.
+     *
+     * \param mvpMatrix The Model-View-Projection matrix for rendering.
+     */
+   // void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix)
+
     void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
     {
         shader.Bind();
@@ -381,7 +589,7 @@ namespace Engine
             // You might want to add an else case to handle the situation where textureVector is empty
 
              //If Sprite present
-            if ((texture->textureKey.subIndex == 1) && entity->HasComponent(ComponentType::Sprite))
+            if ((texture->textureKey.subIndex > 0) && entity->HasComponent(ComponentType::Sprite))
             {
                 // Calculate deltaTime (time since the last frame)
                 static double lastTime = glfwGetTime();
@@ -390,76 +598,6 @@ namespace Engine
                 lastTime = currentTime;
                 float frameRate = 10.0f;
                 float horizontalFrames = 6.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
-
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
-            }
-            else if ((texture->textureKey.subIndex  == 2 ) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 10.0f;
-                float horizontalFrames = 10.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
-
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
-            }
-            else if ((texture->textureKey.subIndex == 3) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 10.0f;
-                float horizontalFrames = 5.0f; // Number of horizontal frames
                 float verticalFrames = 1.0f; // Number of vertical frames
                 //float Length = 1536.0f; // length of sprite sheet
                 Anim_Mode playMode = Anim_Mode::LOOP;
@@ -496,26 +634,61 @@ namespace Engine
             }
         }       
         shader.Bind();
-              
+        
+        //If Sprite present
+        if (texture != nullptr) {
+            if ((texture->textureKey.subIndex > 0) && entity->HasComponent(ComponentType::Sprite))
+            {
+                // Calculate deltaTime (time since the last frame)
+                static double lastTime = glfwGetTime();
+                double currentTime = glfwGetTime();
+                double deltaTime = currentTime - lastTime;
+                lastTime = currentTime;
+                float frameRate = 10.0f;
+                float horizontalFrames = 6.0f; // Number of horizontal frames
+                float verticalFrames = 1.0f; // Number of vertical frames
+                //float Length = 1536.0f; // length of sprite sheet
+                Anim_Mode playMode = Anim_Mode::LOOP;
+
+                // Create a static animation object if not created already
+                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                // Play the animation
+                animation.Play();
+                // Update the animation with deltaTime
+                animation.Update(static_cast<float>(deltaTime));
+                // Get the current frame index
+                int currentFrame = animation.GetCurrentFrame();
+
+                // Calculate the texture offset based on the current frame
+                float frameWidth = 1.0f / horizontalFrames;
+                float frameHeight = 1.0f / verticalFrames;
+                float texCoordX = currentFrame * frameWidth;
+                //float texCoordY = currentRow * frameHeight;
+
+                // Set the texture offset in the shader
+                shader.SetUniform1f("texCoordX", texCoordX);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                shader.SetUniform1f("u_FrameWidth", frameWidth);
+                shader.SetUniform1f("u_FrameHeight", frameHeight);
+                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+            }
+
+            else //render as static
+            {
+                textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
+                shader.SetUniform1f("texCoordX", 0.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
+                shader.SetUniform1f("u_FrameWidth", 1.0f);
+                shader.SetUniform1f("u_FrameHeight", 1.0f);
+            }
+        }
         glm::mat4 result;
         if (useEditorCamera) {
-            result =  m_EditorCamera.GetViewProjectionMatrix() * mvpMatrix;
+            result = mvpMatrix * m_EditorCamera.GetViewMatrix();
         }
         else {
-            result =  m_Camera.GetViewProjectionMatrix() * mvpMatrix;
+            result = mvpMatrix * m_Camera.GetViewMatrix();
         }
-
-        /*
-        // Extract translation part (last column) of the MVP matrix
-        glm::vec4 transformedPosition = result[3];
-
-        std::cout << "Entity: " << static_cast<int>(entity->GetID()) << std::endl;
-        // Print the transformed coordinates
-        std::cout << "Transformed Coordinates: (" << transformedPosition.x << ", "
-            << transformedPosition.y << ", "
-            << transformedPosition.z << ")\n";
-        */
-        
         shader.SetUniformMat4f("u_MVP", result);
 
         va.Bind();
@@ -528,6 +701,13 @@ namespace Engine
         shader.Unbind();
     }
 
+    /*!
+     * \brief Render lines.
+     *
+     * This function renders lines with the specified MVP matrix.
+     *
+     * \param mvpMatrix The Model-View-Projection matrix for rendering.
+     */
     void GraphicsSystem::RenderLines(const glm::mat4& mvpMatrix)
     {
         try {
@@ -550,6 +730,15 @@ namespace Engine
         }
     }
 
+    /*!
+   * \brief Render a single line.
+   *
+   * This function renders a single line with the specified MVP matrix, start, and end positions.
+   *
+   * \param mvpMatrix The Model-View-Projection matrix for rendering.
+   * \param lineStart The starting position of the line.
+   * \param lineEnd The ending position of the line.
+   */
     void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
     {
         try {
@@ -584,6 +773,13 @@ namespace Engine
         }
     }
 
+    /*!
+    * \brief Render a single colored square.
+    *
+    * This function renders a single colored square with the specified MVP matrix.
+    *
+    * \param mvpMatrix The Model-View-Projection matrix for rendering.
+    */
     void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
     {
         try {
@@ -611,13 +807,21 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Update the GraphicsSystem.
+     *
+     * This function updates the GraphicsSystem by rendering entities and handling
+     * user input for toggling rendering modes.
+     *
+     * \param entities A pointer to a map of entities.
+     */
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-        //int width, height;
-        //glfwGetWindowSize(Window, &width, &height);   
-        //UpdateViewport(width, height);
-        renderer.Clear();    
-   
+        int width, height;
+        glfwGetWindowSize(Window, &width, &height);
+        UpdateViewport(width, height);
+       renderer.Clear();
+
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
@@ -662,7 +866,7 @@ namespace Engine
 
                     // Apply transformations from UpdateTransformations
                     glm::mat4 modelA = SetupModelMatrix(transA, rotationA, localScale);
-                    
+                    glm::mat4 mvpA = proj * view * modelA;
                     // glm::mat4 mvpA = proj* m_Camera.GetViewProjectionMatrix()  * modelA;
 
                     // Get the current state of the 'P' key
@@ -673,28 +877,28 @@ namespace Engine
                         TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
                         // Check if there's a change in the 'P' key state
-                        //if (currentPState && !previousPState)
-                        //{
-                        //    // Toggle the rendering mode
-                        //    ToggleRenderMode();
-                        //}
+                        if (currentPState && !previousPState)
+                        {
+                            // Toggle the rendering mode
+                            ToggleRenderMode();
+                        }
 
-                        //// Update the previous 'P' key state
-                        //previousPState = currentPState;
+                        // Update the previous 'P' key state
+                        previousPState = currentPState;
 
                         if (!renderTexturedSquare)
                         {
                             if(texture->textureKey.mainIndex == Background)
-                                RenderBackground(modelA);
+                                RenderBackground(mvpA);
                             else {
-                                RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
+                                RenderTexturedEntity(mvpA, entity); // Here, we pass the specific entity
 
-                                RenderLines(modelA);
+                                RenderLines(mvpA); 
                             }
                         }
                         else
                         {
-                            DrawColoredSquare(modelA);
+                            DrawColoredSquare(mvpA);
                         }
                     }
 
@@ -718,30 +922,14 @@ namespace Engine
         }
 
         //font.RenderText(shader, "Sample", -0.9f, -0.9f, 0.001f, glm::vec3(0.0f, 0.0f, 0.0f));
-        
+        /*
         font.SwitchFont(1);
-        //font.RenderText(shader, "Samurai Cat",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        //font.SwitchFont(2);
-        //font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        
-        // Render text if cat placement is wrong
-        if (!(isStartingPoint)) 
-        {
-            font.RenderText(shader, "Place unit at the start of the path.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        }
-        // Render text if game is paused
-        if (isGamePaused)
-        {
-            font.RenderText(shader, "Game is paused.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        }
-        // Render text if in settings
-        if (inSettings)
-        {
-            font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        }
-
+        font.RenderText(shader, "Samurai Cat",  0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
+        font.SwitchFont(2);
+        font.RenderText(shader, "Hello World", 0.f, 0.6f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
+        */
         // Restore the previous shader state
-        shader.SetActiveShaderSet(previousShaderSet);
+        //shader.SetActiveShaderSet(previousShaderSet);
 
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
@@ -767,11 +955,26 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Updates the viewport and projection matrix.
+     *
+     * This function updates the OpenGL viewport to match the specified width and height.
+     * It also updates the projection matrix to maintain the correct aspect ratio.
+     *
+     * \param width The width of the viewport.
+     * \param height The height of the viewport.
+     */
     void GraphicsSystem::UpdateViewport(int width, int height)
     {
         glViewport(0, 0, width, height);
+        proj = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
     }
 
+    /*!
+     * \brief Toggle the rendering mode.
+     *
+     * This function toggles between textured and plain squares for rendering.
+     */
     void GraphicsSystem::ToggleRenderMode()
     {
         try {
@@ -788,6 +991,16 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Toggles between two shader sets.
+     *
+     * This function toggles between Shader Set 1 and Shader Set 2. If the current active shader set
+     * is Shader Set 1, it switches to Shader Set 2, and vice versa. After toggling, it attempts to
+     * reinitialize the shaders based on the new active set.
+     *
+     * \note This function assumes that the shader object is properly initialized before calling it.
+     *
+     */
     void GraphicsSystem::ToggleShaderSet()
     {
         try
@@ -808,18 +1021,30 @@ namespace Engine
         }
     }
 
+    /*!
+     * \brief Setup the model matrix for an entity.
+     *
+     * This function sets up the model matrix for an entity based on translation,
+     * rotation, and scale parameters.
+     *
+     * \param translation The translation vector.
+     * \param rotationAngle The rotation angle in radians.
+     * \param scale The scale vector.
+     *
+     * \return The model matrix for the entity.
+     */
     glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
         //int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
         // Calculate the position for your object at the center of the screen
-        //glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
+        glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
 
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
 
         // Translate the object to the calculated center position
-        //model = glm::translate(model, MobjectPosition);
+        model = glm::translate(model, MobjectPosition);
 
         // Apply the provided translation, scale, and rotation
         model = glm::translate(model, translation);

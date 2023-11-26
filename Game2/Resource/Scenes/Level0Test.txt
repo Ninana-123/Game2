@@ -136,12 +136,6 @@ CollisionVel: -120 255
 Texture
 MainIndex: 4
 SubIndex: 0
-Pathfinding
-startX: 0
-startY: 0
-goalX: 0
-goalY: 0
-initialized: 0
 EndEntity
 Transform
 Position: -275 -35
@@ -162,12 +156,6 @@ CollisionVel: -275 -35
 Texture
 MainIndex: 4
 SubIndex: 0
-Pathfinding
-startX: 0
-startY: 0
-goalX: 0
-goalY: 0
-initialized: 0
 EndEntity
 Transform
 Position: 345 75
@@ -183,7 +171,7 @@ MinY: 75
 MaxX: 345
 MaxY: 75
 Radius: 0
-Layer: 6
+Layer: 0
 CollisionVel: 345 75
 Texture
 MainIndex: 5

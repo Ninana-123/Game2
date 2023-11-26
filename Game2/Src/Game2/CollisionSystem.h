@@ -14,6 +14,7 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
+
 #pragma once
 
 #ifndef CSD1130_COLLISION_H_
@@ -23,13 +24,22 @@ Technology is prohibited.
 #include "Vector2d.h"
 #include "EngineTypes.h"
 
-#endif 
 
-// Global Variable to check for button Collision
+
+
+/**************************************************************************/
+/*!
+
+*/
+/**************************************************************************/
+
+
+#endif // CSD1130_COLLISION_H_
+
+// Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
-extern bool isStartingPoint;
 
 extern bool isShooting;
 

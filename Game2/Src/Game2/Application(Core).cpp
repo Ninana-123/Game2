@@ -12,7 +12,8 @@ Copyright (C) 2023 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
-/******************************************************************************/
+ /******************************************************************************/
+//Includes
 #include "pch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -36,7 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Arrow.h"
 #include "WindowsWindow.h"
 #include "fmod.hpp"
-#include "Input.h"
+
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -45,8 +46,6 @@ double loopTime = 0.0;  // Definition of loopTime
 const double fixedDeltaTime = 1.0 / 60.0;//user defined 
 double accumulatedTime = 0.0;//one time definition
 int currentNumberOfSteps = 0;
-int e_Width = 0;
-int e_Height = 0;
 double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false;
@@ -55,6 +54,7 @@ std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
+
 
 namespace Engine
 {
@@ -76,7 +76,7 @@ namespace Engine
     std::shared_ptr<ShootingSystem> shootingSystem = nullptr;
 
     // Entity-related instances and properties
-    GraphicsSystem* graphicsSystem;
+    GraphicsSystem graphicsSystem;
     std::shared_ptr<EntityManager> EM;
     Engine::PrefabManager PM;
     EntityID cloneEntity;
@@ -93,15 +93,26 @@ namespace Engine
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
-
+    /*!**********************************************************************
+    \brief
+    Constructor for the Application class
+    *************************************************************************/
     Application::Application()
     {
     }   
-
+    /*!**********************************************************************
+    \brief
+    Destructor for the Application class
+    *************************************************************************/
     Application::~Application()
     {
     }
-
+    /*!**********************************************************************
+    \brief
+    Initialize the application
+    This function initializes various components and systems needed 
+    for the application to run.
+    *************************************************************************/
     void Application::Initialize()
     {
         // Initialize GLFW
@@ -117,8 +128,6 @@ namespace Engine
             return; // Handle the window creation error
         }
      
-        e_Width = m_Window->GetWidth();
-        e_Height = m_Window->GetHeight();
 
         // Set event callback
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
@@ -137,17 +146,19 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 2; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
-   
+
+        //Attaching Input Handler to EM
+        InputHandler.SetEntityManager(EM);
+
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
-        graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
@@ -190,29 +201,27 @@ namespace Engine
         shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM);
     }
 
+    /*!**********************************************************************
+    \brief
+    Event handler for processing events
+    This function handles incoming events and dispatches them accordingly.
+    *************************************************************************/
     void Application::OnEvent(Event& e)
     {
         // Event handler
         EventDispatcher dispatcher(e);
        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-       dispatcher.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
        //logger.Log(Engine::LogLevel::Event, e.ToString());
        m_ImGuiWrapper->OnEvent(e);
-
-       if (e.GetEventType() == EventType::KeyPressed)
-       {
-           KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-
-           // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
-           if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
-               keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
-               keyPressedEvent.GetKeyCode() == KEY_DELETE)
-           {
-               window.MinimizeWindow();
-           }
-       }
     }
 
+
+    /*!**********************************************************************
+    \brief
+    Run the application
+    This function runs the main loop of the application, handling input,
+    updating systems, and rendering.
+    *************************************************************************/
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
@@ -259,7 +268,7 @@ namespace Engine
             while (accumulatedTime >= fixedDeltaTime) {
 
                 accumulatedTime -= fixedDeltaTime;
-                currentNumberOfSteps++;
+                //currentNumberOfSteps++;
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
@@ -347,11 +356,14 @@ namespace Engine
                     nextPositionY = lastPositionY + 1;
                 }
 
+                // Friction
+                const float friction = 0.1f;
+
                 //if (collisionTest->mColliding) {
                 //    std::cout << "Hello" << std::endl;
                 //}
 
-                if (collisionTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
+                if (physicsTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
 
                     if (collisionTest->isColliding) {
@@ -375,9 +387,9 @@ namespace Engine
                         lastPositionY += transformation;
                         collisionTest->collisionVel.y += transformation;
                         transformTest->position.y = lastPositionY;
-                        //if (physicsTest->velocity.y <= 0.0f) {
-                        //    physicsTest->velocity.y = 1.0f - friction;
-                        //}
+                        if (physicsTest->velocity.y <= 0.0f) {
+                            physicsTest->velocity.y = 1.0f - friction;
+                        }
                         lastKeyPressed = 1;
                     }
 
@@ -386,9 +398,9 @@ namespace Engine
                         lastPositionY -= transformation;
                         collisionTest->collisionVel.y -= transformation;
                         transformTest->position.y = lastPositionY;
-                        //if (physicsTest->velocity.y >= -0.0f) {
-                        //    physicsTest->velocity.y = -1.0f + friction;
-                        //}
+                        if (physicsTest->velocity.y >= -0.0f) {
+                            physicsTest->velocity.y = -1.0f + friction;
+                        }
                         lastKeyPressed = 2;
                     }
 
@@ -397,9 +409,9 @@ namespace Engine
                         lastPositionX -= transformation;
                         collisionTest->collisionVel.x -= transformation;
                         transformTest->position.x = lastPositionX;
-                        //if (physicsTest->velocity.x >= -0.0f) {
-                        //    physicsTest->velocity.x = -1.0f + friction;
-                        //}
+                        if (physicsTest->velocity.x >= -0.0f) {
+                            physicsTest->velocity.x = -1.0f + friction;
+                        }
                         lastKeyPressed = 3;
                     }
 
@@ -408,9 +420,9 @@ namespace Engine
                         lastPositionX += transformation;
                         collisionTest->collisionVel.x += transformation;
                         transformTest->position.x = lastPositionX;
-                        //if (physicsTest->velocity.x <= 0.0f) {
-                        //    physicsTest->velocity.x = 1.0f - friction;
-                        //}
+                        if (physicsTest->velocity.x <= 0.0f) {
+                            physicsTest->velocity.x = 1.0f - friction;
+                        }
                         lastKeyPressed = 4;
                     }
 
@@ -462,15 +474,17 @@ namespace Engine
                             scalingDown = true; // Continue scaling down
                         }
                     }
-                    //else
-                    //{
-                    //    physicsTest->velocity.x = 0.0f;
-                    //    physicsTest->velocity.y = 0.0f;
-                    //}
+                    else
+                    {
+                        physicsTest->velocity.x = 0.0f;
+                        physicsTest->velocity.y = 0.0f;
+                    }
+
                 }
 
-            }         
-            
+            }
+
+
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
@@ -493,9 +507,19 @@ namespace Engine
                 *crashPointer = 42; // This will cause a read access violation, simulating a crash
             }
             */
-        }           
+        }
+            
     }
-
+    /*!**********************************************************************
+    \brief
+    Handles the window close event.
+    This function handles the event triggered when the application's
+    window is closed.
+    \param[in] e 
+    WindowCloseEvent object containing event information.
+    \return
+    True if the window close event was handled successfully, false otherwise.
+    *************************************************************************/
     bool Application::OnWindowClose(WindowCloseEvent& e)
     {
         UNREFERENCED_PARAMETER(e);
@@ -504,26 +528,24 @@ namespace Engine
         m_Running = false;
         return true;
     }
-
-    bool Application::OnWindowResize(WindowResizeEvent& e)
+    /*!**********************************************************************
+    \brief
+    Handles the window resize event.
+    This function handles the event triggered when the application's
+    window is resized.
+    \param[in] e
+    WindowResizeEvent object containing event information.
+    *************************************************************************/
+    void Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
-        float previousWidth = e_Width;
-        float previousHeight = e_Height;
-        int newWidth = e.GetWidth();
-        int newHeight = e.GetHeight();
-        //float scaleWidth = (newWidth / previousWidth);
-        //float scaleHeight = (newHeight / previousHeight);
-        //VECTORMATH::Vector2D scale = {  scaleWidth, scaleHeight };
 
-        graphicsSystem->UpdateViewport(newWidth, newHeight);  
-
-        //std::cout << scaleWidth << ", " << scaleHeight << std::endl;
-        //std::cout << newWidth << ", " << newHeight << std::endl;
-
-        return true;
+        graphicsSystem.UpdateViewport(e.GetWidth(), e.GetHeight());
     }
-
+    /*!**********************************************************************
+    \brief
+    Updates the delta time and calculates frames per second (FPS).
+    *************************************************************************/
     void Application::UpdateDeltaTime()
     {
         static int frameCount = 0;
@@ -540,7 +562,10 @@ namespace Engine
             prevTime = currentTime;
         }
     }
-
+    /*!**********************************************************************
+    \brief
+    Updates the window title to display FPS.
+    *************************************************************************/
     void Application::UpdateWindowTitle() 
     {
         // Update the window title with FPS
@@ -549,5 +574,6 @@ namespace Engine
         std::string fps_str = ss.str();
         std::string title_str = windowProps.Title +" | FPS: " + fps_str;
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
-    }   
+    }
+    
 }

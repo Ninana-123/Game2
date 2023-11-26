@@ -79,9 +79,6 @@ namespace VECTORMATH
 		/**************************************************************************/
 		Vector2D& operator -= (const Vector2D& rhs);
 
-
-		Vector2D& operator *= (const Vector2D& rhs);
-
 		/**************************************************************************/
 		/*!
 		\brief Multiplies a Vector2D object by a scalar and modifies the calling vector.

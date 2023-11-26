@@ -23,28 +23,11 @@ namespace Engine
 	class EditorCamera : public Camera
 	{
 	public:
-		/*!**********************************************************************
-		\brief
-		Constructor for the EditorCamera class.
-
-		\param left
-		The left boundary of the orthographic projection.
-
-		\param right
-		The right boundary of the orthographic projection.
-
-		\param bottom
-		The bottom boundary of the orthographic projection.
-
-		\param top
-		The top boundary of the orthographic projection.
-		*************************************************************************/
 		EditorCamera(float left, float right, float bottom, float top)
 			: Camera(left, right, bottom, top)
 		{
 			// You can initialize any additional parameters specific to the EditorCamera here.
 		}
-
 		/*
 		void Zoom(float delta)
 		{
@@ -59,13 +42,13 @@ namespace Engine
 			RecalculateViewMatrix();
 		}
 		*/
-
 		/*!*********************************************************************
-		\brief
-		Applies a rotation to the camera's current orientation.
+			\brief
+			Applies a rotation to the camera's current orientation.
 
-		\param delta
-		The amount by which to change the camera's rotation.
+			\param delta
+			The amount by which to change the camera's rotation.
+
 		*************************************************************************/
 		void Rotate(float delta)
 		{
@@ -77,12 +60,14 @@ namespace Engine
 			RecalculateViewMatrix();
 		}
 
-		/*!*********************************************************************
-		\brief
-		Moves the camera's position based on a 2D translation vector.
 
-		\param translation
-		The glm::vec2 translation vector indicating how far to move the camera along the x and y axes.
+		/*!*********************************************************************
+			\brief
+			Moves the camera's position based on a 2D translation vector.
+
+			\param translation
+			The glm::vec2 translation vector indicating how far to move the camera along the x and y axes.
+
 		*************************************************************************/
 		void Pan(const glm::vec2& translation)
 		{
@@ -90,22 +75,22 @@ namespace Engine
 			m_Position.y += translation.y;
 			RecalculateViewMatrix();
 		}
-
 		/*!*********************************************************************
-		\brief
-		Resets the camera's projection and view matrices to default values.
+			\brief
+			Resets the camera's projection and view matrices to default values.
 
-		\param left
-		The left boundary of the orthographic projection.
+			\param left
+			The left boundary of the orthographic projection.
 
-		\param right
-		The right boundary of the orthographic projection.
+			\param right
+			The right boundary of the orthographic projection.
 
-		\param bottom
-		The bottom boundary of the orthographic projection.
+			\param bottom
+			The bottom boundary of the orthographic projection.
 
-		\param top
-		The top boundary of the orthographic projection.
+			\param top
+			The top boundary of the orthographic projection.
+
 		*************************************************************************/
 		void ResetCameraPos(float left, float right, float bottom, float top) {
 			m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
@@ -122,14 +107,14 @@ namespace Engine
 		}
 
 		/*!*********************************************************************
-		\brief
-		Updates the camera's position based on user input and specific editor controls.
+			\brief
+			Updates the camera's position based on user input and specific editor controls.
+			\param input
+			The Input object containing the current state of user inputs.
 
-		\param input
-		The Input object containing the current state of user inputs.
+			\param CameraSpeed
+			The speed at which the camera should move or zoom.
 
-		\param CameraSpeed
-		The speed at which the camera should move or zoom.
 		**************************************************************************/
 		void UpdatePosition(const Input& input, float CameraSpeed) override
 		{

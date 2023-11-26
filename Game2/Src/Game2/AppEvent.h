@@ -22,123 +22,40 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine {
 
-    // Event for window resize
-    class GAME2_API WindowResizeEvent : public Event {
-    public:
-        /*!
-        ***********************************************************************
-        \brief
-        Constructor for the WindowResizeEvent class.
-        \param[in] width
-        The new width of the window.
-        \param[in] height
-        The new height of the window.
-        ***********************************************************************/
-        WindowResizeEvent(unsigned int width, unsigned int height) 
-            : Event(), m_Width(width), m_Height(height) {
-            LogEventInfo(); // Log event information when the event is created
-        }
+	// Event for window resize
+	class GAME2_API WindowResizeEvent : public Event {
+	public:
+		WindowResizeEvent(unsigned int width, unsigned int height) : Event(), m_Width(width), m_Height(height) {
+			LogEventInfo(); // Log event information when the event is created
+		}
+		inline unsigned int GetWidth() const { return m_Width; }
+		inline unsigned int GetHeight() const { return m_Height; }
+		void LogEventInfo() const
+		{
+			Logger::GetInstance().Log(LogLevel::Event, "Event Type: " + ToString());
+		}
+		std::string ToString() const override {
+			std::stringstream ss;
+			ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
+			return ss.str();
+		}
+		EVENT_CLASS_TYPE(WindowResize) // Set the event type
+			EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
 
-        /*!
-        ***********************************************************************
-        \brief
-        Get the new width of the window.
-        \return
-        The new width of the window.
-        ***********************************************************************/
-        inline unsigned int GetWidth() const { return m_Width; }
+	private:
+		unsigned int m_Width, m_Height;
+	};
 
-        /*!
-        ***********************************************************************
-        \brief
-        Get the new height of the window.
-        \return
-        The new height of the window.
-        ***********************************************************************/
-        inline unsigned int GetHeight() const { return m_Height; }
-
-        /*!
-        ***********************************************************************
-        \brief
-        Log information about the window resize event.
-        ***********************************************************************/
-        void LogEventInfo() const
-        {
-            Logger::GetInstance().Log(LogLevel::Event, "Event Type: " + ToString());
-        }
-
-        /*!
-        ***********************************************************************
-        \brief
-        Convert the event to a string for logging purposes.
-        \return
-        A string representation of the event.
-        ***********************************************************************/
-        std::string ToString() const override {
-            std::stringstream ss;
-            ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
-            return ss.str();
-        }
-
-        /*!
-        ***********************************************************************
-        \brief
-        Get the type of the event.
-        \return
-        The type of the event.
-        ***********************************************************************/
-        EVENT_CLASS_TYPE(WindowResize) // Set the event type
-
-            /*!
-            ***********************************************************************
-            \brief
-            Get the category of the event.
-            \return
-            The category of the event.
-            ***********************************************************************/
-            EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
-
-    private:
-        unsigned int m_Width, m_Height;
-    };
-
-    // Event for window close
-    class GAME2_API WindowCloseEvent : public Event {
-    public:
-        /*!
-        ***********************************************************************
-        \brief
-        Constructor for the WindowCloseEvent class.
-        ***********************************************************************/
-        WindowCloseEvent() : Event() {}
-
-        /*!
-        ***********************************************************************
-        \brief
-        Log information about the window close event (to be implemented).
-        ***********************************************************************/
-        void LogEventInfo() const
-        {
-            // Log event information (to be implemented)
-            Logger::GetInstance().Log(LogLevel::Event, "Event Type: " + ToString());
-        }
-
-        /*!
-        ***********************************************************************
-        \brief
-        Get the type of the event.
-        \return
-        The type of the event.
-        ***********************************************************************/
-        EVENT_CLASS_TYPE(WindowClose) // Set the event type
-
-            /*!
-            ***********************************************************************
-            \brief
-            Get the category of the event.
-            \return
-            The category of the event.
-            ***********************************************************************/
-            EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
-    };
+	// Event for window close
+	class GAME2_API WindowCloseEvent : public Event {
+	public:
+		WindowCloseEvent() : Event() {}
+		void LogEventInfo() const
+		{
+			// Log event information (to be implemented)
+			Logger::GetInstance().Log(LogLevel::Event, "Event Type: " + ToString());
+		}
+		EVENT_CLASS_TYPE(WindowClose) // Set the event type
+			EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
+	};
 }

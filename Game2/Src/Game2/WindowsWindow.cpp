@@ -2,7 +2,6 @@
 /*!
 \file		WindowsWindow.cpp
 \author 	Liu Xujie
-\co			Kwok Jun Lin Wayne (20%)
 \par    	email: l.xujie@digipen.edu
 \date   	29/09/2923
 \brief		Implementation of the WindowsWindow class, derived from the
@@ -20,7 +19,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AudioEngine.h"
 
 
-//bool isWindowmin = false;
+bool isWindowmin = false;
 
 namespace Engine {
 	// Static flag to check if GLFW is initialized
@@ -53,7 +52,12 @@ namespace Engine {
 		return new WindowsWindow(props);
 	}
 
-	// Constructor for the WindowsWindow class
+	/*!**********************************************************************
+	\brief
+	Constructor for the WindowsWindow class.
+	\param[in] props
+	The WindowConfig containing the window properties.
+	*************************************************************************/
 	WindowsWindow::WindowsWindow(const WindowConfig& props) {
 		Init(props);
 	}
@@ -63,7 +67,6 @@ namespace Engine {
 	Destructor for the WindowsWindow class.
 	*************************************************************************/
 	WindowsWindow::~WindowsWindow() {
-		// Perform any necessary cleanup
 	}
 
 	/*!**********************************************************************
@@ -122,7 +125,6 @@ namespace Engine {
 
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
-		
 			});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
@@ -263,31 +265,4 @@ namespace Engine {
 			//isWindowmin = false;
 		}
 	}
-
-	// Minimize the window
-	void WindowsWindow::MinimizeWindow() {
-		if (m_Window) {
-			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
-
-			// Pause audio before minimizing
-			audio.pauseAllAudio();
-
-			// Iconify (minimize) the GLFW window
-			glfwIconifyWindow(m_Window);
-		}
-	}
-
-	// Restore the window
-	void WindowsWindow::RestoreWindow() {
-		if (m_Window) {
-			// Log information
-			Logger::GetInstance().Log(LogLevel::Info, "Restoring Window");
-
-			// Resume audio after restoring
-			audio.resumeAllAudio();
-
-			// Restore the GLFW window
-			glfwRestoreWindow(m_Window);
-		}
-	}
-} // namespace Engine
+}

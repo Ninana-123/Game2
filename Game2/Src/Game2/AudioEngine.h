@@ -2,7 +2,6 @@
 /*!
 \file		AudioEngine.h
 \author 	Tay Jun Feng Vance
-\co         Wayne Kwok Jun Lin (10%)
 \par    	email: junfengvance.t@digipen.edu
 \date       29/09/2023
 \brief		This file contains the declaration of all functions related to the FMOD
@@ -18,7 +17,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #pragma once
 
-#include "SoundInfo.h"
 #include <fmod_studio.hpp>
 #include <fmod.hpp>
 #include <iostream>
@@ -26,6 +24,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <vector>
 #include <list>
 #include <map>
+#include "SoundInfo.h"
+
+
 
     /**
      * Error Handling Function for FMOD Errors
@@ -110,12 +111,6 @@ public:
     void updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
 
 
-    /*
-     * Map which stores the current playback channels of any playing sound loop
-     * Key is the SoundInfo's uniqueKey field.
-     * Value is the FMOD::Channel* the FMOD::Sound* is playing back on.
-     */
-    std::map<std::string, FMOD::Channel*> loopsPlaying;
 
     /**
     * Updates the position of a looping 3D sound that has already been loaded and is playing back.
@@ -293,3 +288,4 @@ private:
      */
     std::map<std::string, FMOD::Studio::EventInstance*> eventInstances;
 };
+

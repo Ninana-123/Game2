@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		Font.cpp
+\file		font.cpp
 \author 	Teo Sheen Yeoh
 \par    	email: t.sheenyeoh@digipen.edu
 \co         Tay Jun Feng Vance
@@ -14,13 +14,18 @@
             written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+
 #include "pch.h"
 #include "Font.h"
 
 
 namespace Engine
 {
-
+    /**
+    * @brief Initializes the font rendering system.
+    *
+    * This function initializes OpenGL state, compiles shaders, and sets up FreeType library.
+    */
     void font::Initialize() {
       
 
@@ -37,13 +42,17 @@ namespace Engine
         shader.Initialize();
         shader.Bind();
 
+
+
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(fscreenWidth), 0.0f, static_cast<float>(fscreenHeight));
         glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
 
         //int displayWidth, displayHeight;
         //glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
         //glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(displayWidth), 0.0f, static_cast<float>(displayHeight));
         //glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
 
         // FreeType
         if (FT_Init_FreeType(&ft))
@@ -72,7 +81,8 @@ namespace Engine
         {
             //std::cout << "Font file path: " << pathName << std::endl;
         }
-  
+
+    
         // Load first 128 characters of ASCII set
         if (FT_New_Face(ft, pathName.c_str(), 0, &face1)) {
             exit(-1);
@@ -102,10 +112,16 @@ namespace Engine
         // Now you can call MakeDisplayList to load glyphs
         MakeDisplayList(pathName);
 
+
+
         shader.Unbind();
     }
 
-
+    /**
+     * @brief Loads the glyphs of the specified font and creates display lists for rendering text.
+     *
+     * @param pathname Path to the font file.
+     */
     void font::MakeDisplayList(const std::string pathname)
     {
         LoadGlyphsForFace(face1);
@@ -195,6 +211,17 @@ namespace Engine
         FT_Done_Face(face);
     }
 
+
+    /**
+    * @brief Renders the specified text at the given position, scale, and color using the provided shader.
+    *
+    * @param shader Shader program to use for rendering.
+    * @param text Text to render.
+    * @param x X-coordinate of the starting position.
+    * @param y Y-coordinate of the starting position.
+    * @param scale Scale factor for the text.
+    * @param color Color of the text.
+    */
     void font::RenderText(Shader& shader, std::string text, float x, float y, float scale, glm::vec3 color)
     {
         // activate corresponding render state    
@@ -267,6 +294,13 @@ namespace Engine
         shader.Unbind();
     }
 
+
+
+    /**
+    * @brief Cleans up the FreeType library resources.
+    *
+    * This function should be called to release resources acquired by FreeType library.
+    */
     void font::CleanupFreeType() 
     {
         FT_Done_Face(face1);

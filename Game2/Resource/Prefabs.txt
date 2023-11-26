@@ -16,24 +16,14 @@ MaxY: 0
 Radius: 0
 Layer: 4
 CollisionVel: 0 0
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex: 0
-playing: 0
-playmode: 0
 Texture
 MainIndex: 1
 SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: 0
-goalY: 0
+goalX: -200
+goalY: -200
 initialized: 0
 EndPrefab
 Archer
@@ -53,24 +43,14 @@ MaxY: 0
 Radius: 0
 Layer: 4
 CollisionVel: 0 0
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex: 0
-playing: 0
-playmode: 0
 Texture
 MainIndex: 3
 SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: 0
-goalY: 0
+goalX: 200
+goalY: 200
 initialized: 0
 EndPrefab
 Tank
@@ -90,23 +70,13 @@ MaxY: 0
 Radius: 0
 Layer: 4
 CollisionVel: 0 0
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex: 0
-playing: 0
-playmode: 0
 Texture
 MainIndex: 2
 SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
-goalX: 0
+goalX: 300
 goalY: 0
 initialized: 0
 EndPrefab

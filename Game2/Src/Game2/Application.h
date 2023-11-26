@@ -18,7 +18,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AppEvent.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
-#include "WindowsWindow.h"
 
 extern double loopTime;
 extern const double fixedDeltaTime;
@@ -27,8 +26,7 @@ extern bool isPaused;
 extern bool stepOneFrame;
 extern double dt;
 extern std::string initScene;
-extern int e_Width;
-extern int e_Height;
+
 
 namespace Engine
 {
@@ -36,44 +34,21 @@ namespace Engine
     class GAME2_API Application
     {
     public:
-
-        /*!**********************************************************************
-        \brief
-        Constructor for the Application class
-        *************************************************************************/
+        // Constructor
         Application();
 
-        /*!**********************************************************************
-        \brief
-        Destructor for the Application class
-        *************************************************************************/
+        // Destructor
         virtual ~Application();
 
-        /*!**********************************************************************
-        \brief
-        Initialize the application
-        This function initializes various components and systems needed
-        for the application to run.
-        *************************************************************************/
         void Initialize();
 
-        /*!**********************************************************************
-        \brief
-        Run the application
-        This function runs the main loop of the application, handling input,
-        updating systems, and rendering.
-        *************************************************************************/
+        // Run the application
         void Run();
 
-        /*!**********************************************************************
-        \brief
-        Event handler for processing events
-        This function handles incoming events and dispatches them accordingly.
-        *************************************************************************/
+        // Event handler
         void OnEvent(Event& e);
 
-        // Window instance
-        WindowsWindow window;
+      
 
         // Get a reference to the application instance (Singleton pattern)
         static Application& Get()
@@ -82,63 +57,28 @@ namespace Engine
             return instance;
         }
 
-        /*!**********************************************************************
-        \brief
-        Updates the delta time and calculates frames per second (FPS).
-        *************************************************************************/
         void UpdateDeltaTime();
-
-        /*!**********************************************************************
-        \brief
-        Updates the window title to display FPS.
-        *************************************************************************/
         void UpdateWindowTitle();
 
-        // Asset manager instance
         std::shared_ptr<Engine::AssetManager> assetManager;
-
-        // Entity manager instance
         std::shared_ptr<Engine::EntityManager> EM;        
 
     private:
-
-        /*!**********************************************************************
-        \brief
-        Handles the window close event.
-        This function handles the event triggered when the application's
-        window is closed.
-        \param[in] e
-        WindowCloseEvent object containing event information.
-        \return
-        True if the window close event was handled successfully, false otherwise.
-        *************************************************************************/
+        // Handle the window close event
         bool OnWindowClose(WindowCloseEvent& e);
 
-        /*!**********************************************************************
-        \brief
-        Handles the window resize event.
-        This function handles the event triggered when the application's
-        window is resized.
-        \param[in] e
-        WindowResizeEvent object containing event information.
-        *************************************************************************/
-        bool OnWindowResize(WindowResizeEvent& e);
+        void OnWindowResize(WindowResizeEvent& e);
 
-        // Window instance 
+        // Window instance (ownership managed by a smart pointer)
         std::unique_ptr<Window> m_Window;
 
         // Flag indicating if the application is running
         bool m_Running = true;
-    
+
+        
     };
 
-    /*!
-    ***********************************************************************
-    \brief
-    Function to create an application instance.
-    \return
-    A pointer to the created Application instance.
-    ***********************************************************************/
+    // Function to create an application instance
     Application* CreateApplication();
 
 } // End of namespace Engine

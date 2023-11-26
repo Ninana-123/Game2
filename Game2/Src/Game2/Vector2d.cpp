@@ -96,13 +96,6 @@ namespace VECTORMATH {
         return *this;
     }
 
-    // Multiplies two Vector2D objects and modifies the calling vector.
-    Vector2D& Vector2D::operator *= (const Vector2D& rhs) {
-        x *= rhs.x;
-        y *= rhs.y;
-        return *this;
-    }
-
     // Multiplies a Vector2D object by a scalar and modifies the calling vector.
     Vector2D& Vector2D::operator*=(float rhs) {
         x *= rhs;

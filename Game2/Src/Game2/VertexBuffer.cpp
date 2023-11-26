@@ -16,6 +16,13 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "VertexBuffer.h"
 #include "Renderer.h"
 
+/*!
+ * \brief VertexBuffer constructor.
+ * \param data Pointer to the vertex data.
+ * \param size Size of the vertex data.
+ *
+ * This constructor generates a new OpenGL vertex buffer and stores the provided vertex data in it.
+ */
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
     //generate a new buffer and store its ID in m_RendererID
@@ -26,24 +33,47 @@ VertexBuffer::VertexBuffer(const void* data, unsigned int size)
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 }
 
+/*!
+ * \brief VertexBuffer destructor.
+ *
+ * This destructor frees up the OpenGL resources associated with the vertex buffer.
+ */
 VertexBuffer::~VertexBuffer()
 {
     //free up resources
     GLCall(glDeleteBuffers(1, &m_RendererID));
 }
 
+/*!
+ * \brief Set the data for the vertex buffer.
+ *
+ * This function binds the vertex buffer and sets its data with the specified data and size.
+ *
+ * \param data A pointer to the data to be copied into the buffer.
+ * \param size The size of the data in bytes.
+ */
 void VertexBuffer::SetData(const void* data, unsigned int size)
 {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 }
 
+/*!
+ * \brief Binds the vertex buffer for rendering.
+ *
+ * This function binds the vertex buffer for rendering, allowing it to be used in drawing operations.
+ */
 void VertexBuffer::Bind() const
 {
     //bind vertex buffer for rendering
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
 }
 
+/*!
+ * \brief Unbinds the vertex buffer to prevent accidental modification.
+ *
+ * This function unbinds the vertex buffer, preventing it from being accidentally modified during other OpenGL operations.
+ */
 void VertexBuffer::Unbind() const
 {
     //unbind vertex buffer to prevent accidental modification

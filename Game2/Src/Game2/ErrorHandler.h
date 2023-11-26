@@ -20,40 +20,14 @@ namespace Engine {
 
     class GAME2_API ErrorHandler {
     public:
-        /*!*********************************************************************
-        \brief
-        Sets up the default unhandled exception filter for the application.
-         **************************************************************************/
+        // Initialize the error handler
         static void Initialize();
 
-        /*!*********************************************************************
-        \brief
-        Translates exception codes into human - readable messages
-
-        \param exceptionCode
-        The exception code that was encountered.
-
-        \return
-        A string representing the human - readable message for the exception code.
-
-         **************************************************************************/
+        // Translates the exception code to a string description
         static std::string TranslateExceptionCode(DWORD exceptionCode);
 
     private:
-        /*!*********************************************************************
-        \brief
-        Custom exception handler that logs unhandled exceptions.
-
-        \param exceptionInfo
-        A pointer to an EXCEPTION_POINTERS structure that contains information
-        about the exception and the state of the processor at the time of the
-        exception.
-
-        \return
-        A status code.EXCEPTION_EXECUTE_HANDLER if successful, or an appropriate
-        error status code.
-
-          *************************************************************************/
+        // The actual exception handler function
         static LONG WINAPI ExceptionHandler(EXCEPTION_POINTERS* exceptionInfo);
     };
 

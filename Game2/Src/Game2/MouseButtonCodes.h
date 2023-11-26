@@ -30,7 +30,6 @@ namespace Engine {
 
     namespace Mouse {
 
-        // Mapping of mouse button codes to mouse button names
         const std::map<MouseCode, std::string> mouseMap = {
             {0, "Left Mouse Button"},
             {1, "Right Mouse Button"},
