@@ -504,7 +504,7 @@ namespace Engine
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
 
-				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable)
+				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
 				{
 					AABB aabb1;
 					Circle circle1;
@@ -594,11 +594,8 @@ namespace Engine
 												<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 
 										}
-									}
-
-										
+									}								
 								}
-
 							}
 						}
 					}
