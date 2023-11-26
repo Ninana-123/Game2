@@ -162,7 +162,7 @@ namespace Engine {
 	private:
 		std::shared_ptr<EntityManager> entityManager;
 		std::shared_ptr<ImGuiWrapper> ImGuiWrapper;
-		EntityID targetEntityID = -1;
+		EntityID targetEntityID = static_cast<EntityID>(-1);
 		bool isDragging;
 	};
 }

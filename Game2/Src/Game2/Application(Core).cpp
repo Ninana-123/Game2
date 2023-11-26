@@ -518,8 +518,8 @@ namespace Engine
     bool Application::OnWindowResize(WindowResizeEvent& e)
     {
         // Update the viewport and projection matrix
-        float previousWidth = e_Width;
-        float previousHeight = e_Height;
+        //float previousWidth = e_Width;
+        //float previousHeight = e_Height;
         int newWidth = e.GetWidth();
         int newHeight = e.GetHeight();
         //float scaleWidth = (newWidth / previousWidth);

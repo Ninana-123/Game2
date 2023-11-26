@@ -935,8 +935,8 @@ namespace Engine {
 									textureMainIndex = i;
 									texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
 
-									float texWidth = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth();
-									float texHeight = assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight();
+									float texWidth = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth());
+									float texHeight = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight());
 									float aspectRatio = texWidth / texHeight;
 									transform->scaleX = 1.f * aspectRatio;
 									transform->scaleY = 1.f * (1 / aspectRatio);
