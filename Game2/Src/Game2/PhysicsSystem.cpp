@@ -51,7 +51,7 @@ namespace Engine
                     && !(entity->HasComponent(ComponentType::Pathfinding)))
                 {
                     CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-                    //std::cout << "inside of if statement" << std::endl;
+                    std::cout << "inside of if statement" << std::endl;
 
                     if (collisionComponent->layer == Layer::World) 
                     {

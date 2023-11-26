@@ -118,9 +118,8 @@ namespace Engine
 		}
 		
 		*/
-		EntityToMouseCollision(entities);
 		EntityToEntityCollision(entities);
-		
+		EntityToMouseCollision(entities);
 	}
 
 	EntityID CollisionSystem::GetLastCollidingEntityID() { return lastCollidingEntityID; }
@@ -502,8 +501,7 @@ namespace Engine
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 
-
-				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable)
+				if (collisionComponent1->layer != Layer::inGameGUI) 
 				{
 					AABB aabb1;
 					Circle circle1;
@@ -645,8 +643,7 @@ namespace Engine
 			{
 				// Retrieve the CollisionComponent and TransformComponent
 				CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-				TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-
+				
 				if (collisionComponent->layer == Layer::Editable)
 				{				
 					// Check for point-to-rect collision
@@ -654,7 +651,7 @@ namespace Engine
 					{
 						// Collision detected, set a flag or perform any actions needed
 						collisionComponent->mColliding = true;
-						//std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
+						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
 					else
 					{
@@ -662,20 +659,7 @@ namespace Engine
 						collisionComponent->mColliding = false;
 					}
 				}
-
-				if (collisionComponent)
-				{
-					float halfWidth_1 = collisionComponent->c_Width / 2.0f;
-					float halfHeight_1 = collisionComponent->c_Height / 2.0f;
-
-					float minX_1 = static_cast<float>(transformComponent->position.x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent->position.x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent->position.y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent->position.y) + halfHeight_1;
-
-					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
-				}			
+				
 			}
 
 			// Button collision logic
@@ -739,20 +723,6 @@ namespace Engine
 						// No collision, reset the flag or perform cleanup
 						collisionComponent->mColliding = false;
 					}
-				}
-
-				if (collisionComponent)
-				{
-					float halfWidth_1 = collisionComponent->c_Width / 2.0f;
-					float halfHeight_1 = collisionComponent->c_Height / 2.0f;
-
-					float minX_1 = static_cast<float>(transformComponent->position.x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent->position.x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent->position.y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent->position.y) + halfHeight_1;
-
-					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
 				}
 			}
 		}

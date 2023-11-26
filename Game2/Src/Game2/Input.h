@@ -20,7 +20,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "MouseButtonCodes.h"
 #include "Vector2d.h"
 #include "EntityManager.h"
-#include "ImGuiWrapper.h"
 
 namespace Engine {
 
@@ -34,8 +33,6 @@ namespace Engine {
 		void UpdateKeyStates();
 		void Update();
 		static bool IsMouseButtonPressed(MouseCode button);
-		static bool IsMouseButtonReleased(const MouseCode button);
-		static bool IsMouseClicked(const MouseCode button);
 		static VECTORMATH::Vector2D GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
@@ -43,18 +40,12 @@ namespace Engine {
 		float GetMouseScrollDelta() const;
 
 		void SetEntityManager(std::shared_ptr<Engine::EntityManager> manager);
-		void SetImGuiWrapper(std::shared_ptr<Engine::ImGuiWrapper> imGui);
-
 		void Picking();
-		void Dragging();
-		void Delete();
-		//void Undo();
+		static bool IsMouseButtonReleased(const MouseCode button);
+		static bool IsMouseClicked(const MouseCode button);
 
 
 	private:
 		std::shared_ptr<EntityManager> entityManager;
-		std::shared_ptr<ImGuiWrapper> ImGuiWrapper;
-		EntityID targetEntityID = -1;
-		bool isDragging;
 	};
 }
