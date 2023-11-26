@@ -36,10 +36,11 @@ Technology is prohibited.
 
 #endif // CSD1130_COLLISION_H_
 
-// Variable to check for button Collision
+// Global Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
+extern bool isStartingPoint;
 
 namespace Engine
 {

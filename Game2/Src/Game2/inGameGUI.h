@@ -11,8 +11,11 @@
 #include "EngineTypes.h"
 #include "AssetManager.h"
 
-// Extern to save texture for pathfinding
+// Global variables
 extern int pathfindingEntityTexture;
+extern bool isGamePaused;
+extern bool inSettings;
+
 
 namespace Engine
 {

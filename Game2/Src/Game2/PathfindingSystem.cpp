@@ -362,12 +362,6 @@ namespace Engine
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                /*if (collisionComponent->layer == Layer::Castle)
-                {
-                    goalX = transformComponent->position.x;
-                    goalY = transformComponent->position.y;
-                }*/
-
                 if (entity->HasComponent(ComponentType::Pathfinding))
                 {
 
@@ -385,9 +379,9 @@ namespace Engine
                             goalY = closestTower.second;
                         }
                         
-                        if (Input::IsKeyTriggered(KEY_SPACE))
+                        if (Input::IsKeyPressed(KEY_SPACE))
                         {
-                            std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
+                            // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
                             goalX = currentClosestTower.first;
                             goalY = currentClosestTower.second;
 
@@ -401,7 +395,7 @@ namespace Engine
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
-                            // Check if both positions were attained before
+                            // Check if both positions were attained before, go to castle if yes
                             if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first)
                             {
                                 goalX = 345;
@@ -413,19 +407,18 @@ namespace Engine
                             {
                                 goalY = goalY + 80;
                                 pathfindingComponent->previousPos1 = prevPos1;
-                                
-                                std::cout << "previousPos1: " << pathfindingComponent->previousPos1.first << std::endl;
+                                // std::cout << "previousPos1: " << pathfindingComponent->previousPos1.first << std::endl;
                             }
                             // If tower 2
                             if (goalX == -70 && goalY == 245)
                             {
                                 goalY = goalY - 105;
                                 pathfindingComponent->previousPos2 = prevPos2;
-                                std::cout << "previousPos2: " << pathfindingComponent->previousPos2.first << std::endl;
+                                // std::cout << "previousPos2: " << pathfindingComponent->previousPos2.first << std::endl;
                             }
                             
                             pathfinder.setGoal(goalX, goalY);
-                            std::cout << "inside goalX: " << goalX << "inside goalY: " << goalY << std::endl;
+                            // std::cout << "inside goalX: " << goalX << "inside goalY: " << goalY << std::endl;
                             pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
                             pathfindingComponent->initialized = true;
 
