@@ -22,20 +22,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine {
 
-    /*!*********************************************************************
-        \brief
-        Loads a texture based on main and sub indices.
-
-        \param mainIndex
-        The main index used to look up the texture in the map.
-
-        \param subIndex
-        The sub index used to look up the texture in the map, default is 0.
-
-        \return
-        A shared pointer to the loaded Texture, or nullptr if the texture
-        could not be loaded.
-    *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
         TextureKey key{ mainIndex, subIndex };
 
@@ -57,22 +43,7 @@ namespace Engine {
         Logger::GetInstance().Log(LogLevel::Debug, std::to_string(texture->GetHeight()));
         return texture;
     }
-    /*!*********************************************************************
-    \brief
-    Loads a texture from the specified file path and associates it with main and sub indices.
 
-    \param mainIndex
-    The main index for the texture which is part of the key used for storing the texture.
-    
-    \param filePath
-    The file path of the texture to be loaded.
-
-    \param subIndex
-    The sub index for the texture which is part of the key used for storing the texture, default is 0.
-
-    \return
-    A shared pointer to the newly loaded Texture.
-    *************************************************************************/
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
         TextureKey key{ mainIndex, subIndex };
         auto texture = std::make_shared<Texture>(filePath);
@@ -80,22 +51,7 @@ namespace Engine {
         textureFilePaths[key] = filePath;
         return texture;
     }
-    /*!*********************************************************************
-    \brief
-    Updates an existing texture or loads a new one if it doesn't exist.
 
-    \param mainIndex
-    The main index for the texture which is part of the key used for 
-    identifying the texture to update.
-
-    \param filePath
-    The new file path of the texture to be used for updating or loading 
-    the texture.
-
-    \param subIndex
-    The sub index for the texture which is part of the key used for 
-    identifying the texture to update, default is 0.
-    *************************************************************************/
     void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
     {
         TextureKey textureKey{ mainIndex, subIndex };
@@ -115,23 +71,7 @@ namespace Engine {
             loadTexture(mainIndex, filePath, subIndex);
         }
     }
-    /*!*********************************************************************
-        \brief
-        Retrieves a shared pointer to a Texture object if it exists.
 
-    
-        \param mainIndex
-        The main index for the texture which is part of the key used for
-        identifying the texture to retrieve.
-
-        \param subIndex
-        The sub index for the texture which is part of the key used for 
-        identifying the texture to retrieve, default is 0.
-
-        \return
-        A shared pointer to the Texture if found; otherwise, nullptr.
-
-    **************************************************************************/
     std::shared_ptr<Texture> AssetManager::getTexture(int mainIndex, int subIndex /*= 0*/) const {
         TextureKey key{ mainIndex, subIndex };
         auto it = textures.find(key);
@@ -141,23 +81,7 @@ namespace Engine {
         std::cerr << "Retrieving: Texture not found for MainID: " << mainIndex << ", SubIndex: " << subIndex << std::endl;
         return nullptr;
     }
-    /*!*********************************************************************
-        \brief
-        Updates the file path of an existing texture in the asset manager.
 
-
-        \param mainIndex
-        The main index for the texture, used as part of the key to 
-        locate the texture in the map.
-
-        \param subIndex
-        The sub index for the texture, used as part of the key to 
-        locate the texture in the map.
-
-        \param newFilePath
-        The new file path to associate with the texture.
-
-    **************************************************************************/
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
         TextureKey key{ mainIndex, subIndex }; 
         auto it = textureFilePaths.find(key);
@@ -183,15 +107,7 @@ namespace Engine {
 
     }
     */
-    /*!*********************************************************************
-        \brief
-        Retrieves all texture keys from the asset manager.
 
-
-        \return
-        A std::vector containing all the texture keys present in the asset manager.
-
-    **************************************************************************/
     std::vector<TextureKey> AssetManager::GetAllTextureKeys() const {
         std::vector<TextureKey> keys;
         for (const auto& pair : textures) {
@@ -199,18 +115,7 @@ namespace Engine {
         }
         return keys;
     }
-    /*!*********************************************************************
-        \brief
-        Gets the file path of a texture associated with a specific texture key.
 
-
-       \param textureKey
-        The TextureKey structure that contains the main index and sub index identifying the texture.
-
-        \return
-        A constant reference to the file path string associated with the texture key, or an empty string if the key is not found.
-
-    **************************************************************************/
     const std::string& AssetManager::GetTexturePath(const TextureKey& textureKey) const {
         auto it = textureFilePaths.find(textureKey);
         if (it != textureFilePaths.end()) {

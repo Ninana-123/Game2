@@ -54,17 +54,10 @@ namespace Engine {
 	static float fpsValues[FPSCount] = { 0 };
 	static int currentFrame = 0;
 
-	/*!**********************************************************************
-	\brief
-	Constructor for ImGuiWrapper class.
-	*************************************************************************/
 	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
 	}
-	/*!**********************************************************************
-	\brief
-	Destructor for ImGuiWrapper class.
-	*************************************************************************/
+
 	ImGuiWrapper::~ImGuiWrapper()
 	{
 	}
@@ -86,6 +79,7 @@ namespace Engine {
 		const char* vendor = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
 		return vendor ? vendor : "N/A";
 	}
+
 	/*!**********************************************************************
 	\brief
 	Gets the renderer using OpenGL and GLEW.
@@ -204,6 +198,7 @@ namespace Engine {
 		float memoryUsagePercentage = static_cast<float>(status.dwMemoryLoad);
 		return memoryUsagePercentage;
 	}
+
 	void ImGuiWrapper::Initialize() {
 		fileBrowser.setAssetManagerPtr(assetManager);
 		fileBrowser.setEntityManagerPtr(entityManager);
@@ -212,11 +207,7 @@ namespace Engine {
 		fileBrowser.setTargetEntityPtr(targetEntity);
 		fileBrowser.setLoader(deserializer);
 	}
-	/*!**********************************************************************
-	\brief
-	Called when attaching ImGui
-	Initializes ImGui context, style, and key mappings
-	*************************************************************************/
+
 	void ImGuiWrapper::OnAttach()
 	{
 		IMGUI_CHECKVERSION();
@@ -244,23 +235,13 @@ namespace Engine {
 		ImGui_ImplOpenGL3_Init("#version 410");
 	}
 
-	/*!**********************************************************************
-	\brief
-	Called when detaching ImGui.
-    Currently empty as there are no specific detach actions needed.
-	*************************************************************************/
 	void ImGuiWrapper::OnDetach()
 	{
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
-	/*!**********************************************************************
-	\brief
-	Update ImGui for the current frame.
-	This function is responsible for updating ImGui and rendering ImGui 
-	content for the current frame.
-	*************************************************************************/
+
 	void ImGuiWrapper::OnUpdate()
 	{
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
@@ -292,14 +273,6 @@ namespace Engine {
 		}
 	}
 
-
-	/*!**********************************************************************
-	\brief
-	Handle events for ImGui interaction.
-	This function processes events related to ImGui interaction.
-	\param[in] event 
-	The event to handle.
-	*************************************************************************/
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
@@ -314,16 +287,7 @@ namespace Engine {
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
 	}
-	/*!**********************************************************************
-	\brief
-	Handle mouse button pressed event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a mouse button 
-	press event.
-	\param[in] e
-	The mouse button pressed event.
-	\return 
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -331,16 +295,7 @@ namespace Engine {
 
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle mouse button released event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a mouse button
-	released event.
-	\param[in] e
-	The mouse button released event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -348,15 +303,7 @@ namespace Engine {
 
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle mouse moved event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a mouse moved event.
-	\param[in] e
-	The mouse moved event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnMouseMovedEvent(MouseMovedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -364,16 +311,7 @@ namespace Engine {
 
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle mouse scrolled event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a mouse scrolled
-	event.
-	\param[in] e
-	The mouse scrolled event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnMouseScrolledEvent(MouseScrolledEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -382,15 +320,7 @@ namespace Engine {
 
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle key pressed event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a key press event.
-	\param[in] e
-	The key pressed event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnKeyPressedEvent(KeyPressedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -401,32 +331,14 @@ namespace Engine {
 		io.KeySuper = io.KeysDown[KEY_LEFT_SUPER] || io.KeysDown[KEY_RIGHT_SUPER];
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle key released event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a key released
-	event.
-	\param[in] e
-	The key released event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnKeyReleased(KeyReleasedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[e.GetKeyCode()] = false;
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle key typed event for ImGui interaction.
-	This function sets the appropriate flag in ImGuiIO for a key typed
-	event.
-	\param[in] e
-	The key typed event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnKeyTypedEvent(KeyTypedEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -435,16 +347,7 @@ namespace Engine {
 			io.AddInputCharacter((unsigned short)keycode);
 		return false;
 	}
-	/*!**********************************************************************
-	\brief
-	Handle window resize event for ImGui interaction.
-	This function updates ImGuiIO with the new display size and 
-	framebuffer scale, as well as sets the OpenGL viewport.
-	\param[in] e
-	The window resize event.
-	\return
-	False indicating event has been handled.
-	*************************************************************************/
+
 	bool ImGuiWrapper::OnWindowResizeEvent(WindowResizeEvent& e)
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -743,8 +646,9 @@ namespace Engine {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 					}
 
-					if (!entityNames.empty() && selectedEntityIndex >= 0)
+					if (!entityNames.empty() && selectedEntityIndex >= 0 && targetEntity)
 					{
+						selectedEntityIndex = targetEntity->GetID();
 						if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
 							for (int i = 0; i < entityNames.size(); ++i) {
 								const bool isSelected = (selectedEntityIndex == i);
@@ -793,7 +697,7 @@ namespace Engine {
 
 					if (ImGui::Button("Delete selected entity"))
 					{
-						if (!entityNames.empty())
+						if (!entityNames.empty() && (selectedEntityIndex >= 1))
 						{
 							entityManager->DestroyEntity(selectedEntityIndex);
 							entityNames.erase(entityNames.begin() + selectedEntityIndex);
@@ -912,6 +816,8 @@ namespace Engine {
 							entityNames.push_back("Entity " + std::to_string(entity.first));
 						}
 					}
+
+					selectedEntityIndex = targetEntity->GetID();
 
 					if (selectedEntityIndex >= entityNames.size()) {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);

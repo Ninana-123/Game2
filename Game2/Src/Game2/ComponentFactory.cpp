@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		ComponentFactory.h
+\file		ComponentFactory.cpp
 \author 	Tristan Tham Rui Hong
 \par    	email: t.tham@digipen.edu
 \date   	29/09/2923
@@ -16,53 +16,32 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
-
-    /*!**********************************************************************
-    \brief
-    Constructor for the ComponentFactory class
-    *************************************************************************/
+    // Constructor for ComponentFactory
     ComponentFactory::ComponentFactory()
     {
         // Register components with predefined ComponentType values
-        RegisterComponent(ComponentType::Transform, []()    { return std::make_unique<TransformComponent>();       });
-        RegisterComponent(ComponentType::Collision, []()    { return std::make_unique<CollisionComponent>();       });
-        RegisterComponent(ComponentType::Texture,   []()    { return std::make_unique<TextureComponent>();         });
-        RegisterComponent(ComponentType::Physics,   []()    { return std::make_unique<PhysicsComponent>();         });
-        RegisterComponent(ComponentType::Sprite,    []()    { return std::make_unique<SpriteComponent>();          });
-        RegisterComponent(ComponentType::Pathfinding, []()  { return std::make_unique<PathfindingComponent>();     });
-
+        RegisterComponent(ComponentType::Transform, []() { return std::make_unique<TransformComponent>();       });
+        RegisterComponent(ComponentType::Collision, []() { return std::make_unique<CollisionComponent>();       });
+        RegisterComponent(ComponentType::Texture, []() { return std::make_unique<TextureComponent>();         });
+        RegisterComponent(ComponentType::Physics, []() { return std::make_unique<PhysicsComponent>();         });
+        RegisterComponent(ComponentType::Sprite, []() { return std::make_unique<SpriteComponent>();          });
+        RegisterComponent(ComponentType::Pathfinding, []() { return std::make_unique<PathfindingComponent>();     });
     }
-    /*!**********************************************************************
-    \brief
-    Returns a reference to the component registry, a mapping of ComponentType to CreationFunction.
-    \return
-    A reference to the component registry, where ComponentType is mapped to CreationFunction.
-    *************************************************************************/
+
+    // Static function to access the componentRegistry
     std::unordered_map<ComponentType, ComponentFactory::CreationFunction>& ComponentFactory::componentRegistry()
     {
         static std::unordered_map<ComponentType, CreationFunction> registry;
         return registry;
     }
-    /*!**********************************************************************
-    \brief
-    Registers a component creation function for a given ComponentType.
-    \param type
-    The ComponentType to associate with the creation function.
-    \param function 
-    The creation function to register for the specified ComponentType.
-    *************************************************************************/
+
+    // Register a component type with its creation function
     void ComponentFactory::RegisterComponent(ComponentType type, CreationFunction function)
     {
         componentRegistry()[type] = function;
     }
-    /*!**********************************************************************
-    \brief
-    Creates a unique_ptr to a Component based on the specified ComponentType.
-    \param type
-    The ComponentType for which to create a Component.
-    \return 
-    A unique_ptr to the created Component or nullptr if the ComponentType is unknown.
-    *************************************************************************/
+
+    // Create a component of the specified type
     std::unique_ptr<Component> ComponentFactory::CreateComponent(ComponentType type)
     {
         auto it = componentRegistry().find(type);
@@ -73,10 +52,11 @@ namespace Engine
         return nullptr; // Handle unknown component types or add appropriate error handling
     }
 
+    // Convert a string to a ComponentType
     ComponentType ComponentFactory::StringToComponentType(const std::string& typeString)
     {
         // Map component type strings to enum values
-        static std::unordered_map<std::string, ComponentType> StringTotypeMap = 
+        static std::unordered_map<std::string, ComponentType> StringTotypeMap =
         {
             {"Transform",   ComponentType::Transform  },
             {"Collision",   ComponentType::Collision  },
@@ -92,10 +72,11 @@ namespace Engine
             return it->second;
         }
 
-        //return invalid
+        // Return invalid ComponentType if not found
         return ComponentType::Unknown;
     }
 
+    // Convert a ComponentType to a string
     std::string ComponentFactory::ComponentTypeToString(ComponentType type)
     {
         // Map enum values to component type strings
@@ -115,10 +96,7 @@ namespace Engine
             return it->second;
         }
 
-        //return invalid
+        // Return "Unknown Component" for an invalid ComponentType
         return "Unknown Component";
     }
-
 }
-
-

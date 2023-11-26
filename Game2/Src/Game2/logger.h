@@ -22,6 +22,11 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <mutex>
 
 namespace Engine {
+    /*!
+    * \brief Enumeration representing different log levels.
+    *
+    * The LogLevel enum class defines different log levels, including Debug, App, Event, Info, and Error.
+    */
     enum class LogLevel {
         Debug,
         App,
@@ -32,20 +37,52 @@ namespace Engine {
 
     class GAME2_API Logger {
     public:
+        /*!
+        * \brief Get the singleton instance of the Logger class.
+        * \return Logger& Reference to the Logger instance.
+        */
         static Logger& GetInstance();
 
         // Delete copy constructor and assignment operator to prevent multiple instances
         Logger(const Logger&) = delete;
         Logger& operator=(const Logger&) = delete;
+
+        /*!
+         * \brief Log a message with the specified log level.
+         * \param level The log level (Debug, App, Event, Info, Error).
+         * \param message The log message.
+         */
         void Log(LogLevel level, const std::string& message);
+
+        /*!
+         * \brief Log a formatted message with the specified log level.
+         * \param level The log level (Debug, App, Event, Info, Error).
+         * \param format The format string for the log message.
+         * \param ... Variadic arguments for formatted logging.
+         */
         void Log(LogLevel level, const char* format, ...); // Use variadic arguments for formatted logging
+
+        /*!
+         * \brief Flush the log file.
+         */
         void Flush();
 
-
     private:
+        /*!
+         * \brief Constructor for the Logger class.
+         * \param logFileName The name of the log file.
+         */
         Logger(const std::string& logFileName = "default_log.txt");
+
+        /*!
+         * \brief Destructor for the Logger class.
+         */
         ~Logger();
 
+        /*!
+         * \brief Write a log message to the log file.
+         * \param logMessage The log message to write.
+         */
         void WriteLog(const std::string& logMessage);
 
         std::ofstream m_LogFile;

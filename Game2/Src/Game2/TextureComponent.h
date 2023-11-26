@@ -49,11 +49,27 @@ namespace Engine
 			return cloneComponent;
 		}
 
+		/*!*****************************************************************
+
+		\brief
+		Serializes the TextureComponent data.
+
+		\param outputStream The output stream to write the data to.
+
+		********************************************************************/
 		void Serialize(std::ostream& outputStream) const override {
 			outputStream << "MainIndex: " << textureKey.mainIndex << '\n';
 			outputStream << "SubIndex: " << textureKey.subIndex << '\n';
 		}
 
+		/*!*****************************************************************
+
+		\brief
+		Deserializes the TextureComponent data.
+
+		\param inputStream The input stream to read the data from.
+
+		********************************************************************/
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			int mainIndex = 0;

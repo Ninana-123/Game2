@@ -54,7 +54,7 @@ namespace Engine
 
         */
         /**************************************************************************/
-        PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false) {}
+        PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false), isWalking(false) {}
 
         /**************************************************************************/
         /*!
@@ -69,6 +69,7 @@ namespace Engine
         */
         /**************************************************************************/
         PathfindingSystem(int numRows, int numCols);
+
 
         /**************************************************************************/
         /*!
@@ -109,6 +110,15 @@ namespace Engine
         /**************************************************************************/
         std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
+        void createLogicalCollisionMap();
+
+        void initializeCollisionMap();
+
+        bool hasCollision(int x, int y);
+
+        std::pair<int, int> findClosestFreeCell(int x, int y);
+
+        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
 
     private:
         struct Node {
@@ -168,6 +178,7 @@ namespace Engine
         int goalY = 0;
 
         bool initialized; // A flag to check if the pathfinder has been initialized
+        bool isWalking;
     };
 }
 

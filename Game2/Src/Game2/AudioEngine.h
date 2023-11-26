@@ -2,6 +2,7 @@
 /*!
 \file		AudioEngine.h
 \author 	Tay Jun Feng Vance
+\co         Wayne Kwok Jun Lin (10%)
 \par    	email: junfengvance.t@digipen.edu
 \date       29/09/2023
 \brief		This file contains the declaration of all functions related to the FMOD
@@ -17,6 +18,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #pragma once
 
+#include "SoundInfo.h"
 #include <fmod_studio.hpp>
 #include <fmod.hpp>
 #include <iostream>
@@ -24,9 +26,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include <vector>
 #include <list>
 #include <map>
-#include "SoundInfo.h"
-
-
 
     /**
      * Error Handling Function for FMOD Errors
@@ -47,7 +46,6 @@ public:
      * AudioEngine::init() must be called before using the Audio Engine
      */
     AudioEngine();
-
 
     /**
      * Initializes Audio Engine Studio and Core systems to default values.
@@ -72,12 +70,6 @@ public:
      */
     void loadSound(SoundInfo soundInfo);
 
-    void resumeAllAudio();
-
-    void pauseAllAudio();
-
-    size_t getLoopsPlayingSize() const { return loopsPlaying.size(); }
-
     /**
     * Plays a sound file using FMOD's low level audio system. If the sound file has not been
     * previously loaded using loadSoundFile(), a console message is displayed
@@ -93,9 +85,19 @@ public:
     void stopSound(SoundInfo soundInfo);
 
     /**
+     * @brief Pauses all audio playback.
+     */
+    void pauseAllAudio();
+
+    /**
     * Pauses a playing sound.
     */
     void pauseSound(SoundInfo soundInfo);
+
+    /**
+     * @brief Resumes all paused audio playback.
+     */
+    void resumeAllAudio();
 
     /**
     * Resumes a paused sound.
@@ -110,8 +112,6 @@ public:
      */
     void updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
 
-
-
     /**
     * Updates the position of a looping 3D sound that has already been loaded and is playing back.
     * The SoundInfo object's position coordinates will be used for the new sound position, so
@@ -123,7 +123,6 @@ public:
      * Checks if a looping sound is playing.
      */
     bool soundIsPlaying(SoundInfo soundInfo);
-
 
     /**
      * Sets the position of the listener in the 3D scene.
@@ -200,6 +199,10 @@ public:
     // The audio sampling rate of the audio engine
     static const int AUDIO_SAMPLE_RATE = 44100;
 
+    /**
+     * @brief Gets the size of the loops currently playing.
+     */
+    size_t getLoopsPlayingSize() const { return loopsPlaying.size(); }
 private:
 
     /**
@@ -266,6 +269,7 @@ private:
      */
     std::map<std::string, FMOD::Sound*> sounds;
 
+
     /*
      * Map which stores the current playback channels of any playing sound loop
      * Key is the SoundInfo's uniqueKey field.
@@ -288,4 +292,3 @@ private:
      */
     std::map<std::string, FMOD::Studio::EventInstance*> eventInstances;
 };
-
