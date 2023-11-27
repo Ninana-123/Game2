@@ -563,7 +563,8 @@ namespace Engine
 
     void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
     {
-        try {
+        try 
+        {
             shader.Bind();
             vaLines.Bind();
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
@@ -589,7 +590,8 @@ namespace Engine
             vaLines.Unbind();
             shader.Unbind();
         }
-        catch (const std::exception& e) {
+        catch (const std::exception& e) 
+        {
 
             Logger::GetInstance().Log(LogLevel::Error, "Render single line error: " + std::string(e.what()));
         }
@@ -602,10 +604,12 @@ namespace Engine
         shader.Bind();
         shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
 
-        if (useEditorCamera) {
+        if (useEditorCamera) 
+        {
             shader.SetUniformMat4f("u_MVP", m_EditorCamera.GetViewProjectionMatrix());
         }
-        else {
+        else 
+        {
             shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
         }
 

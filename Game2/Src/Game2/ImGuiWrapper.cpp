@@ -619,214 +619,19 @@ namespace Engine {
 				ImGui::Text("No Keys Pressed");
 			}
 		}
-		if (ImGui::BeginTabBar("Tabs")) {
-
-			if (ImGui::BeginTabItem("Game Objects")) {
-				if (entityManager) {
-					if (ImGui::Button("Create Entity"))
-					{
-						entityManager->CreateEntity();
-						std::cout << "Created Entity" << std::endl;
-					}
-					ImGui::Text("Create Multiple Entities");
-					ImGui::InputText("Create Count", createCountInput, 10);
-					// Clone Entity button
-					if (ImGui::Button("Create Multiple Entities"))
-					{
-						// Parse the clone count from the input text
-						int createCount = atoi(createCountInput);
-
-						// Ensure clone count is valid and non-negative
-						if (createCount > 0)
-						{
-							// Clone the object 'cloneCount' times
-							for (int i = 0; i < createCount; ++i)
-							{
-								entityManager->CreateEntity();
-								std::cout << "Created Entity" << std::endl;
-							}
-						}
-					}
-
-					const auto entities = entityManager->GetEntities();
-					ImGui::Text("Number of Entities: %d", entities->size());
-					ImGui::Separator();
-					ImGui::Text("Currently selected entity ID:");
-					std::vector<std::string> entityNames;
-					for (const auto& entity : *entities) {
-						if (entity.first == 0) {
-							entityNames.push_back("Background");
-						}
-						else {
-							entityNames.push_back("Entity " + std::to_string(entity.first));
-						}
-					}
-
-					if (selectedEntityIndex >= entityNames.size()) {
-						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
-					}
-
-					if (!entityNames.empty() && selectedEntityIndex >= 0 && targetEntity)
-					{
-						selectedEntityIndex = targetEntity->GetID();
-						if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
-							for (int i = 0; i < entityNames.size(); ++i) {
-								const bool isSelected = (selectedEntityIndex == i);
-								if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
-									selectedEntityIndex = i;
-									targetEntity = entityManager->GetEntity(selectedEntityIndex);
-								}
-								if (isSelected)
-									ImGui::SetItemDefaultFocus();
-							}
-							ImGui::EndCombo();
-						}
-
-						// Clone Entity button
-						if (ImGui::Button("Clone Entity"))
-						{
-							if (selectedEntityIndex)
-							{
-								entityManager->CloneEntity(selectedEntityIndex);
-							}
-						}
-					}
-					else
-					{
-						ImGui::Text("No entities available"); // or handle as appropriate
-					}
-
-					ImGui::Text("Clone Multiple Entities");
-					ImGui::InputText("Clone Count", cloneCountInput, 10);
-					// Clone Multiple Entity button
-					if (ImGui::Button("Clone Multiple Entities"))
-					{
-						// Parse the clone count from the input text
-						int cloneCount = atoi(cloneCountInput);
-
-						// Ensure clone count is valid and non-negative
-						if (cloneCount > 0 && targetEntity)
-						{
-							// Clone the selected entity 'cloneCount' times
-							for (int i = 0; i < cloneCount; ++i)
-							{
-								entityManager->CloneEntity(targetEntity->GetID());
-							}
-						}
-					}
-
-					if (ImGui::Button("Delete selected entity"))
-					{
-						if (!entityNames.empty() && (selectedEntityIndex >= 1))
-						{
-							entityManager->DestroyEntity(selectedEntityIndex);
-							entityNames.erase(entityNames.begin() + selectedEntityIndex);
-
-							// Update other relevant data structures
-
-							// Resize the vector if necessary
-							if (entityNames.empty())
-							{
-								selectedEntityIndex = -1; // No entities left, set index to an invalid value
-								targetEntity = nullptr;   // No entity to select
-							}
-							else if (selectedEntityIndex >= entityNames.size())
-							{
-								selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
-								entityManager->nextEntityID--;
-								prefabManager->nextPrefabID--;
-								targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
-
-							}
-							else if (selectedEntityIndex < entityNames.size())
-							{
-								entityManager->nextEntityID--;
-								prefabManager->nextPrefabID--;
-								targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
-							}
-							else
-							{
-								targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
-							}
-						}
-					}
-					
-					
-					if (shouldLoadScene) {
-						// If `deleteAllEntity` is true, delete all entities
-						if (deleteAllEntity == true)
-						{
-							// Retrieve the size of entities list
-							int entityCount = static_cast<int>(entityManager->GetEntities()->size());
-
-							// Loop backwards through the entities and delete each one
-							for (int i = entityCount - 1; i >= 0; --i)
-							{
-								entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
-							}
-
-		
-
-							// Reset the selected entity index as there are no entities to select
-							selectedEntityIndex = -1;
-
-							// Set targetEntity to nullptr as there are no entities left
-							targetEntity = nullptr;
-
-							// Reset any other relevant data structures or counters if needed
-							entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
-							prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
-
-							std::cout << "Deleted All Entities" << std::endl;
-							deleteAllEntity = false;
-						}
-
-						// Now load the scene
-						deserializer->LoadScene(sceneToLoad);
-						if (entityManager->GetEntities()->size() >= 2) {
-							selectedEntityIndex = 1;
-						}
-						else if (entityManager->GetEntities()->size() == 1) {
-							selectedEntityIndex = 0;
-						}
-						else
-							selectedEntityIndex = -1;
-						if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
-							targetEntity = entityManager->GetEntity(selectedEntityIndex);
-						}
-						shouldLoadScene = false; // Reset flag
-					}
-
-				}
-				ImGui::EndTabItem();
-			}
+		if (ImGui::BeginTabBar("Tabs")) 
+		{
 			//Property editor
 			if (ImGui::BeginTabItem("Entity Properties")) {
 				if (entityManager && targetEntity) {
 					std::unordered_map<ComponentType, Component*> components = targetEntity->GetComponents();
 					// Get the properties of the selected entity (you will need to replace these with your actual entity property retrieval code)
 					std::string entityName = "Entity " + std::to_string(targetEntity->GetID());
-					TransformComponent* transform = nullptr;
-					CollisionComponent* collision = nullptr;
-					TextureComponent* texture = nullptr;
-					PhysicsComponent* physics = nullptr;
-
-					if (targetEntity->GetComponent(ComponentType::Transform) != nullptr) {
-						transform = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform));
-					}
-					if (targetEntity->GetComponent(ComponentType::Collision) != nullptr) {
-						collision = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
-					}
-					if (targetEntity->GetComponent(ComponentType::Texture) != nullptr) {
-						texture = dynamic_cast<TextureComponent*>(targetEntity->GetComponent(ComponentType::Texture));
-					}
-					if (targetEntity->GetComponent(ComponentType::Physics) != nullptr) {
-						physics = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
-					}
+				
 					const auto entities = entityManager->GetEntities();
 					// Display the properties
-					ImGui::Text("Entity Name: %s", entityName.c_str());
-					ImGui::Text("Currently selected entity ID:");
+					//ImGui::Text("Entity Name: %s", entityName.c_str());
+					ImGui::Text("Current entity: ");
 					std::vector<std::string> entityNames;
 					for (const auto& entity : *entities) {
 						if (entity.first == 0) {
@@ -838,14 +643,14 @@ namespace Engine {
 					}
 
 					selectedEntityIndex = targetEntity->GetID();
-
 					if (selectedEntityIndex >= entityNames.size()) {
 						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
 					}
 
 					if (!entityNames.empty() && selectedEntityIndex >= 0)
 					{
-						if (ImGui::BeginCombo("Selected", entityNames[selectedEntityIndex].c_str())) {
+						if (ImGui::BeginCombo("Selected", entityNames[selectedEntityIndex].c_str())) 
+						{
 							for (int i = 0; i < entityNames.size(); ++i) {
 								const bool isSelected = (selectedEntityIndex == i);
 								if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
@@ -857,155 +662,282 @@ namespace Engine {
 							}
 							ImGui::EndCombo();
 						}
-					}
-					
-					if (transform != nullptr) {
-						float posX = transform->position.x;
-						float posY = transform->position.y;
-						float scaleX = transform->scaleX;
-						float scaleY = transform->scaleY;
-						float rot = transform->rot;
-						float rotDeg = static_cast<float>(rot * (180.f / M_PI));
-						rotDeg = fmod(rotDeg, 360.0f); // Ensure rotDeg stays within the 0-360 range
 
-						// Input boxes for editing position, scale, and rotation with specified widths
-						if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f")) {
-							// Handle position X change here
-							transform->position.x = posX;
-						}
+						ImGui::SameLine();
+						ImGui::Spacing();
+						ImGui::SameLine();
 
-						if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f")) {
-							// Handle position Y change here
-							transform->position.y = posY;
-						}
-
-						if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f")) {
-							// Handle scale X change here
-							transform->scaleX = scaleX;
-						}
-
-						if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f")) {
-							// Handle scale Y change here
-							transform->scaleY = scaleY;
-						}
-
-						if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f")) {
-							// Handle rotation change here
-							rot = static_cast<float>(rotDeg * (M_PI / 180.f));
-							transform->rot = rot;
-						}
-					}
-					if (collision != nullptr) {
-						// Display the current collision status
-						if (collision->isColliding == true)
-							ImGui::Text("Collision with another entity detected.");
-						else if (collision->isColliding == false)
-							ImGui::Text("No collision detected.");
-
-						// Dropdown list for selecting the Layer
-						ImGui::Text("Select Layer:");
-						const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower"};
-						int currentLayerIndex = static_cast<int>(collision->layer);
-						if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) {
-							// Handle layer change here
-							collision->layer = static_cast<Layer>(currentLayerIndex);
-						}
-					}
-
-					//Texture display
-					if (texture != nullptr) { 
-						std::vector<std::string> textureMainIndexList;
-						auto& textures = assetManager->GetAllTextures();
-						int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
-						//c_state textureSubIndexEnum = static_cast<c_state>(texture->textureKey.subIndex);
-
-						// Find the maximum mainIndex dynamically
-						int maxMainIndex = -1;
-						for (const auto& [textureKey, imGuitexture] : textures) {
-							maxMainIndex = std::max(maxMainIndex, static_cast<int>(textureKey.mainIndex));
-						}
-						maxMainIndex++;
-
-						// Combo box for MainIndex
-						if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str())) {
-							for (int i = 0; i < maxMainIndex; ++i) {
-								ImGui::PushID(i);  // Set a unique ID for each Selectable
-								const bool isSelected = (textureMainIndex == i);
-								if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
-									textureMainIndex = i;
-									texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
-
-									float texWidth = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth());
-									float texHeight = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight());
-									float aspectRatio = texWidth / texHeight;
-									transform->scaleX = 1.f * aspectRatio;
-									transform->scaleY = 1.f * (1 / aspectRatio);
-
-								}
-								if (isSelected) {
-									ImGui::SetItemDefaultFocus();
-								}
-								ImGui::PopID();
-							}
-							ImGui::EndCombo();
-						}
-
-						// Combo box for SubIndex using enum names
-						if (ImGui::BeginCombo("SubIndex", c_stateToString(static_cast<c_state>(texture->textureKey.subIndex)).c_str()))
-						{							
-							// Collect existing subindexes for the current mainIndex
-							std::set<int> existingSubIndexes;
-
-							for (const auto& [key, _] : textures)
+						//Delete Function
+						if (ImGui::Button("Delete"))
+						{
+							if (!entityNames.empty() && (selectedEntityIndex >= 1))
 							{
-								if (key.mainIndex == texture->textureKey.mainIndex)
+								entityManager->DestroyEntity(selectedEntityIndex);
+								entityNames.erase(entityNames.begin() + selectedEntityIndex);
+
+								// Update other relevant data structures
+								// Resize the vector if necessary
+								if (entityNames.empty())
 								{
-									existingSubIndexes.insert(key.subIndex);
+									selectedEntityIndex = -1; // No entities left, set index to an invalid value
+									targetEntity = nullptr;   // No entity to select
+								}
+								else if (selectedEntityIndex >= entityNames.size())
+								{
+									selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+									entityManager->nextEntityID--;
+									prefabManager->nextPrefabID--;
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+
+								}
+								else if (selectedEntityIndex < entityNames.size())
+								{
+									entityManager->nextEntityID--;
+									prefabManager->nextPrefabID--;
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+								}
+								else
+								{
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
 								}
 							}
+						}
+					}
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
 
-							// Iterate over the existing subindexes
-							for (int subIndex : existingSubIndexes)
+					ImGui::Text("Component List: ");
+					ImGui::Spacing();
+					static bool ComponentExistsWarning = false;
+					const char* creatorComponentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding" };
+					static int selectedComponent = 0; // index for component types array
+
+					if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
+					{
+						if (selectedComponent > 0)
+						{
+							// Check if a component of the selected type already exists in the prefab
+							ComponentType typeToAdd = ComponentFactory::StringToComponentType(creatorComponentTypes[selectedComponent]);
+							if (!targetEntity->HasComponent(typeToAdd))
 							{
-								ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
-								if (ImGui::IsItemClicked())
-								{
-									texture->textureKey.subIndex = subIndex;
-								}
+								// Add the selected component type to the selected prefab
+								targetEntity->AddNewComponent(typeToAdd);
+								selectedComponent = 0; // Reset the selected component index
 							}
-							ImGui::EndCombo();
+							else
+							{
+								// Set the flag to show the warning message
+								ComponentExistsWarning = true;
+								selectedComponent = 0;
+							}
 						}
 					}
 
-					if (physics != nullptr) {
-						
-						float veloX = physics->velocity.x;
-						float veloY = physics->velocity.y;
-
-						if (ImGui::InputFloat("Velocity X", &veloX, 1.0f, 2.0f, "%.2f")) {
-							physics->velocity.x = veloX;
-						}
-
-						if (ImGui::InputFloat("Velocity Y", &veloY, 1.0f, 2.0f, "%.2f")) {
-							physics->velocity.y = veloY;
+					if (ComponentExistsWarning)
+					{
+						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Entity already has a %s component!", creatorComponentTypes[selectedComponent]);
+						ImGui::SameLine();
+						// Optionally, you can add a button to dismiss the warning
+						if (ImGui::Button("Dismiss"))
+						{
+							ComponentExistsWarning = false;
 						}
 					}
 
-					// Add more properties as needed
-					if (ImGui::CollapsingHeader("Component List")) {
-						for (const auto& pair : components) {
-							ComponentType type = pair.first;
-							std::string buffer = ComponentFactory::ComponentTypeToString(type);
+					ImGui::Spacing();
 
-							// Display component-specific properties here							
-							ImGui::Text("Entity has %s component.", buffer.c_str());							
+					//Component Reader
+					const auto& bufferComponents = targetEntity->GetComponents();
+					for (const auto& pair : bufferComponents)
+					{
+						ComponentType componentType = pair.first;
+						ImGui::PushID(static_cast<int>(componentType));
+
+						if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(componentType).c_str()))
+						{
+							ImGui::Indent();
+
+							switch (componentType)
+							{
+							case ComponentType::Transform:
+							{
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+								float posX = transform->position.x;
+								float posY = transform->position.y;
+								float scaleX = transform->scaleX;
+								float scaleY = transform->scaleY;
+								float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+								rotDeg = fmod(rotDeg, 360.0f);
+
+								// Input boxes for editing TransformComponent properties
+								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.x = posX;
+								}
+
+								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.y = posY;
+								}
+
+								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleX = scaleX;
+								}
+
+								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleY = scaleY;
+								}
+
+								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
+								{
+									transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+								}
+								break;
+							}
+
+							case ComponentType::Collision:
+							{
+								CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+								float width = collision->c_Width;
+								float height = collision->c_Height;
+								bool isColliding = collision->isColliding;
+
+								// Input boxes for editing CollisionComponent properties
+								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Width = width;
+								}
+
+								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Height = height;
+								}
+
+								ImGui::Text("Select Layer:");
+								const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower" };
+								int currentLayerIndex = static_cast<int>(collision->layer);
+								if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames)))
+								{
+									// Handle layer change here
+									collision->layer = static_cast<Layer>(currentLayerIndex);
+								}
+
+								break;
+							}
+
+							case ComponentType::Physics:
+							{
+								PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+								float velocity_x = physics->velocity.x;
+								float velocity_y = physics->velocity.y;
+
+								if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.x = velocity_x;
+								}
+
+								if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.y = velocity_y;
+								}
+
+								break;
+							}
+							case ComponentType::Texture:
+							{
+								auto& textures = assetManager->GetAllTextures();
+								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+								int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
+								int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+
+								// Assuming textures is an unordered_map with key as TextureKey
+								int maxMainIndex = static_cast<int>(textures.size()) - 1;
+
+								// Combo box for Texture MainIndex
+								if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str()))
+								{
+									for (int i = 0; i <= maxMainIndex; ++i)
+									{
+										ImGui::Selectable(std::to_string(i).c_str(), texture->textureKey.mainIndex == i);
+										if (ImGui::IsItemClicked())
+										{
+											texture->textureKey.mainIndex = static_cast<TextureClass>(i);
+										}
+									}
+									ImGui::EndCombo();
+								}
+
+								// Combo box for Texture SubIndex
+								if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
+								{
+									// Collect existing subindexes for the current mainIndex
+									std::set<int> existingSubIndexes;
+
+									for (const auto& [key, _] : textures)
+									{
+										if (key.mainIndex == texture->textureKey.mainIndex)
+										{
+											existingSubIndexes.insert(key.subIndex);
+										}
+									}
+
+									// Iterate over the existing subindexes
+									for (int subIndex : existingSubIndexes)
+									{
+										ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
+										if (ImGui::IsItemClicked())
+										{
+											texture->textureKey.subIndex = subIndex;
+										}
+									}
+									ImGui::EndCombo();
+								}
+								break;
+							}
+
+							case ComponentType::Sprite:
+							{
+								ImGui::Spacing();
+								break;
+							}
+
+							case ComponentType::Pathfinding:
+							{
+								PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(pair.second);
+								int goalX = pathfinding->goalX;
+								int goalY = pathfinding->goalY;
+								ImGui::InputInt("Goal X", &goalX, 1, 50);
+								ImGui::InputInt("Goal Y", &goalY, 1, 50);
+
+								break;
+							}
+
+							default:
+								break;
+							}
+
+							ImGui::Spacing();
+							if (ImGui::Button("Remove"))
+							{
+								targetEntity->components.erase(componentType);
+							}
+
+							ImGui::Unindent();
 						}
+						ImGui::PopID();
 					}
 				}
-				else {
+				else
+				{
 					ImGui::Text("No entity selected.");
 				}
-				if (shouldLoadScene) {
+				if (shouldLoadScene)
+				{
 					// If `deleteAllEntity` is true, delete all entities
 					if (deleteAllEntity == true)
 					{
@@ -1049,6 +981,451 @@ namespace Engine {
 				}
 				ImGui::EndTabItem();
 			}
+
+			if (ImGui::BeginTabItem("Entity Factory")) 
+			{
+				if (entityManager) 
+				{
+					static Entity bufferEntity(0); //buffer entity object
+					ImGui::Text("Entity Creator");
+					// Dropdown list for adding components
+					static bool ComponentExistsWarning = false;
+					const char* creatorComponentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding" };
+					static int selectedComponent = 0; // index for component types array
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
+					ImGui::Text("Components List: ");
+					ImGui::Spacing();
+
+					if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
+					{
+						
+						if (selectedComponent > 0)
+						{
+							// Check if a component of the selected type already exists in the prefab
+							ComponentType typeToAdd = ComponentFactory::StringToComponentType(creatorComponentTypes[selectedComponent]);
+							if (!bufferEntity.HasComponent(typeToAdd))
+							{
+								// Add the selected component type to the selected prefab
+								bufferEntity.AddNewComponent(typeToAdd);
+								selectedComponent = 0; // Reset the selected component index
+							}
+							else
+							{
+								// Set the flag to show the warning message
+								//ComponentExistsWarning = true;
+								selectedComponent = 0;
+							}
+						}					
+					}
+
+					if (ComponentExistsWarning)
+					{
+						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Entity already has a %s component!", creatorComponentTypes[selectedComponent]);
+						ImGui::SameLine();
+						// Optionally, you can add a button to dismiss the warning
+						if (ImGui::Button("Dismiss"))
+						{
+							ComponentExistsWarning = false;
+						}
+					}
+
+					const auto& bufferComponents = bufferEntity.GetComponents();
+					for (const auto& pair : bufferComponents)
+					{
+						ComponentType componentType = pair.first;
+						ImGui::PushID(static_cast<int>(componentType));
+
+						if (ImGui::CollapsingHeader(ComponentFactory::ComponentTypeToString(componentType).c_str()))
+						{
+							ImGui::Indent();
+
+							switch (componentType)
+							{
+							case ComponentType::Transform:
+							{
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+
+								float posX = transform->position.x;
+								float posY = transform->position.y;
+								float scaleX = transform->scaleX;
+								float scaleY = transform->scaleY;
+								float rotDeg = static_cast<float>(transform->rot * (180.f / M_PI));
+								rotDeg = fmod(rotDeg, 360.0f);
+
+								// Input boxes for editing TransformComponent properties
+								if (ImGui::InputFloat("Pos X", &posX, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.x = posX;
+								}
+
+								if (ImGui::InputFloat("Pos Y", &posY, 1.0f, 2.0f, "%.2f"))
+								{
+									transform->position.y = posY;
+								}
+
+								if (ImGui::InputFloat("Scale X", &scaleX, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleX = scaleX;
+								}
+
+								if (ImGui::InputFloat("Scale Y", &scaleY, 0.1f, 1.0f, "%.2f"))
+								{
+									transform->scaleY = scaleY;
+								}
+
+								if (ImGui::InputFloat("Rotation (Deg)", &rotDeg, 1.0f, 10.0f, "%.1f"))
+								{
+									transform->rot = static_cast<float>(rotDeg * (M_PI / 180.f));
+								}
+								break;
+							}
+
+							case ComponentType::Collision:
+							{
+								CollisionComponent* collision = dynamic_cast<CollisionComponent*>(pair.second);
+
+								float width = collision->c_Width;
+								float height = collision->c_Height;
+								bool isColliding = collision->isColliding;
+
+								// Input boxes for editing CollisionComponent properties
+								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Width = width;
+								}
+
+								if (ImGui::InputFloat("Height", &height, 1.0f, 5.0f, "%.2f"))
+								{
+									collision->c_Height = height;
+								}
+
+								ImGui::Text("Select Layer:");
+								const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower" };
+								int currentLayerIndex = static_cast<int>(collision->layer);
+								if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames)))
+								{
+									// Handle layer change here
+									collision->layer = static_cast<Layer>(currentLayerIndex);
+								}
+
+								break;
+							}
+
+							case ComponentType::Physics:
+							{
+								PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
+								float velocity_x = physics->velocity.x;
+								float velocity_y = physics->velocity.y;
+
+								if (ImGui::InputFloat("X velocity", &velocity_x, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.x = velocity_x;
+								}
+
+								if (ImGui::InputFloat("Y velocity", &velocity_y, 1.0f, 5.0f, "%.2f"))
+								{
+									physics->velocity.y = velocity_y;
+								}
+
+								break;
+							}
+							case ComponentType::Texture:
+							{
+								std::vector<std::string> textureMainIndexList;
+								TransformComponent* transform = dynamic_cast<TransformComponent*>(pair.second);
+								TextureComponent* texture = dynamic_cast<TextureComponent*>(pair.second);
+								auto& textures = assetManager->GetAllTextures();
+								int textureMainIndex = static_cast<int>(texture->textureKey.mainIndex);
+								int textureSubIndex = static_cast<int>(texture->textureKey.subIndex);
+
+								// Find the maximum mainIndex dynamically
+								int maxMainIndex = -1;
+								for (const auto& [textureKey, imGuitexture] : textures) {
+									maxMainIndex = std::max(maxMainIndex, static_cast<int>(textureKey.mainIndex));
+								}
+								maxMainIndex++;
+
+								// Combo box for MainIndex
+								if (ImGui::BeginCombo("Texture MainIndex", std::to_string(textureMainIndex).c_str())) {
+									for (int i = 0; i < maxMainIndex; ++i) {
+										ImGui::PushID(i);  // Set a unique ID for each Selectable
+										const bool isSelected = (textureMainIndex == i);
+										if (ImGui::Selectable(std::to_string(i).c_str(), isSelected)) {
+											textureMainIndex = i;
+											texture->textureKey.mainIndex = static_cast<TextureClass>(textureMainIndex);
+
+											float texWidth = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetWidth());
+											float texHeight = static_cast<float>(assetManager->getTexture(texture->textureKey.mainIndex, texture->textureKey.subIndex)->GetHeight());
+											float aspectRatio = texWidth / texHeight;
+											transform->scaleX = 1.f * aspectRatio;
+											transform->scaleY = 1.f * (1 / aspectRatio);
+
+										}
+										if (isSelected) {
+											ImGui::SetItemDefaultFocus();
+										}
+										ImGui::PopID();
+									}
+									ImGui::EndCombo();
+								}
+
+								// Combo box for Texture SubIndex
+								if (ImGui::BeginCombo("Texture SubIndex", c_stateToString(static_cast<c_state>(textureSubIndex)).c_str()))
+								{
+									// Collect existing subindexes for the current mainIndex
+									std::set<int> existingSubIndexes;
+
+									for (const auto& [key, _] : textures)
+									{
+										if (key.mainIndex == texture->textureKey.mainIndex)
+										{
+											existingSubIndexes.insert(key.subIndex);
+										}
+									}
+
+									// Iterate over the existing subindexes
+									for (int subIndex : existingSubIndexes)
+									{
+										ImGui::Selectable(c_stateToString(static_cast<c_state>(subIndex)).c_str(), texture->textureKey.subIndex == subIndex);
+										if (ImGui::IsItemClicked())
+										{
+											texture->textureKey.subIndex = subIndex;
+										}
+									}
+									ImGui::EndCombo();
+								}
+								break;
+							}
+
+							case ComponentType::Sprite:
+							{
+								ImGui::Spacing();
+								break;
+							}
+
+							case ComponentType::Pathfinding:
+							{
+								PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(pair.second);
+								int goalX = pathfinding->goalX;
+								int goalY = pathfinding->goalY;
+								ImGui::InputInt("Goal X", &goalX, 1, 50);
+								ImGui::InputInt("Goal Y", &goalY, 1, 50);
+
+								break;
+							}
+
+							default:
+								break;
+							}
+
+							ImGui::Spacing();
+							if (ImGui::Button("Remove"))
+							{
+								bufferEntity.components.erase(componentType);
+							}
+
+							ImGui::Unindent();
+						}
+						ImGui::PopID();
+					}
+					ImGui::Spacing();
+					if (ImGui::Button("Create Entity"))
+					{
+						EntityID newEntityID = entityManager->CreateEntity();
+						Entity* newPrefab = entityManager->GetEntity(newEntityID);
+					
+						// Add each component to the new prefab
+						for (const auto& pair : bufferComponents)
+						{
+							Component* clonedComponent = pair.second->Clone();
+							newPrefab->components.emplace(pair.first, std::unique_ptr<Component>(clonedComponent));
+						}					
+						std::cout << "Created Entity: " << newEntityID << std::endl;
+					}
+					
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
+
+					ImGui::Text("Create Multiple Entities");
+
+					ImGui::InputText("Create Count", createCountInput, 10);
+					ImGui::Spacing();
+					// Clone Entity button
+					if (ImGui::Button("Create Multiple Entities"))
+					{
+						// Parse the clone count from the input text
+						int createCount = atoi(createCountInput);
+
+						// Ensure clone count is valid and non-negative
+						if (createCount > 0)
+						{
+							// Clone the object 'cloneCount' times
+							for (int i = 0; i < createCount; ++i)
+							{
+								entityManager->CloneEntity(entityManager->nextEntityID);
+								std::cout << "Created Entity" << std::endl;
+							}
+						}
+					}
+
+					const auto entities = entityManager->GetEntities();
+					ImGui::Text("Number of Entities: %d", entities->size());
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
+					ImGui::Text("Currently selected entity ID:");
+					std::vector<std::string> entityNames;
+					for (const auto& entity : *entities) {
+						if (entity.first == 0) {
+							entityNames.push_back("Background");
+						}
+						else {
+							entityNames.push_back("Entity " + std::to_string(entity.first));
+						}
+					}
+
+					if (selectedEntityIndex >= entityNames.size()) {
+						selectedEntityIndex = static_cast<int>(entityNames.size() - 1);
+					}
+
+					if (!entityNames.empty() && selectedEntityIndex >= 0 && targetEntity)
+					{
+						selectedEntityIndex = targetEntity->GetID();
+						if (ImGui::BeginCombo("Entities", entityNames[selectedEntityIndex].c_str())) {
+							for (int i = 0; i < entityNames.size(); ++i) {
+								const bool isSelected = (selectedEntityIndex == i);
+								if (ImGui::Selectable(entityNames[i].c_str(), isSelected)) {
+									selectedEntityIndex = i;
+									targetEntity = entityManager->GetEntity(selectedEntityIndex);
+								}
+								if (isSelected)
+									ImGui::SetItemDefaultFocus();
+							}
+							ImGui::EndCombo();
+						}
+						ImGui::Spacing();
+						// Clone Entity button
+						if (ImGui::Button("Clone Entity"))
+						{
+							if (selectedEntityIndex)
+							{
+								entityManager->CloneEntity(selectedEntityIndex);
+							}
+						}
+						ImGui::SameLine();
+						ImGui::Spacing();
+						ImGui::SameLine();
+						if (ImGui::Button("Delete"))
+						{
+							if (!entityNames.empty() && (selectedEntityIndex >= 1))
+							{
+								entityManager->DestroyEntity(selectedEntityIndex);
+								entityNames.erase(entityNames.begin() + selectedEntityIndex);
+
+								// Update other relevant data structures
+								// Resize the vector if necessary
+								if (entityNames.empty())
+								{
+									selectedEntityIndex = -1; // No entities left, set index to an invalid value
+									targetEntity = nullptr;   // No entity to select
+								}
+								else if (selectedEntityIndex >= entityNames.size())
+								{
+									selectedEntityIndex = static_cast<int>(entityNames.size() - 1); // Adjust the selected index
+									entityManager->nextEntityID--;
+									prefabManager->nextPrefabID--;
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+
+								}
+								else if (selectedEntityIndex < entityNames.size())
+								{
+									entityManager->nextEntityID--;
+									prefabManager->nextPrefabID--;
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+								}
+								else
+								{
+									targetEntity = entityManager->GetEntity(selectedEntityIndex); // Update current entity
+								}
+							}
+						}
+					}
+					else
+					{
+						ImGui::Text("No entities available"); // or handle as appropriate
+					}
+
+					ImGui::Text("Clone Multiple Entities");
+					ImGui::InputText("Clone Count", cloneCountInput, 10);
+					// Clone Multiple Entity button
+					ImGui::Spacing();
+					if (ImGui::Button("Clone Multiple Entities"))
+					{
+						// Parse the clone count from the input text
+						int cloneCount = atoi(cloneCountInput);
+
+						// Ensure clone count is valid and non-negative
+						if (cloneCount > 0 && targetEntity)
+						{
+							// Clone the selected entity 'cloneCount' times
+							for (int i = 0; i < cloneCount; ++i)
+							{
+								entityManager->CloneEntity(targetEntity->GetID());
+							}
+						}
+					}
+					
+									
+					if (shouldLoadScene) {
+						// If `deleteAllEntity` is true, delete all entities
+						if (deleteAllEntity == true)
+						{
+							// Retrieve the size of entities list
+							int entityCount = static_cast<int>(entityManager->GetEntities()->size());
+
+							// Loop backwards through the entities and delete each one
+							for (int i = entityCount - 1; i >= 0; --i)
+							{
+								entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+							}
+
+							// Reset the selected entity index as there are no entities to select
+							selectedEntityIndex = -1;
+
+							// Set targetEntity to nullptr as there are no entities left
+							targetEntity = nullptr;
+
+							// Reset any other relevant data structures or counters if needed
+							entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
+							prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
+
+							std::cout << "Deleted All Entities" << std::endl;
+							deleteAllEntity = false;
+						}
+
+						// Now load the scene
+						deserializer->LoadScene(sceneToLoad);
+						if (entityManager->GetEntities()->size() >= 2) {
+							selectedEntityIndex = 1;
+						}
+						else if (entityManager->GetEntities()->size() == 1) {
+							selectedEntityIndex = 0;
+						}
+						else
+							selectedEntityIndex = -1;
+						if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
+							targetEntity = entityManager->GetEntity(selectedEntityIndex);
+						}
+						shouldLoadScene = false; // Reset flag
+					}
+
+				}
+				ImGui::EndTabItem();
+			}
+			
 			if (ImGui::BeginTabItem("Prefab Tool")) {
 				if (prefabManager)
 				{
@@ -1072,6 +1449,8 @@ namespace Engine {
 
 					if (!prefabNames.empty())
 					{
+						ImGui::Text("Current Prefab: ");
+						ImGui::Spacing();
 						if (ImGui::BeginCombo("Select Prefab", prefabNames[selectedPrefabIndex].c_str()))
 						{
 							for (int i = 0; i < prefabNames.size(); ++i)
@@ -1103,12 +1482,17 @@ namespace Engine {
 						}
 
 						// display components of the selected prefab
-						ImGui::Text("Components");
-						ImGui::SameLine();
+						
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite" ,"Pathfinding"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
+						ImGui::Spacing();
+						ImGui::Separator();
+						ImGui::Spacing();
+						ImGui::Text("Components List: ");
+						ImGui::Spacing();
+
 						if (ImGui::Combo("Add New Component", &selectedComponentType, componentTypes, IM_ARRAYSIZE(componentTypes)))
 						{
 							if (selectedComponentType > 0)
@@ -1210,12 +1594,18 @@ namespace Engine {
 										collision->c_Height = height;
 									}
 
-									if (ImGui::Checkbox("Is Colliding", &isColliding))
+									ImGui::Text("Select Layer:");
+									const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower" };
+									int currentLayerIndex = static_cast<int>(collision->layer);
+									if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) 
 									{
-										collision->isColliding = isColliding;
+										// Handle layer change here
+										collision->layer = static_cast<Layer>(currentLayerIndex);
 									}
+
 									break;
 								}
+
 								case ComponentType::Physics:
 								{
 									PhysicsComponent* physics = dynamic_cast<PhysicsComponent*>(pair.second);
@@ -1286,6 +1676,23 @@ namespace Engine {
 									break;
 								}
 
+								case ComponentType::Sprite:
+								{
+									ImGui::Spacing();
+									break;
+								}
+
+								case ComponentType::Pathfinding:
+								{
+									PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(pair.second);
+									int goalX = pathfinding->goalX;
+									int goalY = pathfinding->goalY;
+									ImGui::InputInt("Goal X", &goalX, 1, 50);
+									ImGui::InputInt("Goal Y", &goalY, 1, 50);
+
+									break;
+								}
+
 								default:
 									break;
 								}
@@ -1331,8 +1738,9 @@ namespace Engine {
 						}
 						*/
 
-
+						ImGui::Spacing();
 						ImGui::Separator();
+						ImGui::Spacing();
 
 						if (ImGui::CollapsingHeader("Prefab Creator"))
 						{
@@ -1343,7 +1751,7 @@ namespace Engine {
 							static Prefab bufferPrefab(0); // buffer prefab to hold changes
 
 							// Dropdown list for adding components
-							const char* creatorComponentTypes[] = { "", "Transform", "Collision", "Physics", "Texture" };
+							const char* creatorComponentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite", "Pathfinding"};
 							static int selectedComponent = 0; // index for component types array
 
 							if (ImGui::Combo("Add Component", &selectedComponent, creatorComponentTypes, IM_ARRAYSIZE(creatorComponentTypes)))
