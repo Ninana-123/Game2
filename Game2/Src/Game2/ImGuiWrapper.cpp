@@ -452,7 +452,7 @@ namespace Engine {
 			fileBrowser.Show();
 		}
 	}
-
+	/*
 	void ImGuiWrapper::RenderAudioBrowser() {
 		auto& audioFiles = assetManager->GetAllAudioFiles();
 		int audioIDCounter = 0;
@@ -485,7 +485,7 @@ namespace Engine {
 
 		// Code to handle file dialog for replacing audio...
 	}
-
+	*/
 
 	void ImGuiWrapper::RenderLevelEditor()
 	{
@@ -567,10 +567,10 @@ namespace Engine {
 					outputStream << "Texture" << '\n';
 					textureComp->Serialize(outputStream);
 				}
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
-					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Logic)) {
+					BehaviourComponent* behaviourComp  = dynamic_cast<BehaviourComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Logic));
 					outputStream << "Behaviour" << '\n';
-					textureComp->Serialize(outputStream);
+					behaviourComp->Serialize(outputStream);
 				}
 
 				// Mark the end of entity serialization
@@ -2017,7 +2017,7 @@ namespace Engine {
 				ImGui::EndTabItem();
 			}
 			RenderAssetBrowser();
-			RenderAudioBrowser();
+			//RenderAudioBrowser();
 			ImGui::EndTabBar();
 		}
 		ImGui::End();
