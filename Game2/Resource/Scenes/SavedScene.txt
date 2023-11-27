@@ -127,4 +127,5 @@ Rotation: 0
 Texture
 MainIndex: 6
 SubIndex: 0
+
 EndEntity
