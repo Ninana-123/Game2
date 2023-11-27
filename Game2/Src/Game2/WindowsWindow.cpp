@@ -201,7 +201,7 @@ namespace Engine {
 			m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 			if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
-				MinimizeWindow();
+				//MinimizeWindow();
 			}
 			else {
 				if (m_IsMaximized) {

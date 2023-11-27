@@ -171,9 +171,6 @@ xcopy "$(SolutionDir)Game2\vendor\freetype\freetype.dll" "$(SolutionDir)bin\Rele
   <ItemGroup>
     <ClCompile Include="Src\Sandbox.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Src\MoveBehaviour.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

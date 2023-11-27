@@ -25,6 +25,12 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 
 
+#ifdef NDEBUG // Check if we are in release mode
+bool renderCollisionBox = false;
+#else
+bool renderCollisionBox = true; // Debug mode
+#endif
+
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
@@ -536,7 +542,11 @@ namespace Engine
             shader.Bind();
             vaLines.Bind();
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
-            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+            if (renderCollisionBox == true) {
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
+            }
+            else
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 0.0f); // Set the line color
 
             // Draw the lines directly without an IBO
             GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
@@ -684,8 +694,8 @@ namespace Engine
                                 RenderBackground(modelA);
                             else {
                                 RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
-
-                                RenderLines(modelA);
+                                 RenderLines(modelA);
+                                
                             }
                         }
                         else

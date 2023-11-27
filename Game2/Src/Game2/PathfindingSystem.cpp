@@ -488,21 +488,21 @@ namespace Engine
                             if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
                             {
                                 // std::cout << "infantry here" << std::endl;
-                                textureComponent->textureKey = { 1, 0 };
+                                textureComponent->textureKey = { 1, 2 };
                             }
 
                             // Archer
                             if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
                             {
                                 // std::cout << "archer here" << std::endl;
-                                textureComponent->textureKey = { 3, 0 };
+                                textureComponent->textureKey = { 3, 2 };
                             }
 
                             // Tank
                             if (prevTexture != 7 && prevTexture != 8 && textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 1)
                             {
                                 // std::cout << "tank here" << std::endl;
-                                textureComponent->textureKey = { 2, 0 };
+                                textureComponent->textureKey = { 2, 2 };
                             }
 
                         }

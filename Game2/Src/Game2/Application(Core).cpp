@@ -34,7 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
-#include "MoveBehaviour.h"
+//#include "MoveBehaviour.h"
 #include "Input.h"
 
 // Global variables for frames per second (fps) calculation
@@ -59,10 +59,6 @@ namespace Engine
 {
     // Audio file paths and SoundInfo objects
     AudioEngine audioEngine;
-    SoundInfo sound_Win("Resource/Audio/levelwin.wav", "02", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Arrow("Resource/Audio/archer_shoot.wav", "03", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Slash("Resource/Audio/samurai_slash.wav", "04", false, false, 0.5f, 0.0f);
-    SoundInfo sound_Ambience("Resource/Audio/forest_ambience.wav", "02", false, true, 0.5f, 0.0f);
 
     Engine::Input InputHandler;
     // Window Properties configuration loaded from a file
@@ -164,21 +160,38 @@ namespace Engine
             targetEntity = EM->GetEntity(0);
         // Initialize audio files and load sounds
         audioEngine.init();
-        assetManager->AddAudioPath(AudioKey("level_bgm"), "Resource/Audio/level_bgm.wav");
-        auto sound_BGM = assetManager->loadAudio(AudioKey("level_bgm"));
-        assetManager->getAudio(AudioKey("level_bgm"))->setLoop();
-        audioEngine.loadSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
-        audioEngine.loadSound(sound_Ambience);
-        audioEngine.loadSound(sound_Win);
-        audioEngine.loadSound(sound_Arrow);
-        audioEngine.loadSound(sound_Slash);
+        assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
+        assetManager->loadAudio(AudioKey("sound_BGM"));
+        assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
 
-      /*  sound_BGM.setLoop();
-        sound_Win.setLoop();
-        sound_Arrow.setLoop();
-        sound_Slash.setLoop();*/
+        assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
+        assetManager->loadAudio(AudioKey("sound_Win"));
+        assetManager->getAudio(AudioKey("sound_Win"))->setVolume(0.5f);
 
-        // Initialize ImGuiWrapper
+        assetManager->AddAudioPath(AudioKey("sound_Arrow"), "Resource/Audio/archer_shoot.wav");
+        assetManager->loadAudio(AudioKey("sound_Arrow"));
+        assetManager->getAudio(AudioKey("sound_Arrow"))->setVolume(0.5f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Slash"), "Resource/Audio/samurai_slash.wav");
+        assetManager->loadAudio(AudioKey("sound_Slash"));
+        assetManager->getAudio(AudioKey("sound_Slash"))->setVolume(0.5f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Ambience"), "Resource/Audio/forest_ambience.wav");
+        assetManager->loadAudio(AudioKey("sound_Ambience"));
+        assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
+
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
+
+        /*  sound_BGM.setLoop();
+          sound_Win.setLoop();
+          sound_Arrow.setLoop();
+          sound_Slash.setLoop();*/
+
+          // Initialize ImGuiWrapper
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM, assetManager, loader);
         m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
@@ -196,32 +209,44 @@ namespace Engine
     {
         // Event handler
         EventDispatcher dispatcher(e);
-       dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-       dispatcher.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
-       //logger.Log(Engine::LogLevel::Event, e.ToString());
-       m_ImGuiWrapper->OnEvent(e);
+        dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+        dispatcher.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
+        //logger.Log(Engine::LogLevel::Event, e.ToString());
+        m_ImGuiWrapper->OnEvent(e);
 
+        if (e.GetEventType() == EventType::KeyPressed)
+        {
+            KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+
+            // Check if Ctrl, Alt, and Delete keys are pressed simultaneously
+            if (keyPressedEvent.GetKeyCode() == KEY_LEFT_CONTROL &&
+                keyPressedEvent.GetKeyCode() == KEY_LEFT_ALT &&
+                keyPressedEvent.GetKeyCode() == KEY_DELETE)
+            {
+                window.MinimizeWindow();
+            }
+        }
     }
 
     void Application::Run()
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        audioEngine.playSound(*(assetManager->getAudio(AudioKey("level_bgm"))));
-        audioEngine.playSound(sound_Ambience);
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
         previousTime = std::chrono::high_resolution_clock::now();
-       /*
-        if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
-            transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
-            if (transformTest != nullptr)
-            {
-                auto moveBehaviour = std::make_shared<Game::MoveBehaviour>(transformTest, 5.0f);
-            systemsManager->GetSystem<LogicSystem>().AddBehaviour(static_cast<Engine::BehaviourFCT*>(moveBehaviour.get()));
-            }
+        /*
+         if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
+             transformTest = dynamic_cast<TransformComponent*>(m_ImGuiWrapper->TargetEntityGetter()->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
+             if (transformTest != nullptr)
+             {
+                 auto moveBehaviour = std::make_shared<Game::MoveBehaviour>(transformTest, 5.0f);
+             systemsManager->GetSystem<LogicSystem>().AddBehaviour(static_cast<Engine::BehaviourFCT*>(moveBehaviour.get()));
+             }
 
-        }
-        */
-        
+         }
+         */
+
 
         while (m_Running)
         {
@@ -232,29 +257,6 @@ namespace Engine
             previousTime = currentTime;
             UpdateDeltaTime();
             Application::UpdateWindowTitle();
-
-            bool isFirstRun = true;
-            window.UpdateFocus();  // Check and handle focus in the window
-            // Check if the window has lost focus and minimize if needed
-            if (!window.IsWindowFocused()) {
-                window.MinimizeWindow();
-                // Pause audio only if it's not the first run
-                if (!isFirstRun) {
-                    audioEngine.pauseAllAudio();
-                }
-            }
-            else {
-                // Check if the window is not maximized and restore if needed
-                if (!window.IsWindowMaximized()) {
-                    window.RestoreWindow();
-                }
-                // Resume audio only if it's not the first run
-                if (!isFirstRun) {
-                    audioEngine.resumeAllAudio();
-                }
-            }
-            // After the first run, update the flag
-            isFirstRun = false;
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -283,34 +285,35 @@ namespace Engine
 
                 // Audio handling based on key input
                 if (InputHandler.IsKeyTriggered(KEY_3)) {
-                    audioEngine.playSound(sound_Win);
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Win"))));
                     //currentlyPlayingSound = false;
                 }
 
                 if (InputHandler.IsKeyTriggered(KEY_5)) {
-                    audioEngine.playSound(sound_Arrow);
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Arrow)"))));
                     //currentlyPlayingSound = false;
                 }
 
                 if (InputHandler.IsKeyTriggered(KEY_7)) {
-                    audioEngine.playSound(sound_Slash);
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
                     //currentlyPlayingSound = false;
                 }
 
-                if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(sound_Win)) {
-                    audioEngine.stopSound(sound_Win);
+                if (InputHandler.IsKeyTriggered(KEY_4) && audioEngine.soundIsPlaying(*(assetManager->getAudio(AudioKey("sound_Win"))))) {
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Win"))));
                     currentlyPlayingSound = false;
                 }
 
-                if (InputHandler.IsKeyTriggered(KEY_6) && audioEngine.soundIsPlaying(sound_Arrow)) {
-                    audioEngine.stopSound(sound_Arrow);
+                if (InputHandler.IsKeyTriggered(KEY_6) && audioEngine.soundIsPlaying(*(assetManager->getAudio(AudioKey("sound_Arrow"))))) {
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Arrow"))));
                     currentlyPlayingSound = false;
                 }
 
-                if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(sound_Slash)) {
-                    audioEngine.stopSound(sound_Slash);
+                if (InputHandler.IsKeyTriggered(KEY_8) && audioEngine.soundIsPlaying(*(assetManager->getAudio(AudioKey("sound_Slash"))))) {
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
                     currentlyPlayingSound = false;
                 }
+
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))
@@ -366,7 +369,7 @@ namespace Engine
                 {
 
                     if (collisionTest->isColliding) {
-                        audioEngine.playSound(sound_Slash);
+                        //audioEngine.playSound(sound_Slash);
                         if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
                             transformTest->position.y = lastPositionY - 10.f;
                         }
