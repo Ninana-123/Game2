@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\Arrow.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
+    <ClInclude Include="Src\Game2\ShootingComponent.h" />
+    <ClInclude Include="Src\Game2\ShootingSystem.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
@@ -86,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
+    <ClCompile Include="Src\Game2\Arrow.cpp" />
     <ClCompile Include="Src\Game2\AssetManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
     <ClCompile Include="Src\Game2\Body.cpp" />
@@ -122,6 +126,7 @@
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
+    <ClCompile Include="Src\Game2\ShootingSystem.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

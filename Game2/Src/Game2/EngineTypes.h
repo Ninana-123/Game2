@@ -17,7 +17,7 @@ const int MAX_SUBINDEX = 4;
 
 // Component IDs and Types
 typedef unsigned int ComponentID; //!< Type for component identifiers.
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Unknown }; 
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding,Shooting, Unknown }; 
 
 // Character State Enumeration
 enum c_state { Static, Walking, Attack, Death, Idle }; 
@@ -61,6 +61,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuGameInfo,
     mainMenuCredits,
     Logo,
+    Arrow,
     TextureClassCount
 };
 
