@@ -41,8 +41,12 @@ namespace Engine
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
             "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
-        m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
+        m_Camera(static_cast<float>( - GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>( - GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2)), 
+            m_EditorCamera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>( - GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2))
     {
+       
     }
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
@@ -51,7 +55,10 @@ namespace Engine
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
             "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
             entityManager(entityManager),
-             m_Camera(-640.0f, 640.0f, -360.0f, 360.0f), m_EditorCamera(-640.0f, 640.0f, -360.0f, 360.0f)
+        m_Camera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>(-GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2)),
+        m_EditorCamera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>(-GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2))
     {
     }
 
@@ -75,7 +82,6 @@ namespace Engine
 
         Window = glfwGetCurrentContext();
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
-        std::cout << "CHECK";
         GraphicsSystem::InitializeGLEW();
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

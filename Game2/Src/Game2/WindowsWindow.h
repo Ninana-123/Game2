@@ -47,7 +47,7 @@ namespace Engine {
          */
         void RestoreWindow();
 
-        bool IsImGuiHovered() const;
+       // bool IsImGuiHovered() const;
 
         /**
          * @brief Default constructor.
@@ -89,7 +89,13 @@ namespace Engine {
 
         inline bool IsWindowMaximized() const { return m_IsMaximized; }
 
-        //void UpdateFocus();
+        inline bool IsImGuiHovered() const { return isImGuiHovered; }
+
+        inline bool IsFullScreen() const { return m_IsFullScreen; }
+
+        void SwitchToWindowedMode();
+
+        void SwitchToFullScreenMode();
     private:
         /**
          * @brief Initializes the WindowsWindow using the provided WindowConfig properties.
@@ -119,5 +125,6 @@ namespace Engine {
         bool m_IsMaximized = false;
         bool m_IsFocused = true;
         bool isImGuiHovered = false;
+        bool m_IsFullScreen = false;
     };
 }

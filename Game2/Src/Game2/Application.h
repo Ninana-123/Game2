@@ -3,6 +3,8 @@
 \file		Application.h
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
+\co         Wayne Kwok Jun Lin (10%)
+\par        email: k.junlinwayne@digipen.edu
 \date   	29/09/2923
 \brief		This file contains the declaration of the main application class
 
@@ -134,6 +136,8 @@ namespace Engine
         WindowResizeEvent object containing event information.
         *************************************************************************/
         bool OnWindowResize(WindowResizeEvent& e);
+
+        void ToggleFullScreen();
 
         // Window instance 
         std::unique_ptr<Window> m_Window;

@@ -121,9 +121,6 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\LogicSystem.cpp">
-      <Filter>Systems\Logic</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
@@ -321,13 +318,6 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\LogicSystem.h">
-      <Filter>Systems\Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\BehaviourComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h">
       <Filter>Systems\Graphics</Filter>
     </ClInclude>

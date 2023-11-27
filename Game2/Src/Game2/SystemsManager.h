@@ -15,7 +15,6 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include "PathfindingSystem.h"
-#include "LogicSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
 #pragma once

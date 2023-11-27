@@ -20,13 +20,11 @@ namespace Engine
 	template CollisionSystem* SystemsManager::GetSystem<CollisionSystem>(); 
 	template PhysicsSystem* SystemsManager::GetSystem<PhysicsSystem>();
 	template PathfindingSystem* SystemsManager::GetSystem<PathfindingSystem>();
-	template LogicSystem* SystemsManager::GetSystem<LogicSystem>();
 
 	template void SystemsManager::ToggleSystemState<CollisionSystem>();
 	template void SystemsManager::ToggleSystemState<GraphicsSystem>();
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
 	template void SystemsManager::ToggleSystemState<PathfindingSystem>();
-	template void SystemsManager::ToggleSystemState<LogicSystem>();
 	
 	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
 		: assetManager(assetManager), entityManager(entityManager) {
@@ -35,7 +33,6 @@ namespace Engine
 	void SystemsManager::Initialize()
 	{
 		//add systems into systems container
-		all_systems.push_back(new LogicSystem());
 		all_systems.push_back(new CollisionSystem());
 		all_systems.push_back(new PhysicsSystem());
 		all_systems.push_back(new GraphicsSystem(assetManager, entityManager));
