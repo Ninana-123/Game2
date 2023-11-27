@@ -23,6 +23,7 @@
     <ClInclude Include="Src\Game2\BehaviourComponent.h" />
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
+    <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
     <ClInclude Include="Src\Game2\LogicSystem.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="Src\Game2\Camera.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
+    <ClCompile Include="Src\Game2\EditorFBO.cpp" />
     <ClCompile Include="Src\Game2\EngineTypes.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
@@ -238,7 +240,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Game2\vendor\glfw-3.3.8.bin.WIN64\include;Src;$(SolutionDir)Game2\vendor\spdlog\include;$(SolutionDir)Game2\vendor\glew-2.2.0\include;$(SolutionDir)Game2\vendor\FMOD\Include;$(SolutionDir)Game2\vendor\imgui;$(SolutionDir)Game2\vendor\GLAD\include\glad;%(AdditionalIncludeDirectories);$(SolutionDir)Sandbox\Src</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -268,9 +270,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>

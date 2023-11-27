@@ -85,7 +85,11 @@ namespace Engine
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
-
+#ifdef DEBUG
+    bool isFullScreen = false;
+#else
+    bool isFullScreen = true;
+#endif
     Application::Application()
     {
     }   
@@ -226,6 +230,31 @@ namespace Engine
                 window.MinimizeWindow();
             }
         }
+        if (e.GetEventType() == EventType::KeyPressed) {
+            KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+
+            // Check for ALT+ENTER (key codes may vary depending on your implementation)
+            if (keyPressedEvent.GetKeyCode() == KEY_F11) {
+                ToggleFullscreen();
+            }
+        }
+    }
+
+    void Application::ToggleFullscreen() {
+        GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window
+
+        if (isFullScreen) {
+            // Switch to windowed mode
+            glfwSetWindowMonitor(windowHandle, nullptr, 100, 100, windowProps.Width, windowProps.Height, GLFW_DONT_CARE);
+        }
+        else {
+            // Switch to fullscreen mode
+            GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+            glfwSetWindowMonitor(windowHandle, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+
+        isFullScreen = !isFullScreen; // Toggle the state
     }
 
     void Application::Run()
@@ -258,14 +287,17 @@ namespace Engine
             UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
+            UpdateWindowFocus();
+
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
-                // When stepping one frame, we perform only one update and then reset the stepOneFrame flag
                 if (stepOneFrame) {
                     isPaused = true; // Automatically pause after stepping one frame
                     stepOneFrame = false;
-                }
+
+                }                 
             }
+
             if (InputHandler.IsKeyTriggered(KEY_F7)) {
                 isPaused = !isPaused;
             }
@@ -275,9 +307,8 @@ namespace Engine
                 stepOneFrame = true;
             }
             //std::cout << InputHandler.GetMousePosition().x << " x "<< InputHandler.GetMousePosition().y << std::endl;  
-
+            currentNumberOfSteps = 0;
             while (accumulatedTime >= fixedDeltaTime) {
-
                 accumulatedTime -= fixedDeltaTime;
                 currentNumberOfSteps++;
                 InputHandler.Update();
@@ -514,6 +545,7 @@ namespace Engine
         UNREFERENCED_PARAMETER(e);
         // Handle window close event
         loader->SavePrefabs("Resource/Prefabs.txt");
+        glfwTerminate();
         m_Running = false;
         return true;
     }
@@ -554,13 +586,50 @@ namespace Engine
         }
     }
 
+    void Application::UpdateWindowFocus() {
+        if (m_Window) {
+            // Use get() to obtain a raw pointer to the managed object
+            Engine::WindowsWindow* windowsWindow = dynamic_cast<Engine::WindowsWindow*>(m_Window.get());
+
+            if (windowsWindow) {
+                // Check if the window is currently focused
+                bool isFocused = glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_FOCUSED) != 0;
+
+                // If the window is not focused or is iconified (minimized)
+                if (!isFocused || glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_ICONIFIED)) {
+                    // Minimize the window, pause the game, and pause all audio playback
+                    //windowsWindow->MinimizeWindow();
+                    isPaused = true;
+                    audioEngine.pauseAllAudio();
+                    Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
+                }
+                // If the window is focused
+                else {
+                    // If the window was maximized, restore it
+                    if (windowsWindow->IsWindowMaximized()) {
+                        windowsWindow->RestoreWindow();
+                    }
+                    // Unpause the game, resume audio playback, and log the event
+                    isPaused = false;
+                    audioEngine.resumeAllAudio();
+                    Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
+                }
+            }
+        }
+    }
+
     void Application::UpdateWindowTitle() 
     {
-        // Update the window title with FPS
+        std::string title_str = windowProps.Title;
+
+        // Append FPS information in debug mode only
+#ifdef DEBUG
         std::stringstream ss;
         ss << std::fixed << std::setprecision(2) << fps;
         std::string fps_str = ss.str();
-        std::string title_str = windowProps.Title +" | FPS: " + fps_str;
+        title_str += " | FPS: " + fps_str;
+#endif
+
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
-    }   
+    }
 }

@@ -21,7 +21,7 @@ namespace Engine
 	class BehaviourComponent : public Component
 	{
 	protected:
-		unsigned int m_behaviourIndex;
+		unsigned int m_behaviourIndex = 0;
 	public:
 		
 		inline void SetBehaviourIndex(const unsigned int& behaviourIndex) {

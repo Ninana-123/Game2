@@ -163,6 +163,15 @@ namespace Engine {
         const std::string& getAudioPath(const AudioKey& key) const;
 
         void AddAudioPath(const AudioKey& key, const std::string& path);
+
+        const std::vector<AudioKey>& GetAllAudioFiles() const {
+            
+            std::vector<AudioKey> allAudioKeys;
+            for (const auto& audioPair : audios) {
+                allAudioKeys.push_back(audioPair.first);
+            }
+            return allAudioKeys;
+        }
     private:
 
         std::map<AudioKey, std::string> audioFilePaths;

@@ -19,7 +19,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "logger.h"
 #include "TransformComponent.h"
 
-
 namespace Engine {
 
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
@@ -143,8 +142,6 @@ namespace Engine {
         }
     }
 
-
-
     void AssetManager::unloadAudio(const AudioKey& key) {
         auto it = audios.find(key);
         if (it != audios.end()) {
@@ -189,6 +186,5 @@ namespace Engine {
         audioFilePaths[key] = path;
         std::cout << path<< std::endl;
     }
-
 
 }

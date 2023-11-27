@@ -18,6 +18,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "Core.h"
 #include "Event.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 
 namespace Engine {
@@ -93,6 +95,7 @@ namespace Engine {
         \return
         A pointer to the native window handle.
         ***********************************************************************/
-        virtual void* GetNativeWindow() const = 0;
+        virtual GLFWwindow* GetNativeWindow() const = 0;
+
     };
 }

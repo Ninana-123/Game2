@@ -36,7 +36,17 @@ namespace Engine
 	class CollisionSystem : public System //CollisionSystem class, Child class of System base class
 	{
 	public:
-		
+		/**************************************************************************/
+		/*!
+		\brief Retrieves the EntityID of the last colliding entity.
+
+		\return
+		EntityID of the last colliding entity.
+
+		\note
+		This function returns the identifier of the entity involved in the most recent collision.
+		*/
+		/**************************************************************************/
 		EntityID GetLastCollidingEntityID();
 
 		/*!*****************************************************************

@@ -32,20 +32,40 @@ Engine::ErrorHandler errorHandler;
  * The main function serves as the entry point for the application. It creates
  * an instance of the application, initializes it, and starts the application loop.
  */
+ // Use the main entry point for Debug mode
+#if defined(DEBUG) || defined(_DEBUG)
+
 int main(int argc, char** argv)
 {
     UNREFERENCED_PARAMETER(argc);
     UNREFERENCED_PARAMETER(argv);
 
-    // Enable run-time memory check for debug builds.
-#if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-#endif
 
     errorHandler.Initialize();
     auto app = Engine::CreateApplication();
     app->Initialize();
     app->Run();
-    
+
     return 0;
 }
+
+#else
+
+// Use WinMain entry point for Release mode
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hInstance);
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(nCmdShow);
+
+    errorHandler.Initialize();
+    auto app = Engine::CreateApplication();
+    app->Initialize();
+    app->Run();
+
+    return 0;
+}
+
+#endif
