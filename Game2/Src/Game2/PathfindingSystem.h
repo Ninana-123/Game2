@@ -26,6 +26,8 @@ Technology is prohibited.
 #include "System.h"
 #include "PathfindingComponent.h"
 
+extern bool isGameOver;
+
 namespace Engine
 {
     class PathfindingSystem : public System

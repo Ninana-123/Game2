@@ -61,6 +61,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuGameInfo,
     mainMenuCredits,
     Logo,
+    victoryScreen,
     TextureClassCount
 };
 

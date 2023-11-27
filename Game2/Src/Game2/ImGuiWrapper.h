@@ -30,6 +30,7 @@ extern bool shouldLoadScene;
 extern std::string sceneToLoad;
 extern bool useEditorCamera;
 
+
 namespace Engine {
 
 	class GAME2_API ImGuiWrapper {

@@ -508,6 +508,12 @@ namespace Engine
                                 textureComponent->textureKey = { 2, 2 };
                             }
 
+                            if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON)) 
+                            {
+                                isGameOver = true;
+                                std::cout << "Hello check" << std::endl;
+                            }
+
                         }
 
                     }
