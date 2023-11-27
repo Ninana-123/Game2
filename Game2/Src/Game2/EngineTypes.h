@@ -41,7 +41,7 @@ enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, 
 enum TextureClass //!< Enumeration for different texture classes.
 {
     Background,
-    Infanty,
+    Infantry,
     Tank,
     Archer,
     Tower,

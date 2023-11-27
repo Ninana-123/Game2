@@ -3,6 +3,8 @@
 \file		Application.cpp
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
+\co         Wayne Kwok Jun Lin
+\co         email: k.junlinwayne@digipen.edu
 \date   	29/09/2923
 \brief		This file contains the implementation of the main application class
             and its functionalities, including window initialization, event 
@@ -274,7 +276,6 @@ namespace Engine
          }
          */
 
-
         while (m_Running)
         {
             auto loopStartTime = std::chrono::high_resolution_clock::now();
@@ -342,7 +343,6 @@ namespace Engine
                     audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
                     currentlyPlayingSound = false;
                 }
-
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))

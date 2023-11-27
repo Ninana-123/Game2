@@ -254,6 +254,7 @@ namespace Engine {
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
 			renderImGuiGUI = !renderImGuiGUI;
 		}
+
 		if (useEditorCamera == true) {
 			ImGui::Begin("Editor Camera Instructions");
 			ImGui::Text("Instructions for using the Editor Camera:");
@@ -265,6 +266,7 @@ namespace Engine {
 			ImGui::Text("Rotate Camera: U");
 			ImGui::End();
 		}
+
 		if (renderImGuiGUI == true) {
 			ImGuiIO& io = ImGui::GetIO();
 			int displayWidth, displayHeight;
@@ -290,10 +292,11 @@ namespace Engine {
 		}
 	}
 
+
 	void ImGuiWrapper::UpdateImGuiInteractionState() {
-			// Check if ImGui wants to capture the mouse or keyboard
-			isImGuiHovered = ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard;
-		}
+		isImGuiHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow);
+		Logger::GetInstance().Log(LogLevel::Debug, "ImGui Hovered: " + std::to_string(isImGuiHovered));
+	}
 
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
