@@ -270,9 +270,7 @@ namespace Engine {
 				ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 			}
 
-			io.MouseDown[0] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
-			io.MouseDown[1] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
-			io.MouseDown[2] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS;
+			//ImGui::Image((void*)(intptr_t)Engine::GraphicSystem::GetInstance().editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
 			RenderLevelEditor();
 		}
@@ -811,7 +809,6 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								//bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1094,7 +1091,6 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								//bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1587,7 +1583,6 @@ namespace Engine {
 
 									float width = collision->c_Width;
 									float height = collision->c_Height;
-									//bool isColliding = collision->isColliding;
 
 									// Input boxes for editing CollisionComponent properties
 									if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))

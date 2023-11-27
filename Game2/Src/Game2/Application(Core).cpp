@@ -85,7 +85,11 @@ namespace Engine
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
-
+#ifdef DEBUG
+    bool isFullScreen = false;
+#else
+    bool isFullScreen = true;
+#endif
     Application::Application()
     {
     }   
@@ -226,6 +230,31 @@ namespace Engine
                 window.MinimizeWindow();
             }
         }
+        if (e.GetEventType() == EventType::KeyPressed) {
+            KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+
+            // Check for ALT+ENTER (key codes may vary depending on your implementation)
+            if (keyPressedEvent.GetKeyCode() == KEY_F11) {
+                ToggleFullscreen();
+            }
+        }
+    }
+
+    void Application::ToggleFullscreen() {
+        GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window
+
+        if (isFullScreen) {
+            // Switch to windowed mode
+            glfwSetWindowMonitor(windowHandle, nullptr, 100, 100, windowProps.Width, windowProps.Height, GLFW_DONT_CARE);
+        }
+        else {
+            // Switch to fullscreen mode
+            GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(primaryMonitor);
+            glfwSetWindowMonitor(windowHandle, primaryMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+
+        isFullScreen = !isFullScreen; // Toggle the state
     }
 
     void Application::Run()
@@ -282,9 +311,8 @@ namespace Engine
                 stepOneFrame = true;
             }
             //std::cout << InputHandler.GetMousePosition().x << " x "<< InputHandler.GetMousePosition().y << std::endl;  
-
+            currentNumberOfSteps = 0;
             while (accumulatedTime >= fixedDeltaTime) {
-
                 accumulatedTime -= fixedDeltaTime;
                 currentNumberOfSteps++;
                 InputHandler.Update();
@@ -520,6 +548,7 @@ namespace Engine
         UNREFERENCED_PARAMETER(e);
         // Handle window close event
         loader->SavePrefabs("Resource/Prefabs.txt");
+        glfwTerminate();
         m_Running = false;
         return true;
     }
@@ -619,11 +648,16 @@ namespace Engine
 
     void Application::UpdateWindowTitle() 
     {
-        // Update the window title with FPS
+        std::string title_str = windowProps.Title;
+
+        // Append FPS information in debug mode only
+#ifdef DEBUG
         std::stringstream ss;
         ss << std::fixed << std::setprecision(2) << fps;
         std::string fps_str = ss.str();
-        std::string title_str = windowProps.Title +" | FPS: " + fps_str;
+        title_str += " | FPS: " + fps_str;
+#endif
+
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
-    }   
+    }
 }
