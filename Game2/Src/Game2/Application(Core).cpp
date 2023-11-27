@@ -72,6 +72,7 @@ namespace Engine
 
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
+    CollisionSystem* collisionSystem;
     std::shared_ptr<EntityManager> EM;
     Engine::PrefabManager PM;
     EntityID cloneEntity;
@@ -146,6 +147,7 @@ namespace Engine
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
         graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
+        collisionSystem = systemsManager->GetSystem<CollisionSystem>();
 
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);

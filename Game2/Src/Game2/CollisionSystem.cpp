@@ -22,9 +22,9 @@ Technology is prohibited.
 #include "Input.h"
 #include "Window.h"
 #include "inGameGUI.h"
+#include "GraphicsSystem.h"
 
-
-float dt = 0.0;  // Time difference between frames (delta time)
+double l_dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
@@ -159,7 +159,6 @@ namespace Engine
 		Step 4: Repeat step 3 on the y-axis
 
 		Step 5: Otherwise the rectangles intersect
-
 		*/
 
 		if (aabb1.max.x < aabb2.min.x)
@@ -170,10 +169,10 @@ namespace Engine
 			return false;
 		if (aabb1.min.y > aabb2.max.y)
 			return false;
-
+		l_dt = dt;
 		VECTORMATH::Vec2 relVelocity = { 0, 0 };
 		VECTORMATH::Vec2 tFirst = { 0, 0 };
-		VECTORMATH::Vec2 tLast = { dt, dt };
+		VECTORMATH::Vec2 tLast = { static_cast<float>(dt) , static_cast<float>(dt) };
 		VECTORMATH::Vec2 tTemp = { 0, 0 };
 		relVelocity.x = vel2.x - vel1.x;
 		relVelocity.y = vel2.y - vel1.y;
@@ -636,17 +635,31 @@ namespace Engine
 
 	void CollisionSystem::EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
+		std::cout << e_editorWidth << std::endl;
+		std::cout << e_editorHeight << std::endl;
+
+		float editorWidth = e_editorWidth;
+		float editorHeight = e_editorHeight;
+
 		// Get the mouse position from the input system
 		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
 
-		int displayWidth, displayHeight;
-		glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
-		float scaleX = static_cast<float>( 1280.f / displayWidth);
-		float scaleY = static_cast<float>( 720.f / displayHeight);
+		//int displayWidth, displayHeight;
+		//glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+		float screenScaleX = 1280.f / editorWidth;
+		float screenScaleY = 720.f / editorHeight;
+
+		// Scale factor for the additional scaling in the editor viewport
+		//float editorScaleX = static_cast<float>(editorWidth) / 1280.0f;
+		//float editorScaleY = static_cast<float>(editorHeight) / 720.0f;
+
+		// Combine scaling factors
+		//float scaleX = screenScaleX * editorScaleX;
+		//float scaleY = screenScaleY * editorScaleY;
 
 		// Normalize the mouse position
-		mousePosition.x = mousePosition.x * scaleX - 1280.f / 2.0f;
-		mousePosition.y = 720.f / 2.0f - mousePosition.y * scaleY;
+		mousePosition.x = (mousePosition.x - 10.f) * screenScaleX - 1280.f / 2.0f;
+		mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f)* screenScaleY;
 
 		// Iterate through all entities in the editable layer
 		for (auto it = entities->begin(); it != entities->end(); ++it)

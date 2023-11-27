@@ -42,6 +42,9 @@ bool renderImGuiGUI = false;
 bool renderImGuiGUI = true; // Debug mode
 #endif
 
+float e_editorWidth;
+float e_editorHeight;
+
 namespace Engine {
 
 
@@ -56,6 +59,7 @@ namespace Engine {
 	static float fpsValues[FPSCount] = { 0 };
 	static int currentFrame = 0;
 	AudioEngine LEAudioEngine;
+
 
 	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
@@ -273,11 +277,16 @@ namespace Engine {
 			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 			
 			ImGui::Begin("Level Editor Viewport");
+
+			ImVec2 contentSize = ImGui::GetContentRegionAvail();
+			e_editorWidth = contentSize.x;
+			e_editorHeight = contentSize.y;
+
 			SystemsManager& systemsManager = SystemsManager::GetInstance();
 			GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
 			// Display the texture in the ImGui window
-			ImGui::Image((void*)(intptr_t)graphicSystem->editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-
+			ImGui::Image((void*)(intptr_t)graphicSystem->editorFBO.GetTexID(), contentSize, ImVec2(0, 1), ImVec2(1, 0));
+			
 			ImGui::End();
 			RenderLevelEditor();
 		}
