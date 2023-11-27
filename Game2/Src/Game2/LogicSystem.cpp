@@ -6,11 +6,13 @@
 
 namespace Engine {
 
+    //Initializes LogicSystem
     void LogicSystem::Initialize() {
         // Initialization logic for LogicSystem
         std::cout << "LogicSystem Initialized\n";
     }
 
+    //Update loop for LogicSystem
     void LogicSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) {
         for (auto& [id, entity] : *entities) {
             if (entity->HasComponent(ComponentType::Logic)) {
@@ -26,6 +28,7 @@ namespace Engine {
         //std::cout << "LogicSystem Updated\n";
     }
 
+    //Adds behaviour to system
     void LogicSystem::AddBehaviour(BehaviourFCT* behaviour) {
         // Add a new behaviour to the system
         m_behaviours.push_back(behaviour);

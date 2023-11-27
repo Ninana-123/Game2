@@ -147,23 +147,70 @@ namespace Engine {
         **************************************************************************/
         const std::string& GetTexturePath(const TextureKey& textureKey) const;
 
+
+        /**
+        * @brief Returns a reference to the unordered map containing all loaded textures.
+        * @return A reference to the map of textures.
+        */
         // Update the function signature
         inline std::unordered_map<TextureKey, std::shared_ptr<Texture>>& GetAllTextures() {
             return textures;
         }
 
+
+        /**
+        * @brief Returns a reference to the map containing file paths for all textures.
+        * @return A reference to the map of texture file paths.
+        */
         const std::map<TextureKey, std::string>& GetTextureFilePaths() const {
             return textureFilePaths;
         }
+
+        /**
+        * @brief Loads an audio file and returns a shared pointer to the associated SoundInfo.
+        * @param key The key identifying the audio file.
+        * @return A shared pointer to the loaded SoundInfo, or nullptr if the file is not found.
+        */
         std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key);
+
+        /**
+        * @brief Unloads an audio file based on its key.
+        * @param key The key identifying the audio file to be unloaded.
+        */
         void unloadAudio(const AudioKey& key);
+
+        /**
+        * @brief Retrieves a shared pointer to the SoundInfo associated with the specified audio key.
+        * @param key The key identifying the audio file.
+        * @return A shared pointer to the SoundInfo, or nullptr if the file is not found.
+        */
         std::shared_ptr<SoundInfo> getAudio(const AudioKey& key) const;
 
+        /**
+        * @brief Updates the file path of an audio file.
+        * @param key The key identifying the audio file.
+        * @param newFilePath The new file path for the audio file.
+        */
         void updateAudioFilePath(const AudioKey& key, const std::string& newFilePath);
+
+        /**
+        * @brief Retrieves the file path of an audio file based on its key.
+        * @param key The key identifying the audio file.
+        * @return The file path of the audio file, or an empty string if the file is not found.
+        */
         const std::string& getAudioPath(const AudioKey& key) const;
 
+        /**
+        * @brief Adds an audio file path to the manager.
+        * @param key The key identifying the audio file.
+        * @param path The file path of the audio file.
+        */
         void AddAudioPath(const AudioKey& key, const std::string& path);
 
+        /**
+        * @brief Returns a vector containing all audio keys currently loaded in the manager.
+        * @return A vector of audio keys.
+        */
         const std::vector<AudioKey>& GetAllAudioFiles() const {
             
             std::vector<AudioKey> allAudioKeys;
