@@ -1,4 +1,4 @@
-10
+9
 Infantry
 Transform
 Position: -135 -300
@@ -223,15 +223,5 @@ ScaleY: 4
 Rotation: 0
 Texture
 MainIndex: 6
-SubIndex: 0
-EndPrefab
-VictoryScreen
-Transform
-Position: 0 0
-ScaleX: 16
-ScaleY: 9
-Rotation: 0
-Texture
-MainIndex: 21
 SubIndex: 0
 EndPrefab

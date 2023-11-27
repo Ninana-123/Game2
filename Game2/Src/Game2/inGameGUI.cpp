@@ -18,7 +18,6 @@
 int pathfindingEntityTexture = 0;
 bool isGamePaused = false;
 bool inSettings = false;
-bool isGameOver = false;
 
 namespace Engine
 {
@@ -110,13 +109,6 @@ namespace Engine
 		}
 		// Reset flag
 		CollisionCheck = false;
-
-		if (isGameOver && Input::IsKeyTriggered(KEY_W))
-		{
-			Prefab* victoryPrefab = prefabManager->GetPrefab(9);
-			entityManager->CreateEntityFromPrefab(*victoryPrefab);
-			std::cout << "Hello check" << std::endl;
-		}
 		
     }
 }

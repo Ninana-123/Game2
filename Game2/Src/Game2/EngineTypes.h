@@ -20,7 +20,7 @@ typedef unsigned int ComponentID;
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding,Logic, Unknown };
 
 // Character State Enumeration
-enum c_state { Static, Walking, Attack, Death, Idle }; 
+enum c_state { Static, Walking, Attack, Death,  TowerDestroyed, CastleDestroyed, Idle }; 
 
 /*!
 \brief
