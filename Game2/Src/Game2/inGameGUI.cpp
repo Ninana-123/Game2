@@ -73,14 +73,14 @@ namespace Engine
 			if (lastCollidingEntityTexture == 10)
 			{
 				//std::cout << "Colliding with pause button" << std::endl;
-				isGamePaused = true;
+				isPaused = true;
 				lastCollidingEntityTexture = 0;
 			}
 
 			if (lastCollidingEntityTexture == 11)
 			{
 				//std::cout << "Colliding with play button" << std::endl;
-				isGamePaused = false;
+				isPaused = false;
 				lastCollidingEntityTexture = 0;
 			}
 
@@ -97,7 +97,6 @@ namespace Engine
 				}
 				lastCollidingEntityTexture = 0;
 			}
-
 		}
 
 		// Cheat code to get to victory screen
@@ -108,7 +107,6 @@ namespace Engine
 		}
 
 		// Reset flag
-		CollisionCheck = false;
-		
+		CollisionCheck = false;		
     }
 }

@@ -3,6 +3,8 @@
 \file		Application.cpp
 \author 	Liu Xujie
 \par    	email: l.xujie@digipen.edu
+\co         Wayne Kwok Jun Lin
+\co         email: k.junlinwayne@digipen.edu
 \date   	29/09/2923
 \brief		This file contains the implementation of the main application class
             and its functionalities, including window initialization, event 
@@ -275,11 +277,6 @@ namespace Engine
 
          }
          */
-
-        //if (InputHandler.IsKeyTriggered(KEY_F11))
-        //{
-        //    ToggleFullScreen();
-        //}
 
         while (m_Running)
         {
@@ -620,31 +617,6 @@ namespace Engine
             }
         }
     }
-
-    //void Application::ToggleFullScreen()
-    //{
-    //    if (m_Window)
-    //    {
-    //        // Use get() to obtain a raw pointer to the managed object
-    //        Engine::WindowsWindow* windowsWindow = dynamic_cast<Engine::WindowsWindow*>(m_Window.get());
-
-    //        if (windowsWindow)
-    //        {
-    //            // Check if the window is currently in full-screen mode
-    //            bool isFullScreen = glfwGetWindowMonitor(windowsWindow->GetNativeWindow()) != nullptr;
-
-    //            // Toggle between windowed and full-screen mode
-    //            if (isFullScreen)
-    //            {
-    //                windowsWindow->SwitchToWindowedMode();
-    //            }
-    //            else
-    //            {
-    //                windowsWindow->SwitchToFullScreenMode();
-    //            }
-    //        }
-    //    }
-    //}
 
     void Application::UpdateWindowTitle() 
     {

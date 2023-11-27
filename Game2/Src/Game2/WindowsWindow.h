@@ -91,11 +91,11 @@ namespace Engine {
 
         inline bool IsImGuiHovered() const { return isImGuiHovered; }
 
-        //inline bool IsFullScreen() const { return m_IsFullScreen; }
+        inline bool IsFullScreen() const { return m_IsFullScreen; }
 
-        //void SwitchToWindowedMode();
+        void SwitchToWindowedMode();
 
-        //void SwitchToFullScreenMode();
+        void SwitchToFullScreenMode();
     private:
         /**
          * @brief Initializes the WindowsWindow using the provided WindowConfig properties.

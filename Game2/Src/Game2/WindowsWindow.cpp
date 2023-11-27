@@ -78,11 +78,10 @@ namespace Engine {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
 		//const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		//m_Window = glfwCreateWindow(mode->width, mode->height, m_Data.Title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		//glfwSetWindowMonitor(GetNativeWindow(), glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
-		m_Window = glfwCreateWindow(GetWidth(), GetHeight(), m_Data.Title.c_str(), nullptr , nullptr);
+
 	#ifdef DEBUG
 		
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -106,8 +105,6 @@ namespace Engine {
 		}
 		m_Window = glfwCreateWindow(mode->width, mode->height, m_Data.Title.c_str(), primaryMonitor, nullptr);
 	#endif
-	
-
 		
 		glfwSetWindowAttrib(m_Window, GLFW_RESIZABLE, GLFW_TRUE);
 
@@ -221,7 +218,6 @@ namespace Engine {
 	// Update the WindowsWindow by processing events and swapping buffers
 	void WindowsWindow::OnUpdate() {
 
-		//UpdateFocus();
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
@@ -250,41 +246,41 @@ namespace Engine {
 		}
 	}
 
-	//void WindowsWindow::SwitchToWindowedMode()
-	//{
-	//	// Check if the window is not already in windowed mode
-	//	if (!glfwGetWindowMonitor(m_Window))
-	//	{
-	//		// Get the current window position and size
-	//		int x, y, width, height;
-	//		glfwGetWindowPos(m_Window, &x, &y);
-	//		glfwGetWindowSize(m_Window, &width, &height);
+	void WindowsWindow::SwitchToWindowedMode()
+	{
+		// Check if the window is not already in windowed mode
+		if (!glfwGetWindowMonitor(m_Window))
+		{
+			// Get the current window position and size
+			int x, y, width, height;
+			glfwGetWindowPos(m_Window, &x, &y);
+			glfwGetWindowSize(m_Window, &width, &height);
 
-	//		// Restore the windowed mode with the previous position and size
-	//		glfwSetWindowMonitor(m_Window, nullptr, x, y, width, height, 0);
-	//	}
-	//}
+			// Restore the windowed mode with the previous position and size
+			glfwSetWindowMonitor(m_Window, nullptr, x, y, width, height, 0);
+		}
+	}
 
-	//void WindowsWindow::SwitchToFullScreenMode()
-	//{
-	//	// Check if the window is not already in full-screen mode
-	//	if (!glfwGetWindowMonitor(m_Window))
-	//	{
-	//		// Get the primary monitor
-	//		GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
+	void WindowsWindow::SwitchToFullScreenMode()
+	{
+		// Check if the window is not already in full-screen mode
+		if (!glfwGetWindowMonitor(m_Window))
+		{
+			// Get the primary monitor
+			GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 
-	//		// Get the current window position and size
-	//		int x, y, width, height;
-	//		glfwGetWindowPos(m_Window, &x, &y);
-	//		glfwGetWindowSize(m_Window, &width, &height);
+			// Get the current window position and size
+			int x, y, width, height;
+			glfwGetWindowPos(m_Window, &x, &y);
+			glfwGetWindowSize(m_Window, &width, &height);
 
-	//		// Switch to full-screen mode using the primary monitor
-	//		glfwSetWindowMonitor(m_Window, primaryMonitor, 0, 0, width, height, GLFW_DONT_CARE);
-	//	}
-	//	else
-	//	{
-	//		// If the window is already in full-screen mode, switch to windowed mode
-	//		SwitchToWindowedMode();
-	//	}
-	//}
+			// Switch to full-screen mode using the primary monitor
+			glfwSetWindowMonitor(m_Window, primaryMonitor, 0, 0, width, height, GLFW_DONT_CARE);
+		}
+		else
+		{
+			// If the window is already in full-screen mode, switch to windowed mode
+			SwitchToWindowedMode();
+		}
+	}
 } // namespace Engine
