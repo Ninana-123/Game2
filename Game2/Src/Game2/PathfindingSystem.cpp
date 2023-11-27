@@ -511,7 +511,6 @@ namespace Engine
                             if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON)) 
                             {
                                 isGameOver = true;
-                                std::cout << "Hello check" << std::endl;
                             }
 
                         }

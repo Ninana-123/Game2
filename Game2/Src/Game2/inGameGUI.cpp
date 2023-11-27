@@ -108,6 +108,13 @@ namespace Engine
 			}
 
 		}
+
+		if (isGameOver && Input::IsKeyTriggered(KEY_W))
+		{
+			Prefab* victoryPrefab = prefabManager->GetPrefab(9);
+			entityManager->CreateEntityFromPrefab(*victoryPrefab);
+		}
+
 		// Reset flag
 		CollisionCheck = false;
 		
