@@ -437,7 +437,8 @@ namespace Engine
                             // Infantry switch to walking mode
                             if ((pathfindingEntityTexture == 7))
                             {
-                                if (textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0)
+                                if ((textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 0)
+                                    || textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 2)
                                 {
                                     textureComponent->textureKey = { 1, 1 };
                                 }
@@ -449,7 +450,8 @@ namespace Engine
                             // Archer switch to walking mode
                             else if ((pathfindingEntityTexture == 8))
                             {
-                                if (textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0)
+                                if ((textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0)
+                                    || textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 2)
                                 {
                                     textureComponent->textureKey = { 3, 1 };
                                 }
@@ -461,7 +463,8 @@ namespace Engine
                             // Tank switch to walking mode
                             else if ((pathfindingEntityTexture == 9))
                             {
-                                if (textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0)
+                                if ((textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0)
+                                    || textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 2)
                                 {
                                     textureComponent->textureKey = { 2, 1 };
                                 }
@@ -481,7 +484,7 @@ namespace Engine
 
                         }
 
-                        // Switch back to idle mode
+                        // Switch back to attacking mode
                         else
                         {
                             // Infantry
