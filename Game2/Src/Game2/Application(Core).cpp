@@ -100,7 +100,11 @@ namespace Engine
 
     void Application::Initialize()
     {
-        glfwInit();
+        // Initialize GLFW
+        if (!glfwInit()) {
+            Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to initialize GLFW");
+            return; // Handle the initialization error
+        }
 
         // Create the window
         m_Window = std::unique_ptr<Window>(Window::Create(windowProps));
