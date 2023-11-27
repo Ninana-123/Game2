@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "EditorFBO.h"
-#include <iostream>
 
 EditorFBO::EditorFBO() : fbo(0), texture(0), width(0), height(0) {}
 

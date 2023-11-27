@@ -13,6 +13,7 @@ public:
     void Unbind();
     GLuint GetTexID() const;
     void Resize(int newWidth, int newHeight);
+   
 
 private:
     GLuint fbo;
