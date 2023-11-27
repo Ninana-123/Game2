@@ -211,6 +211,21 @@ namespace Engine
 
         EditorFBO editorFBO;
 
+        inline int GetWindowWidth() {
+            int width = 0, temp=0;
+            if(glfwInit())
+            glfwGetWindowSize(glfwGetCurrentContext(), &width, &temp);
+            return width;
+        }
+
+        inline int GetWindowHeight() {
+            int height = 0, temp=0;
+            if (glfwInit())
+                glfwGetWindowSize(glfwGetCurrentContext(), &temp, &height);
+            return height;
+        }
+
+
     private:
         Shader shader;
         std::vector<std::vector<Texture>> textures;
