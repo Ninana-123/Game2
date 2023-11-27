@@ -528,41 +528,41 @@ namespace Engine
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
             }
-            //if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
-            //{
-            //    // Calculate deltaTime (time since the last frame)
-            //    static double lastTime = glfwGetTime();
-            //    double currentTime = glfwGetTime();
-            //    double deltaTime = currentTime - lastTime;
-            //    lastTime = currentTime;
-            //    float frameRate = 10.0f;
-            //    float horizontalFrames = 6.0f; // Number of horizontal frames
-            //    float verticalFrames = 1.0f; // Number of vertical frames
-            //    //float Length = 1536.0f; // length of sprite sheet
-            //    Anim_Mode playMode = Anim_Mode::LOOP;
+            if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
+            {
+                // Calculate deltaTime (time since the last frame)
+                static double lastTime = glfwGetTime();
+                double currentTime = glfwGetTime();
+                double deltaTime = currentTime - lastTime;
+                lastTime = currentTime;
+                float frameRate = 10.0f;
+                float horizontalFrames = 6.0f; // Number of horizontal frames
+                float verticalFrames = 1.0f; // Number of vertical frames
+                //float Length = 1536.0f; // length of sprite sheet
+                Anim_Mode playMode = Anim_Mode::LOOP;
 
-            //    // Create a static animation object if not created already
-            //    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-            //    // Play the animation
-            //    animation.Play();
-            //    // Update the animation with deltaTime
-            //    animation.Update(static_cast<float>(deltaTime));
-            //    // Get the current frame index
-            //    int currentFrame = animation.GetCurrentFrame();
+                // Create a static animation object if not created already
+                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                // Play the animation
+                animation.Play();
+                // Update the animation with deltaTime
+                animation.Update(static_cast<float>(deltaTime));
+                // Get the current frame index
+                int currentFrame = animation.GetCurrentFrame();
 
-            //    // Calculate the texture offset based on the current frame
-            //    float frameWidth = 1.0f / horizontalFrames;
-            //    float frameHeight = 1.0f / verticalFrames;
-            //    float texCoordX = currentFrame * frameWidth;
-            //    //float texCoordY = currentRow * frameHeight;
+                // Calculate the texture offset based on the current frame
+                float frameWidth = 1.0f / horizontalFrames;
+                float frameHeight = 1.0f / verticalFrames;
+                float texCoordX = currentFrame * frameWidth;
+                //float texCoordY = currentRow * frameHeight;
 
-            //    // Set the texture offset in the shader
-            //    shader.SetUniform1f("texCoordX", texCoordX);
-            //    //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-            //    shader.SetUniform1f("u_FrameWidth", frameWidth);
-            //    shader.SetUniform1f("u_FrameHeight", frameHeight);
-            //    shader.SetUniform1i("u_CurrentFrame", currentFrame);
-            //}
+                // Set the texture offset in the shader
+                shader.SetUniform1f("texCoordX", texCoordX);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                shader.SetUniform1f("u_FrameWidth", frameWidth);
+                shader.SetUniform1f("u_FrameHeight", frameHeight);
+                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+            }
             else //render as static
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
