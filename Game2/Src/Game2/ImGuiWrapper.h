@@ -29,7 +29,7 @@ extern bool deleteAllEntity;
 extern bool shouldLoadScene;
 extern std::string sceneToLoad;
 extern bool useEditorCamera;
-
+extern bool renderImGuiGUI;
 
 namespace Engine {
 

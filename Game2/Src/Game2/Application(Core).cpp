@@ -598,7 +598,7 @@ namespace Engine
                 // If the window is not focused or is iconified (minimized)
                 if (!isFocused || glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_ICONIFIED)) {
                     // Minimize the window, pause the game, and pause all audio playback
-                    windowsWindow->MinimizeWindow();
+                    //windowsWindow->MinimizeWindow();
                     isPaused = true;
                     audioEngine.pauseAllAudio();
                     Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");

@@ -40,6 +40,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "EntityManager.h"
 #include "EditorCamera.h"
 #include "Font.h"
+#include "EditorFBO.h"
 
 namespace Engine
 {
@@ -206,6 +207,9 @@ namespace Engine
       
         double animationStartTime{};
         double frameDuration{}; 
+
+
+        EditorFBO editorFBO;
 
     private:
         Shader shader;

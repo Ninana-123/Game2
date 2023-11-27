@@ -35,13 +35,14 @@ bool deleteAllEntity = false;
 bool shouldLoadScene = false;
 std::string sceneToLoad;
 bool useEditorCamera = false;
+#ifdef NDEBUG // Check if we are in release mode
+bool renderImGuiGUI = false;
+#else
+bool renderImGuiGUI = true; // Debug mode
+#endif
 
 namespace Engine {
-#ifdef NDEBUG // Check if we are in release mode
-	bool renderImGuiGUI = false;
-#else
-	bool renderImGuiGUI = true; // Debug mode
-#endif
+
 
 	EntityID firstEntity, secondEntity;
 	Entity* targettedEntity;
@@ -264,12 +265,16 @@ namespace Engine {
 			glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
 			io.DisplaySize.x = static_cast<float>(displayWidth);
 			io.DisplaySize.y = static_cast<float>(displayHeight);
-			if (renderDockspace == true) {
-				ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-			}
+			
+			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+			
+			ImGui::Begin("Level Editor Viewport");
+			SystemsManager& systemsManager = SystemsManager::GetInstance();
+			GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
+			// Display the texture in the ImGui window
+			ImGui::Image((void*)(intptr_t)graphicSystem->editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
-			//ImGui::Image((void*)(intptr_t)Engine::GraphicSystem::GetInstance().editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-
+			ImGui::End();
 			RenderLevelEditor();
 		}
 	}
@@ -371,6 +376,12 @@ namespace Engine {
 		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
+
+		SystemsManager& systemsManager = SystemsManager::GetInstance();
+		GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
+		
+		graphicSystem->editorFBO.Resize(e.GetWidth(), e.GetHeight());
+		
 		return false;
 	}
 
