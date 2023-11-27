@@ -141,6 +141,8 @@ namespace Engine {
 		 */
 		void RenderLevelEditor();
 
+		void RenderAudioBrowser();
+
 		int selectedEntityIndex = 1;
 
 	private:

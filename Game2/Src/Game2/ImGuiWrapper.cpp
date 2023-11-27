@@ -30,6 +30,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiFileBrowser.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "AudioEngine.h"
 
 bool deleteAllEntity = false;
 bool shouldLoadScene = false;
@@ -57,6 +58,7 @@ namespace Engine {
 	const int FPSCount = 100;
 	static float fpsValues[FPSCount] = { 0 };
 	static int currentFrame = 0;
+	AudioEngine LEAudioEngine;
 
 
 	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
@@ -459,6 +461,40 @@ namespace Engine {
 			fileBrowser.Show();
 		}
 	}
+	/*
+	void ImGuiWrapper::RenderAudioBrowser() {
+		auto& audioFiles = assetManager->GetAllAudioFiles();
+		int audioIDCounter = 0;
+
+		if (ImGui::BeginTabItem("Audio Browser")) {
+			for (auto& audioKey : audioFiles) {
+				audioIDCounter++;
+				ImGui::PushID(audioIDCounter);
+				std::cout << audioKey.filename.c_str();
+				ImGui::TextUnformatted(audioKey.filename.c_str()); // Use TextUnformatted for safety
+				std::cout << "test1" << std::endl;
+
+				// You can provide a button to play the audio to test
+				if (ImGui::Button("Play")) {
+					// Code to play the audio
+				}
+				ImGui::SameLine();
+
+				// Provide an option to replace the audio file
+				if (ImGui::Button("Replace")) {
+					// Code to replace the audio file, for example, opening a file dialog
+				}
+
+				// Maybe show a waveform preview if you have that capability
+
+				ImGui::PopID();
+			}
+			ImGui::EndTabItem();
+		}
+
+		// Code to handle file dialog for replacing audio...
+	}
+	*/
 
 	void ImGuiWrapper::RenderLevelEditor()
 	{
@@ -540,10 +576,10 @@ namespace Engine {
 					outputStream << "Texture" << '\n';
 					textureComp->Serialize(outputStream);
 				}
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
-					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Logic)) {
+					BehaviourComponent* behaviourComp  = dynamic_cast<BehaviourComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Logic));
 					outputStream << "Behaviour" << '\n';
-					textureComp->Serialize(outputStream);
+					behaviourComp->Serialize(outputStream);
 				}
 
 				// Mark the end of entity serialization
@@ -1990,6 +2026,7 @@ namespace Engine {
 				ImGui::EndTabItem();
 			}
 			RenderAssetBrowser();
+			//RenderAudioBrowser();
 			ImGui::EndTabBar();
 		}
 		ImGui::End();
