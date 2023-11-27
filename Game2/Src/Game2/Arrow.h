@@ -24,25 +24,25 @@
 
 namespace Engine
 {
-    //struct Arrow
-    //{
-    //    VECTORMATH::Vec2 position;
-    //    VECTORMATH::Vec2 velocity;
-    //    bool isActive; // Flag to determine if the arrow is active or not
-    //    float damage;  // Damage value for the arrow (adjust as needed)
-    //};
+    struct Arrow
+    {
+        VECTORMATH::Vec2 position;
+        VECTORMATH::Vec2 velocity;
+        bool isActive; // Flag to determine if the arrow is active or not
+        float damage;  // Damage value for the arrow (adjust as needed)
+    };
 
-    //class ShootingSystem
-    //{
-    //public:
+    class ShootingSystem
+    {
+    public:
 
-    //    void Initialize();
-    //    ShootingSystem(); // Constructor to initialize shooting rate variables
-    //    ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
-    //    void Update(float deltaTime, bool shootingCheck);
-    //    //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);
+        void Initialize();
+        ShootingSystem(); // Constructor to initialize shooting rate variables
+        ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+        void Update(float deltaTime, bool shootingCheck);
+        //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);
 
-    //private:
+    private:
         // Shooting properties
         //float shootingSpeed; // Speed of arrows when shot
         //float shootingRate;  // Time between consecutive shots
@@ -59,15 +59,15 @@ namespace Engine
         //void CheckEntitiesForShooting(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities, CollisionSystem& collisionSystem);
         //void ShootArrow(EntityID shooterID, EntityID targetID, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
-        //std::shared_ptr<Engine::EntityManager> entityManager;
-        //Engine::PrefabManager* prefabManager;
-        //Entity* targetEntity = nullptr;
-        //CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
-        //TextureComponent* textureCheck;
+        std::shared_ptr<Engine::EntityManager> entityManager;
+        Engine::PrefabManager* prefabManager;
+        Entity* targetEntity = nullptr;
+        CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
+        TextureComponent* textureCheck;
 
-        //float spawnTimer;
-        //float spawnInterval;
-    //};
+        float spawnTimer;
+        float spawnInterval;
+    };
 }
 
 #endif
