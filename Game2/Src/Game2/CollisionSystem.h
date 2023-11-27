@@ -256,6 +256,6 @@ namespace Engine
 		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
 		private:
-		EntityID lastCollidingEntityID;
+			EntityID lastCollidingEntityID = {};
 	};
 }

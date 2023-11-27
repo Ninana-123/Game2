@@ -45,9 +45,12 @@ namespace Engine
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
             "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
-        m_Camera(-GraphicsSystem::GetWindowWidth()/2, GraphicsSystem::GetWindowWidth() / 2, -GraphicsSystem::GetWindowHeight() / 2, GraphicsSystem::GetWindowHeight() / 2), m_EditorCamera(-GraphicsSystem::GetWindowWidth() / 2, GraphicsSystem::GetWindowWidth() / 2, -GraphicsSystem::GetWindowHeight() / 2, GraphicsSystem::GetWindowHeight() / 2)
+        m_Camera(static_cast<float>( - GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>( - GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2)), 
+            m_EditorCamera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>( - GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2))
     {
-
+       
     }
 
     GraphicsSystem::GraphicsSystem(std::shared_ptr<Engine::AssetManager> assetManager,std::shared_ptr<Engine::EntityManager> entityManager)
@@ -56,7 +59,10 @@ namespace Engine
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
             "Resource/Shaders/Shader3.vert", "Resource/Shaders/Shader3.frag"),
             entityManager(entityManager),
-             m_Camera(-GraphicsSystem::GetWindowWidth() / 2, GraphicsSystem::GetWindowWidth() / 2, -GraphicsSystem::GetWindowHeight() / 2, GraphicsSystem::GetWindowHeight() / 2), m_EditorCamera(-GraphicsSystem::GetWindowWidth() / 2, GraphicsSystem::GetWindowWidth() / 2, -GraphicsSystem::GetWindowHeight() / 2, GraphicsSystem::GetWindowHeight() / 2)
+        m_Camera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>(-GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2)),
+        m_EditorCamera(static_cast<float>(-GraphicsSystem::GetWindowWidth() / 2), static_cast<float>(GraphicsSystem::GetWindowWidth() / 2)
+            , static_cast<float>(-GraphicsSystem::GetWindowHeight() / 2), static_cast<float>(GraphicsSystem::GetWindowHeight() / 2))
     {
     }
 
