@@ -263,7 +263,7 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        //audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
         audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
         previousTime = std::chrono::high_resolution_clock::now();
         /*
