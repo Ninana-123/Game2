@@ -20,12 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
-    <ClInclude Include="Src\Game2\BehaviourComponent.h" />
-    <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
-    <ClInclude Include="Src\Game2\LogicSystem.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
@@ -115,7 +112,6 @@
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
-    <ClCompile Include="Src\Game2\LogicSystem.cpp" />
     <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp" />
     <ClCompile Include="Src\Game2\PathfindingSystem.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
@@ -271,7 +267,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

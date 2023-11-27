@@ -14,8 +14,6 @@ written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
 #include "pch.h"
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include "Application.h"
 #include "Input.h"
 #include "EntityManager.h"
@@ -25,8 +23,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Entity.h"
 #include "System.h"
 #include "KeyCodes.h"
-#include "GraphicsSystem.h"
-#include "PhysicsSystem.h"
 #include "ImGuiWrapper.h"
 #include "AudioEngine.h"
 #include "Loader.h"
@@ -34,7 +30,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
-//#include "MoveBehaviour.h"
 #include "Input.h"
 
 // Global variables for frames per second (fps) calculation
@@ -91,6 +86,7 @@ namespace Engine
 #else
     bool isFullScreen = true;
 #endif
+
     Application::Application()
     {
     }   
