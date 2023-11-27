@@ -30,6 +30,8 @@ extern bool shouldLoadScene;
 extern std::string sceneToLoad;
 extern bool useEditorCamera;
 extern bool renderImGuiGUI;
+extern float e_editorWidth;
+extern float e_editorHeight;
 
 namespace Engine {
 

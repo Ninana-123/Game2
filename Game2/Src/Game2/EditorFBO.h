@@ -14,6 +14,8 @@ public:
     GLuint GetTexID() const;
     void Resize(int newWidth, int newHeight);
 
+    inline int GetWidth() { return width; }
+    inline int GetHeight() { return height; }
 private:
     GLuint fbo;
     GLuint texture;

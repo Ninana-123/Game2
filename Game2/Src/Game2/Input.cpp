@@ -215,17 +215,26 @@ namespace Engine {
 
                 Entity* DragEntity = entityManager->GetEntity(targetEntityID);
 
+                float editorWidth = e_editorWidth;
+                float editorHeight = e_editorHeight;
+
                 // Get the mouse position from the input system
                 VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
+          
+                float screenScaleX = 1280.f / editorWidth ;
+                float screenScaleY = 720.f / editorHeight ;
 
-                int displayWidth, displayHeight;
-                glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
-                float scaleX = static_cast<float>(1280.f / displayWidth);
-                float scaleY = static_cast<float>(720.f / displayHeight);
+                // Scale factor for the additional scaling in the editor viewport
+                //float editorScaleX = static_cast<float>(editorWidth) / 1280.0f;
+                //float editorScaleY = static_cast<float>(editorHeight) / 720.0f;
+
+                // Combine scaling factors
+                //float scaleX = screenScaleX * editorScaleX;
+                //float scaleY = screenScaleY * editorScaleY;
 
                 // Normalize the mouse position
-                mousePosition.x = mousePosition.x * scaleX - 1280.f / 2.0f;
-                mousePosition.y = 720.f / 2.0f - mousePosition.y * scaleY;
+                mousePosition.x = (mousePosition.x - 10.f )* screenScaleX - 1280.f / 2.0f;
+                mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f ) * screenScaleY;
 
                 //std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
                 

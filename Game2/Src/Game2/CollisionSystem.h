@@ -22,7 +22,6 @@ Technology is prohibited.
 #include "System.h"
 #include "Vector2d.h"
 #include "EngineTypes.h"
-
 #endif 
 
 // Global Variable to check for button Collision
