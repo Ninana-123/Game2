@@ -18,6 +18,7 @@
 int pathfindingEntityTexture = 0;
 bool isGamePaused = false;
 bool inSettings = false;
+bool isGameOver = false;
 
 namespace Engine
 {

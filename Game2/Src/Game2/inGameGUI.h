@@ -28,7 +28,7 @@
 extern int pathfindingEntityTexture;
 extern bool isGamePaused;
 extern bool inSettings;
-
+extern bool isGameOver;
 
 namespace Engine
 {
