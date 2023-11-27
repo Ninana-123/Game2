@@ -29,7 +29,7 @@ extern bool deleteAllEntity;
 extern bool shouldLoadScene;
 extern std::string sceneToLoad;
 extern bool useEditorCamera;
-
+extern bool renderImGuiGUI;
 
 namespace Engine {
 
@@ -138,6 +138,8 @@ namespace Engine {
 		 * \brief Renders the level editor in ImGui.
 		 */
 		void RenderLevelEditor();
+
+		void RenderAudioBrowser();
 
 		int selectedEntityIndex = 1;
 

@@ -21,6 +21,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine {
 
+    // Function to load a texture with specified main and sub indices
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const int subIndex /*= 0*/) {
         TextureKey key{ mainIndex, subIndex };
 
@@ -43,6 +44,7 @@ namespace Engine {
         return texture;
     }
 
+    // Function to load a texture with specified main index, file path, and sub index
     std::shared_ptr<Texture> AssetManager::loadTexture(const int mainIndex, const std::string& filePath, const int subIndex /*= 0*/) {
         TextureKey key{ mainIndex, subIndex };
         auto texture = std::make_shared<Texture>(filePath);
@@ -51,6 +53,7 @@ namespace Engine {
         return texture;
     }
 
+    // Function to update the file path of a texture and reload it
     void AssetManager::UpdateTexture(int mainIndex, const std::string& filePath, int subIndex)
     {
         TextureKey textureKey{ mainIndex, subIndex };
@@ -81,6 +84,7 @@ namespace Engine {
         return nullptr;
     }
 
+    // Function to retrieve a texture based on main and sub indices
     void AssetManager::updateTextureFilePath(int mainIndex, int subIndex ,const std::string& newFilePath) {
         TextureKey key{ mainIndex, subIndex }; 
         auto it = textureFilePaths.find(key);
@@ -107,6 +111,8 @@ namespace Engine {
     }
     */
 
+    // Function to get all texture keys stored in the manager
+
     std::vector<TextureKey> AssetManager::GetAllTextureKeys() const {
         std::vector<TextureKey> keys;
         for (const auto& pair : textures) {
@@ -115,6 +121,7 @@ namespace Engine {
         return keys;
     }
 
+    // Function to get the file path of a texture based on its key
     const std::string& AssetManager::GetTexturePath(const TextureKey& textureKey) const {
         auto it = textureFilePaths.find(textureKey);
         if (it != textureFilePaths.end()) {
@@ -125,7 +132,7 @@ namespace Engine {
         return emptyString;
     }
 
-
+    // Function to load an audio file with the specified key
     std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key) {
         // Assuming audioFilePaths is a member that holds paths to audio files
         auto it = audioFilePaths.find(key);
@@ -142,6 +149,7 @@ namespace Engine {
         }
     }
 
+    // Function to unload an audio file based on its key
     void AssetManager::unloadAudio(const AudioKey& key) {
         auto it = audios.find(key);
         if (it != audios.end()) {
@@ -152,6 +160,7 @@ namespace Engine {
         }
     }
 
+    // Function to retrieve an audio file based on its key
     std::shared_ptr<SoundInfo> AssetManager::getAudio(const AudioKey& key) const {
         auto it = audios.find(key);
         if (it != audios.end()) {
@@ -161,6 +170,7 @@ namespace Engine {
         return nullptr;
     }
 
+    // Function to update the file path of an audio file
     void AssetManager::updateAudioFilePath(const AudioKey& key, const std::string& newFilePath) {
         auto it = audioFilePaths.find(key);
         if (it != audioFilePaths.end()) {
@@ -182,6 +192,7 @@ namespace Engine {
         return emptyString;
     }
 
+    // Function to add an audio file path to the manager
     void AssetManager::AddAudioPath(const AudioKey& key, const std::string& path) {
         audioFilePaths[key] = path;
         std::cout << path<< std::endl;

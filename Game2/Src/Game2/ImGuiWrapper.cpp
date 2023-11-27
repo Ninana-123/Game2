@@ -30,18 +30,20 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "ImGuiFileBrowser.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "AudioEngine.h"
 
 bool deleteAllEntity = false;
 bool shouldLoadScene = false;
 std::string sceneToLoad;
 bool useEditorCamera = false;
+#ifdef NDEBUG // Check if we are in release mode
+bool renderImGuiGUI = false;
+#else
+bool renderImGuiGUI = true; // Debug mode
+#endif
 
 namespace Engine {
-#ifdef NDEBUG // Check if we are in release mode
-	bool renderImGuiGUI = false;
-#else
-	bool renderImGuiGUI = true; // Debug mode
-#endif
+
 
 	EntityID firstEntity, secondEntity;
 	Entity* targettedEntity;
@@ -53,6 +55,7 @@ namespace Engine {
 	const int FPSCount = 100;
 	static float fpsValues[FPSCount] = { 0 };
 	static int currentFrame = 0;
+	AudioEngine LEAudioEngine;
 
 	ImGuiWrapper::ImGuiWrapper() : entityManager(), prefabManager()
 	{
@@ -266,12 +269,16 @@ namespace Engine {
 			glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
 			io.DisplaySize.x = static_cast<float>(displayWidth);
 			io.DisplaySize.y = static_cast<float>(displayHeight);
-			if (renderDockspace == true) {
-				ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-			}
+			
+			ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+			
+			ImGui::Begin("Level Editor Viewport");
+			SystemsManager& systemsManager = SystemsManager::GetInstance();
+			GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
+			// Display the texture in the ImGui window
+			ImGui::Image((void*)(intptr_t)graphicSystem->editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
-			//ImGui::Image((void*)(intptr_t)Engine::GraphicSystem::GetInstance().editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
-
+			ImGui::End();
 			RenderLevelEditor();
 		}
 	}
@@ -374,6 +381,12 @@ namespace Engine {
 		io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
 		glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
+
+		SystemsManager& systemsManager = SystemsManager::GetInstance();
+		GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
+		
+		graphicSystem->editorFBO.Resize(e.GetWidth(), e.GetHeight());
+		
 		return false;
 	}
 
@@ -442,6 +455,40 @@ namespace Engine {
 			fileBrowser.Show();
 		}
 	}
+	/*
+	void ImGuiWrapper::RenderAudioBrowser() {
+		auto& audioFiles = assetManager->GetAllAudioFiles();
+		int audioIDCounter = 0;
+
+		if (ImGui::BeginTabItem("Audio Browser")) {
+			for (auto& audioKey : audioFiles) {
+				audioIDCounter++;
+				ImGui::PushID(audioIDCounter);
+				std::cout << audioKey.filename.c_str();
+				ImGui::TextUnformatted(audioKey.filename.c_str()); // Use TextUnformatted for safety
+				std::cout << "test1" << std::endl;
+
+				// You can provide a button to play the audio to test
+				if (ImGui::Button("Play")) {
+					// Code to play the audio
+				}
+				ImGui::SameLine();
+
+				// Provide an option to replace the audio file
+				if (ImGui::Button("Replace")) {
+					// Code to replace the audio file, for example, opening a file dialog
+				}
+
+				// Maybe show a waveform preview if you have that capability
+
+				ImGui::PopID();
+			}
+			ImGui::EndTabItem();
+		}
+
+		// Code to handle file dialog for replacing audio...
+	}
+	*/
 
 	void ImGuiWrapper::RenderLevelEditor()
 	{
@@ -523,10 +570,10 @@ namespace Engine {
 					outputStream << "Texture" << '\n';
 					textureComp->Serialize(outputStream);
 				}
-				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Texture)) {
-					TextureComponent* textureComp = dynamic_cast<TextureComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Texture));
+				if (entityManager->GetEntity(static_cast<EntityID>(i))->HasComponent(ComponentType::Logic)) {
+					BehaviourComponent* behaviourComp  = dynamic_cast<BehaviourComponent*>(entityManager->GetEntity(static_cast<EntityID>(i))->GetComponent(ComponentType::Logic));
 					outputStream << "Behaviour" << '\n';
-					textureComp->Serialize(outputStream);
+					behaviourComp->Serialize(outputStream);
 				}
 
 				// Mark the end of entity serialization
@@ -1973,6 +2020,7 @@ namespace Engine {
 				ImGui::EndTabItem();
 			}
 			RenderAssetBrowser();
+			//RenderAudioBrowser();
 			ImGui::EndTabBar();
 		}
 		ImGui::End();

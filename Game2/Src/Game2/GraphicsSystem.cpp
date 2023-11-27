@@ -37,6 +37,9 @@ namespace Engine
     // Logger GraphicsLogger;
     Input InputController;
 
+    
+
+
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
@@ -74,7 +77,8 @@ namespace Engine
     void GraphicsSystem::Initialize() {
 
         Window = glfwGetCurrentContext();
-
+        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+        std::cout << "CHECK";
         GraphicsSystem::InitializeGLEW();
 
         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -83,7 +87,6 @@ namespace Engine
         glClear(GL_COLOR_BUFFER_BIT);
 
         //int screenWidth, screenHeight;
-        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
         //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
 
         // Load and initialize the shader
@@ -202,7 +205,8 @@ namespace Engine
         shader.Unbind();
 
         font.Initialize();
-        
+        editorFBO.Initialize(screenWidth, screenHeight);
+
       //  font.Initialize("Resource/Fonts/arial.ttf");
       /*  font.Initialize("Resource/Fonts/Inkfree.ttf");
         font.Initialize("Resource/Fonts/arial.ttf");*/
@@ -628,11 +632,11 @@ namespace Engine
 
     void GraphicsSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
     {
-        //int width, height;
-        //glfwGetWindowSize(Window, &width, &height);   
         //UpdateViewport(width, height);
-        renderer.Clear();    
-   
+        renderer.Clear(); 
+        if(renderImGuiGUI == true)
+        editorFBO.Bind();
+
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
@@ -749,7 +753,8 @@ namespace Engine
         shader.SetActiveShaderSet(previousShaderSet);
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);
-
+        if (renderImGuiGUI == true)
+        editorFBO.Unbind();
     }
 
     void GraphicsSystem::UpdateShaderSet()
