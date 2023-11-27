@@ -268,6 +268,7 @@ namespace Engine {
 				ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 			}
 
+			//ImGui::Image((void*)(intptr_t)Engine::GraphicSystem::GetInstance().editorFBO.GetTexID(), ImGui::GetContentRegionAvail(), ImVec2(0, 1), ImVec2(1, 0));
 
 			RenderLevelEditor();
 		}
@@ -805,7 +806,6 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1088,7 +1088,6 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1581,7 +1580,6 @@ namespace Engine {
 
 									float width = collision->c_Width;
 									float height = collision->c_Height;
-									bool isColliding = collision->isColliding;
 
 									// Input boxes for editing CollisionComponent properties
 									if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))

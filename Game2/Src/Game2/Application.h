@@ -107,7 +107,9 @@ namespace Engine
         std::shared_ptr<Engine::AssetManager> assetManager;
 
         // Entity manager instance
-        std::shared_ptr<Engine::EntityManager> EM;        
+        std::shared_ptr<Engine::EntityManager> EM;      
+
+        void ToggleFullscreen();
 
     private:
 
