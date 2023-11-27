@@ -388,7 +388,7 @@ namespace Engine
             // You might want to add an else case to handle the situation where textureVector is empty
 
              //If Sprite present
-            if ((texture->textureKey.subIndex == 1 ) && entity->HasComponent(ComponentType::Sprite))
+            if ((texture->textureKey.subIndex == 1) && entity->HasComponent(ComponentType::Sprite))
             {
                 // Calculate deltaTime (time since the last frame)
                 static double lastTime = glfwGetTime();
@@ -493,6 +493,7 @@ namespace Engine
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
             }
+<<<<<<< HEAD
             if ((texture->textureKey.subIndex == 4) && entity->HasComponent(ComponentType::Sprite))
             {
                 // Calculate deltaTime (time since the last frame)
@@ -563,6 +564,8 @@ namespace Engine
             //    shader.SetUniform1f("u_FrameHeight", frameHeight);
             //    shader.SetUniform1i("u_CurrentFrame", currentFrame);
             //}
+=======
+>>>>>>> parent of 3eeff88 (tower animation)
             else //render as static
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
@@ -613,7 +616,7 @@ namespace Engine
             vaLines.Bind();
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
             if (renderCollisionBox == true) {
-                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 0.0f); // Set the line color
+                shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
             }
             else
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 0.0f); // Set the line color
