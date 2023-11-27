@@ -291,7 +291,7 @@ namespace Engine {
 		dispatcher.Dispatch<KeyTypedEvent>(std::bind(&ImGuiWrapper::OnKeyTypedEvent, this, std::placeholders::_1));
 		dispatcher.Dispatch<WindowResizeEvent>(std::bind(&ImGuiWrapper::OnWindowResizeEvent, this, std::placeholders::_1));
 
-		//UpdateImGuiInteractionState();
+		UpdateImGuiInteractionState();
 	}
 	/*!**********************************************************************
 	\brief

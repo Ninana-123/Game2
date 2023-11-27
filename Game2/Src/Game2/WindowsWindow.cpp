@@ -201,18 +201,19 @@ namespace Engine {
 			m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
 
 			if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
-				//MinimizeWindow();
+				MinimizeWindow();
+				isPaused = !isPaused;
+				audio.pauseAllAudio();
 			}
 			else {
 				if (m_IsMaximized) {
 					RestoreWindow();
 				}
+				audio.resumeAllAudio();
+	
 			}
 		}
-		else {
-			// Handle the case when m_Window is not valid
-			// You may want to log an error or take appropriate action
-		}
+
 	}
 
 	// Update the WindowsWindow by processing events and swapping buffers

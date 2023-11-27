@@ -17,6 +17,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #include "Window.h"
 #include <GLFW/glfw3.h>
+extern bool isPaused;
 
 namespace Engine {
     class WindowsWindow : public Window {
