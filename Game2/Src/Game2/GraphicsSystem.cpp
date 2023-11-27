@@ -37,9 +37,6 @@ namespace Engine
     // Logger GraphicsLogger;
     Input InputController;
 
-    
-
-
     GraphicsSystem::GraphicsSystem()
         : shader("Resource/Shaders/Shader.vert", "Resource/Shaders/Shader.frag",
             "Resource/Shaders/Shader2.vert", "Resource/Shaders/Shader2.frag",
@@ -774,6 +771,14 @@ namespace Engine
         catch (const std::exception& e) {
             Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
         }
+    }
+
+    void GraphicsSystem::UpdateTexture(int main, int sub, const std::string& newPath)
+    {
+        textures[main][sub].UpdateTexture(newPath);
+        std::shared_ptr<Texture> texture = assetManager->getTexture(main, sub);
+        texture->SetFilePath(newPath);
+        texture->SetID(textures[main][sub].GetTextureID());       
     }
 
     void GraphicsSystem::UpdateViewport(int width, int height)

@@ -83,19 +83,89 @@ bool Texture::Load()
     return m_LocalBuffer != nullptr;
 }
 
-bool Texture::Load(const std::string& path)
-{
-    // Enable vertical flipping of loaded images
+void Texture::LoadNewTexture(const std::string& newPath) {
+    // Load the new image data
     stbi_set_flip_vertically_on_load(1);
+    unsigned char* newLocalBuffer = stbi_load(newPath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
-    // Load the image data from the file using stb_image
-    m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+    // Check if loading was successful
+    if (newLocalBuffer) {
+        // Delete the old OpenGL texture
+        glDeleteTextures(1, &m_RendererID);
 
-    // Update the file path
-    m_Filepath = path;
+        // Generate a new OpenGL texture
+        glGenTextures(1, &m_RendererID);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
 
-    // Check if the loading process was successful
-    return m_LocalBuffer != nullptr;
+        // Set texture parameters
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+        // Upload the new image data to OpenGL texture
+        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newLocalBuffer));
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        // Free the old local buffer
+        stbi_image_free(m_LocalBuffer);
+
+        // Set the new local buffer
+        m_LocalBuffer = newLocalBuffer;
+
+        // Update file path
+        m_Filepath = newPath;
+
+        std::cout << "Updated FilePath: " << m_Filepath << std::endl;
+        std::cout << "Target ID: " << m_RendererID << std::endl;
+    }
+    else {
+        // Handle the case where loading fails
+        std::cerr << "Failed to load the new texture." << std::endl;
+    }
+}
+
+void Texture::UpdateTexture(const std::string& newPath)
+{
+    // Load the new image data
+    stbi_set_flip_vertically_on_load(1);
+    unsigned char* newLocalBuffer = stbi_load(newPath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
+
+    // Check if loading was successful
+    if (newLocalBuffer) {
+        // Delete the old OpenGL texture
+        glDeleteTextures(1, &m_RendererID);
+
+        // Generate a new OpenGL texture
+        glGenTextures(1, &m_RendererID);
+        glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+        // Set texture parameters
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+        // Upload the new image data to OpenGL texture
+        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newLocalBuffer));
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        // Free the old local buffer
+        stbi_image_free(m_LocalBuffer);
+
+        // Set the new local buffer
+        m_LocalBuffer = newLocalBuffer;
+
+        // Update file path
+        m_Filepath = newPath;
+
+        std::cout << "Updated FilePath: " << m_Filepath << std::endl;
+        std::cout << "New Target ID: " << m_RendererID << std::endl;
+    }
+    else {
+        // Handle the case where loading fails
+        std::cerr << "Failed to load the new texture." << std::endl;
+    }
 }
 
 void Texture::SetRenderPos(float posX, float posY)

@@ -432,15 +432,14 @@ namespace Engine {
 				// Iterate through subindexes for each main index
 				for (int subIndex = 0; subIndex < MAX_SUBINDEX; ++subIndex) {
 					TextureKey textureKey{ mainIndex, subIndex };
-
 					auto it = textures.find(textureKey);
-					if (it != textures.end()) {
-						imgIDCounter++;
-						ImGui::PushID(imgIDCounter);
-
+					if (it != textures.end()) 
+					{						
+						GLuint textureID = it->second->GetTextureID();					
+						ImGui::PushID(textureID);					
 						std::string texturePath = assetManager->GetTexturePath(textureKey);
-						ImTextureID imgID = (void*)(intptr_t)imgIDCounter;
-
+						ImTextureID imgID = (void*)(intptr_t)textureID;
+						std::cout << textureID << std::endl;
 						ImGui::Image(imgID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
 						ImGui::SameLine();
 

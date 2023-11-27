@@ -135,6 +135,8 @@ namespace Engine
          */
         void UpdateShaderSet();
 
+        void UpdateTexture(int main, int sub, const std::string& newPath);
+
         /*!
         * \brief Render a textured entity.
         *

@@ -97,7 +97,10 @@ public:
      * This function loads a new texture image from the specified file path and updates
      * the Texture object with the new image data.
      */
-    bool Load(const std::string& path); // Load texture from file
+    void LoadNewTexture(const std::string& path); // Load texture from file
+
+    void UpdateTexture(const std::string& newPath);
+
 
     /*!
      * \brief Set the rendering position of the texture.
@@ -116,6 +119,11 @@ public:
      */
     unsigned int GetTextureID() const {
         return m_RendererID;
+    }
+
+    void SetID(int id)
+    {
+        m_RendererID = id;
     }
 
     /*!
