@@ -86,6 +86,15 @@ public:
     /**************************************************************************/
     // void handle_collision(Rigidbody& other_object);
 
+    /**************************************************************************/
+    /*!
+    \brief Sets the position of the entity.
+
+    \param[in] pos
+    The new position represented by a 2D vector.
+
+    */
+    /**************************************************************************/
     void setPosition(VECTORMATH::Vec2 pos);
 };
 

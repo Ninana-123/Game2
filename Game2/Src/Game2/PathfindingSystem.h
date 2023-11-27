@@ -112,14 +112,78 @@ namespace Engine
         /**************************************************************************/
         std::vector<std::pair<int, int>> findShortestPath(int windowWidth, int windowHeight);
 
+        /**************************************************************************/
+        /*!
+        \brief Creates a logical collision map for efficient collision detection.
+
+        \details
+        This function creates a logical collision map, optimizing collision checks for certain operations.
+
+        \warning
+        Ensure that the map is properly initialized before calling this function.
+        */
+        /**************************************************************************/
         void createLogicalCollisionMap();
 
+        /**************************************************************************/
+        /*!
+        \brief Initializes the collision map.
+
+        \details
+        This function initializes the logical collision map for subsequent collision checks.
+        */
+        /**************************************************************************/
         void initializeCollisionMap();
 
+        /**************************************************************************/
+        /*!
+        \brief Checks if a collision occurs at the specified coordinates.
+
+        \param[in] x
+        The x-coordinate of the position to check.
+
+        \param[in] y
+        The y-coordinate of the position to check.
+
+        \return
+        True if a collision is detected at the specified coordinates; false otherwise.
+        */
+        /**************************************************************************/
         bool hasCollision(int x, int y);
 
+        /**************************************************************************/
+        /*!
+        \brief Finds the closest free cell to the specified coordinates.
+
+        \param[in] x
+        The x-coordinate of the starting position.
+
+        \param[in] y
+        The y-coordinate of the starting position.
+
+        \return
+        A pair representing the coordinates of the closest free cell.
+        */
+        /**************************************************************************/
         std::pair<int, int> findClosestFreeCell(int x, int y);
 
+        /**************************************************************************/
+        /*!
+        \brief Finds the closest pair of coordinates to the specified position.
+
+        \param[in] startPosX
+        The x-coordinate of the starting position.
+
+        \param[in] startPosY
+        The y-coordinate of the starting position.
+
+        \param[in] towerPositions
+        A vector containing the positions of towers.
+
+        \return
+        A pair representing the closest coordinates to the starting position.
+        */
+        /**************************************************************************/
         std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
 
     private:
