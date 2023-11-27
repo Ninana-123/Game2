@@ -13,6 +13,8 @@ KNOWN BUGS:
 
 2. Spawning a unit from the top may cause the path to find the same tower again one more time before heading over to the castle.
 
+3. When game is fullscreen, the functions work in debug mode, as in the units are going where they supposed to. However this cannot be confirmed in released mode.
+
 INCOMPLETE FEATURES:
 1. Arrow is supposed to spawn and aim towards the unit when unit is in range of tower radius.
 
