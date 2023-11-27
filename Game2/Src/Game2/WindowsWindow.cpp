@@ -196,30 +196,10 @@ namespace Engine {
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::UpdateFocus() {
-		if (m_Window) {
-			m_IsFocused = glfwGetWindowAttrib(m_Window, GLFW_FOCUSED) != 0;
-
-			if (!m_IsFocused || glfwGetWindowAttrib(m_Window, GLFW_ICONIFIED)) {
-				MinimizeWindow();
-				isPaused = !isPaused;
-				audio.pauseAllAudio();
-			}
-			else {
-				if (m_IsMaximized) {
-					RestoreWindow();
-				}
-				audio.resumeAllAudio();
-	
-			}
-		}
-
-	}
-
 	// Update the WindowsWindow by processing events and swapping buffers
 	void WindowsWindow::OnUpdate() {
 
-		UpdateFocus();
+		//UpdateFocus();
 
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
@@ -233,7 +213,7 @@ namespace Engine {
 			// Iconify (minimize) the GLFW window
 			glfwIconifyWindow(m_Window);
 			m_IsMaximized = false;
-			audio.pauseAllAudio();
+			//audio.pauseAllAudio();
 		}
 	}
 

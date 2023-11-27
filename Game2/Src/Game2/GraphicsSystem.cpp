@@ -739,6 +739,7 @@ namespace Engine
         {
             font.RenderText(shader, "Game is paused.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
+
         // Render text if in settings
         if (inSettings)
         {

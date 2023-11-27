@@ -258,53 +258,7 @@ namespace Engine
             UpdateDeltaTime();
             Application::UpdateWindowTitle();
 
-             window.UpdateFocus();
-            if (isPaused)
-            {
-                // When stepping one frame, we perform only one update and then reset the stepOneFrame flag
-                //bool isFirstRun = true;
-                //window.UpdateFocus();  // Check and handle focus in the window
-                //// Check if the window has lost focus and minimize if needed
-                //if (!window.IsWindowFocused()) {
-                //    window.MinimizeWindow();
-
-                //    //pause the game logic
-                //    //isPaused = !isPaused;
-
-                //    // Pause audio only if it's not the first run
-                //    if (!isFirstRun) {
-                //        audioEngine.pauseAllAudio();
-                //    }
-                //}
-                //else {
-                //    // Check if the window is not maximized and restore if needed
-                //    if (!window.IsWindowMaximized()) {
-                //        window.RestoreWindow();
-                //    }
-                //    // Resume audio only if it's not the first run
-                //    if (!isFirstRun) {
-                //        audioEngine.resumeAllAudio();
-                //    }
-                //    //resume the game logic
-                //    //isPaused = false;
-                //}
-                //// After the first run, update the flag
-                //isFirstRun = false;
-                if (!isPaused && !window.IsWindowFocused()) {
-                    // Pause logic
-                    window.MinimizeWindow();
-                    gamePlaying = true;
-                    audioEngine.pauseAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
-                }
-                else if (isPaused && window.IsWindowFocused()) {
-                    // Resume logic
-                    window.RestoreWindow();
-                    gamePlaying = false;
-                    audioEngine.resumeAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
-                }
-            }
+            UpdateWindowFocus();
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -312,8 +266,7 @@ namespace Engine
                     isPaused = true; // Automatically pause after stepping one frame
                     stepOneFrame = false;
 
-                }
-                    
+                }                 
             }
 
             if (InputHandler.IsKeyTriggered(KEY_F7)) {
@@ -601,6 +554,38 @@ namespace Engine
             fps = double(frameCount) / dt;
             frameCount = 0;
             prevTime = currentTime;
+        }
+    }
+
+    void Application::UpdateWindowFocus() {
+        if (m_Window) {
+            // Use get() to obtain a raw pointer to the managed object
+            Engine::WindowsWindow* windowsWindow = dynamic_cast<Engine::WindowsWindow*>(m_Window.get());
+
+            if (windowsWindow) {
+                // Check if the window is currently focused
+                bool isFocused = glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_FOCUSED) != 0;
+
+                // If the window is not focused or is iconified (minimized)
+                if (!isFocused || glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_ICONIFIED)) {
+                    // Minimize the window, pause the game, and pause all audio playback
+                    windowsWindow->MinimizeWindow();
+                    isPaused = true;
+                    audioEngine.pauseAllAudio();
+                    Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
+                }
+                // If the window is focused
+                else {
+                    // If the window was maximized, restore it
+                    if (windowsWindow->IsWindowMaximized()) {
+                        windowsWindow->RestoreWindow();
+                    }
+                    // Unpause the game, resume audio playback, and log the event
+                    isPaused = false;
+                    audioEngine.resumeAllAudio();
+                    Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
+                }
+            }
         }
     }
 

@@ -269,7 +269,6 @@ private:
      */
     std::map<std::string, FMOD::Sound*> sounds;
 
-
     /*
      * Map which stores the current playback channels of any playing sound loop
      * Key is the SoundInfo's uniqueKey field.

@@ -16,7 +16,6 @@ written consent of DigiPen Institute of Technology is prohibited.
 #pragma once
 
 #include "Window.h"
-#include <GLFW/glfw3.h>
 extern bool isPaused;
 
 namespace Engine {
@@ -77,7 +76,9 @@ namespace Engine {
          * @brief Gets the native window handle.
          * @return A pointer to the native window handle.
          */
-        inline virtual void* GetNativeWindow() const { return m_Window; }
+        GLFWwindow* GetNativeWindow() const {
+            return m_Window;
+        }
 
         inline bool IsWindowFocused() const {
             if (m_Window) {
@@ -88,7 +89,7 @@ namespace Engine {
 
         inline bool IsWindowMaximized() const { return m_IsMaximized; }
 
-        void UpdateFocus();
+        //void UpdateFocus();
     private:
         /**
          * @brief Initializes the WindowsWindow using the provided WindowConfig properties.

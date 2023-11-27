@@ -94,6 +94,15 @@ namespace Engine
         *************************************************************************/
         void UpdateWindowTitle();
 
+        /*!**********************************************************************
+         * \brief Updates the focus state of the application window.
+         *
+         * This function is responsible for handling changes in window focus and taking
+         * appropriate actions, such as minimizing or restoring the window, pausing or
+         * resuming the game, and controlling audio playback.
+         *************************************************************************/
+        void UpdateWindowFocus();
+
         // Asset manager instance
         std::shared_ptr<Engine::AssetManager> assetManager;
 
