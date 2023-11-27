@@ -545,6 +545,7 @@ namespace Engine
         UNREFERENCED_PARAMETER(e);
         // Handle window close event
         loader->SavePrefabs("Resource/Prefabs.txt");
+        glfwTerminate();
         m_Running = false;
         return true;
     }
