@@ -247,6 +247,7 @@ namespace Engine {
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
 			renderImGuiGUI = !renderImGuiGUI;
 		}
+
 		if (useEditorCamera == true) {
 			ImGui::Begin("Editor Camera Instructions");
 			ImGui::Text("Instructions for using the Editor Camera:");
@@ -258,6 +259,7 @@ namespace Engine {
 			ImGui::Text("Rotate Camera: U");
 			ImGui::End();
 		}
+
 		if (renderImGuiGUI == true) {
 			ImGuiIO& io = ImGui::GetIO();
 			int displayWidth, displayHeight;
@@ -268,15 +270,19 @@ namespace Engine {
 				ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 			}
 
+			io.MouseDown[0] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+			io.MouseDown[1] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
+			io.MouseDown[2] = glfwGetMouseButton(glfwGetCurrentContext(), GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS;
 
 			RenderLevelEditor();
 		}
 	}
 
+
 	void ImGuiWrapper::UpdateImGuiInteractionState() {
-			// Check if ImGui wants to capture the mouse or keyboard
-			isImGuiHovered = ImGui::GetIO().WantCaptureMouse || ImGui::GetIO().WantCaptureKeyboard;
-		}
+		isImGuiHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow);
+		Logger::GetInstance().Log(LogLevel::Debug, "ImGui Hovered: " + std::to_string(isImGuiHovered));
+	}
 
 	void ImGuiWrapper::OnEvent(Event& event)
 	{
@@ -805,7 +811,7 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								bool isColliding = collision->isColliding;
+								//bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1088,7 +1094,7 @@ namespace Engine {
 
 								float width = collision->c_Width;
 								float height = collision->c_Height;
-								bool isColliding = collision->isColliding;
+								//bool isColliding = collision->isColliding;
 
 								// Input boxes for editing CollisionComponent properties
 								if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))
@@ -1581,7 +1587,7 @@ namespace Engine {
 
 									float width = collision->c_Width;
 									float height = collision->c_Height;
-									bool isColliding = collision->isColliding;
+									//bool isColliding = collision->isColliding;
 
 									// Input boxes for editing CollisionComponent properties
 									if (ImGui::InputFloat("Width", &width, 1.0f, 5.0f, "%.2f"))

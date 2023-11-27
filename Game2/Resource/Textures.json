@@ -1,0 +1,147 @@
+[
+    {
+        "mainIndex": "Background",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Background.png"
+    },
+    {
+        "mainIndex": "Infanty",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Warrior.png"
+    },
+    {
+        "mainIndex": "Infanty",
+        "subIndex": 1,
+        "filePath": "Resource/Texture/WarriorWalking.png"
+    },
+    {
+        "mainIndex": "Infanty",
+        "subIndex": 2,
+        "filePath": "Resource/Texture/WarriorAttack.png"
+    },
+    {
+        "mainIndex": "Tank",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Tank.png"
+    },
+    {
+        "mainIndex": "Tank",
+        "subIndex": 1,
+        "filePath": "Resource/Texture/TankWalking.png"
+    },
+    {
+        "mainIndex": "Tank",
+        "subIndex": 2,
+        "filePath": "Resource/Texture/TankAttack.png"
+    },
+    {
+        "mainIndex": "Archer",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Archer.png"
+    },
+    {
+        "mainIndex": "Archer",
+        "subIndex": 1,
+        "filePath": "Resource/Texture/ArcherWalking.png"
+    },
+    {
+        "mainIndex": "Archer",
+        "subIndex": 2,
+        "filePath": "Resource/Texture/ArcherAttack.png"
+    },
+    {
+        "mainIndex": "Archer",
+        "subIndex": 3,
+        "filePath": "Resource/Texture/ArcherDeath.png"
+    },
+    {
+        "mainIndex": "Tower",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Tower.png"
+    },
+    {
+        "mainIndex": "Castle",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Castle.png"
+    },
+    {
+        "mainIndex": "HUD",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/HUD.png"
+    },
+    {
+        "mainIndex": "HUDInfantry",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/HUDInfantry.png"
+    },
+    {
+        "mainIndex": "HUDArcher",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/HUDArcher.png"
+    },
+    {
+        "mainIndex": "HUDTank",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/HUDTank.png"
+    },
+    {
+        "mainIndex": "pauseButton",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/pausebutton.png"
+    },
+    {
+        "mainIndex": "playButton",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/playbutton.png"
+    },
+    {
+        "mainIndex": "settingsButton",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/settingsbutton.png"
+    },
+    {
+        "mainIndex": "pausePressed",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/pausePressed.png"
+    },
+    {
+        "mainIndex": "playPressed",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/playPressed.png"
+    },
+    {
+        "mainIndex": "settingsPressed",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/settingsPressed.png"
+    },
+    {
+        "mainIndex": "mainMenuBG",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/mainMenu.png"
+    },
+    {
+        "mainIndex": "mainMenuPlay",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/mmPlay.png"
+    },
+    {
+        "mainIndex": "mainMenuGameInfo",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/mmGameInfo.png"
+    },
+    {
+        "mainIndex": "mainMenuCredits",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/mmCredits.png"
+    },
+    {
+        "mainIndex": "Logo",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/Logo.png"
+    },
+    {
+        "mainIndex": "victoryScreen",
+        "subIndex": 0,
+        "filePath": "Resource/Texture/victory_background.png"
+    }
+]

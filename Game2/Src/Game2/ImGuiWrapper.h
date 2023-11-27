@@ -141,6 +141,8 @@ namespace Engine {
 
 		int selectedEntityIndex = 1;
 
+		inline bool IsImGuiHovered() const { return isImGuiHovered; }
+
 	private:
 
 		/*!

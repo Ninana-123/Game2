@@ -24,6 +24,7 @@
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
+    <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\LogicSystem.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />

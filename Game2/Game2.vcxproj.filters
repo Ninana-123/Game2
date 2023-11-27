@@ -325,6 +325,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
+    <ClInclude Include="Src\Game2\json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

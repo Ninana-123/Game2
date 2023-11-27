@@ -133,6 +133,8 @@ namespace Engine
         *************************************************************************/
         bool OnWindowResize(WindowResizeEvent& e);
 
+        //void ToggleFullScreen();
+
         // Window instance 
         std::unique_ptr<Window> m_Window;
 
