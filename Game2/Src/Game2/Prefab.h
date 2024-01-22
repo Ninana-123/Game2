@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		Prefab.h
@@ -9,6 +8,8 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_PREFAB_H
+#define ENGINE_PREFAB_H
 
 #include "pch.h"
 #include "Component.h"
@@ -38,3 +39,4 @@ namespace Engine
 		std::string name;
 	};
 }
+#endif ENGINE_PREFAB_H

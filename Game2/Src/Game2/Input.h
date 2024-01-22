@@ -14,7 +14,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
-#pragma once
+#ifndef ENGINE_INPUT_H
+#define ENGINE_INPUT_H
 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
@@ -166,3 +167,4 @@ namespace Engine {
 		bool isDragging = false;
 	};
 }
+#endif ENGINE_INPUT_H

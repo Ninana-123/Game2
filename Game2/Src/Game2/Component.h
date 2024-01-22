@@ -11,8 +11,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+#ifndef ENGINE_COMPONENT_H
+#define ENGINE_COMPONENT_H
 
-#pragma once
 #include "EngineTypes.h"
 
 namespace Engine
@@ -54,3 +55,4 @@ namespace Engine
         virtual void Deserialize(std::istream& is) = 0;
     };
 }
+#endif ENGINE_COMPONENT_H

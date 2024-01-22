@@ -12,7 +12,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_INPUTEVENTS_H
+#define ENGINE_INPUTEVENTS_H
 
 #include "pch.h"
 #include "Event.h"
@@ -237,3 +238,4 @@ namespace Engine {
         EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 } // End of namespace Engine
+#endif ENGINE_INPUTEVENTS_H

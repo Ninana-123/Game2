@@ -12,11 +12,10 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_MATRIX_H
+#define ENGINE_MATRIX_H
 
 #define M_PI           3.14159265358979323846
-
 
 namespace MATRIXMATH
 {
@@ -221,3 +220,4 @@ namespace MATRIXMATH
         float m[9];
     };
 }
+#endif ENGINE_MATRIX_H

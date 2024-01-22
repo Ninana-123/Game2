@@ -14,15 +14,12 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
-#ifndef CSD1130_COLLISION_H_
-#define CSD1130_COLLISION_H_
+#ifndef ENGINE_COLLISION_H_
+#define ENGINE_COLLISION_H_
 
 #include "System.h"
 #include "Vector2d.h"
 #include "EngineTypes.h"
-#endif 
 
 // Global Variable to check for button Collision
 extern bool buttonCollision;
@@ -259,3 +256,4 @@ namespace Engine
 			EntityID lastCollidingEntityID = {};
 	};
 }
+#endif ENGINE_COLLISION_H

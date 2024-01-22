@@ -12,9 +12,10 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-#include <map>
+#ifndef ENGINE_KEYCODES_H
+#define ENGINE_KEYCODES_H
 
+#include <map>
 
 /* The unknown key */
 #define KEY_UNKNOWN            -1
@@ -271,3 +272,4 @@ namespace Engine {
         };
     }
 }
+#endif ENGINE_KEYCODES_H

@@ -8,6 +8,8 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_SYSTEMSMANAGER_H
+#define ENGINE_SYSTEMSMANAGER_H
 
 #include "pch.h"
 #include "System.h"
@@ -17,7 +19,6 @@
 #include "PathfindingSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
-#pragma once
 
 namespace Engine
 {
@@ -138,3 +139,4 @@ namespace Engine
        
     };
 }  // namespace Engine
+#endif ENGINE_SYSTEMSMANAGER_H

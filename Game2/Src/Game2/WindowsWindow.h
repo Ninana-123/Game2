@@ -13,7 +13,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_WINDOWWINDOW_H
+#define ENGINE_WINDOWWINDOW_H
 
 #include "Window.h"
 extern bool isPaused;
@@ -128,3 +129,4 @@ namespace Engine {
         bool m_IsFullScreen = false;
     };
 }
+#endif ENGINE_WINDOWWINDOW_H

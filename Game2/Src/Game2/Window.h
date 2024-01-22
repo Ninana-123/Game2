@@ -13,7 +13,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_WINDOW_H
+#define ENGINE_WINDOW_H
 
 #include "pch.h"
 #include "Core.h"
@@ -99,3 +100,4 @@ namespace Engine {
 
     };
 }
+#endif ENGINE_WINDOW_H

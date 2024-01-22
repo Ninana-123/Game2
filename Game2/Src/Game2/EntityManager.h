@@ -9,7 +9,8 @@
  */
  /******************************************************************************/
 
-#pragma once
+#ifndef ENGINE_ENTITYMANAGER_H
+#define ENGINE_ENTITYMANAGER_H
 
 #include "Entity.h"
 #include "Prefab.h"
@@ -113,3 +114,4 @@ namespace Engine
 	};
 
 }
+#endif ENGINE_ENTITYMANAGER_H

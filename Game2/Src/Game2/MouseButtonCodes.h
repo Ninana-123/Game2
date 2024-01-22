@@ -12,7 +12,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_MOUSEBUTTON_H
+#define ENGINE_MOUSEBUTTON_H
+
 #include <map>
 
 #define LEFT_MOUSE_BUTTON         0
@@ -43,3 +45,4 @@ namespace Engine {
         };
     }
 }
+#endif ENGINE_MOUSEBUTTON_H

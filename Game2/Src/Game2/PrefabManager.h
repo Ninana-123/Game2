@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		PrefabManager.h
@@ -9,6 +8,8 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_PREFABMANAGER_H
+#define ENGINE_PREFABMANAGER_H
 
 #include "Prefab.h"
 
@@ -34,3 +35,4 @@ namespace Engine
 	};
 
 }
+#endif ENGINE_PREFABMANAGER_H

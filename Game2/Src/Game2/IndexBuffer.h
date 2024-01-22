@@ -12,8 +12,6 @@
 			written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
 #ifndef ENGINE_INDEXBUFFER_H
 #define ENGINE_INDEXBUFFER_H
 

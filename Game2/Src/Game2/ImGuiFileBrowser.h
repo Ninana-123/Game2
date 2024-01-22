@@ -13,6 +13,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+#ifndef ENGINE_IMGUIFILE_H
+#define ENGINE_IMGUIFILE_H
+
 #include "pch.h"
 #include "imgui.h"
 #include "AssetManager.h"
@@ -264,3 +267,4 @@ namespace Engine {
         }
     };
 }
+#endif ENGINE_IMGUIIFLE_H

@@ -8,7 +8,9 @@
 
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_PATHFINDINGCOMPONENT_H
+#define ENGINE_PATHFINDINGCOMPONENT_H
+
 #include "Component.h"
 #include "PathfindingSystem.h"
 #include "EngineTypes.h"
@@ -83,3 +85,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_PATHFINDINGCOMPONENT_H

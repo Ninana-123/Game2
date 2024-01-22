@@ -14,8 +14,8 @@
 			written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_FONT_H
+#define ENGINE_FONT_H
 
 #include <iostream>
 #include <map>
@@ -32,9 +32,6 @@
 #include FT_FREETYPE_H
 
 #include "Shader.h"
-
-#ifndef FONT_H
-#define FONT_H
 
 namespace Engine {
 
@@ -143,4 +140,4 @@ namespace Engine {
 		//GLFWwindow* window{};
 	};
 }
-#endif // FONT_H
+#endif  ENGINE_FONT_H
