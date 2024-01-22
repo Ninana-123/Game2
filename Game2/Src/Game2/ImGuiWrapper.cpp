@@ -413,7 +413,7 @@ namespace Engine {
 	void ImGuiWrapper::RenderAssetBrowser() {
 
 		auto& textures = assetManager->GetAllTextures(); //buffer
-		int imgIDCounter = 0;
+		//int imgIDCounter = 0;
 		if (ImGui::BeginTabItem("Asset Browser")) {
 			if (InputHandlerImGui.IsKeyPressed(KEY_F9)) {
 				// Iterate through main indexes
