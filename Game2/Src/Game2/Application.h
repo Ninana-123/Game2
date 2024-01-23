@@ -90,6 +90,8 @@ namespace Engine
         *************************************************************************/
         void UpdateDeltaTime();
 
+        static bool TimePassed(double seconds);
+
         /*!**********************************************************************
         \brief
         Updates the window title to display FPS.

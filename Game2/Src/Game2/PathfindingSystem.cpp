@@ -22,6 +22,7 @@ Technology is prohibited.
 #include "EntityManager.h"
 #include "inGameGUI.h"
 #include <GLFW/glfw3.h>
+#include "Application.h"
 
 namespace Engine
 {
@@ -372,6 +373,7 @@ namespace Engine
 
                         closestTower = getClosestPair(startX, startY, towerPositions);
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
+                        
                         if (endPointX != closestTower.first && endPointY != closestTower.second) 
                         {
                             goalX = closestTower.first;
@@ -380,6 +382,7 @@ namespace Engine
                         
                         if (Input::IsKeyPressed(KEY_SPACE))
                         {
+
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
                             goalX = currentClosestTower.first;
                             goalY = currentClosestTower.second;
@@ -431,7 +434,8 @@ namespace Engine
                         //std::cout << std::endl;
 
                         // If path is not empty, execute path finding logic
-                        if (!pathfindingComponent->path.empty())
+                        if (!pathfindingComponent->path.empty() && Application::TimePassed(3))
+                        // if (Application::TimePassed(3))
                         {
 
                             // Infantry switch to walking mode

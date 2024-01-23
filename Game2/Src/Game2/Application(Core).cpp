@@ -584,6 +584,23 @@ namespace Engine
         }
     }
 
+    bool Application::TimePassed(double seconds)
+    {
+        static std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
+
+        // Calculate elapsed time since the start
+        auto currentTimeBaybie = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::duration<double>>(currentTimeBaybie - startTime).count();
+
+        // Check if the elapsed time is greater than or equal to the specified seconds
+        bool result = elapsedTime >= seconds;
+
+        std::cout << "My boolean value is: " << std::boolalpha << result << std::endl;
+        std::cout << "Elapsed time is: " << elapsedTime << " seconds" << std::endl;
+
+        return result;
+    }
+
     void Application::UpdateWindowFocus() {
         if (m_Window) {
             // Use get() to obtain a raw pointer to the managed object
