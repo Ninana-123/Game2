@@ -8,7 +8,8 @@
 
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_TRANSFORMCOMPONENT_H
+#define ENGINE_TRANSFORMCOMPONENT_H
 
 #include "Component.h"
 #include "EngineTypes.h"
@@ -86,3 +87,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_TRANSFORMCOMPONENT_H

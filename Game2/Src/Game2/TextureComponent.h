@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		TextureComponent.h
@@ -9,6 +8,8 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_TEXTURECOMPONENT_H
+#define ENGINE_TEXTURECOMPONENT_H
 
 #include "Component.h"
 #include "EngineTypes.h"
@@ -80,3 +81,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_TEXTURECOMPONENT_H

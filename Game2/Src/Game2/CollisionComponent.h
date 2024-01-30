@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		CollisionComponent.h
@@ -9,6 +8,9 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_COLLISIONCOMPONENT_H
+#define ENGINE_COLLISIONCOMPONENT_H
+
 #include "Component.h"
 #include "CollisionSystem.h"
 
@@ -94,3 +96,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_COLLISIONCOMPONENT_H

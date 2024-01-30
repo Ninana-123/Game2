@@ -12,7 +12,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_ASSETMANAGER_H
+#define ENGINE_ASSETMANAGER_H
+
 #include "pch.h"
 #include "Texture.h"
 #include "EngineTypes.h"
@@ -276,3 +278,4 @@ namespace Engine {
         };
     };
 }
+#endif ENGINE_ASSETMANAGER_H

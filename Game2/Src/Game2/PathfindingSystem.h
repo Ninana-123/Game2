@@ -14,9 +14,8 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
-
-#ifndef PATHFINDING_H
-#define PATHFINDING_H
+#ifndef ENGINE_PATHFINDING_H
+#define ENGINE_PATHFINDING_H
 
 #include <iostream>
 #include <vector>
@@ -249,8 +248,4 @@ namespace Engine
         bool isWalking;
     };
 }
-
-
-#endif
-
-
+#endif ENGINE_PATHFINDING_H

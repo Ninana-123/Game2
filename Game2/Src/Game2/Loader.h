@@ -14,8 +14,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+#ifndef ENGINE_LOADER_H
+#define ENGINE_LOADER_H
 
-#pragma once
 #include "pch.h"
 #include "WindowsWindow.h"
 #include "Entity.h"
@@ -81,3 +82,4 @@ namespace Engine {
     };
 
 }
+#endif ENGINE_LOADER_H

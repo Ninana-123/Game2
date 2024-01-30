@@ -16,7 +16,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_IMGUIWRAPPER_H
+#define ENGINE_IMGUIWRAPPER_H
+
 #include "Event.h"
 #include "InputEvent.h"
 #include "AppEvent.h"
@@ -245,3 +247,4 @@ namespace Engine {
 
 	};
 }
+#endif ENGINE_IMGUIWRAPPER_H

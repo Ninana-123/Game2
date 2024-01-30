@@ -14,7 +14,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_APPEVENT_H
+#define ENGINE_APPEVENT_H
 
 #include "pch.h"
 #include "Event.h"
@@ -142,3 +143,4 @@ namespace Engine {
             EVENT_CLASS_CATEGORY(EventCategoryApplication) // Set the event category
     };
 }
+#endif ENGINE_APPEVENT_H

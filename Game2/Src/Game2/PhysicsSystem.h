@@ -8,8 +8,8 @@
 
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_PHYSICSSYSTEM_H
+#define ENGINE_PHYSICSSYSTEM_H
 
 #include "System.h"
 #include "Entity.h"
@@ -147,3 +147,4 @@ namespace Engine
         Rigidbody createRigidbodyFromPhysicsComponent(PhysicsComponent* physicsComponent, TransformComponent* transformComponent);
     };
 }
+#endif ENGINE_PHYSICSSYSTEM_H

@@ -1,0 +1,1333 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'state'. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 4346,
+                  "startColumn": 9,
+                  "endLine": 4346,
+                  "endColumn": 43
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::InputTextEx",
+                  "decoratedName": "?InputTextEx@ImGui@@YA_NPEBD0PEADHAEBUImVec2@@HP6AHPEAUImGuiInputTextCallbackData@@@ZPEAX@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4107,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4108,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4115,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4116,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4117,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4119,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4120,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4121,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4122,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4123,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4124,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4125,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4128,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4130,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4131,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4132,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4133,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4135,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4136,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4138,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4139,
+                            "startColumn": 12
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4140,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4141,
+                            "startColumn": 23
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4142,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4183,
+                            "startColumn": 17
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4184,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4187,
+                            "startColumn": 27
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4189,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4190,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4194,
+                            "startColumn": 26
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4196,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4197,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4199,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4200,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4201,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4202,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4203,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4205,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4207,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "'state' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4208,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4209,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4210,
+                            "startColumn": 42
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4266,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4267,
+                            "startColumn": 26
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4274,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this branch, (assume 'g.ActiveId==id')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4277,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'user_clicked' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4279,
+                            "startColumn": 35
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4280,
+                            "startColumn": 26
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4282,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4283,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4284,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'is_multiline' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4289,
+                            "startColumn": 13
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'is_osx' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4291,
+                            "startColumn": 19
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'flags' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4296,
+                            "startColumn": 26
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this branch, (assume 'g.ActiveId==id&&state==0')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4297,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4300,
+                            "startColumn": 63
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4304,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4305,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4306,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4307,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4311,
+                            "startColumn": 38
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4322,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4323,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4326,
+                            "startColumn": 21
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4342,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4343,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this branch, (assume 'g.ActiveId==id')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 4346,
+                            "startColumn": 36
+                          }
+                        },
+                        "message": {
+                          "text": "'state' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 'window'. See line 7274 for an earlier location where this can occur"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                },
+                "region": {
+                  "startLine": 7304,
+                  "startColumn": 5,
+                  "endLine": 7304,
+                  "endColumn": 70
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ImGui::EndMenuBar",
+                  "decoratedName": "?EndMenuBar@ImGui@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7273,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7274,
+                            "startColumn": 15
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7276,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7279,
+                            "startColumn": 109
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7282,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7283,
+                            "startColumn": 49
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7285,
+                            "startColumn": 129
+                          }
+                        },
+                        "message": {
+                          "text": "'window' may be NULL (Skip this branch)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7302,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7303,
+                            "startColumn": 10
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+                          },
+                          "region": {
+                            "startLine": 7304,
+                            "startColumn": 32
+                          }
+                        },
+                        "message": {
+                          "text": "'window' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.35.32217.1",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/TUF/Documents/GitHub/Game2/Game2/Src/Game2/imgui_widgets.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "1234b4101049a34f34357c5ae2c1ede88c28b9165409a9e3dcf4602b68923df0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/pch.h"
+          },
+          "hashes": {
+            "sha-256": "d40ab76f821eba7c3d0890bb16cd6ea27635109d9ce656470ff48aecad4e5ec8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/imgui.h"
+          },
+          "hashes": {
+            "sha-256": "c0764c652cf0cf36c6c076c1c7fe54101ba5a8f011cbc689dd2fbfe19b450543"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/imconfig.h"
+          },
+          "hashes": {
+            "sha-256": "260dace38975aa8acc2d16fb60aa1c1f785046f2a4fe06c4ef35ef8ee65c9c8a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/imgui_internal.h"
+          },
+          "hashes": {
+            "sha-256": "a3305aaf093df0d56af1c9df7b63a0428a7885aff3b9036e261cf42c863d98c3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/imstb_textedit.h"
+          },
+          "hashes": {
+            "sha-256": "f1f89d896d4921d6193a0def9b9445732483d116ee103b273816657246d0e2aa"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -11,10 +11,8 @@
             written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
-#ifndef INGAMEGUISYSTEM_H
-#define INGAMEGUISYSTEM_H
+#ifndef ENGINE_INGAMEGUISYSTEM_H
+#define ENGINE_INGAMEGUISYSTEM_H
 
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
@@ -104,4 +102,4 @@ namespace Engine
 
     };
 }
-#endif
+#endif ENGINE_INGAMEGUISYSTEM_H

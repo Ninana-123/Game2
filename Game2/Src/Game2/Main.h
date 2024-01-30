@@ -15,7 +15,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_MAIN_H
+#define ENGINE_MAIN_H
+
 #include "Application.h" 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
@@ -67,5 +69,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     return 0;
 }
-
 #endif
+
+#endif ENGINE_MAIN_H

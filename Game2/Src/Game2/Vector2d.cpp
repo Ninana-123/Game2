@@ -78,8 +78,9 @@ namespace VECTORMATH {
 
     // Initializes the x and y components of a Vector2D object.
     Vector2D::Vector2D(float _x, float _y) : x(_x), y(_y) {
+        m[0] = _x;
+        m[1] = _y;
     }
-
 
     // Assignment operators
     // Adds two Vector2D objects and modifies the calling vector.

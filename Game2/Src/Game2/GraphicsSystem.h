@@ -13,8 +13,6 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
 #ifndef ENGINE_GRAPHICS_H
 #define ENGINE_GRAPHICS_H
 
@@ -297,4 +295,4 @@ namespace Engine
         std::shared_ptr<Engine::EntityManager> entityManager;
     };
 }
-#endif // ENGINE_GRAPHICS_H
+#endif ENGINE_GRAPHICS_H

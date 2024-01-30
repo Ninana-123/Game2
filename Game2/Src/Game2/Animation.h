@@ -14,8 +14,8 @@
             written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_ANIMATION_H
+#define ENGINE_ANIMATION_H
 
 #include <fstream>
 namespace Engine
@@ -107,3 +107,4 @@ namespace Engine
         Anim_Mode playMode;
     };
 }
+#endif ENGINE_ANIMATION_H

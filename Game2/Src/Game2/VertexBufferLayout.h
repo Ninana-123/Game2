@@ -12,7 +12,6 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
-#pragma once
 #ifndef ENGINE_VERTEXBUFFERLAYOUT_H
 #define ENGINE_VERTEXBUFFERLAYOUT_H
 

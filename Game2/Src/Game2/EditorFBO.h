@@ -11,9 +11,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-#ifndef EDITOR_FBO_H
-#define EDITOR_FBO_H
+#ifndef ENGINE_EDITOR_FBO_H
+#define ENGINE_EDITOR_FBO_H
 
 #include <GL/glew.h>
 
@@ -81,4 +80,4 @@ private:
     void SetupTexture();
 };
 
-#endif // EDITOR_FBO_H
+#endif ENGINE_EDITOR_FBO_H

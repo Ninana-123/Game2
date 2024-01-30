@@ -8,8 +8,8 @@
 
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_VECTOR2D_H
+#define ENGINE_VECTOR2D_H
 
 namespace VECTORMATH
 {
@@ -451,3 +451,4 @@ namespace VECTORMATH
 	/**************************************************************************/
 	void rotateVector2D(Vector2D& vec, float angleRadians);
 }
+#endif ENGINE_VECTOR2D_H

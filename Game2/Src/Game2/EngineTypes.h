@@ -7,7 +7,8 @@
 \brief		Declaration of types to be used in the custom engine
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_ENGINETYPES_H
+#define ENGINE_ENGINETYPES_H
 
 // Entity and Prefab IDs
 typedef unsigned int EntityID; 
@@ -162,3 +163,4 @@ enum anim_mode
 {
     loop, one_time
 };
+#endif ENGINE_ENGINETYPES_H

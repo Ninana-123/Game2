@@ -12,10 +12,11 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
-#pragma once
+#ifndef ENGINE_LOGGER_H
+#define ENGINE_LOGGER_H
+
 #pragma warning(disable : 4251)
 #pragma warning(disable : 4099)
-
 
 #include "pch.h"
 #include "Core.h"
@@ -89,3 +90,4 @@ namespace Engine {
         std::mutex logMutex;  // Mutex for thread-safety
     };
 }
+#endif ENGINE_LOGGER_H

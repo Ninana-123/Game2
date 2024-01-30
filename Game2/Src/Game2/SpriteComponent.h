@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		SpriteComponent.h
@@ -9,6 +8,9 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_SPRITECOMPONENT_H
+#define ENGINE_SPRITECOMPONENT_H
+
 #include "Animation.h"
 #include "Component.h"
 #include "EngineTypes.h"
@@ -102,3 +104,4 @@ namespace Engine
         }
     };
 }
+#endif ENGINE_SPRITECOMPONENT_H

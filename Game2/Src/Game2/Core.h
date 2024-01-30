@@ -12,7 +12,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_CORE_H
+#define ENGINE_CORE_H
+
 #define GAME2_API __declspec(dllexport)
 
 #define BIT(x) (1<<x)
@@ -57,3 +59,4 @@ namespace Engine
 		bool GameActive;
 	};
 }
+#endif ENGINE_CORE_H

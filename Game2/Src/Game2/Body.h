@@ -10,10 +10,8 @@
 
  */
  /******************************************************************************/
-
-#pragma once 
-#ifndef RIGIDBODY_H
-#define RIGIDBODY_H
+#ifndef ENGINE_BODY_H
+#define ENGINE_BODY_H
 
 #include "Vector2d.h"
 #include "CollisionComponent.h"
@@ -98,4 +96,4 @@ public:
     void setPosition(VECTORMATH::Vec2 pos);
 };
 
-#endif // RIGIDBODY_H
+#endif ENGINE_BODY_H

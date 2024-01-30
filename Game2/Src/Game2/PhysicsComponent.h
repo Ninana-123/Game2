@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		PhysicsComponent.h
@@ -9,6 +8,8 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_PHYSICSCOMPONENT_H
+#define ENGINE_PHYSICSCOMPONENT_H
 
 #include "Component.h"
 #include "CollisionSystem.h"
@@ -70,3 +71,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_PHYSICSCOMPONENT_H
