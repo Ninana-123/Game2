@@ -23,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "SpriteComponent.h"
 #include "PathfindingComponent.h"
 #include "BehaviourComponent.h"
+#include "StatsComponent.h"
 
 namespace Engine
 {

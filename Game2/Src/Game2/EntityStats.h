@@ -3,11 +3,6 @@
 #ifndef ENTITYSTATS_H
 #define ENTITYSTATS_H
 
-#include "TransformComponent.h"
-#include "CollisionComponent.h"
-#include "CollisionSystem.h"
-#include "input.h"
-#include "PrefabManager.h"
 #include "EngineTypes.h"
 #include "AssetManager.h"
 
