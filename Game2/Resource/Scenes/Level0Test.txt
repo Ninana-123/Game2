@@ -1,4 +1,4 @@
-10
+13
 Transform
 Position: 1 0
 ScaleX: 3672.09
@@ -187,5 +187,32 @@ Layer: 6
 CollisionVel: 345 75
 Texture
 MainIndex: 5
+SubIndex: 0
+EndEntity
+Transform
+Position: -69 345
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
+SubIndex: 0
+EndEntity
+Transform
+Position: -274 -130
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
+SubIndex: 0
+EndEntity
+Transform
+Position: 350 207
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
 SubIndex: 0
 EndEntity

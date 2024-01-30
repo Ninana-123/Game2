@@ -186,6 +186,8 @@ namespace Engine
         /**************************************************************************/
         std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
 
+        // ~PathfindingSystem();
+
     private:
         struct Node {
             int x, y;

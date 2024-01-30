@@ -127,6 +127,9 @@
     <ClCompile Include="Src\Game2\EditorFBO.cpp">
       <Filter>Systems\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\EntityStats.cpp">
+      <Filter>EntityStats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -321,6 +324,13 @@
     <ClInclude Include="Src\Game2\EditorFBO.h">
       <Filter>Systems\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\json.hpp" />
+    <ClInclude Include="Src\Game2\StatsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EntityStats.h">
+      <Filter>EntityStats</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -430,6 +440,9 @@
     </Filter>
     <Filter Include="Systems\Logic">
       <UniqueIdentifier>{e25a2196-df20-4c33-9343-e3cd6fed303b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EntityStats">
+      <UniqueIdentifier>{3b9fe9a6-9030-4c9c-bb14-9928e54d17f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

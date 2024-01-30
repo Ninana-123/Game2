@@ -17,7 +17,7 @@ const int MAX_SUBINDEX = 4;
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding,Logic, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Unknown };
 
 // Character State Enumeration
 enum c_state { Static, Walking, Attack, Death, Idle }; 
@@ -62,6 +62,27 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuCredits,
     Logo,
     victoryScreen,
+    catHPEmpty,
+    catHP1,
+    catHP2,
+    catHP3,
+    catHP4,
+    catHP5,
+    catHP6,
+    catHP7,
+    catHP8,
+    catHP9,
+    towerHPEmpty,
+    towerHP1,
+    towerHP2,
+    towerHP3,
+    towerHP4,
+    towerHP5,
+    towerHP6,
+    towerHP7,
+    towerHP8,
+    towerHP9,
+
     TextureClassCount
 };
 
