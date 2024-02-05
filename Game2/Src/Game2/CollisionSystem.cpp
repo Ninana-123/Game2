@@ -29,6 +29,9 @@ bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
 bool isStartingPoint = true;
+bool towerCollision = false;
+float towerHealth;
+std::vector<Engine::Stats> towers;
 
 /*!*****************************************************************
 
@@ -501,7 +504,7 @@ namespace Engine
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
-
+				StatsComponent* statsComponent1 = dynamic_cast<StatsComponent*>(entity1->GetComponent(ComponentType::Stats));
 
 				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
 				{
@@ -510,12 +513,24 @@ namespace Engine
 					circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 					VECTORMATH::Vec2 vel1;
 					VECTORMATH::Vec2 circleVel1 = VECTORMATH::Vec2(collisionComponent1->collisionVel.x, collisionComponent1->collisionVel.y);
+					
 
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower)
 					{
 						circle1.radius = 100.f;
-
+						if (!(statsComponent1->statsInitialized)) 
+						{
+							towers.emplace_back(statsComponent1->health, 0.0f);
+							Stats towerStats(statsComponent1->health, 0.0f);
+							towerHealth = towerStats.getHealth();
+							std::cout << "Tower Health is: " << statsComponent1->health << std::endl;
+							statsComponent1->statsInitialized = true;
+						}
+						else 
+						{
+							std::cout << "Tower updated health is: " << statsComponent1->health << std::endl; // Debug check to see if initialised
+						}
 					}
 
 					if (collisionComponent1)
@@ -545,6 +560,8 @@ namespace Engine
 							{
 								CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
+								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
+								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
 
 								AABB aabb2;
 								Circle circle2;
@@ -579,6 +596,24 @@ namespace Engine
 											&& collisionComponent2->layer != Layer::inGameGUI)
 										{
 											isColliding = true;
+											if (collisionComponent2->layer == Layer::Tower)
+											{
+												towerCollision = true;
+												buttonCollision = true;
+												if (statsComponent2->health > 0 && Application::TimePassed(3)) 
+												{
+													// std::cout << "its in the if statement" << std::endl;
+													statsComponent2->health--;
+													lastCollidingEntityTexture = 41;
+													if ((healthBarEntityTexture == 41 && statsComponent2->health == 0))
+													{
+														if ((textureComponent->textureKey.mainIndex == 41 && textureComponent->textureKey.subIndex == 0))
+														{
+															textureComponent->textureKey = { 32, 0 };
+														}
+													}
+												}
+											}
 											//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 										}
 

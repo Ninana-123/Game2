@@ -439,7 +439,7 @@ namespace Engine
                         //std::cout << std::endl;
 
                         // If path is not empty, execute path finding logic
-                        if (!pathfindingComponent->path.empty() && Application::TimePassed(3))
+                        if (!pathfindingComponent->path.empty())
                         // if (Application::TimePassed(3))
                         {
 

@@ -11,29 +11,17 @@ namespace Engine
     class Stats
     {
     public:
-        Stats(float initialHealth, float initialAttackPower)
-            : health(initialHealth), attackPower(initialAttackPower) {}
+        Stats(float initialHealth, float initialAttackPower);
 
-        int getHealth() const { return health; }
-        int getAttackPower() const { return attackPower; }
+        int getHealth() const;
+        int getAttackPower() const;
 
-        void setHealth(float newHealth) { health = newHealth; }
-        void setAttackPower(float newAttackPower) { attackPower = newAttackPower; }
+        void setHealth(float newHealth);
+        void setAttackPower(float newAttackPower);
 
-        void displayStats() const
-        {
-            std::cout << "Health: " << health << std::endl;
-            std::cout << "Attack Power: " << attackPower << std::endl;
-        }
+        void displayStats() const;
 
-        void takeDamage(int damage)
-        {
-            health -= damage;
-            if (health < 0) {
-                health = 0;
-            }
-            std::cout << "Took " << damage << " damage. Current health: " << health << std::endl;
-        }
+        void takeDamage(int damage);
 
     private:
         int health;
