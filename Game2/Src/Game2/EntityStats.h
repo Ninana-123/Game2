@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ENTITYSTATS_H
 #define ENTITYSTATS_H
 
@@ -12,13 +10,13 @@ namespace Engine
     {
     public:
         Stats(float initialHealth, float initialAttackPower)
-            : health(initialHealth), attackPower(initialAttackPower) {}
+            : health(static_cast<int>(initialHealth)), attackPower(static_cast<int>(initialAttackPower)) {}
 
         int getHealth() const { return health; }
         int getAttackPower() const { return attackPower; }
 
-        void setHealth(float newHealth) { health = newHealth; }
-        void setAttackPower(float newAttackPower) { attackPower = newAttackPower; }
+        void setHealth(float newHealth) { health = static_cast<int>(newHealth); }
+        void setAttackPower(float newAttackPower) { attackPower = static_cast<int>(newAttackPower); }
 
         void displayStats() const
         {
