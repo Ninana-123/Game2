@@ -1,2 +1,0 @@
-C:\Users\TUF\Documents\GitHub\Game2\bin\Release-x64\Game2\Game2.dll.lastcodeanalysissucceeded
-C:\Users\TUF\Documents\GitHub\Game2\bin-int\Release-x64\Game2\NativeCodeAnalysis.read.1.tlog

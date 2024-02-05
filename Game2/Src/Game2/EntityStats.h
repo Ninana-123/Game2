@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ENTITYSTATS_H
 #define ENTITYSTATS_H
 

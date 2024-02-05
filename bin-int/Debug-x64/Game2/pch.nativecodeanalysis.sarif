@@ -8,7 +8,7 @@
         "driver": {
           "name": "PREfast",
           "fullName": "PREfast Code Analysis",
-          "version": "14.33.31629.0",
+          "version": "14.35.32217.1",
           "informationUri": "https://aka.ms/cpp/ca"
         }
       },
@@ -20,7 +20,7 @@
       "artifacts": [
         {
           "location": {
-            "uri": "file:///c:/school stuff/y2t1/csd2401 software engineering project 3.1/game2/game2/src/game2/pch.cpp"
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/pch.cpp"
           },
           "roles": [
             "analysisTarget"
@@ -31,7 +31,7 @@
         },
         {
           "location": {
-            "uri": "file:///c:/school stuff/y2t1/csd2401 software engineering project 3.1/game2/game2/src/game2/pch.h"
+            "uri": "file:///c:/users/tuf/documents/github/game2/game2/src/game2/pch.h"
           },
           "hashes": {
             "sha-256": "d40ab76f821eba7c3d0890bb16cd6ea27635109d9ce656470ff48aecad4e5ec8"
