@@ -124,11 +124,14 @@
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\EditorFBO.cpp">
-      <Filter>Systems\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityStats.cpp">
       <Filter>EntityStats</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EditorFBO.cpp">
+      <Filter>Systems\Graphics\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PickingFBO.cpp">
+      <Filter>Systems\Graphics\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,15 +324,18 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\EditorFBO.h">
-      <Filter>Systems\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\StatsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\EntityStats.h">
       <Filter>EntityStats</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EditorFBO.h">
+      <Filter>Systems\Graphics\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PickingFBO.h">
+      <Filter>Systems\Graphics\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -443,6 +449,9 @@
     </Filter>
     <Filter Include="EntityStats">
       <UniqueIdentifier>{3b9fe9a6-9030-4c9c-bb14-9928e54d17f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Editor">
+      <UniqueIdentifier>{c3d49252-850e-4ef0-8921-ad79c81ccc2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
