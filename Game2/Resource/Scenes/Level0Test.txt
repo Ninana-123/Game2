@@ -143,8 +143,8 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 10
-StatsInitialized: 0
+Health: 50
+Range: 100
 EndEntity
 Transform
 Position: -275 -35
@@ -173,7 +173,7 @@ goalY: 0
 initialized: 0
 Stats
 Health: 10
-StatsInitialized: 0
+Range: 50
 EndEntity
 Transform
 Position: 345 75

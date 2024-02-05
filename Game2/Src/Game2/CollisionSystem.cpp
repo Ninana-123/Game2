@@ -516,21 +516,10 @@ namespace Engine
 					
 
 					// Set tower's circle radius
-					if (collisionComponent1->layer == Layer::Tower)
+					if (collisionComponent1->layer == Layer::Tower && statsComponent1)
 					{
-						circle1.radius = 100.f;
-						if (!(statsComponent1->statsInitialized)) 
-						{
-							towers.emplace_back(statsComponent1->health, 0.0f);
-							Stats towerStats(statsComponent1->health, 0.0f);
-							towerHealth = towerStats.getHealth();
-							std::cout << "Tower Health is: " << statsComponent1->health << std::endl;
-							statsComponent1->statsInitialized = true;
-						}
-						else 
-						{
-							std::cout << "Tower updated health is: " << statsComponent1->health << std::endl; // Debug check to see if initialised
-						}
+						circle1.radius = statsComponent1->range;
+					
 					}
 
 					if (collisionComponent1)
@@ -566,9 +555,14 @@ namespace Engine
 								AABB aabb2;
 								Circle circle2;
 								circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
-								circle2.radius = 100.f;//retrieve from component pl0x
+								
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
+
+								if (statsComponent2)
+								{
+									circle2.radius = statsComponent2->range;
+								}
 
 								if (collisionComponent2)
 								{
@@ -591,34 +585,24 @@ namespace Engine
 									if (collisionComponent2 != nullptr)
 									{
 										circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
-
+										BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
 										if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2)
 											&& collisionComponent2->layer != Layer::inGameGUI)
 										{
 											isColliding = true;
+											//Collision Between Non Tower and Towers only -bc Tower can never AABB collide with another Tower
 											if (collisionComponent2->layer == Layer::Tower)
 											{
 												towerCollision = true;
 												buttonCollision = true;
-												if (statsComponent2->health > 0) 
+																								
+												if (behaviourComponent1)
 												{
-													if ((textureComponent->textureKey.mainIndex == 41 && textureComponent->textureKey.subIndex == 0))
-													{
-														textureComponent->textureKey = { 32, 0 };
-													}
-													// std::cout << "its in the if statement" << std::endl;
-													statsComponent2->health--;
-													lastCollidingEntityTexture = 41;
-													if (statsComponent2->health == 0)
-													{
-														if ((textureComponent->textureKey.mainIndex == 41 && textureComponent->textureKey.subIndex == 0))
-														{
-															textureComponent->textureKey = { 32, 0 };
-														}
-													}
-												}
-											}
-											//std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+													behaviourComponent1->SetBehaviourState(c_state::Attack);
+													collisionComponent1->target = entity2->GetID();
+													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+												}																																	
+											}							
 										}
 
 										// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
@@ -627,9 +611,15 @@ namespace Engine
 										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
 											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
 										{
-											// isColliding = true;
-											std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
-												<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+											//isColliding = true;
+											if (behaviourComponent1)
+											{
+												behaviourComponent1->SetBehaviourState(c_state::Attack);
+												collisionComponent1->target = entity2->GetID();			
+												std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+													<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+											}
+											
 
 										}
 									}								

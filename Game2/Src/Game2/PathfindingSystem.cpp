@@ -514,7 +514,7 @@ namespace Engine
                             if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
                             {
                                 // std::cout << "infantry here" << std::endl;
-                                textureComponent->textureKey = { 1, 2 };
+                                //textureComponent->textureKey = { 1, 2 };
                             }
 
                             // Archer

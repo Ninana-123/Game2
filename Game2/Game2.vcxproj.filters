@@ -133,6 +133,9 @@
     <ClCompile Include="Src\Game2\PickingFBO.cpp">
       <Filter>Systems\Graphics\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\TempStateMachine.cpp">
+      <Filter>Systems\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -336,6 +339,15 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\PickingFBO.h">
       <Filter>Systems\Graphics\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\BehaviourFCT.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TempStateMachine.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\BehaviourComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

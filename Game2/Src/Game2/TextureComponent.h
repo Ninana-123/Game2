@@ -22,6 +22,11 @@ namespace Engine
 
 		TextureKey textureKey = { 0, 0 };
 
+		inline void SetAnimation(int subkey)
+		{
+			textureKey = { textureKey.mainIndex, subkey };
+		}
+
 		/*!*****************************************************************
 
 		\brief
