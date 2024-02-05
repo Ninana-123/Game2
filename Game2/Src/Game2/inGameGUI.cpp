@@ -16,6 +16,7 @@
 #include "Application.h"
 
 int pathfindingEntityTexture = 0;
+int healthBarEntityTexture = 0;
 bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
@@ -41,7 +42,13 @@ namespace Engine
 		// Texture 8 is archer, 9 is tank, 7 is infantry
 		if (CollisionCheck) 
 		{	
-			
+			if (lastCollidingEntityTexture == 41)
+			{
+				healthBarEntityTexture = lastCollidingEntityTexture;
+				lastCollidingEntity = 0;
+				lastCollidingEntityTexture = 0;
+			}
+
 			if (lastCollidingEntityTexture == 7)
 			{
 				Prefab* infantryPrefab = prefabManager->GetPrefab(0);

@@ -24,6 +24,7 @@
 
 // Global variables
 extern int pathfindingEntityTexture;
+extern int healthBarEntityTexture;
 extern bool isGamePaused;
 extern bool inSettings;
 extern bool isGameOver;

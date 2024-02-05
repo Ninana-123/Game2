@@ -123,8 +123,8 @@ ScaleX: 2
 ScaleY: 2
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 200
+c_Height: 200
 isColliding: 0
 MinX: -70
 MinY: 245
@@ -142,6 +142,9 @@ startY: 0
 goalX: 0
 goalY: 0
 initialized: 0
+Stats
+Health: 10
+StatsInitialized: 0
 EndEntity
 Transform
 Position: -275 -35
@@ -149,8 +152,8 @@ ScaleX: 2
 ScaleY: 2
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 200
+c_Height: 200
 isColliding: 0
 MinX: -275
 MinY: -35
@@ -168,6 +171,9 @@ startY: 0
 goalX: 0
 goalY: 0
 initialized: 0
+Stats
+Health: 10
+StatsInitialized: 0
 EndEntity
 Transform
 Position: 345 75
