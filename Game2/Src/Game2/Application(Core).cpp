@@ -33,6 +33,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
+//#include "MainMenu.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -48,6 +49,7 @@ bool isPaused = false;
 bool stepOneFrame = false;
 double dt = 0;
 std::string initScene = "Resource/Scenes/Level0Test.txt";
+//std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -91,6 +93,7 @@ namespace Engine
 
     Application::Application()
     {
+        //mainMenu = std::make_unique<MainMenu>();
     }   
 
     Application::~Application()
