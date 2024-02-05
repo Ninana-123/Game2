@@ -49,7 +49,8 @@ namespace Engine
     std::pair<int, int> prevPos2 = { 0, 0 };
 
     // Define the collision map as a dynamically allocated 2D array
-    int** collisionMap = nullptr;
+    // int** collisionMap = nullptr;
+    std::unique_ptr<std::unique_ptr<int[]>[]> collisionMap;
 
     void PathfindingSystem::createLogicalCollisionMap() 
     {
@@ -83,13 +84,26 @@ namespace Engine
         }
     }
 
-    void PathfindingSystem::initializeCollisionMap() 
+    //void PathfindingSystem::initializeCollisionMap() 
+    //{
+    //    // Set the size of the collision map based on displayWidth and displayHeight
+    //    collisionMap = new int* [displayWidth];
+    //    for (int i = 0; i < displayWidth; ++i) 
+    //    {
+    //        collisionMap[i] = new int[displayHeight];
+    //    }
+
+    //    // Create a logical collision map
+    //    createLogicalCollisionMap();
+    //}
+
+    void PathfindingSystem::initializeCollisionMap()
     {
-        // Set the size of the collision map based on displayWidth and displayHeight
-        collisionMap = new int* [displayWidth];
-        for (int i = 0; i < displayWidth; ++i) 
+        // Use smart pointers to manage the memory for the collision map
+        collisionMap = std::make_unique<std::unique_ptr<int[]>[]>(displayWidth);
+        for (int i = 0; i < displayWidth; i++)
         {
-            collisionMap[i] = new int[displayHeight];
+            collisionMap[i] = std::make_unique<int[]>(displayHeight);
         }
 
         // Create a logical collision map
@@ -439,7 +453,7 @@ namespace Engine
                         //std::cout << std::endl;
 
                         // If path is not empty, execute path finding logic
-                        if (!pathfindingComponent->path.empty() && Application::TimePassed(3))
+                        if (!pathfindingComponent->path.empty())
                         // if (Application::TimePassed(3))
                         {
 
