@@ -600,12 +600,16 @@ namespace Engine
 											{
 												towerCollision = true;
 												buttonCollision = true;
-												if (statsComponent2->health > 0 && Application::TimePassed(3)) 
+												if (statsComponent2->health > 0) 
 												{
+													if ((textureComponent->textureKey.mainIndex == 41 && textureComponent->textureKey.subIndex == 0))
+													{
+														textureComponent->textureKey = { 32, 0 };
+													}
 													// std::cout << "its in the if statement" << std::endl;
 													statsComponent2->health--;
 													lastCollidingEntityTexture = 41;
-													if ((healthBarEntityTexture == 41 && statsComponent2->health == 0))
+													if (statsComponent2->health == 0)
 													{
 														if ((textureComponent->textureKey.mainIndex == 41 && textureComponent->textureKey.subIndex == 0))
 														{
