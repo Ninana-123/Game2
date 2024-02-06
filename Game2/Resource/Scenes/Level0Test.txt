@@ -145,6 +145,8 @@ initialized: 0
 Stats
 Health: 50
 Range: 100
+Logic
+BehaviourIndex: 0
 EndEntity
 Transform
 Position: -275 -35
@@ -174,26 +176,33 @@ initialized: 0
 Stats
 Health: 10
 Range: 50
+Logic
+BehaviourIndex: 0
 EndEntity
 Transform
 Position: 345 75
-ScaleX: 2.5
+ScaleX: 2
 ScaleY: 3
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 250
+c_Height: 250
 isColliding: 0
 MinX: 345
 MinY: 75
 MaxX: 345
 MaxY: 75
 Radius: 0
-Layer: 6
+Layer: 5
 CollisionVel: 345 75
 Texture
 MainIndex: 5
 SubIndex: 0
+Stats
+Health: 50
+Range: 100
+Logic
+BehaviourIndex: 0
 EndEntity
 Transform
 Position: -69 345
