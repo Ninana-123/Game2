@@ -22,7 +22,7 @@ namespace Engine {
 
 	class MainMenu {
 	public:
-		MainMenu(std::shared_ptr<EntityManager> entityManager, PrefabManager* prefabManager, std::shared_ptr<AssetManager> assetManager);
+		MainMenu();
 		~MainMenu();
 
 		void Initialize();
@@ -33,7 +33,8 @@ namespace Engine {
 
 	private:
 		std::string menuSceneFilePath;
-		Loader loader;
+		std::shared_ptr<Engine::AssetManager> assManager;
+
 	};
 }
 #endif // !ENGINE_MAINMENU_H

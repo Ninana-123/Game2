@@ -15,12 +15,17 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "MainMenu.h"
 #include "Application.h"
 #include "Loader.h"
+#include "AssetManager.h"
+
 std::string nextSceneFilePath = "Resource/Scenes/Level0Test.txt";
 
 namespace Engine {
+std::shared_ptr<Loader> load = nullptr;
+PrefabManager PreManager;
+std::shared_ptr<EntityManager> EntManager;
 
-	MainMenu::MainMenu(std::shared_ptr<EntityManager> entityManager, PrefabManager* prefabManager, std::shared_ptr<AssetManager> assetManager) 
-		: menuSceneFilePath("Resource/Scenes/MainMenu.txt"), loader(entityManager, prefabManager, assetManager) {
+	MainMenu::MainMenu() 
+		: menuSceneFilePath("Resource/Scenes/MainMenu.txt") {
 
 	}
 
@@ -29,6 +34,11 @@ namespace Engine {
 	}
 
 	void MainMenu::Initialize() {
+		EntManager = std::make_shared<Engine::EntityManager>();
+		assManager = std::make_shared<Engine::AssetManager>();
+
+		load = std::make_unique<Engine::Loader>(EntManager, &PreManager, assManager);
+
 		LoadMainMenuScene();
 	}
 
@@ -43,11 +53,11 @@ namespace Engine {
 	void MainMenu::TransitionToGame() {
 		//set the next scene file path
 		
-		loader.LoadScene(nextSceneFilePath);
+		load->LoadScene(nextSceneFilePath);
 	}
 
 	void MainMenu::LoadMainMenuScene()
 	{
-		loader.LoadScene(menuSceneFilePath);
+		load->LoadScene(menuSceneFilePath);
 	}
 }

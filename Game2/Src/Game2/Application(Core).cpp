@@ -97,7 +97,7 @@ namespace Engine
 
     Application::Application()
     {
-        mainMenu = new MainMenu(EM, &PM, assetManager);
+        mainMenu = new MainMenu();
     }   
 
     Application::~Application()
