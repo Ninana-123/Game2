@@ -134,7 +134,7 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 4; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
