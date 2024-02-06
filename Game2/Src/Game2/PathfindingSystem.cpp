@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "inGameGUI.h"
 #include <GLFW/glfw3.h>
 #include "Application.h"
+#include "BehaviourComponent.h"
 
 namespace Engine
 {
@@ -380,6 +381,7 @@ namespace Engine
                 TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+                BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
 
                 if (entity->HasComponent(ComponentType::Pathfinding))
                 {
@@ -409,10 +411,9 @@ namespace Engine
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
                         }
-
-                        
+                     
                         if (!(pathfindingComponent->initialized))
-                        {
+                        {                          
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
@@ -467,7 +468,7 @@ namespace Engine
                                 }
                                 prevTextures.push_back(pathfindingEntityTexture);
                                 prevTexture = pathfindingEntityTexture;
-                                isWalking = true;
+                                isWalking = true;                               
                             }
 
                             // Archer switch to walking mode
@@ -497,19 +498,23 @@ namespace Engine
                             }
 
                             std::pair<int, int> nextPosition = pathfindingComponent->path[0];
-
+                            if (behaviourComponent)
+                            {
+                                behaviourComponent->SetBehaviourState(c_state::Walking);
+                            }
+                            
                             // Update the entity's position
                             transformComponent->position.x = static_cast<float>(nextPosition.first);
                             transformComponent->position.y = static_cast<float>(nextPosition.second);
 
                             // Remove the first position from the path
                             pathfindingComponent->path.erase(pathfindingComponent->path.begin());
-
                         }
 
                         // Switch back to attacking mode
                         else
-                        {
+                        {                           
+                           
                             // Infantry
                             if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
                             {

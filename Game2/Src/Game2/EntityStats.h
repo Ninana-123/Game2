@@ -2,10 +2,10 @@
 #define ENTITYSTATS_H
 
 #include "EngineTypes.h"
-#include "AssetManager.h"
 
 namespace Engine 
 {
+    class Entity;
     class Stats
     {
     public:
@@ -21,9 +21,12 @@ namespace Engine
 
         void takeDamage(int damage);
 
+        static void AttackTarget(int damage, Entity* entity1, Entity* target);
+        
     private:
         int health;
         int attackPower;
+        static float attack_timer;
     };
 
 }

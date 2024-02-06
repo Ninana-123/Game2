@@ -42,18 +42,24 @@ namespace Engine
 
 	void StateMachine::Walking(Entity* entity)
 	{
-
+		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		texture->SetAnimation(static_cast<int>(c_state::Walking));
 	}
 
 	void StateMachine::Attack(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Attack));
+		Entity* target = collision->target;
+		Stats::AttackTarget(10, entity, target);
 	}
 
 	void StateMachine::Death(Entity* entity)
 	{
-
+		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		texture->SetAnimation(static_cast<int>(c_state::Death));
+		entity->components.erase(ComponentType::Collision);
 	}
 
 
