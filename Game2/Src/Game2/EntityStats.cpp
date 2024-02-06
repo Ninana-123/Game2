@@ -55,13 +55,11 @@ namespace Engine
             BehaviourComponent* behaviourComponent2 = dynamic_cast<BehaviourComponent*>(target->GetComponent(ComponentType::Logic));
             if (statsComponent2)
             {
-                attack_timer += fixedDeltaTime;
                 if (statsComponent2->health > 0)
                 {
-                    if (attack_timer >= 5.0f)
+                    if (Application::TimePassed(1))
                     {
                         statsComponent2->health -= damage;
-                        attack_timer = 0.0f;
                         std::cout << "Current Health: " << statsComponent2->health << std::endl;
                     }
                 }
@@ -73,13 +71,11 @@ namespace Engine
                         behaviourComponent2->SetBehaviourState(c_state::Death);
                         std::cout << "Dead " << statsComponent2->health << std::endl;
                     }
-
                 }
-
             }
         }
+         
         
-    
     }
 
 }

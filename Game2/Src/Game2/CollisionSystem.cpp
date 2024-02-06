@@ -28,10 +28,43 @@ double l_dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
+int towerCollidingEntity = 0;
+int tower2CollidingEntity = 0;
+int tower1CollidingEntityHealth = 0;
+int tower2CollidingEntityHealth = 0;
 bool isStartingPoint = true;
 bool towerCollision = false;
 float towerHealth;
 std::vector<Engine::Stats> towers;
+
+// Define a map for towerCollidingEntityHealth and corresponding texture keys
+std::map<int, int> towerHealthToTextureKey = 
+{
+	{0, 32},
+	{5, 33},
+	{10, 34},
+	{15, 35},
+	{20, 36},
+	{25, 37},
+	{30, 38},
+	{35, 39},
+	{40, 40},
+	{45, 41}
+};
+
+std::map<int, int> tower2HealthToTextureKey =
+{
+	{0, 32},
+	{5, 33},
+	{10, 34},
+	{15, 35},
+	{20, 36},
+	{25, 37},
+	{30, 38},
+	{35, 39},
+	{40, 40},
+	{45, 41}
+};
 
 /*!*****************************************************************
 
@@ -569,6 +602,99 @@ namespace Engine
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
 
+								//// Check if the conditions are met
+								//if (entity2->GetID() == 11 && towerCollidingEntity == 8) 
+								//{
+								//	// Find the corresponding texture key for the towerCollidingEntityHealth
+								//	auto it = towerHealthToTextureKey.find(tower1CollidingEntityHealth);
+								//	// If found, set the texture key
+								//	if (it != towerHealthToTextureKey.end()) 
+								//	{
+								//		textureComponent->textureKey = { it->second, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7)
+								//{
+								//	// Find the corresponding texture key for the towerCollidingEntityHealth
+								//	auto it = towerHealthToTextureKey.find(tower2CollidingEntityHealth);
+								//	// If found, set the texture key
+								//	if (it != towerHealthToTextureKey.end())
+								//	{
+								//		textureComponent->textureKey = { it->second, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 0)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 32, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 5)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 33, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 10)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 34, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 15)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 35, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 20)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 36, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 25)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 37, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 30)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 38, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 35)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 39, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 40)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 40, 0 };
+								//	}
+								//}
+
+								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 45)
+								//{
+								//	{
+								//		textureComponent->textureKey = { 41, 0 };
+								//	}
+								//}
+
 								if (statsComponent2)
 								{
 									circle2.radius = statsComponent2->range;
@@ -588,6 +714,30 @@ namespace Engine
 								{
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
+
+								// Check if the conditions are met
+								if (entity2->GetID() == 11 && towerCollidingEntity == 8)
+								{
+									// Find the corresponding texture key for the towerCollidingEntityHealth
+									auto it = towerHealthToTextureKey.find(tower1CollidingEntityHealth);
+									// If found, set the texture key
+									if (it != towerHealthToTextureKey.end())
+									{
+										textureComponent->textureKey = { it->second, 0 };
+									}
+								}
+
+								if (entity2->GetID() == 10 && towerCollidingEntity == 7)
+								{
+									// Find the corresponding texture key for the towerCollidingEntityHealth
+									auto it = towerHealthToTextureKey.find(tower2CollidingEntityHealth);
+									// If found, set the texture key
+									if (it != towerHealthToTextureKey.end())
+									{
+										textureComponent->textureKey = { it->second, 0 };
+									}
+								}
+
 								// Check for collision with entity2
 								if (entity2->HasComponent(ComponentType::Collision)) 
 								{
@@ -600,6 +750,7 @@ namespace Engine
 											&& collisionComponent2->layer != Layer::inGameGUI)
 										{
 											isColliding = true;
+
 											//Collision Between Non Tower and Towers only -bc Tower can never AABB collide with another Tower
 											if (collisionComponent2->layer == Layer::Tower)
 											{
@@ -610,9 +761,20 @@ namespace Engine
 												{
 													behaviourComponent1->SetBehaviourState(c_state::Attack);
 													collisionComponent1->target = entity2;
+													towerCollidingEntity = entity2->GetID();
+													// towerCollidingEntityHealth = statsComponent2->health;
+													if (entity2->GetID() == 7) 
+													{
+														tower2CollidingEntityHealth = statsComponent2->health;
+													}
+													if (entity2->GetID() == 8)
+													{
+														tower1CollidingEntityHealth = statsComponent2->health;
+														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
+													}
 													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 												}																																	
-											}							
+											}
 										}
 										
 										// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
@@ -632,6 +794,7 @@ namespace Engine
 										}
 									}								
 								}
+								
 							}
 						}
 					}
