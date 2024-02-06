@@ -12,6 +12,8 @@ written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 #include "Loader.h"
+#include "AssetManager.h"
+#include "EntityManager.h"
 
 #ifndef ENGINE_MAINMENU_H
 #define ENGINE_MAINMENU_H
@@ -20,7 +22,7 @@ namespace Engine {
 
 	class MainMenu {
 	public:
-		MainMenu();
+		MainMenu(std::shared_ptr<EntityManager> entityManager, PrefabManager* prefabManager, std::shared_ptr<AssetManager> assetManager);
 		~MainMenu();
 
 		void Initialize();

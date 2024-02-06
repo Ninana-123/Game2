@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     UNREFERENCED_PARAMETER(argv);
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-   // _crtBreakAlloc = 1096211;
+    //_crtBreakAlloc = 13381;
 
     errorHandler.Initialize();
     auto app = Engine::CreateApplication();

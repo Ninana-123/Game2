@@ -130,6 +130,7 @@
     <ClCompile Include="Src\Game2\EntityStats.cpp">
       <Filter>EntityStats</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -331,6 +332,7 @@
     <ClInclude Include="Src\Game2\EntityStats.h">
       <Filter>EntityStats</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\MainMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">

@@ -33,7 +33,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
-//#include "MainMenu.h"
+#include "MainMenu.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -79,6 +79,8 @@ namespace Engine
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
  
+    MainMenu* mainMenu;
+
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -93,11 +95,12 @@ namespace Engine
 
     Application::Application()
     {
-        //mainMenu = std::make_unique<MainMenu>();
+        mainMenu = new MainMenu(EM, &PM, assetManager);
     }   
 
     Application::~Application()
     {
+        delete mainMenu;
     }
 
     void Application::Initialize()
@@ -151,12 +154,14 @@ namespace Engine
         // Load scene from a file
         loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene(initScene);
+        //loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
         loader->LoadPrefabs("Resource/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
+        mainMenu->Initialize();
+
         if (EM->GetEntity(1) != nullptr) {
             targetEntity = EM->GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
@@ -290,6 +295,11 @@ namespace Engine
             Application::UpdateWindowTitle();
 
             UpdateWindowFocus();
+
+            // Main menu test
+            if (InputHandler.IsKeyTriggered(KEY_M)) {
+                mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
+            }
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);

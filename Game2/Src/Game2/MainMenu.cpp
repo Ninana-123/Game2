@@ -19,7 +19,8 @@ std::string nextSceneFilePath = "Resource/Scenes/Level0Test.txt";
 
 namespace Engine {
 
-	MainMenu::MainMenu() : menuSceneFilePath("Resource/Scenes/MainMenu.txt"), loader(loader) {
+	MainMenu::MainMenu(std::shared_ptr<EntityManager> entityManager, PrefabManager* prefabManager, std::shared_ptr<AssetManager> assetManager) 
+		: menuSceneFilePath("Resource/Scenes/MainMenu.txt"), loader(entityManager, prefabManager, assetManager) {
 
 	}
 
