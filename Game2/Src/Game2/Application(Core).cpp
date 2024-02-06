@@ -34,6 +34,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "WindowsWindow.h"
 #include "Input.h"
 #include "MainMenu.h"
+#include "TempStateMachine.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -71,13 +72,14 @@ namespace Engine
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
     std::shared_ptr<EntityManager> EM;
-    Engine::PrefabManager PM;
+    PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
     ComponentFactory CF;
+    StateMachine SM;
  
     MainMenu* mainMenu;
 
@@ -530,6 +532,7 @@ namespace Engine
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
+            SM.UpdateEntities(EM->GetEntities());
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
             m_ImGuiWrapper->Begin();

@@ -26,6 +26,7 @@ namespace Engine
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;
+		EntityID target;
 		VECTORMATH::Vector2D collisionVel = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************

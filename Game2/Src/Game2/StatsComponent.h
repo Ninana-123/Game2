@@ -7,7 +7,9 @@ namespace Engine
 	class StatsComponent : public Component
 	{
 	public:
+		unit_type type = unit_type::none;
 		float health = 0.0f;
+		float range = 0.0f;
 		bool statsInitialized = false;
 
 		/*!*****************************************************************
@@ -35,21 +37,23 @@ namespace Engine
 		{
 			StatsComponent* cloneComponent = new StatsComponent();
 			cloneComponent->health = health;
-			cloneComponent->statsInitialized = statsInitialized;
+			cloneComponent->range = range;
+			//cloneComponent->statsInitialized = statsInitialized;
 
 			return cloneComponent;
 		}
 
 		void Serialize(std::ostream& outputStream) const override {
 			outputStream << "Health: " << health << '\n';
-			outputStream << "StatsInitialized: " << statsInitialized << '\n';
+			outputStream << "Range: " << range << '\n';
+			//outputStream << "StatsInitialized: " << statsInitialized << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			//int buffer{};
 			inputStream >> temp >> health;
-			inputStream >> temp >> statsInitialized;
+			inputStream >> temp >> range;
 		}
 	};
 }

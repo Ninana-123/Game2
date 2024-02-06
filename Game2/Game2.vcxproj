@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\BehaviourComponent.h" />
+    <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\EntityStats.h" />
@@ -28,6 +30,7 @@
     <ClInclude Include="Src\Game2\MainMenu.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
+    <ClInclude Include="Src\Game2\PickingFBO.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
@@ -78,6 +81,7 @@
     <ClInclude Include="Src\Game2\StatsComponent.h" />
     <ClInclude Include="Src\Game2\System.h" />
     <ClInclude Include="Src\Game2\SystemsManager.h" />
+    <ClInclude Include="Src\Game2\TempStateMachine.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\TextureComponent.h" />
     <ClInclude Include="Src\Game2\TransformComponent.h" />
@@ -125,12 +129,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Src\Game2\PhysicsSystem.cpp" />
+    <ClCompile Include="Src\Game2\PickingFBO.cpp" />
     <ClCompile Include="Src\Game2\Prefab.cpp" />
     <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />
+    <ClCompile Include="Src\Game2\TempStateMachine.cpp" />
     <ClCompile Include="Src\Game2\Texture.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeaderFile>

@@ -23,6 +23,9 @@ enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathf
 // Character State Enumeration
 enum c_state { Static, Walking, Attack, Death, Idle }; 
 
+// Unit Type Enum
+enum unit_type { none, infantry, tank, archer, tower, base };
+
 /*!
 \brief
 Converts a character state to a string.
