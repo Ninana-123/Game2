@@ -58,10 +58,11 @@ namespace Engine
 	void StateMachine::Death(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Death));
-		entity->components.erase(ComponentType::Collision);
+		collision->disableCollision = true;
+		//entity->components.erase(ComponentType::Collision);
 	}
-
 
 }
 

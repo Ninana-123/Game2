@@ -153,7 +153,7 @@ namespace Engine
         loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
-        loader->LoadPrefabs("Resource/Prefabs.txt");
+        loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
         if (EM->GetEntity(1) != nullptr) {
