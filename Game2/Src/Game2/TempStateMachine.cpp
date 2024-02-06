@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TempStateMachine.h"
+#include "Application.h"
 
 namespace Engine
 {
@@ -52,7 +53,8 @@ namespace Engine
 		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Attack));
 		Entity* target = collision->target;
-		Stats::AttackTarget(10, entity, target);
+		Stats::AttackTarget(5, entity, target);
+
 	}
 
 	void StateMachine::Death(Entity* entity)
