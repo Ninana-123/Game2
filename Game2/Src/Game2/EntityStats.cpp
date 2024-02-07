@@ -49,6 +49,13 @@ namespace Engine
     void Stats::AttackTarget(int damage, Entity* entity1, Entity* target)
     {
         //StatsComponent* statsComponent1 = dynamic_cast<StatsComponent*>(entity1->GetComponent(ComponentType::Stats)); retrieve attack values in stat component
+        CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
+        if (collisionComponent1->layer == Layer::Tower)
+        {
+            BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
+            behaviourComponent1->SetBehaviourState(c_state::Static);
+            return;
+        }
         if (target)
         {
             StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(target->GetComponent(ComponentType::Stats));
@@ -73,9 +80,7 @@ namespace Engine
                     }
                 }
             }
-        }
-         
-        
+        }               
     }
 
 }

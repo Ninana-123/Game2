@@ -181,8 +181,8 @@ BehaviourIndex: 0
 EndEntity
 Transform
 Position: 345 75
-ScaleX: 2
-ScaleY: 3
+ScaleX: 1.5
+ScaleY: 5
 Rotation: 0
 Collision
 c_Width: 250

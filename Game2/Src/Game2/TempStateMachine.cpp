@@ -16,6 +16,9 @@ namespace Engine
 				BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
 				switch (behaviourComponent->GetState())
 				{
+				case c_state::Static:
+					Idle(entity);
+					break;
 				case c_state::Idle:
 					Idle(entity);
 					break;
