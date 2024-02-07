@@ -588,7 +588,7 @@ namespace Engine
 										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
 											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
 										{
-											// isColliding = true;
+											isColliding = true;
 											std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 												<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 

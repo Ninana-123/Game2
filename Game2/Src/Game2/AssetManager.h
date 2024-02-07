@@ -253,6 +253,7 @@ namespace Engine {
             { {TextureClass::mainMenuCredits,   0}, "Resource/Texture/mmCredits.png"},
             { {TextureClass::Logo,              0}, "Resource/Texture/Logo.png"},
             { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_background.png"},
+            { {TextureClass::Arrow,             0}, "Resource/Texture/Arrow.png"},
         };
     };
 }

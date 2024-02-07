@@ -67,6 +67,7 @@ namespace Engine
             {"Sprite",      ComponentType::Sprite     },
             {"Pathfinding", ComponentType::Pathfinding},
             {"Logic", ComponentType::Logic},
+            {"Shooting", ComponentType::Shooting},
         };
 
         auto it = StringTotypeMap.find(typeString);
@@ -91,6 +92,7 @@ namespace Engine
             {ComponentType::Sprite,      "Sprite"      },
             {ComponentType::Pathfinding, "Pathfinding" },
             {ComponentType::Logic, "Logic" },
+            {ComponentType::Shooting, "Shooting" },
         };
 
         auto it = typeToStringMap.find(type);
