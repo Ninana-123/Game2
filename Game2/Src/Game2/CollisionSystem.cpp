@@ -33,6 +33,7 @@ int tower2CollidingEntity = 0;
 int tower1CollidingEntityHealth = 0;
 int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
+int victoryID = 0;
 bool tower1Destroyed = false;
 bool tower2Destroyed = false;
 bool castleDestroyed = false;
@@ -659,6 +660,11 @@ namespace Engine
 									}
 								}
 
+								if (textureComponent->textureKey.mainIndex == 21)
+								{
+									victoryID = entity2->GetID();
+								}
+
 								// Check for collision with entity2
 								if (entity2->HasComponent(ComponentType::Collision)) 
 								{
@@ -711,6 +717,7 @@ namespace Engine
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
+
 													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 												}																																	
 											}

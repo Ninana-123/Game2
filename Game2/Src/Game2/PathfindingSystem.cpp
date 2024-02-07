@@ -399,7 +399,22 @@ namespace Engine
                         startX = static_cast<int>(transformComponent->position.x);
                         startY = static_cast<int>(transformComponent->position.y);
 
-                        closestTower = getClosestPair(startX, startY, towerPositions);
+                        if (tower1Destroyed == false && tower2Destroyed == false) 
+                        {
+                            closestTower = getClosestPair(startX, startY, towerPositions);
+                        }
+                        //if (tower1Destroyed == true && tower2Destroyed == false)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[1] });
+                        //}
+                        //if (tower1Destroyed == false && tower2Destroyed == true)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
+                        //}
+                        //if (tower1Destroyed == true && tower2Destroyed == true)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
+                        //}
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
                         
                         //goalX = closestTower.first;
@@ -437,6 +452,7 @@ namespace Engine
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
                             changedTowers = true;
+                            // towerPositions.erase(towerPositions.begin() + 0);
                         }
 
                         if (transformComponent->position.x == -70 && transformComponent->position.y == 140
@@ -450,6 +466,7 @@ namespace Engine
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
                             changedTowers = true;
+                            // towerPositions.erase(towerPositions.begin() + 1);
                         }
                      
                         if (!(pathfindingComponent->initialized))

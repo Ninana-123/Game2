@@ -118,6 +118,11 @@ namespace Engine
 			}
 		}
 
+		if (Input::IsKeyTriggered(KEY_ESCAPE) && victoryScreenShown == true)
+		{
+			entityManager->DestroyEntity(victoryID);
+		}
+
 		// Reset flag
 		CollisionCheck = false;		
 

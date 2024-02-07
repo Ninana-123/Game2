@@ -28,6 +28,7 @@ extern int lastCollidingEntityTexture;
 extern int tower1CollidingEntityHealth;
 extern int tower2CollidingEntityHealth;
 extern int castleCollidingEntityHealth;
+extern int victoryID;
 extern bool isStartingPoint;
 extern bool towerCollision;
 extern bool tower1Destroyed;
