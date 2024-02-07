@@ -18,6 +18,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 
 std::string nextSceneFilePath = "Resource/Scenes/Level0Test.txt";
+//std::string menuSceneFilePath = "Resource/Scenes/MainMenu.txt";
 
 namespace Engine {
 std::shared_ptr<Loader> load = nullptr;

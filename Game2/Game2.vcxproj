@@ -27,7 +27,6 @@
     <ClInclude Include="Src\Game2\EntityStats.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
     <ClInclude Include="Src\Game2\json.hpp" />
-    <ClInclude Include="Src\Game2\MainMenu.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\PickingFBO.h" />
@@ -121,7 +120,6 @@
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
-    <ClCompile Include="Src\Game2\MainMenu.cpp" />
     <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp" />
     <ClCompile Include="Src\Game2\PathfindingSystem.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">

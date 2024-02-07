@@ -663,7 +663,7 @@ namespace Engine
 
     void Application::TransitionToNextScene()
     {
-mm        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
+        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
         loader->LoadScene(nextScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
     }

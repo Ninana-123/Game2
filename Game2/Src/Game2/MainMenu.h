@@ -37,4 +37,4 @@ namespace Engine {
 
 	};
 }
-#endif // !ENGINE_MAINMENU_H
+#endif ENGINE_MAINMENU_H
