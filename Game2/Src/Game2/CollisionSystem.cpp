@@ -734,11 +734,11 @@ namespace Engine
 													// towerCollidingEntityHealth = statsComponent2->health;
 													if (entity2->GetID() == 7) 
 													{
-														tower2CollidingEntityHealth = statsComponent2->health;
+														tower2CollidingEntityHealth = static_cast<int>(statsComponent2->health);
 													}
 													if (entity2->GetID() == 8)
 													{
-														tower1CollidingEntityHealth = statsComponent2->health;
+														tower1CollidingEntityHealth = static_cast<int>(statsComponent2->health);
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
 													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;

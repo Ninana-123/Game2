@@ -2076,15 +2076,15 @@ namespace Engine {
 						case ComponentType::Stats:
 						{
 							StatsComponent* stats = dynamic_cast<StatsComponent*>(pair.second);
-							int health = stats->health;
-							int range = stats->range;
+							int health = static_cast<int>(stats->health);
+							int range = static_cast<int>(stats->range);
 							if (ImGui::InputInt("Health", &health, 1, 50))
 							{
-								stats->health = health;
+								stats->health = static_cast<float>(health);
 							}
 							if (ImGui::InputInt("Range", &range, 1, 50))
 							{
-								stats->range = range;
+								stats->range = static_cast<float>(range);
 							}
 
 							break;

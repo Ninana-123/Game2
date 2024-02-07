@@ -305,7 +305,9 @@ namespace Engine
             //    mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
             //}
             if (InputHandler.IsKeyTriggered(KEY_M))
+            {
                 TransitionToNextScene();
+            }
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -663,7 +665,10 @@ namespace Engine
 
     void Application::TransitionToNextScene()
     {
-mm        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
+        Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
+        loader->UnloadScene(initScene);
+        
+        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
         loader->LoadScene(nextScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
     }
