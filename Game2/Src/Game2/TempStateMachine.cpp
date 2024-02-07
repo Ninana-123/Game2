@@ -16,6 +16,9 @@ namespace Engine
 				BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
 				switch (behaviourComponent->GetState())
 				{
+				case c_state::Static:
+					Idle(entity);
+					break;
 				case c_state::Idle:
 					Idle(entity);
 					break;
@@ -60,10 +63,11 @@ namespace Engine
 	void StateMachine::Death(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Death));
-		entity->components.erase(ComponentType::Collision);
+		collision->disableCollision = true;
+		//entity->components.erase(ComponentType::Collision);
 	}
-
 
 }
 

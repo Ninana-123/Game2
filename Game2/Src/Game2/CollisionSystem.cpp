@@ -539,6 +539,11 @@ namespace Engine
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 				StatsComponent* statsComponent1 = dynamic_cast<StatsComponent*>(entity1->GetComponent(ComponentType::Stats));
 
+				if (collisionComponent1 && collisionComponent1->disableCollision)
+				{
+					continue;
+				}
+				
 				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
 				{
 					AABB aabb1;
@@ -584,6 +589,11 @@ namespace Engine
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
 								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
+
+								if (collisionComponent2 && collisionComponent2->disableCollision == true)
+								{
+									continue;
+								}
 
 								AABB aabb2;
 								Circle circle2;
