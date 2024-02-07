@@ -143,7 +143,12 @@ namespace Engine {
 		 */
 		void RenderLevelEditor();
 
-		void RenderAudioBrowser();
+		//void RenderAudioBrowser();
+
+		void RenderContentBrowser();
+
+		void RenderEntityProperties();
+
 
 		int selectedEntityIndex = 1;
 
@@ -233,6 +238,7 @@ namespace Engine {
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
 
 	private:
+		float LeftWindowWidth = 0.0f;
 		bool renderDockspace = false;
 		bool isImGuiHovered = false;
 		float m_Time = 0.0f;
@@ -244,6 +250,8 @@ namespace Engine {
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
 		void UpdateImGuiInteractionState();
+		std::filesystem::path m_CurrentDirectory = "Resource";
+		
 
 	};
 }

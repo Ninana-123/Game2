@@ -49,33 +49,38 @@ namespace Engine
     void Stats::AttackTarget(int damage, Entity* entity1, Entity* target)
     {
         //StatsComponent* statsComponent1 = dynamic_cast<StatsComponent*>(entity1->GetComponent(ComponentType::Stats)); retrieve attack values in stat component
-        StatsComponent * statsComponent2 = dynamic_cast<StatsComponent*>(target->GetComponent(ComponentType::Stats));
-        BehaviourComponent* behaviourComponent2 = dynamic_cast<BehaviourComponent*>(target->GetComponent(ComponentType::Logic));
-        if (statsComponent2)
+        CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
+        if (collisionComponent1->layer == Layer::Tower)
         {
-            attack_timer += fixedDeltaTime;
-            if (statsComponent2->health > 0)
+            BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
+            behaviourComponent1->SetBehaviourState(c_state::Static);
+            return;
+        }
+        if (target)
+        {
+            StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(target->GetComponent(ComponentType::Stats));
+            BehaviourComponent* behaviourComponent2 = dynamic_cast<BehaviourComponent*>(target->GetComponent(ComponentType::Logic));
+            if (statsComponent2)
             {
-                if (attack_timer >= 5.0f)
+                if (statsComponent2->health > 0)
                 {
-                    statsComponent2->health -= damage;
-                    attack_timer = 0.0f;
-                    std::cout << "Current Health: " << statsComponent2->health << std::endl;
+                    if (Application::TimePassed(1))
+                    {
+                        statsComponent2->health -= damage;
+                        std::cout << "Current Health: " << statsComponent2->health << std::endl;
+                    }
+                }
+                else
+                {
+                    if (behaviourComponent2)
+                    {
+                        statsComponent2->health = 0;
+                        behaviourComponent2->SetBehaviourState(c_state::Death);
+                        std::cout << "Dead " << statsComponent2->health << std::endl;
+                    }
                 }
             }
-            else
-            {
-                if (behaviourComponent2)
-                {
-                    statsComponent2->health = 0;
-                    behaviourComponent2->SetBehaviourState(c_state::Death);
-                    std::cout << "Dead " << statsComponent2->health << std::endl;
-                }    
-
-            }  
-
-        }
-      
+        }               
     }
 
 }

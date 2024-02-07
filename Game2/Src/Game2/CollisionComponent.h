@@ -19,10 +19,12 @@ namespace Engine
 	class CollisionComponent : public Component
 	{
 	public:
+		
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
 		bool mColliding = false;
+		bool disableCollision = false;
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;

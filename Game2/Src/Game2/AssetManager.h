@@ -238,6 +238,10 @@ namespace Engine {
             { {TextureClass::Archer,            2}, "Resource/Texture/ArcherAttack.png" },
             { {TextureClass::Archer,            3}, "Resource/Texture/ArcherDeath.png" },
             { {TextureClass::Tower,             0}, "Resource/Texture/Tower.png" },
+                        { {TextureClass::Tower,             4}, "Resource/Texture/TowerDestroyed.png" },
+
+
+
             { {TextureClass::Castle,            0}, "Resource/Texture/Castle.png" },
             { {TextureClass::HUD,               0}, "Resource/Texture/HUD.png" },
             { {TextureClass::HUDInfantry,       0}, "Resource/Texture/HUDInfantry.png"},

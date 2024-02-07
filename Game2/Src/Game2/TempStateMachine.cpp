@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TempStateMachine.h"
+#include "Application.h"
 
 namespace Engine
 {
@@ -15,6 +16,9 @@ namespace Engine
 				BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
 				switch (behaviourComponent->GetState())
 				{
+				case c_state::Static:
+					Idle(entity);
+					break;
 				case c_state::Idle:
 					Idle(entity);
 					break;
@@ -52,16 +56,18 @@ namespace Engine
 		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Attack));
 		Entity* target = collision->target;
-		Stats::AttackTarget(10, entity, target);
+		Stats::AttackTarget(5, entity, target);
+
 	}
 
 	void StateMachine::Death(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 		texture->SetAnimation(static_cast<int>(c_state::Death));
-		entity->components.erase(ComponentType::Collision);
+		collision->disableCollision = true;
+		//entity->components.erase(ComponentType::Collision);
 	}
-
 
 }
 

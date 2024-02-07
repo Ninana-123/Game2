@@ -14,14 +14,14 @@
 typedef unsigned int EntityID; 
 typedef unsigned int PrefabID;
 constexpr EntityID EMPTY_ID = 0; 
-const int MAX_SUBINDEX = 4; 
+const int MAX_SUBINDEX = 5; 
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Unknown };
 
 // Character State Enumeration
-enum c_state { Static, Walking, Attack, Death, Idle }; 
+enum c_state { Static, Walking, Attack, Death, TowerDestroyed, Idle };
 
 // Unit Type Enum
 enum unit_type { none, infantry, tank, archer, tower, base };

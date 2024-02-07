@@ -140,7 +140,7 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 4; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
@@ -161,7 +161,7 @@ namespace Engine
         loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
-        loader->LoadPrefabs("Resource/Prefabs.txt");
+        loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
         //mainMenu->Initialize();
