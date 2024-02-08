@@ -436,13 +436,13 @@ namespace Engine
                             // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
                         }
 
-                        // Debugging
-                        std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
-                        std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
-                        std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
+                        //// Debugging
+                        //std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
+                        //std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
+                        //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
 
                         if (transformComponent->position.x == -275 && transformComponent->position.y == 45
-                            && tower1CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -451,12 +451,12 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
                             // towerPositions.erase(towerPositions.begin() + 0);
                         }
 
                         if (transformComponent->position.x == -70 && transformComponent->position.y == 140
-                            && tower2CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -465,7 +465,7 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
                             // towerPositions.erase(towerPositions.begin() + 1);
                         }
                      

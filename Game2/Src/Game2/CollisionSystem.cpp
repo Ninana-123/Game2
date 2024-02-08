@@ -568,6 +568,7 @@ namespace Engine
 									circle2.radius = statsComponent2->range;
 								}
 
+								// Getting the health of each tower/castle
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
@@ -595,7 +596,7 @@ namespace Engine
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 
-								// Check if the conditions are met
+								// Changing the texture for the healthbars
 								if (entity2->GetID() == 11 && towerCollidingEntity == 8)
 								{
 									// Find the corresponding texture key for the towerCollidingEntityHealth
@@ -629,6 +630,7 @@ namespace Engine
 									}
 								}
 
+								// Getting ID of victory screen
 								if (textureComponent->textureKey.mainIndex == 21)
 								{
 									victoryID = entity2->GetID();
