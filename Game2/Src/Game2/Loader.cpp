@@ -14,7 +14,6 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
 #include "pch.h"
 #include "AssetManager.h"
 #include "Loader.h"
@@ -107,6 +106,46 @@ namespace Engine {
         }
 
         sceneFile.close();
+    }
+
+    void Loader::UnloadScene(const std::string& filePathOut)
+    {
+        std::ofstream sceneFileOut(filePathOut);
+        if (!sceneFileOut.is_open())
+        {
+            std::cerr << "Error: could not open scene file!" << filePathOut << '\n';
+            return;
+        }
+
+        // Get the entity count
+        int outEntityCount = static_cast<int>(entityManager->GetEntities()->size());
+        sceneFileOut << outEntityCount << '\n';
+
+        // Iterate through each entity
+        for (const auto& entityPair : *entityManager->GetEntities())
+        {
+            Entity* entityPtr = entityPair.second.get();
+
+            // Serialize entity ID
+            sceneFileOut << entityPtr->GetID() << '\n';
+
+            // Serialize each component of the entity
+            for (const auto& componentPair : entityPtr->GetComponents()) {
+                const ComponentType type = componentPair.first;
+                const auto& component = componentPair.second;
+
+                // Component type
+                sceneFileOut << ComponentFactory::ComponentTypeToString(type) << '\n';
+
+                // Serialize component
+                component->Serialize(sceneFileOut);
+            }
+
+            // End of entity marker
+            sceneFileOut << "End Entity\n";
+        }
+
+        sceneFileOut.close();
     }
     
     void Loader::LoadPrefabs(const std::string& filepath)

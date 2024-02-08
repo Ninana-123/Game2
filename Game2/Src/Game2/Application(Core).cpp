@@ -33,6 +33,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
+//#include "MainMenu.h"
 #include "TempStateMachine.h"
 
 // Global variables for frames per second (fps) calculation
@@ -46,8 +47,9 @@ int e_Width = 0;
 int e_Height = 0;
 double prevTime = glfwGetTime();
 bool isPaused = false;
-bool stepOneFrame = false;
+bool stepOneFrame = false; 
 double dt = 0;
+// std::string initScene = "Resource/Scenes/MainMenu.txt";
 std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
@@ -79,6 +81,8 @@ namespace Engine
     ComponentFactory CF;
     StateMachine SM;
  
+    //MainMenu* mainMenu;
+
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -93,10 +97,12 @@ namespace Engine
 
     Application::Application()
     {
+        //mainMenu = new MainMenu();
     }   
 
     Application::~Application()
     {
+        //delete mainMenu;
     }
 
     void Application::Initialize()
@@ -148,7 +154,9 @@ namespace Engine
         collisionSystem = systemsManager->GetSystem<CollisionSystem>();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
+        //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
+        std::shared_ptr<Loader> loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
+
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
@@ -156,6 +164,8 @@ namespace Engine
         loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
+        //mainMenu->Initialize();
+
         if (EM->GetEntity(1) != nullptr) {
             targetEntity = EM->GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
@@ -289,6 +299,15 @@ namespace Engine
             Application::UpdateWindowTitle();
 
             UpdateWindowFocus();
+
+            // Main menu test
+            //if (InputHandler.IsKeyTriggered(KEY_M)) {
+            //    mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
+            //}
+            if (InputHandler.IsKeyTriggered(KEY_M))
+            {
+                TransitionToNextScene();
+            }
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -642,6 +661,16 @@ namespace Engine
                 }
             }
         }
+    }
+
+    void Application::TransitionToNextScene()
+    {
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
+    //    loader->UnloadScene(initScene);
+    //    
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
+    //    loader->LoadScene(nextScene);
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
     }
 
     void Application::UpdateWindowTitle() 

@@ -157,37 +157,6 @@ namespace Engine
 	bool CollisionSystem::CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
 		const AABB& aabb2, const VECTORMATH::Vec2& vel2)
 	{
-		//UNREFERENCED_PARAMETER(aabb1);
-		//UNREFERENCED_PARAMETER(vel1);
-		//UNREFERENCED_PARAMETER(aabb2);
-		//UNREFERENCED_PARAMETER(vel2);
-
-		/*
-		Implement the collision intersection over here.
-
-		The steps are:
-		Step 1: Check for collision detection between rectangles (assuming static here).
-				If the check returns no overlap you continue with the following steps.
-
-		Step 2: Initialize and calculate the new velocity of Vb
-				tFirst = 0
-				tLast = dt
-
-		Step 3: Working with one dimension (x-axis).
-				if(Vb < 0)
-					case 1
-					case 4
-				if(Vb > 0)
-					case 2
-					case 3
-
-				case 5
-
-		Step 4: Repeat step 3 on the y-axis
-
-		Step 5: Otherwise the rectangles intersect
-		*/
-
 		if (aabb1.max.x < aabb2.min.x)
 			return false;
 		if (aabb1.min.x > aabb2.max.x)
