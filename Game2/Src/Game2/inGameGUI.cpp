@@ -118,7 +118,7 @@ namespace Engine
 			}
 		}
 
-		if (Input::IsKeyTriggered(KEY_ESCAPE) && victoryScreenShown == true)
+		if (Input::IsKeyTriggered(KEY_BACKSPACE) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);
 		}
