@@ -78,6 +78,7 @@ namespace Engine
     TransformComponent* transformTest;
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
+    TextureComponent* textureTest;
     ComponentFactory CF;
     StateMachine SM;
  
@@ -171,9 +172,11 @@ namespace Engine
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
+            textureTest = dynamic_cast<TextureComponent*>(targetEntity->GetComponent(ComponentType::Texture));
         }
         else
             targetEntity = EM->GetEntity(0);
+
         // Initialize audio files and load sounds
         audioEngine.init();
         //assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
@@ -415,22 +418,25 @@ namespace Engine
                 //    std::cout << "Hello" << std::endl;
                 //}
 
-                if (collisionTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
+                if (collisionTest && transformTest && textureTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
 
-                    if (collisionTest->isColliding && towerCollision == false) {
-                        //audioEngine.playSound(sound_Slash);
-                        if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
-                            transformTest->position.y = lastPositionY - 10.f;
-                        }
-                        if (lastKeyPressed == 2 || (lastPositionY > nextPositionY)) {
-                            transformTest->position.y = lastPositionY + 10.f;
-                        }
-                        if (lastKeyPressed == 3 || (lastPositionX < nextPositionX)) {
-                            transformTest->position.x = lastPositionX + 10.f;
-                        }
-                        if (lastKeyPressed == 4 || (lastPositionX > nextPositionX)) {
-                            transformTest->position.x = lastPositionX - 10.f;
+                    if (collisionTest->isColliding) {
+                        if (textureTest->textureKey.mainIndex == 1 || textureTest->textureKey.mainIndex == 2 ||
+                            textureTest->textureKey.mainIndex == 3) {
+                            //audioEngine.playSound(sound_Slash);
+                            if ((lastPositionY < nextPositionY)) {
+                                transformTest->position.y = lastPositionY - 10.f;
+                            }
+                            if ((lastPositionY > nextPositionY)) {
+                                transformTest->position.y = lastPositionY + 10.f;
+                            }
+                            if ((lastPositionX < nextPositionX)) {
+                                transformTest->position.x = lastPositionX + 10.f;
+                            }
+                            if ((lastPositionX > nextPositionX)) {
+                                transformTest->position.x = lastPositionX - 10.f;
+                            }
                         }
                     }
 
