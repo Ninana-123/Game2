@@ -138,7 +138,7 @@ namespace Engine {
         auto it = audioFilePaths.find(key);
         if (it != audioFilePaths.end()) {
             // Create a SoundInfo with all the necessary parameters
-            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, true, 0.0f, 0.0f);       
+            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, true, 1.0f, 0.0f);       
             // Store the loaded SoundInfo in the audios map
             audios[key] = soundInfo;
             return soundInfo;
