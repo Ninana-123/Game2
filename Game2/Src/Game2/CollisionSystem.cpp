@@ -666,6 +666,11 @@ namespace Engine
 														{
 															tower2Destroyed = true;
 														}
+														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+															&& tower2Destroyed == true)
+														{
+															textureComponent->textureKey = { 4, 4 };
+														}
 													}
 													if (entity2->GetID() == 8)
 													{
@@ -673,6 +678,11 @@ namespace Engine
 														if (tower1CollidingEntityHealth == 0)
 														{
 															tower1Destroyed = true;
+														}
+														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+															&& tower1Destroyed == true)
+														{
+															textureComponent->textureKey = { 4, 4 };
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}

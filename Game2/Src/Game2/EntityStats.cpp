@@ -75,7 +75,7 @@ namespace Engine
                     if (behaviourComponent2)
                     {
                         statsComponent2->health = 0;
-                        behaviourComponent2->SetBehaviourState(c_state::Death);
+                        // behaviourComponent2->SetBehaviourState(c_state::Death);
                         std::cout << "Dead " << statsComponent2->health << std::endl;
                     }
                 }
