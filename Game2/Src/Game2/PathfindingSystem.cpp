@@ -263,8 +263,8 @@ namespace Engine
         endPointY = startPosY;
 
         // Change path to other tower if at current tower
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 && 
-            tower2Destroyed == false) 
+        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 &&
+            tower2Destroyed == false)
         {
             if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
             {
@@ -273,7 +273,7 @@ namespace Engine
             }
         }
         if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105 &&
-            tower1Destroyed == false) 
+            tower1Destroyed == false)
         {
             if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
             {
@@ -404,9 +404,6 @@ namespace Engine
                         //}
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
                         
-                        //goalX = closestTower.first;
-                        //goalY = closestTower.second;
-
                         if (endPointX != closestTower.first && endPointY != closestTower.second) 
                         {
                             goalX = closestTower.first;
@@ -459,14 +456,11 @@ namespace Engine
                         }
                      
                         if (!(pathfindingComponent->initialized))
-                        {  
-                            
+                        {                          
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
                             // Check if both positions were attained before, go to castle if yes
-                            //if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first
-                                //&& tower1CollidingEntityHealth == 0 && tower2CollidingEntityHealth == 0)
                             if (tower1Destroyed && tower2Destroyed)
                             {
                                 goalX = 345;
