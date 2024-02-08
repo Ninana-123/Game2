@@ -508,11 +508,11 @@ namespace Engine
                 double currentTime = glfwGetTime();
                 double deltaTime = currentTime - lastTime;
                 lastTime = currentTime;
-                float frameRate = 5.0F;
+                float frameRate = 10.0f;
                 float horizontalFrames = 5.0f; // Number of horizontal frames
                 float verticalFrames = 1.0f; // Number of vertical frames
                 //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::ONE_TIME;
+                Anim_Mode playMode = Anim_Mode::LOOP;
 
                 // Create a static animation object if not created already
                 static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
@@ -787,54 +787,6 @@ namespace Engine
         if (inSettings)
         {
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        }
-
-        // Infantry count
-        if (totalInfantry == 3) 
-        {
-            font.RenderText(shader, "x3", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalInfantry == 2)
-        {
-            font.RenderText(shader, "x2", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalInfantry == 1)
-        {
-            font.RenderText(shader, "x1", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalInfantry == 0)
-        {
-            font.RenderText(shader, "x0", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        // Archer count
-        if (totalArcher == 2) 
-        {
-            font.RenderText(shader, "x2", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalArcher == 1)
-        {
-            font.RenderText(shader, "x1", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalArcher == 0)
-        {
-            font.RenderText(shader, "x0", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        // Tank count
-        if (totalTank == 1) 
-        {
-            font.RenderText(shader, "x1", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-        }
-
-        if (totalTank == 0)
-        {
-            font.RenderText(shader, "x0", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
         }
 
         shader.SetActiveShaderSet(previousShaderSet);

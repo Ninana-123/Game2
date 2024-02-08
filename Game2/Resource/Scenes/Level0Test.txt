@@ -133,16 +133,6 @@ MaxY: 245
 Radius: 0
 Layer: 5
 CollisionVel: -120 255
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex: 0
-playing: 0
-playmode: 0
 Texture
 MainIndex: 4
 SubIndex: 0
@@ -174,16 +164,6 @@ MaxY: -35
 Radius: 0
 Layer: 5
 CollisionVel: -275 -35
-Sprite
-framerate: 0
-horizontalframes: 0
-verticalframes: 0
-animtimer: 0
-currentframe: 0
-texturexindex: 0
-textureyindex: 0
-playing: 0
-playmode: 0
 Texture
 MainIndex: 4
 SubIndex: 0

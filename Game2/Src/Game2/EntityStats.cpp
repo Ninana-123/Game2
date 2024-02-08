@@ -54,14 +54,6 @@ namespace Engine
         {
             BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
             behaviourComponent1->SetBehaviourState(c_state::Static);
-            //if (tower1Destroyed) 
-            //{
-            //    behaviourComponent1->SetBehaviourState(c_state::TowerDestroyed);
-            //}
-            //if (tower2Destroyed) 
-            //{
-            //    behaviourComponent1->SetBehaviourState(c_state::TowerDestroyed);
-            //}
             return;
         }
         if (target)
@@ -83,7 +75,7 @@ namespace Engine
                     if (behaviourComponent2)
                     {
                         statsComponent2->health = 0;
-                        // behaviourComponent2->SetBehaviourState(c_state::Death);
+                        behaviourComponent2->SetBehaviourState(c_state::Death);
                         std::cout << "Dead " << statsComponent2->health << std::endl;
                     }
                 }

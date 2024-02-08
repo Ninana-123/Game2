@@ -41,7 +41,7 @@ namespace Engine
 	void StateMachine::Idle(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		// texture->SetAnimation(static_cast<int>(c_state::Static));
+		texture->SetAnimation(static_cast<int>(c_state::Static));
 	}
 
 	void StateMachine::Walking(Entity* entity)
@@ -54,10 +54,7 @@ namespace Engine
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		if (collision->layer != Layer::Tower) 
-		{
-			texture->SetAnimation(static_cast<int>(c_state::Attack));
-		}
+		texture->SetAnimation(static_cast<int>(c_state::Attack));
 		Entity* target = collision->target;
 		Stats::AttackTarget(5, entity, target);
 

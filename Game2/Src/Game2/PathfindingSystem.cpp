@@ -392,22 +392,7 @@ namespace Engine
                         startX = static_cast<int>(transformComponent->position.x);
                         startY = static_cast<int>(transformComponent->position.y);
 
-                        if (tower1Destroyed == false && tower2Destroyed == false) 
-                        {
-                            closestTower = getClosestPair(startX, startY, towerPositions);
-                        }
-                        //if (tower1Destroyed == true && tower2Destroyed == false)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[1] });
-                        //}
-                        //if (tower1Destroyed == false && tower2Destroyed == true)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
-                        //}
-                        //if (tower1Destroyed == true && tower2Destroyed == true)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
-                        //}
+                        closestTower = getClosestPair(startX, startY, towerPositions);
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
                         
                         if (endPointX != closestTower.first && endPointY != closestTower.second) 
@@ -416,23 +401,7 @@ namespace Engine
                             goalY = closestTower.second;
                         }
                         
-                        if (entity->GetID() == 7)
-                        {
-                            tower2CollidingEntityHealth = statsComponent->health;
-                        }
-                        if (entity->GetID() == 8)
-                        {
-                            tower1CollidingEntityHealth = statsComponent->health;
-                            // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
-                        }
-
-                        //// Debugging
-                        //std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
-                        //std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
-                        //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
-
-                        if (transformComponent->position.x == -275 && transformComponent->position.y == 45
-                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
+                        if (Input::IsKeyPressed(KEY_SPACE))
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -441,22 +410,6 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            pathfindingComponent->changedTowers = true;
-                            // towerPositions.erase(towerPositions.begin() + 0);
-                        }
-
-                        if (transformComponent->position.x == -70 && transformComponent->position.y == 140
-                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
-                        {
-
-                            // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
-                            goalX = currentClosestTower.first;
-                            goalY = currentClosestTower.second;
-
-                            // Mark the pathfinding component as not initialized to recalculate the path
-                            pathfindingComponent->initialized = false;
-                            pathfindingComponent->changedTowers = true;
-                            // towerPositions.erase(towerPositions.begin() + 1);
                         }
                      
                         if (!(pathfindingComponent->initialized))

@@ -25,7 +25,6 @@ namespace Engine
 		int startY = 0; // Start point X
 		int goalX = 0; // End point X
 		int goalY = 0; // End point Y
-		bool changedTowers = false;
 		std::vector<std::pair<int, int>> path; // Store the path as a list of points
 		bool initialized = false;
 		std::pair<int, int> previousPos1 = { 0, 0 };
@@ -48,7 +47,6 @@ namespace Engine
 			cloneComponent->startY = startY;
 			cloneComponent->goalX= goalX;
 			cloneComponent->goalY = goalY;
-			cloneComponent->changedTowers = changedTowers;
 			cloneComponent->path = path;
 			cloneComponent->initialized = initialized;
 			cloneComponent->previousPos1 = previousPos1;
