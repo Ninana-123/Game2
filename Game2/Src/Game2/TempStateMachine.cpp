@@ -54,7 +54,10 @@ namespace Engine
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		texture->SetAnimation(static_cast<int>(c_state::Attack));
+		if (collision->layer != Layer::Tower) 
+		{
+			texture->SetAnimation(static_cast<int>(c_state::Attack));
+		}
 		Entity* target = collision->target;
 		Stats::AttackTarget(5, entity, target);
 

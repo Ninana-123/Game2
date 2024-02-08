@@ -25,6 +25,9 @@
 // Global variables
 extern int pathfindingEntityTexture;
 extern int healthBarEntityTexture;
+extern int totalInfantry;
+extern int totalArcher;
+extern int totalTank;
 extern bool isGamePaused;
 extern bool inSettings;
 extern bool isGameOver;
@@ -92,6 +95,8 @@ namespace Engine
         */
         /**************************************************************************/
         void Update(bool CollisionCheck);
+
+        void RestartGame();
 
         // ~inGameGUI();
 

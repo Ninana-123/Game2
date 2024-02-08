@@ -17,6 +17,9 @@
 
 int pathfindingEntityTexture = 0;
 int healthBarEntityTexture = 0;
+int totalInfantry = 0;
+int totalArcher = 0;
+int totalTank = 0;
 bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
@@ -26,10 +29,13 @@ namespace Engine
 {
 	
 	int i = 0;
+	bool inGameGUIInitialized = false;
 
 	void inGameGUI::Initialize() 
 	{
-
+		totalInfantry = 3;
+		totalArcher = 2;
+		totalTank = 1;
 	}
 
 	inGameGUI::inGameGUI() : entityManager(), prefabManager(), collisionSystem()
@@ -38,7 +44,12 @@ namespace Engine
 
 	void inGameGUI::Update(bool CollisionCheck)
 	{
-
+		if (!(inGameGUIInitialized)) 
+		{
+			Initialize();
+			inGameGUIInitialized = true;
+		}
+		
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
 		if (CollisionCheck) 
@@ -50,31 +61,37 @@ namespace Engine
 				lastCollidingEntityTexture = 0;
 			}
 
-			if (lastCollidingEntityTexture == 7)
+			// Spawn infantry
+			if (lastCollidingEntityTexture == 7 && totalInfantry > 0)
 			{
 				Prefab* infantryPrefab = prefabManager->GetPrefab(0);
 				entityManager->CreateEntityFromPrefab(*infantryPrefab);
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
+				totalInfantry--;
 			}
 			
-			if (lastCollidingEntityTexture == 8)
+			// Spawn Archer
+			if (lastCollidingEntityTexture == 8 && totalArcher > 0)
 			{
 				Prefab* archerPrefab = prefabManager->GetPrefab(1);
 				entityManager->CreateEntityFromPrefab(*archerPrefab);
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
+				totalArcher--;
 			}			
 			
-			if (lastCollidingEntityTexture == 9)
+			// Spawn Tank
+			if (lastCollidingEntityTexture == 9 && totalTank > 0)
 			{
 				Prefab* tankPrefab = prefabManager->GetPrefab(2);
 				entityManager->CreateEntityFromPrefab(*tankPrefab);
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
+				totalTank--;
 			}
 
 			// Logic for the pause/play and setting buttons
@@ -121,10 +138,21 @@ namespace Engine
 		if (Input::IsKeyTriggered(KEY_BACKSPACE) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);
+			RestartGame();
 		}
 
 		// Reset flag
 		CollisionCheck = false;		
 
     }
+
+	void inGameGUI::RestartGame() 
+	{
+		deleteAllEntity = true;
+		shouldLoadScene = true; // Set flag indicating a scene should be loaded
+		sceneToLoad = initScene; // Store the name of the scene to be loaded
+		bool isGameOver = false;
+		bool victoryScreenShown = false;
+		inGameGUIInitialized = false;
+	}
 }
