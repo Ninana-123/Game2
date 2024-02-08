@@ -24,6 +24,7 @@ bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
 bool victoryScreenShown = false;
+bool accessedCastle = false;
 
 namespace Engine
 {
@@ -127,7 +128,7 @@ namespace Engine
 		// Cheat code to get to victory screen
 		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed && !victoryScreenShown)
 		{
-			if (Application::TimePassed(1)) 
+			if (Application::TimePassed(2)) 
 			{
 				Prefab* victoryPrefab = prefabManager->GetPrefab(9);
 				entityManager->CreateEntityFromPrefab(*victoryPrefab);
@@ -135,7 +136,7 @@ namespace Engine
 			}
 		}
 
-		if (Input::IsKeyTriggered(KEY_BACKSPACE) && victoryScreenShown == true)
+		if (Input::IsKeyTriggered(KEY_ENTER) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);
 			RestartGame();
@@ -154,5 +155,9 @@ namespace Engine
 		bool isGameOver = false;
 		bool victoryScreenShown = false;
 		inGameGUIInitialized = false;
+		tower1Destroyed = false;
+		tower2Destroyed = false;
+		castleDestroyed = false;
+		accessedCastle = false;
 	}
 }

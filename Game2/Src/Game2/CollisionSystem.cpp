@@ -696,6 +696,11 @@ namespace Engine
 															castleDestroyed = true;
 															isGameOver = true;
 														}
+														if ((textureComponent->textureKey.mainIndex == 5 && textureComponent->textureKey.subIndex == 0)
+															&& castleDestroyed == true)
+														{
+															textureComponent->textureKey = { 5, 5 };
+														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
 

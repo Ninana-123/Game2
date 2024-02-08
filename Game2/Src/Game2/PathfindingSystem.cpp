@@ -441,6 +441,7 @@ namespace Engine
                         //std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
                         //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
 
+                        // If first tower health is 0, and have not changed towers, go to the next tower
                         if (transformComponent->position.x == -275 && transformComponent->position.y == 45
                             && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
@@ -455,6 +456,7 @@ namespace Engine
                             // towerPositions.erase(towerPositions.begin() + 0);
                         }
 
+                        // If second tower health is 0, and have no changed towers, go to the next tower
                         if (transformComponent->position.x == -70 && transformComponent->position.y == 140
                             && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
