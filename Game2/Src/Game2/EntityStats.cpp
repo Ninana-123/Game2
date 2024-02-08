@@ -52,8 +52,16 @@ namespace Engine
         CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
         if (collisionComponent1->layer == Layer::Tower)
         {
-            BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
-            behaviourComponent1->SetBehaviourState(c_state::Static);
+            //BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
+            //behaviourComponent1->SetBehaviourState(c_state::Static);
+            //if (tower1Destroyed) 
+            //{
+            //    behaviourComponent1->SetBehaviourState(c_state::TowerDestroyed);
+            //}
+            //if (tower2Destroyed) 
+            //{
+            //    behaviourComponent1->SetBehaviourState(c_state::TowerDestroyed);
+            //}
             return;
         }
         if (target)
