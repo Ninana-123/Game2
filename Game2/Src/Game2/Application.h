@@ -148,6 +148,7 @@ namespace Engine
         // Flag indicating if the application is running
         bool m_Running = true;
         bool gamePlaying = true;
+        bool isMainMenuLoaded = false;
     };
 
     /*!

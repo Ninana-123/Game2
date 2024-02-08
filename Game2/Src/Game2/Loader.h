@@ -57,7 +57,7 @@ namespace Engine {
          */
         void LoadScene(const std::string& filePath);
 
-        void UnloadScene(const std::string& filePathOut);
+        //void UnloadScene(const std::string& filePathOut);
 
         /*!
          * \brief Load prefabs from a data file.

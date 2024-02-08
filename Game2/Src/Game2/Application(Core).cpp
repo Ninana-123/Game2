@@ -33,7 +33,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
-//#include "MainMenu.h"
+#include "SceneManager.h"
+#include "MainMenuScene.h"
+#include "GameScene.h"
 #include "TempStateMachine.h"
 
 // Global variables for frames per second (fps) calculation
@@ -49,8 +51,8 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
-std::string initScene = "Resource/Scenes/MainMenu.txt";
-std::string nextScene = "Resource/Scenes/Level0Test.txt";
+//std::string initScene = "Resource/Scenes/MainMenu.txt";
+//std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -81,7 +83,9 @@ namespace Engine
     ComponentFactory CF;
     StateMachine SM;
  
-    //MainMenu* mainMenu;
+    SceneManager sceneManager;
+    MainMenuScene mainMenuScene;
+    GameScene gameScene;
 
     float scalar = 0.1f;
     float rotation = 0.125f;
@@ -97,12 +101,12 @@ namespace Engine
 
     Application::Application()
     {
-        //mainMenu = new MainMenu();
+        
     }   
 
     Application::~Application()
     {
-        //delete mainMenu;
+        
     }
 
     void Application::Initialize()
@@ -158,13 +162,14 @@ namespace Engine
         loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
 
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene(initScene);
+        //loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
         loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
-        //mainMenu->Initialize();
+        sceneManager.TransitionToScene(&mainMenuScene);
+        isMainMenuLoaded = true;
 
         if (EM->GetEntity(1) != nullptr) {
             targetEntity = EM->GetEntity(1);
@@ -250,6 +255,14 @@ namespace Engine
                 ToggleFullscreen();
             }
         }
+        if (isMainMenuLoaded) {
+            if (e.GetEventType() == EventType::KeyPressed) {
+                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+                if (keyPressedEvent.GetKeyCode() == KEY_M) {
+                    sceneManager.TransitionToScene(&gameScene);
+                }
+            }
+        }
     }
 
     void Application::ToggleFullscreen() {
@@ -299,15 +312,6 @@ namespace Engine
             Application::UpdateWindowTitle();
 
             UpdateWindowFocus();
-
-            // Main menu test
-            //if (InputHandler.IsKeyTriggered(KEY_M)) {
-            //    mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
-            //}
-            if (InputHandler.IsKeyTriggered(KEY_M))
-            {
-                TransitionToNextScene();
-            }
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -661,16 +665,6 @@ namespace Engine
                 }
             }
         }
-    }
-
-    void Application::TransitionToNextScene()
-    {
-        loader->UnloadScene(initScene);
-        Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
-        
-        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
-        loader->LoadScene(nextScene);
-        
     }
 
     void Application::UpdateWindowTitle() 

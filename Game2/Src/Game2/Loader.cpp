@@ -108,34 +108,34 @@ namespace Engine {
         sceneFile.close();
     }
 
-    void Loader::UnloadScene(const std::string& filePath) {
-        std::ofstream sceneFile(filePath);
-        if (!sceneFile.is_open()) {
-            std::cerr << "Error: Could not open scene file " << filePath << "\n";
-            return;
-        }
+    //void Loader::UnloadScene(const std::string& filePath) {
+    //    std::ofstream sceneFile(filePath);
+    //    if (!sceneFile.is_open()) {
+    //        std::cerr << "Error: Could not open scene file " << filePath << "\n";
+    //        return;
+    //    }
 
-        // Write the number of entities to the scene file
-        sceneFile << entityManager->GetEntities()->size() << std::endl;
+    //    // Write the number of entities to the scene file
+    //    sceneFile << entityManager->GetEntities()->size() << std::endl;
 
-        // Iterate through each entity and its components
-        for (const auto& entityPair : *entityManager->GetEntities()) {
-            Entity* entityPtr = entityPair.second.get();
+    //    // Iterate through each entity and its components
+    //    for (const auto& entityPair : *entityManager->GetEntities()) {
+    //        Entity* entityPtr = entityPair.second.get();
 
-            // Write components of each entity to the scene file
-            for (const auto& componentPair : entityPtr->GetComponents()) {
-                Component* component = componentPair.second;
+    //        // Write components of each entity to the scene file
+    //        for (const auto& componentPair : entityPtr->GetComponents()) {
+    //            Component* component = componentPair.second;
 
-                // Serialize the component's data to the scene file
-                component->Serialize(sceneFile);
-            }
+    //            // Serialize the component's data to the scene file
+    //            component->Serialize(sceneFile);
+    //        }
 
-            // Mark the end of the entity
-            sceneFile << "EndEntity" << std::endl;
-        }
+    //        // Mark the end of the entity
+    //        sceneFile << "EndEntity" << std::endl;
+    //    }
 
-        sceneFile.close();
-    }
+    //    sceneFile.close();
+    //}
     
     void Loader::LoadPrefabs(const std::string& filepath)
     {
