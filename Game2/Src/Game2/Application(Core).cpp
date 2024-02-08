@@ -155,7 +155,7 @@ namespace Engine
 
         // Load scene from a file
         //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
-        std::shared_ptr<Loader> loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
+        loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
 
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
         loader->LoadScene(initScene);
@@ -665,12 +665,12 @@ namespace Engine
 
     void Application::TransitionToNextScene()
     {
-        Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
         loader->UnloadScene(initScene);
+        Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
         
         Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
         loader->LoadScene(nextScene);
-        Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
+        
     }
 
     void Application::UpdateWindowTitle() 
