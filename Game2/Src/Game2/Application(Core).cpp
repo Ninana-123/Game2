@@ -49,8 +49,8 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
-std::string initScene = "Resource/Scenes/MainMenu.txt";
-std::string nextScene = "Resource/Scenes/Level0Test.txt";
+// std::string initScene = "Resource/Scenes/MainMenu.txt";
+std::string initScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -665,12 +665,12 @@ namespace Engine
 
     void Application::TransitionToNextScene()
     {
-        Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
-        loader->UnloadScene(initScene);
-        
-        Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
-        loader->LoadScene(nextScene);
-        Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
+    //    loader->UnloadScene(initScene);
+    //    
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
+    //    loader->LoadScene(nextScene);
+    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
     }
 
     void Application::UpdateWindowTitle() 
