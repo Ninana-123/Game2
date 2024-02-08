@@ -158,6 +158,10 @@ namespace Engine
 		tower1Destroyed = false;
 		tower2Destroyed = false;
 		castleDestroyed = false;
-		accessedCastle = false;
+		//accessedCastle = false;
+		std::cout << "tower1Destroyed: " << tower1Destroyed << std::endl;
+		std::cout << "tower2Destroyed: " << tower2Destroyed << std::endl;
+		std::cout << "castleDestroyed: " << castleDestroyed << std::endl;
+		//std::cout << "accessedCastle: " << accessedCastle << std::endl;
 	}
 }

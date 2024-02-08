@@ -55,7 +55,7 @@ namespace Engine
 
     // Bool to check if unit has switched towers
     bool changedTowers = false;
-    bool accessedCastle = false;
+    // bool accessedCastle = false;
 
     void PathfindingSystem::createLogicalCollisionMap() 
     {
@@ -88,19 +88,6 @@ namespace Engine
             }
         }
     }
-
-    //void PathfindingSystem::initializeCollisionMap() 
-    //{
-    //    // Set the size of the collision map based on displayWidth and displayHeight
-    //    collisionMap = new int* [displayWidth];
-    //    for (int i = 0; i < displayWidth; ++i) 
-    //    {
-    //        collisionMap[i] = new int[displayHeight];
-    //    }
-
-    //    // Create a logical collision map
-    //    createLogicalCollisionMap();
-    //}
 
     void PathfindingSystem::initializeCollisionMap()
     {
@@ -511,10 +498,10 @@ namespace Engine
 
                         }
 
-                        if (accessedCastle == false && tower1Destroyed && tower2Destroyed) 
+                        if (pathfindingComponent->accessedCastle == false && tower1Destroyed && tower2Destroyed) 
                         {
                             pathfindingComponent->initialized = false;
-                            accessedCastle = true;
+                            pathfindingComponent->accessedCastle = true;
                         }
 
                         //// Debug print for pathfinding
