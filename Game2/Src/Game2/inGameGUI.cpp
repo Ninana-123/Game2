@@ -126,7 +126,7 @@ namespace Engine
 		}
 
 		// Cheat code to get to victory screen
-		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed && !victoryScreenShown)
+		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed == true && !victoryScreenShown)
 		{
 			if (Application::TimePassed(2)) 
 			{
@@ -136,7 +136,7 @@ namespace Engine
 			}
 		}
 
-		if (Input::IsKeyTriggered(KEY_ENTER) && victoryScreenShown == true)
+		if (Input::IsKeyPressed(KEY_ENTER) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);
 			RestartGame();
@@ -149,19 +149,14 @@ namespace Engine
 
 	void inGameGUI::RestartGame() 
 	{
-		deleteAllEntity = true;
-		shouldLoadScene = true; // Set flag indicating a scene should be loaded
-		sceneToLoad = initScene; // Store the name of the scene to be loaded
-		bool isGameOver = false;
-		bool victoryScreenShown = false;
+		isGameOver = false;
+		victoryScreenShown = false;
 		inGameGUIInitialized = false;
 		tower1Destroyed = false;
 		tower2Destroyed = false;
 		castleDestroyed = false;
-		//accessedCastle = false;
-		std::cout << "tower1Destroyed: " << tower1Destroyed << std::endl;
-		std::cout << "tower2Destroyed: " << tower2Destroyed << std::endl;
-		std::cout << "castleDestroyed: " << castleDestroyed << std::endl;
-		//std::cout << "accessedCastle: " << accessedCastle << std::endl;
+		deleteAllEntity = true;
+		shouldLoadScene = true; // Set flag indicating a scene should be loaded
+		sceneToLoad = initScene; // Store the name of the scene to be loaded
 	}
 }
