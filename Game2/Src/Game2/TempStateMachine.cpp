@@ -2,8 +2,11 @@
 #include "TempStateMachine.h"
 #include "Application.h"
 
+
 namespace Engine
-{
+{	
+	
+
 	void Engine::StateMachine::UpdateEntities(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
 		// Iterate through entities that require pathfinding updates.
@@ -57,7 +60,7 @@ namespace Engine
 		texture->SetAnimation(static_cast<int>(c_state::Attack));
 		Entity* target = collision->target;
 		Stats::AttackTarget(5, entity, target);
-
+		audio.playSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
 	}
 
 	void StateMachine::Death(Entity* entity)
