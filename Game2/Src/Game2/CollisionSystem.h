@@ -25,14 +25,8 @@ Technology is prohibited.
 extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
-extern int tower1CollidingEntityHealth;
-extern int tower2CollidingEntityHealth;
-extern int castleCollidingEntityHealth;
 extern bool isStartingPoint;
 extern bool towerCollision;
-extern bool tower1Destroyed;
-extern bool tower2Destroyed;
-extern bool castleDestroyed;
 
 namespace Engine
 {

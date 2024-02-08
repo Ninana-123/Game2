@@ -20,7 +20,6 @@ int healthBarEntityTexture = 0;
 bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
-bool victoryScreenShown = false;
 
 namespace Engine
 {
@@ -108,14 +107,10 @@ namespace Engine
 		}
 
 		// Cheat code to get to victory screen
-		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed && !victoryScreenShown)
+		if (isGameOver && Input::IsKeyTriggered(KEY_W))
 		{
-			if (Application::TimePassed(1)) 
-			{
-				Prefab* victoryPrefab = prefabManager->GetPrefab(9);
-				entityManager->CreateEntityFromPrefab(*victoryPrefab);
-				victoryScreenShown = true;
-			}
+			Prefab* victoryPrefab = prefabManager->GetPrefab(9);
+			entityManager->CreateEntityFromPrefab(*victoryPrefab);
 		}
 
 		// Reset flag
