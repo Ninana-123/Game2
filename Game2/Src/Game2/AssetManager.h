@@ -238,7 +238,7 @@ namespace Engine {
             { {TextureClass::Archer,            2}, "Resource/Texture/ArcherAttack.png" },
             { {TextureClass::Archer,            3}, "Resource/Texture/ArcherDeath.png" },
             { {TextureClass::Tower,             0}, "Resource/Texture/Tower.png" },
-                        { {TextureClass::Tower,             4}, "Resource/Texture/TowerDestroyed.png" },
+            { {TextureClass::Tower,             4}, "Resource/Texture/TowerDestroyed.png" },
 
 
 
@@ -258,7 +258,7 @@ namespace Engine {
             { {TextureClass::mainMenuGameInfo,  0}, "Resource/Texture/mmGameInfo.png"},
             { {TextureClass::mainMenuCredits,   0}, "Resource/Texture/mmCredits.png"},
             { {TextureClass::Logo,              0}, "Resource/Texture/Logo.png"},
-            { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_screen.png"},
+            { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_background.png"},
             { {TextureClass::catHPEmpty,        0}, "Resource/Texture/hp_empty.PNG" },
             { {TextureClass::catHP1,            0}, "Resource/Texture/cats_hp_1.PNG" },
             { {TextureClass::catHP2,            0}, "Resource/Texture/cats_hp_2.PNG" },

@@ -53,10 +53,6 @@ namespace Engine
     // int** collisionMap = nullptr;
     std::unique_ptr<std::unique_ptr<int[]>[]> collisionMap;
 
-    // Bool to check if unit has switched towers
-    bool changedTowers = false;
-    bool accessedCastle = false;
-
     void PathfindingSystem::createLogicalCollisionMap() 
     {
         // Vector to store obstacle rectangles
@@ -276,8 +272,7 @@ namespace Engine
         endPointY = startPosY;
 
         // Change path to other tower if at current tower
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 && 
-            tower2Destroyed == false) 
+        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80) 
         {
             if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
             {
@@ -285,8 +280,7 @@ namespace Engine
                 prevPos2 = towersPositions[0];
             }
         }
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105 &&
-            tower1Destroyed == false) 
+        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105) 
         {
             if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
             {
@@ -388,7 +382,6 @@ namespace Engine
                 CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
                 BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
-                StatsComponent* statsComponent = dynamic_cast<StatsComponent*>(entity->GetComponent(ComponentType::Stats));
 
                 if (entity->HasComponent(ComponentType::Pathfinding))
                 {
@@ -399,12 +392,24 @@ namespace Engine
                         startX = static_cast<int>(transformComponent->position.x);
                         startY = static_cast<int>(transformComponent->position.y);
 
-                        closestTower = getClosestPair(startX, startY, towerPositions);
+                        if (tower1Destroyed == false && tower2Destroyed == false) 
+                        {
+                            closestTower = getClosestPair(startX, startY, towerPositions);
+                        }
+                        //if (tower1Destroyed == true && tower2Destroyed == false)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[1] });
+                        //}
+                        //if (tower1Destroyed == false && tower2Destroyed == true)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
+                        //}
+                        //if (tower1Destroyed == true && tower2Destroyed == true)
+                        //{
+                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
+                        //}
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
                         
-                        //goalX = closestTower.first;
-                        //goalY = closestTower.second;
-
                         if (endPointX != closestTower.first && endPointY != closestTower.second) 
                         {
                             goalX = closestTower.first;
@@ -421,13 +426,13 @@ namespace Engine
                             // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
                         }
 
-                        // Debugging
-                        std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
-                        std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
-                        std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
+                        //// Debugging
+                        //std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
+                        //std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
+                        //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
 
                         if (transformComponent->position.x == -275 && transformComponent->position.y == 45
-                            && tower1CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -436,11 +441,12 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
+                            // towerPositions.erase(towerPositions.begin() + 0);
                         }
 
                         if (transformComponent->position.x == -70 && transformComponent->position.y == 140
-                            && tower2CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -449,40 +455,35 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
+                            // towerPositions.erase(towerPositions.begin() + 1);
                         }
                      
                         if (!(pathfindingComponent->initialized))
-                        {  
-                            
+                        {                          
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
                             // Check if both positions were attained before, go to castle if yes
-                            //if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first
-                                //&& tower1CollidingEntityHealth == 0 && tower2CollidingEntityHealth == 0)
-                            if (tower1Destroyed && tower2Destroyed)
+                            if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first)
                             {
                                 goalX = 345;
                                 goalY = 75 - 140;
                             }
 
-                            else 
+                            // If tower 1
+                            if (goalX == -275 && goalY == -35) 
                             {
-                                // If tower 1
-                                if (goalX == -275 && goalY == -35)
-                                {
-                                    goalY = goalY + 80;
-                                    pathfindingComponent->previousPos1 = prevPos1;
-                                    // std::cout << "previousPos1: " << pathfindingComponent->previousPos1.first << std::endl;
-                                }
-                                // If tower 2
-                                if (goalX == -70 && goalY == 245)
-                                {
-                                    goalY = goalY - 105;
-                                    pathfindingComponent->previousPos2 = prevPos2;
-                                    // std::cout << "previousPos2: " << pathfindingComponent->previousPos2.first << std::endl;
-                                }
+                                goalY = goalY + 80;
+                                pathfindingComponent->previousPos1 = prevPos1;
+                                // std::cout << "previousPos1: " << pathfindingComponent->previousPos1.first << std::endl;
+                            }
+                            // If tower 2
+                            if (goalX == -70 && goalY == 245)
+                            {
+                                goalY = goalY - 105;
+                                pathfindingComponent->previousPos2 = prevPos2;
+                                // std::cout << "previousPos2: " << pathfindingComponent->previousPos2.first << std::endl;
                             }
                             
                             pathfinder.setGoal(goalX, goalY);
@@ -490,12 +491,6 @@ namespace Engine
                             pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
                             pathfindingComponent->initialized = true;
 
-                        }
-
-                        if (accessedCastle == false && tower1Destroyed && tower2Destroyed) 
-                        {
-                            pathfindingComponent->initialized = false;
-                            accessedCastle = true;
                         }
 
                         //// Debug print for pathfinding
@@ -507,6 +502,7 @@ namespace Engine
 
                         // If path is not empty, execute path finding logic
                         if (!pathfindingComponent->path.empty())
+                        // if (Application::TimePassed(3))
                         {
 
                             // Infantry switch to walking mode
