@@ -508,11 +508,11 @@ namespace Engine
                 double currentTime = glfwGetTime();
                 double deltaTime = currentTime - lastTime;
                 lastTime = currentTime;
-                float frameRate = 10.0f;
+                float frameRate = 5.0F;
                 float horizontalFrames = 5.0f; // Number of horizontal frames
                 float verticalFrames = 1.0f; // Number of vertical frames
                 //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
+                Anim_Mode playMode = Anim_Mode::ONE_TIME;
 
                 // Create a static animation object if not created already
                 static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
