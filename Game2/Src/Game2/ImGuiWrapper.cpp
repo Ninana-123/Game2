@@ -1956,7 +1956,7 @@ namespace Engine {
 							float width = collision->c_Width;
 							float height = collision->c_Height;
 							bool CollisionSwitch = collision->disableCollision;
-							bool isColliding = collision->isColliding;					
+							//bool isColliding = collision->isColliding;					
 
 							if (ImGui::Checkbox("Disable Collision", &CollisionSwitch))
 							{

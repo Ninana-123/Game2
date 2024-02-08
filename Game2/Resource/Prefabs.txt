@@ -1,0 +1,252 @@
+11
+Infantry
+Transform
+Position: -135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 4
+CollisionVel: 0 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 1
+SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 0
+goalY: 0
+initialized: 0
+Stats
+Health: 50
+Range: 0
+Logic
+BehaviourIndex: 0
+EndPrefab
+Archer
+Transform
+Position: 0 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 4
+CollisionVel: 0 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 3
+SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 0
+goalY: 0
+initialized: 0
+EndPrefab
+Tank
+Transform
+Position: 135 -300
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 45
+c_Height: 45
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 4
+CollisionVel: 0 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
+Texture
+MainIndex: 2
+SubIndex: 0
+Pathfinding
+startX: 0
+startY: 0
+goalX: 0
+goalY: 0
+initialized: 0
+EndPrefab
+HUDArcher
+Transform
+Position: 0 0
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Texture
+MainIndex: 8
+SubIndex: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+CollisionVel: 0 0
+EndPrefab
+HUDTank
+Transform
+Position: -100 -100
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Texture
+MainIndex: 9
+SubIndex: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+CollisionVel: 0 0
+EndPrefab
+Castle
+Transform
+Position: 0 0
+ScaleX: 3
+ScaleY: 2.5
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+CollisionVel: 0 0
+Texture
+MainIndex: 5
+SubIndex: 0
+EndPrefab
+Settingsbutton
+Transform
+Position: 0 0
+ScaleX: 0.5
+ScaleY: 0.5
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+CollisionVel: 0 0
+Texture
+MainIndex: 12
+SubIndex: 0
+EndPrefab
+HUDInfantry
+Transform
+Position: 0 0
+ScaleX: 1
+ScaleY: 1
+Rotation: 0
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 0
+CollisionVel: 0 0
+Texture
+MainIndex: 7
+SubIndex: 0
+EndPrefab
+HUD
+Transform
+Position: 0 0
+ScaleX: 0.25
+ScaleY: 4
+Rotation: 0
+Texture
+MainIndex: 6
+SubIndex: 0
+EndPrefab
+VictoryScreen
+Transform
+Position: 0 0
+ScaleX: 16
+ScaleY: 9
+Rotation: 0
+Texture
+MainIndex: 21
+SubIndex: 0
+EndPrefab
+TowerHP
+Transform
+Position: 0 0
+ScaleX: 0.8
+ScaleY: 0.3
+Rotation: 0
+Texture
+MainIndex: 41
+SubIndex: 0
+EndPrefab

@@ -413,11 +413,11 @@ namespace Engine
                         
                         if (entity->GetID() == 7)
                         {
-                            tower2CollidingEntityHealth = statsComponent->health;
+                            tower2CollidingEntityHealth = static_cast<int>(statsComponent->health);
                         }
                         if (entity->GetID() == 8)
                         {
-                            tower1CollidingEntityHealth = statsComponent->health;
+                            tower1CollidingEntityHealth = static_cast<int>(statsComponent->health);
                             // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
                         }
 
