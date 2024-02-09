@@ -505,7 +505,7 @@ namespace Engine
 					continue;
 				}
 
-				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
+				if (collisionComponent1 && collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
 				{
 					AABB aabb1;
 					Circle circle1;
