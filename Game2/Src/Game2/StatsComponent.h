@@ -1,3 +1,20 @@
+/******************************************************************************/
+/*!
+\file		StatsComponent.h
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+
+\par		a.junshengaloysius@digipen.edu
+
+\date		23/01/2024
+
+\brief		Contains the stats components of a given entity.
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #pragma once
 #include "Component.h"
 #include "EntityStats.h"

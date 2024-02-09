@@ -460,7 +460,7 @@ namespace Engine
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
-                            // Check if both positions were attained before, go to castle if yes
+                            // Check if both towers are destroyed, go to castle
                             if (tower1Destroyed && tower2Destroyed)
                             {
                                 goalX = 345;
