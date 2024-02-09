@@ -243,6 +243,8 @@ namespace Engine {
 
 
             { {TextureClass::Castle,            0}, "Resource/Texture/Castle.png" },
+            { {TextureClass::Castle,            5}, "Resource/Texture/CastleDestroyed.png" },
+
             { {TextureClass::HUD,               0}, "Resource/Texture/HUD.png" },
             { {TextureClass::HUDInfantry,       0}, "Resource/Texture/HUDInfantry.png"},
             { {TextureClass::HUDArcher,         0}, "Resource/Texture/HUDArcher.png"},

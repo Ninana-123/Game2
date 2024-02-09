@@ -26,6 +26,7 @@ Technology is prohibited.
 #include "PathfindingComponent.h"
 
 extern bool isGameOver;
+extern bool accessedCastle;
 
 namespace Engine
 {

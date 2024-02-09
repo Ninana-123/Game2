@@ -110,24 +110,23 @@ namespace Engine {
 
     void Loader::UnloadScene(const std::string& filePathOut)
     {
-        std::ofstream sceneFileOut(filePathOut);
+        // Create a temporary file to serialize the scene data
+        std::string tempFilePath = filePathOut + ".temp";
+        std::ofstream sceneFileOut(tempFilePath);
         if (!sceneFileOut.is_open())
         {
-            std::cerr << "Error: could not open scene file!" << filePathOut << '\n';
+            std::cerr << "Error: could not open temporary scene file!" << tempFilePath << '\n';
             return;
         }
 
         // Get the entity count
-        int outEntityCount = static_cast<int>(entityManager->GetEntities()->size());
-        sceneFileOut << outEntityCount << '\n';
+        int OutEntityCount = static_cast<int>(entityManager->GetEntities()->size());
+        sceneFileOut << OutEntityCount << '\n';
 
         // Iterate through each entity
         for (const auto& entityPair : *entityManager->GetEntities())
         {
             Entity* entityPtr = entityPair.second.get();
-
-            // Serialize entity ID
-            sceneFileOut << entityPtr->GetID() << '\n';
 
             // Serialize each component of the entity
             for (const auto& componentPair : entityPtr->GetComponents()) {
@@ -146,6 +145,10 @@ namespace Engine {
         }
 
         sceneFileOut.close();
+
+        // Replace the original scene file with the temporary file
+        std::remove(filePathOut.c_str()); // Delete the original scene file
+        std::rename(tempFilePath.c_str(), filePathOut.c_str()); // Rename the temporary file to the original scene file
     }
     
     void Loader::LoadPrefabs(const std::string& filepath)

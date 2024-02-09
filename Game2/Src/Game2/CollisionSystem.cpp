@@ -569,6 +569,7 @@ namespace Engine
 									circle2.radius = statsComponent2->range;
 								}
 
+								// Getting the health of each tower/castle
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
@@ -596,7 +597,7 @@ namespace Engine
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 
-								// Check if the conditions are met
+								// Changing the texture for the healthbars
 								if (entity2->GetID() == 11 && towerCollidingEntity == 8)
 								{
 									// Find the corresponding texture key for the towerCollidingEntityHealth
@@ -630,6 +631,7 @@ namespace Engine
 									}
 								}
 
+								// Getting ID of victory screen
 								if (textureComponent->textureKey.mainIndex == 21)
 								{
 									victoryID = entity2->GetID();
@@ -667,6 +669,11 @@ namespace Engine
 														{
 															tower2Destroyed = true;
 														}
+														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+															&& tower2Destroyed == true)
+														{
+															textureComponent->textureKey = { 4, 4 };
+														}
 													}
 													if (entity2->GetID() == 8)
 													{
@@ -674,6 +681,11 @@ namespace Engine
 														if (tower1CollidingEntityHealth == 0)
 														{
 															tower1Destroyed = true;
+														}
+														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+															&& tower1Destroyed == true)
+														{
+															textureComponent->textureKey = { 4, 4 };
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
@@ -684,6 +696,11 @@ namespace Engine
 														{
 															castleDestroyed = true;
 															isGameOver = true;
+														}
+														if ((textureComponent->textureKey.mainIndex == 5 && textureComponent->textureKey.subIndex == 0)
+															&& castleDestroyed == true)
+														{
+															textureComponent->textureKey = { 5, 5 };
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}

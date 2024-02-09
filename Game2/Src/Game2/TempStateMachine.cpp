@@ -44,7 +44,7 @@ namespace Engine
 	void StateMachine::Idle(Entity* entity)
 	{
 		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		texture->SetAnimation(static_cast<int>(c_state::Static));
+		// texture->SetAnimation(static_cast<int>(c_state::Static));
 	}
 
 	void StateMachine::Walking(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)

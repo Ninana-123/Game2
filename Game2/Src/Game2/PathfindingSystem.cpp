@@ -55,7 +55,7 @@ namespace Engine
 
     // Bool to check if unit has switched towers
     bool changedTowers = false;
-    bool accessedCastle = false;
+    // bool accessedCastle = false;
 
     void PathfindingSystem::createLogicalCollisionMap() 
     {
@@ -88,19 +88,6 @@ namespace Engine
             }
         }
     }
-
-    //void PathfindingSystem::initializeCollisionMap() 
-    //{
-    //    // Set the size of the collision map based on displayWidth and displayHeight
-    //    collisionMap = new int* [displayWidth];
-    //    for (int i = 0; i < displayWidth; ++i) 
-    //    {
-    //        collisionMap[i] = new int[displayHeight];
-    //    }
-
-    //    // Create a logical collision map
-    //    createLogicalCollisionMap();
-    //}
 
     void PathfindingSystem::initializeCollisionMap()
     {
@@ -276,8 +263,8 @@ namespace Engine
         endPointY = startPosY;
 
         // Change path to other tower if at current tower
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 && 
-            tower2Destroyed == false) 
+        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 &&
+            tower2Destroyed == false)
         {
             if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
             {
@@ -286,7 +273,7 @@ namespace Engine
             }
         }
         if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105 &&
-            tower1Destroyed == false) 
+            tower1Destroyed == false)
         {
             if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
             {
@@ -417,9 +404,6 @@ namespace Engine
                         //}
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
                         
-                        //goalX = closestTower.first;
-                        //goalY = closestTower.second;
-
                         if (endPointX != closestTower.first && endPointY != closestTower.second) 
                         {
                             goalX = closestTower.first;
@@ -436,13 +420,14 @@ namespace Engine
                             // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
                         }
 
-                        // Debugging
-                        std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
-                        std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
-                        std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
+                        //// Debugging
+                        //std::cout << "Tower 1 Health: " << tower1CollidingEntityHealth << " Tower 1 Status: " << tower1Destroyed << std::endl;
+                        //std::cout << "Tower 2 Health: " << tower2CollidingEntityHealth << " Tower 2 Status: " << tower2Destroyed << std::endl;
+                        //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
 
+                        // If first tower health is 0, and have not changed towers, go to the next tower
                         if (transformComponent->position.x == -275 && transformComponent->position.y == 45
-                            && tower1CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -451,12 +436,13 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
                             // towerPositions.erase(towerPositions.begin() + 0);
                         }
 
+                        // If second tower health is 0, and have no changed towers, go to the next tower
                         if (transformComponent->position.x == -70 && transformComponent->position.y == 140
-                            && tower2CollidingEntityHealth == 0 && changedTowers == false)
+                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -465,19 +451,16 @@ namespace Engine
 
                             // Mark the pathfinding component as not initialized to recalculate the path
                             pathfindingComponent->initialized = false;
-                            changedTowers = true;
+                            pathfindingComponent->changedTowers = true;
                             // towerPositions.erase(towerPositions.begin() + 1);
                         }
                      
                         if (!(pathfindingComponent->initialized))
-                        {  
-                            
+                        {                          
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
                             pathfinder.setStart(startX,startY);
 
                             // Check if both positions were attained before, go to castle if yes
-                            //if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first
-                                //&& tower1CollidingEntityHealth == 0 && tower2CollidingEntityHealth == 0)
                             if (tower1Destroyed && tower2Destroyed)
                             {
                                 goalX = 345;
@@ -509,10 +492,10 @@ namespace Engine
 
                         }
 
-                        if (accessedCastle == false && tower1Destroyed && tower2Destroyed) 
+                        if (pathfindingComponent->accessedCastle == false && tower1Destroyed && tower2Destroyed) 
                         {
                             pathfindingComponent->initialized = false;
-                            accessedCastle = true;
+                            pathfindingComponent->accessedCastle = true;
                         }
 
                         //// Debug print for pathfinding
