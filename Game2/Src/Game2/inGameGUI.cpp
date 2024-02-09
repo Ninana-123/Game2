@@ -126,7 +126,7 @@ namespace Engine
 			}
 		}
 
-		// Cheat code to get to victory screen
+		// Cheat code to get to victory screen + actual victory screen
 		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed == true && !victoryScreenShown)
 		{
 			if (Application::TimePassed(2)) 
@@ -150,6 +150,7 @@ namespace Engine
 
 	void inGameGUI::RestartGame()
 	{
+		// Resetting all the flags
 		isGameOver = false;
 		victoryScreenShown = false;
 		inGameGUIInitialized = false;

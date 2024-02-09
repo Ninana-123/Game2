@@ -50,7 +50,7 @@ namespace Engine {
          * \param key Key code of the keyboard key to check.
          * \return True if the key is currently down, false otherwise.
          */
-        bool IsKeyDown(const KeyCode key);
+        static bool IsKeyDown(const KeyCode key);
 
         /*!
          * \brief Checks if the specified keyboard key is released.
@@ -58,7 +58,7 @@ namespace Engine {
          * \param key Key code of the keyboard key to check.
          * \return True if the key is released, false otherwise.
          */
-        bool IsKeyReleased(const KeyCode key);
+        static bool IsKeyReleased(const KeyCode key);
 
         /*!
          * \brief Updates the previous key states with the current key states.

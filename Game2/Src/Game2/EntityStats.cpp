@@ -1,3 +1,19 @@
+/******************************************************************************/
+/*!
+\file		EntityStats.cpp
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+
+\par		a.junshengaloysius@digipen.edu
+
+\date		12/01/2024
+
+\brief		Contains the definitions for keeping track and manipulation of entity stats.
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents
+without the prior written consent of DigiPen Institute of
+Technology is prohibited.
+ */
+ /******************************************************************************/
 #include "pch.h"
 #include "EntityStats.h"
 #include "EntityManager.h"
@@ -72,6 +88,7 @@ namespace Engine
             {
                 if (statsComponent2->health > 0)
                 {
+                    // If time passed after 1 second when attacking, tower takes damage
                     if (Application::TimePassed(1))
                     {
                         statsComponent2->health -= damage;
