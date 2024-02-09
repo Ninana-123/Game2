@@ -23,6 +23,7 @@ Technology is prohibited.
 #include "Window.h"
 #include "inGameGUI.h"
 #include "GraphicsSystem.h"
+#include "AudioEngine.h"
 
 double l_dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
