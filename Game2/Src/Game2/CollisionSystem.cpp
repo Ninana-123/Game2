@@ -43,7 +43,7 @@ float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
 // Define a map for towerCollidingEntityHealth and corresponding texture keys
-std::map<int, int> towerHealthToTextureKey =
+std::map<int, int> towerHealthToTextureKey = 
 {
 	{0, 32},
 	{5, 33},
@@ -572,20 +572,17 @@ namespace Engine
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
-									if (statsComponent2) // Check if statsComponent2 is not nullptr
+									if (entity2->GetID() == 7)
 									{
-										if (entity2->GetID() == 7)
-										{
-											tower2CollidingEntityHealth = static_cast<int>(statsComponent2->health);
-										}
-										if (entity2->GetID() == 8)
-										{
-											tower1CollidingEntityHealth = static_cast<int>(statsComponent2->health);
-										}
-										if (entity2->GetID() == 9)
-										{
-											castleCollidingEntityHealth = static_cast<int>(statsComponent2->health);
-										}
+										tower2CollidingEntityHealth = statsComponent2->health;
+									}
+									if (entity2->GetID() == 8)
+									{
+										tower1CollidingEntityHealth = statsComponent2->health;
+									}
+									if (entity2->GetID() == 9)
+									{
+										castleCollidingEntityHealth = statsComponent2->health;
 									}
 								}
 

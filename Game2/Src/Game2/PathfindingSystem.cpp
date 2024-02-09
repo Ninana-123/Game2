@@ -57,7 +57,7 @@ namespace Engine
     bool changedTowers = false;
     // bool accessedCastle = false;
 
-    void PathfindingSystem::createLogicalCollisionMap()
+    void PathfindingSystem::createLogicalCollisionMap() 
     {
         // Vector to store obstacle rectangles
         std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> obstacles;
@@ -465,15 +465,13 @@ namespace Engine
                             pathfinder.setStart(startX, startY);
 
                             // Check if both positions were attained before, go to castle if yes
-                            //if (pathfindingComponent->previousPos1.first && pathfindingComponent->previousPos2.first
-                                //&& tower1CollidingEntityHealth == 0 && tower2CollidingEntityHealth == 0)
                             if (tower1Destroyed && tower2Destroyed)
                             {
                                 goalX = 345;
                                 goalY = 75 - 140;
                             }
 
-                            else
+                            else 
                             {
                                 // If tower 1
                                 if (goalX == -275 && goalY == -35)
@@ -490,7 +488,7 @@ namespace Engine
                                     // std::cout << "previousPos2: " << pathfindingComponent->previousPos2.first << std::endl;
                                 }
                             }
-
+                            
                             pathfinder.setGoal(goalX, goalY);
                             // std::cout << "inside goalX: " << goalX << "inside goalY: " << goalY << std::endl;
                             pathfindingComponent->path = pathfinder.findShortestPath(displayWidth, displayHeight);
@@ -498,7 +496,7 @@ namespace Engine
 
                         }
 
-                        if (pathfindingComponent->accessedCastle == false && tower1Destroyed && tower2Destroyed)
+                        if (pathfindingComponent->accessedCastle == false && tower1Destroyed && tower2Destroyed) 
                         {
                             pathfindingComponent->initialized = false;
                             pathfindingComponent->accessedCastle = true;
