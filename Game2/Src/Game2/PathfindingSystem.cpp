@@ -362,10 +362,10 @@ namespace Engine
         {
             Entity* entity = it.second.get();
 
-            if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Texture))
-            {
-                TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-            }
+            //if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Texture))
+            //{
+            //    TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+            //}
 
             if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Collision))
             {
