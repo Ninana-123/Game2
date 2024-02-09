@@ -597,7 +597,7 @@ namespace Engine
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
-            m_inGameGUI->Update(buttonCollision);
+            m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
