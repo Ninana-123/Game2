@@ -331,15 +331,6 @@ namespace Engine
             UpdateWindowFocus();
 
 
-            // Main menu test
-            //if (InputHandler.IsKeyTriggered(KEY_M)) {
-            //    mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
-            //}
-            if (InputHandler.IsKeyTriggered(KEY_M))
-            {
-                TransitionToNextScene();
-            }
-
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
                 if (stepOneFrame) {
