@@ -147,6 +147,7 @@ namespace Engine
 			storage.erase(it);
 		}
 	}
+
 	void EntityManager::DestroyEntitiesInStorage()
 	{
 		for(EntityID entityID : storage) {

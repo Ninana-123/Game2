@@ -21,8 +21,8 @@ namespace Engine {
 	class SceneManager {
 	public:
 		/*!
-		\brief .
-		\return .
+		\brief Transitions to a new scene.
+		\param scene Pointer to the scene to transition to.
 		*/
 		void TransitionToScene(std::shared_ptr<Engine::Scene> scene);
 

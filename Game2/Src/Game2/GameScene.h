@@ -26,20 +26,20 @@ namespace Engine {
 class GameScene : public Scene {
 	public:
 		/*!
-		\brief .
-		\return .
+		\brief Constructor for GameScene class.
+		\param EM Pointer to the EntityManager instance.
+		\param prefabManager Pointer to the PrefabManager instance.
+		\param AM Pointer to the AssetManager instance.
 		*/
 		GameScene(std::shared_ptr<EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<AssetManager> AM) : gameLoader(EM, prefabManager, AM) {}
 		
 		/*!
-		\brief .
-		\return .
+		\brief Called when the game scene is loaded.
 		*/
 		void OnLoad() override;
 
 		/*!
-		\brief .
-		\return .
+		\brief Called when the game scene is shut down.
 		*/
 		void OnShutDown() override;
 

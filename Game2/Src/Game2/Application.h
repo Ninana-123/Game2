@@ -140,7 +140,7 @@ namespace Engine
         *************************************************************************/
         bool OnWindowResize(WindowResizeEvent& e);
 
-        void TransitionToNextScene();
+       //void TransitionToNextScene();
 
         // Window instance 
         std::unique_ptr<Window> m_Window;

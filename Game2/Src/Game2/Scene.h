@@ -20,20 +20,19 @@ namespace Engine {
 	class Scene {
 	public: 
 		/*!
-		\brief .
-		\return .
+		\brief Virtual destructor for the Scene class.
 		*/
 		virtual ~Scene() {} //virtual destructor
 
 		/*!
-		\brief .
-		\return .
+		\brief Pure virtual function to be overridden by derived classes.
+		\details This function is called when the scene is loaded.
 		*/
 		virtual void OnLoad() = 0;
 
 		/*!
-		\brief .
-		\return .
+		\brief Pure virtual function to be overridden by derived classes.
+		\details This function is called when the scene is shut down.
 		*/
 		virtual void OnShutDown() = 0;
 	};

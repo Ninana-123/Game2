@@ -24,20 +24,20 @@ namespace Engine {
 	class MainMenuScene : public Scene {
 	public:
 		/*!
-		\brief .
-		\return .
+		\brief Constructor for MainMenuScene class.
+		\param EM Pointer to the EntityManager instance.
+		\param prefabManager Pointer to the PrefabManager instance.
+		\param AM Pointer to the AssetManager instance.
 		*/
 		MainMenuScene(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) : menuLoader(EM, prefabManager, AM) {}
 
 		/*!
-		\brief .
-		\return .
+		\brief Called when the main menu scene is loaded.
 		*/
 		void OnLoad() override;
 
 		/*!
-		\brief .
-		\return .
+		\brief Called when the main menu scene is shut down.
 		*/
 		void OnShutDown() override;
 

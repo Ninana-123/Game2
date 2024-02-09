@@ -109,12 +109,32 @@ namespace Engine
 		*/
 		static EntityID nextEntityID;
 
-		// Method to get iterators to the beginning and end of the entities collection
-		auto begin() { return entities.begin(); }
+		/*!
+		\brief Method to get iterators to the beginning and end of the entities collection.
+		\return An iterator pointing to the beginning of the entities collection.
+		*/		auto begin() { return entities.begin(); }
+
+		/*!
+		\brief Method to get iterators to the beginning and end of the entities collection.
+		\return An iterator pointing to the end of the entities collection.
+		*/
 		auto end() { return entities.end(); }
 
+		/*!
+		\brief Adds an entity to the storage vector.
+		\param entityID The unique identifier (EntityID) of the entity to add to storage.
+		*/
 		void AddToStorage(EntityID entityID);
+
+		/*!
+		\brief Removes an entity from the storage vector.
+		\param entityID The unique identifier (EntityID) of the entity to remove from storage.
+		*/
 		void RemoveFromStorage(EntityID entityID);
+
+		/*!
+		\brief Destroys entities stored in the storage vector.
+		*/
 		void DestroyEntitiesInStorage();
 
 	protected:
