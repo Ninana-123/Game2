@@ -37,6 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "TempStateMachine.h"
+#include "Vector2d.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -585,7 +586,7 @@ namespace Engine
             
             audioEngine.update();
             //System Updating
-            systemsManager->UpdateSystems(EM->GetEntities());
+            (void)systemsManager->UpdateSystems(EM->GetEntities());
             SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
@@ -678,7 +679,6 @@ namespace Engine
 
         return result;
     }
-
 
     void Application::UpdateWindowFocus() {
         if (m_Window) {

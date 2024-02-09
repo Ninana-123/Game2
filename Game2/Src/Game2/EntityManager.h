@@ -112,7 +112,8 @@ namespace Engine
 		/*!
 		\brief Method to get iterators to the beginning and end of the entities collection.
 		\return An iterator pointing to the beginning of the entities collection.
-		*/		auto begin() { return entities.begin(); }
+		*/		
+		auto begin() { return entities.begin(); }
 
 		/*!
 		\brief Method to get iterators to the beginning and end of the entities collection.
