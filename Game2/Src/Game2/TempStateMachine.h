@@ -22,6 +22,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Component.h"
 #include "AssetManager.h"
 
+extern bool isGameOver;
+
 namespace Engine
 {
 	class StateMachine
