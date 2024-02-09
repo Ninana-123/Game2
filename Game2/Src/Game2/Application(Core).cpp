@@ -564,7 +564,7 @@ namespace Engine
             
             audioEngine.update();
             //System Updating
-            systemsManager->UpdateSystems(EM->GetEntities());
+            (void)systemsManager->UpdateSystems(EM->GetEntities());
             SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
