@@ -22,8 +22,10 @@ INCOMPLETE FEATURES:
 
 3. Arrow for archer unit has also not been implemented.
 
-4. Main Menus, settings, how to play and the like has not been implemented.
+4. Main Menu - UI hasn't been implemented, so 1 way to transition to the Game scene is to press "m".
 
-5. Death animations of the units are not added yet as well.
+5. Settings, how to play and the like has not been implemented.
 
-6. Unit recovery system not in place yet, such as how long before you need to wait for the next spawning or how many can you spawn.
+6. Death animations of the units are not added yet as well.
+
+7. Unit recovery system not in place yet, such as how long before you need to wait for the next spawning or how many can you spawn.

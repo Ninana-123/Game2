@@ -37,6 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "TempStateMachine.h"
+#include "Vector2d.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -657,7 +658,6 @@ namespace Engine
 
         return result;
     }
-
 
     void Application::UpdateWindowFocus() {
         if (m_Window) {

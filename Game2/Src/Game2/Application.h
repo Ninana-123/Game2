@@ -149,6 +149,25 @@ namespace Engine
         bool m_Running = true;
         bool gamePlaying = true;
         bool isMainMenuLoaded = false;
+        //// Assuming width_texture and height_texture are known
+        //float width_texture ;
+        //float height_texture;
+        //float scaleX = 2.7f;  // Scale factor in the X direction
+        //float scaleY = 2.4f;  // Scale factor in the Y direction
+
+        //float estimated_width = width_texture * scaleX;
+        //float estimated_height = height_texture * scaleY;
+
+        //// Position of the play button entity
+        //float playButtonX = 335.0f;  // X position of the play button
+        //float playButtonY = -50.0f;   // Y position of the play button
+
+        //// Calculate boundaries of the play button
+        //float playButtonLeft = playButtonX - estimated_width / 2.0f;
+        //float playButtonRight = playButtonX + estimated_width / 2.0f;
+        //float playButtonTop = playButtonY + estimated_height / 2.0f;
+        //float playButtonBottom = playButtonY - estimated_height / 2.0f;
+
     };
 
     /*!
