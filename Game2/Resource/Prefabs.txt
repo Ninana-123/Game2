@@ -1,10 +1,10 @@
 11
 Infantry
 Transform
-Position: -176 -281
+Position: -135 -300
 ScaleX: 1
-ScaleY: 2.2
-Rotation: -0.174533
+ScaleY: 1
+Rotation: 0
 Collision
 c_Width: 45
 c_Height: 45
