@@ -140,7 +140,7 @@ namespace Engine
         *************************************************************************/
         bool OnWindowResize(WindowResizeEvent& e);
 
-        void TransitionToNextScene();
+       //void TransitionToNextScene();
 
         // Window instance 
         std::unique_ptr<Window> m_Window;
@@ -148,6 +148,7 @@ namespace Engine
         // Flag indicating if the application is running
         bool m_Running = true;
         bool gamePlaying = true;
+        bool isMainMenuLoaded = false;
     };
 
     /*!

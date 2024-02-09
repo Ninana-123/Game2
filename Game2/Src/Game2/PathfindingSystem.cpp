@@ -67,16 +67,16 @@ namespace Engine
         obstacles.push_back({ {-640, -360}, {10, 0} });
         obstacles.push_back({ {10, -220}, {640, -220} });
         obstacles.push_back({ {-640, 150}, {5, 360} });
-        
-        for (int i = 0; i < displayWidth; ++i) 
+
+        for (int i = 0; i < displayWidth; ++i)
         {
-            for (int j = 0; j < displayHeight; ++j) 
+            for (int j = 0; j < displayHeight; ++j)
             {
                 // Check if the cell is within any obstacle region
                 bool isObstacle = false;
                 for (const auto& obstacle : obstacles) {
                     if (i >= (displayWidth / 2) + obstacle.first.first && i < (displayWidth / 2) + obstacle.second.first &&
-                        j >= (displayHeight / 2) + obstacle.first.second && j < (displayHeight / 2) + obstacle.second.second) 
+                        j >= (displayHeight / 2) + obstacle.first.second && j < (displayHeight / 2) + obstacle.second.second)
                     {
                         isObstacle = true;
                         break;
@@ -103,10 +103,10 @@ namespace Engine
     }
 
     // Check if a specific cell has collision
-    bool PathfindingSystem::hasCollision(int x, int y) 
+    bool PathfindingSystem::hasCollision(int x, int y)
     {
         // Ensure the coordinates are within the grid bounds
-        if (x >= 0 && x < displayWidth && y >= 0 && y < displayHeight) 
+        if (x >= 0 && x < displayWidth && y >= 0 && y < displayHeight)
         {
             // Return true if the cell has collision
             return collisionMap[x][y] == 1;
@@ -229,25 +229,25 @@ namespace Engine
                 }
             }
         }
-        
+
         //std::cout << "function did nothing " << std::endl;
         // If no free cell is found in the search area, return the original point
         return { x, y };
     }
 
-    std::pair<int, int> PathfindingSystem::getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towersPositions) 
+    std::pair<int, int> PathfindingSystem::getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towersPositions)
     {
         double minDistance = std::numeric_limits<double>::max();
 
-        for (const auto& tower : towersPositions) 
+        for (const auto& tower : towersPositions)
         {
             double currentDistance = distance(startPosX, startPosY, tower.first, tower.second);
             // std::cout << "tower.first : " << tower.first << "tower.second: " << tower.second << std::endl;
-            if (currentDistance < minDistance) 
+            if (currentDistance < minDistance)
             {
                 minDistance = currentDistance;
                 closestTower = tower;
-                if (closestTower.first == towersPositions[0].first) 
+                if (closestTower.first == towersPositions[0].first)
                 {
                     prevPos1 = towersPositions[0];
                 }
@@ -255,7 +255,7 @@ namespace Engine
                 {
                     prevPos1 = towersPositions[1];
                 }
-                
+
             }
         }
         // Set new current endpoint check
@@ -266,7 +266,7 @@ namespace Engine
         if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 &&
             tower2Destroyed == false)
         {
-            if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second) 
+            if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second)
             {
                 currentClosestTower = towerPositions[1];
                 prevPos2 = towersPositions[0];
@@ -282,10 +282,10 @@ namespace Engine
             }
             return currentClosestTower;
         }
-        else 
+        else
         {
             return closestTower;
-        }   
+        }
     }
 
 
@@ -293,10 +293,10 @@ namespace Engine
     {
 
         // Adjusted the indexing to handle negative coordinates
-        int adjustedStartX = startX + static_cast<int>(windowWidth/2);
-        int adjustedStartY = startY + static_cast<int>(windowHeight/2);
-        int adjustedGoalX = goalX + static_cast<int>(windowWidth/2);
-        int adjustedGoalY = goalY + static_cast<int>(windowHeight/2);
+        int adjustedStartX = startX + static_cast<int>(windowWidth / 2);
+        int adjustedStartY = startY + static_cast<int>(windowHeight / 2);
+        int adjustedGoalX = goalX + static_cast<int>(windowWidth / 2);
+        int adjustedGoalY = goalY + static_cast<int>(windowHeight / 2);
         std::vector<std::vector<double>> distanceGrid(numRows, std::vector<double>(numCols, INFINITY));
         std::vector<std::vector<std::pair<int, int>>> parent(numRows, std::vector<std::pair<int, int>>(numCols, { -1, -1 }));
         std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
@@ -316,7 +316,7 @@ namespace Engine
                 // We have reached the goal, reconstruct the path
                 std::vector<std::pair<int, int>> path;
                 while (x != -1 && y != -1) {
-                    path.push_back({ x - static_cast<int>(windowWidth/2), y - static_cast<int>(windowHeight/2) });
+                    path.push_back({ x - static_cast<int>(windowWidth / 2), y - static_cast<int>(windowHeight / 2) });
                     int newX = parent[x][y].first;
                     int newY = parent[x][y].second;
                     x = newX;
@@ -362,7 +362,7 @@ namespace Engine
         {
             Entity* entity = it.second.get();
 
-            if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Texture)) 
+            if (entity->HasComponent(ComponentType::Transform) && entity->HasComponent(ComponentType::Texture))
             {
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
             }
@@ -386,7 +386,7 @@ namespace Engine
                         startX = static_cast<int>(transformComponent->position.x);
                         startY = static_cast<int>(transformComponent->position.y);
 
-                        if (tower1Destroyed == false && tower2Destroyed == false) 
+                        if (tower1Destroyed == false && tower2Destroyed == false)
                         {
                             closestTower = getClosestPair(startX, startY, towerPositions);
                         }
@@ -403,20 +403,23 @@ namespace Engine
                         //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
                         //}
                         // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
-                        
-                        if (endPointX != closestTower.first && endPointY != closestTower.second) 
+
+                        //goalX = closestTower.first;
+                        //goalY = closestTower.second;
+
+                        if (endPointX != closestTower.first && endPointY != closestTower.second)
                         {
                             goalX = closestTower.first;
                             goalY = closestTower.second;
                         }
-                        
+
                         if (entity->GetID() == 7)
                         {
-                            tower2CollidingEntityHealth = statsComponent->health;
+                            tower2CollidingEntityHealth = static_cast<int>(statsComponent->health);
                         }
                         if (entity->GetID() == 8)
                         {
-                            tower1CollidingEntityHealth = statsComponent->health;
+                            tower1CollidingEntityHealth = static_cast<int>(statsComponent->health);
                             // std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
                         }
 
@@ -454,11 +457,12 @@ namespace Engine
                             pathfindingComponent->changedTowers = true;
                             // towerPositions.erase(towerPositions.begin() + 1);
                         }
-                     
+
                         if (!(pathfindingComponent->initialized))
-                        {                          
+                        {
+
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
-                            pathfinder.setStart(startX,startY);
+                            pathfinder.setStart(startX, startY);
 
                             // Check if both towers are destroyed, go to castle
                             if (tower1Destroyed && tower2Destroyed)
@@ -519,7 +523,7 @@ namespace Engine
                                 }
                                 prevTextures.push_back(pathfindingEntityTexture);
                                 prevTexture = pathfindingEntityTexture;
-                                isWalking = true;                               
+                                isWalking = true;
                             }
 
                             // Archer switch to walking mode
@@ -553,7 +557,7 @@ namespace Engine
                             {
                                 behaviourComponent->SetBehaviourState(c_state::Walking);
                             }
-                            
+
                             // Update the entity's position
                             transformComponent->position.x = static_cast<float>(nextPosition.first);
                             transformComponent->position.y = static_cast<float>(nextPosition.second);
@@ -564,8 +568,8 @@ namespace Engine
 
                         // Switch back to attacking mode
                         else
-                        {                           
-                           
+                        {
+
                             // Infantry
                             if (prevTexture != 8 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 1 && textureComponent->textureKey.subIndex == 1)
                             {
@@ -587,7 +591,7 @@ namespace Engine
                                 textureComponent->textureKey = { 2, 2 };
                             }
 
-                            if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON)) 
+                            if (Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
                             {
                                 isGameOver = true;
                             }
@@ -628,5 +632,3 @@ namespace Engine
         }
     }
 }
-
-

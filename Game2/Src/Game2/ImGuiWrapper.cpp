@@ -31,6 +31,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "AudioEngine.h"
+#include "GameScene.h"
 
 bool deleteAllEntity = false;
 bool shouldLoadScene = false;
@@ -665,7 +666,7 @@ namespace Engine {
 		if (ImGui::Button("Stop")) {
 			deleteAllEntity = true;
 			shouldLoadScene = true; // Set flag indicating a scene should be loaded
-			sceneToLoad = initScene; // Store the name of the scene to be loaded
+			sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
 		}
 
 		ImGui::SameLine();
@@ -1956,7 +1957,7 @@ namespace Engine {
 							float width = collision->c_Width;
 							float height = collision->c_Height;
 							bool CollisionSwitch = collision->disableCollision;
-							bool isColliding = collision->isColliding;					
+							//bool isColliding = collision->isColliding;					
 
 							if (ImGui::Checkbox("Disable Collision", &CollisionSwitch))
 							{

@@ -63,7 +63,7 @@ namespace Engine
 			map container of entities with references
 
 		********************************************************************/
-		void Update (std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
+		void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
 
 		struct AABB
 		{
@@ -71,7 +71,7 @@ namespace Engine
 			VECTORMATH::Vec2 max;
 		};
 
-		struct Circle 
+		struct Circle
 		{
 			VECTORMATH::Vec2 center;
 			float radius = 0.f;
@@ -261,8 +261,8 @@ namespace Engine
 		/**************************************************************************/
 		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
-		private:
-			EntityID lastCollidingEntityID = {};
+	private:
+		EntityID lastCollidingEntityID = {};
 	};
 }
 #endif ENGINE_COLLISION_H

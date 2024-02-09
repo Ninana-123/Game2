@@ -43,7 +43,7 @@ namespace Engine
         */
         /**************************************************************************/
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
-    
+
         /**************************************************************************/
         /*!
         \brief Initialize the pathfinding system for a grid-based map with a specified number of rows and columns.

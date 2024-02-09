@@ -14,6 +14,7 @@
 #include "pch.h"
 #include "inGameGUI.h"
 #include "Application.h"
+#include "GameScene.h"
 
 int pathfindingEntityTexture = 0;
 int healthBarEntityTexture = 0;
@@ -28,11 +29,11 @@ bool accessedCastle = false;
 
 namespace Engine
 {
-	
+
 	int i = 0;
 	bool inGameGUIInitialized = false;
 
-	void inGameGUI::Initialize() 
+	void inGameGUI::Initialize()
 	{
 		totalInfantry = 3;
 		totalArcher = 2;
@@ -45,16 +46,16 @@ namespace Engine
 
 	void inGameGUI::Update(bool CollisionCheck)
 	{
-		if (!(inGameGUIInitialized)) 
+		if (!(inGameGUIInitialized))
 		{
 			Initialize();
 			inGameGUIInitialized = true;
 		}
-		
+
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
-		if (CollisionCheck) 
-		{	
+		if (CollisionCheck)
+		{
 			if (lastCollidingEntityTexture == 41)
 			{
 				healthBarEntityTexture = lastCollidingEntityTexture;
@@ -72,7 +73,7 @@ namespace Engine
 				lastCollidingEntityTexture = 0;
 				totalInfantry--;
 			}
-			
+
 			// Spawn Archer
 			if (lastCollidingEntityTexture == 8 && totalArcher > 0)
 			{
@@ -82,8 +83,8 @@ namespace Engine
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 				totalArcher--;
-			}			
-			
+			}
+
 			// Spawn Tank
 			if (lastCollidingEntityTexture == 9 && totalTank > 0)
 			{
@@ -113,11 +114,11 @@ namespace Engine
 			if (lastCollidingEntityTexture == 12)
 			{
 				//std::cout << "Colliding with settings button" << std::endl;
-				if (inSettings) 
+				if (inSettings)
 				{
 					inSettings = false;
 				}
-				else 
+				else
 				{
 					inSettings = true;
 				}
@@ -143,11 +144,11 @@ namespace Engine
 		}
 
 		// Reset flag
-		CollisionCheck = false;		
+		CollisionCheck = false;
 
-    }
+	}
 
-	void inGameGUI::RestartGame() 
+	void inGameGUI::RestartGame()
 	{
 		// Resetting all the flags
 		isGameOver = false;
@@ -158,6 +159,6 @@ namespace Engine
 		castleDestroyed = false;
 		deleteAllEntity = true;
 		shouldLoadScene = true; // Set flag indicating a scene should be loaded
-		sceneToLoad = initScene; // Store the name of the scene to be loaded
+		sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
 	}
 }

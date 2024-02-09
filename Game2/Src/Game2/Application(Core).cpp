@@ -33,7 +33,9 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
-//#include "MainMenu.h"
+#include "SceneManager.h"
+#include "MainMenuScene.h"
+#include "GameScene.h"
 #include "TempStateMachine.h"
 
 // Global variables for frames per second (fps) calculation
@@ -49,8 +51,8 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
-// std::string initScene = "Resource/Scenes/MainMenu.txt";
-std::string initScene = "Resource/Scenes/Level0Test.txt";
+//std::string initScene = "Resource/Scenes/MainMenu.txt";
+//std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -82,7 +84,9 @@ namespace Engine
     ComponentFactory CF;
     StateMachine SM;
  
-    //MainMenu* mainMenu;
+    SceneManager sceneManager;
+    //MainMenuScene mainMenuScene;
+    //GameScene gameScene;
 
     float scalar = 0.1f;
     float rotation = 0.125f;
@@ -98,12 +102,12 @@ namespace Engine
 
     Application::Application()
     {
-        //mainMenu = new MainMenu();
+        
     }   
 
     Application::~Application()
     {
-        //delete mainMenu;
+        
     }
 
     void Application::Initialize()
@@ -156,16 +160,17 @@ namespace Engine
 
         // Load scene from a file
         //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
-        std::shared_ptr<Loader> loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
+        loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
 
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene(initScene);
+        //loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
         loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
-        //mainMenu->Initialize();
+        sceneManager.TransitionToScene(std::make_shared<MainMenuScene>(EM, &PM, assetManager));
+        isMainMenuLoaded = true;
 
         if (EM->GetEntity(1) != nullptr) {
             targetEntity = EM->GetEntity(1);
@@ -179,9 +184,9 @@ namespace Engine
 
         // Initialize audio files and load sounds
         audioEngine.init();
-        //assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
-        //assetManager->loadAudio(AudioKey("sound_BGM"));
-        //assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
+        assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
+        assetManager->loadAudio(AudioKey("sound_BGM"));
+        assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
 
         assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
         assetManager->loadAudio(AudioKey("sound_Win"));
@@ -199,11 +204,22 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Ambience"));
         assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
 
-        //audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
+        assetManager->AddAudioPath(AudioKey("sound_Foot1"), "Resource/Audio/Footsteps/Footsteps1.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot1"));
+        assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.5f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Foot2"), "Resource/Audio/Footsteps/Footsteps2.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot2"));
+        assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.5f);
+
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
+
 
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
@@ -253,6 +269,17 @@ namespace Engine
                 ToggleFullscreen();
             }
         }
+        if (isMainMenuLoaded) {
+            if (e.GetEventType() == EventType::KeyPressed) {
+                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+                if (keyPressedEvent.GetKeyCode() == KEY_M) {
+                    deleteAllEntity = true;
+                    shouldLoadScene = true; // Set flag indicating a scene should be loaded
+                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    // sceneManager.TransitionToScene(std::make_shared<GameScene>(EM, &PM, assetManager));
+                }
+            }
+        }
     }
 
     void Application::ToggleFullscreen() {
@@ -276,7 +303,7 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        //audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
         audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
         previousTime = std::chrono::high_resolution_clock::now();
         /*
@@ -303,14 +330,6 @@ namespace Engine
 
             UpdateWindowFocus();
 
-            // Main menu test
-            //if (InputHandler.IsKeyTriggered(KEY_M)) {
-            //    mainMenu->TransitionToGame();  // Transition to the next scene (you can bind this to any key you like)
-            //}
-            if (InputHandler.IsKeyTriggered(KEY_M))
-            {
-                TransitionToNextScene();
-            }
 
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
@@ -539,12 +558,14 @@ namespace Engine
                     //}
                 }
 
+                
+
             }         
             
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
-            SM.UpdateEntities(EM->GetEntities());
+            SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
             m_ImGuiWrapper->Begin();
@@ -563,6 +584,7 @@ namespace Engine
                 *crashPointer = 42; // This will cause a read access violation, simulating a crash
             }
             */
+
         }           
     }
 
@@ -667,16 +689,6 @@ namespace Engine
                 }
             }
         }
-    }
-
-    void Application::TransitionToNextScene()
-    {
-    //    Logger::GetInstance().Log(LogLevel::Debug, "Unloaded Scene");
-    //    loader->UnloadScene(initScene);
-    //    
-    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition to next scene...");
-    //    loader->LoadScene(nextScene);
-    //    Logger::GetInstance().Log(LogLevel::Debug, "Transition complete,");
     }
 
     void Application::UpdateWindowTitle() 

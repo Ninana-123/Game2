@@ -25,11 +25,15 @@
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\EntityStats.h" />
+    <ClInclude Include="Src\Game2\GameScene.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
     <ClInclude Include="Src\Game2\json.hpp" />
+    <ClInclude Include="Src\Game2\MainMenuScene.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\PickingFBO.h" />
+    <ClInclude Include="Src\Game2\Scene.h" />
+    <ClInclude Include="Src\Game2\SceneManager.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
@@ -106,6 +110,7 @@
     <ClCompile Include="Src\Game2\EntityManager.cpp" />
     <ClCompile Include="Src\Game2\EntityStats.cpp" />
     <ClCompile Include="Src\Game2\Font.cpp" />
+    <ClCompile Include="Src\Game2\GameScene.cpp" />
     <ClCompile Include="Src\Game2\GraphicsSystem.cpp" />
     <ClCompile Include="Src\Game2\imgui.cpp" />
     <ClCompile Include="Src\Game2\ImGuiWrapper.cpp" />
@@ -120,6 +125,7 @@
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
     <ClCompile Include="Src\Game2\Logger.cpp" />
+    <ClCompile Include="Src\Game2\MainMenuScene.cpp" />
     <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp" />
     <ClCompile Include="Src\Game2\PathfindingSystem.cpp" />
     <ClCompile Include="Src\Game2\pch.cpp">
@@ -131,6 +137,7 @@
     <ClCompile Include="Src\Game2\Prefab.cpp" />
     <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
+    <ClCompile Include="Src\Game2\SceneManager.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />

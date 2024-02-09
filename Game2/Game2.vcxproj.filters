@@ -136,6 +136,15 @@
     <ClCompile Include="Src\Game2\TempStateMachine.cpp">
       <Filter>Systems\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\MainMenuScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\GameScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\SceneManager.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -349,6 +358,18 @@
     <ClInclude Include="Src\Game2\BehaviourComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\MainMenuScene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Scene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\GameScene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SceneManager.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -464,6 +485,9 @@
     </Filter>
     <Filter Include="Systems\Graphics\Editor">
       <UniqueIdentifier>{c3d49252-850e-4ef0-8921-ad79c81ccc2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\SceneManager">
+      <UniqueIdentifier>{78ac4633-0f1f-4b48-8d84-5a45e0ff684a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

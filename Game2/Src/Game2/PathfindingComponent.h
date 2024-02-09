@@ -47,7 +47,7 @@ namespace Engine
 			PathfindingComponent* cloneComponent = new PathfindingComponent();
 			cloneComponent->startX = startX;
 			cloneComponent->startY = startY;
-			cloneComponent->goalX= goalX;
+			cloneComponent->goalX = goalX;
 			cloneComponent->goalY = goalY;
 			cloneComponent->changedTowers = changedTowers;
 			cloneComponent->accessedCastle = accessedCastle;
