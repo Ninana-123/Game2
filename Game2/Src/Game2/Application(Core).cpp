@@ -179,9 +179,9 @@ namespace Engine
 
         // Initialize audio files and load sounds
         audioEngine.init();
-        //assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
-        //assetManager->loadAudio(AudioKey("sound_BGM"));
-        //assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
+        assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
+        assetManager->loadAudio(AudioKey("sound_BGM"));
+        assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
 
         assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
         assetManager->loadAudio(AudioKey("sound_Win"));
@@ -199,7 +199,7 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Ambience"));
         assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
 
-        //audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
@@ -276,7 +276,7 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        //audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
         audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
         previousTime = std::chrono::high_resolution_clock::now();
         /*
