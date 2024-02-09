@@ -134,4 +134,24 @@ namespace Engine
 			entities = std::move(updatedEntities);
 		}
 	}
+
+	void EntityManager::AddToStorage(EntityID entityID)
+	{
+		storage.push_back(entityID);
+	}
+
+	void EntityManager::RemoveFromStorage(EntityID entityID)
+	{
+		auto it = std::find(storage.begin(), storage.end(), entityID);
+		if (it != storage.end()) {
+			storage.erase(it);
+		}
+	}
+	void EntityManager::DestroyEntitiesInStorage()
+	{
+		for(EntityID entityID : storage) {
+			DestroyEntity(entityID);
+		}
+		storage.clear();
+	}
 }

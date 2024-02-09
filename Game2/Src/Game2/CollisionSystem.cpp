@@ -572,17 +572,20 @@ namespace Engine
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
-									if (entity2->GetID() == 7)
+									if (statsComponent2) // Check if statsComponent2 is not nullptr
 									{
-										tower2CollidingEntityHealth = static_cast<int>(statsComponent2->health);
-									}
-									if (entity2->GetID() == 8)
-									{
-										tower1CollidingEntityHealth = static_cast<int>(statsComponent2->health);
-									}
-									if (entity2->GetID() == 9)
-									{
-										castleCollidingEntityHealth = static_cast<int>(statsComponent2->health);
+										if (entity2->GetID() == 7)
+										{
+											tower2CollidingEntityHealth = static_cast<int>(statsComponent2->health);
+										}
+										if (entity2->GetID() == 8)
+										{
+											tower1CollidingEntityHealth = static_cast<int>(statsComponent2->health);
+										}
+										if (entity2->GetID() == 9)
+										{
+											castleCollidingEntityHealth = static_cast<int>(statsComponent2->health);
+										}
 									}
 								}
 

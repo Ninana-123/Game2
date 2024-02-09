@@ -113,8 +113,12 @@ namespace Engine
 		auto begin() { return entities.begin(); }
 		auto end() { return entities.end(); }
 
-	private:
+		void AddToStorage(EntityID entityID);
+		void RemoveFromStorage(EntityID entityID);
+		void DestroyEntitiesInStorage();
 
+	protected:
+		std::vector<EntityID> storage;
 	};
 
 }

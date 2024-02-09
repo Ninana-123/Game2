@@ -23,13 +23,15 @@ namespace Engine {
 	void MainMenuScene::OnLoad()
 	{	
 		menuLoader.LoadScene(MainMenuSceneFilePath);
-		
+		// Add entities to storage when they are created
+		auto entities = m_entityManager.GetEntities();
+		for (const auto& pair : *entities) {
+			m_entityManager.AddToStorage(pair.first);
+		}
 	}
 
 	void MainMenuScene::OnShutDown()
 	{
-		for (auto& pair : m_entityManager) {
-			m_entityManager.DestroyEntity(pair.first);
-		}
+		m_entityManager.DestroyEntitiesInStorage();
 	}
 }
