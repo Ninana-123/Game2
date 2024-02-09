@@ -23,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Animation.h"
 #include "ImGuiWrapper.h"
 #include "inGameGUI.h"
+#include "Application.h"
 
 
 #ifdef NDEBUG // Check if we are in release mode
@@ -30,7 +31,8 @@ bool renderCollisionBox = false;
 #else
 bool renderCollisionBox = true; // Debug mode
 #endif
-
+double framesPerSecond = 0.0;
+bool fpsTimer = true;
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
@@ -711,7 +713,6 @@ namespace Engine
         renderer.Clear(); 
         if(renderImGuiGUI == true)
         editorFBO.Bind();
-
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
@@ -825,6 +826,7 @@ namespace Engine
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
 
+        if(mainMenuCheck == false){
         // Infantry count
         if (totalInfantry == 3) 
         {
@@ -872,6 +874,14 @@ namespace Engine
         {
             font.RenderText(shader, "x0", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
         }
+       
+        }
+ 
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(2) << fps;
+        std::string fps_str = ss.str();
+        if(fpsTimer == true)
+            font.RenderText(shader, fps_str, -0.75f, 0.9f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
 
         shader.SetActiveShaderSet(previousShaderSet);
         // CAMERA

@@ -40,6 +40,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Font.h"
 #include "EditorFBO.h"
 
+extern bool fpsTimer;
+
 namespace Engine
 {
     class GraphicsSystem : public System

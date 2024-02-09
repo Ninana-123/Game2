@@ -32,6 +32,8 @@ extern double dt;
 extern std::string initScene;
 extern int e_Width;
 extern int e_Height;
+extern bool mainMenuCheck;
+extern double fps;
 
 namespace Engine
 {

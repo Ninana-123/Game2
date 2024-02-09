@@ -304,8 +304,12 @@ namespace Engine {
 
 	void ImGuiWrapper::OnUpdate()
 	{
+
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1) == true) {
 			renderImGuiGUI = !renderImGuiGUI;
+			SystemsManager& systemsManager = SystemsManager::GetInstance();
+			GraphicsSystem* graphicSystem = systemsManager.GetSystem<GraphicsSystem>();
+			graphicSystem->editorFBO.Unbind();
 		}
 
 		if (useEditorCamera == true) {

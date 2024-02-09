@@ -52,6 +52,7 @@ double prevTime = glfwGetTime();
 bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
+bool mainMenuCheck = true;
 //std::string initScene = "Resource/Scenes/MainMenu.txt";
 //std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
@@ -275,11 +276,12 @@ namespace Engine
                 KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
                 if (keyPressedEvent.GetKeyCode() == KEY_M) {
 
-#if defined(DEBUG) || defined(_DEBUG)
-
+#ifdef DEBUG
                     deleteAllEntity = true;
                     shouldLoadScene = true; // Set flag indicating a scene should be loaded
                     sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    mainMenuCheck = false;
+                    isMainMenuLoaded = false;
 #else
 
                     std::string fp = GameSceneFilePath;
@@ -378,6 +380,8 @@ namespace Engine
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
+                if (InputHandler.IsKeyTriggered(KEY_F5))
+                    fpsTimer = !fpsTimer;
                 // Audio handling based on key input
                 if (InputHandler.IsKeyTriggered(KEY_3)) {
                     audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Win"))));
