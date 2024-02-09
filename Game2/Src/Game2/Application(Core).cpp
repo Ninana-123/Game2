@@ -196,11 +196,22 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Ambience"));
         assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
 
+        assetManager->AddAudioPath(AudioKey("sound_Foot1"), "Resource/Audio/Footsteps/Footsteps1.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot1"));
+        assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.5f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Foot2"), "Resource/Audio/Footsteps/Footsteps2.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot2"));
+        assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.5f);
+
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
+
 
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
@@ -299,6 +310,7 @@ namespace Engine
             Application::UpdateWindowTitle();
 
             UpdateWindowFocus();
+
 
             // Main menu test
             //if (InputHandler.IsKeyTriggered(KEY_M)) {
@@ -540,7 +552,7 @@ namespace Engine
             audioEngine.update();
             //System Updating
             systemsManager->UpdateSystems(EM->GetEntities());
-            SM.UpdateEntities(EM->GetEntities());
+            SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
             m_ImGuiWrapper->Begin();
