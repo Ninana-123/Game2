@@ -262,7 +262,10 @@ namespace Engine
             if (e.GetEventType() == EventType::KeyPressed) {
                 KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
                 if (keyPressedEvent.GetKeyCode() == KEY_M) {
-                    sceneManager.TransitionToScene(std::make_shared<GameScene>(EM, &PM, assetManager));
+                    deleteAllEntity = true;
+                    shouldLoadScene = true; // Set flag indicating a scene should be loaded
+                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    // sceneManager.TransitionToScene(std::make_shared<GameScene>(EM, &PM, assetManager));
                 }
             }
         }
