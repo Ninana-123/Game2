@@ -131,7 +131,7 @@ namespace Engine
 		// Cheat code to get to victory screen + actual victory screen
 		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed == true && !victoryScreenShown)
 		{	
-			audioEngine.pauseSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+			//audioEngine.pauseSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 
 			if (Application::TimePassed(2)) 
 			{
