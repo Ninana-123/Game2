@@ -85,8 +85,8 @@ namespace Engine
     StateMachine SM;
  
     SceneManager sceneManager;
-    MainMenuScene mainMenuScene;
-    GameScene gameScene;
+    //MainMenuScene mainMenuScene;
+    //GameScene gameScene;
 
     float scalar = 0.1f;
     float rotation = 0.125f;
@@ -169,7 +169,7 @@ namespace Engine
         loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
         
-        sceneManager.TransitionToScene(&mainMenuScene);
+        sceneManager.TransitionToScene(std::make_shared<MainMenuScene>(EM, &PM, assetManager));
         isMainMenuLoaded = true;
 
         if (EM->GetEntity(1) != nullptr) {
@@ -262,7 +262,7 @@ namespace Engine
             if (e.GetEventType() == EventType::KeyPressed) {
                 KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
                 if (keyPressedEvent.GetKeyCode() == KEY_M) {
-                    sceneManager.TransitionToScene(&gameScene);
+                    sceneManager.TransitionToScene(std::make_shared<GameScene>(EM, &PM, assetManager));
                 }
             }
         }

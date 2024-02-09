@@ -1,7 +1,7 @@
 /******************************************************************************/
 /*!
 \file		CollisionSystem.cpp
-\author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807 
+\author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807
 \co		    Tristan Tham Rui Hong,  t.tham@digipen.edu 2200794
 
 \date		10/09/2023
@@ -39,25 +39,11 @@ bool tower2Destroyed = false;
 bool castleDestroyed = false;
 bool isStartingPoint = true;
 bool towerCollision = false;
-float towerHealth;
+float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
 // Define a map for towerCollidingEntityHealth and corresponding texture keys
-std::map<int, int> towerHealthToTextureKey = 
-{
-	{0, 32},
-	{5, 33},
-	{10, 34},
-	{15, 35},
-	{20, 36},
-	{25, 37},
-	{30, 38},
-	{35, 39},
-	{40, 40},
-	{45, 41}
-};
-
-std::map<int, int> tower2HealthToTextureKey =
+std::map<int, int> towerHealthToTextureKey =
 {
 	{0, 32},
 	{5, 33},
@@ -158,11 +144,11 @@ namespace Engine
 		{
 			entities->emplace(std::move(entityPair));
 		}
-		
+
 		*/
 		EntityToMouseCollision(entities);
 		EntityToEntityCollision(entities);
-		
+
 	}
 
 	EntityID CollisionSystem::GetLastCollidingEntityID() { return lastCollidingEntityID; }
@@ -517,7 +503,7 @@ namespace Engine
 				{
 					continue;
 				}
-				
+
 				if (collisionComponent1->layer != Layer::inGameGUI && collisionComponent1->layer != Layer::Editable && collisionComponent1->layer != Layer::BeforeSpawn)
 				{
 					AABB aabb1;
@@ -525,13 +511,13 @@ namespace Engine
 					circle1.center = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 					VECTORMATH::Vec2 vel1;
 					VECTORMATH::Vec2 circleVel1 = VECTORMATH::Vec2(collisionComponent1->collisionVel.x, collisionComponent1->collisionVel.y);
-					
+
 
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower && statsComponent1)
 					{
 						circle1.radius = statsComponent1->range;
-					
+
 					}
 
 					if (collisionComponent1)
@@ -572,102 +558,10 @@ namespace Engine
 								AABB aabb2;
 								Circle circle2;
 								circle2.center = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
-								
+
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
 
-								//// Check if the conditions are met
-								//if (entity2->GetID() == 11 && towerCollidingEntity == 8) 
-								//{
-								//	// Find the corresponding texture key for the towerCollidingEntityHealth
-								//	auto it = towerHealthToTextureKey.find(tower1CollidingEntityHealth);
-								//	// If found, set the texture key
-								//	if (it != towerHealthToTextureKey.end()) 
-								//	{
-								//		textureComponent->textureKey = { it->second, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7)
-								//{
-								//	// Find the corresponding texture key for the towerCollidingEntityHealth
-								//	auto it = towerHealthToTextureKey.find(tower2CollidingEntityHealth);
-								//	// If found, set the texture key
-								//	if (it != towerHealthToTextureKey.end())
-								//	{
-								//		textureComponent->textureKey = { it->second, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 0)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 32, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 5)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 33, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 10)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 34, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 15)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 35, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 20)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 36, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 25)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 37, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 30)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 38, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 35)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 39, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 40)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 40, 0 };
-								//	}
-								//}
-
-								//if (entity2->GetID() == 10 && towerCollidingEntity == 7 && tower2CollidingEntityHealth == 45)
-								//{
-								//	{
-								//		textureComponent->textureKey = { 41, 0 };
-								//	}
-								//}
 
 								if (statsComponent2)
 								{
@@ -678,6 +572,18 @@ namespace Engine
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
+									if (entity2->GetID() == 7)
+									{
+										tower2CollidingEntityHealth = static_cast<int>(statsComponent2->health);
+									}
+									if (entity2->GetID() == 8)
+									{
+										tower1CollidingEntityHealth = static_cast<int>(statsComponent2->health);
+									}
+									if (entity2->GetID() == 9)
+									{
+										castleCollidingEntityHealth = static_cast<int>(statsComponent2->health);
+									}
 								}
 
 								if (entity2->HasComponent(ComponentType::Physics))
@@ -731,7 +637,7 @@ namespace Engine
 								}
 
 								// Check for collision with entity2
-								if (entity2->HasComponent(ComponentType::Collision)) 
+								if (entity2->HasComponent(ComponentType::Collision))
 								{
 
 									if (collisionComponent2 != nullptr)
@@ -748,17 +654,17 @@ namespace Engine
 											{
 												towerCollision = true;
 												buttonCollision = true;
-																								
+
 												if (behaviourComponent1)
 												{
 													behaviourComponent1->SetBehaviourState(c_state::Attack);
 													collisionComponent1->target = entity2;
 													towerCollidingEntity = entity2->GetID();
 													// towerCollidingEntityHealth = statsComponent2->health;
-													if (entity2->GetID() == 7) 
+													if (entity2->GetID() == 7)
 													{
 														//tower2CollidingEntityHealth = statsComponent2->health;
-														if (tower2CollidingEntityHealth == 0) 
+														if (tower2CollidingEntityHealth == 0)
 														{
 															tower2Destroyed = true;
 														}
@@ -790,14 +696,19 @@ namespace Engine
 															castleDestroyed = true;
 															isGameOver = true;
 														}
+														if ((textureComponent->textureKey.mainIndex == 5 && textureComponent->textureKey.subIndex == 0)
+															&& castleDestroyed == true)
+														{
+															textureComponent->textureKey = { 5, 5 };
+														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
 
 													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
-												}																																	
+												}
 											}
 										}
-										
+
 										// std::cout << "Circle Vel1 is: " << circleVel1.x << " " << circleVel1.y << "\n" << "Circle vel2 is: " << circleVel2.x << " " << circleVel2.y << std::endl;
 
 										// Check if tower radius is colliding with the player's radius
@@ -808,14 +719,14 @@ namespace Engine
 											if (behaviourComponent1)
 											{
 												behaviourComponent1->SetBehaviourState(c_state::Attack);
-												collisionComponent1->target = entity2;			
+												collisionComponent1->target = entity2;
 												std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 													<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 											}
 										}
-									}								
+									}
 								}
-								
+
 							}
 						}
 					}
@@ -836,16 +747,16 @@ namespace Engine
 					//update AABB coordinates in entity1
 					if (collisionComponent1)
 					{
-							float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
-							float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
+						float halfWidth_1 = collisionComponent1->c_Width / 2.0f;
+						float halfHeight_1 = collisionComponent1->c_Height / 2.0f;
 
-							float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
-							float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
-							float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
-							float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
+						float minX_1 = static_cast<float>(transformComponent1->position.x) - halfWidth_1;
+						float maxX_1 = static_cast<float>(transformComponent1->position.x) + halfWidth_1;
+						float minY_1 = static_cast<float>(transformComponent1->position.y) - halfHeight_1;
+						float maxY_1 = static_cast<float>(transformComponent1->position.y) + halfHeight_1;
 
-							collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-							collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+						collisionComponent1->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
+						collisionComponent1->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
 
 					}
 				}
@@ -880,13 +791,13 @@ namespace Engine
 
 		// Normalize the mouse position
 		mousePosition.x = (mousePosition.x - 10.f) * screenScaleX - 1280.f / 2.0f;
-		mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f)* screenScaleY;
+		mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f) * screenScaleY;
 
 		// Iterate through all entities in the editable layer
 		for (auto it = entities->begin(); it != entities->end(); ++it)
 		{
 			Entity* entity = it->second.get();
-			
+
 			// Check if the entity has a CollisionComponent
 			if (entity->HasComponent(ComponentType::Collision))
 			{
@@ -896,7 +807,7 @@ namespace Engine
 				TextureComponent* textureCheck = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
 				if (collisionComponent->layer == Layer::Editable)
-				{				
+				{
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
@@ -943,7 +854,7 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn)
 				{
-					
+
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
@@ -952,17 +863,17 @@ namespace Engine
 
 						// If released at either starting points
 						if ((Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= -640 && mousePosition.x <= -550
-							&& mousePosition.y >= -10 && mousePosition.y <= 150) 
+							&& mousePosition.y >= -10 && mousePosition.y <= 150)
 							|| (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON) && mousePosition.x >= 5 && mousePosition.x <= 185
 								&& mousePosition.y >= 295 && mousePosition.y <= 360))
-						{			
+						{
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
 							isStartingPoint = true;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
-							
+
 						}
-						
+
 						// If released elsewhere
 						else if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
 						{
@@ -989,7 +900,7 @@ namespace Engine
 
 					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
 					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
-				}			
+				}
 			}
 		}
 	}

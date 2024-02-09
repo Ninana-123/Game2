@@ -14,6 +14,7 @@
 #include "pch.h"
 #include "inGameGUI.h"
 #include "Application.h"
+#include "GameScene.h"
 
 int pathfindingEntityTexture = 0;
 int healthBarEntityTexture = 0;
@@ -23,14 +24,16 @@ int totalTank = 0;
 bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
+bool victoryScreenShown = false;
+bool accessedCastle = false;
 
 namespace Engine
 {
-	
+
 	int i = 0;
 	bool inGameGUIInitialized = false;
 
-	void inGameGUI::Initialize() 
+	void inGameGUI::Initialize()
 	{
 		totalInfantry = 3;
 		totalArcher = 2;
@@ -43,16 +46,16 @@ namespace Engine
 
 	void inGameGUI::Update(bool CollisionCheck)
 	{
-		if (!(inGameGUIInitialized)) 
+		if (!(inGameGUIInitialized))
 		{
 			Initialize();
 			inGameGUIInitialized = true;
 		}
-		
+
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
-		if (CollisionCheck) 
-		{	
+		if (CollisionCheck)
+		{
 			if (lastCollidingEntityTexture == 41)
 			{
 				healthBarEntityTexture = lastCollidingEntityTexture;
@@ -70,7 +73,7 @@ namespace Engine
 				lastCollidingEntityTexture = 0;
 				totalInfantry--;
 			}
-			
+
 			// Spawn Archer
 			if (lastCollidingEntityTexture == 8 && totalArcher > 0)
 			{
@@ -80,8 +83,8 @@ namespace Engine
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 				totalArcher--;
-			}			
-			
+			}
+
 			// Spawn Tank
 			if (lastCollidingEntityTexture == 9 && totalTank > 0)
 			{
@@ -111,11 +114,11 @@ namespace Engine
 			if (lastCollidingEntityTexture == 12)
 			{
 				//std::cout << "Colliding with settings button" << std::endl;
-				if (inSettings) 
+				if (inSettings)
 				{
 					inSettings = false;
 				}
-				else 
+				else
 				{
 					inSettings = true;
 				}
@@ -124,30 +127,42 @@ namespace Engine
 		}
 
 		// Cheat code to get to victory screen
-		if (isGameOver && Input::IsKeyTriggered(KEY_W))
+		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed && !victoryScreenShown)
 		{
-			Prefab* victoryPrefab = prefabManager->GetPrefab(9);
-			entityManager->CreateEntityFromPrefab(*victoryPrefab);
+			if (Application::TimePassed(2))
+			{
+				Prefab* victoryPrefab = prefabManager->GetPrefab(9);
+				entityManager->CreateEntityFromPrefab(*victoryPrefab);
+				victoryScreenShown = true;
+			}
 		}
 
-		if (Input::IsKeyTriggered(KEY_BACKSPACE) && victoryScreenShown == true)
+		if (Input::IsKeyTriggered(KEY_ENTER) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);
 			RestartGame();
 		}
 
 		// Reset flag
-		CollisionCheck = false;		
+		CollisionCheck = false;
 
-    }
+	}
 
-	void inGameGUI::RestartGame() 
+	void inGameGUI::RestartGame()
 	{
 		deleteAllEntity = true;
 		shouldLoadScene = true; // Set flag indicating a scene should be loaded
-		sceneToLoad = initScene; // Store the name of the scene to be loaded
-		bool isGameOver = false;
-		bool victoryScreenShown = false;
+		sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+		isGameOver = false;
+		victoryScreenShown = false;
 		inGameGUIInitialized = false;
+		tower1Destroyed = false;
+		tower2Destroyed = false;
+		castleDestroyed = false;
+		//accessedCastle = false;
+		std::cout << "tower1Destroyed: " << tower1Destroyed << std::endl;
+		std::cout << "tower2Destroyed: " << tower2Destroyed << std::endl;
+		std::cout << "castleDestroyed: " << castleDestroyed << std::endl;
+		//std::cout << "accessedCastle: " << accessedCastle << std::endl;
 	}
 }

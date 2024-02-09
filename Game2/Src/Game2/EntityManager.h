@@ -109,6 +109,10 @@ namespace Engine
 		*/
 		static EntityID nextEntityID;
 
+		// Method to get iterators to the beginning and end of the entities collection
+		auto begin() { return entities.begin(); }
+		auto end() { return entities.end(); }
+
 	private:
 
 	};

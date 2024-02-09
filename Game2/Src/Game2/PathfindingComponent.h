@@ -26,6 +26,7 @@ namespace Engine
 		int goalX = 0; // End point X
 		int goalY = 0; // End point Y
 		bool changedTowers = false;
+		bool accessedCastle = false;
 		std::vector<std::pair<int, int>> path; // Store the path as a list of points
 		bool initialized = false;
 		std::pair<int, int> previousPos1 = { 0, 0 };
@@ -46,9 +47,10 @@ namespace Engine
 			PathfindingComponent* cloneComponent = new PathfindingComponent();
 			cloneComponent->startX = startX;
 			cloneComponent->startY = startY;
-			cloneComponent->goalX= goalX;
+			cloneComponent->goalX = goalX;
 			cloneComponent->goalY = goalY;
 			cloneComponent->changedTowers = changedTowers;
+			cloneComponent->accessedCastle = accessedCastle;
 			cloneComponent->path = path;
 			cloneComponent->initialized = initialized;
 			cloneComponent->previousPos1 = previousPos1;
