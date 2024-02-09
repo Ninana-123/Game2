@@ -7,6 +7,8 @@
 #include "Component.h"
 #include "AssetManager.h"
 
+extern bool isGameOver;
+
 namespace Engine
 {
 	class StateMachine

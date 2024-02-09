@@ -94,7 +94,7 @@ namespace Engine
         Flag indicating whether collision checks should be performed.
         */
         /**************************************************************************/
-        void Update(bool CollisionCheck);
+        void Update(bool CollisionCheck, AudioEngine& audioEngine, AssetManager& assetManager);
 
         void RestartGame();
 

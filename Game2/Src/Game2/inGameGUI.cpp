@@ -14,6 +14,7 @@
 #include "pch.h"
 #include "inGameGUI.h"
 #include "Application.h"
+#include "AudioEngine.h"
 
 int pathfindingEntityTexture = 0;
 int healthBarEntityTexture = 0;
@@ -25,6 +26,7 @@ bool inSettings = false;
 bool isGameOver = false;
 bool victoryScreenShown = false;
 bool accessedCastle = false;
+//AudioEngine audio;
 
 namespace Engine
 {
@@ -43,7 +45,7 @@ namespace Engine
 	{
 	}
 
-	void inGameGUI::Update(bool CollisionCheck)
+	void inGameGUI::Update(bool CollisionCheck, AudioEngine& audioEngine, AssetManager& assetManager)
 	{
 		if (!(inGameGUIInitialized)) 
 		{
@@ -127,7 +129,9 @@ namespace Engine
 
 		// Cheat code to get to victory screen
 		if (isGameOver && Input::IsKeyTriggered(KEY_W) || isGameOver && castleDestroyed == true && !victoryScreenShown)
-		{
+		{	
+			audioEngine.pauseSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+
 			if (Application::TimePassed(2)) 
 			{
 				Prefab* victoryPrefab = prefabManager->GetPrefab(9);
