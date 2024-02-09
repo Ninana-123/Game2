@@ -2,6 +2,7 @@
 /*!
 \file		EntityStats.cpp
 \author		Ang Jun Sheng Aloysius, a.junshengaloysius, 2201807
+\co         Tristan Tham Rui Hong, t.tham, 2200794
 
 \par		a.junshengaloysius@digipen.edu
 

@@ -67,33 +67,34 @@ namespace Engine
 	}
 
 	void StateMachine::Walking(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
-	{	
+	{
 		static bool isFoot1Playing = true; // Start with footstep1
 		static double lastFootSoundTime = glfwGetTime(); // Initialize the last foot sound time
-
-		// Check if one second has elapsed since the last foot sound playback
-		if (glfwGetTime() - lastFootSoundTime >= 1.0)
-		{
-			// If footstep1 is playing, stop it and play footstep2
-			if (isFoot1Playing)
+		if (!isGameOver) {
+			// Check if one second has elapsed since the last foot sound playback
+			if (glfwGetTime() - lastFootSoundTime >= 1.0)
 			{
-				audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-				audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
-				isFoot1Playing = false;
-			}
-			// If footstep2 is playing, stop it and play footstep1
-			else
-			{
-				audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
-				audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-				isFoot1Playing = true;
-			}
+				// If footstep1 is playing, stop it and play footstep2
+				if (isFoot1Playing)
+				{
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
+					audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
+					isFoot1Playing = false;
+				}
+				// If footstep2 is playing, stop it and play footstep1
+				else
+				{
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
+					audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
+					isFoot1Playing = true;
+				}
 
-			lastFootSoundTime = glfwGetTime(); // Update the last foot sound time
+				lastFootSoundTime = glfwGetTime(); // Update the last foot sound time
+			}
+			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+			texture->SetAnimation(static_cast<int>(c_state::Walking));
+			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 		}
-		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		texture->SetAnimation(static_cast<int>(c_state::Walking));
-		//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 	}
 
 	void StateMachine::Attack(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
@@ -106,36 +107,36 @@ namespace Engine
 		//audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 		static bool isAudioAttackPlaying = false;
 		static double lastSoundTime = glfwGetTime(); // Initialize the last sound time
-
-		// Check if one second has elapsed since the last sound playback
-		if (glfwGetTime() - lastSoundTime >= 1.0)
-		{
-			// If audio is not playing, start playing it
-			if (!isAudioAttackPlaying)
+		if (!isGameOver) {
+			// Check if one second has elapsed since the last sound playback
+			if (glfwGetTime() - lastSoundTime >= 1.0)
 			{
-				// Play the sound
-				audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
-				isAudioAttackPlaying = true;
-				audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-				audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
-			}
-			else
-			{
-				// Stop the sound playback
-				audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
-				isAudioAttackPlaying = false;
-			}
+				// If audio is not playing, start playing it
+				if (!isAudioAttackPlaying)
+				{
+					// Play the sound
+					audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+					isAudioAttackPlaying = true;
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
+				}
+				else
+				{
+					// Stop the sound playback
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+					isAudioAttackPlaying = false;
+				}
 
-			lastSoundTime = glfwGetTime(); // Update the last sound time
+				lastSoundTime = glfwGetTime(); // Update the last sound time
+			}
+			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+			texture->SetAnimation(static_cast<int>(c_state::Attack));
+			Entity* target = collision->target;
+			Stats::AttackTarget(5, entity, target);
+			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
+			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
 		}
-		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		texture->SetAnimation(static_cast<int>(c_state::Attack));
-		Entity* target = collision->target;
-		Stats::AttackTarget(5, entity, target);
-		//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-		//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
-		
 	}
 
 	void StateMachine::Death(Entity* entity)
