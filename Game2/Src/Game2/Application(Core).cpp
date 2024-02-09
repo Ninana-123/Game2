@@ -84,7 +84,7 @@ namespace Engine
     TextureComponent* textureTest;
     ComponentFactory CF;
     StateMachine SM;
- 
+
     SceneManager sceneManager;
     //MainMenuScene mainMenuScene;
     //GameScene gameScene;
@@ -103,12 +103,12 @@ namespace Engine
 
     Application::Application()
     {
-        
-    }   
+
+    }
 
     Application::~Application()
     {
-        
+
     }
 
     void Application::Initialize()
@@ -125,7 +125,7 @@ namespace Engine
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
-     
+
         e_Width = m_Window->GetWidth();
         e_Height = m_Window->GetHeight();
 
@@ -153,7 +153,7 @@ namespace Engine
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
-   
+
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
         graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
@@ -169,7 +169,7 @@ namespace Engine
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
         loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
-        
+
         sceneManager.TransitionToScene(std::make_shared<MainMenuScene>(EM, &PM, assetManager));
         isMainMenuLoaded = true;
 
@@ -274,14 +274,35 @@ namespace Engine
             if (e.GetEventType() == EventType::KeyPressed) {
                 KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
                 if (keyPressedEvent.GetKeyCode() == KEY_M) {
+
+#if defined(DEBUG) || defined(_DEBUG)
+
                     deleteAllEntity = true;
                     shouldLoadScene = true; // Set flag indicating a scene should be loaded
                     sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
-                    // sceneManager.TransitionToScene(std::make_shared<GameScene>(EM, &PM, assetManager));
+#else
+
+                    std::string fp = GameSceneFilePath;
+                    // Retrieve the size of entities list
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                    // Loop backwards through the entities and delete each one
+                    for (int i = entityCount - 1; i >= 0; --i)
+                    {
+                        EM->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+                    }
+                    std::cout << "Deleted All Entities" << std::endl;
+                    // Now load the scene
+                    loader->LoadScene(fp);            
+                    isMainMenuLoaded = false;
+#endif
                 }
+            
             }
+            
         }
     }
+
 
     void Application::ToggleFullscreen() {
         GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window
@@ -565,7 +586,7 @@ namespace Engine
             
             audioEngine.update();
             //System Updating
-            systemsManager->UpdateSystems(EM->GetEntities());
+            (void)systemsManager->UpdateSystems(EM->GetEntities());
             SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
