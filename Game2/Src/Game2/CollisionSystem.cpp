@@ -723,7 +723,7 @@ namespace Engine
 											//isColliding = true;
 											if (behaviourComponent1)
 											{
-												behaviourComponent1->SetBehaviourState(c_state::Attack);
+												// behaviourComponent1->SetBehaviourState(c_state::Attack);
 												collisionComponent1->target = entity2;
 												std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 													<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
