@@ -32,6 +32,7 @@ namespace Engine
 {
 	class ShootingSystem : public System
 	{
+    public:
 		//void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
 
 		//bool CanShoot(ShootingComponent* shootingComponent);
@@ -67,7 +68,7 @@ namespace Engine
         CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
         TextureComponent* textureCheck;
 
-        float spawnTimer;
-        float spawnInterval;
+        float spawnTimer = 0.0;
+        float spawnInterval = 0.0;
     };
 }

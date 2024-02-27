@@ -33,6 +33,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CollisionSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
+#include "ShootingSystem.h"
+#include "ShootingComponent.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -64,6 +66,8 @@ namespace Engine
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
+    std::shared_ptr<ShootingSystem> shootingSystem = nullptr;
+
 
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
@@ -75,6 +79,7 @@ namespace Engine
     TransformComponent* transformTest;
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
+    ShootingComponent* shootingTest;
     ComponentFactory CF;
  
     float scalar = 0.1f;
@@ -523,6 +528,7 @@ namespace Engine
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
             m_inGameGUI->Update(buttonCollision);
+            shootingSystem->Update(deltaTime, isShooting);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
