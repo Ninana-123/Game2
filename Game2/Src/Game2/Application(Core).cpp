@@ -85,6 +85,7 @@ namespace Engine
     TextureComponent* textureTest;
     ComponentFactory CF;
     StateMachine SM;
+    //FileBrowser fileBrowser;
 
     SceneManager sceneManager;
     //MainMenuScene mainMenuScene;
@@ -240,6 +241,9 @@ namespace Engine
         //Attaching Input Handler to EM
         InputHandler.SetEntityManager(EM);
         InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
+
+        //fileBrowser.setSelectedEntityIndexReference(selectedEntityIndex);
+        //fileBrowser.setLoader(deserializer);
     }
 
     void Application::OnEvent(Event& e)
@@ -278,6 +282,7 @@ namespace Engine
 
 #ifdef DEBUG
                     deleteAllEntity = true;
+                    //LoadScene();
                     shouldLoadScene = true; // Set flag indicating a scene should be loaded
                     sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
                     mainMenuCheck = false;
@@ -730,4 +735,47 @@ namespace Engine
 
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
+
+    //void Application::LoadScene()
+    //{
+    //    if (deleteAllEntity == true)
+    //    {
+    //        // Retrieve the size of entities list
+    //        int entityCount = static_cast<int>(entityManager->GetEntities()->size());
+
+    //        // Loop backwards through the entities and delete each one
+    //        for (int i = entityCount - 1; i >= 0; --i)
+    //        {
+    //            entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+    //        }
+
+    //        // Reset the selected entity index as there are no entities to select
+    //        selectedEntityIndex = -1;
+
+    //        // Set targetEntity to nullptr as there are no entities left
+    //        targetEntity = nullptr;
+
+    //        // Reset any other relevant data structures or counters if needed
+    //        entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
+    //        prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
+
+    //        std::cout << "Deleted All Entities" << std::endl;
+    //        deleteAllEntity = false;
+    //    }
+
+    //    // Now load the scene
+    //    deserializer->LoadScene(sceneToLoad);
+    //    if (entityManager->GetEntities()->size() >= 2) {
+    //        selectedEntityIndex = 1;
+    //    }
+    //    else if (entityManager->GetEntities()->size() == 1) {
+    //        selectedEntityIndex = 0;
+    //    }
+    //    else
+    //        selectedEntityIndex = -1;
+    //    if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
+    //        targetEntity = entityManager->GetEntity(selectedEntityIndex);
+    //    }
+    //    shouldLoadScene = false; // Reset flag
+    //}
 }

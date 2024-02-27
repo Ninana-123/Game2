@@ -153,6 +153,8 @@ namespace Engine {
          */
         void Dragging();
 
+        void InGameGUIDragging();
+
         /*!
          * \brief Performs deletion operation based on mouse input.
          */

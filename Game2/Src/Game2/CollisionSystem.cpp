@@ -772,19 +772,41 @@ namespace Engine
 
 	void CollisionSystem::EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
-		std::cout << e_editorWidth << std::endl;
-		std::cout << e_editorHeight << std::endl;
-
-		float editorWidth = e_editorWidth;
-		float editorHeight = e_editorHeight;
 
 		// Get the mouse position from the input system
 		VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
 
-		//int displayWidth, displayHeight;
-		//glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
-		float screenScaleX = 1280.f / editorWidth;
-		float screenScaleY = 720.f / editorHeight;
+		if (renderImGuiGUI == true) 
+		{
+
+			std::cout << "This is e_editorWidth: " << e_editorWidth << std::endl;
+			std::cout << "This is e_editorHeight: " << e_editorHeight << std::endl;
+
+			float editorWidth = e_editorWidth;
+			float editorHeight = e_editorHeight;
+
+			float screenScaleX = 1280.f / editorWidth;
+			float screenScaleY = 720.f / editorHeight;
+
+			// Normalize the mouse position
+			mousePosition.x = (mousePosition.x - 10.f) * screenScaleX - 1280.f / 2.0f;
+			mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f) * screenScaleY;
+		}
+
+		if (renderImGuiGUI == false) 
+		{
+			// For non Imgui purposes
+			int displayWidth, displayHeight;
+			glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+			float scaleX = displayWidth / 1280.f;
+			float scaleY = displayHeight / 720.f;
+
+			std::cout << "This is displayWidth: " << displayWidth << std::endl;
+			std::cout << "This is displayHeight: " << displayHeight << std::endl;
+
+			mousePosition.x = ((mousePosition.x) - 1280.f / 2.0f) * scaleX;
+			mousePosition.y = (720.f / 2.0f - (mousePosition.y)) * scaleY;
+		}
 
 		// Scale factor for the additional scaling in the editor viewport
 		//float editorScaleX = static_cast<float>(editorWidth) / 1280.0f;
@@ -794,9 +816,7 @@ namespace Engine
 		//float scaleX = screenScaleX * editorScaleX;
 		//float scaleY = screenScaleY * editorScaleY;
 
-		// Normalize the mouse position
-		mousePosition.x = (mousePosition.x - 10.f) * screenScaleX - 1280.f / 2.0f;
-		mousePosition.y = 720.f / 2.0f - (mousePosition.y - 20.f) * screenScaleY;
+		
 
 		// Iterate through all entities in the editable layer
 		for (auto it = entities->begin(); it != entities->end(); ++it)
@@ -829,9 +849,10 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::inGameGUI)
 				{
-					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb) && Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
+					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb)
+						&& Input::IsMouseClicked(LEFT_MOUSE_BUTTON))
 					{
-						// std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+						std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
 						buttonCollision = true;
 						lastCollidingEntity = entity->GetID();
 						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;

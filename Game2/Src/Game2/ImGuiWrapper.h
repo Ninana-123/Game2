@@ -237,6 +237,7 @@ namespace Engine {
 		 */
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
 
+
 	private:
 		float LeftWindowWidth = 0.0f;
 		bool renderDockspace = false;

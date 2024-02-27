@@ -22,6 +22,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "EntityManager.h"
 #include "WindowsWindow.h"
+// #include "ImGuiFileBrowser.h"
 
 extern double loopTime;
 extern const double fixedDeltaTime;
@@ -47,6 +48,9 @@ namespace Engine
         Constructor for the Application class
         *************************************************************************/
         Application();
+
+        //Application(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::Loader> loader)
+        //    : entityManager(em), prefabManager(pm), deserializer(loader) {}
 
         /*!**********************************************************************
         \brief
@@ -117,6 +121,10 @@ namespace Engine
         std::shared_ptr<Engine::EntityManager> EM;      
 
         void ToggleFullscreen();
+        
+        //void LoadScene();
+
+        //int selectedEntityIndex = 1;
 
     private:
 
@@ -151,6 +159,11 @@ namespace Engine
         bool m_Running = true;
         bool gamePlaying = true;
         bool isMainMenuLoaded = false;
+
+        //std::shared_ptr<Engine::EntityManager> entityManager;
+        //Engine::PrefabManager* prefabManager;
+        //std::shared_ptr<Engine::Loader> deserializer;
+
         //// Assuming width_texture and height_texture are known
         //float width_texture ;
         //float height_texture;

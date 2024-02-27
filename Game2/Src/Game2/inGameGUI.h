@@ -57,7 +57,8 @@ namespace Engine
         A pointer to the PrefabManager.
         */
         /**************************************************************************/
-        inGameGUI(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+        inGameGUI(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) 
+            : entityManager(em), prefabManager(pm) {}
 
         /**************************************************************************/
         /*!
