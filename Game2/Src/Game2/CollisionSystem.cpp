@@ -29,6 +29,7 @@ bool buttonCollision = false;
 int lastCollidingEntity = 0;
 int lastCollidingEntityTexture = 0;
 bool isStartingPoint = true;
+bool isShooting = false;
 
 /*!*****************************************************************
 
@@ -587,7 +588,8 @@ namespace Engine
 										// Check if tower radius is colliding with the player's radius
 										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
 											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
-										{
+										{	
+											isShooting = true;
 											isColliding = true;
 											std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
 												<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;

@@ -1,4 +1,4 @@
-10
+11
 Infantry
 Transform
 Position: -135 -300
@@ -234,4 +234,40 @@ Rotation: 0
 Texture
 MainIndex: 21
 SubIndex: 0
+EndPrefab
+Arrow
+Transform
+Position: -300 30
+ScaleX: 0.5
+ScaleY: 0.4
+Rotation: 2.18166
+Collision
+c_Width: 0
+c_Height: 0
+isColliding: 0
+MinX: 0
+MinY: 0
+MaxX: 0
+MaxY: 0
+Radius: 0
+Layer: 4
+CollisionVel: 0 0
+Physics
+Velocity: 0 0
+Acceleration: 0 0
+Mass: 0
+friction: 0
+Texture
+MainIndex: 22
+SubIndex: 0
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
 EndPrefab
