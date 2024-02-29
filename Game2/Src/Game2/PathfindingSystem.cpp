@@ -559,8 +559,8 @@ namespace Engine
                                 behaviourComponent->SetBehaviourState(c_state::Walking);
                             }
 
-                            //if (pathfindingEntityTexture != 9) 
-                            //{
+                            if (textureComponent->textureKey.mainIndex == 1 || textureComponent->textureKey.mainIndex == 3)
+                            {
                                 pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.01);
                                 std::cout << "Starting elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
 
@@ -576,20 +576,25 @@ namespace Engine
                                     // pathfindingComponent->timeElapsedMovement = 0.0f;
                                     std::cout << "Ending elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
                                 }
-                            //}
+                            }
 
-                            //if ((pathfindingEntityTexture == 9)) 
-                            //{
-                            //    if (Application::TimePassed(0.1))
-                            //    {
-                            //        // Update the entity's position
-                            //        transformComponent->position.x = static_cast<float>(nextPosition.first);
-                            //        transformComponent->position.y = static_cast<float>(nextPosition.second);
+                            if (textureComponent->textureKey.mainIndex == 2)
+                            {
+                                
+                                pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.05);
+                                //pathfindingComponent->charType = textureComponent->textureKey.mainIndex;
 
-                            //        // Remove the first position from the path
-                            //        pathfindingComponent->path.erase(pathfindingComponent->path.begin());
-                            //    }
-                            //}
+                                if (pathfindingComponent->timeElapsedMovement >= 0.05)
+                                {
+                                    // Update the entity's position
+                                    transformComponent->position.x = static_cast<float>(nextPosition.first);
+                                    transformComponent->position.y = static_cast<float>(nextPosition.second);
+
+                                    // Remove the first position from the path
+                                    pathfindingComponent->path.erase(pathfindingComponent->path.begin());
+                                }
+                                
+                            }
                         }
 
                         // Switch back to attacking mode

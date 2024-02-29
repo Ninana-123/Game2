@@ -25,6 +25,7 @@ namespace Engine
 		int startY = 0; // Start point X
 		int goalX = 0; // End point X
 		int goalY = 0; // End point Y
+		int charType = 0;
 		float timeElapsedMovement = 0.0f;
 		std::chrono::high_resolution_clock::time_point startTime;
 		bool changedTowers = false;
@@ -51,6 +52,7 @@ namespace Engine
 			cloneComponent->startY = startY;
 			cloneComponent->goalX = goalX;
 			cloneComponent->goalY = goalY;
+			cloneComponent->charType = charType;
 			cloneComponent->timeElapsedMovement = timeElapsedMovement;
 			cloneComponent->startTime = startTime;
 			cloneComponent->changedTowers = changedTowers;
