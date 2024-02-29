@@ -689,6 +689,31 @@ namespace Engine
         return result;
     }
 
+    float Application::ElapsedTime(PathfindingComponent* pathfindingComponent, double seconds)
+    {
+        // Check if the entity has a valid pathfinding component
+        if (pathfindingComponent == nullptr)
+            return 0.0f; // Return 0 if the component is invalid
+
+        // Use the stored startTime within the pathfinding component
+        auto& startTime = pathfindingComponent->startTime;
+
+        // Calculate elapsed time since the start
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::duration<double>>(currentTime - startTime).count();
+
+        bool result = elapsedTime >= seconds;
+
+        // If the specified time has passed, reset the startTime to the current time
+        if (result)
+        {
+            startTime = currentTime;
+        }
+
+        return elapsedTime;
+    }
+
+
     void Application::UpdateWindowFocus() {
         if (m_Window) {
             // Use get() to obtain a raw pointer to the managed object

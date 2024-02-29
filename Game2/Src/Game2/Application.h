@@ -99,6 +99,8 @@ namespace Engine
 
         static bool TimePassed(double seconds);
 
+        static float ElapsedTime(PathfindingComponent* pathfindingComponent, double seconds);
+
         /*!**********************************************************************
         \brief
         Updates the window title to display FPS.
