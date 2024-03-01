@@ -29,6 +29,7 @@ extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
 extern bool isStartingPoint;
+extern bool isShooting;
 
 namespace Engine
 {
