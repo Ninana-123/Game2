@@ -184,7 +184,7 @@ namespace Engine
         A pair representing the closest coordinates to the starting position.
         */
         /**************************************************************************/
-        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
+        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions, int unitNum);
 
         // ~PathfindingSystem();
 

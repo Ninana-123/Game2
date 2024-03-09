@@ -235,7 +235,7 @@ namespace Engine
         return { x, y };
     }
 
-    std::pair<int, int> PathfindingSystem::getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towersPositions)
+    std::pair<int, int> PathfindingSystem::getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towersPositions, int unitNum)
     {
         double minDistance = std::numeric_limits<double>::max();
 
@@ -263,24 +263,47 @@ namespace Engine
         endPointY = startPosY;
 
         // Change path to other tower if at current tower
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 &&
-            tower2Destroyed == false)
+        if (unitNum != 3) 
         {
-            if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second)
+            if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second + 80 &&
+                tower2Destroyed == false)
             {
-                currentClosestTower = towerPositions[1];
-                prevPos2 = towersPositions[0];
+                if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second)
+                {
+                    currentClosestTower = towerPositions[1];
+                    prevPos2 = towersPositions[0];
+                }
+            }
+            if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105 &&
+                tower1Destroyed == false)
+            {
+                if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
+                {
+                    currentClosestTower = towerPositions[0];
+                    prevPos2 = towersPositions[1];
+                }
+                return currentClosestTower;
             }
         }
-        if (towersPositions.size() > 1 && endPointX == closestTower.first && endPointY == closestTower.second - 105 &&
-            tower1Destroyed == false)
+        if (unitNum == 3) 
         {
-            if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
+            if (towersPositions.size() > 1 && tower2Destroyed == false)
             {
-                currentClosestTower = towerPositions[0];
-                prevPos2 = towersPositions[1];
+                if (closestTower.first == towersPositions[0].first && closestTower.second == towersPositions[0].second)
+                {
+                    currentClosestTower = towerPositions[1];
+                    prevPos2 = towersPositions[0];
+                }
             }
-            return currentClosestTower;
+            if (towersPositions.size() > 1 && tower1Destroyed == false)
+            {
+                if (closestTower.first == towersPositions[1].first && closestTower.second == towersPositions[1].second)
+                {
+                    currentClosestTower = towerPositions[0];
+                    prevPos2 = towersPositions[1];
+                }
+                return currentClosestTower;
+            }
         }
         else
         {
@@ -388,21 +411,8 @@ namespace Engine
 
                         if (tower1Destroyed == false && tower2Destroyed == false)
                         {
-                            closestTower = getClosestPair(startX, startY, towerPositions);
+                            closestTower = getClosestPair(startX, startY, towerPositions, textureComponent->textureKey.mainIndex);
                         }
-                        //if (tower1Destroyed == true && tower2Destroyed == false)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[1] });
-                        //}
-                        //if (tower1Destroyed == false && tower2Destroyed == true)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
-                        //}
-                        //if (tower1Destroyed == true && tower2Destroyed == true)
-                        //{
-                        //    closestTower = getClosestPair(startX, startY, { towerPositions[0] });
-                        //}
-                        // std::cout << currentClosestTower.first << currentClosestTower.second << std::endl;
 
                         //goalX = closestTower.first;
                         //goalY = closestTower.second;
