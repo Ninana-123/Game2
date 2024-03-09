@@ -353,7 +353,7 @@ namespace Engine {
 
 	void ImGuiWrapper::UpdateImGuiInteractionState() {
 		isImGuiHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow);
-		Logger::GetInstance().Log(LogLevel::Debug, "ImGui Hovered: " + std::to_string(isImGuiHovered));
+		// Logger::GetInstance().Log(LogLevel::Debug, "ImGui Hovered: " + std::to_string(isImGuiHovered));
 	}
 
 	void ImGuiWrapper::OnEvent(Event& event)

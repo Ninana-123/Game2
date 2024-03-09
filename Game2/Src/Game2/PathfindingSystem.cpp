@@ -429,11 +429,12 @@ namespace Engine
                         //std::cout << "Pathfinding Initialization: " << pathfindingComponent->initialized << std::endl;
 
                         // If first tower health is 0, and have not changed towers, go to the next tower
-                        if (transformComponent->position.x == -275 && transformComponent->position.y == 45
-                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
+                        /*if (transformComponent->position.x == -275 && transformComponent->position.y == 45
+                            && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)*/
+                        if (tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
-                            // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
+                            std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
                             goalX = currentClosestTower.first;
                             goalY = currentClosestTower.second;
 
@@ -444,11 +445,12 @@ namespace Engine
                         }
 
                         // If second tower health is 0, and have no changed towers, go to the next tower
-                        if (transformComponent->position.x == -70 && transformComponent->position.y == 140
-                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
+                        /*if (transformComponent->position.x == -70 && transformComponent->position.y == 140
+                            && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)*/
+                        if (tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
                         {
 
-                            // std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
+                            std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
                             goalX = currentClosestTower.first;
                             goalY = currentClosestTower.second;
 
@@ -527,7 +529,7 @@ namespace Engine
                             }
 
                             // Archer switch to walking mode
-                            else if ((pathfindingEntityTexture == 8))
+                            if ((pathfindingEntityTexture == 8))
                             {
                                 if ((textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0)
                                     || textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 2)
@@ -540,7 +542,7 @@ namespace Engine
                             }
 
                             // Tank switch to walking mode
-                            else if ((pathfindingEntityTexture == 9))
+                            if ((pathfindingEntityTexture == 9))
                             {
                                 if ((textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 0)
                                     || textureComponent->textureKey.mainIndex == 2 && textureComponent->textureKey.subIndex == 2)
@@ -554,15 +556,28 @@ namespace Engine
 
                             
                             std::pair<int, int> nextPosition = pathfindingComponent->path[0];
-                            if (behaviourComponent)
+
+                            // Settings for the rest of the units
+                            if (behaviourComponent && textureComponent->textureKey.mainIndex != 3)
                             {
                                 behaviourComponent->SetBehaviourState(c_state::Walking);
                             }
 
-                            if (textureComponent->textureKey.mainIndex == 1 || textureComponent->textureKey.mainIndex == 3)
+                            // Archer settings
+                            if (behaviourComponent && textureComponent->textureKey.mainIndex == 3 && !(collisionComponent->isColliding))
+                            {
+                                behaviourComponent->SetBehaviourState(c_state::Walking);
+                            }
+
+                            //else if (behaviourComponent && pathfindingEntityTexture == 8 && (collisionComponent->isColliding))
+                            //{
+                            //    behaviourComponent->SetBehaviourState(c_state::Attack);
+                            //}
+
+                            if (textureComponent->textureKey.mainIndex == 1)
                             {
                                 pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.01);
-                                std::cout << "Starting elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
+                                // std::cout << "Starting elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
 
                                 if (pathfindingComponent->timeElapsedMovement >= 0.01)
                                 {
@@ -574,9 +589,30 @@ namespace Engine
                                     pathfindingComponent->path.erase(pathfindingComponent->path.begin());
 
                                     // pathfindingComponent->timeElapsedMovement = 0.0f;
-                                    std::cout << "Ending elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
+                                    // std::cout << "Ending elapsed time movement is: " << pathfindingComponent->timeElapsedMovement << " seconds" << std::endl;
                                 }
                             }
+
+                            if (textureComponent->textureKey.mainIndex == 3 && !collisionComponent->isColliding) 
+                            {
+                                pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.01);
+
+                                if (pathfindingComponent->timeElapsedMovement >= 0.01)
+                                {
+                                    // Update the entity's position
+                                    transformComponent->position.x = static_cast<float>(nextPosition.first);
+                                    transformComponent->position.y = static_cast<float>(nextPosition.second);
+
+                                    // Remove the first position from the path
+                                    pathfindingComponent->path.erase(pathfindingComponent->path.begin());
+
+                                }
+                            }
+
+                            //if (textureComponent->textureKey.mainIndex == 3 && collisionComponent->isColliding) 
+                            //{
+                            //    pathfindingComponent->path.clear();
+                            //}
 
                             if (textureComponent->textureKey.mainIndex == 2)
                             {

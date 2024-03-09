@@ -110,8 +110,8 @@ void AudioEngine::stopSound(SoundInfo soundInfo)
         ERRCHECK(loopsPlaying[soundInfo.getUniqueID()]->stop());
         loopsPlaying.erase(soundInfo.getUniqueID());
     }
-    else
-        std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";
+    // else
+        // std::cout << "Audio Engine: Can't stop a looping sound that's not playing!\n";
 }
 
 void AudioEngine::pauseAllAudio() {
@@ -171,39 +171,39 @@ void AudioEngine::pauseSound(SoundInfo soundInfo) {
 }
 
 void AudioEngine::resumeAllAudio() {
-    Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Playing all audio.");
+    //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Playing all audio.");
 
     if (loopsPlaying.empty()) {
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "No channels in loopsPlaying.");
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "No channels in loopsPlaying.");
         return;
     }
 
     // Log the contents of loopsPlaying before resuming
-    Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channels playing before resume:");
+    //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channels playing before resume:");
     for (const auto& pair : loopsPlaying) {
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channel ID: " + pair.first);
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channel ID: " + pair.first);
     }
 
     for (const auto& pair : loopsPlaying) {
         FMOD::Channel* channel = pair.second; // Use the channel directly
 
         // Debug messages for loop
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Inside resumeAllAudio loop. Checking channel: " + pair.first);
+        // Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Inside resumeAllAudio loop. Checking channel: " + pair.first);
 
         bool isPausedBefore;
         channel->getPaused(&isPausedBefore);
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Checking channel: " + pair.first + " (IsPausedBefore: " 
-            + (isPausedBefore ? "true" : "false") + ")");
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Checking channel: " + pair.first + " (IsPausedBefore: " 
+        //    + (isPausedBefore ? "true" : "false") + ")");
 
         if (isPausedBefore) {
-            Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Resuming channel: " + pair.first);
+            // Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Resuming channel: " + pair.first);
             ERRCHECK(channel->setPaused(false));
         }
 
         bool isPausedAfter;
         channel->getPaused(&isPausedAfter);
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Resumed channel: " + pair.first + " (WasPaused: " 
-            + (isPausedBefore ? "true" : "false") + ", IsPausedAfter: " + (isPausedAfter ? "true" : "false") + ")");
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Resumed channel: " + pair.first + " (WasPaused: " 
+        //    + (isPausedBefore ? "true" : "false") + ", IsPausedAfter: " + (isPausedAfter ? "true" : "false") + ")");
     }
 }
 

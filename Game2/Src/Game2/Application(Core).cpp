@@ -677,8 +677,8 @@ namespace Engine
         // Check if the elapsed time is greater than or equal to the specified seconds
         bool result = elapsedTime >= seconds;
 
-        std::cout << "My boolean value is: " << std::boolalpha << result << std::endl;
-        std::cout << "Elapsed time is: " << elapsedTime << " seconds" << std::endl;
+        //std::cout << "My boolean value is: " << std::boolalpha << result << std::endl;
+        //std::cout << "Elapsed time is: " << elapsedTime << " seconds" << std::endl;
 
         // If the specified time has passed, reset the startTime to the current time
         if (result)
@@ -729,7 +729,7 @@ namespace Engine
                     //windowsWindow->MinimizeWindow();
                     isPaused = true;
                     audioEngine.pauseAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
+                    // Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
                 }
                 // If the window is focused
                 else {
@@ -740,7 +740,7 @@ namespace Engine
                     // Unpause the game, resume audio playback, and log the event
                     isPaused = false;
                     audioEngine.resumeAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
+                    // Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
                 }
             }
         }

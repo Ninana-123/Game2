@@ -672,6 +672,7 @@ namespace Engine
 														if (tower2CollidingEntityHealth == 0)
 														{
 															tower2Destroyed = true;
+															isColliding = false;
 														}
 														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
@@ -685,6 +686,7 @@ namespace Engine
 														if (tower1CollidingEntityHealth == 0)
 														{
 															tower1Destroyed = true;
+															isColliding = false;
 														}
 														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
 															&& tower1Destroyed == true)
@@ -700,6 +702,7 @@ namespace Engine
 														{
 															castleDestroyed = true;
 															isGameOver = true;
+															isColliding = false;
 														}
 														if ((textureComponent->textureKey.mainIndex == 5 && textureComponent->textureKey.subIndex == 0)
 															&& castleDestroyed == true)
@@ -709,7 +712,7 @@ namespace Engine
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
 
-													std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+													// std::cout << "Collision Detected between Entity" << static_cast<int>(entity1->GetID()) << " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 												}
 											}
 										}
@@ -779,8 +782,8 @@ namespace Engine
 		if (renderImGuiGUI == true) 
 		{
 
-			std::cout << "This is e_editorWidth: " << e_editorWidth << std::endl;
-			std::cout << "This is e_editorHeight: " << e_editorHeight << std::endl;
+			//std::cout << "This is e_editorWidth: " << e_editorWidth << std::endl;
+			//std::cout << "This is e_editorHeight: " << e_editorHeight << std::endl;
 
 			float editorWidth = e_editorWidth;
 			float editorHeight = e_editorHeight;
