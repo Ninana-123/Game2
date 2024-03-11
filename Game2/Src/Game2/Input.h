@@ -14,7 +14,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
 /******************************************************************************/
-#pragma once
+#ifndef ENGINE_INPUT_H
+#define ENGINE_INPUT_H
 
 #include "KeyCodes.h"
 #include "MouseButtonCodes.h"
@@ -49,7 +50,7 @@ namespace Engine {
          * \param key Key code of the keyboard key to check.
          * \return True if the key is currently down, false otherwise.
          */
-        bool IsKeyDown(const KeyCode key);
+        static bool IsKeyDown(const KeyCode key);
 
         /*!
          * \brief Checks if the specified keyboard key is released.
@@ -57,7 +58,7 @@ namespace Engine {
          * \param key Key code of the keyboard key to check.
          * \return True if the key is released, false otherwise.
          */
-        bool IsKeyReleased(const KeyCode key);
+        static bool IsKeyReleased(const KeyCode key);
 
         /*!
          * \brief Updates the previous key states with the current key states.
@@ -152,6 +153,8 @@ namespace Engine {
          */
         void Dragging();
 
+        void InGameGUIDragging();
+
         /*!
          * \brief Performs deletion operation based on mouse input.
          */
@@ -166,3 +169,4 @@ namespace Engine {
 		bool isDragging = false;
 	};
 }
+#endif ENGINE_INPUT_H

@@ -31,10 +31,14 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
+#include "ShootingSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
-#include "ShootingSystem.h"
-#include "ShootingComponent.h"
+#include "SceneManager.h"
+#include "MainMenuScene.h"
+#include "GameScene.h"
+#include "TempStateMachine.h"
+#include "Vector2d.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -47,9 +51,11 @@ int e_Width = 0;
 int e_Height = 0;
 double prevTime = glfwGetTime();
 bool isPaused = false;
-bool stepOneFrame = false;
+bool stepOneFrame = false; 
 double dt = 0;
-std::string initScene = "Resource/Scenes/Level0Test.txt";
+bool mainMenuCheck = true;
+//std::string initScene = "Resource/Scenes/MainMenu.txt";
+//std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
 // Variable for last key pressed
 int lastKeyPressed = 0;
@@ -66,22 +72,27 @@ namespace Engine
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
-    std::shared_ptr<ShootingSystem> shootingSystem = nullptr;
-
+    std::shared_ptr<ShootingSystem> m_shootingSystem = nullptr;
 
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
     std::shared_ptr<EntityManager> EM;
-    Engine::PrefabManager PM;
+    PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
     TransformComponent* transformTest;
     CollisionComponent* collisionTest;
     PhysicsComponent* physicsTest;
-    ShootingComponent* shootingTest;
+    TextureComponent* textureTest;
     ComponentFactory CF;
- 
+    StateMachine SM;
+    //FileBrowser fileBrowser;
+
+    SceneManager sceneManager;
+    //MainMenuScene mainMenuScene;
+    //GameScene gameScene;
+
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
@@ -96,10 +107,12 @@ namespace Engine
 
     Application::Application()
     {
-    }   
+
+    }
 
     Application::~Application()
     {
+
     }
 
     void Application::Initialize()
@@ -116,7 +129,7 @@ namespace Engine
             Logger::GetInstance().Log(Engine::LogLevel::Error, "Failed to create the Window");
             return; // Handle the window creation error
         }
-     
+
         e_Width = m_Window->GetWidth();
         e_Height = m_Window->GetHeight();
 
@@ -137,36 +150,43 @@ namespace Engine
 
         // Load textures for each mainIndex and subIndex
         for (int mainIndex = 0; mainIndex <= maxMainIndex; ++mainIndex) {
-            for (int subIndex = 0; subIndex <= 3; ++subIndex) {
+            for (int subIndex = 0; subIndex <= 5; ++subIndex) {
                 assetManager->loadTexture(mainIndex, subIndex);
             }
         }
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
-   
+
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
         graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
         collisionSystem = systemsManager->GetSystem<CollisionSystem>();
 
         // Load scene from a file
-        loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
+        //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
+        loader = std::make_shared<Engine::Loader>(EM, &PM, assetManager);
+
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Scene");
-        loader->LoadScene(initScene);
+        //loader->LoadScene(initScene);
         Logger::GetInstance().Log(LogLevel::Debug, "Scene Loaded");
         Logger::GetInstance().Log(LogLevel::Debug, "Loading Prefabs");
-        loader->LoadPrefabs("Resource/Prefabs.txt");
+        loader->LoadPrefabs("Resource/Prefabs/Prefabs.txt");
         Logger::GetInstance().Log(LogLevel::Debug, "Prefabs Loaded");
-        
+
+        sceneManager.TransitionToScene(std::make_shared<MainMenuScene>(EM, &PM, assetManager));
+        isMainMenuLoaded = true;
+
         if (EM->GetEntity(1) != nullptr) {
             targetEntity = EM->GetEntity(1);
             transformTest = dynamic_cast<TransformComponent*>(targetEntity->GetComponent(ComponentType::Transform)); //reference to Entity Transform data
             collisionTest = dynamic_cast<CollisionComponent*>(targetEntity->GetComponent(ComponentType::Collision));
             physicsTest = dynamic_cast<PhysicsComponent*>(targetEntity->GetComponent(ComponentType::Physics));
+            textureTest = dynamic_cast<TextureComponent*>(targetEntity->GetComponent(ComponentType::Texture));
         }
         else
             targetEntity = EM->GetEntity(0);
+
         // Initialize audio files and load sounds
         audioEngine.init();
         assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
@@ -189,11 +209,22 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Ambience"));
         assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
 
+        assetManager->AddAudioPath(AudioKey("sound_Foot1"), "Resource/Audio/Footsteps/Footsteps1.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot1"));
+        assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.5f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Foot2"), "Resource/Audio/Footsteps/Footsteps2.wav");
+        assetManager->loadAudio(AudioKey("sound_Foot2"));
+        assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.5f);
+
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
+
 
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
@@ -209,9 +240,15 @@ namespace Engine
         // Initialize inGameGUI
         m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
 
+        // Initialize inGameGUI
+        m_shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM);
+
         //Attaching Input Handler to EM
         InputHandler.SetEntityManager(EM);
         InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
+
+        //fileBrowser.setSelectedEntityIndexReference(selectedEntityIndex);
+        //fileBrowser.setLoader(deserializer);
     }
 
     void Application::OnEvent(Event& e)
@@ -243,7 +280,41 @@ namespace Engine
                 ToggleFullscreen();
             }
         }
+        if (isMainMenuLoaded) {
+            if (e.GetEventType() == EventType::KeyPressed) {
+                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+                if (keyPressedEvent.GetKeyCode() == KEY_M) {
+
+#ifdef DEBUG
+                    deleteAllEntity = true;
+                    //LoadScene();
+                    shouldLoadScene = true; // Set flag indicating a scene should be loaded
+                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    mainMenuCheck = false;
+                    isMainMenuLoaded = false;
+#else
+
+                    std::string fp = GameSceneFilePath;
+                    // Retrieve the size of entities list
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                    // Loop backwards through the entities and delete each one
+                    for (int i = entityCount - 1; i >= 0; --i)
+                    {
+                        EM->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+                    }
+                    std::cout << "Deleted All Entities" << std::endl;
+                    // Now load the scene
+                    loader->LoadScene(fp);            
+                    isMainMenuLoaded = false;
+#endif
+                }
+            
+            }
+            
+        }
     }
+
 
     void Application::ToggleFullscreen() {
         GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window
@@ -293,6 +364,7 @@ namespace Engine
 
             UpdateWindowFocus();
 
+
             if (!isPaused || stepOneFrame) {
                 accumulatedTime += (stepOneFrame ? fixedDeltaTime : deltaTime);
                 if (stepOneFrame) {
@@ -318,6 +390,8 @@ namespace Engine
                 InputHandler.Update();
                 m_Window->OnUpdate();
 
+                if (InputHandler.IsKeyTriggered(KEY_F5))
+                    fpsTimer = !fpsTimer;
                 // Audio handling based on key input
                 if (InputHandler.IsKeyTriggered(KEY_3)) {
                     audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Win"))));
@@ -399,22 +473,25 @@ namespace Engine
                 //    std::cout << "Hello" << std::endl;
                 //}
 
-                if (collisionTest && transformTest) //INPUT TESTING FOR UNIT ENTITIES
+                if (collisionTest && transformTest && textureTest) //INPUT TESTING FOR UNIT ENTITIES
                 {
 
                     if (collisionTest->isColliding) {
-                        //audioEngine.playSound(sound_Slash);
-                        if (lastKeyPressed == 1 || (lastPositionY < nextPositionY)) {
-                            transformTest->position.y = lastPositionY - 10.f;
-                        }
-                        if (lastKeyPressed == 2 || (lastPositionY > nextPositionY)) {
-                            transformTest->position.y = lastPositionY + 10.f;
-                        }
-                        if (lastKeyPressed == 3 || (lastPositionX < nextPositionX)) {
-                            transformTest->position.x = lastPositionX + 10.f;
-                        }
-                        if (lastKeyPressed == 4 || (lastPositionX > nextPositionX)) {
-                            transformTest->position.x = lastPositionX - 10.f;
+                        if (textureTest->textureKey.mainIndex == 1 || textureTest->textureKey.mainIndex == 2 ||
+                            textureTest->textureKey.mainIndex == 3) {
+                            //audioEngine.playSound(sound_Slash);
+                            if ((lastPositionY < nextPositionY)) {
+                                transformTest->position.y = lastPositionY - 10.f;
+                            }
+                            if ((lastPositionY > nextPositionY)) {
+                                transformTest->position.y = lastPositionY + 10.f;
+                            }
+                            if ((lastPositionX < nextPositionX)) {
+                                transformTest->position.x = lastPositionX + 10.f;
+                            }
+                            if ((lastPositionX > nextPositionX)) {
+                                transformTest->position.x = lastPositionX - 10.f;
+                            }
                         }
                     }
 
@@ -517,18 +594,21 @@ namespace Engine
                     //}
                 }
 
+                
+
             }         
             
             audioEngine.update();
             //System Updating
-            systemsManager->UpdateSystems(EM->GetEntities());
+            (void)systemsManager->UpdateSystems(EM->GetEntities());
+            SM.UpdateEntities(EM->GetEntities(), audioEngine, *assetManager);
             auto loopEndTime = std::chrono::high_resolution_clock::now();
             loopTime = std::chrono::duration_cast<std::chrono::microseconds>(loopEndTime - loopStartTime).count() / 1000.0; // Convert to milliseconds
             m_ImGuiWrapper->Begin();
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
-            m_inGameGUI->Update(buttonCollision);
-            shootingSystem->Update(deltaTime, isShooting);
+            m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
+            m_shootingSystem->Update(deltaTime, isShooting);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
@@ -541,6 +621,7 @@ namespace Engine
                 *crashPointer = 42; // This will cause a read access violation, simulating a crash
             }
             */
+
         }           
     }
 
@@ -590,6 +671,55 @@ namespace Engine
         }
     }
 
+    bool Application::TimePassed(double seconds)
+    {
+        // Use static to make sure the startTime is persistent across function calls
+        static std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
+
+        // Calculate elapsed time since the start
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::duration<double>>(currentTime - startTime).count();
+
+        // Check if the elapsed time is greater than or equal to the specified seconds
+        bool result = elapsedTime >= seconds;
+
+        //std::cout << "My boolean value is: " << std::boolalpha << result << std::endl;
+        //std::cout << "Elapsed time is: " << elapsedTime << " seconds" << std::endl;
+
+        // If the specified time has passed, reset the startTime to the current time
+        if (result)
+        {
+            startTime = currentTime;
+        }
+
+        return result;
+    }
+
+    float Application::ElapsedTime(PathfindingComponent* pathfindingComponent, double seconds)
+    {
+        // Check if the entity has a valid pathfinding component
+        if (pathfindingComponent == nullptr)
+            return 0.0f; // Return 0 if the component is invalid
+
+        // Use the stored startTime within the pathfinding component
+        auto& startTime = pathfindingComponent->startTime;
+
+        // Calculate elapsed time since the start
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::duration<double>>(currentTime - startTime).count();
+
+        bool result = elapsedTime >= seconds;
+
+        // If the specified time has passed, reset the startTime to the current time
+        if (result)
+        {
+            startTime = currentTime;
+        }
+
+        return elapsedTime;
+    }
+
+
     void Application::UpdateWindowFocus() {
         if (m_Window) {
             // Use get() to obtain a raw pointer to the managed object
@@ -605,7 +735,7 @@ namespace Engine
                     //windowsWindow->MinimizeWindow();
                     isPaused = true;
                     audioEngine.pauseAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
+                    // Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
                 }
                 // If the window is focused
                 else {
@@ -616,7 +746,7 @@ namespace Engine
                     // Unpause the game, resume audio playback, and log the event
                     isPaused = false;
                     audioEngine.resumeAllAudio();
-                    Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
+                    // Logger::GetInstance().Log(LogLevel::Debug, "Window regained focus. Resuming game and audio.");
                 }
             }
         }
@@ -636,4 +766,47 @@ namespace Engine
 
         glfwSetWindowTitle(glfwGetCurrentContext(), title_str.c_str());
     }
+
+    //void Application::LoadScene()
+    //{
+    //    if (deleteAllEntity == true)
+    //    {
+    //        // Retrieve the size of entities list
+    //        int entityCount = static_cast<int>(entityManager->GetEntities()->size());
+
+    //        // Loop backwards through the entities and delete each one
+    //        for (int i = entityCount - 1; i >= 0; --i)
+    //        {
+    //            entityManager->DestroyEntity(i); // Assumes DestroyEntity accepts an index
+    //        }
+
+    //        // Reset the selected entity index as there are no entities to select
+    //        selectedEntityIndex = -1;
+
+    //        // Set targetEntity to nullptr as there are no entities left
+    //        targetEntity = nullptr;
+
+    //        // Reset any other relevant data structures or counters if needed
+    //        entityManager->nextEntityID = 0; // Assuming this is how you reset your IDs
+    //        prefabManager->nextPrefabID = 0; // Reset prefab ID counter if needed
+
+    //        std::cout << "Deleted All Entities" << std::endl;
+    //        deleteAllEntity = false;
+    //    }
+
+    //    // Now load the scene
+    //    deserializer->LoadScene(sceneToLoad);
+    //    if (entityManager->GetEntities()->size() >= 2) {
+    //        selectedEntityIndex = 1;
+    //    }
+    //    else if (entityManager->GetEntities()->size() == 1) {
+    //        selectedEntityIndex = 0;
+    //    }
+    //    else
+    //        selectedEntityIndex = -1;
+    //    if (entityManager->GetEntity(selectedEntityIndex) != nullptr) {
+    //        targetEntity = entityManager->GetEntity(selectedEntityIndex);
+    //    }
+    //    shouldLoadScene = false; // Reset flag
+    //}
 }

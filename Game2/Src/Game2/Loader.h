@@ -14,8 +14,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
+#ifndef ENGINE_LOADER_H
+#define ENGINE_LOADER_H
 
-#pragma once
 #include "pch.h"
 #include "WindowsWindow.h"
 #include "Entity.h"
@@ -56,6 +57,8 @@ namespace Engine {
          */
         void LoadScene(const std::string& filePath);
 
+        //void UnloadScene(const std::string& filePathOut);
+
         /*!
          * \brief Load prefabs from a data file.
          * \param filepath The path to the prefab data file.
@@ -81,3 +84,4 @@ namespace Engine {
     };
 
 }
+#endif ENGINE_LOADER_H

@@ -8,10 +8,11 @@
 
  */
 /******************************************************************************/
+#ifndef ENGINE_SYSTEM_H
+#define ENGINE_SYSTEM_H
+
 #include "pch.h"
 #include "EngineTypes.h"
-
-#pragma once
 
 namespace Engine
 {
@@ -105,3 +106,4 @@ namespace Engine
 		double elapsedTime = 0.0;		
 	};
 }
+#endif ENGINE_SYSTEM_H

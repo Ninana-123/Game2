@@ -12,7 +12,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_EDITORCAMERA_H
+#define ENGINE_EDITORCAMERA_H
+
 #include "Camera.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Input.h"
@@ -193,3 +195,4 @@ namespace Engine
 		const float m_RotationSpeed = 3.0f;  // Degrees per second
 	};
 }
+#endif ENGINE_EDITORCAMERA_H

@@ -22,10 +22,17 @@ namespace Engine
 	{
 	protected:
 		unsigned int m_behaviourIndex = 0;
+		c_state State = Static;
 	public:
 		
 		inline void SetBehaviourIndex(const unsigned int& behaviourIndex) {
 			m_behaviourIndex = behaviourIndex;
+		}
+		inline void SetBehaviourState(c_state state) {
+			State = state;
+		}
+		inline c_state GetState() noexcept {
+			return State;
 		}
 		inline unsigned int& GetBehaviourIndex() noexcept {
 			return m_behaviourIndex;

@@ -11,10 +11,8 @@
             written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
-#ifndef INGAMEGUISYSTEM_H
-#define INGAMEGUISYSTEM_H
+#ifndef ENGINE_INGAMEGUISYSTEM_H
+#define ENGINE_INGAMEGUISYSTEM_H
 
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
@@ -26,6 +24,10 @@
 
 // Global variables
 extern int pathfindingEntityTexture;
+extern int healthBarEntityTexture;
+extern int totalInfantry;
+extern int totalArcher;
+extern int totalTank;
 extern bool isGamePaused;
 extern bool inSettings;
 extern bool isGameOver;
@@ -55,7 +57,8 @@ namespace Engine
         A pointer to the PrefabManager.
         */
         /**************************************************************************/
-        inGameGUI(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+        inGameGUI(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) 
+            : entityManager(em), prefabManager(pm) {}
 
         /**************************************************************************/
         /*!
@@ -92,7 +95,9 @@ namespace Engine
         Flag indicating whether collision checks should be performed.
         */
         /**************************************************************************/
-        void Update(bool CollisionCheck);
+        void Update(bool CollisionCheck, AudioEngine& audioEngine, AssetManager& assetManager);
+
+        void RestartGame();
 
         // ~inGameGUI();
 
@@ -104,4 +109,4 @@ namespace Engine
 
     };
 }
-#endif
+#endif ENGINE_INGAMEGUISYSTEM_H

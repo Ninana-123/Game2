@@ -12,7 +12,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_SOUNDINFO_H
+#define ENGINE_SOUNDINFO_H
 
 class SoundInfo {
 public:
@@ -194,3 +195,4 @@ private:
     float y{};                // Y position in 3D space
     float z{};                // Z position in 3D space
 };
+#endif ENGINE_SOUNDINFO_H

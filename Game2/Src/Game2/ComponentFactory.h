@@ -11,7 +11,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_COMPONENTFACTORY_H
+#define ENGINE_COMPONENTFACTORY_H
+
 #include "pch.h"
 #include "Component.h"
 #include "TransformComponent.h"
@@ -21,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "SpriteComponent.h"
 #include "PathfindingComponent.h"
 #include "BehaviourComponent.h"
+#include "StatsComponent.h"
 
 namespace Engine
 {
@@ -87,3 +90,4 @@ namespace Engine
 		static std::unordered_map<ComponentType, CreationFunction>& componentRegistry();
 	};
 }
+#endif ENGINE_COMPONENTFACTORY_H

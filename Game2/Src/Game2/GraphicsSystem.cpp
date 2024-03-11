@@ -23,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Animation.h"
 #include "ImGuiWrapper.h"
 #include "inGameGUI.h"
+#include "Application.h"
 
 
 #ifdef NDEBUG // Check if we are in release mode
@@ -30,7 +31,8 @@ bool renderCollisionBox = false;
 #else
 bool renderCollisionBox = true; // Debug mode
 #endif
-
+double framesPerSecond = 0.0;
+bool fpsTimer = true;
 #pragma warning(disable: 4100) // disable "unreferenced parameter" 
 namespace Engine
 {
@@ -500,6 +502,78 @@ namespace Engine
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
             }
+
+            else if ((texture->textureKey.subIndex == 4) && entity->HasComponent(ComponentType::Sprite))
+            {
+                // Calculate deltaTime (time since the last frame)
+                static double lastTime = glfwGetTime();
+                double currentTime = glfwGetTime();
+                double deltaTime = currentTime - lastTime;
+                lastTime = currentTime;
+                float frameRate = 5.0F;
+                float horizontalFrames = 5.0f; // Number of horizontal frames
+                float verticalFrames = 1.0f; // Number of vertical frames
+                //float Length = 1536.0f; // length of sprite sheet
+                Anim_Mode playMode = Anim_Mode::ONE_TIME;
+
+                // Create a static animation object if not created already
+                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                // Play the animation
+                animation.Play();
+                // Update the animation with deltaTime
+                animation.Update(static_cast<float>(deltaTime));
+                // Get the current frame index
+                int currentFrame = animation.GetCurrentFrame();
+
+                // Calculate the texture offset based on the current frame
+                float frameWidth = 1.0f / horizontalFrames;
+                float frameHeight = 1.0f / verticalFrames;
+                float texCoordX = currentFrame * frameWidth;
+                //float texCoordY = currentRow * frameHeight;
+
+                // Set the texture offset in the shader
+                shader.SetUniform1f("texCoordX", texCoordX);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                shader.SetUniform1f("u_FrameWidth", frameWidth);
+                shader.SetUniform1f("u_FrameHeight", frameHeight);
+                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+                }
+
+            else if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
+            {
+                // Calculate deltaTime (time since the last frame)
+                static double lastTime = glfwGetTime();
+                double currentTime = glfwGetTime();
+                double deltaTime = currentTime - lastTime;
+                lastTime = currentTime;
+                float frameRate = 5.0F;
+                float horizontalFrames = 6.0f; // Number of horizontal frames
+                float verticalFrames = 1.0f; // Number of vertical frames
+                //float Length = 1536.0f; // length of sprite sheet
+                Anim_Mode playMode = Anim_Mode::ONE_TIME;
+
+                // Create a static animation object if not created already
+                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                // Play the animation
+                animation.Play();
+                // Update the animation with deltaTime
+                animation.Update(static_cast<float>(deltaTime));
+                // Get the current frame index
+                int currentFrame = animation.GetCurrentFrame();
+
+                // Calculate the texture offset based on the current frame
+                float frameWidth = 1.0f / horizontalFrames;
+                float frameHeight = 1.0f / verticalFrames;
+                float texCoordX = currentFrame * frameWidth;
+                //float texCoordY = currentRow * frameHeight;
+
+                // Set the texture offset in the shader
+                shader.SetUniform1f("texCoordX", texCoordX);
+                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                shader.SetUniform1f("u_FrameWidth", frameWidth);
+                shader.SetUniform1f("u_FrameHeight", frameHeight);
+                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+                }
             else //render as static
             {
                 textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
@@ -639,7 +713,6 @@ namespace Engine
         renderer.Clear(); 
         if(renderImGuiGUI == true)
         editorFBO.Bind();
-
         // Get the current state of the 'S' key
         bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
@@ -752,6 +825,64 @@ namespace Engine
         {
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
+
+        if(mainMenuCheck == false)
+        {
+            // Infantry count
+            if (totalInfantry == 3) 
+            {
+                font.RenderText(shader, "x3", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalInfantry == 2)
+            {
+                font.RenderText(shader, "x2", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalInfantry == 1)
+            {
+                font.RenderText(shader, "x1", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalInfantry == 0)
+            {
+                font.RenderText(shader, "x0", -0.15f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            // Archer count
+            if (totalArcher == 2) 
+            {
+                font.RenderText(shader, "x2", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalArcher == 1)
+            {
+                font.RenderText(shader, "x1", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalArcher == 0)
+            {
+                font.RenderText(shader, "x0", 0.07f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            // Tank count
+            if (totalTank == 1) 
+            {
+                font.RenderText(shader, "x1", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+
+            if (totalTank == 0)
+            {
+                font.RenderText(shader, "x0", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+            }
+       
+        }
+ 
+        std::stringstream ss;
+        ss << std::fixed << std::setprecision(2) << fps;
+        std::string fps_str = ss.str();
+        if(fpsTimer == true)
+            font.RenderText(shader, fps_str, -0.75f, 0.9f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
 
         shader.SetActiveShaderSet(previousShaderSet);
         // CAMERA

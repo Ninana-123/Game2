@@ -14,21 +14,27 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
-
-#ifndef CSD1130_COLLISION_H_
-#define CSD1130_COLLISION_H_
+#ifndef ENGINE_COLLISION_H_
+#define ENGINE_COLLISION_H_
 
 #include "System.h"
 #include "Vector2d.h"
 #include "EngineTypes.h"
-#endif 
 
 // Global Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
 extern int lastCollidingEntityTexture;
+extern int towerCollidingEntity;
+extern int tower1CollidingEntityHealth;
+extern int tower2CollidingEntityHealth;
+extern int castleCollidingEntityHealth;
+extern int victoryID;
 extern bool isStartingPoint;
+extern bool towerCollision;
+extern bool tower1Destroyed;
+extern bool tower2Destroyed;
+extern bool castleDestroyed;
 extern bool isShooting;
 
 namespace Engine
@@ -58,7 +64,7 @@ namespace Engine
 			map container of entities with references
 
 		********************************************************************/
-		void Update (std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
+		void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
 
 		struct AABB
 		{
@@ -66,7 +72,7 @@ namespace Engine
 			VECTORMATH::Vec2 max;
 		};
 
-		struct Circle 
+		struct Circle
 		{
 			VECTORMATH::Vec2 center;
 			float radius = 0.f;
@@ -256,7 +262,8 @@ namespace Engine
 		/**************************************************************************/
 		void EntityToMouseCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
-		private:
-			EntityID lastCollidingEntityID = {};
+	private:
+		EntityID lastCollidingEntityID = {};
 	};
 }
+#endif ENGINE_COLLISION_H

@@ -13,7 +13,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_APPLICATION_H
+#define ENGINE_APPLICATION_H
 
 #include "Core.h"
 #include "Window.h"
@@ -21,6 +22,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "EntityManager.h"
 #include "WindowsWindow.h"
+// #include "ImGuiFileBrowser.h"
 
 extern double loopTime;
 extern const double fixedDeltaTime;
@@ -31,6 +33,8 @@ extern double dt;
 extern std::string initScene;
 extern int e_Width;
 extern int e_Height;
+extern bool mainMenuCheck;
+extern double fps;
 
 namespace Engine
 {
@@ -44,6 +48,9 @@ namespace Engine
         Constructor for the Application class
         *************************************************************************/
         Application();
+
+        //Application(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, std::shared_ptr<Engine::Loader> loader)
+        //    : entityManager(em), prefabManager(pm), deserializer(loader) {}
 
         /*!**********************************************************************
         \brief
@@ -90,6 +97,10 @@ namespace Engine
         *************************************************************************/
         void UpdateDeltaTime();
 
+        static bool TimePassed(double seconds);
+
+        static float ElapsedTime(PathfindingComponent* pathfindingComponent, double seconds);
+
         /*!**********************************************************************
         \brief
         Updates the window title to display FPS.
@@ -112,6 +123,10 @@ namespace Engine
         std::shared_ptr<Engine::EntityManager> EM;      
 
         void ToggleFullscreen();
+        
+        //void LoadScene();
+
+        //int selectedEntityIndex = 1;
 
     private:
 
@@ -137,7 +152,7 @@ namespace Engine
         *************************************************************************/
         bool OnWindowResize(WindowResizeEvent& e);
 
-        void ToggleFullScreen();
+       //void TransitionToNextScene();
 
         // Window instance 
         std::unique_ptr<Window> m_Window;
@@ -145,6 +160,31 @@ namespace Engine
         // Flag indicating if the application is running
         bool m_Running = true;
         bool gamePlaying = true;
+        bool isMainMenuLoaded = false;
+
+        //std::shared_ptr<Engine::EntityManager> entityManager;
+        //Engine::PrefabManager* prefabManager;
+        //std::shared_ptr<Engine::Loader> deserializer;
+
+        //// Assuming width_texture and height_texture are known
+        //float width_texture ;
+        //float height_texture;
+        //float scaleX = 2.7f;  // Scale factor in the X direction
+        //float scaleY = 2.4f;  // Scale factor in the Y direction
+
+        //float estimated_width = width_texture * scaleX;
+        //float estimated_height = height_texture * scaleY;
+
+        //// Position of the play button entity
+        //float playButtonX = 335.0f;  // X position of the play button
+        //float playButtonY = -50.0f;   // Y position of the play button
+
+        //// Calculate boundaries of the play button
+        //float playButtonLeft = playButtonX - estimated_width / 2.0f;
+        //float playButtonRight = playButtonX + estimated_width / 2.0f;
+        //float playButtonTop = playButtonY + estimated_height / 2.0f;
+        //float playButtonBottom = playButtonY - estimated_height / 2.0f;
+
     };
 
     /*!
@@ -157,3 +197,4 @@ namespace Engine
     Application* CreateApplication();
 
 } // End of namespace Engine
+#endif ENGINE_APPLICATION_H

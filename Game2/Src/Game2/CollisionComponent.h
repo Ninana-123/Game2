@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		CollisionComponent.h
@@ -9,6 +8,9 @@
 
  */
  /******************************************************************************/
+#ifndef ENGINE_COLLISIONCOMPONENT_H
+#define ENGINE_COLLISIONCOMPONENT_H
+
 #include "Component.h"
 #include "CollisionSystem.h"
 
@@ -17,13 +19,16 @@ namespace Engine
 	class CollisionComponent : public Component
 	{
 	public:
+		
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
 		bool isColliding = false;
 		bool mColliding = false;
+		bool disableCollision = false;
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;
+		Entity* target = nullptr;
 		VECTORMATH::Vector2D collisionVel = VECTORMATH::Vector2D(0.f, 0.f);
 
 		/*!*****************************************************************
@@ -94,3 +99,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_COLLISIONCOMPONENT_H

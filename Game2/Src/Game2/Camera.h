@@ -15,7 +15,9 @@
 			written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_CAMERA_H
+#define ENGINE_CAMERA_H
+
 #include "pch.h"
 #include <glm/glm.hpp>
 #include "Input.h"
@@ -131,3 +133,4 @@ namespace Engine
 		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
 	};
 }
+#endif ENGINE_CAMERA_H

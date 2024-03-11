@@ -15,8 +15,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-
-#pragma once
+#ifndef ENGINE_AUDIOENGINE_H
+#define ENGINE_AUDIOENGINE_H
 
 #include "SoundInfo.h"
 #include <fmod_studio.hpp>
@@ -291,3 +291,4 @@ private:
      */
     std::map<std::string, FMOD::Studio::EventInstance*> eventInstances;
 };
+#endif ENGINE_AUDIOENGINE_H

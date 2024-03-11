@@ -12,7 +12,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_ASSETMANAGER_H
+#define ENGINE_ASSETMANAGER_H
+
 #include "pch.h"
 #include "Texture.h"
 #include "EngineTypes.h"
@@ -236,7 +238,13 @@ namespace Engine {
             { {TextureClass::Archer,            2}, "Resource/Texture/ArcherAttack.png" },
             { {TextureClass::Archer,            3}, "Resource/Texture/ArcherDeath.png" },
             { {TextureClass::Tower,             0}, "Resource/Texture/Tower.png" },
+            { {TextureClass::Tower,             4}, "Resource/Texture/TowerDestroyed.png" },
+
+
+
             { {TextureClass::Castle,            0}, "Resource/Texture/Castle.png" },
+            { {TextureClass::Castle,            5}, "Resource/Texture/CastleDestroyed.png" },
+
             { {TextureClass::HUD,               0}, "Resource/Texture/HUD.png" },
             { {TextureClass::HUDInfantry,       0}, "Resource/Texture/HUDInfantry.png"},
             { {TextureClass::HUDArcher,         0}, "Resource/Texture/HUDArcher.png"},
@@ -252,8 +260,29 @@ namespace Engine {
             { {TextureClass::mainMenuGameInfo,  0}, "Resource/Texture/mmGameInfo.png"},
             { {TextureClass::mainMenuCredits,   0}, "Resource/Texture/mmCredits.png"},
             { {TextureClass::Logo,              0}, "Resource/Texture/Logo.png"},
-            { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_background.png"},
-            { {TextureClass::Arrow,             0}, "Resource/Texture/Arrow.png"},
+            { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_screen.png"},
+            { {TextureClass::catHPEmpty,        0}, "Resource/Texture/hp_empty.PNG" },
+            { {TextureClass::catHP1,            0}, "Resource/Texture/cats_hp_1.PNG" },
+            { {TextureClass::catHP2,            0}, "Resource/Texture/cats_hp_2.PNG" },
+            { {TextureClass::catHP3,            0}, "Resource/Texture/cats_hp_3.PNG" },
+            { {TextureClass::catHP4,            0}, "Resource/Texture/cats_hp_4.PNG" },
+            { {TextureClass::catHP5,            0}, "Resource/Texture/cats_hp_5.PNG" },
+            { {TextureClass::catHP6,            0}, "Resource/Texture/cats_hp_6.PNG" },
+            { {TextureClass::catHP7,            0}, "Resource/Texture/cats_hp_7.PNG" },
+            { {TextureClass::catHP8,            0}, "Resource/Texture/cats_hp_8.PNG" },
+            { {TextureClass::catHP9,            0}, "Resource/Texture/cats_hp_9full.PNG" },
+            { {TextureClass::towerHPEmpty,      0}, "Resource/Texture/hp_empty.PNG" },
+            { {TextureClass::towerHP1,          0}, "Resource/Texture/Tower_hp_1.PNG" },
+            { {TextureClass::towerHP2,          0}, "Resource/Texture/Tower_hp_2.PNG" },
+            { {TextureClass::towerHP3,          0}, "Resource/Texture/Tower_hp_3.PNG" },
+            { {TextureClass::towerHP4,          0}, "Resource/Texture/Tower_hp_4.PNG" },
+            { {TextureClass::towerHP5,          0}, "Resource/Texture/Tower_hp_5.PNG" },
+            { {TextureClass::towerHP6,          0}, "Resource/Texture/Tower_hp_6.PNG" },
+            { {TextureClass::towerHP7,          0}, "Resource/Texture/Tower_hp_7.PNG" },
+            { {TextureClass::towerHP8,          0}, "Resource/Texture/Tower_hp_8.PNG" },
+            { {TextureClass::towerHP9,          0}, "Resource/Texture/Tower_hp_9.PNG" },
+            { {TextureClass::Arrow,             0}, "Resource/Texture/Arrow.png" },
         };
     };
 }
+#endif ENGINE_ASSETMANAGER_H

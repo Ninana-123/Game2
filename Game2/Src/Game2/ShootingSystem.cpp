@@ -3,7 +3,9 @@
 #include "Entity.h"
 #include "EntityManager.h"
 #include "ShootingSystem.h"
-#include "CollisionSystem.h"
+#include "Application.h"
+
+bool entityCreated = false;
 
 namespace Engine
 {
@@ -44,11 +46,11 @@ namespace Engine
     }
 
     void ShootingSystem::Update(float deltaTime, bool shootingCheck) {
-        static bool entitycreated = false;
-        if (shootingCheck && !entitycreated) {
+        if (shootingCheck && !entityCreated) 
+        {
             Prefab* arrowPrefab = prefabManager->GetPrefab(10);
             entityManager->CreateEntityFromPrefab(*arrowPrefab);
-            entitycreated = true;
+            entityCreated = true;
             //spawnTimer = 0.0f;
         }
         /*if (entitycreated) {

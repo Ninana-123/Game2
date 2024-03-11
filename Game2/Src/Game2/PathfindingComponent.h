@@ -8,7 +8,9 @@
 
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_PATHFINDINGCOMPONENT_H
+#define ENGINE_PATHFINDINGCOMPONENT_H
+
 #include "Component.h"
 #include "PathfindingSystem.h"
 #include "EngineTypes.h"
@@ -23,6 +25,11 @@ namespace Engine
 		int startY = 0; // Start point X
 		int goalX = 0; // End point X
 		int goalY = 0; // End point Y
+		int charType = 0;
+		float timeElapsedMovement = 0.0f;
+		std::chrono::high_resolution_clock::time_point startTime;
+		bool changedTowers = false;
+		bool accessedCastle = false;
 		std::vector<std::pair<int, int>> path; // Store the path as a list of points
 		bool initialized = false;
 		std::pair<int, int> previousPos1 = { 0, 0 };
@@ -43,8 +50,13 @@ namespace Engine
 			PathfindingComponent* cloneComponent = new PathfindingComponent();
 			cloneComponent->startX = startX;
 			cloneComponent->startY = startY;
-			cloneComponent->goalX= goalX;
+			cloneComponent->goalX = goalX;
 			cloneComponent->goalY = goalY;
+			cloneComponent->charType = charType;
+			cloneComponent->timeElapsedMovement = timeElapsedMovement;
+			cloneComponent->startTime = startTime;
+			cloneComponent->changedTowers = changedTowers;
+			cloneComponent->accessedCastle = accessedCastle;
 			cloneComponent->path = path;
 			cloneComponent->initialized = initialized;
 			cloneComponent->previousPos1 = previousPos1;
@@ -83,3 +95,4 @@ namespace Engine
 		}
 	};
 }
+#endif ENGINE_PATHFINDINGCOMPONENT_H

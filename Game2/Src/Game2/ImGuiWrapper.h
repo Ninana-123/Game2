@@ -16,7 +16,9 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_IMGUIWRAPPER_H
+#define ENGINE_IMGUIWRAPPER_H
+
 #include "Event.h"
 #include "InputEvent.h"
 #include "AppEvent.h"
@@ -141,7 +143,12 @@ namespace Engine {
 		 */
 		void RenderLevelEditor();
 
-		void RenderAudioBrowser();
+		//void RenderAudioBrowser();
+
+		void RenderContentBrowser();
+
+		void RenderEntityProperties();
+
 
 		int selectedEntityIndex = 1;
 
@@ -230,7 +237,9 @@ namespace Engine {
 		 */
 		bool OnWindowResizeEvent(WindowResizeEvent& e);
 
+
 	private:
+		float LeftWindowWidth = 0.0f;
 		bool renderDockspace = false;
 		bool isImGuiHovered = false;
 		float m_Time = 0.0f;
@@ -242,6 +251,9 @@ namespace Engine {
 		Entity* targetEntity = nullptr;
 		Prefab* targetPrefab = nullptr;
 		void UpdateImGuiInteractionState();
+		std::filesystem::path m_CurrentDirectory = "Resource";
+		
 
 	};
 }
+#endif ENGINE_IMGUIWRAPPER_H

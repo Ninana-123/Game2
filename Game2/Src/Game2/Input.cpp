@@ -82,7 +82,14 @@ namespace Engine {
             s_KeyState[static_cast<KeyCode>(i)] = glfwGetKey(glfwGetCurrentContext(), i) == GLFW_PRESS;
         }
         Picking();
-        Dragging();
+        if (renderImGuiGUI == true) 
+        {
+            Dragging();
+        }
+        if (renderImGuiGUI == false) 
+        {
+            InGameGUIDragging();
+        }
         Delete();
     }
 
@@ -246,6 +253,47 @@ namespace Engine {
                     transformComponent->position.y = mousePosition.y;
                 }
             }  
+            else
+            {
+                isDragging = false;
+            }
+        }
+    }
+
+    void Input::InGameGUIDragging()
+    {
+        //target entity selected
+        if (targetEntityID != -1)
+        {
+            if (IsMouseButtonPressed(LEFT_MOUSE_BUTTON))
+            {
+                isDragging = true;
+
+                Entity* DragEntity = entityManager->GetEntity(targetEntityID);
+
+                // Get the mouse position from the input system
+                VECTORMATH::Vector2D mousePosition = Input::GetMousePosition();
+
+                // For non Imgui purposes
+                int displayWidth, displayHeight;
+                glfwGetFramebufferSize(glfwGetCurrentContext(), &displayWidth, &displayHeight);
+                float scaleX = displayWidth / 1280.f;
+                float scaleY = displayHeight / 720.f;
+
+                // Normalize the mouse position
+                mousePosition.x = ((mousePosition.x) - 1280.f / 2.0f) * scaleX;
+                mousePosition.y = (720.f / 2.0f - (mousePosition.y)) * scaleY;
+
+                //std::cout << mousePosition.x << ", " << mousePosition.y << std::endl;
+
+                if (DragEntity && isDragging)
+                {
+                    //CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(DragEntity->GetComponent(ComponentType::Collision));
+                    TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(DragEntity->GetComponent(ComponentType::Transform));
+                    transformComponent->position.x = mousePosition.x;
+                    transformComponent->position.y = mousePosition.y;
+                }
+            }
             else
             {
                 isDragging = false;

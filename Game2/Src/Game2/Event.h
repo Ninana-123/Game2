@@ -14,7 +14,8 @@ written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
 
-#pragma once
+#ifndef ENGINE_EVENT_H
+#define ENGINE_EVENT_H
 
 #include "pch.h"
 #include "Core.h"
@@ -192,3 +193,4 @@ namespace Engine {
         return os << e.ToString();
     }
 }
+#endif ENGINE_EVENT_H

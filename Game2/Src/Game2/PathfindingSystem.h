@@ -14,9 +14,8 @@ without the prior written consent of DigiPen Institute of
 Technology is prohibited.
  */
  /******************************************************************************/
-
-#ifndef PATHFINDING_H
-#define PATHFINDING_H
+#ifndef ENGINE_PATHFINDING_H
+#define ENGINE_PATHFINDING_H
 
 #include <iostream>
 #include <vector>
@@ -27,6 +26,7 @@ Technology is prohibited.
 #include "PathfindingComponent.h"
 
 extern bool isGameOver;
+extern bool accessedCastle;
 
 namespace Engine
 {
@@ -43,7 +43,7 @@ namespace Engine
         */
         /**************************************************************************/
         void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
-    
+
         /**************************************************************************/
         /*!
         \brief Initialize the pathfinding system for a grid-based map with a specified number of rows and columns.
@@ -184,7 +184,9 @@ namespace Engine
         A pair representing the closest coordinates to the starting position.
         */
         /**************************************************************************/
-        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions);
+        std::pair<int, int> getClosestPair(int startPosX, int startPosY, const std::vector<std::pair<int, int>>& towerPositions, int unitNum);
+
+        // ~PathfindingSystem();
 
     private:
         struct Node {
@@ -247,8 +249,4 @@ namespace Engine
         bool isWalking;
     };
 }
-
-
-#endif
-
-
+#endif ENGINE_PATHFINDING_H

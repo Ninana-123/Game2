@@ -7,20 +7,24 @@
 \brief		Declaration of types to be used in the custom engine
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_ENGINETYPES_H
+#define ENGINE_ENGINETYPES_H
 
 // Entity and Prefab IDs
 typedef unsigned int EntityID; 
 typedef unsigned int PrefabID;
 constexpr EntityID EMPTY_ID = 0; 
-const int MAX_SUBINDEX = 4; 
+const int MAX_SUBINDEX = 6; 
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding,Logic, Shooting, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Shooting, Unknown };
 
 // Character State Enumeration
-enum c_state { Static, Walking, Attack, Death, Idle }; 
+enum c_state { Static, Walking, Attack, Death, TowerDestroyed, CastleDestroyed, Idle };
+
+// Unit Type Enum
+enum unit_type { none, infantry, tank, archer, tower, base };
 
 /*!
 \brief
@@ -62,7 +66,28 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuCredits,
     Logo,
     victoryScreen,
+    catHPEmpty,
+    catHP1,
+    catHP2,
+    catHP3,
+    catHP4,
+    catHP5,
+    catHP6,
+    catHP7,
+    catHP8,
+    catHP9,
+    towerHPEmpty,
+    towerHP1,
+    towerHP2,
+    towerHP3,
+    towerHP4,
+    towerHP5,
+    towerHP6,
+    towerHP7,
+    towerHP8,
+    towerHP9,
     Arrow,
+
     TextureClassCount
 };
 
@@ -142,3 +167,4 @@ enum anim_mode
 {
     loop, one_time
 };
+#endif ENGINE_ENGINETYPES_H

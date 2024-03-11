@@ -1,4 +1,4 @@
-10
+13
 Transform
 Position: 1 0
 ScaleX: 3672.09
@@ -123,8 +123,8 @@ ScaleX: 2
 ScaleY: 2
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 200
+c_Height: 200
 isColliding: 0
 MinX: -70
 MinY: 245
@@ -133,6 +133,16 @@ MaxY: 245
 Radius: 0
 Layer: 5
 CollisionVel: -120 255
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
 Texture
 MainIndex: 4
 SubIndex: 0
@@ -142,6 +152,11 @@ startY: 0
 goalX: 0
 goalY: 0
 initialized: 0
+Stats
+Health: 50
+Range: 100
+Logic
+BehaviourIndex: 0
 EndEntity
 Transform
 Position: -275 -35
@@ -149,8 +164,8 @@ ScaleX: 2
 ScaleY: 2
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 200
+c_Height: 200
 isColliding: 0
 MinX: -275
 MinY: -35
@@ -159,6 +174,16 @@ MaxY: -35
 Radius: 0
 Layer: 5
 CollisionVel: -275 -35
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
 Texture
 MainIndex: 4
 SubIndex: 0
@@ -168,24 +193,71 @@ startY: 0
 goalX: 0
 goalY: 0
 initialized: 0
+Stats
+Health: 50
+Range: 50
+Logic
+BehaviourIndex: 0
 EndEntity
 Transform
 Position: 345 75
-ScaleX: 2.5
-ScaleY: 3
+ScaleX: 1.5
+ScaleY: 5
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 250
+c_Height: 250
 isColliding: 0
 MinX: 345
 MinY: 75
 MaxX: 345
 MaxY: 75
 Radius: 0
-Layer: 6
+Layer: 5
 CollisionVel: 345 75
+Sprite
+framerate: 0
+horizontalframes: 0
+verticalframes: 0
+animtimer: 0
+currentframe: 0
+texturexindex: 0
+textureyindex: 0
+playing: 0
+playmode: 0
 Texture
 MainIndex: 5
+SubIndex: 0
+Stats
+Health: 50
+Range: 100
+Logic
+BehaviourIndex: 0
+EndEntity
+Transform
+Position: -69 345
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
+SubIndex: 0
+EndEntity
+Transform
+Position: -274 -130
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
+SubIndex: 0
+EndEntity
+Transform
+Position: 350 207
+ScaleX: 0.4
+ScaleY: 0.6
+Rotation: 0
+Texture
+MainIndex: 41
 SubIndex: 0
 EndEntity

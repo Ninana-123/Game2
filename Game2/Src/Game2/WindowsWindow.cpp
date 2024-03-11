@@ -82,8 +82,7 @@ namespace Engine {
 		//m_Window = glfwCreateWindow(mode->width, mode->height, m_Data.Title.c_str(), glfwGetPrimaryMonitor(), nullptr);
 		//glfwSetWindowMonitor(GetNativeWindow(), glfwGetPrimaryMonitor(), 0, 0, mode->width, mode->height, mode->refreshRate);
 
-	#ifdef DEBUG
-		
+
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		if (!m_Window) {
 			// Handle window creation failure
@@ -92,7 +91,7 @@ namespace Engine {
 		}
 
 		//NOT RESIZABLE FOR NOW
-	#else
+		/*
 		GLFWmonitor* primaryMonitor = glfwGetPrimaryMonitor();
 		if (!primaryMonitor) {
 			Logger::GetInstance().Log(LogLevel::Error, "Failed to get primary monitor.");
@@ -104,8 +103,8 @@ namespace Engine {
 			return;
 		}
 		m_Window = glfwCreateWindow(mode->width, mode->height, m_Data.Title.c_str(), primaryMonitor, nullptr);
-	#endif
-		
+ */
+
 		glfwSetWindowAttrib(m_Window, GLFW_RESIZABLE, GLFW_TRUE);
 
 		glfwMakeContextCurrent(m_Window);

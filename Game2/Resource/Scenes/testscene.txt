@@ -105,12 +105,23 @@ SubIndex: 0
 EndEntity
 Transform
 Position: 0 -300
-ScaleX: 1.1
-ScaleY: 4
+ScaleX: 0.3
+ScaleY: 13
 Rotation: 0
 Texture
 MainIndex: 6
 SubIndex: 0
+Collision
+c_Width: 40
+c_Height: 10
+isColliding: 0
+MinX: -80
+MinY: 215
+MaxX: -80
+MaxY: 215
+Radius: 0
+Layer: 2
+CollisionVel: -120 255
 EndEntity
 Transform
 Position: 0 -300
@@ -126,7 +137,7 @@ MinY: -322.5
 MaxX: 22.5
 MaxY: -277.5
 Radius: 0
-Layer: 3
+Layer: 2
 CollisionVel: 0 -15
 Texture
 MainIndex: 8
@@ -146,7 +157,7 @@ MinY: -322.5
 MaxX: 157.5
 MaxY: -277.5
 Radius: 0
-Layer: 3
+Layer: 2
 CollisionVel: 0 0
 Texture
 MainIndex: 9
@@ -166,7 +177,7 @@ MinY: 335
 MaxX: 560
 MaxY: 335
 Radius: 0
-Layer: 3
+Layer: 2
 CollisionVel: 0 0
 Texture
 MainIndex: 10
@@ -186,7 +197,7 @@ MinY: 335
 MaxX: 610
 MaxY: 335
 Radius: 0
-Layer: 3
+Layer: 2
 CollisionVel: 0 0
 Texture
 MainIndex: 12
@@ -206,7 +217,7 @@ MinY: -322.5
 MaxX: -112.5
 MaxY: -277.5
 Radius: 0
-Layer: 3
+Layer: 2
 CollisionVel: 0 0
 Texture
 MainIndex: 7
@@ -218,15 +229,15 @@ ScaleX: 2
 ScaleY: 2
 Rotation: 0
 Collision
-c_Width: 0
-c_Height: 0
+c_Width: 100
+c_Height: 100
 isColliding: 0
 MinX: -80
 MinY: 215
 MaxX: -80
 MaxY: 215
 Radius: 0
-Layer: 5
+Layer: 2
 CollisionVel: -120 255
 Texture
 MainIndex: 4

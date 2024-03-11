@@ -13,7 +13,8 @@ Reproduction or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
  */
  /******************************************************************************/
-#pragma once
+#ifndef ENGINE_WINDOWSWINDOW_H
+#define ENGINE_WINDOWSWINDOW_H
 
 #include "Window.h"
 extern bool isPaused;
@@ -111,7 +112,7 @@ namespace Engine {
 
 
     private:
-        GLFWwindow* m_Window;
+        GLFWwindow* m_Window{};
 
         struct WindowData {
             std::string Title;
@@ -128,3 +129,4 @@ namespace Engine {
         bool m_IsFullScreen = false;
     };
 }
+#endif ENGINE_WINDOWSWINDOW_H
