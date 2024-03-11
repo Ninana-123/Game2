@@ -9,15 +9,6 @@
 
  */
  /******************************************************************************/
-#include "ShootingComponent.h"
-#include "Vector2d.h"
-#include "pch.h"
-#include "GraphicsSystem.h"
-#include "PhysicsSystem.h"
-#include "CollisionSystem.h"
-#include "PathfindingSystem.h"
-#include "AssetManager.h"
-#include "EntityManager.h"
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 #include "CollisionSystem.h"
@@ -25,12 +16,10 @@
 #include "PrefabManager.h"
 #include "EngineTypes.h"
 #include "AssetManager.h"
-#include <vector>
-#include "System.h"
 
 namespace Engine
 {
-	class ShootingSystem : public System
+	class ShootingSystem
 	{
     public:
 		//void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override;
@@ -39,9 +28,33 @@ namespace Engine
 
 		//void Shoot(ShootingComponent* shootingComponent);
 
-        void Initialize();
         ShootingSystem(); // Constructor to initialize shooting rate variables
-        ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm) : entityManager(em), prefabManager(pm) {}
+
+        ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm)
+            : entityManager(em), prefabManager(pm) {}
+
+        /**************************************************************************/
+        /*!
+        \brief Sets the target entity for the in-game GUI.
+
+        \param[in] entity
+        Pointer to the target entity.
+        */
+        /**************************************************************************/
+        inline void SetTargetEntity(Entity* entity) { targetEntity = entity; }
+
+        /**************************************************************************/
+        /*!
+        \brief Gets the target entity for the in-game GUI.
+
+        \return
+        Pointer to the target entity.
+        */
+        /**************************************************************************/
+        inline Entity* TargetEntityGetter() { return targetEntity; }
+
+        void Initialize();
+
         void Update(float deltaTime, bool shootingCheck);
         //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);
 
@@ -66,7 +79,7 @@ namespace Engine
         Engine::PrefabManager* prefabManager;
         Entity* targetEntity = nullptr;
         CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
-        TextureComponent* textureCheck;
+        // TextureComponent* textureCheck;
 
         float spawnTimer = 0.0;
         float spawnInterval = 0.0;

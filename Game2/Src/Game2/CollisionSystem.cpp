@@ -40,6 +40,7 @@ bool tower2Destroyed = false;
 bool castleDestroyed = false;
 bool isStartingPoint = true;
 bool towerCollision = false;
+bool isShooting = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -721,9 +722,11 @@ namespace Engine
 
 										// Check if tower radius is colliding with the player's radius
 										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
-											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
+											&& collisionComponent2->layer != Layer::inGameGUI 
+											&& collisionComponent1->layer == Layer::Tower)
 										{
 											//isColliding = true;
+											isShooting = true;
 											if (behaviourComponent1)
 											{
 												// behaviourComponent1->SetBehaviourState(c_state::Attack);

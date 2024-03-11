@@ -35,6 +35,7 @@ extern bool towerCollision;
 extern bool tower1Destroyed;
 extern bool tower2Destroyed;
 extern bool castleDestroyed;
+extern bool isShooting;
 
 namespace Engine
 {

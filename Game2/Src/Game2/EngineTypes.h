@@ -86,6 +86,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     towerHP7,
     towerHP8,
     towerHP9,
+    Arrow,
 
     TextureClassCount
 };

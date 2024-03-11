@@ -121,9 +121,6 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\inGameGUI.cpp">
-      <Filter>Systems\inGameGUI</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\EntityStats.cpp">
       <Filter>EntityStats</Filter>
     </ClCompile>
@@ -144,6 +141,9 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\ShootingSystem.cpp">
       <Filter>Systems\Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\inGameGUI.cpp">
+      <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
