@@ -241,7 +241,7 @@ namespace Engine
         m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
 
         // Initialize inGameGUI
-        m_shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM);
+        m_shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM, collisionSystem);
 
         //Attaching Input Handler to EM
         InputHandler.SetEntityManager(EM);

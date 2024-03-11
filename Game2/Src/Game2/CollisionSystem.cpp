@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "CollisionComponent.h"
+#include "ShootingSystem.h"
 #include "PhysicsComponent.h"
 #include "Input.h"
 #include "Window.h"
@@ -150,6 +151,7 @@ namespace Engine
 		*/
 		EntityToMouseCollision(entities);
 		EntityToEntityCollision(entities);
+
 
 	}
 
@@ -488,13 +490,22 @@ namespace Engine
 		return false;
 	}
 
+	void CollisionSystem::PlayerTowerCollision(EntityID lhs, EntityID rhs)
+	{
+		CollisionQueue.emplace(std::make_pair(lhs, rhs));
+	}
+
+	void CollisionSystem::PlayerArrowCollision(EntityID lhs, EntityID rhs)
+	{
+		PlayerArrowQueue.emplace(std::make_pair(lhs, rhs));
+	}
+
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
 		// Iterate through all pairs of entities
 		for (auto it1 = entities->begin(); it1 != entities->end(); ++it1)
 		{
 			Entity* entity1 = it1->second.get();
-
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
@@ -545,7 +556,11 @@ namespace Engine
 						if (it1 != it2) // Avoid self-collision check
 						{
 							Entity* entity2 = it2->second.get();
-
+							if ((entity1->GetID() == 13 && entity2->GetID() == 15)
+								|| (entity1->GetID() == 15 && entity2->GetID() == 13)) // Defo wrong, should check with entity types instead
+							{
+								PlayerArrowCollision(entity1->GetID(), entity2->GetID());
+							}
 							if (entity2->HasComponent(ComponentType::Transform))
 							{
 								CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
@@ -727,8 +742,10 @@ namespace Engine
 										{
 											//isColliding = true;
 											isShooting = true;
+											PlayerTowerCollision(entity1->GetID(), entity2->GetID());
 											if (behaviourComponent1)
 											{
+												
 												// behaviourComponent1->SetBehaviourState(c_state::Attack);
 												collisionComponent1->target = entity2;
 												std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())

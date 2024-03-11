@@ -15,7 +15,8 @@
 #include "input.h"
 #include "PrefabManager.h"
 #include "EngineTypes.h"
-#include "AssetManager.h"
+#include "AssetManager.h"'
+#include "SystemsManager.h"
 
 namespace Engine
 {
@@ -30,8 +31,8 @@ namespace Engine
 
         ShootingSystem(); // Constructor to initialize shooting rate variables
 
-        ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm)
-            : entityManager(em), prefabManager(pm) {}
+        ShootingSystem(std::shared_ptr<Engine::EntityManager> em, Engine::PrefabManager* pm, Engine::CollisionSystem* cs)
+            : entityManager(em), prefabManager(pm), collisionSystem(cs) {}
 
         /**************************************************************************/
         /*!
@@ -56,6 +57,8 @@ namespace Engine
         void Initialize();
 
         void Update(float deltaTime, bool shootingCheck);
+        std::vector<std::pair<EntityID, EntityID>> CollisionVector;
+        std::vector<std::pair<EntityID, EntityID>> PlayerArrowVector;
         //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);
 
     private:
@@ -63,10 +66,14 @@ namespace Engine
         //float shootingSpeed; // Speed of arrows when shot
         //float shootingRate;  // Time between consecutive shots
         //float shootCooldown; // Timer to track time until the next shot is allowed
-
+        struct Arrow
+        {
+            Prefab* entity;
+            bool active;
+        };
         // Arrow pool properties
         //static const int maxPoolSize = 100; // Maximum pool size
-        //std::vector<Arrow> arrows;           // Container to store active arrows
+        std::vector<Arrow> arrows;           // Container to store active arrows
 
         //void UpdateArrows();
         //void HandleCollisions(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
@@ -76,12 +83,11 @@ namespace Engine
         //void ShootArrow(EntityID shooterID, EntityID targetID, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
 
         std::shared_ptr<Engine::EntityManager> entityManager;
+        Engine::CollisionSystem* collisionSystem;  // Declare an instance of CollisionSystem
         Engine::PrefabManager* prefabManager;
         Entity* targetEntity = nullptr;
-        CollisionSystem collisionSystem;  // Declare an instance of CollisionSystem
         // TextureComponent* textureCheck;
-
-        float spawnTimer = 0.0;
-        float spawnInterval = 0.0;
+        float spawnInterval = 2.0;
+        float spawnTimer = spawnInterval;
     };
 }
