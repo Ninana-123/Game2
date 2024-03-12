@@ -627,10 +627,10 @@ namespace Engine
                             if (textureComponent->textureKey.mainIndex == 2)
                             {
                                 
-                                pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.05);
+                                pathfindingComponent->timeElapsedMovement = Application::ElapsedTime(pathfindingComponent, 0.02);
                                 //pathfindingComponent->charType = textureComponent->textureKey.mainIndex;
 
-                                if (pathfindingComponent->timeElapsedMovement >= 0.05)
+                                if (pathfindingComponent->timeElapsedMovement >= 0.02)
                                 {
                                     // Update the entity's position
                                     transformComponent->position.x = static_cast<float>(nextPosition.first);

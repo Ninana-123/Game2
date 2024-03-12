@@ -40,6 +40,8 @@ bool tower2Destroyed = false;
 bool castleDestroyed = false;
 bool isStartingPoint = true;
 bool towerCollision = false;
+bool isSpawned = false;
+bool unitHalfSpawned = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -859,6 +861,7 @@ namespace Engine
 						buttonCollision = true;
 						lastCollidingEntity = entity->GetID();
 						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;
+						isSpawned = true;
 						// std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
 						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
 						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
@@ -881,7 +884,7 @@ namespace Engine
 					}
 				}
 
-				if (collisionComponent->layer == Layer::BeforeSpawn)
+				if (collisionComponent->layer == Layer::BeforeSpawn && isSpawned)
 				{
 
 					// Check for point-to-rect collision
@@ -899,6 +902,8 @@ namespace Engine
 							collisionComponent->layer = Layer::World;
 							collisionComponent->mColliding = false;
 							isStartingPoint = true;
+							unitHalfSpawned = false;
+							isSpawned = false;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 
 						}
@@ -907,6 +912,7 @@ namespace Engine
 						else if (Input::IsMouseButtonReleased(LEFT_MOUSE_BUTTON))
 						{
 							isStartingPoint = false;
+							unitHalfSpawned = true;
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}

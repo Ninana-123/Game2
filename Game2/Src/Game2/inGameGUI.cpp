@@ -56,7 +56,7 @@ namespace Engine
 
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
-		if (CollisionCheck)
+		if (CollisionCheck && isSpawned)
 		{
 			if (lastCollidingEntityTexture == 41)
 			{
@@ -66,7 +66,7 @@ namespace Engine
 			}
 
 			// Spawn infantry
-			if (lastCollidingEntityTexture == 7 && totalInfantry > 0)
+			if (lastCollidingEntityTexture == 7 && totalInfantry > 0 && !unitHalfSpawned)
 			{
 				Prefab* infantryPrefab = prefabManager->GetPrefab(0);
 				entityManager->CreateEntityFromPrefab(*infantryPrefab);
@@ -77,7 +77,7 @@ namespace Engine
 			}
 
 			// Spawn Archer
-			if (lastCollidingEntityTexture == 8 && totalArcher > 0)
+			if (lastCollidingEntityTexture == 8 && totalArcher > 0 && !unitHalfSpawned)
 			{
 				Prefab* archerPrefab = prefabManager->GetPrefab(1);
 				entityManager->CreateEntityFromPrefab(*archerPrefab);
@@ -88,7 +88,7 @@ namespace Engine
 			}
 
 			// Spawn Tank
-			if (lastCollidingEntityTexture == 9 && totalTank > 0)
+			if (lastCollidingEntityTexture == 9 && totalTank > 0 && !unitHalfSpawned)
 			{
 				Prefab* tankPrefab = prefabManager->GetPrefab(2);
 				entityManager->CreateEntityFromPrefab(*tankPrefab);
