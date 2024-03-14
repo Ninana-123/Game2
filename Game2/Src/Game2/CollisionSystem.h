@@ -30,6 +30,7 @@ extern int tower1CollidingEntityHealth;
 extern int tower2CollidingEntityHealth;
 extern int castleCollidingEntityHealth;
 extern int victoryID;
+// extern int arrowID;
 extern bool isStartingPoint;
 extern bool towerCollision;
 extern bool tower1Destroyed;
@@ -37,6 +38,7 @@ extern bool tower2Destroyed;
 extern bool castleDestroyed;
 extern bool isSpawned;
 extern bool unitHalfSpawned;
+extern bool isShooting;
 
 namespace Engine
 {
@@ -167,6 +169,10 @@ namespace Engine
 		*/
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
+		void PlayerTowerCollision(EntityID lhs, EntityID rhs);
+		void PlayerArrowCollision(EntityID lhs, EntityID rhs);
+		std::queue<std::pair<EntityID, EntityID>> CollisionQueue; // Should be playerTowerqueue
+		std::queue<std::pair<EntityID, EntityID>> PlayerArrowQueue; // Player Arrow Queue
 
 		/**************************************************************************/
 

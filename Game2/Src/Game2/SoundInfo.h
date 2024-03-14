@@ -35,7 +35,7 @@ public:
     The reverb amount for the sound (0.0 to 1.0).
     ***********************************************************************/
     SoundInfo(const std::string& filePath, const std::string& uniqueID, bool is3D = false, bool loop = false,
-        float volume = 1.0f, float reverbAmount = 0.0f)
+        float volume = 0.0f, float reverbAmount = 0.0f)
         : filePath(filePath), uniqueID(uniqueID), getis3D(is3D), loop(loop),
         volume(volume), reverbAmount(reverbAmount), loaded(false), x(0.0f), y(0.0f), z(0.0f) {}
 
