@@ -6,6 +6,7 @@
 #include "Application.h"
 
 bool entityCreated = false;
+bool outOfBounds = false;
 int lemaoArrowID = 0;
 
 namespace Engine
@@ -168,14 +169,16 @@ namespace Engine
         float scaleY = screenHeight / 720.f;
 
         // Loop through every entity
-        for (auto it1 = entities->begin(); it1 != entities->end(); ++it1) {
+        for (auto it1 = entities->begin(); it1 != entities->end(); ++it1) 
+        {
             Entity* entity = it1->second.get();
 
             // Check if the entity has a TransformComponent (assuming the arrow entity has one)
             TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
             TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-            if (transform) {
+            if (transform) 
+            {
                 //// Check if the entity is an arrow and if it's out of bounds
                 //if (entity->HasComponent(ComponentType::Shooting) &&
                 //    (transform->position.x < 0 || transform->position.x > screenWidth ||
@@ -186,13 +189,20 @@ namespace Engine
                 //}
                 std::cout << "This is the entity's ID: " << entity->GetID() << std::endl;
 
-                if (entity->HasComponent(ComponentType::Shooting)) 
+                if (entity->HasComponent(ComponentType::Shooting))
                 {
                     std::cout << "This is the arrow's ID: " << entity->GetID() << std::endl;
-                    // entityManager->DestroyEntity(1);
+                    lemaoArrowID = entity->GetID();
+                    outOfBounds = true;
                 }
 
             }
+        }
+
+        if (outOfBounds) 
+        {
+            entityManager->DestroyEntity(lemaoArrowID);
+            outOfBounds = false;
         }
 
        /* for (const auto& temp : arrows)
