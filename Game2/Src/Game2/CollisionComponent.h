@@ -25,6 +25,7 @@ namespace Engine
 		bool isColliding = false;
 		bool mColliding = false;
 		bool disableCollision = false;
+		bool isArrow = false;
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;

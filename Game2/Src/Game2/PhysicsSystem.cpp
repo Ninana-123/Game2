@@ -53,7 +53,7 @@ namespace Engine
                     CollisionComponent* collisionComponent = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
                     // std::cout << "inside of if statement" << std::endl;
 
-                    if (collisionComponent->layer == Layer::World) 
+                    if (collisionComponent->layer == Layer::World || collisionComponent->layer == Layer::Arrow) 
                     {
                         TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
                         PhysicsComponent* physicsComponent = dynamic_cast<PhysicsComponent*>(entity->GetComponent(ComponentType::Physics));

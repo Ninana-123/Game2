@@ -23,6 +23,7 @@ namespace Engine
 		float projectileSpeed; //Projectile speed
 		int damage; //Damage dealt by projectile
 		bool isShooting = false;
+		Layer layer = Layer::Arrow;
 
 		/*!*****************************************************************
 
@@ -53,26 +54,27 @@ namespace Engine
 			cloneComponent->timeSinceLastShot = timeSinceLastShot;
 			cloneComponent->projectileSpeed = projectileSpeed;
 			cloneComponent->damage = damage;
+			cloneComponent->layer = layer;
 
 			return cloneComponent;
 		}
 
 		void Serialize(std::ostream& outputStream) const override {
-			outputStream << "isShooting: " << isShooting << '\n';
-			outputStream << "cooldownTime " << cooldownTime << '\n';
-			outputStream << "timeSinceLastShot " << timeSinceLastShot << '\n';
-			outputStream << "projectileSpeed " << projectileSpeed << '\n';
-			outputStream << "damage " << damage << '\n';
+			//outputStream << "isShooting: " << isShooting << '\n';
+			//outputStream << "cooldownTime " << cooldownTime << '\n';
+			//outputStream << "timeSinceLastShot " << timeSinceLastShot << '\n';
+			//outputStream << "projectileSpeed " << projectileSpeed << '\n';
+			//outputStream << "damage " << damage << '\n';
 		}
 
 		void Deserialize(std::istream& inputStream) override {
 			std::string temp;
 			int buffer;
-			inputStream >> temp >> isShooting;
-			inputStream >> temp >> cooldownTime;
-			inputStream >> temp >> timeSinceLastShot;
-			inputStream >> temp >> projectileSpeed;
-			inputStream >> temp >> damage;
+			//inputStream >> temp >> isShooting;
+			//inputStream >> temp >> cooldownTime;
+			//inputStream >> temp >> timeSinceLastShot;
+			//inputStream >> temp >> projectileSpeed;
+			//inputStream >> temp >> damage;
 		}
 	};
 }

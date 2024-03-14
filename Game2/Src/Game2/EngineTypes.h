@@ -39,7 +39,7 @@ A string representation of the character state.
 std::string c_stateToString(c_state state);
 
 // Layer Enumeration
-enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, Castle }; //!< Enumeration for different layers in the game.
+enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, Castle, Arrow }; //!< Enumeration for different layers in the game.
 
 // Texture Class Enumeration
 enum TextureClass //!< Enumeration for different texture classes.

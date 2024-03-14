@@ -608,7 +608,7 @@ namespace Engine
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
             m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
-            m_shootingSystem->Update(deltaTime, isShooting);
+            m_shootingSystem->Update(deltaTime, isShooting, EM->GetEntities());
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
