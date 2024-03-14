@@ -24,5 +24,6 @@
 #include <filesystem>
 #include <stdexcept>
 #include <set>	
+#include <future>
 // Windows API Headers
 #include <Windows.h>
