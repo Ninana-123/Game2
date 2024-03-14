@@ -36,6 +36,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "SceneManager.h"
 #include "MainMenuScene.h"
 #include "GameScene.h"
+#include "CutScene.h"
 #include "TempStateMachine.h"
 #include "Vector2d.h"
 
@@ -284,12 +285,14 @@ namespace Engine
                     deleteAllEntity = true;
                     //LoadScene();
                     shouldLoadScene = true; // Set flag indicating a scene should be loaded
-                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    //sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    sceneToLoad = CutSceneFilePath;
                     mainMenuCheck = false;
                     isMainMenuLoaded = false;
 #else
 
-                    std::string fp = GameSceneFilePath;
+                    //std::string fp = GameSceneFilePath;
+                    std::string fp = CutSceneFilePath;
                     // Retrieve the size of entities list
                     int entityCount = static_cast<int>(EM->GetEntities()->size());
 

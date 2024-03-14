@@ -21,6 +21,8 @@ Technology is prohibited.
 #include "EntityManager.h"
 
 namespace Engine {
+    extern const std::string CutSceneFilePath;
+
     class CutScene : public Scene {
     public:
         /*!
@@ -44,14 +46,6 @@ namespace Engine {
     private:
         Loader cutsceneLoader;
         EntityManager c_entityManager;
-        std::vector<TextureComponent> cutsceneTextures;
-        int textureDisplayDuration; // Define this if it's supposed to control the display duration of each texture
-
-        void ReadCutsceneTextures();
-
-        void PlayCutscene();
-
-        void DisplayTexture(const TextureComponent& texture);
     };
 }
 #endif // ENGINE_CUT_SCENE_H
