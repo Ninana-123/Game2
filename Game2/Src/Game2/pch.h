@@ -3,6 +3,7 @@
 
 // Standard Library Headers
 #include <iostream>
+#include <istream>
 #include <memory>
 #include <iomanip>
 #include <utility>
@@ -19,6 +20,7 @@
 #include <functional>
 #include <filesystem>
 #include <chrono>
+#include <thread>
 #include <filesystem>
 #include <stdexcept>
 #include <set>	
