@@ -22,6 +22,7 @@
     <ClInclude Include="Src\Game2\Animation.h" />
     <ClInclude Include="Src\Game2\BehaviourComponent.h" />
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
+    <ClInclude Include="Src\Game2\CutScene.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\EntityStats.h" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Src\Game2\Camera.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
+    <ClCompile Include="Src\Game2\CutScene.cpp" />
     <ClCompile Include="Src\Game2\EditorFBO.cpp" />
     <ClCompile Include="Src\Game2\EngineTypes.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />

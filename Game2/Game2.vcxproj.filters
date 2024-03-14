@@ -142,6 +142,9 @@
     <ClCompile Include="Src\Game2\SceneManager.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\CutScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -362,6 +365,9 @@
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\SceneManager.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CutScene.h">
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>

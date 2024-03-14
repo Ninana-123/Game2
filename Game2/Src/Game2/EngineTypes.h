@@ -86,6 +86,14 @@ enum TextureClass //!< Enumeration for different texture classes.
     towerHP7,
     towerHP8,
     towerHP9,
+    cutScene1,
+    cutScene2,
+    cutScene3,
+    cutScene4,
+    cutScene5,
+    cutScene6,
+    cutScene7,
+    cutScene8,
 
     TextureClassCount
 };
