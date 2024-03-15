@@ -282,17 +282,24 @@ namespace Engine
                 if (keyPressedEvent.GetKeyCode() == KEY_M) {
 
 #ifdef DEBUG
+
+                    // In debug mode, set flag to delete all entities
                     deleteAllEntity = true;
-                    //LoadScene();
-                    shouldLoadScene = true; // Set flag indicating a scene should be loaded
-                    //sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
-                    sceneToLoad = CutSceneFilePath;
+                    // Set flag to indicate scene loading
+                    shouldLoadScene = true;
+                    
+                    // Set the scene to load as cutscene
+                    //sceneToLoad = CutSceneFilePath;
+                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    
+                    // Set flags to indicate scene change
                     mainMenuCheck = false;
                     isMainMenuLoaded = false;
+
 #else
 
-                    //std::string fp = GameSceneFilePath;
-                    std::string fp = CutSceneFilePath;
+                    std::string fp = GameSceneFilePath;
+                    //std::string fp = CutSceneFilePath;
                     // Retrieve the size of entities list
                     int entityCount = static_cast<int>(EM->GetEntities()->size());
 
@@ -305,6 +312,13 @@ namespace Engine
                     // Now load the scene
                     loader->LoadScene(fp);            
                     isMainMenuLoaded = false;
+
+                    // In release mode, simply clear the entities
+                    //EM->GetEntities()->clear();
+                    //// Load the cutscene
+                    //loader->LoadScene(CutSceneFilePath);
+                    //// Set flags to indicate scene change
+                    //isMainMenuLoaded = false;
 #endif
                 }
             
@@ -713,7 +727,7 @@ namespace Engine
             startTime = currentTime;
         }
 
-        return elapsedTime;
+        return static_cast<float>(elapsedTime);
     }
 
 

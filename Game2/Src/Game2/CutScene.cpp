@@ -33,14 +33,26 @@ const std::string CutSceneFilePath = "Resource/Scenes/CutScene.txt";
         }
 
         // Display each entity sequentially with a delay
-        for (EntityID id : entityIDs) {
-            c_entityManager.AddToStorage(id);
-            std::future<void> future = std::async(std::launch::async, [=]() {
+        size_t currentIndex = 0;
+        bool isFirstEntity = true;
+        while (currentIndex < entityIDs.size()) {
+            // Display the current entity
+            c_entityManager.AddToStorage(entityIDs[currentIndex]);
+
+            // If it's the first entity, wait for a shorter delay
+            if (isFirstEntity) {
+                isFirstEntity = false;
+                std::this_thread::sleep_for(std::chrono::milliseconds(4000)); // Adjust the delay as needed
+            }
+            else {
                 std::this_thread::sleep_for(TextureDisplayTime); // Wait for the specified display time
-                });
-            future.wait(); // Wait for the async operation to complete before proceeding
+            }
+
+            // Move to the next entity
+            ++currentIndex;
         }
     }
+
 
     void CutScene::OnShutDown()
     {
