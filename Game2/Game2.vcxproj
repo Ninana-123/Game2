@@ -142,7 +142,6 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\SceneManager.cpp" />
-    <ClCompile Include="Src\Game2\ScriptSystem.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
     <ClCompile Include="Src\Game2\ShootingSystem.cpp" />
