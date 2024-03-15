@@ -305,10 +305,9 @@ namespace Engine
                 return currentClosestTower;
             }
         }
-        else
-        {
+
             return closestTower;
-        }
+        
     }
 
     std::vector<std::pair<int, int>> PathfindingSystem::findShortestPath(int windowWidth, int windowHeight)
