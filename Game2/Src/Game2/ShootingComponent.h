@@ -3,7 +3,9 @@
 /*!
 \file		ShootingComponent.h
 \author		Tay Jun Feng Vance
+\co         Ang Jun Sheng Aloysius
 \par		junfengvance.t@digipen.edu
+\par        a.junshengaloysius.edu
 \date		22/01/2024
 \brief		Contains the interface of the Shooting Component
 
