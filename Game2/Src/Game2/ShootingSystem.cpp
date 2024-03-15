@@ -75,7 +75,7 @@ namespace Engine
         if (!PlayerArrowVector.empty())
         {
             Entity* Player = entityManager.get()->GetEntity(PlayerArrowVector.front().second);
-            Entity* Arrow = entityManager.get()->GetEntity(PlayerArrowVector.front().first); // Could be second?? didnt check
+            //Entity* Arrow = entityManager.get()->GetEntity(PlayerArrowVector.front().first); // Could be second?? didnt check
             Player->AddNewComponent(ComponentType::Stats);
             StatsComponent* PlayerStats = dynamic_cast<StatsComponent*>(Player->GetComponent(ComponentType::Stats));
             PlayerStats->health -= 1;
@@ -90,7 +90,7 @@ namespace Engine
             Prefab* arrowPrefab = prefabManager->GetPrefab(10);
             EntityID arrowID = entityManager->CreateEntityFromPrefab(*arrowPrefab);
             entityCreated = true;
-            Arrow arrow;
+            Arrow arrow{};
             arrow.active = true;
             arrow.entity = arrowPrefab;
             
@@ -141,8 +141,9 @@ namespace Engine
 
         int OOBScreenWidth, OOBScreenHeight;
         glfwGetFramebufferSize(glfwGetCurrentContext(), &OOBScreenWidth, &OOBScreenHeight);
-        float scaleX = OOBScreenWidth / 1280.f;
-        float scaleY = OOBScreenHeight / 720.f;
+        float scaleX = static_cast<float>(OOBScreenWidth) / 1280.f;
+        float scaleY = static_cast<float>(OOBScreenHeight) / 720.f;
+
 
         // Loop through every entity
         for (auto it1 = entities->begin(); it1 != entities->end(); ++it1) 
@@ -151,7 +152,7 @@ namespace Engine
 
             // Check if the entity has a TransformComponent (assuming the arrow entity has one)
             TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
-            TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+            //TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
             if (transform) 
             {
@@ -159,8 +160,8 @@ namespace Engine
 
                 if (entity->HasComponent(ComponentType::Shooting))     
                 {
-                    if (transform->position.x < (0 - OOBScreenWidth) * scaleX || transform->position.x > (OOBScreenWidth / 2) * scaleX ||
-                        transform->position.y < (0 - OOBScreenHeight) * scaleY || transform->position.y > (OOBScreenHeight / 2) * scaleY) 
+                    if (transform->position.x < (0.f - OOBScreenWidth) * scaleX || transform->position.x > (OOBScreenWidth / 2.f) * scaleX ||
+                        transform->position.y < (0.f - OOBScreenHeight) * scaleY || transform->position.y > (OOBScreenHeight / 2.f) * scaleY) 
                     {
                         std::cout << "This is the arrow's ID: " << entity->GetID() << std::endl;
                         lemaoArrowID = entity->GetID();

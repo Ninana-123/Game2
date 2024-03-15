@@ -53,15 +53,15 @@ namespace Engine
 			ShootingComponent* cloneComponent = new ShootingComponent();
 			cloneComponent->isShooting = isShooting;
 			cloneComponent->cooldownTime = cooldownTime;
-			cloneComponent->timeSinceLastShot = timeSinceLastShot;
-			cloneComponent->projectileSpeed = projectileSpeed;
-			cloneComponent->damage = damage;
+			//cloneComponent->timeSinceLastShot = timeSinceLastShot;
+			//cloneComponent->projectileSpeed = projectileSpeed;
+			//cloneComponent->damage = damage;
 			cloneComponent->layer = layer;
 
 			return cloneComponent;
 		}
 
-		void Serialize(std::ostream& outputStream) const override {
+		void Serialize(std::ostream& /*outputStream*/) const override {
 			//outputStream << "isShooting: " << isShooting << '\n';
 			//outputStream << "cooldownTime " << cooldownTime << '\n';
 			//outputStream << "timeSinceLastShot " << timeSinceLastShot << '\n';
@@ -69,9 +69,9 @@ namespace Engine
 			//outputStream << "damage " << damage << '\n';
 		}
 
-		void Deserialize(std::istream& inputStream) override {
-			std::string temp;
-			int buffer;
+		void Deserialize(std::istream& /*inputStream*/) override {
+			//std::string temp;
+			//int buffer{};
 			//inputStream >> temp >> isShooting;
 			//inputStream >> temp >> cooldownTime;
 			//inputStream >> temp >> timeSinceLastShot;
