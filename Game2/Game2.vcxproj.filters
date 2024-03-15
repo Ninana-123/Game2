@@ -145,6 +145,9 @@
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\CutScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -372,6 +375,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\ShootingSystem.h">
       <Filter>Systems\Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CutScene.h">
+      <Filter>Base\SceneManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

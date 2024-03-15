@@ -240,8 +240,6 @@ namespace Engine {
             { {TextureClass::Tower,             0}, "Resource/Texture/Tower.png" },
             { {TextureClass::Tower,             4}, "Resource/Texture/TowerDestroyed.png" },
 
-
-
             { {TextureClass::Castle,            0}, "Resource/Texture/Castle.png" },
             { {TextureClass::Castle,            5}, "Resource/Texture/CastleDestroyed.png" },
 
@@ -282,6 +280,20 @@ namespace Engine {
             { {TextureClass::towerHP8,          0}, "Resource/Texture/Tower_hp_8.PNG" },
             { {TextureClass::towerHP9,          0}, "Resource/Texture/Tower_hp_9.PNG" },
             { {TextureClass::Arrow,             0}, "Resource/Texture/Arrow.png" },
+
+            { {TextureClass::cutScene1,         0}, "Resource/Texture/cutScene1.PNG" },
+            { {TextureClass::cutScene2,         0}, "Resource/Texture/cutScene2.PNG" },
+            { {TextureClass::cutScene3,         0}, "Resource/Texture/cutScene3.PNG" },
+            { {TextureClass::cutScene4,         0}, "Resource/Texture/cutScene4.PNG" },
+            { {TextureClass::cutScene5,         0}, "Resource/Texture/cutScene5.PNG" },
+            { {TextureClass::cutScene6,         0}, "Resource/Texture/cutScene6.PNG" },
+            { {TextureClass::cutScene7,         0}, "Resource/Texture/cutScene7.PNG" },
+            { {TextureClass::cutScene8,         0}, "Resource/Texture/whiteScreen.PNG" },
+
+            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainmenu_screen.PNG" },
+            { {TextureClass::defeatScreen,      0}, "Resource/Texture/mainmenu_screen.PNG" },
+            { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" }
+
         };
     };
 }
