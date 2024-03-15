@@ -180,9 +180,9 @@ void AudioEngine::resumeAllAudio() {
 
     // Log the contents of loopsPlaying before resuming
     //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channels playing before resume:");
-    for (const auto& pair : loopsPlaying) {
-        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channel ID: " + pair.first);
-    }
+    //for (const auto& pair : loopsPlaying) {
+    //    //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Channel ID: " + pair.first);
+    //}
 
     for (const auto& pair : loopsPlaying) {
         FMOD::Channel* channel = pair.second; // Use the channel directly

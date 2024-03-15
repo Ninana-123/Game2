@@ -149,6 +149,7 @@ namespace Engine {
 
 		void RenderEntityProperties();
 
+		inline void setTargetEntity(Entity* target) { targetEntity = target; }
 
 		int selectedEntityIndex = 1;
 

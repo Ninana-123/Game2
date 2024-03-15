@@ -15,10 +15,14 @@ KNOWN BUGS:
 
 3. When game is fullscreen, the functions work in debug mode, as in the units are going where they supposed to. However this cannot be confirmed in released mode.
 
-INCOMPLETE FEATURES:
-1. Arrow is supposed to spawn and aim towards the unit when unit is in range of tower radius.
+4. Dropping the unit out of the window will cause the game to crash.
 
-2. Health bar of enemies and towers as well as animation of towers being destroyed are yet to be added.
+5. Selecting the archer unit after an arrow has been spawned causes the game to crash.
+
+INCOMPLETE FEATURES:
+1. Arrow is currently buggy and not able to work with multiple towers.
+
+2. Health bar of units have not been added..
 
 3. Arrow for archer unit has also not been implemented.
 
