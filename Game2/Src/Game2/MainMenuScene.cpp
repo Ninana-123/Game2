@@ -16,7 +16,7 @@ Technology is prohibited.
 #include "pch.h"
 #include "MainMenuScene.h"
 
-const std::string MainMenuSceneFilePath = "Resource/Scenes/MainMenu1.txt";
+const std::string MainMenuSceneFilePath = "Resource/Scenes/MainMenu.txt";
 
 namespace Engine {
 
