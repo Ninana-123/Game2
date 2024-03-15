@@ -83,7 +83,7 @@ namespace Engine
             PlayerArrowVector.erase(PlayerArrowVector.begin());
         }
 
-        if (shootingCheck && !entityCreated)
+        if (shootingCheck && !entityCreated && !tower1Destroyed)
         {
             //EntityID arrowID = entityManager->CreateEntity();
             //std::cout << "This is the arrow's ID: " << arrowID << std::endl;
