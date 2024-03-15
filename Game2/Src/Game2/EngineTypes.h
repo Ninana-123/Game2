@@ -18,7 +18,7 @@ const int MAX_SUBINDEX = 6;
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Script, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
 
 //Script type
 enum class ScriptType { infantry, tower };
@@ -42,7 +42,7 @@ A string representation of the character state.
 std::string c_stateToString(c_state state);
 
 // Layer Enumeration
-enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, Castle }; //!< Enumeration for different layers in the game.
+enum class Layer { World, Interactive, Editable, inGameGUI, BeforeSpawn, Tower, Castle, Arrow }; //!< Enumeration for different layers in the game.
 
 // Texture Class Enumeration
 enum TextureClass //!< Enumeration for different texture classes.
@@ -89,6 +89,19 @@ enum TextureClass //!< Enumeration for different texture classes.
     towerHP7,
     towerHP8,
     towerHP9,
+    Arrow,
+    cutScene1,
+    cutScene2,
+    cutScene3,
+    cutScene4,
+    cutScene5,
+    cutScene6,
+    cutScene7,
+    cutScene8,
+
+    mainMenuScreen,
+    pauseScreen,
+    defeatScreen,
 
     TextureClassCount
 };

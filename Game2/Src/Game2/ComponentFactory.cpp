@@ -28,6 +28,7 @@ namespace Engine
         RegisterComponent(ComponentType::Pathfinding,   []()    { return std::make_unique<PathfindingComponent>();     });
         RegisterComponent(ComponentType::Logic,         []()    { return std::make_unique<BehaviourComponent>();       });
         RegisterComponent(ComponentType::Stats,         []()    { return std::make_unique<StatsComponent>();           });
+        RegisterComponent(ComponentType::Shooting,      []()    {return std::make_unique<ShootingComponent>();         });
         RegisterComponent(ComponentType::Script,        []()    { return std::make_unique<ScriptComponent>();          });
 
     }
@@ -68,9 +69,10 @@ namespace Engine
             {"Texture",     ComponentType::Texture    },
             {"Sprite",      ComponentType::Sprite     },
             {"Pathfinding", ComponentType::Pathfinding},
-            {"Logic",       ComponentType::Logic},
-            {"Stats",       ComponentType::Stats},
-            {"Script",      ComponentType::Script},
+            {"Logic",       ComponentType::Logic      },
+            {"Stats",       ComponentType::Stats      },
+            {"Shooting",    ComponentType::Shooting   },
+            {"Script",      ComponentType::Script     },
         };
 
         auto it = StringTotypeMap.find(typeString);
@@ -96,6 +98,7 @@ namespace Engine
             {ComponentType::Pathfinding, "Pathfinding" },
             {ComponentType::Logic,       "Logic"       },
             {ComponentType::Stats,       "Stats"       },
+            {ComponentType::Shooting,    "Shooting"    },
             {ComponentType::Script,      "Script"      },
         };
 

@@ -18,6 +18,7 @@ Technology is prohibited.
 #include "CollisionSystem.h"
 #include "Entity.h"
 #include "CollisionComponent.h"
+#include "ShootingSystem.h"
 #include "PhysicsComponent.h"
 #include "Input.h"
 #include "Window.h"
@@ -35,6 +36,7 @@ int tower1CollidingEntityHealth = 0;
 int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
 int victoryID = 0;
+int lemaoArrowID = 0;
 bool tower1Destroyed = false;
 bool tower2Destroyed = false;
 bool castleDestroyed = false;
@@ -42,6 +44,8 @@ bool isStartingPoint = true;
 bool towerCollision = false;
 bool isSpawned = false;
 bool unitHalfSpawned = false;
+bool isShooting = false;
+bool unitArrowCollision = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -151,6 +155,7 @@ namespace Engine
 		*/
 		EntityToMouseCollision(entities);
 		EntityToEntityCollision(entities);
+
 
 	}
 
@@ -489,12 +494,23 @@ namespace Engine
 		return false;
 	}
 
+	void CollisionSystem::PlayerTowerCollision(EntityID lhs, EntityID rhs)
+	{
+		CollisionQueue.emplace(std::make_pair(lhs, rhs));
+	}
+
+	void CollisionSystem::PlayerArrowCollision(EntityID lhs, EntityID rhs)
+	{
+		PlayerArrowQueue.emplace(std::make_pair(lhs, rhs));
+	}
+
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
 		// Iterate through all pairs of entities
 		for (auto it1 = entities->begin(); it1 != entities->end(); ++it1)
 		{
 			Entity* entity1 = it1->second.get();
+
 
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
@@ -521,7 +537,6 @@ namespace Engine
 					if (collisionComponent1->layer == Layer::Tower && statsComponent1)
 					{
 						circle1.radius = statsComponent1->range;
-
 					}
 
 					if (collisionComponent1)
@@ -531,8 +546,9 @@ namespace Engine
 
 					if (entity1->HasComponent(ComponentType::Physics))
 					{
-						PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
-						vel1 = VECTORMATH::Vec2(physicsComponent1->velocity.x, physicsComponent1->velocity.y);
+						//PhysicsComponent* physicsComponent1 = dynamic_cast<PhysicsComponent*>(entity1->GetComponent(ComponentType::Physics));
+						//vel1 = VECTORMATH::Vec2(physicsComponent1->velocity.x, physicsComponent1->velocity.y);
+						vel1 = VECTORMATH::Vec2(transformComponent1->position.x, transformComponent1->position.y);
 					}
 					else
 					{
@@ -546,6 +562,11 @@ namespace Engine
 						if (it1 != it2) // Avoid self-collision check
 						{
 							Entity* entity2 = it2->second.get();
+							//if ((entity1->GetID() == 13 && entity2->GetID() == 15)
+							//	|| (entity1->GetID() == 15 && entity2->GetID() == 13)) // Defo wrong, should check with entity types instead
+							//{
+							//	PlayerArrowCollision(entity1->GetID(), entity2->GetID());
+							//}
 
 							if (entity2->HasComponent(ComponentType::Transform))
 							{
@@ -553,6 +574,7 @@ namespace Engine
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
 								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
+								ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
 
 								if (collisionComponent2 && collisionComponent2->disableCollision == true)
 								{
@@ -566,9 +588,15 @@ namespace Engine
 								VECTORMATH::Vec2 vel2;
 								VECTORMATH::Vec2 circleVel2;
 
+								//if ((entity1->HasComponent(ComponentType::Logic) && entity2->HasComponent(ComponentType::Physics))
+								//	|| (entity1->HasComponent(ComponentType::Physics) && entity2->HasComponent(ComponentType::Logic)))
+								//{
+								//	PlayerArrowCollision(entity1->GetID(), entity2->GetID());
+								//}
 
 								if (statsComponent2)
 								{
+									statsComponent2->range = 100;
 									circle2.radius = statsComponent2->range;
 								}
 
@@ -576,6 +604,7 @@ namespace Engine
 								if (collisionComponent2)
 								{
 									aabb2 = collisionComponent2->aabb;
+									
 									if (statsComponent2) // Check if statsComponent2 is not nullptr
 									{
 										if (entity2->GetID() == 7)
@@ -595,8 +624,9 @@ namespace Engine
 
 								if (entity2->HasComponent(ComponentType::Physics))
 								{
-									PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
-									vel2 = VECTORMATH::Vec2(physicsComponent2->velocity.x, physicsComponent2->velocity.y);
+									//PhysicsComponent* physicsComponent2 = dynamic_cast<PhysicsComponent*>(entity2->GetComponent(ComponentType::Physics));
+									//vel2 = VECTORMATH::Vec2(physicsComponent2->velocity.x, physicsComponent2->velocity.y);
+									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 								else
 								{
@@ -651,10 +681,23 @@ namespace Engine
 									{
 										circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
 										BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
+
+
 										if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2)
 											&& collisionComponent2->layer != Layer::inGameGUI)
 										{
 											isColliding = true;
+
+											if (collisionComponent2->layer == Layer::Arrow && collisionComponent1->layer == Layer::World)
+											{
+												// std::cout << "outside behavior" << std::endl;
+												if (behaviourComponent1) 
+												{
+													//std::cout << "inside behavior" << std::endl;
+													unitArrowCollision = true;
+													lemaoArrowID = entity2->GetID();
+												}
+											}
 
 											//Collision Between Non Tower and Towers only -bc Tower can never AABB collide with another Tower
 											if (collisionComponent2->layer == Layer::Tower)
@@ -723,15 +766,19 @@ namespace Engine
 
 										// Check if tower radius is colliding with the player's radius
 										if (CollisionSystem::CollisionIntersection_CircleCircle(circle1, circleVel1, circle2, circleVel2)
-											&& collisionComponent2->layer != Layer::inGameGUI && collisionComponent1->layer == Layer::Tower)
+											&& collisionComponent2->layer != Layer::inGameGUI 
+											&& collisionComponent1->layer == Layer::Tower)
 										{
 											//isColliding = true;
+											isShooting = true;
+											PlayerTowerCollision(entity1->GetID(), entity2->GetID());
 											if (behaviourComponent1)
 											{
+												
 												// behaviourComponent1->SetBehaviourState(c_state::Attack);
 												collisionComponent1->target = entity2;
-												std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
-													<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
+												//std::cout << "Circle Collision Detected between Entity" << static_cast<int>(entity1->GetID())
+													//<< " and Entity" << static_cast<int>(entity2->GetID()) << std::endl;
 											}
 										}
 									}
@@ -806,8 +853,8 @@ namespace Engine
 			float scaleX = displayWidth / 1280.f;
 			float scaleY = displayHeight / 720.f;
 
-			std::cout << "This is displayWidth: " << displayWidth << std::endl;
-			std::cout << "This is displayHeight: " << displayHeight << std::endl;
+			// std::cout << "This is displayWidth: " << displayWidth << std::endl;
+			// std::cout << "This is displayHeight: " << displayHeight << std::endl;
 
 			mousePosition.x = ((mousePosition.x) - 1280.f / 2.0f) * scaleX;
 			mousePosition.y = (720.f / 2.0f - (mousePosition.y)) * scaleY;
