@@ -51,12 +51,12 @@ namespace Engine
 		Component* Clone() const override
 		{
 			ShootingComponent* cloneComponent = new ShootingComponent();
-			cloneComponent->isShooting = isShooting;
-			cloneComponent->cooldownTime = cooldownTime;
+			//cloneComponent->isShooting = isShooting;
+			//cloneComponent->cooldownTime = cooldownTime;
 			//cloneComponent->timeSinceLastShot = timeSinceLastShot;
 			//cloneComponent->projectileSpeed = projectileSpeed;
 			//cloneComponent->damage = damage;
-			cloneComponent->layer = layer;
+			//cloneComponent->layer = layer;
 
 			return cloneComponent;
 		}
