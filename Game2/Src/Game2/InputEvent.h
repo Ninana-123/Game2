@@ -199,7 +199,11 @@ namespace Engine {
       */
     class GAME2_API MouseButtonPressedEvent : public MouseButtonEvent {
     public:
-        MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
+        MouseButtonPressedEvent(int button) : MouseButtonEvent(button), m_MouseX(0), m_MouseY(0) {}
+        inline void SetX(float X) { m_MouseX = X; }
+        inline void SetY(float Y) { m_MouseY = Y; }
+        inline float GetX() const { return m_MouseX; }
+        inline float GetY() const { return m_MouseY; }
 
         std::string ToString() const override {
             auto it = Engine::Mouse::mouseMap.find(GetMouseButton());
@@ -213,6 +217,10 @@ namespace Engine {
             Logger::GetInstance().Log(LogLevel::Event, ("Event Type: " + ToString()).c_str());
         }
         EVENT_CLASS_TYPE(MouseButtonPressed)
+    private:
+        float m_MouseX, m_MouseY;
+
+
     };
 
     /*!

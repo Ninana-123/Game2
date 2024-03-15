@@ -55,6 +55,7 @@ bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
 bool mainMenuCheck = true;
+std::string fp;
 //std::string initScene = "Resource/Scenes/MainMenu.txt";
 //std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
@@ -282,49 +283,51 @@ namespace Engine
             }
         }
         if (isMainMenuLoaded) {
-            if (e.GetEventType() == EventType::KeyPressed) {
-                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-                if (keyPressedEvent.GetKeyCode() == KEY_M) {
+            if (e.GetEventType() == EventType::MouseButtonPressed)
+            {
+                MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
+                if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
+                {
+                    // Check if the mouse click is within the quadrilateral
+                    mousePressedEvent.SetX(InputHandler.GetMouseX());
+                    mousePressedEvent.SetY(InputHandler.GetMouseY());
+                    float mouseX = mousePressedEvent.GetX();
+                    float mouseY = mousePressedEvent.GetY();
 
-#ifdef DEBUG
-
-                    // In debug mode, set flag to delete all entities
-                    deleteAllEntity = true;
-                    // Set flag to indicate scene loading
-                    shouldLoadScene = true;
-                    
-                    // Set the scene to load as cutscene
-                    //sceneToLoad = CutSceneFilePath;
-                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
-                    
-                    // Set flags to indicate scene change
-                    mainMenuCheck = false;
-                    isMainMenuLoaded = false;
-
-#else
-
-                    std::string fp = GameSceneFilePath;
-                    //std::string fp = CutSceneFilePath;
-                    // Retrieve the size of entities list
-                    int entityCount = static_cast<int>(EM->GetEntities()->size());
-
-                    // Loop backwards through the entities and delete each one
-                    for (int i = entityCount - 1; i >= 0; --i)
+                    if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
                     {
-                        EM->DestroyEntity(i); // Assumes DestroyEntity accepts an index
-                    }
-                    std::cout << "Deleted All Entities" << std::endl;
-                    // Now load the scene
-                    loader->LoadScene(fp);            
-                    isMainMenuLoaded = false;
+                        fp = GameSceneFilePath;
+                        int entityCount = static_cast<int>(EM->GetEntities()->size());
 
-                    // In release mode, simply clear the entities
-                    //EM->GetEntities()->clear();
-                    //// Load the cutscene
-                    //loader->LoadScene(CutSceneFilePath);
-                    //// Set flags to indicate scene change
-                    //isMainMenuLoaded = false;
-#endif
+                        for (int i = entityCount - 1; i >= 0; --i) {
+                            EM->DestroyEntity(i); 
+                        }
+
+                        m_ImGuiWrapper->selectedEntityIndex = -1;
+
+                        // Set targetEntity to nullptr as there are no entities left
+                        m_ImGuiWrapper->SetTargetEntity(nullptr);
+
+                        // Reset any other relevant data structures or counters if needed
+                        EM->nextEntityID = 0; // Assuming this is how you reset your IDs
+                        PM.nextPrefabID = 0; // Reset prefab ID counter if needed
+
+                        // Now load the scene
+                        loader->LoadScene(fp);
+                        if (EM->GetEntities()->size() >= 2) {
+                            m_ImGuiWrapper->selectedEntityIndex = 1;
+                        }
+                        else if (EM->GetEntities()->size() == 1) {
+                            m_ImGuiWrapper->selectedEntityIndex = 0;
+                        }
+                        else
+                            m_ImGuiWrapper->selectedEntityIndex = -1;
+                        if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                            m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                        }
+                        mainMenuCheck = false;
+                        isMainMenuLoaded = false;
+                    }
                 }
             
             }
@@ -826,4 +829,26 @@ namespace Engine
     //    }
     //    shouldLoadScene = false; // Reset flag
     //}
+    bool Application::IsPointInQuadrilateral(float x, float y, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+    {
+        // Use ray casting algorithm to determine if the point is inside the quadrilateral
+        int intersectCount = 0;
+
+        // Check for intersections with each edge of the quadrilateral
+        if (DoIntersect(x, y, x1, y1, x2, y2)) intersectCount++;
+        if (DoIntersect(x, y, x2, y2, x3, y3)) intersectCount++;
+        if (DoIntersect(x, y, x3, y3, x4, y4)) intersectCount++;
+        if (DoIntersect(x, y, x4, y4, x1, y1)) intersectCount++;
+
+        // If the number of intersections is odd, the point is inside the quadrilateral
+        return intersectCount % 2 == 1;
+    }
+
+    // Function to check if a point intersects with a line segment
+    bool Application::DoIntersect(float pX, float pY, float qX, float qY, float rX, float rY)
+    {
+        return (qY > pY) != (rY > pY) && pX < (rX - qX) * (pY - qY) / (rY - qY) + qX;
+    }
+
+
 }
