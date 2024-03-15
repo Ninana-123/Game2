@@ -47,7 +47,7 @@ namespace Engine
 	{
 	}
 
-	void inGameGUI::Update(bool CollisionCheck, AudioEngine& audioEngine, AssetManager& assetManager)
+	void inGameGUI::Update(bool CollisionCheck, AudioEngine& /*audioEngine*/, AssetManager& assetManager)
 	{
 		UNREFERENCED_PARAMETER(assetManager);
 		if (!(inGameGUIInitialized))

@@ -574,7 +574,7 @@ namespace Engine
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
 								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
-								ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
+								//ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
 
 								if (collisionComponent2 && collisionComponent2->disableCollision == true)
 								{

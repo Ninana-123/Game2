@@ -1,4 +1,3 @@
-#pragma once
 /******************************************************************************/
 /*!
 \file		ShootingSystem.h
@@ -9,13 +8,14 @@
 
  */
  /******************************************************************************/
+#pragma once
 #include "TransformComponent.h"
 #include "CollisionComponent.h"
 #include "CollisionSystem.h"
 #include "input.h"
 #include "PrefabManager.h"
 #include "EngineTypes.h"
-#include "AssetManager.h"'
+#include "AssetManager.h"
 #include "SystemsManager.h"
 
 
