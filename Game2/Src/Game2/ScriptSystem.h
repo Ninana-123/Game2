@@ -87,6 +87,6 @@ namespace Engine
 
 	private:
 		EntityManager& entityManager; //EM instance
-		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts
+		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts2
 	};
 }

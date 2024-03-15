@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Animation.h" />
+    <ClInclude Include="Src\Game2\Arrow.h" />
     <ClInclude Include="Src\Game2\BehaviourComponent.h" />
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
     <ClInclude Include="Src\Game2\CutScene.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\EntityStats.h" />
     <ClInclude Include="Src\Game2\GameScene.h" />
+    <ClInclude Include="Src\Game2\Infantry.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
     <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\MainMenuScene.h" />
@@ -91,6 +93,7 @@
     <ClInclude Include="Src\Game2\TempStateMachine.h" />
     <ClInclude Include="Src\Game2\Texture.h" />
     <ClInclude Include="Src\Game2\TextureComponent.h" />
+    <ClInclude Include="Src\Game2\Tower.h" />
     <ClInclude Include="Src\Game2\TransformComponent.h" />
     <ClInclude Include="Src\Game2\Vector2d.h" />
     <ClInclude Include="Src\Game2\VertexArray.h" />
@@ -102,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Game2\Animation.cpp" />
     <ClCompile Include="Src\Game2\Application(Core).cpp" />
+    <ClCompile Include="Src\Game2\Arrow.cpp" />
     <ClCompile Include="Src\Game2\AssetManager.cpp" />
     <ClCompile Include="Src\Game2\AudioEngine.cpp" />
     <ClCompile Include="Src\Game2\Body.cpp" />
@@ -126,6 +130,7 @@
     <ClCompile Include="Src\Game2\imgui_tables.cpp" />
     <ClCompile Include="Src\Game2\imgui_widgets.cpp" />
     <ClCompile Include="Src\Game2\IndexBuffer.cpp" />
+    <ClCompile Include="Src\Game2\Infantry.cpp" />
     <ClCompile Include="Src\Game2\inGameGUI.cpp" />
     <ClCompile Include="Src\Game2\Input.cpp" />
     <ClCompile Include="Src\Game2\Loader.cpp" />
@@ -155,6 +160,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Tower.cpp" />
     <ClCompile Include="Src\Game2\Vector2d.cpp" />
     <ClCompile Include="Src\Game2\VertexArray.cpp" />
     <ClCompile Include="Src\Game2\VertexBuffer.cpp" />

@@ -148,6 +148,13 @@
     <ClCompile Include="Src\Game2\CutScene.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\Infantry.cpp">
+      <Filter>Scripts\Units\Infantry</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Tower.cpp">
+      <Filter>Scripts\Units\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -385,6 +392,15 @@
     <ClInclude Include="Src\Game2\ScriptComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\Infantry.h">
+      <Filter>Scripts\Units\Infantry</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Tower.h">
+      <Filter>Scripts\Units\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Arrow.h">
+      <Filter>Scripts\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -507,8 +523,20 @@
     <Filter Include="Systems\Shooting">
       <UniqueIdentifier>{138a7d6c-8f48-4adb-a3ee-2b136eb9ce30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\CutsceneManager">
-      <UniqueIdentifier>{1b19cc6e-e484-4c4c-b4e2-3b46381ce7fa}</UniqueIdentifier>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{1be87286-6d7a-4800-825c-779d9a8ee74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units">
+      <UniqueIdentifier>{794f224c-f603-4205-83d2-5ea8dc96b3f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Infantry">
+      <UniqueIdentifier>{4b9d6148-bf74-4b60-a19a-fe99a16a07c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Tower">
+      <UniqueIdentifier>{e52a34df-c39f-4052-8d1d-c5dc39c06886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Action">
+      <UniqueIdentifier>{77658eb7-c2a5-4082-ba94-449ef0b4efd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
