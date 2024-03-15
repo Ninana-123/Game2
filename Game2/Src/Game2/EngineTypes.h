@@ -96,8 +96,8 @@ enum TextureClass //!< Enumeration for different texture classes.
     cutScene8,
 
     mainMenuScreen,
-    defeatScreen,
     pauseScreen,
+    defeatScreen,
 
     TextureClassCount
 };
