@@ -21,33 +21,32 @@ const std::chrono::milliseconds TextureDisplayTime(3000); // Display each textur
 namespace Engine {
 const std::string CutSceneFilePath = "Resource/Scenes/CutScene.txt";
 
-    void CutScene::OnLoad()
-    {
-        cutsceneLoader.LoadScene(CutSceneFilePath);
-        auto entities = c_entityManager.GetEntities();
+void CutScene::OnLoad()
+{
+    cutsceneLoader.LoadScene(CutSceneFilePath);
+    auto entities = c_entityManager.GetEntities();
 
-        // Store the entities in a vector for sequential display
-        std::vector<EntityID> entityIDs;
-        for (const auto& pair : *entities) {
-            entityIDs.push_back(pair.first);
-        }
-
-        // Display the first entity immediately if the flag is set
-        bool displayImmediately = true;
-        if (!entityIDs.empty()) {
-            c_entityManager.AddToStorage(entityIDs.front());
-            displayImmediately = false; // Disable immediate display for subsequent entities
-        }
-
-        // Display each subsequent entity sequentially with a delay
-        for (size_t i = 1; i < entityIDs.size(); ++i) {
-            // Wait for the specified display time before proceeding to the next entity
-            std::this_thread::sleep_for(TextureDisplayTime);
-
-            // Display the entity
-            c_entityManager.AddToStorage(entityIDs[i]);
-        }
+    // Store the entities in a vector for sequential display
+    std::vector<EntityID> entityIDs;
+    for (const auto& pair : *entities) {
+        entityIDs.push_back(pair.first);
     }
+
+    // Define a lambda function to display entities sequentially with a delay
+    auto displayEntities = [this, &entityIDs]() {
+        for (size_t i = 0; i < entityIDs.size(); ++i) {
+            c_entityManager.AddToStorage(entityIDs[i]);
+            std::this_thread::sleep_for(TextureDisplayTime);
+        }
+    };
+
+    // Start a new thread to display entities
+    std::thread displayThread(displayEntities);
+
+    // Detach the thread to allow it to continue running independently
+    displayThread.detach();
+}
+
 
     void CutScene::OnShutDown()
     {
