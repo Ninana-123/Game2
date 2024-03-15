@@ -1,6 +1,21 @@
-#pragma once
+/******************************************************************************/
+/*!
+\file		BehaviourFCT.h
+\author 	Tristan Tham Rui Hong
 
-//BehaviourFCT.h
+\email		t.tham@digipen.edu
+
+\date   	30/01/2024
+\brief		This file contains the implementation of the states behaviours
+            that the entities will be using.
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
+#ifndef ENGINE_BEHAVIOUR_FCT_H
+#define ENGINE_BEHAVIOUR_FCT_H
 
 namespace Engine {
 
@@ -18,3 +33,4 @@ namespace Engine {
     };
 
 }
+#endif ENGINE_BEHAVIOUR_FCT_H
