@@ -32,27 +32,22 @@ const std::string CutSceneFilePath = "Resource/Scenes/CutScene.txt";
             entityIDs.push_back(pair.first);
         }
 
-        // Display each entity sequentially with a delay
-        size_t currentIndex = 0;
-        bool isFirstEntity = true;
-        while (currentIndex < entityIDs.size()) {
-            // Display the current entity
-            c_entityManager.AddToStorage(entityIDs[currentIndex]);
+        // Display the first entity immediately if the flag is set
+        bool displayImmediately = true;
+        if (!entityIDs.empty()) {
+            c_entityManager.AddToStorage(entityIDs.front());
+            displayImmediately = false; // Disable immediate display for subsequent entities
+        }
 
-            // If it's the first entity, wait for a shorter delay
-            if (isFirstEntity) {
-                isFirstEntity = false;
-                std::this_thread::sleep_for(std::chrono::milliseconds(4000)); // Adjust the delay as needed
-            }
-            else {
-                std::this_thread::sleep_for(TextureDisplayTime); // Wait for the specified display time
-            }
+        // Display each subsequent entity sequentially with a delay
+        for (size_t i = 1; i < entityIDs.size(); ++i) {
+            // Wait for the specified display time before proceeding to the next entity
+            std::this_thread::sleep_for(TextureDisplayTime);
 
-            // Move to the next entity
-            ++currentIndex;
+            // Display the entity
+            c_entityManager.AddToStorage(entityIDs[i]);
         }
     }
-
 
     void CutScene::OnShutDown()
     {

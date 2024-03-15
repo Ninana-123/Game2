@@ -289,6 +289,7 @@ namespace Engine {
             { {TextureClass::cutScene7,         0}, "Resource/Texture/cutScene7.PNG" },
             { {TextureClass::cutScene8,         0}, "Resource/Texture/whiteScreen.PNG" },
 
+            { {TextureClass::mainMenuScreen,         0}, "Resource/Texture/mainmenu_screen.PNG" }
         };
     };
 }

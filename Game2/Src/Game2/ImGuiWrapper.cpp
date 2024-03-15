@@ -32,6 +32,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "imgui_impl_opengl3.h"
 #include "AudioEngine.h"
 #include "GameScene.h"
+#include "CutScene.h"
 
 bool deleteAllEntity = false;
 bool shouldLoadScene = false;
