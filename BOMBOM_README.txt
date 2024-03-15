@@ -15,7 +15,9 @@ KNOWN BUGS:
 
 3. When game is fullscreen, the functions work in debug mode, as in the units are going where they supposed to. However this cannot be confirmed in released mode.
 
-4. Dropping the unit out of the window will cause the program to crash.
+4. Dropping the unit out of the window will cause the game to crash.
+
+5. Selecting the archer unit after an arrow has been spawned causes the game to crash.
 
 INCOMPLETE FEATURES:
 1. Arrow is currently buggy and not able to work with multiple towers.
