@@ -28,7 +28,7 @@ namespace Engine
 		if (counter <= 0.f)
 		{
 			Entity* target = targets.front();
-			Shoot(target);
+			//Shoot(target);
 			counter = 1.f / firerate;
 		}
 		
