@@ -31,6 +31,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "inGameGUI.h"
 #include "CollisionSystem.h"
+#include "ShootingSystem.h"
 #include "WindowsWindow.h"
 #include "Input.h"
 #include "SceneManager.h"
@@ -72,6 +73,7 @@ namespace Engine
     std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
+    std::shared_ptr<ShootingSystem> m_shootingSystem = nullptr;
 
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
@@ -238,6 +240,9 @@ namespace Engine
 
         // Initialize inGameGUI
         m_inGameGUI = std::make_unique<Engine::inGameGUI>(EM, &PM);
+
+        // Initialize inGameGUI
+        m_shootingSystem = std::make_unique<Engine::ShootingSystem>(EM, &PM, collisionSystem);
 
         //Attaching Input Handler to EM
         InputHandler.SetEntityManager(EM);
@@ -620,6 +625,7 @@ namespace Engine
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
             m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
+            m_shootingSystem->Update(deltaTime, isShooting, EM->GetEntities());
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

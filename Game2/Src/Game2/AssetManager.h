@@ -279,6 +279,7 @@ namespace Engine {
             { {TextureClass::towerHP7,          0}, "Resource/Texture/Tower_hp_7.PNG" },
             { {TextureClass::towerHP8,          0}, "Resource/Texture/Tower_hp_8.PNG" },
             { {TextureClass::towerHP9,          0}, "Resource/Texture/Tower_hp_9.PNG" },
+            { {TextureClass::Arrow,             0}, "Resource/Texture/Arrow.png" },
 
             { {TextureClass::cutScene1,         0}, "Resource/Texture/cutScene1.PNG" },
             { {TextureClass::cutScene2,         0}, "Resource/Texture/cutScene2.PNG" },

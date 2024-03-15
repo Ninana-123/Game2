@@ -115,10 +115,10 @@ void AudioEngine::stopSound(SoundInfo soundInfo)
 }
 
 void AudioEngine::pauseAllAudio() {
-    Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing all audio.");
+    // Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing all audio.");
 
     if (loopsPlaying.empty()) {
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "No channels in loopsPlaying.");
+        // Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "No channels in loopsPlaying.");
         return;
     }
 
@@ -126,29 +126,29 @@ void AudioEngine::pauseAllAudio() {
         FMOD::Channel* channel = pair.second;
 
         // Debug messages for loop
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Inside pauseAllAudio loop. Checking channel: " + pair.first);
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Inside pauseAllAudio loop. Checking channel: " + pair.first);
 
         bool isPausedBefore;
         channel->getPaused(&isPausedBefore);
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Checking channel: " + pair.first + " (IsPausedBefore: " 
-            + (isPausedBefore ? "true" : "false") + ")");
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Checking channel: " + pair.first + " (IsPausedBefore: " 
+        //    + (isPausedBefore ? "true" : "false") + ")");
 
         if (!isPausedBefore) {
-            Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing channel: " + pair.first);
+            //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Pausing channel: " + pair.first);
             ERRCHECK(channel->setPaused(true));
         }
 
         bool isPausedAfter;
         channel->getPaused(&isPausedAfter);
-        Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Paused channel: " + pair.first + " (WasPaused: " 
-            + (isPausedBefore ? "true" : "false") + ", IsPausedAfter: " + (isPausedAfter ? "true" : "false") + ")");
+        //Engine::Logger::GetInstance().Log(Engine::LogLevel::Info, "Paused channel: " + pair.first + " (WasPaused: " 
+        //    + (isPausedBefore ? "true" : "false") + ", IsPausedAfter: " + (isPausedAfter ? "true" : "false") + ")");
     }
 }
 
 void AudioEngine::pauseSound(SoundInfo soundInfo) {
     // Check if the sound is loaded
     if (!soundLoaded(soundInfo)) {
-        std::cerr << "Error: Sound not loaded. Cannot pause." << std::endl;
+        // std::cerr << "Error: Sound not loaded. Cannot pause." << std::endl;
         return;
     }
 
@@ -166,7 +166,7 @@ void AudioEngine::pauseSound(SoundInfo soundInfo) {
         channel->setPaused(!isPaused);
     }
     else {
-        std::cerr << "Error: Sound not playing. Cannot pause." << std::endl;
+        // std::cerr << "Error: Sound not playing. Cannot pause." << std::endl;
     }
 }
 
@@ -210,7 +210,7 @@ void AudioEngine::resumeAllAudio() {
 void AudioEngine::resumeSound(SoundInfo soundInfo) {
     // Check if the sound is loaded
     if (!soundLoaded(soundInfo)) {
-        std::cerr << "Error: Sound not loaded. Cannot resume." << std::endl;
+        // std::cerr << "Error: Sound not loaded. Cannot resume." << std::endl;
         return;
     }
 
@@ -230,11 +230,11 @@ void AudioEngine::resumeSound(SoundInfo soundInfo) {
             channel->setPaused(false);
         }
         else {
-            std::cerr << "Error: Sound is not paused. Cannot resume." << std::endl;
+            // std::cerr << "Error: Sound is not paused. Cannot resume." << std::endl;
         }
     }
     else {
-        std::cerr << "Error: Sound not playing. Cannot resume." << std::endl;
+        // std::cerr << "Error: Sound not playing. Cannot resume." << std::endl;
     }
 }
 
@@ -261,15 +261,15 @@ void AudioEngine::updateSoundLoopVolume(SoundInfo& soundInfo, float newVolume, u
         //std::cout << "Updating with new soundinfo vol \n";
         soundInfo.setVolume(newVolume); // update the SoundInfo's volume
     }
-    else
-        std::cout << "AudioEngine: Can't update sound loop volume! (It isn't playing or might not be loaded)\n";
+    //else
+    //    std::cout << "AudioEngine: Can't update sound loop volume! (It isn't playing or might not be loaded)\n";
 }
 
 void AudioEngine::update3DSoundPosition(SoundInfo soundInfo) {
     if (soundIsPlaying(soundInfo))
         set3dChannelPosition(soundInfo, loopsPlaying[soundInfo.getUniqueID()]);
-    else
-        std::cout << "Audio Engine: Can't update sound position!\n";
+    //else
+    //    std::cout << "Audio Engine: Can't update sound position!\n";
 
 }
 
@@ -292,21 +292,21 @@ unsigned int AudioEngine::getSoundLengthInMS(SoundInfo soundInfo) {
 }
 
 void AudioEngine::loadFMODStudioBank(const char* filepath) {
-    std::cout << "Audio Engine: Loading FMOD Studio Sound Bank " << filepath << '\n';
+    // std::cout << "Audio Engine: Loading FMOD Studio Sound Bank " << filepath << '\n';
     FMOD::Studio::Bank* bank = NULL;
     ERRCHECK(studioSystem->loadBankFile(filepath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));
     soundBanks.insert({ filepath, bank });
 }
 
 void AudioEngine::loadFMODStudioEvent(const char* eventName, std::vector<std::pair<const char*, float>> paramsValues) { // std::vector<std::map<const char*, float>> perInstanceParameterValues) {
-    std::cout << "AudioEngine: Loading FMOD Studio Event " << eventName << '\n';
+    // std::cout << "AudioEngine: Loading FMOD Studio Event " << eventName << '\n';
     FMOD::Studio::EventDescription* eventDescription = NULL;
     ERRCHECK(studioSystem->getEvent(eventName, &eventDescription));
     // Create an instance of the event
     FMOD::Studio::EventInstance* eventInstance = NULL;
     ERRCHECK(eventDescription->createInstance(&eventInstance));
     for (const auto& parVal : paramsValues) {
-        std::cout << "AudioEngine: Setting Event Instance Parameter " << parVal.first << "to value: " << parVal.second << '\n';
+        // std::cout << "AudioEngine: Setting Event Instance Parameter " << parVal.first << "to value: " << parVal.second << '\n';
         // Set the parameter values of the event instance
         ERRCHECK(eventInstance->setParameterByName(parVal.first, parVal.second));
     }
@@ -317,8 +317,8 @@ void AudioEngine::loadFMODStudioEvent(const char* eventName, std::vector<std::pa
 void AudioEngine::setFMODEventParamValue(const char* eventName, const char* parameterName, float value) {
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->setParameterByName(parameterName, value));
-    else
-        std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, can't set param \n";
+    //else
+    //    std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, can't set param \n";
 
 }
 
@@ -329,16 +329,16 @@ void AudioEngine::playEvent(const char* eventName, int instanceIndex) {
     UNREFERENCED_PARAMETER(instanceIndex);
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->start());
-    else
-        std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot play \n";
+    //else
+    //    std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot play \n";
 }
 
 void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
     UNREFERENCED_PARAMETER(instanceIndex);
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
-    else
-        std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot stop \n";
+    //else
+    //    std::cout << "AudioEngine: Event " << eventName << " was not in event instance cache, cannot stop \n";
 }
 
 void AudioEngine::setEventVolume(const char* eventName, float volume0to1) {
