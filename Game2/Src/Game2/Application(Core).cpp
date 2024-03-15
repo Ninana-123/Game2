@@ -289,8 +289,8 @@ namespace Engine
                     shouldLoadScene = true;
                     
                     // Set the scene to load as cutscene
-                    //sceneToLoad = CutSceneFilePath;
-                    sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
+                    sceneToLoad = CutSceneFilePath;
+                    //sceneToLoad = GameSceneFilePath; // Store the name of the scene to be loaded
                     
                     // Set flags to indicate scene change
                     mainMenuCheck = false;
@@ -298,8 +298,8 @@ namespace Engine
 
 #else
 
-                    std::string fp = GameSceneFilePath;
-                    //std::string fp = CutSceneFilePath;
+                    //std::string fp = GameSceneFilePath;
+                    std::string fp = CutSceneFilePath;
                     // Retrieve the size of entities list
                     int entityCount = static_cast<int>(EM->GetEntities()->size());
 
