@@ -33,6 +33,8 @@
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
     <ClInclude Include="Src\Game2\Scene.h" />
     <ClInclude Include="Src\Game2\SceneManager.h" />
+    <ClInclude Include="Src\Game2\ScriptComponent.h" />
+    <ClInclude Include="Src\Game2\ScriptSystem.h" />
     <ClInclude Include="Src\Game2\SpriteComponent.h" />
     <ClInclude Include="Src\Game2\AppEvent.h" />
     <ClInclude Include="Src\Game2\AssetManager.h" />
@@ -136,6 +138,7 @@
     <ClCompile Include="Src\Game2\PrefabManager.cpp" />
     <ClCompile Include="Src\Game2\Renderer.cpp" />
     <ClCompile Include="Src\Game2\SceneManager.cpp" />
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp" />
     <ClCompile Include="Src\Game2\Shader.cpp" />
     <ClCompile Include="Src\Game2\ErrorHandler.cpp" />
     <ClCompile Include="Src\Game2\SystemsManager.cpp" />

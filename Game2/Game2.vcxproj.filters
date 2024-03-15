@@ -142,6 +142,9 @@
     <ClCompile Include="Src\Game2\SceneManager.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp">
+      <Filter>Systems\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -364,6 +367,12 @@
     <ClInclude Include="Src\Game2\SceneManager.h">
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\ScriptSystem.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ScriptComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -482,6 +491,9 @@
     </Filter>
     <Filter Include="Base\SceneManager">
       <UniqueIdentifier>{78ac4633-0f1f-4b48-8d84-5a45e0ff684a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\CutsceneManager">
+      <UniqueIdentifier>{1b19cc6e-e484-4c4c-b4e2-3b46381ce7fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

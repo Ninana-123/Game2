@@ -86,6 +86,17 @@ namespace Engine
 		*/
 		EntityID CloneEntity(EntityID sourceEntityID);
 
+		/*!
+		\brief
+		Clones an existing entity and returns the unique identifier of the new entity.
+		Overload of previous function with Entity pointer as input
+
+		\param sourceEntityID
+		The unique identifier (EntityID) of the entity to clone.
+
+		\return
+		The unique identifier (EntityID) of the newly created clone.
+		*/
 		EntityID CloneEntity(Entity* sourceEntity);
 
 		/*!
