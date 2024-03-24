@@ -27,7 +27,6 @@ bool inSettings = false;
 bool isGameOver = false;
 bool victoryScreenShown = false;
 bool accessedCastle = false;
-// bool entityCreated = false;
 //AudioEngine audio;
 
 namespace Engine
@@ -150,14 +149,6 @@ namespace Engine
 
 		// Reset flag
 		CollisionCheck = false;
-
-		//if (isShooting && !entityCreated)
-		//{
-		//	Prefab* arrowPrefab = prefabManager->GetPrefab(10);
-		//	entityManager->CreateEntityFromPrefab(*arrowPrefab);
-		//	entityCreated = true;
-		//	//spawnTimer = 0.0f;
-		//}
 
 	}
 

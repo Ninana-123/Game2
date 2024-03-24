@@ -121,6 +121,9 @@
     <ClCompile Include="Src\Game2\Font.cpp">
       <Filter>Base\Font</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\inGameGUI.cpp">
+      <Filter>Systems\inGameGUI</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Game2\EntityStats.cpp">
       <Filter>EntityStats</Filter>
     </ClCompile>
@@ -138,12 +141,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\SceneManager.cpp">
       <Filter>Base\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\ShootingSystem.cpp">
-      <Filter>Systems\Shooting</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\inGameGUI.cpp">
-      <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,12 +364,6 @@
     <ClInclude Include="Src\Game2\SceneManager.h">
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\ShootingComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\ShootingSystem.h">
-      <Filter>Systems\Shooting</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -491,9 +482,6 @@
     </Filter>
     <Filter Include="Base\SceneManager">
       <UniqueIdentifier>{78ac4633-0f1f-4b48-8d84-5a45e0ff684a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\Shooting">
-      <UniqueIdentifier>{138a7d6c-8f48-4adb-a3ee-2b136eb9ce30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
