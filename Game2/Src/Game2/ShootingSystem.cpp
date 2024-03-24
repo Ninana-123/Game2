@@ -23,6 +23,7 @@ Technology is prohibited.
 
 bool entityCreated = false;
 bool outOfBounds = false;
+EntityID hahaArrowID = 0;
 
 namespace Engine
 {
@@ -61,7 +62,8 @@ namespace Engine
     {
     }
 
-    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) {
+    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
+    {
         while (!collisionSystem->CollisionQueue.empty())
         {
             CollisionVector.push_back(collisionSystem->CollisionQueue.front());
@@ -102,7 +104,7 @@ namespace Engine
                 Entity* Tower = entityManager.get()->GetEntity(CollisionVector.front().first); // Could be second?? didnt check
                 Entity* Player = entityManager.get()->GetEntity(CollisionVector.front().second); // Could be second?? didnt check
                 Entity* Arrow = entityManager.get()->GetEntity(arrowID); // Could be second?? didnt check
-                //Arrow->AddNewComponent(ComponentType::Transform);
+                Arrow->AddNewComponent(ComponentType::Transform);
                 Arrow->AddNewComponent(ComponentType::Physics);
                 Arrow->AddNewComponent(ComponentType::Collision);
                 Arrow->AddNewComponent(ComponentType::Shooting);
@@ -175,6 +177,7 @@ namespace Engine
         if (outOfBounds || unitArrowCollision) 
         {
             // std::cout << "check for print" << std::endl;
+            std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
             entityManager->DestroyEntity(lemaoArrowID);
             outOfBounds = false;
             unitArrowCollision = false;

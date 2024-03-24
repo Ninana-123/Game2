@@ -133,6 +133,7 @@ namespace Engine
 			// update original map with buffer map
 			entities = std::move(updatedEntities);
 		}
+		EntityID entityID = nextEntityID--;
 	}
 
 	void EntityManager::AddToStorage(EntityID entityID)

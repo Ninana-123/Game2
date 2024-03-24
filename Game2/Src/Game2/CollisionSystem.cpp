@@ -37,6 +37,7 @@ int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
 int victoryID = 0;
 int lemaoArrowID = 0;
+int unitID = 0;
 bool tower1Destroyed = false;
 bool tower2Destroyed = false;
 bool castleDestroyed = false;
@@ -771,7 +772,10 @@ namespace Engine
 										{
 											//isColliding = true;
 											isShooting = true;
-											PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+											if (entity1->GetID() && entity2->GetID()) 
+											{
+												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+											}
 											if (behaviourComponent1)
 											{
 												
@@ -960,6 +964,7 @@ namespace Engine
 						{
 							isStartingPoint = false;
 							unitHalfSpawned = true;
+							unitID = entity->GetID();
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}

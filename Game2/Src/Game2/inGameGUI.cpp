@@ -56,6 +56,7 @@ namespace Engine
 			inGameGUIInitialized = true;
 		}
 
+
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
 		if (CollisionCheck && isSpawned)
@@ -98,6 +99,13 @@ namespace Engine
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
 				totalTank--;
+			}
+
+			if (unitHalfSpawned)
+			{
+				std::cout << "Unit ID is: " << unitID << std::endl;
+				// entityManager->DestroyEntity(unitID);
+				unitHalfSpawned = false;
 			}
 
 			// Logic for the pause/play and setting buttons
