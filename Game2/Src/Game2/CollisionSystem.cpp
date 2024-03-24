@@ -36,7 +36,7 @@ int tower1CollidingEntityHealth = 0;
 int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
 int victoryID = 0;
-int lemaoArrowID = 0;
+// int arrowID = 0;
 bool tower1Destroyed = false;
 bool tower2Destroyed = false;
 bool castleDestroyed = false;
@@ -45,7 +45,6 @@ bool towerCollision = false;
 bool isSpawned = false;
 bool unitHalfSpawned = false;
 bool isShooting = false;
-bool unitArrowCollision = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -688,14 +687,27 @@ namespace Engine
 										{
 											isColliding = true;
 
-											if (collisionComponent2->layer == Layer::Arrow && collisionComponent1->layer == Layer::World)
+											//// Collision between Arrow and Unit
+											//if (collisionComponent2->layer == Layer::Arrow) 
+											//{
+											//	if (behaviourComponent1) 
+											//	{
+											//		std::cout << "hello" << std::endl;
+											//	}
+											//}
+											
+											//if (shootingComponent1 == nullptr) 
+											//{
+											//	std::cout << "why is this null" << std::endl;
+											//}
+
+											//std::cout << "outside of the collision check" << std::endl;
+
+											if (collisionComponent2->layer == Layer::Arrow)
 											{
-												// std::cout << "outside behavior" << std::endl;
 												if (behaviourComponent1) 
 												{
-													//std::cout << "inside behavior" << std::endl;
-													unitArrowCollision = true;
-													lemaoArrowID = entity2->GetID();
+													//std::cout << "yay its not null" << std::endl;
 												}
 											}
 

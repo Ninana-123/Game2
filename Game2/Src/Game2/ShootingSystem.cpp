@@ -1,19 +1,3 @@
-/******************************************************************************/
-/*!
-\file		ShootingSystem.cpp
-\author		Ang Jun Sheng Aloysius, a.junshengaloysius@digipen.edu, 2201807
-\co		    Teo Sheen Yeoh, t.sheenyeoh@digipen.edu
-
-\date		11/03/2024
-\brief		Contains the defintion for the logic of the shooting element of the tower/units.
-
-Copyright (C) 2023 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents
-without the prior written consent of DigiPen Institute of
-Technology is prohibited.
- */
- /******************************************************************************/
-
 #include "pch.h"
 #include "TransformComponent.h"
 #include "Entity.h"
@@ -23,6 +7,7 @@ Technology is prohibited.
 
 bool entityCreated = false;
 bool outOfBounds = false;
+int lemaoArrowID = 0;
 
 namespace Engine
 {
@@ -83,7 +68,46 @@ namespace Engine
             PlayerArrowVector.erase(PlayerArrowVector.begin());
         }
 
-        if (shootingCheck && !entityCreated)
+        //if (shootingCheck && !entityCreated && (!tower1Destroyed || !tower2Destroyed))
+        //{
+        //    entityCreated = true;
+
+        //    // Create a new arrow entity
+        //    EntityID arrowID = entityManager->CreateEntity();        
+
+        //    // Update the components of the arrow entity
+        //    if (!CollisionVector.empty())
+        //    {
+        //        // Add necessary components to the arrow entity
+        //        Entity* Arrow = entityManager.get()->GetEntity(arrowID);
+        //        Arrow->AddNewComponent(ComponentType::Physics);
+        //        Arrow->AddNewComponent(ComponentType::Collision);
+        //        Arrow->AddNewComponent(ComponentType::Shooting);
+
+        //        Entity* Tower = entityManager.get()->GetEntity(CollisionVector.front().first);
+        //        Entity* Player = entityManager.get()->GetEntity(CollisionVector.front().second);
+        //        TransformComponent* TowerTransform = dynamic_cast<TransformComponent*>(Tower->GetComponent(ComponentType::Transform));
+        //        TransformComponent* PlayerTransform = dynamic_cast<TransformComponent*>(Player->GetComponent(ComponentType::Transform));
+        //        TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(Arrow->GetComponent(ComponentType::Transform));
+        //        TextureComponent* ArrowTexture = dynamic_cast<TextureComponent*>(Arrow->GetComponent(ComponentType::Texture));
+        //        ArrowTexture->textureKey = { 42, 0 };
+        //        CollisionComponent* ArrowCollision = dynamic_cast<CollisionComponent*>(Arrow->GetComponent(ComponentType::Collision));
+        //        ArrowCollision->layer = Layer::Arrow;
+        //        ArrowCollision->c_Height = 0;
+        //        ArrowCollision->c_Width = 0;
+        //        PhysicsComponent* ArrowPhysics = dynamic_cast<PhysicsComponent*>(Arrow->GetComponent(ComponentType::Physics));
+        //        VECTORMATH::Vec2 Vel = PlayerTransform->position - TowerTransform->position;
+        //        ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(Arrow->GetComponent(ComponentType::Shooting));
+        //        ArrowShooting->layer = Layer::Arrow;
+        //        ArrowTransform->rot = atan2(Vel.y, Vel.x);
+        //        ArrowPhysics->velocity = Vel;
+        //        ArrowPhysics->mass = 0.001f;
+        //        ArrowTransform->position = TowerTransform->position;
+        //        CollisionVector.pop_back();
+        //    }
+        //}
+
+        if (shootingCheck && !entityCreated && (!tower1Destroyed || !tower2Destroyed))
         {
             //EntityID arrowID = entityManager->CreateEntity();
             //std::cout << "This is the arrow's ID: " << arrowID << std::endl;
@@ -139,10 +163,10 @@ namespace Engine
             }
         }
 
-        int OOBScreenWidth, OOBScreenHeight;
-        glfwGetFramebufferSize(glfwGetCurrentContext(), &OOBScreenWidth, &OOBScreenHeight);
-        float scaleX = OOBScreenWidth / 1280.f;
-        float scaleY = OOBScreenHeight / 720.f;
+        int screenWidth, screenHeight;
+        glfwGetFramebufferSize(glfwGetCurrentContext(), &screenWidth, &screenHeight);
+        float scaleX = screenWidth / 1280.f;
+        float scaleY = screenHeight / 720.f;
 
         // Loop through every entity
         for (auto it1 = entities->begin(); it1 != entities->end(); ++it1) 
@@ -155,28 +179,30 @@ namespace Engine
 
             if (transform) 
             {
-                // std::cout << "This is the entity's ID: " << entity->GetID() << std::endl;
+                //// Check if the entity is an arrow and if it's out of bounds
+                //if (entity->HasComponent(ComponentType::Shooting) &&
+                //    (transform->position.x < 0 || transform->position.x > screenWidth ||
+                //        transform->position.y < 0 || transform->position.y > screenHeight)) {
 
-                if (entity->HasComponent(ComponentType::Shooting))     
+                //    // Destroy the arrow entity
+                //    entityManager->DestroyEntity(entity->GetID());
+                //}
+                std::cout << "This is the entity's ID: " << entity->GetID() << std::endl;
+
+                if (entity->HasComponent(ComponentType::Shooting))
                 {
-                    if (transform->position.x < (0 - OOBScreenWidth) * scaleX || transform->position.x > (OOBScreenWidth / 2) * scaleX ||
-                        transform->position.y < (0 - OOBScreenHeight) * scaleY || transform->position.y > (OOBScreenHeight / 2) * scaleY) 
-                    {
-                        std::cout << "This is the arrow's ID: " << entity->GetID() << std::endl;
-                        lemaoArrowID = entity->GetID();
-                        outOfBounds = true;
-                    }
+                    std::cout << "This is the arrow's ID: " << entity->GetID() << std::endl;
+                    lemaoArrowID = entity->GetID();
+                    outOfBounds = true;
                 }
 
             }
         }
 
-        if (outOfBounds || unitArrowCollision) 
+        if (outOfBounds) 
         {
-            // std::cout << "check for print" << std::endl;
             entityManager->DestroyEntity(lemaoArrowID);
             outOfBounds = false;
-            unitArrowCollision = false;
         }
 
        /* for (const auto& temp : arrows)
