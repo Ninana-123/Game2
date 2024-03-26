@@ -47,6 +47,7 @@ bool isSpawned = false;
 bool unitHalfSpawned = false;
 bool isShooting = false;
 bool unitArrowCollision = false;
+bool fuckMe = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -937,7 +938,6 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn && isSpawned)
 				{
-
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
@@ -964,16 +964,18 @@ namespace Engine
 						{
 							isStartingPoint = false;
 							unitHalfSpawned = true;
+							// fuckMe = true;
 							unitID = entity->GetID();
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
+
 					else
 					{
 						// No collision, reset the flag or perform cleanup
 						collisionComponent->mColliding = false;
 					}
-				}
+				
 
 				if (collisionComponent)
 				{
