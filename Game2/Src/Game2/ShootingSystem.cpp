@@ -174,7 +174,16 @@ namespace Engine
             }
         }
 
-        if (outOfBounds || unitArrowCollision) 
+        if (unitArrowCollision) 
+        {
+            // std::cout << "check for print" << std::endl;
+            std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
+            entityManager->DestroyEntity(lemaoArrowID);
+            outOfBounds = false;
+            unitArrowCollision = false;
+        }
+
+        if (outOfBounds)
         {
             // std::cout << "check for print" << std::endl;
             std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number

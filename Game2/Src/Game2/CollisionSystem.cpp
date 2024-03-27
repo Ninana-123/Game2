@@ -691,6 +691,7 @@ namespace Engine
 										{
 											isColliding = true;
 
+											// Collision from arrow to unit
 											if (collisionComponent2->layer == Layer::Arrow && collisionComponent1->layer == Layer::World)
 											{
 												// std::cout << "outside behavior" << std::endl;
@@ -699,6 +700,12 @@ namespace Engine
 													//std::cout << "inside behavior" << std::endl;
 													unitArrowCollision = true;
 													lemaoArrowID = entity2->GetID();
+													statsComponent1->health -= 5;
+													std::cout << "infantry's health is: " << statsComponent1->health << std::endl;
+													if (statsComponent1->health == 0) 
+													{
+														std::cout << "infantry is fucking dead" << std::endl;
+													}
 												}
 											}
 
