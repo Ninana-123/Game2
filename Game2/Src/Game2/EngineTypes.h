@@ -102,6 +102,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuScreen,
     pauseScreen,
     defeatScreen,
+    startingPoint,
 
     TextureClassCount
 };

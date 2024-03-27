@@ -1,4 +1,4 @@
-13
+15
 Transform
 Position: 1 0
 ScaleX: 3672.09
@@ -259,5 +259,23 @@ ScaleY: 0.6
 Rotation: 0
 Texture
 MainIndex: 41
+SubIndex: 0
+EndEntity
+Transform
+Position: -595 70
+ScaleX: 1.0
+ScaleY: 1.2
+Rotation: 0
+Texture
+MainIndex: 54
+SubIndex: 0
+EndEntity
+Transform
+Position: 95 327.5
+ScaleX: 1.2
+ScaleY: 1.0
+Rotation: 0
+Texture
+MainIndex: 54
 SubIndex: 0
 EndEntity

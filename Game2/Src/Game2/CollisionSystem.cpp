@@ -37,6 +37,7 @@ int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
 int victoryID = 0;
 int lemaoArrowID = 0;
+int unitID = 0;
 bool tower1Destroyed = false;
 bool tower2Destroyed = false;
 bool castleDestroyed = false;
@@ -46,6 +47,7 @@ bool isSpawned = false;
 bool unitHalfSpawned = false;
 bool isShooting = false;
 bool unitArrowCollision = false;
+bool fuckMe = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -536,6 +538,7 @@ namespace Engine
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower && statsComponent1)
 					{
+						// statsComponent1->range = 100;
 						circle1.radius = statsComponent1->range;
 					}
 
@@ -688,6 +691,7 @@ namespace Engine
 										{
 											isColliding = true;
 
+											// Collision from arrow to unit
 											if (collisionComponent2->layer == Layer::Arrow && collisionComponent1->layer == Layer::World)
 											{
 												// std::cout << "outside behavior" << std::endl;
@@ -696,6 +700,12 @@ namespace Engine
 													//std::cout << "inside behavior" << std::endl;
 													unitArrowCollision = true;
 													lemaoArrowID = entity2->GetID();
+													statsComponent1->health -= 5;
+													std::cout << "infantry's health is: " << statsComponent1->health << std::endl;
+													if (statsComponent1->health == 0) 
+													{
+														std::cout << "infantry is fucking dead" << std::endl;
+													}
 												}
 											}
 
@@ -771,7 +781,10 @@ namespace Engine
 										{
 											//isColliding = true;
 											isShooting = true;
-											PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+											if (entity1->GetID() && entity2->GetID()) 
+											{
+												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+											}
 											if (behaviourComponent1)
 											{
 												
@@ -933,7 +946,6 @@ namespace Engine
 
 				if (collisionComponent->layer == Layer::BeforeSpawn && isSpawned)
 				{
-
 					// Check for point-to-rect collision
 					if (CollisionIntersection_PointRect(mousePosition, collisionComponent->aabb))
 					{
@@ -960,15 +972,19 @@ namespace Engine
 						{
 							isStartingPoint = false;
 							unitHalfSpawned = true;
+							// fuckMe = true;
+							unitID = entity->GetID();
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
 					}
+
 					else
 					{
 						// No collision, reset the flag or perform cleanup
 						collisionComponent->mColliding = false;
 					}
 				}
+				
 
 				if (collisionComponent)
 				{

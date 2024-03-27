@@ -93,7 +93,7 @@ namespace Engine
                     if (Application::TimePassed(1))
                     {
                         statsComponent2->health -= damage;
-                        std::cout << "Current Health: " << statsComponent2->health << std::endl;
+                        std::cout << "Current Tower Health: " << statsComponent2->health << std::endl;
                     }
                 }
                 else
@@ -102,7 +102,7 @@ namespace Engine
                     {
                         statsComponent2->health = 0;
                         // behaviourComponent2->SetBehaviourState(c_state::Death);
-                        std::cout << "Dead " << statsComponent2->health << std::endl;
+                        std::cout << "Tower Dead " << statsComponent2->health << std::endl;
                     }
                 }
             }
