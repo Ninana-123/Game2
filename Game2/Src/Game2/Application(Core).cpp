@@ -37,7 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "SceneManager.h"
 #include "MainMenuScene.h"
 #include "GameScene.h"
-#include "CutScene.h"
+#include "CutSceneLevel.h"
 #include "TempStateMachine.h"
 #include "Vector2d.h"
 

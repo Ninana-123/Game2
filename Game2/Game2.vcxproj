@@ -23,14 +23,14 @@
     <ClInclude Include="Src\Game2\Arrow.h" />
     <ClInclude Include="Src\Game2\BehaviourComponent.h" />
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
-    <ClInclude Include="Src\Game2\CutScene.h" />
+    <ClInclude Include="Src\Game2\VFX.h" />
+    <ClInclude Include="Src\Game2\CutSceneLevel.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />
     <ClInclude Include="Src\Game2\EditorFBO.h" />
     <ClInclude Include="Src\Game2\EntityStats.h" />
     <ClInclude Include="Src\Game2\GameScene.h" />
     <ClInclude Include="Src\Game2\Infantry.h" />
     <ClInclude Include="Src\Game2\inGameGUI.h" />
-    <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\MainMenuScene.h" />
     <ClInclude Include="Src\Game2\PathfindingComponent.h" />
     <ClInclude Include="Src\Game2\PathfindingSystem.h" />
@@ -112,7 +112,8 @@
     <ClCompile Include="Src\Game2\Camera.cpp" />
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
-    <ClCompile Include="Src\Game2\CutScene.cpp" />
+    <ClCompile Include="Src\Game2\CutSceneLevel.cpp" />
+    <ClCompile Include="Src\Game2\VFX.cpp" />
     <ClCompile Include="Src\Game2\EditorFBO.cpp" />
     <ClCompile Include="Src\Game2\EngineTypes.cpp" />
     <ClCompile Include="Src\Game2\Entity.cpp" />

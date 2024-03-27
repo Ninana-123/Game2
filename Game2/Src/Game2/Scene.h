@@ -30,6 +30,12 @@ namespace Engine {
 		*/
 		virtual void OnLoad() = 0;
 
+		virtual void OnInit() = 0;
+
+		virtual void OnUpdate(double deltaTime) = 0;
+
+		virtual void FreeLevel() = 0;
+
 		/*!
 		\brief Pure virtual function to be overridden by derived classes.
 		\details This function is called when the scene is shut down.

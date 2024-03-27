@@ -1,10 +1,10 @@
 /******************************************************************************/
 /*!
-\file		CutScene.h
+\file		CutSceneLevel.h
 \author		Kwok Jun Lin Wayne, k.junlinwayne, 2200751
 \par		k.junlinwayne@digipen.edu
 \date		10/03/2024
-\brief		Contains the declarations of the Game Scene.
+\brief		Contains the declarations of the Cut Scene Level.
 
 Copyright (C) 2024 DigiPen Institute of Technology.
 Reproduction or disclosure of this file or its contents
@@ -13,17 +13,19 @@ Technology is prohibited.
  */
  /******************************************************************************/
 
-#ifndef ENGINE_CUT_SCENE_H
-#define ENGINE_CUT_SCENE_H
+#ifndef ENGINE_CUTSCENE_LEVEL_H
+#define ENGINE_CUTSCENE_LEVEL_H
 
 #include "Scene.h"
 #include "Loader.h"
 #include "EntityManager.h"
+#include "VFX.h"
 
-namespace Engine {
+namespace Engine
+{
     extern const std::string CutSceneFilePath;
 
-    class CutScene : public Scene {
+    class CutSceneLevel : public Scene {
     public:
         /*!
         \brief Constructor for CutScene class.
@@ -31,12 +33,18 @@ namespace Engine {
         \param prefabManager Pointer to the PrefabManager instance.
         \param AM Pointer to the AssetManager instance.
         */
-        CutScene(std::shared_ptr<EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<AssetManager> AM) : cutsceneLoader(EM, prefabManager, AM) {}
+        CutSceneLevel(std::shared_ptr<EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<AssetManager> AM) : cutsceneLoader(EM, prefabManager, AM) {}
 
         /*!
         \brief Called when the cutscene is loaded.
         */
         void OnLoad() override;
+
+        void OnInit() override;
+
+        void OnUpdate(double deltaTime) override;
+
+        void FreeLevel() override;
 
         /*!
         \brief Called when the cutscene is shut down.
@@ -46,6 +54,8 @@ namespace Engine {
     private:
         Loader cutsceneLoader;
         EntityManager c_entityManager;
+        VFX vfx;
     };
 }
-#endif // ENGINE_CUT_SCENE_H
+
+#endif ENGINE_CUTSCENE_LEVEL_H
