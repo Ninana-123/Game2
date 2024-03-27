@@ -292,7 +292,8 @@ namespace Engine {
 
             { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainmenu_screen.PNG" },
             { {TextureClass::defeatScreen,      0}, "Resource/Texture/mainmenu_screen.PNG" },
-            { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" }
+            { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" },
+            { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" }
 
         };
     };

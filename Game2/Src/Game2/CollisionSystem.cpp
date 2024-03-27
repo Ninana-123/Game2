@@ -538,6 +538,7 @@ namespace Engine
 					// Set tower's circle radius
 					if (collisionComponent1->layer == Layer::Tower && statsComponent1)
 					{
+						// statsComponent1->range = 100;
 						circle1.radius = statsComponent1->range;
 					}
 
@@ -975,6 +976,7 @@ namespace Engine
 						// No collision, reset the flag or perform cleanup
 						collisionComponent->mColliding = false;
 					}
+				}
 				
 
 				if (collisionComponent)
