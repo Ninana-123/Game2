@@ -22,6 +22,7 @@ int healthBarEntityTexture = 0;
 int totalInfantry = 0;
 int totalArcher = 0;
 int totalTank = 0;
+int prevSelectedEntityIndex;
 bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
@@ -104,7 +105,19 @@ namespace Engine
 			if (unitHalfSpawned)
 			{
 				std::cout << "Unit ID is: " << unitID << std::endl;
-				// entityManager->DestroyEntity(unitID);
+				prevSelectedEntityIndex = m_ImGuiWrapper->selectedEntityIndex - 1;
+				entityManager->DestroyEntity(unitID);
+				if (m_ImGuiWrapper != nullptr) {
+					m_ImGuiWrapper->SetTargetEntity(nullptr);
+					entityManager->nextEntityID = prevSelectedEntityIndex+1; // Assuming this is how you reset your IDs
+					prefabManager->nextPrefabID = prevSelectedEntityIndex +1; // Reset prefab ID counter if needed
+					std::cout << "hello0";
+
+					if (entityManager->GetEntity(prevSelectedEntityIndex) != nullptr) {
+						m_ImGuiWrapper->SetTargetEntity(entityManager->GetEntity(prevSelectedEntityIndex));
+					}
+					std::cout << "hello1";
+				}
 				unitHalfSpawned = false;
 			}
 
