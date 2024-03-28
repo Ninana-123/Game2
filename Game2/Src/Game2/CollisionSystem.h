@@ -41,7 +41,9 @@ extern bool isSpawned;
 extern bool unitHalfSpawned;
 extern bool isShooting;
 extern bool unitArrowCollision;
-extern bool fuckMe;
+extern bool infantrySpawned;
+extern bool tankSpawned;
+extern bool archerSpawned;
 
 namespace Engine
 {

@@ -57,6 +57,24 @@ namespace Engine
 			inGameGUIInitialized = true;
 		}
 
+		// Decrementing total units
+		if (infantrySpawned)
+		{
+			totalInfantry--;
+			infantrySpawned = false;
+		}
+
+		if (tankSpawned)
+		{
+			totalTank--;
+			tankSpawned = false;
+		}
+
+		if (archerSpawned)
+		{
+			totalArcher--;
+			archerSpawned = false;
+		}
 
 		// Logic for the GUI buttons for the spawning of entities upon click
 		// Texture 8 is archer, 9 is tank, 7 is infantry
@@ -77,9 +95,8 @@ namespace Engine
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
-				totalInfantry--;
 			}
-
+			 
 			// Spawn Archer
 			if (lastCollidingEntityTexture == 8 && totalArcher > 0 && !unitHalfSpawned)
 			{
@@ -88,7 +105,7 @@ namespace Engine
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
-				totalArcher--;
+				//totalArcher--;
 			}
 
 			// Spawn Tank
@@ -99,7 +116,7 @@ namespace Engine
 				pathfindingEntityTexture = lastCollidingEntityTexture;
 				lastCollidingEntity = 0;
 				lastCollidingEntityTexture = 0;
-				totalTank--;
+				//totalTank--;
 			}
 
 			if (unitHalfSpawned)
@@ -111,12 +128,13 @@ namespace Engine
 					m_ImGuiWrapper->SetTargetEntity(nullptr);
 					entityManager->nextEntityID = prevSelectedEntityIndex+1; // Assuming this is how you reset your IDs
 					prefabManager->nextPrefabID = prevSelectedEntityIndex +1; // Reset prefab ID counter if needed
-					std::cout << "hello0";
+					// std::cout << "hello0";
 
-					if (entityManager->GetEntity(prevSelectedEntityIndex) != nullptr) {
+					if (entityManager->GetEntity(prevSelectedEntityIndex) != nullptr) 
+					{
 						m_ImGuiWrapper->SetTargetEntity(entityManager->GetEntity(prevSelectedEntityIndex));
 					}
-					std::cout << "hello1";
+					// std::cout << "hello1";
 				}
 				unitHalfSpawned = false;
 			}

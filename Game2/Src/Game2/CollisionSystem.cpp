@@ -47,7 +47,9 @@ bool isSpawned = false;
 bool unitHalfSpawned = false;
 bool isShooting = false;
 bool unitArrowCollision = false;
-bool fuckMe = false;
+bool infantrySpawned = false;
+bool tankSpawned = false;
+bool archerSpawned = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -780,11 +782,16 @@ namespace Engine
 											&& collisionComponent1->layer == Layer::Tower)
 										{
 											//isColliding = true;
-											isShooting = true;
+											if (collisionComponent2->layer == Layer::World) 
+											{
+												isShooting = true;
+											}
+
 											if (entity1->GetID() && entity2->GetID()) 
 											{
 												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
 											}
+
 											if (behaviourComponent1)
 											{
 												
@@ -963,6 +970,20 @@ namespace Engine
 							isStartingPoint = true;
 							unitHalfSpawned = false;
 							isSpawned = false;
+							if (textureCheck->textureKey.mainIndex == 1) 
+							{
+								infantrySpawned = true;
+							}
+							if (textureCheck->textureKey.mainIndex == 2)
+							{
+								tankSpawned = true;
+							}
+							if (textureCheck->textureKey.mainIndex == 3)
+							{
+								archerSpawned = true;
+							}
+
+
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 
 						}
@@ -972,7 +993,6 @@ namespace Engine
 						{
 							isStartingPoint = false;
 							unitHalfSpawned = true;
-							// fuckMe = true;
 							unitID = entity->GetID();
 						}
 						//std::cout << "Mouse collided with Entity " << entity->GetID();
