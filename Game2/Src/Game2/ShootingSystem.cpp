@@ -179,7 +179,6 @@ namespace Engine
             // std::cout << "check for print" << std::endl;
             std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
             entityManager->DestroyEntity(lemaoArrowID);
-            outOfBounds = false;
             unitArrowCollision = false;
         }
 
@@ -189,7 +188,6 @@ namespace Engine
             std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
             entityManager->DestroyEntity(lemaoArrowID);
             outOfBounds = false;
-            unitArrowCollision = false;
         }
 
        /* for (const auto& temp : arrows)

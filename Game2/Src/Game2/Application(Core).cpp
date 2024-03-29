@@ -56,6 +56,8 @@ bool stepOneFrame = false;
 double dt = 0;
 bool mainMenuCheck = true;
 std::string fp;
+std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper = nullptr;
+
 //std::string initScene = "Resource/Scenes/MainMenu.txt";
 //std::string nextScene = "Resource/Scenes/Level0Test.txt";
 
@@ -71,7 +73,6 @@ namespace Engine
     // Window Properties configuration loaded from a file
     std::shared_ptr<Loader> loader = nullptr;
     Engine::WindowConfig windowProps = loader->LoadWindowPropsFromConfig("Resource/Config/config.txt");
-    std::shared_ptr<ImGuiWrapper> m_ImGuiWrapper = nullptr;
     std::shared_ptr<SystemsManager> systemsManager = nullptr;
     std::shared_ptr<inGameGUI> m_inGameGUI = nullptr;
     std::shared_ptr<ShootingSystem> m_shootingSystem = nullptr;

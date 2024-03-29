@@ -22,6 +22,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "AssetManager.h"
 #include "EntityManager.h"
 #include "WindowsWindow.h"
+#include "ImGuiWrapper.h"
+#include <memory>
 // #include "ImGuiFileBrowser.h"
 
 extern double loopTime;
@@ -35,6 +37,7 @@ extern int e_Width;
 extern int e_Height;
 extern bool mainMenuCheck;
 extern double fps;
+extern std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper;
 
 namespace Engine
 {

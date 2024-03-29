@@ -809,11 +809,11 @@ namespace Engine
 
         font.SwitchFont(2);
 
-        // Render text if cat placement is wrong
-        if (!(isStartingPoint))
-        {
-            font.RenderText(shader, "Place unit at the start of the path.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
-        }
+        //// Render text if cat placement is wrong
+        //if (!(isStartingPoint))
+        //{
+        //    font.RenderText(shader, "Place unit at the start of the path.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
+        //}
         // Render text if game is paused
         if (isGamePaused)
         {
