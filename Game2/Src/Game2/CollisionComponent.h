@@ -22,15 +22,22 @@ namespace Engine
 		
 		float c_Width = 0.0f;
 		float c_Height = 0.0f;
+		float arrowSpawnInterval = 2.0;
+		float arrowSpawnTimer = arrowSpawnInterval;
 		bool isColliding = false;
 		bool mColliding = false;
 		bool disableCollision = false;
 		bool isArrow = false;
+		bool towerShooting = false;
+		bool arrowSpawned = false;
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;
 		Entity* target = nullptr;
 		VECTORMATH::Vector2D collisionVel = VECTORMATH::Vector2D(0.f, 0.f);
+		std::queue<std::pair<EntityID, EntityID>> PlayerTowerQueue;
+		std::vector<std::pair<EntityID, EntityID>> PlayerTowerVector;
+
 
 		/*!*****************************************************************
 
@@ -58,6 +65,8 @@ namespace Engine
 			CollisionComponent* cloneComponent = new CollisionComponent();
 			cloneComponent->c_Width = c_Width;
 			cloneComponent->c_Height = c_Height;
+			cloneComponent->arrowSpawnInterval = arrowSpawnInterval;
+			cloneComponent->arrowSpawnTimer = arrowSpawnTimer;
 			cloneComponent->isColliding = isColliding;
 			cloneComponent->aabb.min.x = aabb.min.x;
 			cloneComponent->aabb.max.x = aabb.max.x;
@@ -66,6 +75,8 @@ namespace Engine
 			cloneComponent->circle.radius = circle.radius;
 			cloneComponent->layer      = layer;
 			cloneComponent->collisionVel = collisionVel;
+			cloneComponent->PlayerTowerQueue = PlayerTowerQueue;
+			cloneComponent->PlayerTowerVector = PlayerTowerVector;
 
 			return cloneComponent;
 		}

@@ -503,10 +503,10 @@ namespace Engine
 		CollisionQueue.emplace(std::make_pair(lhs, rhs));
 	}
 
-	void CollisionSystem::PlayerArrowCollision(EntityID lhs, EntityID rhs)
-	{
-		PlayerArrowQueue.emplace(std::make_pair(lhs, rhs));
-	}
+	//void CollisionSystem::PlayerArrowCollision(EntityID lhs, EntityID rhs)
+	//{
+	//	PlayerArrowQueue.emplace(std::make_pair(lhs, rhs));
+	//}
 
 	void CollisionSystem::EntityToEntityCollision(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
 	{
@@ -579,7 +579,7 @@ namespace Engine
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
 								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
-								//ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
+								ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
 
 								if (collisionComponent2 && collisionComponent2->disableCollision == true)
 								{
@@ -781,16 +781,28 @@ namespace Engine
 											&& collisionComponent2->layer != Layer::inGameGUI 
 											&& collisionComponent1->layer == Layer::Tower)
 										{
+
 											//isColliding = true;
 											if (collisionComponent2->layer == Layer::World) 
 											{
 												isShooting = true;
+												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+												collisionComponent1->PlayerTowerQueue = CollisionQueue;
+
+												while (!collisionComponent1->PlayerTowerQueue.empty())
+												{
+												    collisionComponent1->PlayerTowerVector.push_back(collisionComponent1->PlayerTowerQueue.front());
+												    collisionComponent1->PlayerTowerQueue.pop();
+												}
+
+												collisionComponent1->towerShooting = true;
+												
 											}
 
-											if (entity1->GetID() && entity2->GetID()) 
-											{
-												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
-											}
+											//if (entity1->GetID() && entity2->GetID()) 
+											//{
+											//	PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+											//}
 
 											if (behaviourComponent1)
 											{

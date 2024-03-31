@@ -175,9 +175,9 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 		void PlayerTowerCollision(EntityID lhs, EntityID rhs);
-		void PlayerArrowCollision(EntityID lhs, EntityID rhs);
+		//void PlayerArrowCollision(EntityID lhs, EntityID rhs);
 		std::queue<std::pair<EntityID, EntityID>> CollisionQueue; // Should be playerTowerqueue
-		std::queue<std::pair<EntityID, EntityID>> PlayerArrowQueue; // Player Arrow Queue
+		//std::queue<std::pair<EntityID, EntityID>> PlayerArrowQueue; // Player Arrow Queue
 
 		/**************************************************************************/
 
