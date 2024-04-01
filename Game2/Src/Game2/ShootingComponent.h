@@ -24,7 +24,9 @@ namespace Engine
 		float timeSinceLastShot; //Time since the last shot
 		float projectileSpeed; //Projectile speed
 		int damage; //Damage dealt by projectile
-		bool isShooting = false;
+		// bool towerShooting = false;
+		// void PlayerTowerCollision(EntityID lhs, EntityID rhs);
+		// std::queue<std::pair<EntityID, EntityID>> PlayerTowerQueue;
 		Layer layer = Layer::Arrow;
 
 		/*!*****************************************************************
@@ -56,6 +58,7 @@ namespace Engine
 			//cloneComponent->timeSinceLastShot = timeSinceLastShot;
 			//cloneComponent->projectileSpeed = projectileSpeed;
 			//cloneComponent->damage = damage;
+			//cloneComponent->PlayerTowerQueue = PlayerTowerQueue;
 			//cloneComponent->layer = layer;
 
 			return cloneComponent;
@@ -67,6 +70,7 @@ namespace Engine
 			//outputStream << "timeSinceLastShot " << timeSinceLastShot << '\n';
 			//outputStream << "projectileSpeed " << projectileSpeed << '\n';
 			//outputStream << "damage " << damage << '\n';
+			//outputStream << "layer " << layer << '\n';
 		}
 
 		void Deserialize(std::istream& /*inputStream*/) override {

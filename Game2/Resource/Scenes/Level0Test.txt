@@ -157,6 +157,7 @@ Health: 50
 Range: 100
 Logic
 BehaviourIndex: 0
+Shooting
 EndEntity
 Transform
 Position: -275 -35
@@ -198,6 +199,7 @@ Health: 50
 Range: 50
 Logic
 BehaviourIndex: 0
+Shooting
 EndEntity
 Transform
 Position: 345 75

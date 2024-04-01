@@ -59,7 +59,7 @@ namespace Engine
 
         void Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
         std::vector<std::pair<EntityID, EntityID>> CollisionVector;
-        std::vector<std::pair<EntityID, EntityID>> PlayerArrowVector;
+
         //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);
 
     private:

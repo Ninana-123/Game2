@@ -28,6 +28,8 @@ namespace Engine
 		float health = 0.0f;
 		float range = 0.0f;
 		bool statsInitialized = false;
+		bool towerDestroyed = false;
+		bool playerDead = false;
 
 		/*!*****************************************************************
 
