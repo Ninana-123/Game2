@@ -17,15 +17,16 @@ Technology is prohibited.
 #define ENGINE_VFX_H
 
 #include "Loader.h"
-#include "EntityManager.h"
+#include "Entity.h"
 #include "Vector2d.h"
+#include "TransformComponent.h"
+#include "RenderDataComponent.h"
 
 namespace Engine {
 
     class VFX {
     
     public:
-        VFX() {};
         
         // Function to fade in an entity during the cutscene
         void FadeInEntity(EntityID entityID, float dt = 0);
@@ -46,7 +47,7 @@ namespace Engine {
 
         bool inDone{ false }, outDone{ false }, panDone{ false };
         float speed{ 6.f }; //fixed speed for now
-        EntityManager g_EntityManager;
+        Entity g_ECS;
     };
 }
 #endif // ENGINE_VFX_H
