@@ -17,17 +17,17 @@ Technology is prohibited.
 
 namespace Engine {
 
-    void VFX::FadeInEntity(EntityID entityID, float duration)
+    void VFX::FadeInEntity(EntityID entityID, float dt)
     {
 
     }
 
-    void VFX::FadeOutEntity(EntityID entityID, float duration)
+    void VFX::FadeOutEntity(EntityID entityID, float dt)
     {
 
     }
 
-    void VFX::PanEntity(EntityID entityID, const VECTORMATH::Vec2& targetPos, float duration)
+    void VFX::PanEntity(EntityID entityID, const VECTORMATH::Vec2& targetPos, float dt)
     {
 
     }
