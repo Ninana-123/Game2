@@ -72,7 +72,7 @@ namespace Engine
 		static double lastFootSoundTime = glfwGetTime(); // Initialize the last foot sound time
 		if (!isGameOver) {
 			// Check if one second has elapsed since the last foot sound playback
-			if (glfwGetTime() - lastFootSoundTime >= 1.0)
+			if (glfwGetTime() - lastFootSoundTime >= 0.5)
 			{
 				// If footstep1 is playing, stop it and play footstep2
 				if (isFoot1Playing)
@@ -99,26 +99,22 @@ namespace Engine
 
 	void StateMachine::Attack(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
 	{
-		//TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		//CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		//texture->SetAnimation(static_cast<int>(c_state::Attack));
-		//Entity* target = collision->target;
-		//Stats::AttackTarget(5, entity, target);
-		//audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 		static bool isAudioAttackPlaying = false;
 		static double lastSoundTime = glfwGetTime(); // Initialize the last sound time
 		if (!isGameOver) {
 			// Check if one second has elapsed since the last sound playback
-			if (glfwGetTime() - lastSoundTime >= 1.0)
+			if (glfwGetTime() - lastSoundTime >= 0.3)
 			{
+		
 				// If audio is not playing, start playing it
 				if (!isAudioAttackPlaying)
 				{
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
 					// Play the sound
 					audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 					isAudioAttackPlaying = true;
-					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
+					
 				}
 				else
 				{
@@ -134,10 +130,9 @@ namespace Engine
 			texture->SetAnimation(static_cast<int>(c_state::Attack));
 			Entity* target = collision->target;
 			Stats::AttackTarget(5, entity, target);
-			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
 		}
 	}
+
 
 	void StateMachine::Death(Entity* entity)
 	{
