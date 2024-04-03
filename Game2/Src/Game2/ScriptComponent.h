@@ -22,11 +22,11 @@ namespace Engine
 	class Script //Base class
 	{
 	public:
-		virtual void Initialize() {}
 
-		virtual void Update() {}
+		virtual void Update() = 0;
 
-		virtual void Cleanup() {}
+
+		virtual ~Script() = default;
 
 	};
 
@@ -34,20 +34,23 @@ namespace Engine
 	{
 	public:
 
-		ScriptComponent() {};
+		//ScriptFactory* scriptFactory = nullptr; // Pointer to ScriptFactory
+		std::unique_ptr<Script> script = nullptr;
+		Entity* entity = nullptr;
 
-		void SetScript(Script* newScript) 
+		void SetScriptType(ScriptType type)
 		{
-			script = newScript;
+			UNREFERENCED_PARAMETER(type);
+			// Make switch, create new script object not link pointer
+			//script = scriptFactory->AddScript(type, entity);
 		}
+		
+		void SetEntity(Entity* entity_) { this->entity = entity_; }
 
-		Script* GetScript() const 
+		Script* GetScript() const
 		{
-			return script;
+			return script.get();
 		}
-
-	private:
-		Script* script = nullptr;
 
 	public:
 		/*!*****************************************************************
@@ -88,6 +91,7 @@ namespace Engine
 		{
 			UNREFERENCED_PARAMETER(inputStream);
 		}
+
 	};
 }
 #endif ENGINE_SCRIPTCOMPONENT_H

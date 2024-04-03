@@ -36,10 +36,11 @@ namespace Engine
 
 	}
 
-	void Shoot(Entity* target)
+	void Tower::Shoot(Entity* target)
 	{
+		UNREFERENCED_PARAMETER(target);
 		//call Arrow script
-		Arrow* arrow = new Arrow(target);
+		//Arrow* arrow = new Arrow(target);
 	}
 }
 
