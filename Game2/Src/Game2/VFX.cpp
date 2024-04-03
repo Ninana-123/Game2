@@ -19,60 +19,61 @@ namespace Engine {
 
     void VFX::FadeInEntity(EntityID entityID, float dt)
     {
-        if (dt == 0.f || g_ECS.GetComponent<RenderData>(target).GetColor().a >= 1.f) //dont need to iterpolate, set the opacity to 0 and transition
-        {
-            g_ECS.GetComponent<RenderData>(target).SetColor({ 1.f,1.f,1.f,1.f });
-            inDone = true;
-            return;
-        }
-        else if (!inDone)
-        {
-            //calculate the difference between the current alpha and 0
-            float diff = g_ECS.GetComponent<RenderData>(target).GetColor().a + 0.001f;
-            float inter = speed * dt;
-            g_ECS.GetComponent<RenderData>(target).GetColor().a += (inter * diff);
+        RenderData* renderData = dynamic_cast<RenderData*>(g_ECS.GetComponent(ComponentType::Render));
+        if (renderData) {
+            if (dt == 0.f || renderData->GetColor().a >= 1.f) {
+                renderData->SetColor({ 1.f, 1.f, 1.f, 1.f });
+                inDone = true;
+                return;
+            }
+            else if (!inDone) {
+                // Calculate the difference between the current alpha and 0
+                float diff = 1.f - renderData->GetColor().a; // Assuming the alpha ranges from 0 to 1
+                float inter = speed * dt;
+                renderData->SetColor(renderData->GetColor() + (inter * diff));
+            }
         }
     }
 
     void VFX::FadeOutEntity(EntityID entityID, float dt)
     {
-        if (dt == 0.f || g_ECS.GetComponent<RenderData>(target).GetColor().a <= 0.001f) //dont need to iterpolate, set the opacity to 0 and transition
-        {
-            g_ECS.GetComponent<RenderData>(target).SetColor({ 1.f,1.f,1.f,0.f });
-            outDone = true;
-            return;
-        }
-        else if (!outDone)
-        {
-            //calculate the difference between the current alpha and 0
-            float diff = g_ECS.GetComponent<RenderData>(target).GetColor().a;
-            float inter = speed * dt;
-            g_ECS.GetComponent<RenderData>(target).GetColor().a -= (inter * diff);
-
-            g_ECS.GetComponent<RenderData>(target).GetColor().a = std::max(0.0f, std::min(1.0f, g_ECS.GetComponent<RenderData>(target).GetColor().a));
+        RenderData* renderData = dynamic_cast<RenderData*>(g_ECS.GetComponent(ComponentType::Render));
+        if (renderData) {
+            if (dt == 0.f || renderData->GetColor().a <= 0.001f) {
+                renderData->SetColor({ 1.f, 1.f, 1.f, 0.f });
+                outDone = true;
+                return;
+            }
+            else if (!outDone) {
+                // Calculate the difference between the current alpha and 0
+                float diff = renderData->GetColor().a;
+                float inter = speed * dt;
+                renderData->SetColor(renderData->GetColor() - (inter * diff));
+                renderData->SetColor({ 1.f, 1.f, 1.f, std::max(0.0f, std::min(1.0f, renderData->GetColor().a)) });
+            }
         }
     }
 
     void VFX::PanEntity(EntityID entityID, const VECTORMATH::Vec2& targetPos, float dt)
     {
-        // Get the TransformComponent of the entity
-        auto& transformComponent = g_ECS.GetComponent<TransformComponent>(entityID);
-        
-        // Calculate the difference between the target position and the current position
-        VECTORMATH::Vec2 diff = targetPos - transformComponent.position;
-        
-        // Check if the difference is within a small threshold to consider it done
-        if (std::fabs(diff.x) < 0.001f && std::fabs(diff.y) < 0.001f)
-        {
-            panDone = true;
-            return;
+        TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(g_ECS.GetComponent(ComponentType::Transform));
+        if (transformComponent) {
+            // Calculate the difference between the target position and the current position
+            VECTORMATH::Vec2 diff = targetPos - transformComponent->position;
+
+            // Check if the difference is within a small threshold to consider it done
+            if (std::fabs(diff.x) < 0.001f && std::fabs(diff.y) < 0.001f)
+            {
+                panDone = true;
+                return;
+            }
+
+            // Calculate the interpolation factor based on speed and delta time
+            float inter = speed * dt;
+
+            // Update the position of the entity towards the target position
+            transformComponent->position += (inter * diff);
         }
-
-        // Calculate the interpolation factor based on speed and delta time
-        float inter = speed * dt;
-
-        // Update the position of the entity towards the target position
-        transformComponent.position += (inter * diff);
     }
 
     bool& VFX::FadedOut()

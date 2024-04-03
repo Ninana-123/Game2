@@ -18,7 +18,7 @@ const int MAX_SUBINDEX = 6;
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Render, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
 
 //Script type
 enum class ScriptType { infantry, tower };
