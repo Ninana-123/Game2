@@ -24,6 +24,7 @@ namespace Engine
 	public:		
 
 		void Update() override;
+		void Shoot(Entity* entity);
 
 	private:
 		std::vector<Entity*> targets;

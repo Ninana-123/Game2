@@ -155,8 +155,8 @@
       <Filter>Scripts\Units\Tower</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Arrow.cpp" />
-    <ClCompile Include="Src\Game2\CutSceneLevel.cpp">
-      <Filter>Base\SceneManager</Filter>
+    <ClCompile Include="Src\Game2\ScriptFactory.cpp">
+      <Filter>Scripts\ScriptFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -403,8 +403,8 @@
     <ClInclude Include="Src\Game2\Arrow.h">
       <Filter>Scripts\Action</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\CutSceneLevel.h">
-      <Filter>Base\SceneManager</Filter>
+    <ClInclude Include="Src\Game2\ScriptFactory.h">
+      <Filter>Scripts\ScriptFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -542,6 +542,9 @@
     </Filter>
     <Filter Include="Scripts\Action">
       <UniqueIdentifier>{77658eb7-c2a5-4082-ba94-449ef0b4efd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\ScriptFactory">
+      <UniqueIdentifier>{8b375dde-e73a-4a9a-8626-00df69d38160}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
