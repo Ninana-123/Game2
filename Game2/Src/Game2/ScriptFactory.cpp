@@ -1,3 +1,17 @@
+/******************************************************************************/
+/*!
+\file		ScriptFactory.cpp
+\author 	Tristan Tham Rui Hong
+\par    	email: t.tham@digipen.edu
+\date   	07/03/2923
+\brief		Definitions of the ScriptFactory class.
+
+Copyright (C) 2023 DigiPen Institute of Technology.
+Reproduction or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+ */
+ /******************************************************************************/
+
 #pragma once
 
 #include "pch.h"
@@ -24,19 +38,20 @@ namespace Engine
         scriptRegistry()[type] = function;
     }
 
-    std::unique_ptr<Script> ScriptFactory::AddScript(ScriptType type, Entity* entity)
+    Script* ScriptFactory::AddScript(ScriptType type, Entity* entity)
     {
         // Check if the script type is registered
         auto it = scriptRegistry().find(type);
         if (it != scriptRegistry().end())
         {
             auto script = it->second(entity);
-            SS.RegisterScript(entity->GetID(), std::move(script));// Register the script in the system
-            return script;
+            SS.RegisterScript(entity->GetID(), std::move(script)); // Register the script in the system
+            // Return a pointer to the script object
+            return SS.GetScript(entity->GetID()); // Assuming GetScript returns a pointer to the registered script
         }
         else
         {
-            return nullptr; //No script for the type
+            return nullptr; // No script for the type
         }
     }
 

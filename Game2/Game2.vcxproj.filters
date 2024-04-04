@@ -158,6 +158,9 @@
     <ClCompile Include="Src\Game2\ScriptFactory.cpp">
       <Filter>Scripts\ScriptFactory</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
