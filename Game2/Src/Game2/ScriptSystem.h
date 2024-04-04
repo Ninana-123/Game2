@@ -82,6 +82,11 @@ namespace Engine
 			}
 		}
 
+		Entity* QueryEntityPtr (EntityID entity)
+		{
+			return entityManager->GetEntity(entity);
+		}
+
 		/*!
 		\brief
 		Removes a script object from an entity

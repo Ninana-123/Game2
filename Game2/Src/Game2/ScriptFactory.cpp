@@ -24,7 +24,7 @@ namespace Engine
     ScriptFactory::ScriptFactory(ScriptSystem& scriptSystem) : SS(scriptSystem)
     {
         // Register script types with their creation functions
-        CreateScript(ScriptType::tower, [](Entity* entity) { return std::make_unique<Tower>(); });
+        CreateScript(ScriptType::tower, [](Entity* entity) { return std::make_unique<Tower>(entity); });
     }
 
     std::unordered_map<ScriptType, ScriptFactory::CreationFunction>& ScriptFactory::scriptRegistry()
@@ -38,16 +38,16 @@ namespace Engine
         scriptRegistry()[type] = function;
     }
 
-    Script* ScriptFactory::AddScript(ScriptType type, Entity* entity)
+    Script* ScriptFactory::AddScript(ScriptType type, EntityID entity)
     {
         // Check if the script type is registered
         auto it = scriptRegistry().find(type);
         if (it != scriptRegistry().end())
         {
-            auto script = it->second(entity);
-            SS.RegisterScript(entity->GetID(), std::move(script)); // Register the script in the system
+            auto script = it->second( SS.QueryEntityPtr(entity) ); //use EM from SS
+            SS.RegisterScript(entity, std::move(script)); // Register the script in the system
             // Return a pointer to the script object
-            return SS.GetScript(entity->GetID()); // Assuming GetScript returns a pointer to the registered script
+            return SS.GetScript(entity); // Assuming GetScript returns a pointer to the registered script
         }
         else
         {

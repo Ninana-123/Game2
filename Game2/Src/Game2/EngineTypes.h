@@ -21,7 +21,7 @@ typedef unsigned int ComponentID;
 enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
 
 //Script type
-enum class ScriptType { infantry, tower };
+enum class ScriptType { Empty, infantry, tower };
 
 // Character State Enumeration
 enum c_state { Static, Walking, Attack, Death, TowerDestroyed, CastleDestroyed, Idle };

@@ -28,7 +28,6 @@ namespace Engine
 
 		virtual void Update() = 0;
 
-
 		virtual ~Script() = default;
 
 	};
@@ -37,14 +36,15 @@ namespace Engine
 	{
 	public:
 
-		//ScriptFactory* scriptFactory = nullptr; // Pointer to ScriptFactory
 		Script* script = nullptr;
-		Entity* entity = nullptr;
-		ScriptType currentScriptType;
+		EntityID entity = EMPTY_ID;
+		ScriptType currentScriptType = ScriptType::Empty;
+
+		void InitializeScript();
 
 		void SetScriptType(ScriptType type);
 		
-		void SetEntity(Entity* entity_);
+		void SetEntity(EntityID entity_);
 
 		Script* GetScript() const;
 	

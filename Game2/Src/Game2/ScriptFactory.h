@@ -34,7 +34,7 @@ namespace Engine
         // Function to create script
         void CreateScript(ScriptType type, CreationFunction function);
 
-        Script* AddScript(ScriptType type, Entity* entity);
+        Script* AddScript(ScriptType type, EntityID entityId);
 
         //void RemoveScript(EntityID entityId);
 

@@ -97,8 +97,22 @@ namespace Engine {
                         transform->scaleX = transform->scaleX * aspectRatio;
                         transform->scaleY = transform->scaleY * (1 / aspectRatio);
                     }
+
+                    if (type == ComponentType::Script) 
+                    {
+                        // Cast the component to ScriptComponent
+                        ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(component);
+                        if (scriptComponent) {
+                            // Call SetScriptType to register the script with the ScriptFactory
+                            scriptComponent->InitializeScript();
+                            //std::cout << "Script successfully created, Entity: " << static_cast<int>(entity) << std::endl;
+                            //std::cout << "Script entityID: " << static_cast<int>(scriptComponent->entity) << std::endl;
+                            //std::cout << "Script type: " << static_cast<int>(scriptComponent->currentScriptType) << std::endl;
+                        }
+                    }           
                 }
-                else {
+                else 
+                {
                    // std::cerr << "Unknown component type: " << componentType << std::endl;
                 }
             }
