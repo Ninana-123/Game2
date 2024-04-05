@@ -16,15 +16,17 @@ written consent of DigiPen Institute of Technology is prohibited.
 #ifndef ENGINE_SCRIPTCOMPONENT_H
 #define ENGINE_SCRIPTCOMPONENT_H
 
-
 namespace Engine
 {
+	class ScriptFactory;
+
+	extern ScriptFactory g_ScriptFactory;
+
 	class Script //Base class
 	{
 	public:
 
 		virtual void Update() = 0;
-
 
 		virtual ~Script() = default;
 
@@ -34,25 +36,18 @@ namespace Engine
 	{
 	public:
 
-		//ScriptFactory* scriptFactory = nullptr; // Pointer to ScriptFactory
-		std::unique_ptr<Script> script = nullptr;
-		Entity* entity = nullptr;
+		Script* script = nullptr;
+		EntityID entity = EMPTY_ID;
+		ScriptType currentScriptType = ScriptType::Empty;
 
-		void SetScriptType(ScriptType type)
-		{
-			UNREFERENCED_PARAMETER(type);
-			// Make switch, create new script object not link pointer
-			//script = scriptFactory->AddScript(type, entity);
-		}
+		void InitializeScript();
+
+		void SetScriptType(ScriptType type);
 		
-		void SetEntity(Entity* entity_) { this->entity = entity_; }
+		void SetEntity(EntityID entity_);
 
-		Script* GetScript() const
-		{
-			return script.get();
-		}
-
-	public:
+		Script* GetScript() const;
+	
 		/*!*****************************************************************
 
 		\brief
@@ -63,7 +58,7 @@ namespace Engine
 
 		********************************************************************/
 
-		ComponentType GetType() const override { return ComponentType::Script; }
+		ComponentType GetType() const override;
 
 		/*!*****************************************************************
 
@@ -74,23 +69,12 @@ namespace Engine
 		Clone component with cloned data members
 
 		********************************************************************/
-		Component* Clone() const override
-		{
-			ScriptComponent* cloneComponent = new ScriptComponent();
-			//cloneComponent->statsInitialized = statsInitialized;
+		Component* Clone() const override;
+	
 
-			return cloneComponent;
-		}
+		void Serialize(std::ostream& outputStream) const override;
 
-		void Serialize(std::ostream& outputStream) const override 
-		{
-			UNREFERENCED_PARAMETER(outputStream);
-		}
-
-		void Deserialize(std::istream& inputStream) override 
-		{
-			UNREFERENCED_PARAMETER(inputStream);
-		}
+		void Deserialize(std::istream& inputStream) override;
 
 	};
 }

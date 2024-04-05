@@ -13,6 +13,9 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #pragma once
 
+#ifndef ENGINE_SCRIPTSYSTEM_H
+#define ENGINE_SCRIPTSYSTEM_H
+
 #include "pch.h"
 #include "Entity.h"
 #include "ScriptComponent.h"
@@ -63,6 +66,27 @@ namespace Engine
 			}
 		}
 
+		Script* GetScript(EntityID entityId)
+		{
+			// Search for the script associated with the given entity ID
+			auto it = scripts.find(entityId);
+			if (it != scripts.end())
+			{
+				// Return a pointer to the script if found
+				return it->second.get();
+			}
+			else
+			{
+				// If script not found, return a nullptr
+				return nullptr;
+			}
+		}
+
+		Entity* QueryEntityPtr (EntityID entity)
+		{
+			return entityManager->GetEntity(entity);
+		}
+
 		/*!
 		\brief
 		Removes a script object from an entity
@@ -96,3 +120,5 @@ namespace Engine
 		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts2
 	};
 }
+
+#endif ENGINE_SCRIPTSYSTEM_H

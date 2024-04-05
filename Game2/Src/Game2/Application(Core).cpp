@@ -40,6 +40,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "CutSceneLevel.h"
 #include "TempStateMachine.h"
 #include "Vector2d.h"
+#include "ScriptFactory.h"
 
 // Global variables for frames per second (fps) calculation
 double fps = 0.00;
@@ -80,7 +81,7 @@ namespace Engine
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
-    std::shared_ptr<EntityManager> EM;
+    std::shared_ptr<EntityManager> EM;   
     PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
@@ -89,6 +90,8 @@ namespace Engine
     PhysicsComponent* physicsTest;
     TextureComponent* textureTest;
     ComponentFactory CF;
+    ScriptSystem scriptSystem(EM);
+    ScriptFactory g_ScriptFactory(scriptSystem);
     StateMachine SM;
     //FileBrowser fileBrowser;
 

@@ -36,6 +36,9 @@ CollisionVel: 0 -15
 Texture
 MainIndex: 8
 SubIndex: 0
+Script
+ID: 2
+type: 1 
 EndEntity
 Transform
 Position: 135 -300

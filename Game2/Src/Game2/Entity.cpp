@@ -19,6 +19,18 @@ namespace Engine
 {
 	void Entity::AddComponent(std::unique_ptr<Component> component)
 	{
+		// Special handling for ScriptComponent
+		if (component->GetType() == ComponentType::Script)
+		{
+			// Cast the component to ScriptComponent
+			ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(component.get());
+			if (scriptComponent)
+			{
+				// Set the entity reference in the script component
+				scriptComponent->SetEntity(id);
+			}
+		}
+
 		components.emplace(component->GetType(), std::move(component));
 	}
 
@@ -28,6 +40,17 @@ namespace Engine
 
 		if (newComponent)
 		{
+			// Special handling for ScriptComponent
+			if (type == ComponentType::Script)
+			{
+				// Cast the new component to ScriptComponent
+				ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(newComponent.get());
+				if (scriptComponent)
+				{
+					// Set the entity reference in the script component
+					scriptComponent->SetEntity(id);
+				}
+			}
 			// Emplace the new component into the entity's container
 			components.emplace(type, std::move(newComponent));
 		}

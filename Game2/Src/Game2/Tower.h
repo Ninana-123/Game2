@@ -22,11 +22,12 @@ namespace Engine
 	class Tower : public Script
 	{
 	public:		
-
+		Tower(Entity* entity_);
 		void Update() override;
 		void Shoot(Entity* entity);
 
 	private:
+		Entity* entity = nullptr;
 		std::vector<Entity*> targets;
 		float firerate = 1.f;
 		float counter = 0.f;

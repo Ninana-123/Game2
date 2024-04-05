@@ -18,6 +18,10 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
+	Tower::Tower (Entity* entity_)
+	{
+		entity = entity_;
+	}
 	void Tower::Update()
 	{
 		if (targets.empty())
@@ -28,7 +32,7 @@ namespace Engine
 		if (counter <= 0.f)
 		{
 			Entity* target = targets.front();
-			//Shoot(target);
+			Shoot(target);
 			counter = 1.f / firerate;
 		}
 		
