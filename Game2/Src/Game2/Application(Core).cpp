@@ -90,6 +90,7 @@ namespace Engine
     TextureComponent* textureTest;
     ComponentFactory CF;
     StateMachine SM;
+    //TextureClass textureClass;
     //FileBrowser fileBrowser;
 
     SceneManager sceneManager;
@@ -224,6 +225,10 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Foot2"));
         assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.3f);
 
+        assetManager->AddAudioPath(AudioKey("sound_Swipe"), "Resource/Audio/tank_attack.wav");
+        assetManager->loadAudio(AudioKey("sound_Swipe"));
+        assetManager->getAudio(AudioKey("sound_Swipe"))->setVolume(0.3f);
+
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
@@ -232,6 +237,7 @@ namespace Engine
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"))));
 
 
         /*  sound_BGM.setLoop();
