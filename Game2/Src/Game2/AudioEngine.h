@@ -90,6 +90,17 @@ public:
     void pauseAllAudio();
 
     /**
+     * @brief Decreases volume of all audio.
+     */
+    void decreaseVolume();
+    
+
+    /**
+     * @brief Increases volume of all audio.
+     */
+    void increaseVolume();
+
+    /**
     * Pauses a playing sound.
     */
     void pauseSound(SoundInfo soundInfo);

@@ -229,6 +229,10 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_Swipe"));
         assetManager->getAudio(AudioKey("sound_Swipe"))->setVolume(0.3f);
 
+        assetManager->AddAudioPath(AudioKey("tower_Down"), "Resource/Audio/tower_fall.wav");
+        assetManager->loadAudio(AudioKey("tower_Down"));
+        assetManager->getAudio(AudioKey("tower_Down"))->setVolume(1.0f);
+
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
@@ -238,6 +242,7 @@ namespace Engine
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("tower_Down"))));
 
 
         /*  sound_BGM.setLoop();
@@ -467,6 +472,15 @@ namespace Engine
                     audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
                     currentlyPlayingSound = false;
                 }
+
+                if (InputHandler.IsKeyTriggered(KEY_DOWN)) {
+                    audioEngine.decreaseVolume();
+                }
+
+                if (InputHandler.IsKeyTriggered(KEY_UP)) {
+                    audioEngine.increaseVolume();
+                }
+
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))
