@@ -29,13 +29,13 @@ namespace Engine {
     public:
         
         // Function to fade in an entity during the cutscene
-        void FadeInEntity(EntityID entityID, float dt = 0);
+        void FadeInEntity(Entity& target, float dt = 0);
 
         // Function to fade out an entity during the cutscene
-        void FadeOutEntity(EntityID entityID, float dt = 0);
+        void FadeOutEntity(Entity& target, float dt = 0);
 
         // Function to pan an entity to a target position during the cutscene
-        void PanEntity(EntityID entityID, const VECTORMATH::Vec2& targetPos, float dt);
+        void PanEntity(Entity& target, const VECTORMATH::Vec2& targetPos, float dt);
 
         bool& FadedOut(); // return if completed fading out
 
@@ -47,7 +47,6 @@ namespace Engine {
 
         bool inDone{ false }, outDone{ false }, panDone{ false };
         float speed{ 6.f }; //fixed speed for now
-        Entity g_ECS;
     };
 }
 #endif // ENGINE_VFX_H

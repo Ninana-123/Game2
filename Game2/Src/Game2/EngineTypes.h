@@ -69,6 +69,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuCredits,
     Logo,
     victoryScreen,
+
     catHPEmpty,
     catHP1,
     catHP2,
@@ -79,6 +80,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     catHP7,
     catHP8,
     catHP9,
+
     towerHPEmpty,
     towerHP1,
     towerHP2,
@@ -90,6 +92,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     towerHP8,
     towerHP9,
     Arrow,
+
     cutScene1,
     cutScene2,
     cutScene3,

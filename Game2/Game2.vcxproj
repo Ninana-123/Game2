@@ -23,6 +23,7 @@
     <ClInclude Include="Src\Game2\Arrow.h" />
     <ClInclude Include="Src\Game2\BehaviourComponent.h" />
     <ClInclude Include="Src\Game2\BehaviourFCT.h" />
+    <ClInclude Include="Src\Game2\RenderDataComponent.h" />
     <ClInclude Include="Src\Game2\VFX.h" />
     <ClInclude Include="Src\Game2\CutSceneLevel.h" />
     <ClInclude Include="Src\Game2\EditorCamera.h" />

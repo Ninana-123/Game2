@@ -4,6 +4,19 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
+Texture
+MainIndex: 50
+SubIndex: 0
+EndEntity
+Transform
+Position: 0 0
+ScaleX: 7.2
+ScaleY: 12.8
+Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 49
 SubIndex: 0
@@ -13,6 +26,8 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 48
 SubIndex: 0
@@ -22,6 +37,8 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 47
 SubIndex: 0
@@ -31,6 +48,8 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 46
 SubIndex: 0
@@ -40,6 +59,8 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 45
 SubIndex: 0
@@ -49,6 +70,8 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 44
 SubIndex: 0
@@ -58,16 +81,9 @@ Position: 0 0
 ScaleX: 7.2
 ScaleY: 12.8
 Rotation: 0
+Render
+Color: 1.0 1.0 1.0 1.0
 Texture
 MainIndex: 43
-SubIndex: 0
-EndEntity
-Transform
-Position: 0 0
-ScaleX: 7.2
-ScaleY: 12.8
-Rotation: 0
-Texture
-MainIndex: 42
 SubIndex: 0
 EndEntity

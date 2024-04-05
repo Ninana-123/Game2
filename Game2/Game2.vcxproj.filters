@@ -154,12 +154,17 @@
     <ClCompile Include="Src\Game2\Tower.cpp">
       <Filter>Scripts\Units\Tower</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\Arrow.cpp" />
     <ClCompile Include="Src\Game2\ScriptFactory.cpp">
       <Filter>Scripts\ScriptFactory</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\ScriptComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\CutSceneLevel.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Arrow.cpp">
+      <Filter>Scripts\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,6 +413,12 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\ScriptFactory.h">
       <Filter>Scripts\ScriptFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CutSceneLevel.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\RenderDataComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

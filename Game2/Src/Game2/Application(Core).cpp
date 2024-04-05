@@ -231,13 +231,12 @@ namespace Engine
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
 
-
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
           sound_Arrow.setLoop();
           sound_Slash.setLoop();*/
 
-          // Initialize ImGuiWrapper
+        // Initialize ImGuiWrapper
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM, assetManager, loader);
         m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
@@ -281,7 +280,7 @@ namespace Engine
         if (e.GetEventType() == EventType::KeyPressed) {
             KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
 
-            // Check for ALT+ENTER (key codes may vary depending on your implementation)
+            // Check for ALT+ENTER 
             if (keyPressedEvent.GetKeyCode() == KEY_F11) {
                 ToggleFullscreen();
             }
@@ -300,7 +299,7 @@ namespace Engine
 
                     if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
                     {
-                        fp = GameSceneFilePath;
+                        fp = CutSceneFilePath;
                         int entityCount = static_cast<int>(EM->GetEntities()->size());
 
                         for (int i = entityCount - 1; i >= 0; --i) {
@@ -313,8 +312,8 @@ namespace Engine
                         m_ImGuiWrapper->SetTargetEntity(nullptr);
 
                         // Reset any other relevant data structures or counters if needed
-                        EM->nextEntityID = 0; // Assuming this is how you reset your IDs
-                        PM.nextPrefabID = 0; // Reset prefab ID counter if needed
+                        EM->nextEntityID = 0; 
+                        PM.nextPrefabID = 0; 
 
                         // Now load the scene
                         loader->LoadScene(fp);
@@ -334,11 +333,9 @@ namespace Engine
                     }
                 }
             
-            }
-            
+            }           
         }
     }
-
 
     void Application::ToggleFullscreen() {
         GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window

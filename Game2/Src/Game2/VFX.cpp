@@ -14,12 +14,12 @@ Technology is prohibited.
  /******************************************************************************/
 #include "pch.h"
 #include "VFX.h"
-\
+
 namespace Engine {
 
-    void VFX::FadeInEntity(EntityID entityID, float dt)
+    void VFX::FadeInEntity(Entity& target, float dt)
     {
-        RenderData* renderData = dynamic_cast<RenderData*>(g_ECS.GetComponent(ComponentType::Render));
+        RenderDataComponent* renderData = dynamic_cast<RenderDataComponent*>(target.GetComponent(ComponentType::Render));
         if (renderData) {
             if (dt == 0.f || renderData->GetColor().a >= 1.f) {
                 renderData->SetColor({ 1.f, 1.f, 1.f, 1.f });
@@ -27,17 +27,17 @@ namespace Engine {
                 return;
             }
             else if (!inDone) {
-                // Calculate the difference between the current alpha and 0
-                float diff = 1.f - renderData->GetColor().a; // Assuming the alpha ranges from 0 to 1
+                // Calculate the difference between the current alpha and 1
+                float diff = 1.f - renderData->GetColor().a;
                 float inter = speed * dt;
                 renderData->SetColor(renderData->GetColor() + (inter * diff));
             }
         }
     }
 
-    void VFX::FadeOutEntity(EntityID entityID, float dt)
+    void VFX::FadeOutEntity(Entity& target, float dt)
     {
-        RenderData* renderData = dynamic_cast<RenderData*>(g_ECS.GetComponent(ComponentType::Render));
+        RenderDataComponent* renderData = dynamic_cast<RenderDataComponent*>(target.GetComponent(ComponentType::Render));
         if (renderData) {
             if (dt == 0.f || renderData->GetColor().a <= 0.001f) {
                 renderData->SetColor({ 1.f, 1.f, 1.f, 0.f });
@@ -54,9 +54,9 @@ namespace Engine {
         }
     }
 
-    void VFX::PanEntity(EntityID entityID, const VECTORMATH::Vec2& targetPos, float dt)
+    void VFX::PanEntity(Entity& target, const VECTORMATH::Vec2& targetPos, float dt)
     {
-        TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(g_ECS.GetComponent(ComponentType::Transform));
+        TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(target.GetComponent(ComponentType::Transform));
         if (transformComponent) {
             // Calculate the difference between the target position and the current position
             VECTORMATH::Vec2 diff = targetPos - transformComponent->position;

@@ -73,7 +73,6 @@ T customClamp(T value, T minValue, T maxValue) {
     return customMin(customMax(value, minValue), maxValue);
 }
 
-
 namespace VECTORMATH {
 
     // Initializes the x and y components of a Vector2D object.
