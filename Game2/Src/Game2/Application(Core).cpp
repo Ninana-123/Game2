@@ -277,6 +277,7 @@ namespace Engine
                 window.MinimizeWindow();
             }
         }
+
         if (e.GetEventType() == EventType::KeyPressed) {
             KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
 
@@ -285,6 +286,7 @@ namespace Engine
                 ToggleFullscreen();
             }
         }
+
         if (isMainMenuLoaded) {
             if (e.GetEventType() == EventType::MouseButtonPressed)
             {
@@ -333,8 +335,18 @@ namespace Engine
                     }
                 }
             
-            }           
+            } 
+            //skip cut scene to reach level 1 (not working,  only works outside code block)
+            if (e.GetEventType() == EventType::KeyPressed) {
+                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
+
+                // skip cut scene to go level 1
+                if (keyPressedEvent.GetKeyCode() == KEY_N) {
+                    loader->LoadScene(GameSceneFilePath);
+                }
+            }
         }
+
     }
 
     void Application::ToggleFullscreen() {

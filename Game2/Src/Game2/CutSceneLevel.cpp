@@ -14,6 +14,8 @@ Technology is prohibited.
  /******************************************************************************/
 #include "pch.h"
 #include "CutSceneLevel.h"
+#include "Input.h"
+#include "GameScene.h"
 
 namespace Engine {
     const std::chrono::milliseconds TextureDisplayTime(2000); // Display each texture for 2 seconds
@@ -21,6 +23,7 @@ namespace Engine {
     std::chrono::steady_clock::time_point startTime{};
     bool timeToFade{ false };
     bool soundPlayed{ false };
+    Input c_KeyInput;
 
     void CutSceneLevel::OnLoad()
     {
@@ -57,16 +60,22 @@ namespace Engine {
 
             // Detach the thread to allow it to continue running independently
             displayThread.detach();
+
+            // once the fade / pan is completed
+            if (vfx.FadedOut())
+            {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                //++currEnt;
+                vfx.FadedOut() = false;
+                startTime = std::chrono::steady_clock::now();
+            }
         }
         
-        // once the fade / pan is completed
-        if (vfx.FadedOut())
-        {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            //++currEnt;
-            vfx.FadedOut() = false;
-            startTime = std::chrono::steady_clock::now();
-        }
+        ////skip cut scene to go level 1
+        //if (c_KeyInput.IsKeyTriggered(KEY_N))
+        //{
+        //    cutsceneLoader.LoadScene(GameSceneFilePath);
+        //}
     }
 
     void CutSceneLevel::FreeLevel()

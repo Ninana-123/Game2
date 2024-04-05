@@ -62,6 +62,7 @@ namespace Engine {
 			inputStream >> temp >> r >> g >> b >> a;
 
 		}
+
 	private:
 		glm::vec4 m_Color{}; //colour for texture
 		
