@@ -20,7 +20,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 
 namespace Engine
-{	
+{
 
 	void Engine::StateMachine::UpdateEntities(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities, AudioEngine& audioEngine, AssetManager& assetManager)
 	{
@@ -47,7 +47,7 @@ namespace Engine
 					Attack(entity, audioEngine, assetManager);
 					break;
 				case c_state::Death:
-					Death(entity);
+					Death(entity, audioEngine, assetManager);
 					break;
 				default:
 					break;
@@ -58,12 +58,12 @@ namespace Engine
 
 	void StateMachine::Idle(Entity* entity)
 	{
-		if (entity != nullptr) 
+		if (entity != nullptr)
 		{
 			// TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			// texture->SetAnimation(static_cast<int>(c_state::Static));
 		}
-		
+
 	}
 
 	void StateMachine::Walking(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
@@ -72,7 +72,7 @@ namespace Engine
 		static double lastFootSoundTime = glfwGetTime(); // Initialize the last foot sound time
 		if (!isGameOver) {
 			// Check if one second has elapsed since the last foot sound playback
-			if (glfwGetTime() - lastFootSoundTime >= 1.0)
+			if (glfwGetTime() - lastFootSoundTime >= 0.5)
 			{
 				// If footstep1 is playing, stop it and play footstep2
 				if (isFoot1Playing)
@@ -93,60 +93,110 @@ namespace Engine
 			}
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			texture->SetAnimation(static_cast<int>(c_state::Walking));
-			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+
 		}
 	}
 
 	void StateMachine::Attack(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
 	{
-		//TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		//CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		//texture->SetAnimation(static_cast<int>(c_state::Attack));
-		//Entity* target = collision->target;
-		//Stats::AttackTarget(5, entity, target);
-		//audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
 		static bool isAudioAttackPlaying = false;
 		static double lastSoundTime = glfwGetTime(); // Initialize the last sound time
+
 		if (!isGameOver) {
 			// Check if one second has elapsed since the last sound playback
-			if (glfwGetTime() - lastSoundTime >= 1.0)
+			if (glfwGetTime() - lastSoundTime >= 0.3)
 			{
 				// If audio is not playing, start playing it
 				if (!isAudioAttackPlaying)
 				{
-					// Play the sound
-					audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
-					isAudioAttackPlaying = true;
 					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
 					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
+
+					// Check the entity type and play the corresponding sound
+					TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+					if (texture)
+					{
+						if (texture->textureKey.mainIndex == TextureClass::Infantry && texture->textureKey.subIndex == 2) {
+							audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+						}
+						else if (texture->textureKey.mainIndex == TextureClass::Infantry && texture->textureKey.subIndex == 1) {
+							audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+						}
+
+						if (texture->textureKey.mainIndex == TextureClass::Archer && texture->textureKey.subIndex == 1) {
+							audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));
+						}
+						else if (texture->textureKey.mainIndex == TextureClass::Archer && texture->textureKey.subIndex != 1) {
+							audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));
+						}
+
+						if (texture->textureKey.mainIndex == TextureClass::Tank && texture->textureKey.subIndex == 2) {
+							audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Swipe"))));
+						}
+						else if (texture->textureKey.mainIndex == TextureClass::Tank && texture->textureKey.subIndex != 2) {
+							audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Swipe"))));
+						}
+					}
+
+					isAudioAttackPlaying = true;
 				}
 				else
 				{
 					// Stop the sound playback
 					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Slash"))));
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));
+					audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Swipe"))));
 					isAudioAttackPlaying = false;
 				}
 
 				lastSoundTime = glfwGetTime(); // Update the last sound time
 			}
+
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 			texture->SetAnimation(static_cast<int>(c_state::Attack));
+
 			Entity* target = collision->target;
 			Stats::AttackTarget(5, entity, target);
-			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot1"))));
-			//audioEngine.stopSound(*(assetManager.getAudio(AudioKey("sound_Foot2"))));
 		}
 	}
 
-	void StateMachine::Death(Entity* entity)
-	{
-		TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-		CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-		texture->SetAnimation(static_cast<int>(c_state::Death));
-		collision->disableCollision = true;
-		//entity->components.erase(ComponentType::Collision);
-	}
 
+	void StateMachine::Death(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
+	{
+		static bool isAudioTowerDestroyedPlaying = false;
+		static double lastSoundTime = glfwGetTime(); // Initialize the last sound time
+
+		if (!isGameOver) {
+			if (glfwGetTime() - lastSoundTime >= 1.0) {
+				// Get texture and collision components
+				TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+				CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+
+				// Check if texture and collision components exist
+				if (texture)
+				{
+					// Check if the entity is a tower and its texture matches the criteria for the death state
+					if (texture->textureKey.mainIndex == TextureClass::Tower)
+					{
+						// Play the tower destroyed audio only if it's not already playing
+						if (!isAudioTowerDestroyedPlaying)
+						{
+							audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Swipe"))));
+							isAudioTowerDestroyedPlaying = true; // Set flag to indicate audio is playing
+						}
+					}
+				}
+			}
+			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+			// Set animation to death state
+			texture->SetAnimation(static_cast<int>(c_state::Death));
+
+			// Disable collision for the entity
+			collision->disableCollision = true;
+		}
+	}
 }
+
 

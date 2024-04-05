@@ -93,6 +93,7 @@ namespace Engine
     ScriptSystem scriptSystem(EM);
     ScriptFactory g_ScriptFactory(scriptSystem);
     StateMachine SM;
+    //TextureClass textureClass;
     //FileBrowser fileBrowser;
 
     SceneManager sceneManager;
@@ -199,6 +200,10 @@ namespace Engine
         assetManager->loadAudio(AudioKey("sound_BGM"));
         assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
 
+        assetManager->AddAudioPath(AudioKey("mainmenu_BGM"), "Resource/Audio/mainmenu_bgm.wav");
+        assetManager->loadAudio(AudioKey("mainmenu_BGM"));
+        assetManager->getAudio(AudioKey("mainmenu_BGM"))->setLoop();
+
         assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
         assetManager->loadAudio(AudioKey("sound_Win"));
         assetManager->getAudio(AudioKey("sound_Win"))->setVolume(0.5f);
@@ -209,7 +214,7 @@ namespace Engine
 
         assetManager->AddAudioPath(AudioKey("sound_Slash"), "Resource/Audio/samurai_slash.wav");
         assetManager->loadAudio(AudioKey("sound_Slash"));
-        assetManager->getAudio(AudioKey("sound_Slash"))->setVolume(0.5f);
+        assetManager->getAudio(AudioKey("sound_Slash"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("sound_Ambience"), "Resource/Audio/forest_ambience.wav");
         assetManager->loadAudio(AudioKey("sound_Ambience"));
@@ -217,19 +222,30 @@ namespace Engine
 
         assetManager->AddAudioPath(AudioKey("sound_Foot1"), "Resource/Audio/Footsteps/Footsteps1.wav");
         assetManager->loadAudio(AudioKey("sound_Foot1"));
-        assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.5f);
+        assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("sound_Foot2"), "Resource/Audio/Footsteps/Footsteps2.wav");
         assetManager->loadAudio(AudioKey("sound_Foot2"));
-        assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.5f);
+        assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.3f);
+
+        assetManager->AddAudioPath(AudioKey("sound_Swipe"), "Resource/Audio/tank_attack.wav");
+        assetManager->loadAudio(AudioKey("sound_Swipe"));
+        assetManager->getAudio(AudioKey("sound_Swipe"))->setVolume(0.3f);
+
+        assetManager->AddAudioPath(AudioKey("tower_Down"), "Resource/Audio/tower_fall.wav");
+        assetManager->loadAudio(AudioKey("tower_Down"));
+        assetManager->getAudio(AudioKey("tower_Down"))->setVolume(1.0f);
 
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"))));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("tower_Down"))));
 
 
         /*  sound_BGM.setLoop();
@@ -331,6 +347,9 @@ namespace Engine
                         }
                         mainMenuCheck = false;
                         isMainMenuLoaded = false;
+                        audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
                     }
                 }
             
@@ -361,8 +380,18 @@ namespace Engine
     {
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
-        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
-        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
+        audioEngine.playSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+
+    /*    if (isMainMenuLoaded) {
+            audioEngine.playSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+        }
+
+        else if (!isMainMenuLoaded) {
+            audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+            audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+            audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
+        }*/
+
         previousTime = std::chrono::high_resolution_clock::now();
         /*
          if (m_ImGuiWrapper->TargetEntityGetter()->HasComponent(ComponentType::Transform)) {
@@ -446,6 +475,15 @@ namespace Engine
                     audioEngine.stopSound(*(assetManager->getAudio(AudioKey("sound_Slash"))));
                     currentlyPlayingSound = false;
                 }
+
+                if (InputHandler.IsKeyTriggered(KEY_DOWN)) {
+                    audioEngine.decreaseVolume();
+                }
+
+                if (InputHandler.IsKeyTriggered(KEY_UP)) {
+                    audioEngine.increaseVolume();
+                }
+
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))
