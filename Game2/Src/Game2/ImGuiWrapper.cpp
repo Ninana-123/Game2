@@ -1358,7 +1358,7 @@ namespace Engine {
 									ImGui::Text("Select Layer:");
 									const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower" };
 									int currentLayerIndex = static_cast<int>(collision->layer);
-									if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) 
+									if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames)))
 									{
 										// Handle layer change here
 										collision->layer = static_cast<Layer>(currentLayerIndex);
@@ -1454,6 +1454,20 @@ namespace Engine {
 									break;
 								}
 
+								case ComponentType::Stats:
+								{
+									StatsComponent* stats = dynamic_cast<StatsComponent*>(pair.second);
+									float hp = stats->health;
+									float range = stats->range;
+									ImGui::InputFloat("Health", &hp, 10, 50);
+									ImGui::InputFloat("Range", &range, 5, 20);
+
+									stats->health = hp;
+									stats->range = range;
+
+									break;
+								}
+
 								default:
 									break;
 								}
@@ -1490,14 +1504,14 @@ namespace Engine {
 							}
 						}
 
-						/*
+						
 						ImGui::SameLine();
 
 						if (ImGui::Button("Save Changes"))
 						{
-							loader->SavePrefabs("Resource/Prefabs.txt");
+							deserializer->SavePrefabs("Resource/Prefabs/Prefabs.txt");
 						}
-						*/
+						
 
 						ImGui::Spacing();
 						ImGui::Separator();
@@ -1508,7 +1522,7 @@ namespace Engine {
 							static bool ComponentExistsWarning = false;
 							static char newPrefabName[64] = "New Prefab"; // input prefab name
 							ImGui::InputText("New Prefab Name", newPrefabName, sizeof(newPrefabName));
-
+							
 							static Prefab bufferPrefab(0); // buffer prefab to hold changes
 
 							// Dropdown list for adding components

@@ -30,6 +30,8 @@ namespace Engine
 		bool statsInitialized = false;
 		bool towerDestroyed = false;
 		bool playerDead = false;
+		bool tankStatsSet = false;
+		bool archerStatsSet = false;
 
 		/*!*****************************************************************
 

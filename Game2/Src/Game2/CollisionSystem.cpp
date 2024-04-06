@@ -515,12 +515,52 @@ namespace Engine
 		{
 			Entity* entity1 = it1->second.get();
 
-
 			if (entity1->HasComponent(ComponentType::Transform) && entity1->HasComponent(ComponentType::Collision))
 			{
 				CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity1->GetComponent(ComponentType::Collision));
 				TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(entity1->GetComponent(ComponentType::Transform));
 				StatsComponent* statsComponent1 = dynamic_cast<StatsComponent*>(entity1->GetComponent(ComponentType::Stats));
+				TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity1->GetComponent(ComponentType::Texture));
+
+
+				// Workaround to add components as prefabs are not saving
+				if (textureComponent)
+				{
+					if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 2)
+					{
+						entity1->AddNewComponent(ComponentType::Stats);
+						std::cout << "stats component added to tank" << std::endl;
+
+					}
+
+					if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 3)
+					{
+						entity1->AddNewComponent(ComponentType::Stats);
+						std::cout << "stats component added to archer" << std::endl;
+					}
+
+					if (statsComponent1 && textureComponent->textureKey.mainIndex == 2)
+					{
+						if (!statsComponent1->tankStatsSet) 
+						{
+							statsComponent1->health = 100;
+							std::cout << "health added to tank" << std::endl;
+							statsComponent1->tankStatsSet = true;
+						}
+					}
+
+					if (statsComponent1 && textureComponent->textureKey.mainIndex == 3)
+					{
+						if (!statsComponent1->archerStatsSet) 
+						{
+							statsComponent1->health = 50;
+							std::cout << "health added to archer" << std::endl;
+							statsComponent1->archerStatsSet = true;
+						}
+					}
+				}
+
+				
 
 				if (collisionComponent1 && collisionComponent1->disableCollision)
 				{
@@ -578,7 +618,7 @@ namespace Engine
 								CollisionComponent* collisionComponent2 = dynamic_cast<CollisionComponent*>(entity2->GetComponent(ComponentType::Collision));
 								TransformComponent* transformComponent2 = dynamic_cast<TransformComponent*>(entity2->GetComponent(ComponentType::Transform));
 								StatsComponent* statsComponent2 = dynamic_cast<StatsComponent*>(entity2->GetComponent(ComponentType::Stats));
-								TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
+								TextureComponent* textureComponent2 = dynamic_cast<TextureComponent*>(entity2->GetComponent(ComponentType::Texture));
 								ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity2->GetComponent(ComponentType::Shooting));
 
 								if (collisionComponent2 && collisionComponent2->disableCollision == true)
@@ -646,7 +686,7 @@ namespace Engine
 									// If found, set the texture key
 									if (it != towerHealthToTextureKey.end())
 									{
-										textureComponent->textureKey = { it->second, 0 };
+										textureComponent2->textureKey = { it->second, 0 };
 									}
 								}
 
@@ -657,7 +697,7 @@ namespace Engine
 									// If found, set the texture key
 									if (it != towerHealthToTextureKey.end())
 									{
-										textureComponent->textureKey = { it->second, 0 };
+										textureComponent2->textureKey = { it->second, 0 };
 									}
 								}
 
@@ -668,12 +708,12 @@ namespace Engine
 									// If found, set the texture key
 									if (it != towerHealthToTextureKey.end())
 									{
-										textureComponent->textureKey = { it->second, 0 };
+										textureComponent2->textureKey = { it->second, 0 };
 									}
 								}
 
 								// Getting ID of victory screen
-								if (textureComponent->textureKey.mainIndex == 21)
+								if (textureComponent2->textureKey.mainIndex == 21)
 								{
 									victoryID = entity2->GetID();
 								}
@@ -686,7 +726,6 @@ namespace Engine
 									{
 										circleVel2 = VECTORMATH::Vec2(collisionComponent2->collisionVel.x, collisionComponent2->collisionVel.y);
 										BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity1->GetComponent(ComponentType::Logic));
-
 
 										if (CollisionSystem::CollisionIntersection_RectRect(aabb1, vel1, aabb2, vel2)
 											&& collisionComponent2->layer != Layer::inGameGUI)
@@ -702,8 +741,8 @@ namespace Engine
 													//std::cout << "inside behavior" << std::endl;
 													unitArrowCollision = true;
 													lemaoArrowID = entity2->GetID();
-													statsComponent1->health -= 5;
-													std::cout << "infantry's health is: " << statsComponent1->health << std::endl;
+													statsComponent1->health -= 5; // Will crash the other if its not infantry as the rest do not have stats component
+													std::cout << "unit's health is: " << statsComponent1->health << std::endl;
 													if (statsComponent1->health == 0) 
 													{
 														std::cout << "infantry is fucking dead" << std::endl;
@@ -731,10 +770,10 @@ namespace Engine
 															tower2Destroyed = true;
 															isColliding = false;
 														}
-														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
 														{
-															textureComponent->textureKey = { 4, 4 };
+															textureComponent2->textureKey = { 4, 4 };
 														}
 													}
 													if (entity2->GetID() == 8)
@@ -745,10 +784,10 @@ namespace Engine
 															tower1Destroyed = true;
 															isColliding = false;
 														}
-														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
+														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower1Destroyed == true)
 														{
-															textureComponent->textureKey = { 4, 4 };
+															textureComponent2->textureKey = { 4, 4 };
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
@@ -761,10 +800,10 @@ namespace Engine
 															isGameOver = true;
 															isColliding = false;
 														}
-														if ((textureComponent->textureKey.mainIndex == 5 && textureComponent->textureKey.subIndex == 0)
+														if ((textureComponent2->textureKey.mainIndex == 5 && textureComponent2->textureKey.subIndex == 0)
 															&& castleDestroyed == true)
 														{
-															textureComponent->textureKey = { 5, 5 };
+															textureComponent2->textureKey = { 5, 5 };
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
