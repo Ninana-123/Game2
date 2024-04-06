@@ -318,7 +318,7 @@ namespace Engine
 
                     if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
                     {
-                        fp = CutSceneFilePath;
+                        fp = GameSceneFilePath;
                         int entityCount = static_cast<int>(EM->GetEntities()->size());
 
                         for (int i = entityCount - 1; i >= 0; --i) {
@@ -781,7 +781,6 @@ namespace Engine
         return static_cast<float>(elapsedTime);
     }
 
-
     void Application::UpdateWindowFocus() {
         if (m_Window) {
             // Use get() to obtain a raw pointer to the managed object
@@ -794,7 +793,7 @@ namespace Engine
                 // If the window is not focused or is iconified (minimized)
                 if (!isFocused || glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_ICONIFIED)) {
                     // Minimize the window, pause the game, and pause all audio playback
-                    //windowsWindow->MinimizeWindow();
+                    windowsWindow->MinimizeWindow();
                     isPaused = true;
                     audioEngine.pauseAllAudio();
                     // Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
@@ -891,6 +890,4 @@ namespace Engine
     {
         return (qY > pY) != (rY > pY) && pX < (rX - qX) * (pY - qY) / (rY - qY) + qX;
     }
-
-
 }

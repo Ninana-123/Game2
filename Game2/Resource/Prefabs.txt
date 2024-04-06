@@ -58,6 +58,9 @@ MaxY: 0
 Radius: 0
 Layer: 4
 CollisionVel: 0 0
+Stats
+Health: 50
+Range: 10
 Sprite
 framerate: 0
 horizontalframes: 0
@@ -97,6 +100,9 @@ MaxY: 0
 Radius: 0
 Layer: 4
 CollisionVel: 0 0
+Stats
+Health: 100
+Range: 0
 Sprite
 framerate: 0
 horizontalframes: 0

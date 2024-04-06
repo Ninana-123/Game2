@@ -166,7 +166,7 @@ namespace Engine
         VertexBufferLayout layoutLines;
         layoutLines.Push<float>(2);
         layoutLines.Push<float>(2);
-        GraphicsSystem::vaLines.AddBuffer(vbLines, layoutLines);
+        vaLines.AddBuffer(vbLines, layoutLines);
 
         /**************************************************************************************************/
         // Define vertices for the background
@@ -203,6 +203,7 @@ namespace Engine
         vb.Unbind();
 
         vbLines.Unbind();
+        vaLines.Unbind();
 
         vaBackground.Unbind();
         ibBackground.Unbind();
@@ -621,7 +622,6 @@ namespace Engine
         try {
             // Bind the shader and set uniforms for line rendering
             shader.Bind();
-            vaLines.Bind();
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
             if (renderCollisionBox == true) {
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
@@ -629,6 +629,7 @@ namespace Engine
             else
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 0.0f); // Set the line color
 
+            vaLines.Bind();
             // Draw the lines directly without an IBO
             GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
 
@@ -778,7 +779,7 @@ namespace Engine
                                 RenderBackground(modelA);
                             else {
                                 RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
-                                 RenderLines(modelA);
+                                RenderLines(modelA);
                                 
                             }
                         }
