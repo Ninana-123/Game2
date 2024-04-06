@@ -119,7 +119,7 @@ namespace Engine
 
 	private:
 		std::shared_ptr<Engine::EntityManager> entityManager; //EM instance
-		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts2
+		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts
 	};
 }
 

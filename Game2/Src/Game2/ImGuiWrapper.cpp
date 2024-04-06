@@ -1503,8 +1503,8 @@ namespace Engine {
 											if (ImGui::Selectable(scriptTypeNames[i], isSelected)) 
 											{
 												currentIndex = i;
-												// Update currentScriptType based on selection
-												script->SetScriptType(static_cast<ScriptType>(i));
+												// Update currentScriptType
+												script->currentScriptType = (static_cast<ScriptType>(i));
 											}
 											if (isSelected) 
 											{
