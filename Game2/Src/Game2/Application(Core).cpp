@@ -90,8 +90,8 @@ namespace Engine
     PhysicsComponent* physicsTest;
     TextureComponent* textureTest;
     ComponentFactory CF;
-    ScriptSystem scriptSystem(EM);
-    ScriptFactory g_ScriptFactory(scriptSystem);
+    ScriptSystem* scriptSystem = nullptr;
+    ScriptFactory* g_ScriptFactory = nullptr;
     StateMachine SM;
     //TextureClass textureClass;
     //FileBrowser fileBrowser;
@@ -103,6 +103,10 @@ namespace Engine
     float scalar = 0.1f;
     float rotation = 0.125f;
     int transformation = 5;
+
+    bool tower1DownSoundPlayed = false;
+    bool tower2DownSoundPlayed = false;
+ 
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
@@ -119,7 +123,7 @@ namespace Engine
 
     Application::~Application()
     {
-
+        delete g_ScriptFactory;
     }
 
     void Application::Initialize()
@@ -169,6 +173,8 @@ namespace Engine
         systemsManager->Initialize();
         graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
         collisionSystem = systemsManager->GetSystem<CollisionSystem>();
+        scriptSystem = systemsManager->GetSystem<ScriptSystem>();
+        g_ScriptFactory = new Engine::ScriptFactory(scriptSystem);
 
         // Load scene from a file
         //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
@@ -197,56 +203,58 @@ namespace Engine
         // Initialize audio files and load sounds
         audioEngine.init();
         assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
-        assetManager->loadAudio(AudioKey("sound_BGM"));
-        assetManager->getAudio(AudioKey("sound_BGM"))->setLoop();
-
+        assetManager->loadAudio(AudioKey("sound_BGM"), true);
+        
         assetManager->AddAudioPath(AudioKey("mainmenu_BGM"), "Resource/Audio/mainmenu_bgm.wav");
-        assetManager->loadAudio(AudioKey("mainmenu_BGM"));
-        assetManager->getAudio(AudioKey("mainmenu_BGM"))->setLoop();
-
+        assetManager->loadAudio(AudioKey("mainmenu_BGM"), true);
+        
         assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
-        assetManager->loadAudio(AudioKey("sound_Win"));
+        assetManager->loadAudio(AudioKey("sound_Win"), false);
         assetManager->getAudio(AudioKey("sound_Win"))->setVolume(0.5f);
 
         assetManager->AddAudioPath(AudioKey("sound_Arrow"), "Resource/Audio/archer_shoot.wav");
-        assetManager->loadAudio(AudioKey("sound_Arrow"));
+        assetManager->loadAudio(AudioKey("sound_Arrow"), false);
         assetManager->getAudio(AudioKey("sound_Arrow"))->setVolume(0.5f);
 
         assetManager->AddAudioPath(AudioKey("sound_Slash"), "Resource/Audio/samurai_slash.wav");
-        assetManager->loadAudio(AudioKey("sound_Slash"));
+        assetManager->loadAudio(AudioKey("sound_Slash"), false);
         assetManager->getAudio(AudioKey("sound_Slash"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("sound_Ambience"), "Resource/Audio/forest_ambience.wav");
-        assetManager->loadAudio(AudioKey("sound_Ambience"));
+        assetManager->loadAudio(AudioKey("sound_Ambience"), true);
         assetManager->getAudio(AudioKey("sound_Ambience"))->setVolume(0.5f);
 
         assetManager->AddAudioPath(AudioKey("sound_Foot1"), "Resource/Audio/Footsteps/Footsteps1.wav");
-        assetManager->loadAudio(AudioKey("sound_Foot1"));
+        assetManager->loadAudio(AudioKey("sound_Foot1"), false);
         assetManager->getAudio(AudioKey("sound_Foot1"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("sound_Foot2"), "Resource/Audio/Footsteps/Footsteps2.wav");
-        assetManager->loadAudio(AudioKey("sound_Foot2"));
+        assetManager->loadAudio(AudioKey("sound_Foot2"), false);
         assetManager->getAudio(AudioKey("sound_Foot2"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("sound_Swipe"), "Resource/Audio/tank_attack.wav");
-        assetManager->loadAudio(AudioKey("sound_Swipe"));
+        assetManager->loadAudio(AudioKey("sound_Swipe"), true);
         assetManager->getAudio(AudioKey("sound_Swipe"))->setVolume(0.3f);
 
         assetManager->AddAudioPath(AudioKey("tower_Down"), "Resource/Audio/tower_fall.wav");
-        assetManager->loadAudio(AudioKey("tower_Down"));
+        assetManager->loadAudio(AudioKey("tower_Down"), false);
         assetManager->getAudio(AudioKey("tower_Down"))->setVolume(1.0f);
 
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"))));
-        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("tower_Down"))));
+        assetManager->AddAudioPath(AudioKey("button_Click"), "Resource/Audio/button_click.wav");
+        assetManager->loadAudio(AudioKey("button_Click"), false);
+        assetManager->getAudio(AudioKey("button_Click"))->setVolume(1.0f);
 
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"), false)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Arrow"), false)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Slash"), false)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Ambience"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot1"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"), true)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("tower_Down"), false)));
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("button_Click"), false)));
 
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
@@ -304,7 +312,9 @@ namespace Engine
         }
         if (isMainMenuLoaded) {
             if (e.GetEventType() == EventType::MouseButtonPressed)
-            {
+            {   
+               
+
                 MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
                 if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
                 {
@@ -316,6 +326,7 @@ namespace Engine
 
                     if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
                     {
+              
                         fp = GameSceneFilePath;
                         int entityCount = static_cast<int>(EM->GetEntities()->size());
 
@@ -431,6 +442,7 @@ namespace Engine
                 isPaused = !isPaused;
             }
 
+
             // Step one frame forward
             if (isPaused && InputHandler.IsKeyTriggered(KEY_F8)) {
                 stepOneFrame = true;
@@ -483,7 +495,51 @@ namespace Engine
                 if (InputHandler.IsKeyTriggered(KEY_UP)) {
                     audioEngine.increaseVolume();
                 }
+               
+                if (InputHandler.IsMouseClicked(0)) {
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("button_Click"))));
+                    //currentlyPlayingSound = false;
+                }
 
+
+                 //Check if tower1 is destroyed and if the sound hasn't been played yet
+                if (tower1Destroyed && !tower1DownSoundPlayed) {
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Set towerDownSoundPlayed to true to indicate that the sound has been played
+                    tower1DownSoundPlayed = true;
+                }
+
+                // Check if tower1 is not destroyed and if the sound has been played
+                else if (!tower1Destroyed && tower1DownSoundPlayed) {
+                   // Stop the sound
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Reset towerDownSoundPlayed to false to indicate that the sound has stopped
+                    tower1DownSoundPlayed = false;
+                }
+
+                //Check if tower1 is destroyed and if the sound hasn't been played yet
+                if (tower2Destroyed && !tower2DownSoundPlayed) {
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Set towerDownSoundPlayed to true to indicate that the sound has been played
+                    tower2DownSoundPlayed = true;
+                }
+
+                // Check if tower1 is not destroyed and if the sound has been played
+                else if (!tower2Destroyed && tower2DownSoundPlayed) {
+                    // Stop the sound
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Reset towerDownSoundPlayed to false to indicate that the sound has stopped
+                    tower2DownSoundPlayed = false;
+                }
+
+            
+               
+
+               
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))
@@ -670,7 +726,7 @@ namespace Engine
             m_ImGuiWrapper->OnUpdate();
             m_ImGuiWrapper->End();
             m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
-            m_shootingSystem->Update(static_cast<float>(deltaTime), isShooting, EM->GetEntities());
+            m_shootingSystem->Update(static_cast<float>(deltaTime), isShooting, EM->GetEntities(), *assetManager, audioEngine);
             systemsManager->ResetSystemTimers();
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;

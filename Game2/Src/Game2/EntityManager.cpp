@@ -52,7 +52,6 @@ namespace Engine
 				// For other components, just clone and add them
 				if (sourceComponent)
 				{
-					Component* clonedComponent = sourceComponent->Clone();
 					newEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
 				}
 			}			
@@ -107,7 +106,6 @@ namespace Engine
 				// For other components, just clone and add them
 				if (sourceComponent)
 				{
-					Component* clonedComponent = sourceComponent->Clone();
 					clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
 				}
 			}
@@ -149,7 +147,6 @@ namespace Engine
 				// For other components, just clone and add them
 				if (sourceComponent)
 				{
-					Component* clonedComponent = sourceComponent->Clone();
 					clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
 				}
 			}

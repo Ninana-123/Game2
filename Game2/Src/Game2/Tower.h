@@ -29,7 +29,7 @@ namespace Engine
 	private:
 		Entity* entity = nullptr;
 		std::vector<Entity*> targets;
-		float firerate = 1.f;
+		float firerate = 0.2f;
 		float counter = 0.f;
 	};
 }

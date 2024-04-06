@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Vector2d.h"
 #include "EngineTypes.h"
 
+
 // Global Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;

@@ -24,7 +24,7 @@ namespace Engine
 			if (scriptComponent)
 			{
 				// Set the entity reference in the script component
-				scriptComponent->SetEntity(id);
+				//scriptComponent->SetEntity(id);
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Engine
 				if (scriptComponent)
 				{
 					// Set the entity reference in the script component
-					scriptComponent->SetEntity(id);
+					//scriptComponent->SetEntity(id);
 				}
 			}
 			// Emplace the new component into the entity's container

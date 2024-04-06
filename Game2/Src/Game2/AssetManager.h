@@ -173,7 +173,7 @@ namespace Engine {
         * @param key The key identifying the audio file.
         * @return A shared pointer to the loaded SoundInfo, or nullptr if the file is not found.
         */
-        std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key);
+        std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key, bool loop);
 
         /**
         * @brief Unloads an audio file based on its key.

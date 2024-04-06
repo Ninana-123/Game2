@@ -21,7 +21,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
-    ScriptFactory::ScriptFactory(ScriptSystem& scriptSystem) : SS(scriptSystem)
+    ScriptFactory::ScriptFactory(ScriptSystem* scriptSystem) : SS(scriptSystem)
     {
         // Register script types with their creation functions
         CreateScript(ScriptType::tower, [](Entity* entity) { return std::make_unique<Tower>(entity); });
@@ -44,10 +44,10 @@ namespace Engine
         auto it = scriptRegistry().find(type);
         if (it != scriptRegistry().end())
         {
-            auto script = it->second( SS.QueryEntityPtr(entity) ); //use EM from SS
-            SS.RegisterScript(entity, std::move(script)); // Register the script in the system
+            auto script = it->second( SS->QueryEntityPtr(entity) ); //use EM from SS
+            SS->RegisterScript(entity, std::move(script)); // Register the script in the system
             // Return a pointer to the script object
-            return SS.GetScript(entity); // Assuming GetScript returns a pointer to the registered script
+            return SS->GetScript(entity); // Assuming GetScript returns a pointer to the registered script
         }
         else
         {

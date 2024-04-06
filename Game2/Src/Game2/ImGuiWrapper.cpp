@@ -1247,7 +1247,7 @@ namespace Engine {
 						
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite" ,"Pathfinding"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite" ,"Pathfinding", "Stats", "Script"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						ImGui::Spacing();
 						ImGui::Separator();
@@ -1358,7 +1358,7 @@ namespace Engine {
 									ImGui::Text("Select Layer:");
 									const char* layerNames[] = { "World", "Interactive", "Editable" , "inGameGUI", "BeforeSpawn", "Tower" };
 									int currentLayerIndex = static_cast<int>(collision->layer);
-									if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames))) 
+									if (ImGui::Combo("##LayerCombo", &currentLayerIndex, layerNames, IM_ARRAYSIZE(layerNames)))
 									{
 										// Handle layer change here
 										collision->layer = static_cast<Layer>(currentLayerIndex);
@@ -1454,6 +1454,69 @@ namespace Engine {
 									break;
 								}
 
+								case ComponentType::Stats:
+								{
+									StatsComponent* stats = dynamic_cast<StatsComponent*>(pair.second);
+									float hp = stats->health;
+									float range = stats->range;
+									ImGui::InputFloat("Health", &hp, 10, 50);
+									ImGui::InputFloat("Range", &range, 5, 20);
+
+									stats->health = hp;
+									stats->range = range;
+
+									break;
+								}
+
+								case ComponentType::Script:
+								{
+									ScriptComponent* script = dynamic_cast<ScriptComponent*>(pair.second);
+
+									// Convert currentScriptType to string
+									std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
+
+									// Get array of script type names
+									const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+									const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
+
+									// Find index of currentScriptType
+									int currentIndex = -1;
+									for (int i = 0; i < numScriptTypes; ++i) 
+									{
+										if (currentScriptTypeName == scriptTypeNames[i]) 
+										{
+											currentIndex = i;
+											break;
+										}
+									}
+
+									// Display EntityID
+									std::string entityIDText = (script->entity == EMPTY_ID) ? "Not Linked" : std::to_string(static_cast<int>(script->entity));
+									ImGui::Text("Entity ID: %s", entityIDText.c_str());
+
+									// Display drop-down menu
+									if (ImGui::BeginCombo("Script Type", currentScriptTypeName.c_str())) 
+									{
+										for (int i = 0; i < numScriptTypes; ++i) 
+										{
+											bool isSelected = (currentIndex == i);
+											if (ImGui::Selectable(scriptTypeNames[i], isSelected)) 
+											{
+												currentIndex = i;
+												// Update currentScriptType
+												script->currentScriptType = (static_cast<ScriptType>(i));
+											}
+											if (isSelected) 
+											{
+												//ImGui::SetItemDefaultFocus(); // Set initial focus when opening the combo
+											}
+										}
+										ImGui::EndCombo();
+									}
+
+									break;
+								}
+
 								default:
 									break;
 								}
@@ -1490,14 +1553,14 @@ namespace Engine {
 							}
 						}
 
-						/*
+						
 						ImGui::SameLine();
 
 						if (ImGui::Button("Save Changes"))
 						{
-							loader->SavePrefabs("Resource/Prefabs.txt");
+							deserializer->SavePrefabs("Resource/Prefabs/Prefabs.txt");
 						}
-						*/
+						
 
 						ImGui::Spacing();
 						ImGui::Separator();
@@ -1508,7 +1571,7 @@ namespace Engine {
 							static bool ComponentExistsWarning = false;
 							static char newPrefabName[64] = "New Prefab"; // input prefab name
 							ImGui::InputText("New Prefab Name", newPrefabName, sizeof(newPrefabName));
-
+							
 							static Prefab bufferPrefab(0); // buffer prefab to hold changes
 
 							// Dropdown list for adding components
@@ -2120,6 +2183,55 @@ namespace Engine {
 
 								ImGui::EndCombo();
 							}
+							break;
+						}
+
+						case ComponentType::Script:
+						{
+							ScriptComponent* script = dynamic_cast<ScriptComponent*>(pair.second);
+
+							// Convert currentScriptType to string
+							std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
+
+							// Get array of script type names
+							const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+							const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
+
+							// Find index of currentScriptType
+							int currentIndex = -1;
+							for (int i = 0; i < numScriptTypes; ++i)
+							{
+								if (currentScriptTypeName == scriptTypeNames[i])
+								{
+									currentIndex = i;
+									break;
+								}
+							}
+
+							// Display EntityID
+							std::string entityIDText = (script->entity == EMPTY_ID) ? "Not Linked" : std::to_string(static_cast<int>(script->entity));
+							ImGui::Text("Entity ID: %s", entityIDText.c_str());
+
+							// Display drop-down menu
+							if (ImGui::BeginCombo("Script Type", currentScriptTypeName.c_str()))
+							{
+								for (int i = 0; i < numScriptTypes; ++i)
+								{
+									bool isSelected = (currentIndex == i);
+									if (ImGui::Selectable(scriptTypeNames[i], isSelected))
+									{
+										currentIndex = i;
+										// Update currentScriptType based on selection
+										script->SetScriptType(static_cast<ScriptType>(i));
+									}
+									if (isSelected)
+									{
+										//ImGui::SetItemDefaultFocus(); // Set initial focus when opening the combo
+									}
+								}
+								ImGui::EndCombo();
+							}
+
 							break;
 						}
 
