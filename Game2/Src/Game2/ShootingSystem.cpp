@@ -150,6 +150,7 @@ namespace Engine
             TransformComponent* transform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
             CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
             StatsComponent* statsComponent = dynamic_cast<StatsComponent*>(entity->GetComponent(ComponentType::Stats));
+            TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
             if (entity->HasComponent(ComponentType::Collision)) 
             {
@@ -162,6 +163,22 @@ namespace Engine
                             statsComponent->towerDestroyed = true;
                         }
                     }
+
+                    //// Workaround to add components as prefabs are not working
+                    //if (textureComponent) 
+                    //{
+                    //    if (!entity->HasComponent(ComponentType::Stats) && textureComponent->textureKey.mainIndex == 2) 
+                    //    {
+                    //        entity->AddNewComponent(ComponentType::Stats);
+
+                    //    }
+
+                    //    if (!entity->HasComponent(ComponentType::Stats) && textureComponent->textureKey.mainIndex == 3)
+                    //    {
+                    //        entity->AddNewComponent(ComponentType::Stats);
+
+                    //    }
+                    //}
 
                     if (collisionComponent1->towerShooting == true && !(collisionComponent1->arrowSpawned) && !statsComponent->towerDestroyed)
                     {

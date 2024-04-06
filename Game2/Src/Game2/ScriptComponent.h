@@ -20,7 +20,7 @@ namespace Engine
 {
 	class ScriptFactory;
 
-	extern ScriptFactory g_ScriptFactory;
+	extern ScriptFactory* g_ScriptFactory;
 
 	class Script //Base class
 	{
@@ -45,6 +45,8 @@ namespace Engine
 		void SetScriptType(ScriptType type);
 		
 		void SetEntity(EntityID entity_);
+
+		std::string ScriptToString(ScriptType type);
 
 		Script* GetScript() const;
 	

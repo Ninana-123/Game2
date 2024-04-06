@@ -90,8 +90,8 @@ namespace Engine
     PhysicsComponent* physicsTest;
     TextureComponent* textureTest;
     ComponentFactory CF;
-    ScriptSystem scriptSystem(EM);
-    ScriptFactory g_ScriptFactory(scriptSystem);
+    ScriptSystem* scriptSystem = nullptr;
+    ScriptFactory* g_ScriptFactory = nullptr;
     StateMachine SM;
     //TextureClass textureClass;
     //FileBrowser fileBrowser;
@@ -123,7 +123,7 @@ namespace Engine
 
     Application::~Application()
     {
-
+        delete g_ScriptFactory;
     }
 
     void Application::Initialize()
@@ -173,6 +173,8 @@ namespace Engine
         systemsManager->Initialize();
         graphicsSystem = systemsManager->GetSystem<GraphicsSystem>();
         collisionSystem = systemsManager->GetSystem<CollisionSystem>();
+        scriptSystem = systemsManager->GetSystem<ScriptSystem>();
+        g_ScriptFactory = new Engine::ScriptFactory(scriptSystem);
 
         // Load scene from a file
         //loader = std::make_unique<Engine::Loader>(EM, &PM, assetManager);
