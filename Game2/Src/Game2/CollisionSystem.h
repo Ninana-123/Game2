@@ -44,6 +44,7 @@ extern bool unitArrowCollision;
 extern bool infantrySpawned;
 extern bool tankSpawned;
 extern bool archerSpawned;
+extern bool arrowSpawnedByArcher;
 
 namespace Engine
 {
@@ -175,8 +176,10 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 		void PlayerTowerCollision(EntityID lhs, EntityID rhs);
+		void ArcherTowerCollision(EntityID lhs, EntityID rhs);
 		//void PlayerArrowCollision(EntityID lhs, EntityID rhs);
 		std::queue<std::pair<EntityID, EntityID>> CollisionQueue; // Should be playerTowerqueue
+		std::queue<std::pair<EntityID, EntityID>> ArcherCollisionQueue; // Should be playerTowerqueue
 		//std::queue<std::pair<EntityID, EntityID>> PlayerArrowQueue; // Player Arrow Queue
 
 		/**************************************************************************/

@@ -93,6 +93,8 @@ namespace Engine
 			}
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			texture->SetAnimation(static_cast<int>(c_state::Walking));
+			PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
+			pathfinding->stoppedWalking = false;
 
 		}
 	}
@@ -155,6 +157,8 @@ namespace Engine
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 			texture->SetAnimation(static_cast<int>(c_state::Attack));
+			PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
+			pathfinding->stoppedWalking = true;
 
 			Entity* target = collision->target;
 			Stats::AttackTarget(5, entity, target);

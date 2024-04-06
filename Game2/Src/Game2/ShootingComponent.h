@@ -28,6 +28,7 @@ namespace Engine
 		// void PlayerTowerCollision(EntityID lhs, EntityID rhs);
 		// std::queue<std::pair<EntityID, EntityID>> PlayerTowerQueue;
 		Layer layer = Layer::Arrow;
+		Layer target = Layer::World;
 
 		/*!*****************************************************************
 
