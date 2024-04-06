@@ -50,8 +50,6 @@ bool unitArrowCollision = false;
 bool infantrySpawned = false;
 bool tankSpawned = false;
 bool archerSpawned = false;
-bool tankStatsSet = false;
-bool archerStatsSet = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -541,18 +539,24 @@ namespace Engine
 						std::cout << "stats component added to archer" << std::endl;
 					}
 
-					if (statsComponent1 && textureComponent->textureKey.mainIndex == 2 && !tankStatsSet)
+					if (statsComponent1 && textureComponent->textureKey.mainIndex == 2)
 					{
-						statsComponent1->health = 100;
-						std::cout << "health added to tank" << std::endl;
-						tankStatsSet = true;
+						if (!statsComponent1->tankStatsSet) 
+						{
+							statsComponent1->health = 100;
+							std::cout << "health added to tank" << std::endl;
+							statsComponent1->tankStatsSet = true;
+						}
 					}
 
-					if (statsComponent1 && textureComponent->textureKey.mainIndex == 3 && !archerStatsSet)
+					if (statsComponent1 && textureComponent->textureKey.mainIndex == 3)
 					{
-						statsComponent1->health = 50;
-						std::cout << "health added to archer" << std::endl;
-						archerStatsSet = true;
+						if (!statsComponent1->archerStatsSet) 
+						{
+							statsComponent1->health = 50;
+							std::cout << "health added to archer" << std::endl;
+							statsComponent1->archerStatsSet = true;
+						}
 					}
 				}
 
