@@ -29,18 +29,33 @@ namespace Engine
 	EntityID EntityManager::CreateEntityFromPrefab(const Prefab& prefab)
 	{
 		EntityID newEntityID = CreateEntity();
+		Entity* newEntity = GetEntity(newEntityID);
 		auto sourceComponents = prefab.GetComponents();
 
 		// Copy components from the archetype to the new entity
 		for (const auto& pair : sourceComponents)
 		{
-			ComponentType componentType = pair.first;
 			Component* sourceComponent = pair.second;
-			UNREFERENCED_PARAMETER(componentType);
-			UNREFERENCED_PARAMETER(sourceComponent);
 			// Clone the component and add it to the entity using AddComponent
 			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
-			GetEntity(newEntityID)->AddComponent(std::unique_ptr<Component>(clonedComponent));
+			// Handle special case for ScriptComponent
+			ComponentType type = clonedComponent->GetType();
+			if (type == ComponentType::Script)
+			{
+				ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(clonedComponent);
+				scriptComponent->SetEntity(newEntityID);
+				scriptComponent->InitializeScript();
+				newEntity->AddComponent(std::unique_ptr<Component>(scriptComponent));
+			}
+			else
+			{
+				// For other components, just clone and add them
+				if (sourceComponent)
+				{
+					Component* clonedComponent = sourceComponent->Clone();
+					newEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+				}
+			}			
 		}
 
 		return newEntityID;
@@ -57,7 +72,8 @@ namespace Engine
 		return &entities;
 	}
 
-	EntityID EntityManager::CloneEntity(EntityID sourceEntityID) {
+	EntityID EntityManager::CloneEntity(EntityID sourceEntityID) 
+	{
 		// Get the source entity to clone
 		Entity* sourceEntity = GetEntity(sourceEntityID);
 		if (!sourceEntity) 
@@ -72,12 +88,29 @@ namespace Engine
 
 		// Clone the components from the source entity to the cloned entity
 		auto sourceComponents = sourceEntity->GetComponents();
-		for (const auto& pair : sourceComponents) {
+		for (const auto& pair : sourceComponents)
+		{
 			Component* sourceComponent = pair.second;
-			Component* clonedComponent = sourceComponent->Clone();
-
-			// Add the cloned component to the cloned entity
-			clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+			// Clone the component and add it to the entity using AddComponent
+			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+			// Handle special case for ScriptComponent
+			ComponentType type = clonedComponent->GetType();
+			if (type == ComponentType::Script)
+			{
+				ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(clonedComponent);
+				scriptComponent->SetEntity(clonedEntityID);
+				scriptComponent->InitializeScript();
+				clonedEntity->AddComponent(std::unique_ptr<Component>(scriptComponent));
+			}
+			else
+			{
+				// For other components, just clone and add them
+				if (sourceComponent)
+				{
+					Component* clonedComponent = sourceComponent->Clone();
+					clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+				}
+			}
 		}
 
 		return clonedEntityID;
@@ -97,12 +130,29 @@ namespace Engine
 
 		// Clone the components from the source entity to the cloned entity
 		auto sourceComponents = sourceEntity->GetComponents();
-		for (const auto& pair : sourceComponents) {
+		for (const auto& pair : sourceComponents)
+		{
 			Component* sourceComponent = pair.second;
-			Component* clonedComponent = sourceComponent->Clone();
-
-			// Add the cloned component to the cloned entity
-			clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+			// Clone the component and add it to the entity using AddComponent
+			Component* clonedComponent = sourceComponent->Clone(); // Implement Clone() in your component classes
+			// Handle special case for ScriptComponent
+			ComponentType type = clonedComponent->GetType();
+			if (type == ComponentType::Script)
+			{
+				ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(clonedComponent);
+				scriptComponent->SetEntity(clonedEntityID);
+				scriptComponent->InitializeScript();
+				clonedEntity->AddComponent(std::unique_ptr<Component>(scriptComponent));
+			}
+			else
+			{
+				// For other components, just clone and add them
+				if (sourceComponent)
+				{
+					Component* clonedComponent = sourceComponent->Clone();
+					clonedEntity->AddComponent(std::unique_ptr<Component>(clonedComponent));
+				}
+			}
 		}
 
 		return clonedEntityID;

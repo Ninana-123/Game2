@@ -23,6 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "EntityManager.h"
 #include "WindowsWindow.h"
 #include "ImGuiWrapper.h"
+#include "ScriptFactory.h"
 #include <memory>
 // #include "ImGuiFileBrowser.h"
 
@@ -38,6 +39,7 @@ extern int e_Height;
 extern bool mainMenuCheck;
 extern double fps;
 extern std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper;
+extern Engine::ScriptFactory g_ScriptFactory;
 
 namespace Engine
 {

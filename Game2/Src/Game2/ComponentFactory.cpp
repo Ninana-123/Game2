@@ -28,7 +28,7 @@ namespace Engine
         RegisterComponent(ComponentType::Pathfinding,   []()    { return std::make_unique<PathfindingComponent>();     });
         RegisterComponent(ComponentType::Logic,         []()    { return std::make_unique<BehaviourComponent>();       });
         RegisterComponent(ComponentType::Stats,         []()    { return std::make_unique<StatsComponent>();           });
-        RegisterComponent(ComponentType::Shooting,      []()    {return std::make_unique<ShootingComponent>();         });
+        RegisterComponent(ComponentType::Shooting,      []()    { return std::make_unique<ShootingComponent>();         });
         RegisterComponent(ComponentType::Script,        []()    { return std::make_unique<ScriptComponent>();          });
 
     }

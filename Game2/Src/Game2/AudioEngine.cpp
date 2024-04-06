@@ -145,6 +145,50 @@ void AudioEngine::pauseAllAudio() {
     }
 }
 
+void AudioEngine::decreaseVolume() {
+    // Iterate through the channels playing loops
+    for (const auto& pair : loopsPlaying) {
+        FMOD::Channel* channel = pair.second;
+
+        // Get the current volume
+        float volume;
+        channel->getVolume(&volume);
+
+        // Decrease the volume by 0.1
+        volume -= 0.1f;
+
+        // Ensure volume doesn't go below 0
+        if (volume < 0.0f) {
+            volume = 0.0f;
+        }
+
+        // Set the new volume
+        ERRCHECK(channel->setVolume(volume));
+    }
+}
+
+void AudioEngine::increaseVolume() {
+    // Iterate through the channels playing loops
+    for (const auto& pair : loopsPlaying) {
+        FMOD::Channel* channel = pair.second;
+
+        // Get the current volume
+        float volume;
+        channel->getVolume(&volume);
+
+        // Increase the volume by 0.1
+        volume += 0.1f;
+
+        // Ensure volume doesn't exceed 1.0
+        if (volume > 1.0f) {
+            volume = 1.0f;
+        }
+
+        // Set the new volume
+        ERRCHECK(channel->setVolume(volume));
+    }
+}
+
 void AudioEngine::pauseSound(SoundInfo soundInfo) {
     // Check if the sound is loaded
     if (!soundLoaded(soundInfo)) {

@@ -16,17 +16,19 @@ written consent of DigiPen Institute of Technology is prohibited.
 #ifndef ENGINE_SCRIPTCOMPONENT_H
 #define ENGINE_SCRIPTCOMPONENT_H
 
-
 namespace Engine
 {
+	class ScriptFactory;
+
+	extern ScriptFactory g_ScriptFactory;
+
 	class Script //Base class
 	{
 	public:
-		virtual void Initialize() {}
 
-		virtual void Update() {}
+		virtual void Update() = 0;
 
-		virtual void Cleanup() {}
+		virtual ~Script() = default;
 
 	};
 
@@ -34,22 +36,18 @@ namespace Engine
 	{
 	public:
 
-		ScriptComponent() {};
-
-		void SetScript(Script* newScript) 
-		{
-			script = newScript;
-		}
-
-		Script* GetScript() const 
-		{
-			return script;
-		}
-
-	private:
 		Script* script = nullptr;
+		EntityID entity = EMPTY_ID;
+		ScriptType currentScriptType = ScriptType::Empty;
 
-	public:
+		void InitializeScript();
+
+		void SetScriptType(ScriptType type);
+		
+		void SetEntity(EntityID entity_);
+
+		Script* GetScript() const;
+	
 		/*!*****************************************************************
 
 		\brief
@@ -60,7 +58,7 @@ namespace Engine
 
 		********************************************************************/
 
-		ComponentType GetType() const override { return ComponentType::Script; }
+		ComponentType GetType() const override;
 
 		/*!*****************************************************************
 
@@ -71,23 +69,13 @@ namespace Engine
 		Clone component with cloned data members
 
 		********************************************************************/
-		Component* Clone() const override
-		{
-			ScriptComponent* cloneComponent = new ScriptComponent();
-			//cloneComponent->statsInitialized = statsInitialized;
+		Component* Clone() const override;
+	
 
-			return cloneComponent;
-		}
+		void Serialize(std::ostream& outputStream) const override;
 
-		void Serialize(std::ostream& outputStream) const override 
-		{
-			UNREFERENCED_PARAMETER(outputStream);
-		}
+		void Deserialize(std::istream& inputStream) override;
 
-		void Deserialize(std::istream& inputStream) override 
-		{
-			UNREFERENCED_PARAMETER(inputStream);
-		}
 	};
 }
 #endif ENGINE_SCRIPTCOMPONENT_H

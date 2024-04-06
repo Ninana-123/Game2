@@ -13,6 +13,9 @@ written consent of DigiPen Institute of Technology is prohibited.
  /******************************************************************************/
 #pragma once
 
+#ifndef ENGINE_SCRIPTSYSTEM_H
+#define ENGINE_SCRIPTSYSTEM_H
+
 #include "pch.h"
 #include "Entity.h"
 #include "ScriptComponent.h"
@@ -31,7 +34,7 @@ namespace Engine
 		\param entityManager
 		input EM object to link entitymanager
 		*/
-		ScriptSystem(EntityManager& entityManager) : entityManager(entityManager) {} //access to EM
+		ScriptSystem(std::shared_ptr<Engine::EntityManager> em) : entityManager(em) {} //access to EM
 
 		/*!
 		\brief
@@ -47,17 +50,41 @@ namespace Engine
 		entityID of script parent
 
 		*/
-		template<typename T>
-		void AddScript(EntityID entityId) 
+		void RegisterScript(EntityID entityId, std::unique_ptr<Script> script)
 		{
+			// Check if the entity already has a script registered
 			auto it = scripts.find(entityId);
-			if (it != scripts.end()) 
+			if (it != scripts.end())
 			{
-				scripts.erase(it); //scrap and renew existing script
+				// If the entity already has a script, replace it with the new one
+				it->second = std::move(script);
 			}
+			else
+			{
+				// Otherwise, add the new script to the map
+				scripts.emplace(entityId, std::move(script));
+			}
+		}
 
-			// Create a new script and assign it to the entity
-			scripts[entityId] = std::make_unique<T>();
+		Script* GetScript(EntityID entityId)
+		{
+			// Search for the script associated with the given entity ID
+			auto it = scripts.find(entityId);
+			if (it != scripts.end())
+			{
+				// Return a pointer to the script if found
+				return it->second.get();
+			}
+			else
+			{
+				// If script not found, return a nullptr
+				return nullptr;
+			}
+		}
+
+		Entity* QueryEntityPtr (EntityID entity)
+		{
+			return entityManager->GetEntity(entity);
 		}
 
 		/*!
@@ -77,16 +104,21 @@ namespace Engine
 		\brief
 		Update function that updates all existing scripts
 		*/
-		void UpdateScripts() 
+		void UpdateScripts()
 		{
 			for (auto& pair : scripts)
 			{
-				pair.second->Update(); 
+				if (pair.second) // Check if the unique_ptr is not null
+				{
+					pair.second->Update(); // Call Update method on the Script object
+				}
 			}
 		}
 
 	private:
-		EntityManager& entityManager; //EM instance
+		std::shared_ptr<Engine::EntityManager> entityManager; //EM instance
 		std::unordered_map<EntityID, std::unique_ptr<Script>> scripts; //pointers to all existing scripts2
 	};
 }
+
+#endif ENGINE_SCRIPTSYSTEM_H
