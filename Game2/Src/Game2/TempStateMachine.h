@@ -96,7 +96,7 @@ namespace Engine
 			A pointer to the entity that has died.
 		*/
 		/**************************************************************************/
-		void Death(Entity* entity);
+		void Death(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager);
 	};
 	
 }

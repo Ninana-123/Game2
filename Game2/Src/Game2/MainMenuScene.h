@@ -19,6 +19,7 @@ Technology is prohibited.
 #include "Scene.h"
 #include "Loader.h"
 #include "EntityManager.h"
+#include "AssetManager.h"
 
 namespace Engine {
 	class MainMenuScene : public Scene {
@@ -29,7 +30,8 @@ namespace Engine {
 		\param prefabManager Pointer to the PrefabManager instance.
 		\param AM Pointer to the AssetManager instance.
 		*/
-		MainMenuScene(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) : menuLoader(EM, prefabManager, AM) {}
+		MainMenuScene(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) 
+			: menuLoader(EM, prefabManager, AM) {}
 
 		/*!
 		\brief Called when the main menu scene is loaded.
