@@ -52,6 +52,7 @@ namespace Engine
         void OnShutDown() override;
 
     private:
+        std::vector<Entity> cutsceneEntities;
         Loader cutsceneLoader;
         EntityManager c_entityManager;
         VFX vfx;

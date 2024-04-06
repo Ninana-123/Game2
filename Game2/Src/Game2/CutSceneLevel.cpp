@@ -24,10 +24,11 @@ namespace Engine {
     bool timeToFade{ false };
     bool soundPlayed{ false };
     Input c_KeyInput;
+    size_t currentEntityIndex {0};
 
     void CutSceneLevel::OnLoad()
     {
-        cutsceneLoader.LoadScene(CutSceneFilePath);
+       cutsceneLoader.LoadScene(CutSceneFilePath);
     }
 
     void CutSceneLevel::OnInit()
@@ -38,44 +39,39 @@ namespace Engine {
 
     void CutSceneLevel::OnUpdate(double deltaTime)
     {
-        //check for current time
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
 
         if (elapsedTime.count() % 4) // Update every frame for 2 seconds
         {
-            auto entities = c_entityManager.GetEntities();
-
-            // Display entities sequentially with a delay
-            auto displayEntities = [this, &entities, deltaTime]() {
-                for (const auto& pair : *entities) {
-                    EntityID entityID = pair.first;
-                    c_entityManager.AddToStorage(entityID);
-                    std::this_thread::sleep_for(TextureDisplayTime);
-                }
-            };
-
-            // Start a new thread to display entities
-            std::thread displayThread(displayEntities);
-
-            // Detach the thread to allow it to continue running independently
-            displayThread.detach();
-
-            // once the fade / pan is completed
-            if (vfx.FadedOut())
+            // Load the cutscene entities from the file if not loaded already
+            if (cutsceneEntities.empty())
             {
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-                //++currEnt;
-                vfx.FadedOut() = false;
+                cutsceneLoader.LoadScene(CutSceneFilePath);
+            }
+
+            // Ensure there are entities left to display
+            if (currentEntityIndex < cutsceneEntities.size())
+            {
+                Entity& currentEntity = cutsceneEntities[currentEntityIndex];
+
+                // Perform fading or panning based on the current entity's index
+                vfx.FadeInEntity(currentEntity, static_cast<float>(deltaTime));
+
+                // Increment the current entity index
+                ++currentEntityIndex;
+
+                // Reset the timer
                 startTime = std::chrono::steady_clock::now();
             }
         }
-        
-        ////skip cut scene to go level 1
-        //if (c_KeyInput.IsKeyTriggered(KEY_N))
-        //{
-        //    cutsceneLoader.LoadScene(GameSceneFilePath);
-        //}
+
+        // Skip the cutscene and go to the next level if space is pressed or if the scene is finished
+        if (c_KeyInput.IsKeyTriggered(GLFW_KEY_SPACE) || currentEntityIndex >= cutsceneEntities.size())
+        {
+            // Go to the next level
+            cutsceneLoader.LoadScene(GameSceneFilePath);
+        }
     }
 
     void CutSceneLevel::FreeLevel()

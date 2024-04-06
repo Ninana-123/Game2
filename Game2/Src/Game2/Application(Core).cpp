@@ -276,15 +276,16 @@ namespace Engine
             {
                 window.MinimizeWindow();
             }
-        }
-
-        if (e.GetEventType() == EventType::KeyPressed) {
-            KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
 
             // Check for ALT+ENTER 
             if (keyPressedEvent.GetKeyCode() == KEY_F11) {
                 ToggleFullscreen();
             }
+
+            // skip cut scene to go level 1
+            //if (keyPressedEvent.GetKeyCode() == KEY_N) {
+            //    loader->LoadScene(GameSceneFilePath);
+            //}
         }
 
         if (isMainMenuLoaded) {
@@ -336,17 +337,7 @@ namespace Engine
                 }
             
             } 
-            //skip cut scene to reach level 1 (not working,  only works outside code block)
-            if (e.GetEventType() == EventType::KeyPressed) {
-                KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
-
-                // skip cut scene to go level 1
-                if (keyPressedEvent.GetKeyCode() == KEY_N) {
-                    loader->LoadScene(GameSceneFilePath);
-                }
-            }
         }
-
     }
 
     void Application::ToggleFullscreen() {
