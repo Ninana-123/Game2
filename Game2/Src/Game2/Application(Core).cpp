@@ -104,6 +104,9 @@ namespace Engine
     float rotation = 0.125f;
     int transformation = 5;
 
+    bool tower1DownSoundPlayed = false;
+    bool tower2DownSoundPlayed = false;
+
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
 #ifdef DEBUG
@@ -236,6 +239,10 @@ namespace Engine
         assetManager->loadAudio(AudioKey("tower_Down"));
         assetManager->getAudio(AudioKey("tower_Down"))->setVolume(1.0f);
 
+        assetManager->AddAudioPath(AudioKey("button_Click"), "Resource/Audio/button_click.wav");
+        assetManager->loadAudio(AudioKey("button_Click"));
+        assetManager->getAudio(AudioKey("button_Click"))->setVolume(1.0f);
+
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("mainmenu_BGM"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Win"))));
@@ -246,7 +253,7 @@ namespace Engine
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Foot2"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("sound_Swipe"))));
         audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("tower_Down"))));
-
+        audioEngine.loadSound(*(assetManager->loadAudio(AudioKey("button_Click"))));
 
         /*  sound_BGM.setLoop();
           sound_Win.setLoop();
@@ -304,7 +311,9 @@ namespace Engine
         }
         if (isMainMenuLoaded) {
             if (e.GetEventType() == EventType::MouseButtonPressed)
-            {
+            {   
+                //audioEngine.playSound(*(assetManager->getAudio(AudioKey("button_Click"))));
+
                 MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
                 if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
                 {
@@ -431,6 +440,7 @@ namespace Engine
                 isPaused = !isPaused;
             }
 
+
             // Step one frame forward
             if (isPaused && InputHandler.IsKeyTriggered(KEY_F8)) {
                 stepOneFrame = true;
@@ -483,7 +493,40 @@ namespace Engine
                 if (InputHandler.IsKeyTriggered(KEY_UP)) {
                     audioEngine.increaseVolume();
                 }
+                
+                bool buttonClickPlaying = false;
 
+                if (InputHandler.IsMouseTriggered(0)) {
+                    // Play the button_Click sound
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("button_Click"))));
+                    buttonClickPlaying = true;
+                }
+
+                // Check if the button_Click sound is playing and should be stopped
+                if (buttonClickPlaying) {
+                    // Wait for 1 second before stopping the sound
+                    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("button_Click"))));
+                    buttonClickPlaying = false;
+                }
+
+                // Check if tower1 is destroyed and if the sound hasn't been played yet
+                if (tower1Destroyed && !tower1DownSoundPlayed) {
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Set towerDownSoundPlayed to true to indicate that the sound has been played
+                    tower1DownSoundPlayed = true;
+                }
+
+                // Check if tower1 is not destroyed and if the sound has been played
+                else if (!tower1Destroyed && tower1DownSoundPlayed) {
+                    // Stop the sound
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("tower_Down"))));
+
+                    // Reset towerDownSoundPlayed to false to indicate that the sound has stopped
+                    tower1DownSoundPlayed = false;
+                }
+             
 
                 //Systems State Toggle Test
                 if (InputHandler.IsKeyTriggered(KEY_1))

@@ -25,11 +25,13 @@ namespace Engine {
     static std::unordered_map<KeyCode, bool> s_KeyState;  // Current key states
     static std::unordered_map<KeyCode, bool> s_KeyStatePrev;  // Previous key states
     static std::unordered_map<KeyCode, std::chrono::steady_clock::time_point> s_KeyCooldown;  // Cooldown time for key triggers
+    static std::unordered_map<MouseCode, std::chrono::steady_clock::time_point> s_MouseCooldown;  // Cooldown time for key triggers
 
 
     static float s_PrevMouseX = 0.0f;
     static float s_ScrollOffsetY = 0.0f;
     static float s_PrevScrollOffsetY = 0.0f;
+    static constexpr int MOUSE_COOLDOWN_MS = 2000;
 
     bool Input::IsKeyPressed(const KeyCode key)
     {
@@ -120,6 +122,7 @@ namespace Engine {
 
         return mouseClicked;
     }
+
 
     VECTORMATH::Vector2D Input::GetMousePosition()
     {

@@ -164,30 +164,6 @@ namespace Engine
 
 	void StateMachine::Death(Entity* entity, AudioEngine& audioEngine, AssetManager& assetManager)
 	{
-		static bool isAudioTowerDestroyedPlaying = false;
-		static double lastSoundTime = glfwGetTime(); // Initialize the last sound time
-
-		if (!isGameOver) {
-			if (glfwGetTime() - lastSoundTime >= 1.0) {
-				// Get texture and collision components
-				TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-				CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-
-				// Check if texture and collision components exist
-				if (texture)
-				{
-					// Check if the entity is a tower and its texture matches the criteria for the death state
-					if (texture->textureKey.mainIndex == TextureClass::Tower)
-					{
-						// Play the tower destroyed audio only if it's not already playing
-						if (!isAudioTowerDestroyedPlaying)
-						{
-							audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Swipe"))));
-							isAudioTowerDestroyedPlaying = true; // Set flag to indicate audio is playing
-						}
-					}
-				}
-			}
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
 			// Set animation to death state
@@ -195,7 +171,7 @@ namespace Engine
 
 			// Disable collision for the entity
 			collision->disableCollision = true;
-		}
+		
 	}
 }
 

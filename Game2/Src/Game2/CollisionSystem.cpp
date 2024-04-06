@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "inGameGUI.h"
 #include "GraphicsSystem.h"
 #include "AudioEngine.h"
+#include "AssetManager.h"
 
 double l_dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
@@ -52,6 +53,8 @@ bool tankSpawned = false;
 bool archerSpawned = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
+
+
 
 // Define a map for towerCollidingEntityHealth and corresponding texture keys
 std::map<int, int> towerHealthToTextureKey = 
@@ -92,7 +95,6 @@ std::map<int, int> towerHealthToTextureKey =
 
 namespace Engine
 {
-
 	Input inputManager;
 
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
@@ -730,11 +732,13 @@ namespace Engine
 														{
 															tower2Destroyed = true;
 															isColliding = false;
+														
 														}
 														if ((textureComponent->textureKey.mainIndex == 4 && textureComponent->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
 														{
 															textureComponent->textureKey = { 4, 4 };
+															
 														}
 													}
 													if (entity2->GetID() == 8)
@@ -749,6 +753,8 @@ namespace Engine
 															&& tower1Destroyed == true)
 														{
 															textureComponent->textureKey = { 4, 4 };
+															tower1Destroyed = false;
+															
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
