@@ -36,7 +36,8 @@ namespace Engine
     {
     }
 
-    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
+    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities, AssetManager& assetManager,
+        AudioEngine& audioEngine) 
     {
         while (!collisionSystem->CollisionQueue.empty())
         {
@@ -206,6 +207,7 @@ namespace Engine
                             ArrowTransform->position = TowerTransform->position;
                             //CollisionVector.erase(CollisionVector.begin());
                             collisionComponent1->PlayerTowerVector.pop_back();
+                            audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));
                         }
                     }
 

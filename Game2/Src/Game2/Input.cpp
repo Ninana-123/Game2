@@ -56,6 +56,7 @@ namespace Engine {
         return false;
     }
 
+
     bool Input::IsKeyDown(const KeyCode key)
     {
         return IsKeyPressed(key);
