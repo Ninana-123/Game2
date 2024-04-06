@@ -29,7 +29,7 @@ namespace Engine
     public:
         using CreationFunction = std::function<std::unique_ptr<Script>(Entity*)>;
 
-        ScriptFactory(ScriptSystem& scriptSystem);
+        ScriptFactory(ScriptSystem* scriptSystem);
 
         // Function to create script
         void CreateScript(ScriptType type, CreationFunction function);
@@ -39,7 +39,7 @@ namespace Engine
         //void RemoveScript(EntityID entityId);
 
     private:
-        ScriptSystem& SS;
+        ScriptSystem* SS;
         std::unordered_map<ScriptType, CreationFunction>& scriptRegistry();
     };
 }

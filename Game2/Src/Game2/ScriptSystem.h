@@ -23,7 +23,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
-	class ScriptSystem
+	class ScriptSystem : public System
 	{
 	public:
 		
@@ -104,8 +104,10 @@ namespace Engine
 		\brief
 		Update function that updates all existing scripts
 		*/
-		void UpdateScripts()
+		void Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) override
 		{
+			UNREFERENCED_PARAMETER(entities);
+
 			for (auto& pair : scripts)
 			{
 				if (pair.second) // Check if the unique_ptr is not null

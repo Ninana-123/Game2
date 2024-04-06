@@ -21,7 +21,7 @@ namespace Engine
 {
 	void ScriptComponent::InitializeScript()
 	{
-		script = g_ScriptFactory.AddScript(currentScriptType, entity);
+		script = g_ScriptFactory->AddScript(currentScriptType, entity);
 		std::cout << "Script Type: " << static_cast<int>(currentScriptType) << std::endl;
 		std::cout << "Script EntityID: " << static_cast<int>(entity) << std::endl;
 	}
@@ -33,7 +33,7 @@ namespace Engine
 		{
 			currentScriptType = type;
 			// Now you can create a new script object based on the type
-			script = g_ScriptFactory.AddScript(type, entity);
+			script = g_ScriptFactory->AddScript(type, entity);
 			std::cout << "New Script Type: " << static_cast<int>(currentScriptType) << std::endl;
 		}
 	}
@@ -41,6 +41,30 @@ namespace Engine
 	void ScriptComponent::SetEntity(EntityID entity_)
 	{ 
 		entity = entity_; 
+	}
+
+	std::string ScriptComponent::ScriptToString(ScriptType type)
+	{
+		std::string buffer;
+		switch (type)
+		{
+		case ScriptType::Empty:
+		{
+			return buffer = "Empty";
+		}
+		case ScriptType::infantry:
+		{
+			return buffer = "Infantry";
+		}
+		case ScriptType::tower:
+		{
+			return buffer = "Tower";
+		}
+		default:
+			buffer = "Unknown";
+			break;
+		}
+		return buffer;
 	}
 
 	Script* ScriptComponent::GetScript() const
@@ -63,7 +87,8 @@ namespace Engine
 
 	void  ScriptComponent::Serialize(std::ostream& outputStream) const
 	{
-		UNREFERENCED_PARAMETER(outputStream);
+		outputStream << "ID: " << static_cast<int>(entity) << '\n';
+		outputStream << "type: " << static_cast<int>(currentScriptType) << '\n';
 	}
 
 	void  ScriptComponent::Deserialize(std::istream& inputStream)
@@ -73,6 +98,7 @@ namespace Engine
 		int script_index;
 		inputStream >> temp >> ID;
 		inputStream >> temp >> script_index;
+		entity = static_cast<EntityID>(ID);
 		currentScriptType = static_cast<ScriptType>(script_index);
 	}
 }

@@ -39,7 +39,7 @@ extern int e_Height;
 extern bool mainMenuCheck;
 extern double fps;
 extern std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper;
-extern Engine::ScriptFactory g_ScriptFactory;
+extern Engine::ScriptFactory* g_ScriptFactory;
 
 namespace Engine
 {
