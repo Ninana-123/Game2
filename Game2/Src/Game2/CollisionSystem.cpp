@@ -52,6 +52,9 @@ bool infantrySpawned = false;
 bool tankSpawned = false;
 bool archerSpawned = false;
 bool arrowSpawnedByArcher = false;
+bool accessedTower1 = false;
+bool accessedTower2 = false;
+bool arrowAccessedCastle = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -756,7 +759,7 @@ namespace Engine
 													lemaoArrowID = entity2->GetID();
 													statsComponent1->health -= 5;
 													std::cout << "unit's health is: " << statsComponent1->health << std::endl;
-													if (statsComponent1->health == 0) 
+													if (statsComponent1->health <= 0) 
 													{
 														std::cout << "unit is dead" << std::endl;
 														statsComponent1->playerDead = true;
@@ -785,7 +788,7 @@ namespace Engine
 													if (entity2->GetID() == 7)
 													{
 														//tower2CollidingEntityHealth = statsComponent2->health;
-														if (tower2CollidingEntityHealth == 0)
+														if (tower2CollidingEntityHealth <= 0)
 														{
 															tower2Destroyed = true;
 															isColliding = false;
@@ -800,7 +803,7 @@ namespace Engine
 													if (entity2->GetID() == 8)
 													{
 														//tower1CollidingEntityHealth = statsComponent2->health;
-														if (tower1CollidingEntityHealth == 0)
+														if (tower1CollidingEntityHealth <= 0)
 														{
 															tower1Destroyed = true;
 															isColliding = false;
@@ -817,7 +820,7 @@ namespace Engine
 													if (entity2->GetID() == 9)
 													{
 														//tower1CollidingEntityHealth = statsComponent2->health;
-														if (castleCollidingEntityHealth == 0)
+														if (castleCollidingEntityHealth <= 0)
 														{
 															castleDestroyed = true;
 															isGameOver = true;
@@ -849,7 +852,50 @@ namespace Engine
 											{
 												isShooting = true;
 												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
-												
+												if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
+												{
+													//std::cout << "goes into first feed" << std::endl;
+													PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+												}
+												if (tower1Destroyed && !tower2Destroyed)
+												{
+													//std::cout << "goes into second feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(7, entity2->GetID());
+												}
+												if (tower2Destroyed && !tower1Destroyed)
+												{
+													//std::cout << "goes into third feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(8, entity2->GetID());
+												}
+												if (tower1Destroyed && tower2Destroyed)
+												{
+													//std::cout << "goes into fourth feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(9, entity2->GetID());
+												}
 												collisionComponent1->PlayerTowerQueue = CollisionQueue;
 												
 												while (!collisionComponent1->PlayerTowerQueue.empty())
@@ -863,7 +909,54 @@ namespace Engine
 
 												if (textureComponent2->textureKey.mainIndex == 3) 
 												{
-													ArcherTowerCollision(entity1->GetID(), entity2->GetID());
+													// Reset the vector once one tower dies so that the arrow shoots correctly
+													if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
+													{
+														//std::cout << "goes into first feed" << std::endl;
+														ArcherTowerCollision(entity1->GetID(), entity2->GetID());
+													}
+													if (tower1Destroyed && !accessedTower2)
+													{
+														//std::cout << "goes into second feed" << std::endl;
+														while (!ArcherCollisionQueue.empty()) 
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(7, entity2->GetID());
+														accessedTower2 = true;
+													}
+													if (tower2Destroyed && !accessedTower1)
+													{
+														//std::cout << "goes into third feed" << std::endl;
+														while (!ArcherCollisionQueue.empty())
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(8, entity2->GetID());
+														accessedTower1 = true;
+													}
+													if (tower1Destroyed && tower2Destroyed && !arrowAccessedCastle)
+													{
+														//std::cout << "goes into fourth feed" << std::endl;
+														while (!ArcherCollisionQueue.empty())
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(9, entity2->GetID());
+														arrowAccessedCastle = true;
+													}
 													collisionComponent2->ArcherTowerQueue = ArcherCollisionQueue;
 
 													while (!collisionComponent2->ArcherTowerQueue.empty())
@@ -872,7 +965,15 @@ namespace Engine
 														collisionComponent2->ArcherTowerQueue.pop();
 													}
 
-													collisionComponent2->archerShooting = true;
+													// Code for archer to stop/start shooting
+													if (!tower1Destroyed || !tower2Destroyed || !castleDestroyed) 
+													{
+														collisionComponent2->archerShooting = true;
+													}
+													if (tower1Destroyed && tower2Destroyed && castleDestroyed) 
+													{
+														collisionComponent2->archerShooting = false;
+													}
 													collisionComponent2->spawnedByArcher = true;
 													arrowSpawnedByArcher = collisionComponent2->spawnedByArcher;
 

@@ -107,6 +107,12 @@ enum TextureClass //!< Enumeration for different texture classes.
     defeatScreen,
     startingPoint,
 
+    archerArrow,
+    infantryVFX,
+    tankVFX,
+    archerVFX,
+    towerVFX,
+
     TextureClassCount
 };
 

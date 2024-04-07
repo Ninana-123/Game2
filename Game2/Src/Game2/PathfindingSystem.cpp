@@ -412,7 +412,7 @@ namespace Engine
                         startX = static_cast<int>(transformComponent->position.x);
                         startY = static_cast<int>(transformComponent->position.y);
 
-                        if (tower1Destroyed == false && tower2Destroyed == false)
+                        if (tower1Destroyed == false || tower2Destroyed == false)
                         {
                             closestTower = getClosestPair(startX, startY, towerPositions, textureComponent->textureKey.mainIndex);
                         }
@@ -444,7 +444,7 @@ namespace Engine
                         // If first tower health is 0, and have not changed towers, go to the next tower
                         /*if (transformComponent->position.x == -275 && transformComponent->position.y == 45
                             && tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)*/
-                        if (tower1CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
+                        if (tower1CollidingEntityHealth <= 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
@@ -460,7 +460,7 @@ namespace Engine
                         // If second tower health is 0, and have no changed towers, go to the next tower
                         /*if (transformComponent->position.x == -70 && transformComponent->position.y == 140
                             && tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)*/
-                        if (tower2CollidingEntityHealth == 0 && pathfindingComponent->changedTowers == false)
+                        if (tower2CollidingEntityHealth <= 0 && pathfindingComponent->changedTowers == false)
                         {
 
                             std::cout << "currentClosestTower.first: " << currentClosestTower.first << "currentClosestTower.second: " << currentClosestTower.second << std::endl;
