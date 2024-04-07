@@ -1017,9 +1017,9 @@ namespace Engine
 						lastCollidingEntity = entity->GetID();
 						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;
 						isSpawned = true;
-						// std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
-						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
+						 std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
+						 std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+						 std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
 
 					// Slotting logic for ingameGUI temporarily until logic system gets put in place
