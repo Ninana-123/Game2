@@ -342,18 +342,7 @@ namespace Engine
         else {
             viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
         }
-
         shader.SetUniformMat4f("u_MVP", viewProjectionMatrix);
-
-        /* Printing Matrix (Uncomment if needed)
-        std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                std::cout << viewProjectionMatrix[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
-        */
 
         vaBackground.Bind(); // Bind the background vertex array
         ibBackground.Bind(); // Bind the background index buffer
@@ -363,9 +352,7 @@ namespace Engine
         shader.Unbind();
         }
         catch (const std::exception& e) {
-
             Logger::GetInstance().Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
-
         }
     }
 
@@ -395,7 +382,6 @@ namespace Engine
                 // Texture with the specified subindex does not exist, default to subindex 0
                 textureVector[0].Bind(0);
             }
-            // You might want to add an else case to handle the situation where textureVector is empty
 
              //If Sprite present
             if ((texture->textureKey.subIndex == 1) && entity->HasComponent(ComponentType::Sprite))
@@ -494,11 +480,9 @@ namespace Engine
                 float frameWidth = 1.0f / horizontalFrames;
                 float frameHeight = 1.0f / verticalFrames;
                 float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
 
                 // Set the texture offset in the shader
                 shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                 shader.SetUniform1f("u_FrameWidth", frameWidth);
                 shader.SetUniform1f("u_FrameHeight", frameHeight);
                 shader.SetUniform1i("u_CurrentFrame", currentFrame);
@@ -593,17 +577,6 @@ namespace Engine
         else {
             result =  m_Camera.GetViewProjectionMatrix() * mvpMatrix;
         }
-
-        /*
-        // Extract translation part (last column) of the MVP matrix
-        glm::vec4 transformedPosition = result[3];
-
-        std::cout << "Entity: " << static_cast<int>(entity->GetID()) << std::endl;
-        // Print the transformed coordinates
-        std::cout << "Transformed Coordinates: (" << transformedPosition.x << ", "
-            << transformedPosition.y << ", "
-            << transformedPosition.z << ")\n";
-        */
         
         shader.SetUniformMat4f("u_MVP", result);
 
@@ -619,10 +592,18 @@ namespace Engine
 
     void GraphicsSystem::RenderLines(const glm::mat4& mvpMatrix)
     {
-        try {
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
             // Bind the shader and set uniforms for line rendering
             shader.Bind();
             vaLines.Bind();
+
+            GLenum error = glGetError();
+            if (error != GL_NO_ERROR)
+            {
+                // Log the error
+                Logger::GetInstance().Log(LogLevel::Error, "OpenGL Error before rendering lines: " + std::to_string(error));
+            }
+
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
             if (renderCollisionBox == true) {
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
@@ -637,45 +618,9 @@ namespace Engine
             vaLines.Unbind();
             shader.Unbind();
         }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Render lines error: " + std::string(e.what()));
-        }
-    }
-
-    void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
-    {
-        try 
+        else
         {
-            shader.Bind();
-            vaLines.Bind();
-            shader.SetUniform1i("u_RenderTextured", 0); // no texture
-            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-            // Update the line vertices based on the new start and end positions
-            float linePositions[] =
-            {
-                lineStart.x, lineStart.y, 0.0f, 0.0f,
-                lineEnd.x, lineEnd.y, 1.0f, 1.0f
-            };
-
-            VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
-            VertexBufferLayout layoutLines;
-            layoutLines.Push<float>(2);
-            layoutLines.Push<float>(2);
-            vaLines.AddBuffer(vbLines, layoutLines);
-
-            // Draw a single straight line
-            GLCall(glDrawArrays(GL_LINES, 0, 2));
-
-            shader.SetUniform1i("u_RenderTextured", 1);
-            vaLines.Unbind();
-            shader.Unbind();
-        }
-        catch (const std::exception& e) 
-        {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Render single line error: " + std::string(e.what()));
+            Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
@@ -714,19 +659,9 @@ namespace Engine
         renderer.Clear(); 
         if(renderImGuiGUI == true)
         editorFBO.Bind();
-        // Get the current state of the 'S' key
-        bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
         shader.Bind();
         
-        // Check if there's a change in the 'S' key state
-        if (currentSState && !previousSState)
-        {
-            // Toggle the shader state
-            ToggleShaderSet();
-        }
-        // Update the previous 'S' key state
-        previousSState = currentSState;
         int previousShaderSet = shader.GetCurrentShaderSet();
         for (const auto& entityPair : *entities)
         {
@@ -763,16 +698,6 @@ namespace Engine
                     {
                         TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                        // Check if there's a change in the 'P' key state
-                        //if (currentPState && !previousPState)
-                        //{
-                        //    // Toggle the rendering mode
-                        //    ToggleRenderMode();
-                        //}
-
-                        //// Update the previous 'P' key state
-                        //previousPState = currentPState;
-
                         if (!renderTexturedSquare)
                         {
                             if(texture->textureKey.mainIndex == Background)
@@ -789,7 +714,6 @@ namespace Engine
                         }
                     }
 
-                    //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
                 }
@@ -875,8 +799,7 @@ namespace Engine
             if (totalTank == 0)
             {
                 font.RenderText(shader, "x0", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-            }
-       
+            }     
         }
  
         std::stringstream ss;
@@ -892,25 +815,6 @@ namespace Engine
         editorFBO.Unbind();
     }
 
-    void GraphicsSystem::UpdateShaderSet()
-    {
-        try {
-            std::cout << "UpdateShaderSet() called!" << std::endl;
-
-            // Print the current shader set before reinitializing shaders
-            std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << std::endl;
-
-            // Reinitialize shaders based on the new set
-            InitializeShader();
-
-            // Print the shader set after reinitializing shaders
-            std::cout << "Shader Set Updated: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
-        }
-        catch (const std::exception& e) {
-            Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
-        }
-    }
-
     void GraphicsSystem::UpdateTexture(int main, int sub, const std::string& newPath)
     {
         textures[main][sub].UpdateTexture(newPath);
@@ -924,54 +828,11 @@ namespace Engine
         glViewport(0, 0, width, height);
     }
 
-    void GraphicsSystem::ToggleRenderMode()
-    {
-        try {
-            renderTexturedSquare = !renderTexturedSquare;
-            std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl;
-
-            shader.Bind();
-            shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
-            std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl;
-        }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Toggle render mode error: " + std::string(e.what()));
-        }
-    }
-
-    void GraphicsSystem::ToggleShaderSet()
-    {
-        try
-        {
-            std::cout << "ToggleShaderSet() called!" << std::endl;
-
-            int newShaderSet = (shader.GetCurrentShaderSet() == 1) ? 2 : 1;
-            shader.SetActiveShaderSet(newShaderSet);
-
-            std::cout << "Shader Set Toggled: " << (newShaderSet == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
-
-            // Update shader properties based on the new set
-            UpdateShaderSet();
-        }
-        catch (const std::exception& e)
-        {
-            Logger::GetInstance().Log(LogLevel::Error, "Shader set toggle error: " + std::string(e.what()));
-        }
-    }
-
     glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
-        //int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
-        // Calculate the position for your object at the center of the screen
-        //glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
-
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
-
-        // Translate the object to the calculated center position
-        //model = glm::translate(model, MobjectPosition);
 
         // Apply the provided translation, scale, and rotation
         model = glm::translate(model, translation);

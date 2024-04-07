@@ -200,57 +200,56 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 
 void Shader::Bind() const
 {
-    auto it = m_RendererIDs.find(m_CurrentShaderSet);
-    if (it != m_RendererIDs.end())
-    {
-        unsigned int rendererID = it->second;
-        if (rendererID != 0)
+        auto it = m_RendererIDs.find(m_CurrentShaderSet);
+        if (it != m_RendererIDs.end())
         {
-            GLCall(glUseProgram(rendererID));
-
-            GLenum error = glGetError();
-            if (error != GL_NO_ERROR)
+            unsigned int rendererID = it->second;
+            if (rendererID != 0)
             {
-                std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(rendererID)" << std::endl;
-                __debugbreak();
+                GLCall(glUseProgram(rendererID));
+
+                GLenum error = glGetError();
+                if (error != GL_NO_ERROR)
+                {
+                    std::cerr << "[OpenGL Error] (" << error << "): glUseProgram(rendererID)" << std::endl;
+                    __debugbreak();
+                }
+            }
+            else
+            {
+                std::cerr << "Attempting to use an invalid shader program!" << std::endl;
             }
         }
         else
         {
-            std::cerr << "Attempting to use an invalid shader program!" << std::endl;
-        }
-    }
-    else
-    {
-        std::cerr << "Shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
-    }
+            std::cerr << "Shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
+        }   
 }
 
 void Shader::Unbind() const
 {
-    GLCall(glUseProgram(0));
+        GLCall(glUseProgram(0));
 }
 
 void Shader::SetUniform1i(const std::string& name, int value)
 {
-    GLCall(glUniform1i(GetUniformLocation(name), value));
+        GLCall(glUniform1i(GetUniformLocation(name), value));
 }
 
 void Shader::SetUniform1f(const std::string& name, float value)
 {
-    GLCall(glUniform1f(GetUniformLocation(name), value));
+        GLCall(glUniform1f(GetUniformLocation(name), value));
 }
 
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
 {
-   
-    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+        GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
    
 }
 
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
-    GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+        GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
 int Shader::GetUniformLocation(const std::string& name)

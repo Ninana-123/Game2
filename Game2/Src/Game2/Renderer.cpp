@@ -45,7 +45,7 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     // Check if the window is minimized
     if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
     {
-        // Window is not minimized, proceed with rendering
+        // Window is not minimized, proceed with rendering 
         shader.Bind();
         va.Bind();
         ib.Bind();

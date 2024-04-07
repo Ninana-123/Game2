@@ -14,6 +14,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #include "pch.h"
 #include "EditorFBO.h"
+#include <GLFW/glfw3.h>
 
 // Default constructor initializing member variables
 EditorFBO::EditorFBO() : fbo(0), texture(0), width(0), height(0) {}
@@ -49,26 +50,26 @@ GLuint EditorFBO::GetTexID() const {
 
 // Creates and configures the OpenGL framebuffer object (FBO)
 void EditorFBO::SetupFBO() {
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        glGenFramebuffers(1, &fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 }
 
 // Creates and configures the OpenGL texture attached to the FBO
 void EditorFBO::SetupTexture() {
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+        glGenTextures(1, &texture);
+        glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::cerr << "ERROR::EDITORFBO:: Framebuffer is not complete!" << std::endl;
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            std::cerr << "ERROR::EDITORFBO:: Framebuffer is not complete!" << std::endl;
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 // Resizes the FBO and its attached texture to the new dimensions
