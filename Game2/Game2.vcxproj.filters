@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Src\Game2\Application(Core).cpp">
+      <Filter>Base\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ComponentFactory.cpp">
+      <Filter>Base\ComponentFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EntityManager.cpp">
+      <Filter>Base\Engine\EntityManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Entity.cpp">
+      <Filter>Base\Engine\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\SystemsManager.cpp">
+      <Filter>Base\Engine\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Prefab.cpp">
+      <Filter>Base\Engine\Prefabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Input.cpp">
+      <Filter>Base\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Logger.cpp">
+      <Filter>Base\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Vector2d.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\WindowsWindow.cpp">
+      <Filter>Base\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\pch.cpp">
+      <Filter>Precompiled</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\AudioEngine.cpp">
+      <Filter>Systems\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\CollisionSystem.cpp">
+      <Filter>Systems\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\GraphicsSystem.cpp">
+      <Filter>Systems\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\IndexBuffer.cpp">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Renderer.cpp">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Shader.cpp">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Texture.cpp">
+      <Filter>Systems\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\VertexArray.cpp">
+      <Filter>Systems\Graphics\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\VertexBuffer.cpp">
+      <Filter>Systems\Graphics\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PhysicsSystem.cpp">
+      <Filter>Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Loader.cpp">
+      <Filter>Base\Serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Matrix3x3Lib.cpp">
+      <Filter>Base\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ImGuiWrapper.cpp">
+      <Filter>ImGuiWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\AssetManager.cpp">
+      <Filter>Base\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ErrorHandler.cpp">
+      <Filter>Base\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Body.cpp">
+      <Filter>Systems\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PrefabManager.cpp">
+      <Filter>Base\Engine\PrefabManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_glfw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_impl_opengl3.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Animation.cpp">
+      <Filter>Base\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Camera.cpp">
+      <Filter>Base\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EngineTypes.cpp">
+      <Filter>Base\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\PathfindingSystem.cpp">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Font.cpp">
+      <Filter>Base\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EntityStats.cpp">
+      <Filter>EntityStats</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\EditorFBO.cpp">
+      <Filter>Systems\Graphics\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\TempStateMachine.cpp">
+      <Filter>Systems\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\MainMenuScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\GameScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\SceneManager.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ShootingSystem.cpp">
+      <Filter>Systems\Shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\inGameGUI.cpp">
+      <Filter>Systems\inGameGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\CutScene.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Infantry.cpp">
+      <Filter>Scripts\Units\Infantry</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Tower.cpp">
+      <Filter>Scripts\Units\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptFactory.cpp">
+      <Filter>Scripts\ScriptFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Arrow.cpp">
+      <Filter>Scripts\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\Archer.cpp">
+      <Filter>Scripts\Units\Archer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Game2\Application.h">
+      <Filter>Base\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Core.h">
+      <Filter>Base\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Component.h">
+      <Filter>Base\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ComponentFactory.h">
+      <Filter>Base\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EntityManager.h">
+      <Filter>Base\Engine\EntityManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Entity.h">
+      <Filter>Base\Engine\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\System.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SystemsManager.h">
+      <Filter>Base\Engine\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Prefab.h">
+      <Filter>Base\Engine\Prefabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EngineTypes.h">
+      <Filter>Base\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\AppEvent.h">
+      <Filter>Base\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Event.h">
+      <Filter>Base\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\InputEvent.h">
+      <Filter>Base\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Input.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\KeyCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\MouseButtonCodes.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Logger.h">
+      <Filter>Base\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Vector2d.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Window.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\WindowsWindow.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\pch.h">
+      <Filter>Precompiled</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TransformComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Main.h">
+      <Filter>Driver</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\AudioEngine.h">
+      <Filter>Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SoundInfo.h">
+      <Filter>Systems\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CollisionSystem.h">
+      <Filter>Systems\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\GraphicsSystem.h">
+      <Filter>Systems\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\IndexBuffer.h">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Renderer.h">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Shader.h">
+      <Filter>Systems\Graphics\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Texture.h">
+      <Filter>Systems\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexArray.h">
+      <Filter>Systems\Graphics\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexBuffer.h">
+      <Filter>Systems\Graphics\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\VertexBufferLayout.h">
+      <Filter>Systems\Graphics\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PhysicsSystem.h">
+      <Filter>Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Loader.h">
+      <Filter>Base\Serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TextureComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Matrix3x3Lib.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PhysicsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiWrapper.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\AssetManager.h">
+      <Filter>Base\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ErrorHandler.h">
+      <Filter>Base\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Body.h">
+      <Filter>Systems\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PrefabManager.h">
+      <Filter>Base\Engine\PrefabManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ImGuiFileBrowser.h">
+      <Filter>ImGuiWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_glfw.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_rectpack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imstb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\imgui_impl_opengl3_loader.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SpriteComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Animation.h">
+      <Filter>Base\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Camera.h">
+      <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EditorCamera.h">
+      <Filter>Base\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\PathfindingSystem.h">
+      <Filter>Systems\Pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Font.h">
+      <Filter>Base\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\inGameGUI.h">
+      <Filter>Systems\inGameGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\json.hpp" />
+    <ClInclude Include="Src\Game2\StatsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EntityStats.h">
+      <Filter>EntityStats</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\EditorFBO.h">
+      <Filter>Systems\Graphics\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\BehaviourFCT.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\TempStateMachine.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\BehaviourComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\MainMenuScene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Scene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\GameScene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\SceneManager.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ShootingComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ShootingSystem.h">
+      <Filter>Systems\Shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CutScene.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ScriptSystem.h">
+      <Filter>Systems\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ScriptComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Infantry.h">
+      <Filter>Scripts\Units\Infantry</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Tower.h">
+      <Filter>Scripts\Units\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Arrow.h">
+      <Filter>Scripts\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\ScriptFactory.h">
+      <Filter>Scripts\ScriptFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\Archer.h">
+      <Filter>Scripts\Units\Archer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{8e0de8b3-6247-4ff7-8046-272081001b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Core">
+      <UniqueIdentifier>{4b171934-36c3-4b47-ab5b-ecb89a328c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\ComponentFactory">
+      <UniqueIdentifier>{6027c7a2-5992-42e6-8d1b-f47e3680e999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine">
+      <UniqueIdentifier>{380b9e66-336b-4ef6-bb32-8cb2dfeeb9bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\Component">
+      <UniqueIdentifier>{3f7f5915-b501-4ce1-ad8d-e1b64ca29d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\Entity">
+      <UniqueIdentifier>{4f3a9beb-6eb4-40dd-b8e2-fede978e954b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\EntityManager">
+      <UniqueIdentifier>{b37ee47a-6a53-4096-afb5-d74cf3774d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\Prefabs">
+      <UniqueIdentifier>{970b8dfc-8a43-4eb8-ad90-7a65f8b4ef18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\System">
+      <UniqueIdentifier>{26305f1e-fbdd-468f-bda9-cf9d0eada1b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Events">
+      <UniqueIdentifier>{72c18286-e49c-4487-8f88-8c7188e5739b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Input">
+      <UniqueIdentifier>{0808c89c-f43b-47ff-822d-02fc5b8661b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Logger">
+      <UniqueIdentifier>{3793e9ab-e7fe-4127-8e0e-6a961eb25fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{e019c71f-6c3f-4da4-9cc6-bf645588cd5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Window">
+      <UniqueIdentifier>{83f6602f-6669-4883-a55f-a8f5fc6ed76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Precompiled">
+      <UniqueIdentifier>{f7efa866-a65e-4f7e-970f-77a50764b050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{4356af0d-6142-4b79-b324-992011bba108}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{00862d08-2d91-4476-bb8d-55bbd28e931a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Driver">
+      <UniqueIdentifier>{2cdba4e3-95d3-4f71-b89d-18631a7f20b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{d03818c0-1098-43ce-8781-cce8a0a89739}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Audio">
+      <UniqueIdentifier>{981462e2-95ba-409a-8822-26c58201a7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Collision">
+      <UniqueIdentifier>{ac170c53-c33e-42b4-9210-f78b987fa8a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics">
+      <UniqueIdentifier>{0edaf45b-2834-4c91-ab30-0a1ebe2ef42c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Serializer">
+      <UniqueIdentifier>{aef22555-3bc9-4211-8b79-97478826eb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Rendering">
+      <UniqueIdentifier>{716fb4de-156e-41c7-a898-06a00819b2b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Physics">
+      <UniqueIdentifier>{2c52e513-b5c7-454c-8da1-3b1bae9fbe9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Texture">
+      <UniqueIdentifier>{679c7976-1ac9-4808-b83e-39b2a6338c16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Vertex">
+      <UniqueIdentifier>{578c0454-6b9a-4d77-b65d-e5a923949581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGuiWrapper">
+      <UniqueIdentifier>{6c327942-ec98-4f23-804e-d67d8279b0d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\AssetsManager">
+      <UniqueIdentifier>{9bb45b5c-b999-4dab-9cb3-dbdaf640c5d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Engine\PrefabManager">
+      <UniqueIdentifier>{4a796833-5ab4-4915-9316-b04e94de34ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Sprite">
+      <UniqueIdentifier>{30a2c830-6e6b-4ee3-914b-ba8f444b2c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Camera">
+      <UniqueIdentifier>{c9d024f3-c758-4c7d-a1c4-634bfc9ec9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Font">
+      <UniqueIdentifier>{07888523-3ed5-4ee5-9fee-4fb8079b3aae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Pathfinding">
+      <UniqueIdentifier>{9533f091-e860-4507-a04f-7a3e911113d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\inGameGUI">
+      <UniqueIdentifier>{e817c0f9-bbac-4f77-91c1-d751193f768a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Logic">
+      <UniqueIdentifier>{e25a2196-df20-4c33-9343-e3cd6fed303b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EntityStats">
+      <UniqueIdentifier>{3b9fe9a6-9030-4c9c-bb14-9928e54d17f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Graphics\Editor">
+      <UniqueIdentifier>{c3d49252-850e-4ef0-8921-ad79c81ccc2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\SceneManager">
+      <UniqueIdentifier>{78ac4633-0f1f-4b48-8d84-5a45e0ff684a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Shooting">
+      <UniqueIdentifier>{138a7d6c-8f48-4adb-a3ee-2b136eb9ce30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{1be87286-6d7a-4800-825c-779d9a8ee74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units">
+      <UniqueIdentifier>{794f224c-f603-4205-83d2-5ea8dc96b3f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Infantry">
+      <UniqueIdentifier>{4b9d6148-bf74-4b60-a19a-fe99a16a07c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Tower">
+      <UniqueIdentifier>{e52a34df-c39f-4052-8d1d-c5dc39c06886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Action">
+      <UniqueIdentifier>{77658eb7-c2a5-4082-ba94-449ef0b4efd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\ScriptFactory">
+      <UniqueIdentifier>{8b375dde-e73a-4a9a-8626-00df69d38160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Archer">
+      <UniqueIdentifier>{41e92b2f-cbf9-4ef9-9c96-a13fdda3a8e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
