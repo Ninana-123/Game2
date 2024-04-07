@@ -305,7 +305,8 @@ namespace Engine {
 
 	void ImGuiWrapper::OnUpdate()
 	{
-
+#ifdef NDEBUG
+#else
 		if (InputHandlerImGui.IsKeyTriggered(KEY_F1))
 		{
 			renderImGuiGUI = !renderImGuiGUI;
@@ -317,6 +318,7 @@ namespace Engine {
 				graphicSystem->editorFBO.Unbind();
 			}
 		}
+#endif
 
 		if (useEditorCamera == true) {
 			ImGui::Begin("Editor Camera Instructions");

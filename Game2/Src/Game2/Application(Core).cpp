@@ -60,6 +60,10 @@ bool howToPlayCheck = false;
 bool creditsCheck = false;
 std::string fp;
 std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper = nullptr;
+int Wwidth = 0;
+int Wheight = 0;
+
+
 
 //std::string initScene = "Resource/Scenes/MainMenu.txt";
 //std::string nextScene = "Resource/Scenes/Level0Test.txt";
@@ -112,11 +116,7 @@ namespace Engine
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
-#ifdef DEBUG
     bool isFullScreen = false;
-#else
-    bool isFullScreen = true;
-#endif
 
     Application::Application()
     {
@@ -158,7 +158,9 @@ namespace Engine
         // Find the maximum mainIndex from textureFilePaths map
         int maxMainIndex = 0;
         for (const auto& entry : textureFilePaths) {
-            maxMainIndex = std::max(maxMainIndex, entry.first.mainIndex);
+            if (entry.first.mainIndex != NULL) {
+                maxMainIndex = std::max(maxMainIndex, entry.first.mainIndex);
+            }
         }
 
         // Load textures for each mainIndex and subIndex
@@ -281,7 +283,10 @@ namespace Engine
         InputHandler.SetImGuiWrapper(m_ImGuiWrapper);
 
         //fileBrowser.setSelectedEntityIndexReference(selectedEntityIndex);
-        //fileBrowser.setLoader(deserializer);
+        //fileBrowser.setLoader(deserializer)
+        // 
+        // ;
+
     }
 
     void Application::OnEvent(Event& e)
@@ -397,6 +402,9 @@ namespace Engine
         Logger::GetInstance().Log(Engine::LogLevel::App, "Application Running.");
 
         audioEngine.playSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+#ifdef NDEBUG // Check if we are in release mode
+        //ToggleFullscreen();
+#endif
 
     /*    if (isMainMenuLoaded) {
             audioEngine.playSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
@@ -423,6 +431,8 @@ namespace Engine
 
         while (m_Running)
         {
+            Engine::WindowsWindow* windowsWindow = dynamic_cast<Engine::WindowsWindow*>(m_Window.get());
+            glfwGetWindowSize(windowsWindow->GetNativeWindow(), &Wwidth, &Wheight);
             auto loopStartTime = std::chrono::high_resolution_clock::now();
             glfwPollEvents();
             auto currentTime = std::chrono::high_resolution_clock::now();

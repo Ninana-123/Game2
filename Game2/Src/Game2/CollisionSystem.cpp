@@ -62,6 +62,9 @@ bool archerDead = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
+float currentWidth = 0, currentHeight = 0;
+float aspectRatioWidth = 0, aspectRatioHeight = 0;
+
 
 
 // Define a map for towerCollidingEntityHealth and corresponding texture keys
@@ -1279,16 +1282,39 @@ namespace Engine
 
 				if (collisionComponent)
 				{
-					float halfWidth_1 = collisionComponent->c_Width / 2.0f;
-					float halfHeight_1 = collisionComponent->c_Height / 2.0f;
 
-					float minX_1 = static_cast<float>(transformComponent->position.x) - halfWidth_1;
-					float maxX_1 = static_cast<float>(transformComponent->position.x) + halfWidth_1;
-					float minY_1 = static_cast<float>(transformComponent->position.y) - halfHeight_1;
-					float maxY_1 = static_cast<float>(transformComponent->position.y) + halfHeight_1;
 
-					collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
-					collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+					// Update currentWidth and currentHeight
+					if (renderImGuiGUI == false) {
+						currentWidth = static_cast<float>(Wwidth);
+						currentHeight = static_cast<float>(Wheight);
+
+						// Calculate aspect ratios and update AABB accordingly
+						aspectRatioWidth = currentWidth / 1280.f;
+						aspectRatioHeight = currentHeight / 720.f;
+
+						// Update AABB min and max values
+						float halfWidth_1 = (collisionComponent->c_Width / 2.0f);
+						float halfHeight_1 = (collisionComponent->c_Height / 2.0f);
+
+						float minX_1 = (static_cast<float>(transformComponent->position.x) - halfWidth_1) * aspectRatioWidth;
+						float maxX_1 = (static_cast<float>(transformComponent->position.x) + halfWidth_1) * aspectRatioWidth;
+						float minY_1 = (static_cast<float>(transformComponent->position.y) - halfHeight_1) * aspectRatioHeight;
+						float maxY_1 = (static_cast<float>(transformComponent->position.y) + halfHeight_1) * aspectRatioHeight;
+
+						collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
+						collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+					}
+					else {
+						float halfWidth_1 = (collisionComponent->c_Width / 2.0f);
+						float halfHeight_1 = (collisionComponent->c_Height / 2.0f);
+						float minX_1 = (static_cast<float>(transformComponent->position.x) - halfWidth_1);
+						float maxX_1 = (static_cast<float>(transformComponent->position.x) + halfWidth_1);
+						float minY_1 = (static_cast<float>(transformComponent->position.y) - halfHeight_1);
+						float maxY_1 = (static_cast<float>(transformComponent->position.y) + halfHeight_1);
+						collisionComponent->aabb.min = VECTORMATH::Vec2(minX_1, minY_1);
+						collisionComponent->aabb.max = VECTORMATH::Vec2(maxX_1, maxY_1);
+					}
 				}
 			}
 		}

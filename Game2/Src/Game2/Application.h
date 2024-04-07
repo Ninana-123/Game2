@@ -42,6 +42,8 @@ extern bool creditsCheck;
 extern double fps;
 extern std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper;
 extern Engine::ScriptFactory* g_ScriptFactory;
+extern int Wwidth;
+extern int Wheight;
 
 namespace Engine
 {
