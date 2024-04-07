@@ -17,7 +17,7 @@ namespace Engine
 	std::vector<System*> SystemsManager::all_systems;
 
 	template GraphicsSystem* SystemsManager::GetSystem<GraphicsSystem>();
-	template CollisionSystem* SystemsManager::GetSystem<CollisionSystem>(); 
+	template CollisionSystem* SystemsManager::GetSystem<CollisionSystem>();
 	template PhysicsSystem* SystemsManager::GetSystem<PhysicsSystem>();
 	template PathfindingSystem* SystemsManager::GetSystem<PathfindingSystem>();
 	template ScriptSystem* SystemsManager::GetSystem<ScriptSystem>();
@@ -27,7 +27,7 @@ namespace Engine
 	template void SystemsManager::ToggleSystemState<PhysicsSystem>();
 	template void SystemsManager::ToggleSystemState<PathfindingSystem>();
 	template void SystemsManager::ToggleSystemState<ScriptSystem>();
-	
+
 	SystemsManager::SystemsManager(std::shared_ptr<Engine::AssetManager> assetManager, std::shared_ptr<Engine::EntityManager> entityManager)
 		: assetManager(assetManager), entityManager(entityManager) {
 	}
@@ -55,15 +55,29 @@ namespace Engine
 			if (system->GetSystemState() == SystemState::On)
 			{
 				// If the application is paused, update only the GraphicsSystem.
-				if (isPaused)
+				if (isPaused && system->returnSystem() == "graphics" || system->returnSystem() == "scriptSystem")
 				{
-					GraphicsSystem* graphicsSystem = dynamic_cast<GraphicsSystem*>(system);
-					if (graphicsSystem)
+					if (system->returnSystem() == "graphics")
 					{
-						graphicsSystem->StartTimer();
-						graphicsSystem->Update(entities);
-						graphicsSystem->StopTimer();
-						break; // Break out of the loop after updating the GraphicsSystem.
+						GraphicsSystem* graphicsSystem = dynamic_cast<GraphicsSystem*>(system);
+						if (graphicsSystem)
+						{
+							graphicsSystem->StartTimer();
+							graphicsSystem->Update(entities);
+							graphicsSystem->StopTimer();
+							break; // Break out of the loop after updating the GraphicsSystem.
+						}
+					}
+					else if (system->returnSystem() == "scriptSystem")
+					{
+						ScriptSystem* scriptSystem = dynamic_cast<ScriptSystem*>(system);
+						if (scriptSystem)
+						{
+							scriptSystem->StartTimer();
+							scriptSystem->Update(entities);
+							scriptSystem->StopTimer();
+							break; // Break out of the loop after updating the scriptsystem.
+						}
 					}
 				}
 				else // If the application is not paused, update all systems as usual.

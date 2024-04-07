@@ -145,7 +145,7 @@
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\CutScene.cpp">
+    <ClCompile Include="Src\Game2\VFX.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Infantry.cpp">
@@ -162,6 +162,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game2\Arrow.cpp">
       <Filter>Scripts\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\CutSceneLevel.cpp">
+      <Filter>Base\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp">
+      <Filter>Systems\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -354,7 +360,6 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\StatsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -391,7 +396,7 @@
     <ClInclude Include="Src\Game2\ShootingSystem.h">
       <Filter>Systems\Shooting</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\CutScene.h">
+    <ClInclude Include="Src\Game2\VFX.h">
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\ScriptSystem.h">
@@ -411,6 +416,12 @@
     </ClInclude>
     <ClInclude Include="Src\Game2\ScriptFactory.h">
       <Filter>Scripts\ScriptFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\CutSceneLevel.h">
+      <Filter>Base\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game2\RenderDataComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

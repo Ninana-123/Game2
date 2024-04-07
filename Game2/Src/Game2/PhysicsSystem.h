@@ -46,6 +46,8 @@ namespace Engine
         /**************************************************************************/
         void setVelocity(float vx, float vy);
 
+        virtual std::string returnSystem() override;
+
         /**************************************************************************/
         /*!
         \brief Sets the acceleration of the physics system.

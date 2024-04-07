@@ -58,6 +58,8 @@ namespace Engine
         /**************************************************************************/
         PathfindingSystem() : numRows(0), numCols(0), startX(0), startY(0), goalX(0), goalY(0), initialized(false), isWalking(false) {}
 
+        virtual std::string returnSystem() override;
+
         /**************************************************************************/
         /*!
         \brief Constructor for the PathfindingSystem with a specified number of rows and columns for pathfinding.

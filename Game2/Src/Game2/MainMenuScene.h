@@ -43,6 +43,10 @@ namespace Engine {
 		*/
 		void OnShutDown() override;
 
+		void OnInit() override {}
+		void OnUpdate(double /*deltaTime*/) override {}
+		void FreeLevel() override {}
+
 	private:
 	Loader menuLoader;
 	EntityManager m_entityManager;

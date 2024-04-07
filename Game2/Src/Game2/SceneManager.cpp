@@ -25,4 +25,10 @@ namespace Engine {
 		currentScene = scene;
 		currentScene->OnLoad();
 	}
+
+	void SceneManager::UpdateScene(std::shared_ptr<Engine::Scene> scene) {
+		if (scene) {
+			scene->OnUpdate(dt);
+		}
+	}
 }

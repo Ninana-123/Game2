@@ -31,6 +31,11 @@ namespace Engine
         velocityY = vy;
     }
 
+    std::string PhysicsSystem::returnSystem()
+    {
+        return "physicsSystem";
+    }
+
     // Sets the acceleration of the physics system.
     void PhysicsSystem::setAcceleration(float ax, float ay) {
         accelerationX = ax;

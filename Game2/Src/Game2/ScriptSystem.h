@@ -36,6 +36,8 @@ namespace Engine
 		*/
 		ScriptSystem(std::shared_ptr<Engine::EntityManager> em) : entityManager(em) {} //access to EM
 
+		virtual std::string returnSystem() override;
+
 		/*!
 		\brief
 		Initialize function to load deserialized scripts

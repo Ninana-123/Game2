@@ -33,6 +33,8 @@ namespace Engine
         */
         Entity(EntityID id) : id(id) {}
 
+        Entity() {}
+
         /*!
         \brief
         Destructor for the Entity class.

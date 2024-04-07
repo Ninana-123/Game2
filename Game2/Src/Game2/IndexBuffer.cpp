@@ -16,6 +16,7 @@
 #include "pch.h"
 #include "IndexBuffer.h"
 #include "Renderer.h"
+#include <GLFW/glfw3.h>
 
 IndexBuffer::IndexBuffer()
     : m_RendererID(0), m_Data(nullptr), m_Count(0)
@@ -56,13 +57,31 @@ void IndexBuffer::GenerateBuffer() const
 
 void IndexBuffer::Bind() const
 {
-    GenerateBuffer();  // Ensure the buffer is generated before binding
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID)); // Bind the element array buffer
+    // Check if the window is minimized
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
+    {
+        GenerateBuffer();  // Ensure the buffer is generated before binding
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID)); // Bind the element array buffer
+    }
+    else
+    {
+        // Window is minimized, do not bind the buffer
+        //std::cout << "Window is minimized, skipping index buffer binding." << std::endl;
+    }
 }
 
 void IndexBuffer::Unbind() const
 {
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+    // Check if the window is minimized
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
+    {
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Unbind the element array buffer
+    }
+    else
+    {
+        // Window is minimized, do not unbind the buffer
+       // std::cout << "Window is minimized, skipping index buffer unbinding." << std::endl;
+    }
 }
 
 void IndexBuffer::SetData(const unsigned int* data, unsigned int count)

@@ -182,6 +182,14 @@ namespace Engine
 			}
 		}
 
+		if (Input::IsKeyTriggered(KEY_M) && Input::IsKeyTriggered(KEY_E) && Input::IsKeyTriggered(KEY_H))
+		{
+			std::cout << "test" << std::endl;
+			Prefab* victoryPrefab = prefabManager->GetPrefab(9);
+			entityManager->CreateEntityFromPrefab(*victoryPrefab);
+			victoryScreenShown = true;
+		}
+
 		if (Input::IsKeyPressed(KEY_ENTER) && victoryScreenShown == true)
 		{
 			entityManager->DestroyEntity(victoryID);

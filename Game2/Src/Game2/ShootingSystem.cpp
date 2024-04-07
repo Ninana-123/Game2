@@ -23,6 +23,7 @@ Technology is prohibited.
 
 bool entityCreated = false;
 bool outOfBounds = false;
+VECTORMATH::Vec2 Vel = { 0, 0 };
 EntityID hahaArrowID = 0;
 
 namespace Engine
@@ -92,7 +93,7 @@ namespace Engine
                             TransformComponent* PlayerTransform2 = dynamic_cast<TransformComponent*>(Player->GetComponent(ComponentType::Transform));
                             TransformComponent* ArrowTransform2 = dynamic_cast<TransformComponent*>(ArcherArrow->GetComponent(ComponentType::Transform));
                             TextureComponent* ArrowTexture2 = dynamic_cast<TextureComponent*>(ArcherArrow->GetComponent(ComponentType::Texture));
-                            ArrowTexture2->textureKey = { 42, 0 };
+                            ArrowTexture2->textureKey = { 55, 0 };
                             CollisionComponent* ArrowCollision2 = dynamic_cast<CollisionComponent*>(ArcherArrow->GetComponent(ComponentType::Collision));
                             ArrowCollision2->layer = Layer::Arrow;
                             ArrowCollision2->layerTarget = Layer::Tower;
@@ -108,8 +109,10 @@ namespace Engine
                             ArrowPhysics2->mass = 0.001f;
                             ArrowTransform2->position = PlayerTransform2->position;
                             //ArrowTransform2->position = {PlayerTransform2->position.x + 10, PlayerTransform2->position.y};
-                            std::cout << "Player's x: " << PlayerTransform2->position.x << std::endl;
-                            std::cout << "Player's y: " << PlayerTransform2->position.y << std::endl;
+                            /*std::cout << "Player's x: " << PlayerTransform2->position.x << std::endl;
+                            std::cout << "Player's y: " << PlayerTransform2->position.y << std::endl;*/
+                            /*std::cout << "Tower's x: " << TowerTransform2->position.x << std::endl;
+                            std::cout << "Tower's y: " << TowerTransform2->position.y << std::endl;*/
                             //CollisionVector.erase(CollisionVector.begin());
                             collisionComponent1->ArcherTowerVector.pop_back();
 
@@ -122,7 +125,7 @@ namespace Engine
                         collisionComponent1->arrowSpawnTimer -= deltaTime;
                         if (collisionComponent1->arrowSpawnTimer < 0)
                         {
-                            std::cout << "it is inside archerArrowedSpawned update to false" << std::endl;
+                            // std::cout << "it is inside archerArrowedSpawned update to false" << std::endl;
                             collisionComponent1->archerArrowSpawned = false;
                             collisionComponent1->arrowSpawnTimer = collisionComponent1->arrowSpawnInterval;
                         }
@@ -135,14 +138,22 @@ namespace Engine
                 {
                     if (entity->HasComponent(ComponentType::Stats)) 
                     {
-                        if (statsComponent->health == 0 && entity->GetID() == 7)
+                        if (statsComponent->health <= 0 && entity->GetID() == 7)
                         {
                             statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
                         }
 
-                        if (statsComponent->health == 0 && entity->GetID() == 8)
+                        if (statsComponent->health <= 0 && entity->GetID() == 8)
                         {
                             statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
+                        }
+
+                        if (statsComponent->health <= 0 && entity->GetID() == 9)
+                        {
+                            statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
                         }
 
                     }
@@ -185,6 +196,8 @@ namespace Engine
                             ArrowPhysics->velocity = Vel;
                             ArrowPhysics->mass = 0.001f;
                             ArrowTransform->position = TowerTransform->position;
+                            std::cout << "Tower's x: " << TowerTransform->position.x << std::endl;
+                            std::cout << "Tower's y: " << TowerTransform->position.y << std::endl;
                             //CollisionVector.erase(CollisionVector.begin());
                             collisionComponent1->PlayerTowerVector.pop_back();
                             audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));

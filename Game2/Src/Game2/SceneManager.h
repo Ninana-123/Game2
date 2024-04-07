@@ -26,8 +26,10 @@ namespace Engine {
 		*/
 		void TransitionToScene(std::shared_ptr<Engine::Scene> scene);
 
+		void UpdateScene(std::shared_ptr<Engine::Scene> scene);
 	private:
 		std::shared_ptr<Engine::Scene> currentScene;
+		float dt = 0;
 	};
 
 }

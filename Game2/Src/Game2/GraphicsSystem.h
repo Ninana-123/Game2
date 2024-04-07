@@ -133,7 +133,7 @@ namespace Engine
          * The selection of the shader set depends on the internal state of the GraphicsSystem.
          *
          */
-        void UpdateShaderSet();
+        //void UpdateShaderSet();
 
         void UpdateTexture(int main, int sub, const std::string& newPath);
 
@@ -166,6 +166,8 @@ namespace Engine
          */
         void RenderLines(const glm::mat4& mvpMatrix);
 
+        virtual std::string returnSystem() override;
+
         /*!
         * \brief Render a single line.
         *
@@ -175,14 +177,14 @@ namespace Engine
         * \param lineStart The starting position of the line.
         * \param lineEnd The ending position of the line.
         */
-        void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
+        //void RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd);
 
         /*!
          * \brief Toggle the rendering mode.
          *
          * This function toggles between textured and plain squares for rendering.
          */
-        void ToggleRenderMode();
+        //void ToggleRenderMode();
 
         /*!
          * \brief Toggles between two shader sets.
@@ -194,7 +196,7 @@ namespace Engine
          * \note This function assumes that the shader object is properly initialized before calling it.
          *
          */
-        void ToggleShaderSet();
+        //void ToggleShaderSet();
 
         /*!
         * \brief Render a single colored square.
@@ -203,7 +205,7 @@ namespace Engine
         *
         * \param mvpMatrix The Model-View-Projection matrix for rendering.
         */
-        void DrawColoredSquare(const glm::mat4& mvpMatrix);
+        //void DrawColoredSquare(const glm::mat4& mvpMatrix);
         //void SetMaxBatchSize(int maxSize);
         int screenWidth{}, screenHeight{};
       
