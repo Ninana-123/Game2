@@ -291,7 +291,7 @@ namespace Engine {
             { {TextureClass::cutScene7,         0}, "Resource/Texture/cutScene7.PNG" },
             { {TextureClass::cutScene8,         0}, "Resource/Texture/whiteScreen.PNG" },
 
-            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainMenuBG.PNG" },
+            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainMenuBG.JPG" },
             { {TextureClass::defeatScreen,      0}, "Resource/Texture/defeat_background.PNG" },
             { {TextureClass::pauseScreen,       0}, "Resource/Texture/pause_screen.PNG" },
             { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" },

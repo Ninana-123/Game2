@@ -47,13 +47,6 @@ Position: 0 -300
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
-Script
-ID: 0
-type: 3
-Running: 0
-Texture
-MainIndex: 3
-SubIndex: 0
 Collision
 c_Width: 45
 c_Height: 45
@@ -78,6 +71,9 @@ texturexindex: 0
 textureyindex: 0
 playing: 0
 playmode: 0
+Texture
+MainIndex: 3
+SubIndex: 0
 Pathfinding
 startX: 0
 startY: 0
@@ -264,5 +260,13 @@ Texture
 MainIndex: 41
 SubIndex: 0
 EndPrefab
-EndPrefab
+DefeatScreen
+Transform
+Position: 0 0
+ScaleX: 16
+ScaleY: 9
+Rotation: 0
+Texture
+MainIndex: 53
+SubIndex: 0
 EndPrefab
