@@ -16,6 +16,7 @@
 #include "pch.h"
 #include "Renderer.h"
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 void GLClearError()
 {
@@ -41,9 +42,19 @@ void Renderer::Clear() const
 
 void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
-    // Draw elements together in one call
-    GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+    // Check if the window is minimized
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
+    {
+        // Window is not minimized, proceed with rendering 
+        shader.Bind();
+        va.Bind();
+        ib.Bind();
+        // Draw elements together in one call
+        GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+    }
+    else
+    {
+        // Window is minimized, do not perform rendering operations
+       // std::cout << "Window is minimized, skipping rendering." << std::endl;
+    }
 }

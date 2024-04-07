@@ -36,6 +36,8 @@ namespace Engine
 		*/
 		ScriptSystem(std::shared_ptr<Engine::EntityManager> em) : entityManager(em) {} //access to EM
 
+		virtual std::string returnSystem() override;
+
 		/*!
 		\brief
 		Initialize function to load deserialized scripts
@@ -85,6 +87,11 @@ namespace Engine
 		Entity* QueryEntityPtr (EntityID entity)
 		{
 			return entityManager->GetEntity(entity);
+		}
+
+		std::shared_ptr<Engine::EntityManager> QueryEM()
+		{
+			return entityManager;
 		}
 
 		/*!

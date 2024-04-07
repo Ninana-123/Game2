@@ -37,7 +37,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "SceneManager.h"
 #include "MainMenuScene.h"
 #include "GameScene.h"
-#include "CutScene.h"
+#include "CutSceneLevel.h"
 #include "TempStateMachine.h"
 #include "Vector2d.h"
 #include "ScriptFactory.h"
@@ -81,7 +81,7 @@ namespace Engine
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
-    std::shared_ptr<EntityManager> EM;   
+    std::shared_ptr<EntityManager> EM;
     PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
@@ -106,7 +106,7 @@ namespace Engine
 
     bool tower1DownSoundPlayed = false;
     bool tower2DownSoundPlayed = false;
- 
+
 
     // Flag to track if a sound is currently playing
     bool currentlyPlayingSound = 0;
@@ -168,6 +168,7 @@ namespace Engine
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
+        EM->LinkPrefabManager(&PM);
 
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();
@@ -204,10 +205,10 @@ namespace Engine
         audioEngine.init();
         assetManager->AddAudioPath(AudioKey("sound_BGM"), "Resource/Audio/level_bgm.wav");
         assetManager->loadAudio(AudioKey("sound_BGM"), true);
-        
+
         assetManager->AddAudioPath(AudioKey("mainmenu_BGM"), "Resource/Audio/mainmenu_bgm.wav");
         assetManager->loadAudio(AudioKey("mainmenu_BGM"), true);
-        
+
         assetManager->AddAudioPath(AudioKey("sound_Win"), "Resource/Audio/levelwin.wav");
         assetManager->loadAudio(AudioKey("sound_Win"), false);
         assetManager->getAudio(AudioKey("sound_Win"))->setVolume(0.5f);
@@ -261,7 +262,7 @@ namespace Engine
           sound_Arrow.setLoop();
           sound_Slash.setLoop();*/
 
-          // Initialize ImGuiWrapper
+        // Initialize ImGuiWrapper
         m_ImGuiWrapper = std::make_unique<Engine::ImGuiWrapper>(EM, &PM, assetManager, loader);
         m_ImGuiWrapper->Initialize();
         m_ImGuiWrapper->OnAttach();
@@ -301,74 +302,76 @@ namespace Engine
             {
                 window.MinimizeWindow();
             }
-        }
-        if (e.GetEventType() == EventType::KeyPressed) {
-            KeyPressedEvent& keyPressedEvent = dynamic_cast<KeyPressedEvent&>(e);
 
-            // Check for ALT+ENTER (key codes may vary depending on your implementation)
+            // Check for ALT+ENTER 
             if (keyPressedEvent.GetKeyCode() == KEY_F11) {
                 ToggleFullscreen();
             }
-        }
-        if (isMainMenuLoaded) {
-            if (e.GetEventType() == EventType::MouseButtonPressed)
-            {   
-               
-
-                MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
-                if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
-                {
-                    // Check if the mouse click is within the quadrilateral
-                    mousePressedEvent.SetX(InputHandler.GetMouseX());
-                    mousePressedEvent.SetY(InputHandler.GetMouseY());
-                    float mouseX = mousePressedEvent.GetX();
-                    float mouseY = mousePressedEvent.GetY();
-
-                    if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
-                    {
-              
-                        fp = GameSceneFilePath;
-                        int entityCount = static_cast<int>(EM->GetEntities()->size());
-
-                        for (int i = entityCount - 1; i >= 0; --i) {
-                            EM->DestroyEntity(i); 
-                        }
-
-                        m_ImGuiWrapper->selectedEntityIndex = -1;
-
-                        // Set targetEntity to nullptr as there are no entities left
-                        m_ImGuiWrapper->SetTargetEntity(nullptr);
-
-                        // Reset any other relevant data structures or counters if needed
-                        EM->nextEntityID = 0; // Assuming this is how you reset your IDs
-                        PM.nextPrefabID = 0; // Reset prefab ID counter if needed
-
-                        // Now load the scene
-                        loader->LoadScene(fp);
-                        if (EM->GetEntities()->size() >= 2) {
-                            m_ImGuiWrapper->selectedEntityIndex = 1;
-                        }
-                        else if (EM->GetEntities()->size() == 1) {
-                            m_ImGuiWrapper->selectedEntityIndex = 0;
-                        }
-                        else
-                            m_ImGuiWrapper->selectedEntityIndex = -1;
-                        if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
-                            m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
-                        }
-                        mainMenuCheck = false;
-                        isMainMenuLoaded = false;
-                        audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
-                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
-                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
-                    }
+            /*
+                    // skip cut scene to go level 1
+                    //if (keyPressedEvent.GetKeyCode() == KEY_N) {
+                    //    loader->LoadScene(GameSceneFilePath);
+                    //}
                 }
-            
-            }
-            
+
+                if (isMainMenuLoaded) {
+                    if (e.GetEventType() == EventType::MouseButtonPressed)
+                    {
+
+
+                        MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
+                        if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
+                        {
+                            // Check if the mouse click is within the quadrilateral
+                            mousePressedEvent.SetX(InputHandler.GetMouseX());
+                            mousePressedEvent.SetY(InputHandler.GetMouseY());
+                            float mouseX = mousePressedEvent.GetX();
+                            float mouseY = mousePressedEvent.GetY();
+
+                            if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
+                            {
+
+                                fp = GameSceneFilePath;
+                                int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                                for (int i = entityCount - 1; i >= 0; --i) {
+                                    EM->DestroyEntity(i);
+                                }
+
+
+
+                                // Reset any other relevant data structures or counters if needed
+                                EM->nextEntityID = 0;
+                                PM.nextPrefabID = 0;
+
+                                // Now load the scene
+                                loader->LoadScene(fp);
+                                //sceneManager.TransitionToScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+                                //sceneManager.UpdateScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+
+                                if (EM->GetEntities()->size() >= 2) {
+                                    m_ImGuiWrapper->selectedEntityIndex = 1;
+                                }
+                                else if (EM->GetEntities()->size() == 1) {
+                                    m_ImGuiWrapper->selectedEntityIndex = 0;
+                                }
+                                else
+                                    m_ImGuiWrapper->selectedEntityIndex = -1;
+                                if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                                    m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                                }
+                                mainMenuCheck = false;
+                                isMainMenuLoaded = false;
+                                audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+                                audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+                                audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
+                            }
+                        }
+
+                    }
+                    */
         }
     }
-
 
     void Application::ToggleFullscreen() {
         GLFWwindow* windowHandle = m_Window->GetNativeWindow(); // Obtain the native GLFW window
@@ -728,6 +731,51 @@ namespace Engine
             m_inGameGUI->Update(buttonCollision, audioEngine, *assetManager);
             m_shootingSystem->Update(static_cast<float>(deltaTime), isShooting, EM->GetEntities(), *assetManager, audioEngine);
             systemsManager->ResetSystemTimers();
+
+            if (isMainMenuLoaded == true) {
+                if (lastCollidingEntityTexture == 17)
+                {
+                    std::cout << "Test";
+                    fp = GameSceneFilePath;
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                    for (int i = entityCount - 1; i >= 0; --i) {
+                        EM->DestroyEntity(i);
+                    }
+
+                    m_ImGuiWrapper->selectedEntityIndex = -1;
+
+                    // Set targetEntity to nullptr as there are no entities left
+                    m_ImGuiWrapper->SetTargetEntity(nullptr);
+
+                    // Reset any other relevant data structures or counters if needed
+                    EM->nextEntityID = 0; // Assuming this is how you reset your IDs
+                    PM.nextPrefabID = 0; // Reset prefab ID counter if needed
+
+                    // Now load the scene
+                    loader->LoadScene(fp);
+                    if (EM->GetEntities()->size() >= 2) {
+                        m_ImGuiWrapper->selectedEntityIndex = 1;
+                    }
+                    else if (EM->GetEntities()->size() == 1) {
+                        m_ImGuiWrapper->selectedEntityIndex = 0;
+                    }
+                    else
+                        m_ImGuiWrapper->selectedEntityIndex = -1;
+                    if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                        m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                    }
+                    mainMenuCheck = false;
+                    isMainMenuLoaded = false;
+                    audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+                    audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
+                    lastCollidingEntity = 0;
+                    lastCollidingEntityTexture = 0;
+                }
+            }
+
+
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
 
@@ -837,7 +885,6 @@ namespace Engine
         return static_cast<float>(elapsedTime);
     }
 
-
     void Application::UpdateWindowFocus() {
         if (m_Window) {
             // Use get() to obtain a raw pointer to the managed object
@@ -850,7 +897,7 @@ namespace Engine
                 // If the window is not focused or is iconified (minimized)
                 if (!isFocused || glfwGetWindowAttrib(windowsWindow->GetNativeWindow(), GLFW_ICONIFIED)) {
                     // Minimize the window, pause the game, and pause all audio playback
-                    //windowsWindow->MinimizeWindow();
+                    windowsWindow->MinimizeWindow();
                     isPaused = true;
                     audioEngine.pauseAllAudio();
                     // Logger::GetInstance().Log(LogLevel::Debug, "Window lost focus. Pausing game and audio.");
@@ -947,6 +994,4 @@ namespace Engine
     {
         return (qY > pY) != (rY > pY) && pX < (rX - qX) * (pY - qY) / (rY - qY) + qX;
     }
-
-
 }

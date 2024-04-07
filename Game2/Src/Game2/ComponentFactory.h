@@ -16,10 +16,11 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 #include "pch.h"
 #include "Component.h"
-#include "TransformComponent.h"
 #include "CollisionComponent.h"
+#include "TransformComponent.h"
 #include "TextureComponent.h"
 #include "PhysicsComponent.h"
+#include "RenderDataComponent.h"
 #include "SpriteComponent.h"
 #include "PathfindingComponent.h"
 #include "BehaviourComponent.h"

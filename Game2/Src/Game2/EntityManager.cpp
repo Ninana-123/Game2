@@ -10,7 +10,6 @@
  /******************************************************************************/
 
 #include "pch.h"
-#include "EntityManager.h"
 #include "System.h"
 #include "SystemsManager.h"
 #include "GraphicsSystem.h"
@@ -202,5 +201,65 @@ namespace Engine
 			DestroyEntity(entityID);
 		}
 		storage.clear();
+	}
+
+	void EntityManager::LinkPrefabManager(PrefabManager* pm)
+	{
+		PM = pm;
+	}
+
+	std::vector<Entity*> EntityManager::QueryScriptEntitiesWithType(ScriptType type)
+	{
+		std::vector<Entity*> entitiesWithType;
+
+		for (const auto& pair : entities)
+		{
+			// Get the entity
+			Entity* ptr = pair.second.get();
+
+			// Check if the entity has a ScriptComponent
+			ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(ptr->GetComponent(ComponentType::Script));
+			if (scriptComponent)
+			{
+				// Check if the ScriptComponent has the specified ScriptType
+				if (scriptComponent->currentScriptType == type)
+				{
+					// Add the entity to the vector
+					entitiesWithType.push_back(ptr);
+				}
+			}
+		}
+
+		return entitiesWithType;
+	}
+
+	std::vector<Entity*> EntityManager::QueryScriptEntitiesWithoutType(ScriptType type)
+	{
+		std::vector<Entity*> entitiesWithoutType;
+
+		for (const auto& pair : entities)
+		{
+			// Get the entity
+			Entity* ptr = pair.second.get();
+
+			// Check if the entity has a ScriptComponent
+			ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(ptr->GetComponent(ComponentType::Script));
+			if (scriptComponent)
+			{
+				// Check if the ScriptComponent does not have the specified ScriptType
+				if (scriptComponent->currentScriptType != type)
+				{
+					// Add the entity to the vector
+					entitiesWithoutType.push_back(ptr);
+				}
+			}
+		}
+
+		return entitiesWithoutType;
+	}
+
+	PrefabManager* EntityManager::QueryPM()
+	{
+		return PM;
 	}
 }

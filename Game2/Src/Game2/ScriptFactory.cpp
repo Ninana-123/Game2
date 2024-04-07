@@ -17,6 +17,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "ScriptFactory.h"
 #include "Tower.h"
+#include "Archer.h"
 
 
 namespace Engine
@@ -25,6 +26,7 @@ namespace Engine
     {
         // Register script types with their creation functions
         CreateScript(ScriptType::tower, [](Entity* entity) { return std::make_unique<Tower>(entity); });
+        CreateScript(ScriptType::archer, [](Entity* entity) { return std::make_unique<Archer>(entity); });
     }
 
     std::unordered_map<ScriptType, ScriptFactory::CreationFunction>& ScriptFactory::scriptRegistry()
@@ -53,6 +55,11 @@ namespace Engine
         {
             return nullptr; // No script for the type
         }
+    }
+
+    ScriptSystem* ScriptFactory::GetScriptSystem()
+    {
+        return SS;
     }
 
     //void RemoveScript(EntityID entityId)

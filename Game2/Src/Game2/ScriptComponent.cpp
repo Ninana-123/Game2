@@ -60,6 +60,10 @@ namespace Engine
 		{
 			return buffer = "Tower";
 		}
+		case ScriptType::archer:
+		{
+			return buffer = "Archer";
+		}
 		default:
 			buffer = "Unknown";
 			break;
@@ -72,7 +76,7 @@ namespace Engine
 		return script;
 	}
 
-	ComponentType  ScriptComponent::GetType() const
+	ComponentType ScriptComponent::GetType() const
 	{ 
 		return ComponentType::Script; 
 	}
@@ -89,6 +93,7 @@ namespace Engine
 	{
 		outputStream << "ID: " << static_cast<int>(entity) << '\n';
 		outputStream << "type: " << static_cast<int>(currentScriptType) << '\n';
+		outputStream << "Running: " << static_cast<int>(run) << '\n';
 	}
 
 	void  ScriptComponent::Deserialize(std::istream& inputStream)
@@ -96,9 +101,12 @@ namespace Engine
 		std::string temp;
 		int ID;
 		int script_index;
+		int running;
 		inputStream >> temp >> ID;
 		inputStream >> temp >> script_index;
+		inputStream >> temp >> running;
 		entity = static_cast<EntityID>(ID);
 		currentScriptType = static_cast<ScriptType>(script_index);
+		run = static_cast<bool>(running);
 	}
 }

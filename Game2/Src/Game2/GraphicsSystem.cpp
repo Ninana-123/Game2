@@ -64,6 +64,9 @@ namespace Engine
     {
     }
 
+    std::string GraphicsSystem::returnSystem() {
+        return "graphics";
+    }
 
     void GraphicsSystem::InitializeGLEW() {
         // Initialize GLEW
@@ -81,141 +84,148 @@ namespace Engine
     }
 
     void GraphicsSystem::Initialize() {
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
 
-        Window = glfwGetCurrentContext();
-        glfwGetWindowSize(Window, &screenWidth, &screenHeight);
-        GraphicsSystem::InitializeGLEW();
+            Window = glfwGetCurrentContext();
+            glfwGetWindowSize(Window, &screenWidth, &screenHeight);
+            GraphicsSystem::InitializeGLEW();
 
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        // Clear the color buffer
-        glClear(GL_COLOR_BUFFER_BIT);
+            // Clear the color buffer
+            glClear(GL_COLOR_BUFFER_BIT);
 
-        //int screenWidth, screenHeight;
-        //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
+            //int screenWidth, screenHeight;
+            //std::cout << "Screen Width: " << screenWidth << ", Screen Height: " << screenHeight << std::endl;
 
-        // Load and initialize the shader
-        try {
-            InitializeShader();
+            // Load and initialize the shader
+            try {
+                InitializeShader();
+            }
+            catch (const std::runtime_error& e) {
+                // Handle shader initialization error
+                throw std::runtime_error("Shader initialization failed: " + std::string(e.what()));
+            }
+
+            // Initialize and bind textures
+            try {
+                InitializeTextures();
+            }
+            catch (const std::runtime_error& e) {
+                // Handle texture initialization error
+                throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
+            }
+
+            //enable blending for transparency
+            GLCall(glEnable(GL_BLEND));
+            GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+            const float fscreenWidth = 1280.0f;
+            const float fscreenHeight = 720.0f;
+
+            // set up projection and view matrices
+            GraphicsSystem::proj = glm::ortho(0.0f, fscreenWidth, 0.0f, fscreenHeight, -1.0f, 1.0f);
+            GraphicsSystem::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
+
+            /**************************************************************************************************/
+            //define vertex array and indices
+            float quadPositions[] =
+            {
+               -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
+                50.f, -50.f, 1.0f, 0.0f,  // bottom-right
+                50.f,  50.f, 1.0f, 1.0f,  // top-right
+               -50.f,  50.f, 0.0f, 1.0f   // top-left
+            };
+
+            // Copy vtx_position into vtx_position member variable
+            std::copy(std::begin(quadPositions), std::end(quadPositions), std::begin(this->vtx_positions));
+
+            unsigned int localIndices[] =
+            {
+                0, 1, 2,
+                2, 3, 0
+            };
+
+            std::copy(std::begin(localIndices), std::end(localIndices), std::begin(this->indices));
+            VertexBuffer vb(quadPositions, 4 * 4 * sizeof(float));
+
+            VertexBufferLayout layout;
+            layout.Push<float>(2);
+            layout.Push<float>(2);
+
+            GraphicsSystem::ib.SetData(localIndices, 6);
+
+            /**************************************************************************************************/
+            // Define vertex array and indices for lines
+            float linePositions[] =
+            {
+               -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
+                50.f, -50.f, 1.0f, 0.0f,  // bottom-right
+                50.f,  50.f, 1.0f, 1.0f,  // top-right
+               -50.f,  50.f, 0.0f, 1.0f   // top-left
+            };
+
+            VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
+
+            VertexBufferLayout layoutLines;
+            layoutLines.Push<float>(2);
+            layoutLines.Push<float>(2);
+            vaLines.AddBuffer(vbLines, layoutLines);
+
+            /**************************************************************************************************/
+            // Define vertices for the background
+            float backgroundPositions[] =
+            {
+                -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
+                 static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
+                 static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
+                -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
+            };
+
+            // Define indices for the background
+            unsigned int backgroundIndices[] =
+            {
+                0, 1, 2,
+                2, 3, 0
+            };
+
+            VertexBuffer vbBackground(backgroundPositions, 4 * 4 * sizeof(float));
+
+            VertexBufferLayout layoutBackground;
+            layoutBackground.Push<float>(2);
+            layoutBackground.Push<float>(2);
+
+            GraphicsSystem::va.AddBuffer(vb, layout);
+
+            GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
+            GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
+
+            /**************************************************************************************************/
+
+            ib.Unbind();
+            va.Unbind();
+            vb.Unbind();
+
+            vbLines.Unbind();
+            vaLines.Unbind();
+
+            vaBackground.Unbind();
+            ibBackground.Unbind();
+
+            shader.Unbind();
+
+            font.Initialize();
+            editorFBO.Initialize(screenWidth, screenHeight);
+
+            //  font.Initialize("Resource/Fonts/arial.ttf");
+            /*  font.Initialize("Resource/Fonts/Inkfree.ttf");
+              font.Initialize("Resource/Fonts/arial.ttf");*/
+              //font.MakeDisplayList(ft, face);
         }
-        catch (const std::runtime_error& e) {
-            // Handle shader initialization error
-            throw std::runtime_error("Shader initialization failed: " + std::string(e.what()));
+        else
+        {
+
         }
-
-        // Initialize and bind textures
-        try {
-            InitializeTextures();
-        }
-        catch (const std::runtime_error& e) {
-            // Handle texture initialization error
-            throw std::runtime_error("Texture initialization failed: " + std::string(e.what()));
-        }
-
-        //enable blending for transparency
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-        const float fscreenWidth = 1280.0f;
-        const float fscreenHeight = 720.0f;
-
-        // set up projection and view matrices
-        GraphicsSystem::proj = glm::ortho(0.0f, fscreenWidth, 0.0f, fscreenHeight, -1.0f, 1.0f);
-        GraphicsSystem::view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Left translation
-
-        /**************************************************************************************************/
-        //define vertex array and indices
-        float quadPositions[] =
-        {
-           -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
-            50.f, -50.f, 1.0f, 0.0f,  // bottom-right
-            50.f,  50.f, 1.0f, 1.0f,  // top-right
-           -50.f,  50.f, 0.0f, 1.0f   // top-left
-        };
-
-        // Copy vtx_position into vtx_position member variable
-        std::copy(std::begin(quadPositions), std::end(quadPositions), std::begin(this->vtx_positions));
-
-        unsigned int localIndices[] =
-        {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        std::copy(std::begin(localIndices), std::end(localIndices), std::begin(this->indices));
-        VertexBuffer vb(quadPositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layout;
-        layout.Push<float>(2);
-        layout.Push<float>(2);
-
-        GraphicsSystem::ib.SetData(localIndices, 6);
-
-        /**************************************************************************************************/
-        // Define vertex array and indices for lines
-        float linePositions[] =
-        {
-           -50.f, -50.f, 0.0f, 0.0f,  // bottom-left
-            50.f, -50.f, 1.0f, 0.0f,  // bottom-right
-            50.f,  50.f, 1.0f, 1.0f,  // top-right
-           -50.f,  50.f, 0.0f, 1.0f   // top-left
-        };
-
-        VertexBuffer vbLines(linePositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layoutLines;
-        layoutLines.Push<float>(2);
-        layoutLines.Push<float>(2);
-        GraphicsSystem::vaLines.AddBuffer(vbLines, layoutLines);
-
-        /**************************************************************************************************/
-        // Define vertices for the background
-        float backgroundPositions[] =
-        {
-            -static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 0.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f, -static_cast<float>(screenHeight) / 2.0f, 1.0f, 0.0f,
-             static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 1.0f, 1.0f,
-            -static_cast<float>(screenWidth) / 2.0f,  static_cast<float>(screenHeight) / 2.0f, 0.0f, 1.0f
-        };
-
-        // Define indices for the background
-        unsigned int backgroundIndices[] =
-        {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        VertexBuffer vbBackground(backgroundPositions, 4 * 4 * sizeof(float));
-
-        VertexBufferLayout layoutBackground;
-        layoutBackground.Push<float>(2);
-        layoutBackground.Push<float>(2);
-
-        GraphicsSystem::va.AddBuffer(vb, layout);
-
-        GraphicsSystem::vaBackground.AddBuffer(vbBackground, layoutBackground);
-        GraphicsSystem::ibBackground.SetData(backgroundIndices, 6);
-
-        /**************************************************************************************************/
-
-        ib.Unbind();
-        va.Unbind();
-        vb.Unbind();
-
-        vbLines.Unbind();
-
-        vaBackground.Unbind();
-        ibBackground.Unbind();
-
-        shader.Unbind();
-
-        font.Initialize();
-        editorFBO.Initialize(screenWidth, screenHeight);
-
-      //  font.Initialize("Resource/Fonts/arial.ttf");
-      /*  font.Initialize("Resource/Fonts/Inkfree.ttf");
-        font.Initialize("Resource/Fonts/arial.ttf");*/
-        //font.MakeDisplayList(ft, face);
     }
 
     void GraphicsSystem::InitializeShader()
@@ -326,302 +336,293 @@ namespace Engine
 
     void GraphicsSystem::RenderBackground(const glm::mat4& mvpMatrix)
     {
-        try {
-        shader.Bind();
-        textures[Background][0].Bind(0);
-        shader.SetUniform1f("texCoordX", 0.0f);
-        //shader.SetUniform1f("u_FrameCount", 1.0f);
-        shader.SetUniform1f("u_FrameWidth", 1.0f);
-        shader.SetUniform1f("u_FrameHeight", 1.0f);
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
 
-        glm::mat4 viewProjectionMatrix;
-        if (useEditorCamera) {
-            viewProjectionMatrix = m_EditorCamera.GetViewProjectionMatrix();
-        }
-        else {
-            viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
-        }
+            try {
+                shader.Bind();
+                textures[Background][0].Bind(0);
+                shader.SetUniform1f("texCoordX", 0.0f);
+                //shader.SetUniform1f("u_FrameCount", 1.0f);
+                shader.SetUniform1f("u_FrameWidth", 1.0f);
+                shader.SetUniform1f("u_FrameHeight", 1.0f);
 
-        shader.SetUniformMat4f("u_MVP", viewProjectionMatrix);
+                glm::mat4 viewProjectionMatrix;
+                if (useEditorCamera) {
+                    viewProjectionMatrix = m_EditorCamera.GetViewProjectionMatrix();
+                }
+                else {
+                    viewProjectionMatrix = m_Camera.GetViewProjectionMatrix();
+                }
+                shader.SetUniformMat4f("u_MVP", viewProjectionMatrix);
 
-        /* Printing Matrix (Uncomment if needed)
-        std::cout << "BACKGROUND MATRIX: " << '\n' << " ";
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                std::cout << viewProjectionMatrix[i][j] << " ";
+                vaBackground.Bind(); // Bind the background vertex array
+                ibBackground.Bind(); // Bind the background index buffer
+
+                renderer.Draw(vaBackground, ibBackground, shader);
+                textures[Background][0].Unbind();
+                shader.Unbind();
             }
-            std::cout << std::endl;
+            catch (const std::exception& e) {
+                Logger::GetInstance().Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
+            }
         }
-        */
-
-        vaBackground.Bind(); // Bind the background vertex array
-        ibBackground.Bind(); // Bind the background index buffer
-
-        renderer.Draw(vaBackground, ibBackground, shader);
-        textures[Background][0].Unbind();
-        shader.Unbind();
-        }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Render background error: " + std::string(e.what()));
-
+        else
+        {
+           // Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
     void GraphicsSystem::RenderTexturedEntity(const glm::mat4& mvpMatrix, Entity* entity)
     {
-        shader.Bind();
-        if (!entity->HasComponent(ComponentType::Texture))
-        {
-            Logger::GetInstance().Log(LogLevel::Error, "Entity does not have a TextureComponent!");
-            return;
-        }
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
 
-        TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
-
-        if (texture != nullptr)
-        {
-            // Attempt to bind the texture based on the subindex
-            auto& textureVector = textures[texture->textureKey.mainIndex];
-
-            if (texture->textureKey.subIndex < textureVector.size())
+            shader.Bind();
+            if (!entity->HasComponent(ComponentType::Texture))
             {
-                // Texture with the specified subindex exists, bind it
-                textureVector[texture->textureKey.subIndex].Bind(0);
-            }
-            else if (!textureVector.empty())
-            {
-                // Texture with the specified subindex does not exist, default to subindex 0
-                textureVector[0].Bind(0);
-            }
-            // You might want to add an else case to handle the situation where textureVector is empty
-
-             //If Sprite present
-            if ((texture->textureKey.subIndex == 1) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 10.0f;
-                float horizontalFrames = 6.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
-
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
-            }
-            else if ((texture->textureKey.subIndex  == 2 ) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 10.0f;
-                float horizontalFrames = 10.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
-
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
-            }
-            else if ((texture->textureKey.subIndex == 3) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 10.0f;
-                float horizontalFrames = 5.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::LOOP;
-
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+                Logger::GetInstance().Log(LogLevel::Error, "Entity does not have a TextureComponent!");
+                return;
             }
 
-            else if ((texture->textureKey.subIndex == 4) && entity->HasComponent(ComponentType::Sprite))
+            TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+
+            if (texture != nullptr)
             {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 5.0F;
-                float horizontalFrames = 5.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::ONE_TIME;
+                // Attempt to bind the texture based on the subindex
+                auto& textureVector = textures[texture->textureKey.mainIndex];
 
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
-
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
-
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+                if (texture->textureKey.subIndex < textureVector.size())
+                {
+                    // Texture with the specified subindex exists, bind it
+                    textureVector[texture->textureKey.subIndex].Bind(0);
+                }
+                else if (!textureVector.empty())
+                {
+                    // Texture with the specified subindex does not exist, default to subindex 0
+                    textureVector[0].Bind(0);
                 }
 
-            else if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
-            {
-                // Calculate deltaTime (time since the last frame)
-                static double lastTime = glfwGetTime();
-                double currentTime = glfwGetTime();
-                double deltaTime = currentTime - lastTime;
-                lastTime = currentTime;
-                float frameRate = 5.0F;
-                float horizontalFrames = 6.0f; // Number of horizontal frames
-                float verticalFrames = 1.0f; // Number of vertical frames
-                //float Length = 1536.0f; // length of sprite sheet
-                Anim_Mode playMode = Anim_Mode::ONE_TIME;
+                //If Sprite present
+                if ((texture->textureKey.subIndex == 1) && entity->HasComponent(ComponentType::Sprite))
+                {
+                    // Calculate deltaTime (time since the last frame)
+                    static double lastTime = glfwGetTime();
+                    double currentTime = glfwGetTime();
+                    double deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+                    float frameRate = 10.0f;
+                    float horizontalFrames = 6.0f; // Number of horizontal frames
+                    float verticalFrames = 1.0f; // Number of vertical frames
+                    //float Length = 1536.0f; // length of sprite sheet
+                    Anim_Mode playMode = Anim_Mode::LOOP;
 
-                // Create a static animation object if not created already
-                static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
-                // Play the animation
-                animation.Play();
-                // Update the animation with deltaTime
-                animation.Update(static_cast<float>(deltaTime));
-                // Get the current frame index
-                int currentFrame = animation.GetCurrentFrame();
+                    // Create a static animation object if not created already
+                    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                    // Play the animation
+                    animation.Play();
+                    // Update the animation with deltaTime
+                    animation.Update(static_cast<float>(deltaTime));
+                    // Get the current frame index
+                    int currentFrame = animation.GetCurrentFrame();
 
-                // Calculate the texture offset based on the current frame
-                float frameWidth = 1.0f / horizontalFrames;
-                float frameHeight = 1.0f / verticalFrames;
-                float texCoordX = currentFrame * frameWidth;
-                //float texCoordY = currentRow * frameHeight;
+                    // Calculate the texture offset based on the current frame
+                    float frameWidth = 1.0f / horizontalFrames;
+                    float frameHeight = 1.0f / verticalFrames;
+                    float texCoordX = currentFrame * frameWidth;
+                    //float texCoordY = currentRow * frameHeight;
 
-                // Set the texture offset in the shader
-                shader.SetUniform1f("texCoordX", texCoordX);
-                //shader.SetUniform1f("u_FrameCount", horizontalFrames);
-                shader.SetUniform1f("u_FrameWidth", frameWidth);
-                shader.SetUniform1f("u_FrameHeight", frameHeight);
-                shader.SetUniform1i("u_CurrentFrame", currentFrame);
+                    // Set the texture offset in the shader
+                    shader.SetUniform1f("texCoordX", texCoordX);
+                    //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                    shader.SetUniform1f("u_FrameWidth", frameWidth);
+                    shader.SetUniform1f("u_FrameHeight", frameHeight);
                 }
-            else //render as static
-            {
-                textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
-                shader.SetUniform1f("texCoordX", 0.0f);
-                //shader.SetUniform1f("u_FrameCount", 1.0f);
-                shader.SetUniform1f("u_FrameWidth", 1.0f);
-                shader.SetUniform1f("u_FrameHeight", 1.0f);
+                else if ((texture->textureKey.subIndex == 2) && entity->HasComponent(ComponentType::Sprite))
+                {
+                    // Calculate deltaTime (time since the last frame)
+                    static double lastTime = glfwGetTime();
+                    double currentTime = glfwGetTime();
+                    double deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+                    float frameRate = 10.0f;
+                    float horizontalFrames = 10.0f; // Number of horizontal frames
+                    float verticalFrames = 1.0f; // Number of vertical frames
+                    //float Length = 1536.0f; // length of sprite sheet
+                    Anim_Mode playMode = Anim_Mode::LOOP;
+
+                    // Create a static animation object if not created already
+                    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                    // Play the animation
+                    animation.Play();
+                    // Update the animation with deltaTime
+                    animation.Update(static_cast<float>(deltaTime));
+                    // Get the current frame index
+                    int currentFrame = animation.GetCurrentFrame();
+
+                    // Calculate the texture offset based on the current frame
+                    float frameWidth = 1.0f / horizontalFrames;
+                    float frameHeight = 1.0f / verticalFrames;
+                    float texCoordX = currentFrame * frameWidth;
+                    //float texCoordY = currentRow * frameHeight;
+
+                    // Set the texture offset in the shader
+                    shader.SetUniform1f("texCoordX", texCoordX);
+                    //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                    shader.SetUniform1f("u_FrameWidth", frameWidth);
+                    shader.SetUniform1f("u_FrameHeight", frameHeight);
+                }
+                else if ((texture->textureKey.subIndex == 3) && entity->HasComponent(ComponentType::Sprite))
+                {
+                    // Calculate deltaTime (time since the last frame)
+                    static double lastTime = glfwGetTime();
+                    double currentTime = glfwGetTime();
+                    double deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+                    float frameRate = 10.0f;
+                    float horizontalFrames = 5.0f; // Number of horizontal frames
+                    float verticalFrames = 1.0f; // Number of vertical frames
+                    //float Length = 1536.0f; // length of sprite sheet
+                    Anim_Mode playMode = Anim_Mode::LOOP;
+
+                    // Create a static animation object if not created already
+                    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                    // Play the animation
+                    animation.Play();
+                    // Update the animation with deltaTime
+                    animation.Update(static_cast<float>(deltaTime));
+                    // Get the current frame index
+                    int currentFrame = animation.GetCurrentFrame();
+
+                    // Calculate the texture offset based on the current frame
+                    float frameWidth = 1.0f / horizontalFrames;
+                    float frameHeight = 1.0f / verticalFrames;
+                    float texCoordX = currentFrame * frameWidth;
+
+                    // Set the texture offset in the shader
+                    shader.SetUniform1f("texCoordX", texCoordX);
+                    shader.SetUniform1f("u_FrameWidth", frameWidth);
+                    shader.SetUniform1f("u_FrameHeight", frameHeight);
+                }
+
+                else if ((texture->textureKey.subIndex == 4) && entity->HasComponent(ComponentType::Sprite))
+                {
+                    // Calculate deltaTime (time since the last frame)
+                    static double lastTime = glfwGetTime();
+                    double currentTime = glfwGetTime();
+                    double deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+                    float frameRate = 5.0F;
+                    float horizontalFrames = 5.0f; // Number of horizontal frames
+                    float verticalFrames = 1.0f; // Number of vertical frames
+                    //float Length = 1536.0f; // length of sprite sheet
+                    Anim_Mode playMode = Anim_Mode::ONE_TIME;
+
+                    // Create a static animation object if not created already
+                    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                    // Play the animation
+                    animation.Play();
+                    // Update the animation with deltaTime
+                    animation.Update(static_cast<float>(deltaTime));
+                    // Get the current frame index
+                    int currentFrame = animation.GetCurrentFrame();
+
+                    // Calculate the texture offset based on the current frame
+                    float frameWidth = 1.0f / horizontalFrames;
+                    float frameHeight = 1.0f / verticalFrames;
+                    float texCoordX = currentFrame * frameWidth;
+                    //float texCoordY = currentRow * frameHeight;
+
+                    // Set the texture offset in the shader
+                    shader.SetUniform1f("texCoordX", texCoordX);
+                    //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                    shader.SetUniform1f("u_FrameWidth", frameWidth);
+                    shader.SetUniform1f("u_FrameHeight", frameHeight);
+                }
+
+                else if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
+                {
+                    // Calculate deltaTime (time since the last frame)
+                    static double lastTime = glfwGetTime();
+                    double currentTime = glfwGetTime();
+                    double deltaTime = currentTime - lastTime;
+                    lastTime = currentTime;
+                    float frameRate = 5.0F;
+                    float horizontalFrames = 6.0f; // Number of horizontal frames
+                    float verticalFrames = 1.0f; // Number of vertical frames
+                    //float Length = 1536.0f; // length of sprite sheet
+                    Anim_Mode playMode = Anim_Mode::ONE_TIME;
+
+                    // Create a static animation object if not created already
+                    static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);
+                    // Play the animation
+                    animation.Play();
+                    // Update the animation with deltaTime
+                    animation.Update(static_cast<float>(deltaTime));
+                    // Get the current frame index
+                    int currentFrame = animation.GetCurrentFrame();
+
+                    // Calculate the texture offset based on the current frame
+                    float frameWidth = 1.0f / horizontalFrames;
+                    float frameHeight = 1.0f / verticalFrames;
+                    float texCoordX = currentFrame * frameWidth;
+                    //float texCoordY = currentRow * frameHeight;
+
+                    // Set the texture offset in the shader
+                    shader.SetUniform1f("texCoordX", texCoordX);
+                    //shader.SetUniform1f("u_FrameCount", horizontalFrames);
+                    shader.SetUniform1f("u_FrameWidth", frameWidth);
+                    shader.SetUniform1f("u_FrameHeight", frameHeight);
+                }
+                else //render as static
+                {
+                    textures[texture->textureKey.mainIndex][0].Bind(0); //render static version of texture at subindex = 0
+                    shader.SetUniform1f("texCoordX", 0.0f);
+                    //shader.SetUniform1f("u_FrameCount", 1.0f);
+                    shader.SetUniform1f("u_FrameWidth", 1.0f);
+                    shader.SetUniform1f("u_FrameHeight", 1.0f);
+                }
             }
-        }       
-        shader.Bind();
-              
-        glm::mat4 result;
-        if (useEditorCamera) {
-            result =  m_EditorCamera.GetViewProjectionMatrix() * mvpMatrix;
+            shader.Bind();
+
+            glm::mat4 result;
+            if (useEditorCamera) {
+                result = m_EditorCamera.GetViewProjectionMatrix() * mvpMatrix;
+            }
+            else {
+                result = m_Camera.GetViewProjectionMatrix() * mvpMatrix;
+            }
+
+            shader.SetUniformMat4f("u_MVP", result);
+
+            va.Bind();
+            ib.Bind();
+            shader.SetUniform1i("u_RenderTextured", 1);
+            // Render the entity
+            //renderer.Draw(va, ib, shader);
+            GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+
+            // Unbind the texture and shader
+            shader.Unbind();
         }
-        else {
-            result =  m_Camera.GetViewProjectionMatrix() * mvpMatrix;
+        else
+        {
+            //Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
-
-        /*
-        // Extract translation part (last column) of the MVP matrix
-        glm::vec4 transformedPosition = result[3];
-
-        std::cout << "Entity: " << static_cast<int>(entity->GetID()) << std::endl;
-        // Print the transformed coordinates
-        std::cout << "Transformed Coordinates: (" << transformedPosition.x << ", "
-            << transformedPosition.y << ", "
-            << transformedPosition.z << ")\n";
-        */
-        
-        shader.SetUniformMat4f("u_MVP", result);
-
-        va.Bind();
-        ib.Bind();
-
-        // Render the entity
-        renderer.Draw(va, ib, shader);
-
-        // Unbind the texture and shader
-        shader.Unbind();
     }
 
     void GraphicsSystem::RenderLines(const glm::mat4& mvpMatrix)
     {
-        try {
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
             // Bind the shader and set uniforms for line rendering
             shader.Bind();
             vaLines.Bind();
+
+            GLenum error = glGetError();
+            if (error != GL_NO_ERROR)
+            {
+                // Log the error
+                Logger::GetInstance().Log(LogLevel::Error, "OpenGL Error before rendering lines: " + std::to_string(error));
+            }
+
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
             if (renderCollisionBox == true) {
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
@@ -636,74 +637,9 @@ namespace Engine
             vaLines.Unbind();
             shader.Unbind();
         }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Render lines error: " + std::string(e.what()));
-        }
-    }
-
-    void GraphicsSystem::RenderSingleLine(const glm::mat4& mvpMatrix, const glm::vec2& lineStart, const glm::vec2& lineEnd)
-    {
-        try 
+        else
         {
-            shader.Bind();
-            vaLines.Bind();
-            shader.SetUniform1i("u_RenderTextured", 0); // no texture
-            shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
-
-            // Update the line vertices based on the new start and end positions
-            float linePositions[] =
-            {
-                lineStart.x, lineStart.y, 0.0f, 0.0f,
-                lineEnd.x, lineEnd.y, 1.0f, 1.0f
-            };
-
-            VertexBuffer vbLines(linePositions, 2 * 4 * sizeof(float));
-            VertexBufferLayout layoutLines;
-            layoutLines.Push<float>(2);
-            layoutLines.Push<float>(2);
-            vaLines.AddBuffer(vbLines, layoutLines);
-
-            // Draw a single straight line
-            GLCall(glDrawArrays(GL_LINES, 0, 2));
-
-            shader.SetUniform1i("u_RenderTextured", 1);
-            vaLines.Unbind();
-            shader.Unbind();
-        }
-        catch (const std::exception& e) 
-        {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Render single line error: " + std::string(e.what()));
-        }
-    }
-
-    void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
-    {
-        try {
-        // Bind the shader and set uniforms
-        shader.Bind();
-        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
-
-        if (useEditorCamera) 
-        {
-            shader.SetUniformMat4f("u_MVP", m_EditorCamera.GetViewProjectionMatrix());
-        }
-        else 
-        {
-            shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
-        }
-
-        va.Bind();
-        ib.Bind();
-        // Render the square
-        renderer.Draw(va, ib, shader);
-        shader.Unbind();
-        }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Draw colored square error: " + std::string(e.what()));
-
+            //Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
@@ -713,19 +649,9 @@ namespace Engine
         renderer.Clear(); 
         if(renderImGuiGUI == true)
         editorFBO.Bind();
-        // Get the current state of the 'S' key
-        bool currentSState = glfwGetKey(this->Window, GLFW_KEY_S) == GLFW_PRESS;
 
         shader.Bind();
         
-        // Check if there's a change in the 'S' key state
-        if (currentSState && !previousSState)
-        {
-            // Toggle the shader state
-            ToggleShaderSet();
-        }
-        // Update the previous 'S' key state
-        previousSState = currentSState;
         int previousShaderSet = shader.GetCurrentShaderSet();
         for (const auto& entityPair : *entities)
         {
@@ -762,33 +688,19 @@ namespace Engine
                     {
                         TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
-                        // Check if there's a change in the 'P' key state
-                        //if (currentPState && !previousPState)
-                        //{
-                        //    // Toggle the rendering mode
-                        //    ToggleRenderMode();
-                        //}
-
-                        //// Update the previous 'P' key state
-                        //previousPState = currentPState;
-
                         if (!renderTexturedSquare)
                         {
                             if(texture->textureKey.mainIndex == Background)
                                 RenderBackground(modelA);
                             else {
                                 RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
-                                 RenderLines(modelA);
+                                //RenderLines(modelA);
                                 
                             }
                         }
-                        else
-                        {
-                            DrawColoredSquare(modelA);
-                        }
+                       
                     }
 
-                    //RenderSingleLine(mvpA, lineStart, lineEnd
                     transform->position.x = transA.x;
                     transform->position.y = transA.y;
                 }
@@ -874,8 +786,7 @@ namespace Engine
             if (totalTank == 0)
             {
                 font.RenderText(shader, "x0", 0.275f, -0.95f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
-            }
-       
+            }     
         }
  
         std::stringstream ss;
@@ -889,25 +800,7 @@ namespace Engine
         m_Camera.UpdatePosition(InputController, CameraSpeed);
         if (renderImGuiGUI == true)
         editorFBO.Unbind();
-    }
-
-    void GraphicsSystem::UpdateShaderSet()
-    {
-        try {
-            std::cout << "UpdateShaderSet() called!" << std::endl;
-
-            // Print the current shader set before reinitializing shaders
-            std::cout << "Current Shader Set: " << shader.GetCurrentShaderSet() << std::endl;
-
-            // Reinitialize shaders based on the new set
-            InitializeShader();
-
-            // Print the shader set after reinitializing shaders
-            std::cout << "Shader Set Updated: " << (shader.GetCurrentShaderSet() == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
-        }
-        catch (const std::exception& e) {
-            Logger::GetInstance().Log(LogLevel::Error, "Shader set update error: " + std::string(e.what()));
-        }
+        shader.Unbind();
     }
 
     void GraphicsSystem::UpdateTexture(int main, int sub, const std::string& newPath)
@@ -923,54 +816,11 @@ namespace Engine
         glViewport(0, 0, width, height);
     }
 
-    void GraphicsSystem::ToggleRenderMode()
-    {
-        try {
-            renderTexturedSquare = !renderTexturedSquare;
-            std::cout << "Render Textured Square: " << (renderTexturedSquare ? "Enabled" : "Disabled") << std::endl;
-
-            shader.Bind();
-            shader.SetUniform1i("u_RenderTextured", renderTexturedSquare ? 1 : 0);
-            std::cout << "Shader Uniform 'u_RenderTextured' set to: " << (renderTexturedSquare ? "1" : "0") << std::endl;
-        }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Toggle render mode error: " + std::string(e.what()));
-        }
-    }
-
-    void GraphicsSystem::ToggleShaderSet()
-    {
-        try
-        {
-            std::cout << "ToggleShaderSet() called!" << std::endl;
-
-            int newShaderSet = (shader.GetCurrentShaderSet() == 1) ? 2 : 1;
-            shader.SetActiveShaderSet(newShaderSet);
-
-            std::cout << "Shader Set Toggled: " << (newShaderSet == 1 ? "Shader Set 1" : "Shader Set 2") << std::endl;
-
-            // Update shader properties based on the new set
-            UpdateShaderSet();
-        }
-        catch (const std::exception& e)
-        {
-            Logger::GetInstance().Log(LogLevel::Error, "Shader set toggle error: " + std::string(e.what()));
-        }
-    }
-
     glm::mat4 GraphicsSystem::SetupModelMatrix(const glm::vec3& translation, float rotationAngle, const glm::vec3& scale)
     {
-        //int screenWidth, screenHeight;
         glfwGetWindowSize(Window, &screenWidth, &screenHeight);
 
-        // Calculate the position for your object at the center of the screen
-        //glm::vec3 MobjectPosition = glm::vec3(static_cast<float>(screenWidth) / 2.0f, static_cast<float>(screenHeight) / 2.0f, 0.0f);
-
         glm::mat4 model = glm::mat4(1.0f); // Initialize the model matrix as identity
-
-        // Translate the object to the calculated center position
-        //model = glm::translate(model, MobjectPosition);
 
         // Apply the provided translation, scale, and rotation
         model = glm::translate(model, translation);

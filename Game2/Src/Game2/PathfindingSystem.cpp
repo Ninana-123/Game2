@@ -135,6 +135,11 @@ namespace Engine
         return std::sqrt(dxSquared + dySquared);
     }
 
+    std::string PathfindingSystem::returnSystem()
+    {
+        return "pathfindingSystem";
+    }
+
     PathfindingSystem::PathfindingSystem(int _numRows, int _numCols) {
         numRows = _numRows;
         numCols = _numCols;

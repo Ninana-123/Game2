@@ -225,7 +225,7 @@ namespace Engine {
 	// Minimize the window
 	void WindowsWindow::MinimizeWindow() {
 		if (m_Window) {
-			Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
+			//Logger::GetInstance().Log(LogLevel::Info, "Minimizing Window");
 
 			// Iconify (minimize) the GLFW window
 			glfwIconifyWindow(m_Window);

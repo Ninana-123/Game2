@@ -13,7 +13,7 @@
 #define ENGINE_ENTITYMANAGER_H
 
 #include "Entity.h"
-#include "Prefab.h"
+#include "PrefabManager.h"
 
 namespace Engine
 {
@@ -24,7 +24,7 @@ namespace Engine
 		\brief
 		Constructor for the EntityManager class.
 		*/
-		EntityManager() {};
+		EntityManager(){};
 
 		/*!
 		\brief
@@ -149,8 +149,17 @@ namespace Engine
 		*/
 		void DestroyEntitiesInStorage();
 
+		void LinkPrefabManager(PrefabManager* pm);
+
+		std::vector<Entity*> QueryScriptEntitiesWithType(ScriptType type);
+
+		std::vector<Entity*> QueryScriptEntitiesWithoutType(ScriptType type);
+
+		PrefabManager* QueryPM();
+
 	protected:
 		std::vector<EntityID> storage;
+		PrefabManager* PM = nullptr;
 	};
 
 }

@@ -290,6 +290,11 @@ namespace Engine
 		return true;
 	}
 
+	std::string CollisionSystem::returnSystem()
+	{
+		return "collisionSystem";
+	}
+
 	bool CollisionSystem::CollisionIntersection_PointRect(const VECTORMATH::Vec2& point, const AABB& aabb)
 	{
 		return (point.x >= aabb.min.x && point.x <= aabb.max.x && point.y >= aabb.min.y && point.y <= aabb.max.y);
@@ -1181,9 +1186,9 @@ namespace Engine
 						lastCollidingEntity = entity->GetID();
 						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;
 						isSpawned = true;
-						// std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
-						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
+						 std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
+						 std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+						 std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
 
 					// Slotting logic for ingameGUI temporarily until logic system gets put in place
@@ -1235,7 +1240,8 @@ namespace Engine
 								archerSpawned = true;
 							}
 
-
+							ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
+							scriptComponent->run = true;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 
 						}
@@ -1275,4 +1281,5 @@ namespace Engine
 			}
 		}
 	}
+
 }

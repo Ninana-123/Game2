@@ -22,30 +22,53 @@ Technology is prohibited.
 #include "AssetManager.h"
 
 namespace Engine {
-	class MainMenuScene : public Scene {
-	public:
-		/*!
-		\brief Constructor for MainMenuScene class.
-		\param EM Pointer to the EntityManager instance.
-		\param prefabManager Pointer to the PrefabManager instance.
-		\param AM Pointer to the AssetManager instance.
-		*/
-		MainMenuScene(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM) 
-			: menuLoader(EM, prefabManager, AM) {}
+    /**
+     * \class MainMenuScene
+     * \brief Represents the Main Menu Scene.
+     *
+     * This class represents the Main Menu Scene and handles the loading and
+     * shutdown of the main menu.
+     */
+    class MainMenuScene : public Scene {
+    public:
+        /**
+         * \brief Constructor for the MainMenuScene class.
+         * \param EM Pointer to the EntityManager instance.
+         * \param prefabManager Pointer to the PrefabManager instance.
+         * \param AM Pointer to the AssetManager instance.
+         */
+        MainMenuScene(std::shared_ptr<Engine::EntityManager> EM, PrefabManager* prefabManager, std::shared_ptr<Engine::AssetManager> AM)
+            : menuLoader(EM, prefabManager, AM) {}
 
-		/*!
-		\brief Called when the main menu scene is loaded.
-		*/
-		void OnLoad() override;
+        /**
+         * \brief Called when the main menu scene is loaded.
+         */
+        void OnLoad() override;
 
-		/*!
-		\brief Called when the main menu scene is shut down.
-		*/
-		void OnShutDown() override;
+        /**
+         * \brief Called when the main menu scene is shut down.
+         */
+        void OnShutDown() override;
 
-	private:
-	Loader menuLoader;
-	EntityManager m_entityManager;
-	};
+        /**
+         * \brief Called when the main menu scene is initialized.
+         */
+        void OnInit() override {}
+
+        /**
+         * \brief Called when the main menu scene is updated.
+         * \param deltaTime The time since the last update.
+         */
+        void OnUpdate(double /*deltaTime*/) override {}
+
+        /**
+         * \brief Free resources used by the main menu scene.
+         */
+        void FreeLevel() override {}
+
+    private:
+        Loader menuLoader; ///< Loader for the main menu.
+        EntityManager m_entityManager; ///< Entity manager for the main menu.
+    };
 }
-#endif	ENGINE_MAINMENU_SCENE_H
+#endif // ENGINE_MAINMENU_SCENE_H

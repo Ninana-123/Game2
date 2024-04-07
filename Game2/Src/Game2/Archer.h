@@ -1,6 +1,6 @@
 /******************************************************************************/
 /*!
-\file		Tower.h
+\file		Archer.h
 \author 	Tristan Tham Rui Hong
 \par    	email: t.tham@digipen.edu
 \date   	01/03/2924
@@ -22,21 +22,21 @@ namespace Engine
 {
 	extern ScriptFactory* g_ScriptFactory;
 
-	class Tower : public Script
+	class Archer : public Script
 	{
-	public:		
-		Tower(Entity* entity_);
+	public:
+		Archer(Entity* entity_);
 		void Update() override;
 		void Shoot(Entity* entity);
 		bool Target();
 		void IsDead();
-		
+
 	private:
-		float hp = 50.f;
+		float hp = 30.f;
 		float range = 200.f;
 		bool alive = true;
 		int count = 0;
-		float firerate = 0.05f;
+		float firerate = 0.3f;
 		float counter = 0.f;
 
 		Entity* entity = nullptr;
@@ -45,9 +45,9 @@ namespace Engine
 		TransformComponent* entityTransform = nullptr;
 		ScriptComponent* entityScript = nullptr;
 
-		std::vector<Entity*> targets;
 		std::vector<Arrow*> arrows;
-
+		std::vector<Entity*> targets;
+	
 		std::shared_ptr<EntityManager> EM = nullptr;
 		PrefabManager* PM = nullptr;
 	};
