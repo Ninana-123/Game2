@@ -36,6 +36,8 @@ namespace Engine
 
         Script* AddScript(ScriptType type, EntityID entityId);
 
+        ScriptSystem* GetScriptSystem();
+
         //void RemoveScript(EntityID entityId);
 
     private:

@@ -145,7 +145,7 @@
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\VFX.cpp">
+    <ClCompile Include="Src\Game2\CutScene.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game2\Infantry.cpp">
@@ -163,11 +163,8 @@
     <ClCompile Include="Src\Game2\Arrow.cpp">
       <Filter>Scripts\Action</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\CutSceneLevel.cpp">
-      <Filter>Base\SceneManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game2\ScriptSystem.cpp">
-      <Filter>Systems\Logic</Filter>
+    <ClCompile Include="Src\Game2\Archer.cpp">
+      <Filter>Scripts\Units\Archer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +357,7 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\StatsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -396,7 +394,7 @@
     <ClInclude Include="Src\Game2\ShootingSystem.h">
       <Filter>Systems\Shooting</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\VFX.h">
+    <ClInclude Include="Src\Game2\CutScene.h">
       <Filter>Base\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game2\ScriptSystem.h">
@@ -417,11 +415,8 @@
     <ClInclude Include="Src\Game2\ScriptFactory.h">
       <Filter>Scripts\ScriptFactory</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\CutSceneLevel.h">
-      <Filter>Base\SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game2\RenderDataComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Src\Game2\Archer.h">
+      <Filter>Scripts\Units\Archer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +557,9 @@
     </Filter>
     <Filter Include="Scripts\ScriptFactory">
       <UniqueIdentifier>{8b375dde-e73a-4a9a-8626-00df69d38160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Units\Archer">
+      <UniqueIdentifier>{41e92b2f-cbf9-4ef9-9c96-a13fdda3a8e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

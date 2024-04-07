@@ -27,6 +27,7 @@ bool isGamePaused = false;
 bool inSettings = false;
 bool isGameOver = false;
 bool victoryScreenShown = false;
+bool defeatScreenShown = false;
 bool accessedCastle = false;
 // bool entityCreated = false;
 //AudioEngine audio;
@@ -39,8 +40,8 @@ namespace Engine
 
 	void inGameGUI::Initialize()
 	{
-		totalInfantry = 3;
-		totalArcher = 2;
+		totalInfantry = 1;
+		totalArcher = 1;
 		totalTank = 1;
 	}
 
@@ -190,10 +191,27 @@ namespace Engine
 			victoryScreenShown = true;
 		}
 
-		if (Input::IsKeyPressed(KEY_ENTER) && victoryScreenShown == true)
+		if (Input::IsKeyPressed(KEY_ENTER) && (victoryScreenShown == true || defeatScreenShown == true))
 		{
-			entityManager->DestroyEntity(victoryID);
+			if (victoryScreenShown) 
+			{
+				entityManager->DestroyEntity(victoryID);
+			}
+			if (defeatScreenShown)
+			{
+				entityManager->DestroyEntity(defeatID);
+			}
 			RestartGame();
+		}
+
+		if (!isGameOver && totalInfantry == 0 && totalTank == 0 && totalArcher == 0
+			&& infantryDead && tankDead && archerDead)
+			
+		{
+			Prefab* defeatPrefab = prefabManager->GetPrefab(11);
+			entityManager->CreateEntityFromPrefab(*defeatPrefab);
+			defeatScreenShown = true;
+			isGameOver = true;
 		}
 
 		// Reset flag

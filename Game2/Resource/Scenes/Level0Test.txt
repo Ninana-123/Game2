@@ -153,7 +153,7 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 50
+Health: 75
 Range: 100
 Logic
 BehaviourIndex: 0
@@ -195,11 +195,14 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 50
+Health: 75
 Range: 100
 Logic
 BehaviourIndex: 0
 Shooting
+Script
+ID: 8
+type: 0
 EndEntity
 Transform
 Position: 345 75
@@ -231,7 +234,7 @@ Texture
 MainIndex: 5
 SubIndex: 0
 Stats
-Health: 50
+Health: 100
 Range: 100
 Logic
 BehaviourIndex: 0

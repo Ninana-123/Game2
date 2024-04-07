@@ -170,6 +170,7 @@ namespace Engine
 
         //Initializing Entity Manager
         EM = std::make_shared<Engine::EntityManager>();
+        EM->LinkPrefabManager(&PM);
 
         systemsManager = std::make_shared<SystemsManager>(assetManager, EM);
         systemsManager->Initialize();

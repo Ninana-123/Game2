@@ -1,4 +1,4 @@
-11
+12
 Infantry
 Transform
 Position: -135 -300
@@ -47,6 +47,10 @@ Position: 0 -300
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
+Script
+ID: 0
+type: 0
+Running: 0
 Collision
 c_Width: 45
 c_Height: 45
@@ -120,19 +124,19 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 100
+Health: 80
 Range: 0
 Logic
 BehaviourIndex: 0
 EndPrefab
-HUDArcher
+Arrow
 Transform
 Position: 0 0
-ScaleX: 1
-ScaleY: 1
+ScaleX: 0.7
+ScaleY: 0.7
 Rotation: 0
 Texture
-MainIndex: 8
+MainIndex: 42
 SubIndex: 0
 Collision
 c_Width: 0
@@ -258,5 +262,15 @@ ScaleY: 0.3
 Rotation: 0
 Texture
 MainIndex: 41
+SubIndex: 0
+EndPrefab
+DefeatScreen
+Transform
+Position: 0 0
+ScaleX: 16
+ScaleY: 9
+Rotation: 0
+Texture
+MainIndex: 53
 SubIndex: 0
 EndPrefab
