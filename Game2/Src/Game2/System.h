@@ -100,6 +100,7 @@ namespace Engine
 			elapsedTime = 0.0;
 		}
 
+		virtual std::string returnSystem() = 0;
 	private:
 		SystemState state = SystemState::On;
 		std::chrono::high_resolution_clock::time_point startTime;

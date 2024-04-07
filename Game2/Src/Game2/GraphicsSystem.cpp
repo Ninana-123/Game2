@@ -64,6 +64,9 @@ namespace Engine
     {
     }
 
+    std::string GraphicsSystem::returnSystem() {
+        return "graphics";
+    }
 
     void GraphicsSystem::InitializeGLEW() {
         // Initialize GLEW
@@ -592,9 +595,10 @@ namespace Engine
 
             va.Bind();
             ib.Bind();
-
+            shader.SetUniform1i("u_RenderTextured", 1);
             // Render the entity
-            renderer.Draw(va, ib, shader);
+            //renderer.Draw(va, ib, shader);
+            GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 
             // Unbind the texture and shader
             shader.Unbind();
@@ -690,7 +694,7 @@ namespace Engine
                                 RenderBackground(modelA);
                             else {
                                 RenderTexturedEntity(modelA, entity); // Here, we pass the specific entity
-                                RenderLines(modelA);
+                                //RenderLines(modelA);
                                 
                             }
                         }

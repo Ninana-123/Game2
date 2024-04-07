@@ -42,9 +42,9 @@ namespace Engine {
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
 
-        if (elapsedTime.count() % 4) // Update every frame for 2 seconds
+        if (elapsedTime.count() % 400000) // Update every frame for 2 seconds
         {
-            // Load the cutscene entities from the file if not loaded already
+            // Load the cutscene entities from the file
             if (cutsceneEntities.empty())
             {
                 cutsceneLoader.LoadScene(CutSceneFilePath);

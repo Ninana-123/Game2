@@ -115,6 +115,7 @@
     <ClCompile Include="Src\Game2\CollisionSystem.cpp" />
     <ClCompile Include="Src\Game2\ComponentFactory.cpp" />
     <ClCompile Include="Src\Game2\CutSceneLevel.cpp" />
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp" />
     <ClCompile Include="Src\Game2\VFX.cpp" />
     <ClCompile Include="Src\Game2\EditorFBO.cpp" />
     <ClCompile Include="Src\Game2\EngineTypes.cpp" />

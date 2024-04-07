@@ -81,7 +81,8 @@ namespace Engine
     // Entity-related instances and properties
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
-    std::shared_ptr<EntityManager> EM;   
+    std::shared_ptr<EntityManager> EM;
+
     PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
@@ -330,7 +331,7 @@ namespace Engine
                     if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
                     {
               
-                        fp = GameSceneFilePath;
+                        fp = CutSceneFilePath;
                         int entityCount = static_cast<int>(EM->GetEntities()->size());
 
                         for (int i = entityCount - 1; i >= 0; --i) {
@@ -348,6 +349,9 @@ namespace Engine
 
                         // Now load the scene
                         loader->LoadScene(fp);
+                        sceneManager.TransitionToScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+                        sceneManager.UpdateScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+
                         if (EM->GetEntities()->size() >= 2) {
                             m_ImGuiWrapper->selectedEntityIndex = 1;
                         }

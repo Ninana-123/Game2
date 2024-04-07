@@ -166,6 +166,9 @@
     <ClCompile Include="Src\Game2\CutSceneLevel.cpp">
       <Filter>Base\SceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp">
+      <Filter>Systems\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">

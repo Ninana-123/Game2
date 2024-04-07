@@ -269,6 +269,11 @@ namespace Engine
 		return true;
 	}
 
+	std::string CollisionSystem::returnSystem()
+	{
+		return "collisionSystem";
+	}
+
 	bool CollisionSystem::CollisionIntersection_PointRect(const VECTORMATH::Vec2& point, const AABB& aabb)
 	{
 		return (point.x >= aabb.min.x && point.x <= aabb.max.x && point.y >= aabb.min.y && point.y <= aabb.max.y);
