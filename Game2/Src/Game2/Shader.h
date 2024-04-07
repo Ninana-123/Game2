@@ -219,5 +219,6 @@ private:
      * and caches it for future use to improve performance.
      */
     int GetUniformLocation(const std::string& name);
+
 };
 #endif ENGINE_SHADER_H

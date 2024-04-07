@@ -16,6 +16,7 @@
 #include "pch.h"
 #include "Shader.h"
 #include "Renderer.h"
+#include <GLFW/glfw3.h>
 
 Shader::Shader(const std::string& filepath1, const std::string& filepath2, 
                const std::string& filepath3, const std::string& filepath4, 
@@ -223,8 +224,6 @@ void Shader::Bind() const
     {
         std::cerr << "Shader set " << m_CurrentShaderSet << " is not initialized!" << std::endl;
     }
-
-    
 }
 
 void Shader::Unbind() const

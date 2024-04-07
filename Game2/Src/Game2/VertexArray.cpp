@@ -18,6 +18,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Renderer.h"
+#include <GLFW/glfw3.h>
 
 VertexArray::VertexArray()
 	: m_RendererID(0), m_RendererBuffers(3)
@@ -44,6 +45,7 @@ void VertexArray::GenerateRendererID() const
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
+
 	Bind();		//bind to make VAO the active VAO
 	vb.Bind();	//bind vertex buffer
 	const auto& elements = layout.GetElements();
@@ -76,15 +78,31 @@ void VertexArray::UpdateBuffer(unsigned int index, const void* data, size_t size
 
 void VertexArray::Bind() const
 {
-	if (m_RendererID == 0)
+	// Check if the window is minimized
+	if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
 	{
-		GenerateRendererID(); //generate new VAO if it doesn't exist
+		if (m_RendererID == 0)
+		{
+			GenerateRendererID(); //generate new VAO if it doesn't exist
+		}
+		//bind to make the new VAO active
+		GLCall(glBindVertexArray(m_RendererID));
 	}
-	//bind to make the new VAO active
-	GLCall(glBindVertexArray(m_RendererID));
+	else
+	{
+		std::cout << "Window is minimized, skipping VAO binding." << std::endl;
+	}
 }
 
 void VertexArray::Unbind() const
 {
-	GLCall(glBindVertexArray(0));
+	// Check if the window is minimized
+	if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
+	{
+		GLCall(glBindVertexArray(0));
+	}
+	else
+	{
+		std::cout << "Window is minimized, skipping VAO unbinding." << std::endl;
+	}
 }

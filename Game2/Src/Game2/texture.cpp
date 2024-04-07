@@ -17,6 +17,7 @@
 #include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include <GLFW/glfw3.h>
 
 Texture::Texture()
     : m_Filepath(""), m_RendererID(0), m_LocalBuffer(nullptr),
@@ -62,14 +63,30 @@ void Texture::InitGL()
 
 void Texture::Bind(unsigned int slot) const
 {
-    // Bind texture to a specific texture slot
-    GLCall(glActiveTexture(GL_TEXTURE0 + slot));
-    GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+    // Check if the window is minimized
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED))
+    {
+        // Window is not minimized, proceed with binding the texture
+        GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+        GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+    }
+    else
+    {
+        // Window is minimized, do not perform texture binding
+        std::cout << "Window is minimized, skipping texture binding." << std::endl;
+    }
 }
 
 void Texture::Unbind() const
 {
-    GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) 
+    {
+        GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+    }
+    else
+    {
+        std::cout << "Window is minimized, skipping texture binding." << std::endl;
+    }
 }
 
 bool Texture::Load()

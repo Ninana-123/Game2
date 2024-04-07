@@ -622,6 +622,7 @@ namespace Engine
         try {
             // Bind the shader and set uniforms for line rendering
             shader.Bind();
+            vaLines.Bind();
             shader.SetUniform1i("u_RenderTextured", 0); // no texture
             if (renderCollisionBox == true) {
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 1.0f); // Set the line color
@@ -629,7 +630,6 @@ namespace Engine
             else
                 shader.SetUniform4f("u_Color", 0.0f, 0.0f, 0.0f, 0.0f); // Set the line color
 
-            vaLines.Bind();
             // Draw the lines directly without an IBO
             GLCall(glDrawArrays(GL_LINE_LOOP, 0, 4));
 
