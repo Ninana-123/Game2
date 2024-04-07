@@ -105,7 +105,7 @@ Radius: 0
 Layer: 4
 CollisionVel: 0 0
 Stats
-Health: 100
+Health: 80
 Range: 0
 Sprite
 framerate: 0

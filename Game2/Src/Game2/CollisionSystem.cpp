@@ -37,6 +37,7 @@ int tower1CollidingEntityHealth = 0;
 int tower2CollidingEntityHealth = 0;
 int castleCollidingEntityHealth = 0;
 int victoryID = 0;
+int defeatID = 0;
 int lemaoArrowID = 0;
 int unitID = 0;
 bool tower1Destroyed = false;
@@ -55,6 +56,9 @@ bool arrowSpawnedByArcher = false;
 bool accessedTower1 = false;
 bool accessedTower2 = false;
 bool arrowAccessedCastle = false;
+bool infantryDead = false;
+bool tankDead = false;
+bool archerDead = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
 
@@ -69,10 +73,24 @@ std::map<int, int> towerHealthToTextureKey =
 	{15, 35},
 	{20, 36},
 	{25, 37},
-	{30, 38},
-	{35, 39},
-	{40, 40},
-	{45, 41}
+	{35, 38},
+	{45, 39},
+	{55, 40},
+	{65, 41}
+};
+
+std::map<int, int> castleHealthToTextureKey =
+{
+	{0, 32},
+	{10, 33},
+	{20, 34},
+	{30, 35},
+	{40, 36},
+	{50, 37},
+	{60, 38},
+	{70, 39},
+	{80, 40},
+	{90, 41}
 };
 
 /*!*****************************************************************
@@ -539,42 +557,42 @@ namespace Engine
 				TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity1->GetComponent(ComponentType::Texture));
 
 
-				// Workaround to add components as prefabs are not saving
-				if (textureComponent)
-				{
-					if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 2)
-					{
-						entity1->AddNewComponent(ComponentType::Stats);
-						std::cout << "stats component added to tank" << std::endl;
+				//// Workaround to add components as prefabs are not saving
+				//if (textureComponent)
+				//{
+				//	if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 2)
+				//	{
+				//		entity1->AddNewComponent(ComponentType::Stats);
+				//		std::cout << "stats component added to tank" << std::endl;
 
-					}
+				//	}
 
-					if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 3)
-					{
-						entity1->AddNewComponent(ComponentType::Stats);
-						std::cout << "stats component added to archer" << std::endl;
-					}
+				//	if (!(entity1->HasComponent(ComponentType::Stats)) && textureComponent->textureKey.mainIndex == 3)
+				//	{
+				//		entity1->AddNewComponent(ComponentType::Stats);
+				//		std::cout << "stats component added to archer" << std::endl;
+				//	}
 
-					if (statsComponent1 && textureComponent->textureKey.mainIndex == 2)
-					{
-						if (!statsComponent1->tankStatsSet) 
-						{
-							statsComponent1->health = 100;
-							std::cout << "health added to tank" << std::endl;
-							statsComponent1->tankStatsSet = true;
-						}
-					}
+				//	if (statsComponent1 && textureComponent->textureKey.mainIndex == 2)
+				//	{
+				//		if (!statsComponent1->tankStatsSet) 
+				//		{
+				//			statsComponent1->health = 80;
+				//			std::cout << "health added to tank" << std::endl;
+				//			statsComponent1->tankStatsSet = true;
+				//		}
+				//	}
 
-					if (statsComponent1 && textureComponent->textureKey.mainIndex == 3)
-					{
-						if (!statsComponent1->archerStatsSet) 
-						{
-							statsComponent1->health = 50;
-							std::cout << "health added to archer" << std::endl;
-							statsComponent1->archerStatsSet = true;
-						}
-					}
-				}
+				//	if (statsComponent1 && textureComponent->textureKey.mainIndex == 3)
+				//	{
+				//		if (!statsComponent1->archerStatsSet) 
+				//		{
+				//			statsComponent1->health = 50;
+				//			std::cout << "health added to archer" << std::endl;
+				//			statsComponent1->archerStatsSet = true;
+				//		}
+				//	}
+				//}
 
 				
 
@@ -694,6 +712,22 @@ namespace Engine
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 
+								// Add health back to 0 so that the texture will update
+								if (tower1CollidingEntityHealth < 0) 
+								{
+									tower1CollidingEntityHealth++;
+								}
+
+								if (tower2CollidingEntityHealth < 0)
+								{
+									tower2CollidingEntityHealth++;
+								}
+
+								if (castleCollidingEntityHealth < 0)
+								{
+									castleCollidingEntityHealth++;
+								}
+
 								// Changing the texture for the healthbars
 								if (entity2->GetID() == 11 && towerCollidingEntity == 8)
 								{
@@ -720,9 +754,9 @@ namespace Engine
 								if (entity2->GetID() == 12 && towerCollidingEntity == 9)
 								{
 									// Find the corresponding texture key for the towerCollidingEntityHealth
-									auto it = towerHealthToTextureKey.find(castleCollidingEntityHealth);
+									auto it = castleHealthToTextureKey.find(castleCollidingEntityHealth);
 									// If found, set the texture key
-									if (it != towerHealthToTextureKey.end())
+									if (it != castleHealthToTextureKey.end())
 									{
 										textureComponent2->textureKey = { it->second, 0 };
 									}
@@ -732,6 +766,12 @@ namespace Engine
 								if (textureComponent2->textureKey.mainIndex == 21)
 								{
 									victoryID = entity2->GetID();
+								}
+
+								// Getting ID of defeat screen
+								if (textureComponent2->textureKey.mainIndex == 53)
+								{
+									defeatID = entity2->GetID();
 								}
 
 								// Check for collision with entity2
@@ -763,6 +803,29 @@ namespace Engine
 													{
 														std::cout << "unit is dead" << std::endl;
 														statsComponent1->playerDead = true;
+
+														//if (statsComponent1->playerDead) 
+														//{
+															// Check to see which unit actually died
+															if (textureComponent->textureKey.mainIndex == 1)
+															{
+																//infantryDead = true;
+																statsComponent1->infantryDead = true;
+																infantryDead = statsComponent1->infantryDead;
+															}
+															if (textureComponent->textureKey.mainIndex == 2)
+															{
+																//tankDead = true;
+																statsComponent1->tankDead = true;
+																tankDead = statsComponent1->tankDead;
+															}
+															if (textureComponent->textureKey.mainIndex == 3)
+															{
+																//archerDead = true;
+																statsComponent1->archerDead = true;
+																archerDead = statsComponent1->archerDead;
+															}
+														//}
 													}
 												}
 											}

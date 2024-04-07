@@ -740,7 +740,7 @@ namespace Engine
             font.RenderText(shader, "Game is in settings.", 0.f, 0.9f, 0.002f, glm::vec3(0.f, 0.f, 0.f));
         }
 
-        if(mainMenuCheck == false)
+        if(mainMenuCheck == false && howToPlayCheck == false && creditsCheck == false)
         {
             // Infantry count
             if (totalInfantry == 3) 
@@ -794,9 +794,56 @@ namespace Engine
         std::stringstream ss;
         ss << std::fixed << std::setprecision(2) << fps;
         std::string fps_str = ss.str();
-        if(fpsTimer == true)
+        if (fpsTimer == true) {
+#ifdef NDEBUG // Check if we are in release mode
+#else
             font.RenderText(shader, fps_str, -0.75f, 0.9f, 0.0015f, glm::vec3(100.f, 100.f, 100.f));
+#endif
+        }
 
+        if (howToPlayCheck == true) {
+            font.RenderText(shader, "HOW TO PLAY", 0.5f, 0.30f, 0.0015f, glm::vec3(0,0,0));
+            font.RenderText(shader, "OBJECTIVE: Take down enemy ", 0.5f, 0.2f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "stronghold. ", 0.5f, 0.1f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "Drag and Drop Units onto ", 0.5f, 0.f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "the designated starting area. ", 0.5f, -0.1f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "Take down structures protecting ", 0.5f, -0.2f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "enemy stronghold. ", 0.5f, -0.3f, 0.001f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "Take down stronghold to win ", 0.5f, -0.4f, 0.001f, glm::vec3(0, 0, 0));
+        }
+
+        if (creditsCheck == true) {
+            font.RenderText(shader, "CREDITS", 0.f, 0.55f, 0.0015f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "DEVELOPERS ", -0.3f, 0.4f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "PRODUCT MANAGER: VANCE TAY  ", -0.3f, 0.35f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "TECH LEAD: LIU XUJIE ", -0.3f, 0.30f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "DESIGN LEAD: ALOYSIUS ANG ", -0.3f, 0.25f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "LEVEL EDITOR: TRISTAN THAM ", -0.3f, 0.2f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "GRAPHICS PROGRAMMER: SHEEN YEOH  ", -0.3f, 0.15f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "GRAPHICS PROGRAMMER: WAYNE KWOK ", -0.3f, 0.10f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "ART LEAD: NG WEI YING ", -0.3f, 0.05f, 0.0005f, glm::vec3(0, 0, 0));
+
+            font.RenderText(shader, "PRESIDENT ", -0.3f, -0.05f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "CLAUDE COMAIR ", -0.3f, -0.10f, 0.0005f, glm::vec3(0, 0, 0));
+
+            font.RenderText(shader, "EXECUTIVES: BEN ELLINGER, JASON CHU, SAMIR ABOU SAMRA,", 0.f, -0.15f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "CHRISTOPHER COMAIR, PRASANNA GHALI, MICHAEL GATS,", 0.f, -0.20f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "JOHN BAUER, MICHELLE COMAIR, DR.ERIK MOHARAMANN,  ", 0.f, -0.25f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "RAYMOND YAN, MELVIN GONSALVEZ, ANGELA KUGLER, DR.CHARLES DUBA, JOHNNY DEEK", 0.f, -0.30f, 0.0005f, glm::vec3(0, 0, 0));
+
+            font.RenderText(shader, "ALL CONTENT(C) 2024 DIGIPEN INSTITUTE OF TECHNOLOGY SINGAPORE, ALL RIGHTS RESERVED.", 0.f, -0.5f, 0.0005f, glm::vec3(0, 0, 0));
+            
+            font.RenderText(shader, "FACULTY AND ADVISORS", 0.3f, 0.4f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "ALWYN LEE  ", 0.3f, 0.35f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "KEH CHOON WEE ", 0.3f, 0.30f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "GOH JING YING ", 0.3f, 0.25f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "DANIELLE FONG ", 0.3f, 0.2f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "ELIE HOSRY  ", 0.3f, 0.15f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "DIAN YANG GOH ", 0.3f, 0.10f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "MALCOM GRANT ", 0.3f, 0.05f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "VUK KRAKOVIC ", 0.3f, 0.f, 0.0005f, glm::vec3(0, 0, 0));
+            font.RenderText(shader, "HOLGER LIEBNITZ ", 0.3f, -0.05f, 0.0005f, glm::vec3(0, 0, 0));
+        }
         shader.SetActiveShaderSet(previousShaderSet);
         // CAMERA
         m_Camera.UpdatePosition(InputController, CameraSpeed);

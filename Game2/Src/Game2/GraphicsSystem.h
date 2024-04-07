@@ -282,7 +282,7 @@ namespace Engine
         Camera m_Camera;
         EditorCamera m_EditorCamera;
 
-        float CameraSpeed = 1.5f;
+        float CameraSpeed = 0.0f;
         float yOffset = 1.0f;
        
 

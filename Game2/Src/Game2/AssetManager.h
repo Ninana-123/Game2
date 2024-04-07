@@ -257,6 +257,7 @@ namespace Engine {
             { {TextureClass::mainMenuPlay,      0}, "Resource/Texture/mmPlay.png"},
             { {TextureClass::mainMenuGameInfo,  0}, "Resource/Texture/mmGameInfo.png"},
             { {TextureClass::mainMenuCredits,   0}, "Resource/Texture/mmCredits.png"},
+
             { {TextureClass::Logo,              0}, "Resource/Texture/Logo.png"},
             { {TextureClass::victoryScreen,     0}, "Resource/Texture/victory_screen.png"},
             { {TextureClass::catHPEmpty,        0}, "Resource/Texture/hp_empty.PNG" },
@@ -290,16 +291,23 @@ namespace Engine {
             { {TextureClass::cutScene7,         0}, "Resource/Texture/cutScene7.PNG" },
             { {TextureClass::cutScene8,         0}, "Resource/Texture/whiteScreen.PNG" },
 
-            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainMenuBG.jpg" },
-            { {TextureClass::defeatScreen,      0}, "Resource/Texture/mainmenu_screen.PNG" },
-            { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" },
+            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainMenuBG.PNG" },
+            { {TextureClass::defeatScreen,      0}, "Resource/Texture/defeat_background.PNG" },
+            { {TextureClass::pauseScreen,       0}, "Resource/Texture/pause_screen.PNG" },
             { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" },
 
             { {TextureClass::archerArrow,    0}, "Resource/Texture/archer_arrow.png" },
             { {TextureClass::infantryVFX,      2}, "Resource/Texture/infantry_vfx.png" },
             { {TextureClass::tankVFX,       2}, "Resource/Texture/tank_vfx.png" },
             { {TextureClass::archerVFX,       2}, "Resource/Texture/archer_vfx.png" },
-            { {TextureClass::towerVFX,       0}, "Resource/Texture/tower_attack.png" }
+            { {TextureClass::towerVFX,       0}, "Resource/Texture/tower_attack.png" },
+
+            { {TextureClass::mainMenuExit,   0}, "Resource/Texture/mmExit.png"},
+            { {TextureClass::howToPlay1,   0}, "Resource/Texture/HowToPlay1.png"},
+            { {TextureClass::howToPlay2,   0}, "Resource/Texture/HowToPlay2.png"},
+            { {TextureClass::howToPlay3,   0}, "Resource/Texture/HowToPlay3.png"},
+            { {TextureClass::howToPlay4,   0}, "Resource/Texture/HowToPlay4.png"},
+            { {TextureClass::howToPlay5,   0}, "Resource/Texture/box_new_2.png"},
 
         };
     };

@@ -120,7 +120,7 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 100
+Health: 80
 Range: 0
 Logic
 BehaviourIndex: 0
@@ -260,5 +260,13 @@ Texture
 MainIndex: 41
 SubIndex: 0
 EndPrefab
-EndPrefab
+DefeatScreen
+Transform
+Position: 0 0
+ScaleX: 16
+ScaleY: 9
+Rotation: 0
+Texture
+MainIndex: 53
+SubIndex: 0
 EndPrefab

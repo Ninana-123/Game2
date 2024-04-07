@@ -37,6 +37,8 @@ extern std::string initScene;
 extern int e_Width;
 extern int e_Height;
 extern bool mainMenuCheck;
+extern bool howToPlayCheck;
+extern bool creditsCheck;
 extern double fps;
 extern std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper;
 extern Engine::ScriptFactory* g_ScriptFactory;

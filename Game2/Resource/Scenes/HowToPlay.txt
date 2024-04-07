@@ -1,0 +1,75 @@
+7
+Transform
+Position: 0 0
+ScaleX: 7.2
+ScaleY: 12.8
+Rotation: 0
+Texture
+MainIndex: 51
+SubIndex: 0
+EndEntity
+Transform
+Position: -500 -260
+ScaleX: 1.5
+ScaleY: 1.5
+Rotation: 0
+Collision
+c_Width: 75
+c_Height: 20
+isColliding: 0
+MinX: -500
+MinY: -260
+MaxX: -500
+MaxY: -260
+Radius: 0
+Layer: 3
+CollisionVel: 0 -15
+Texture
+MainIndex: 60
+SubIndex: 0
+EndEntity
+Transform
+Position: -253.00 197.00
+ScaleX: 1.5
+ScaleY: 3
+Rotation: 0
+Texture
+MainIndex: 61
+SubIndex: 0
+EndEntity
+Transform
+Position: -372 41
+ScaleX: 2.0
+ScaleY: 2.0
+Rotation: 0
+Texture
+MainIndex: 62
+SubIndex: 0
+EndEntity
+Transform
+Position: -98 46
+ScaleX: 2.0
+ScaleY: 2.0
+Rotation: 0
+Texture
+MainIndex: 63
+SubIndex: 0
+EndEntity
+Transform
+Position: -250 -148
+ScaleX: 2.0
+ScaleY: 2.0
+Rotation: 0
+Texture
+MainIndex: 64
+SubIndex: 0
+EndEntity
+Transform
+Position: 327 13
+ScaleX: 4
+ScaleY: 15
+Rotation: 0
+Texture
+MainIndex: 65
+SubIndex: 0
+EndEntity
