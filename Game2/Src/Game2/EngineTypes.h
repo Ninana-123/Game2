@@ -113,6 +113,13 @@ enum TextureClass //!< Enumeration for different texture classes.
     archerVFX,
     towerVFX,
 
+    mainMenuExit,
+    howToPlay1,
+    howToPlay2,
+    howToPlay3,
+    howToPlay4,
+    howToPlay5,
+
     TextureClassCount
 };
 

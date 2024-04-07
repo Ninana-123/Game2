@@ -33,6 +33,17 @@ Position: 331 -175
 ScaleX: 1.5
 ScaleY: 1.5
 Rotation: 0
+Collision
+c_Width: 75
+c_Height: 20
+isColliding: 0
+MinX: 331
+MinY: -175
+MaxX: 331
+MaxY: -175
+Radius: 0
+Layer: 3
+CollisionVel: 0 -15
 Texture
 MainIndex: 18
 SubIndex: 0
@@ -42,6 +53,17 @@ Position: 331 -275
 ScaleX: 1.5
 ScaleY: 1.5
 Rotation: 0
+Collision
+c_Width: 75
+c_Height: 20
+isColliding: 0
+MinX: 331
+MinY: -275
+MaxX: 331
+MaxY: -275
+Radius: 0
+Layer: 3
+CollisionVel: 0 -15
 Texture
 MainIndex: 19
 SubIndex: 0
