@@ -864,12 +864,12 @@ namespace Engine
 													// ArcherTowerCollision(entity1->GetID(), entity2->GetID());
 													if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
 													{
-														std::cout << "goes into first feed" << std::endl;
+														//std::cout << "goes into first feed" << std::endl;
 														ArcherTowerCollision(entity1->GetID(), entity2->GetID());
 													}
 													if (tower1Destroyed && !accessedTower2)
 													{
-														std::cout << "goes into second feed" << std::endl;
+														//std::cout << "goes into second feed" << std::endl;
 														while (!ArcherCollisionQueue.empty()) 
 														{
 															ArcherCollisionQueue.pop();
@@ -883,7 +883,7 @@ namespace Engine
 													}
 													if (tower2Destroyed && !accessedTower1)
 													{
-														std::cout << "goes into third feed" << std::endl;
+														//std::cout << "goes into third feed" << std::endl;
 														while (!ArcherCollisionQueue.empty())
 														{
 															ArcherCollisionQueue.pop();
@@ -897,7 +897,7 @@ namespace Engine
 													}
 													if (tower1Destroyed && tower2Destroyed && !arrowAccessedCastle)
 													{
-														std::cout << "goes into fourth feed" << std::endl;
+														//std::cout << "goes into fourth feed" << std::endl;
 														while (!ArcherCollisionQueue.empty())
 														{
 															ArcherCollisionQueue.pop();
