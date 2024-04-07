@@ -100,7 +100,7 @@ namespace Engine
                             ArrowCollision2->c_Height = 0;
                             ArrowCollision2->c_Width = 0;
                             PhysicsComponent* ArrowPhysics2 = dynamic_cast<PhysicsComponent*>(ArcherArrow->GetComponent(ComponentType::Physics));
-                            VECTORMATH::Vec2 Vel = TowerTransform2->position - PlayerTransform2->position;
+                            Vel = TowerTransform2->position - PlayerTransform2->position;
                             ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(ArcherArrow->GetComponent(ComponentType::Shooting));
                             ArrowShooting->layer = Layer::Arrow;
                             /*VECTORMATH::Vector2DNormalize(Vel, Vel);*/
@@ -188,7 +188,7 @@ namespace Engine
                             ArrowCollision->c_Height = 0;
                             ArrowCollision->c_Width = 0;
                             PhysicsComponent* ArrowPhysics = dynamic_cast<PhysicsComponent*>(Arrow->GetComponent(ComponentType::Physics));
-                            VECTORMATH::Vec2 Vel = PlayerTransform->position - TowerTransform->position;
+                            Vel = PlayerTransform->position - TowerTransform->position;
                             ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(Arrow->GetComponent(ComponentType::Shooting));
                             ArrowShooting->layer = Layer::Arrow;
                             /*VECTORMATH::Vector2DNormalize(Vel, Vel);*/
