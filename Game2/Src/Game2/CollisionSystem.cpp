@@ -69,10 +69,24 @@ std::map<int, int> towerHealthToTextureKey =
 	{15, 35},
 	{20, 36},
 	{25, 37},
-	{30, 38},
-	{35, 39},
-	{40, 40},
-	{45, 41}
+	{35, 38},
+	{45, 39},
+	{55, 40},
+	{65, 41}
+};
+
+std::map<int, int> castleHealthToTextureKey =
+{
+	{0, 32},
+	{10, 33},
+	{20, 34},
+	{30, 35},
+	{40, 36},
+	{50, 37},
+	{60, 38},
+	{70, 39},
+	{80, 40},
+	{90, 41}
 };
 
 /*!*****************************************************************
@@ -554,7 +568,7 @@ namespace Engine
 					{
 						if (!statsComponent1->tankStatsSet) 
 						{
-							statsComponent1->health = 100;
+							statsComponent1->health = 80;
 							std::cout << "health added to tank" << std::endl;
 							statsComponent1->tankStatsSet = true;
 						}
@@ -689,6 +703,22 @@ namespace Engine
 									vel2 = VECTORMATH::Vec2(transformComponent2->position.x, transformComponent2->position.y);
 								}
 
+								// Add health back to 0 so that the texture will update
+								if (tower1CollidingEntityHealth < 0) 
+								{
+									tower1CollidingEntityHealth++;
+								}
+
+								if (tower2CollidingEntityHealth < 0)
+								{
+									tower2CollidingEntityHealth++;
+								}
+
+								if (castleCollidingEntityHealth < 0)
+								{
+									castleCollidingEntityHealth++;
+								}
+
 								// Changing the texture for the healthbars
 								if (entity2->GetID() == 11 && towerCollidingEntity == 8)
 								{
@@ -715,9 +745,9 @@ namespace Engine
 								if (entity2->GetID() == 12 && towerCollidingEntity == 9)
 								{
 									// Find the corresponding texture key for the towerCollidingEntityHealth
-									auto it = towerHealthToTextureKey.find(castleCollidingEntityHealth);
+									auto it = castleHealthToTextureKey.find(castleCollidingEntityHealth);
 									// If found, set the texture key
-									if (it != towerHealthToTextureKey.end())
+									if (it != castleHealthToTextureKey.end())
 									{
 										textureComponent2->textureKey = { it->second, 0 };
 									}

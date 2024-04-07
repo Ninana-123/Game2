@@ -39,8 +39,8 @@ namespace Engine
 
 	void inGameGUI::Initialize()
 	{
-		totalInfantry = 3;
-		totalArcher = 2;
+		totalInfantry = 1;
+		totalArcher = 1;
 		totalTank = 1;
 	}
 
