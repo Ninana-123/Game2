@@ -119,7 +119,7 @@ namespace Engine
 				//totalTank--;
 			}
 
-			if (unitHalfSpawned)
+			if (unitHalfSpawned  && (lastCollidingEntityTexture == 7 || lastCollidingEntityTexture == 8 || lastCollidingEntityTexture == 9 ))
 			{
 				std::cout << "Unit ID is: " << unitID << std::endl;
 				prevSelectedEntityIndex = m_ImGuiWrapper->selectedEntityIndex - 1;

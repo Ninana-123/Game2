@@ -56,6 +56,8 @@ bool isPaused = false;
 bool stepOneFrame = false; 
 double dt = 0;
 bool mainMenuCheck = true;
+bool howToPlayCheck = false;
+bool creditsCheck = false;
 std::string fp;
 std::shared_ptr<Engine::ImGuiWrapper> m_ImGuiWrapper = nullptr;
 
@@ -734,7 +736,6 @@ namespace Engine
             if (isMainMenuLoaded == true) {
                 if (lastCollidingEntityTexture == 17)
                 {
-                    std::cout << "Test";
                     fp = GameSceneFilePath;
                     int entityCount = static_cast<int>(EM->GetEntities()->size());
 
@@ -747,9 +748,8 @@ namespace Engine
                     // Set targetEntity to nullptr as there are no entities left
                     m_ImGuiWrapper->SetTargetEntity(nullptr);
 
-                    // Reset any other relevant data structures or counters if needed
-                    EM->nextEntityID = 0; // Assuming this is how you reset your IDs
-                    PM.nextPrefabID = 0; // Reset prefab ID counter if needed
+                    EM->nextEntityID = 0; 
+                    PM.nextPrefabID = 0; 
 
                     // Now load the scene
                     loader->LoadScene(fp);
@@ -772,8 +772,121 @@ namespace Engine
                     lastCollidingEntity = 0;
                     lastCollidingEntityTexture = 0;
                 }
-            }
+                if (lastCollidingEntityTexture == 18)
+                {
+                    fp = "Resource/Scenes/HowToPlay.txt";
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
 
+                    for (int i = entityCount - 1; i >= 0; --i) {
+                        EM->DestroyEntity(i);
+                    }
+
+                    m_ImGuiWrapper->selectedEntityIndex = -1;
+
+                    // Set targetEntity to nullptr as there are no entities left
+                    m_ImGuiWrapper->SetTargetEntity(nullptr);
+
+                    // Reset any other relevant data structures or counters if needed
+                    EM->nextEntityID = 0; 
+                    PM.nextPrefabID = 0; 
+
+                    // Now load the scene
+                    loader->LoadScene(fp);
+                    if (EM->GetEntities()->size() >= 2) {
+                        m_ImGuiWrapper->selectedEntityIndex = 1;
+                    }
+                    else if (EM->GetEntities()->size() == 1) {
+                        m_ImGuiWrapper->selectedEntityIndex = 0;
+                    }
+                    else
+                        m_ImGuiWrapper->selectedEntityIndex = -1;
+                    if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                        m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                    }
+                    mainMenuCheck = false;
+                    howToPlayCheck = true;
+                    isMainMenuLoaded = false;
+                    lastCollidingEntity = 0;
+                    lastCollidingEntityTexture = 0;
+                }
+                if (lastCollidingEntityTexture == 19)
+                {
+                    fp = "Resource/Scenes/CreditsScene.txt";
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                    for (int i = entityCount - 1; i >= 0; --i) {
+                        EM->DestroyEntity(i);
+                    }
+
+                    m_ImGuiWrapper->selectedEntityIndex = -1;
+
+                    // Set targetEntity to nullptr as there are no entities left
+                    m_ImGuiWrapper->SetTargetEntity(nullptr);
+
+                    // Reset any other relevant data structures or counters if needed
+                    EM->nextEntityID = 0;
+                    PM.nextPrefabID = 0;
+
+                    // Now load the scene
+                    loader->LoadScene(fp);
+                    if (EM->GetEntities()->size() >= 2) {
+                        m_ImGuiWrapper->selectedEntityIndex = 1;
+                    }
+                    else if (EM->GetEntities()->size() == 1) {
+                        m_ImGuiWrapper->selectedEntityIndex = 0;
+                    }
+                    else
+                        m_ImGuiWrapper->selectedEntityIndex = -1;
+                    if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                        m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                    }
+                    mainMenuCheck = false;
+                    creditsCheck = true;
+                    isMainMenuLoaded = false;
+                    lastCollidingEntity = 0;
+                    lastCollidingEntityTexture = 0;
+                }
+            }
+            if (howToPlayCheck == true || creditsCheck == true) {
+                if (lastCollidingEntityTexture == 60)
+                {
+                    fp = "Resource/Scenes/MainMenu1.txt";
+                    int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                    for (int i = entityCount - 1; i >= 0; --i) {
+                        EM->DestroyEntity(i);
+                    }
+
+                    m_ImGuiWrapper->selectedEntityIndex = -1;
+
+                    // Set targetEntity to nullptr as there are no entities left
+                    m_ImGuiWrapper->SetTargetEntity(nullptr);
+
+                    // Reset any other relevant data structures or counters if needed
+                    EM->nextEntityID = 0;
+                    PM.nextPrefabID = 0;
+
+                    // Now load the scene
+                    loader->LoadScene(fp);
+                    if (EM->GetEntities()->size() >= 2) {
+                        m_ImGuiWrapper->selectedEntityIndex = 1;
+                    }
+                    else if (EM->GetEntities()->size() == 1) {
+                        m_ImGuiWrapper->selectedEntityIndex = 0;
+                    }
+                    else
+                        m_ImGuiWrapper->selectedEntityIndex = -1;
+                    if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                        m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                    }
+                    mainMenuCheck = true;
+                    howToPlayCheck = false;
+                    creditsCheck = false;
+                    isMainMenuLoaded = true;
+                    lastCollidingEntity = 0;
+                    lastCollidingEntityTexture = 0;
+                }
+            }
 
             if (InputHandler.IsKeyTriggered(KEY_ESCAPE))
                 m_Running = false;
