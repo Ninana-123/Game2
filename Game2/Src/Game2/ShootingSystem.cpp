@@ -93,7 +93,7 @@ namespace Engine
                             TransformComponent* PlayerTransform2 = dynamic_cast<TransformComponent*>(Player->GetComponent(ComponentType::Transform));
                             TransformComponent* ArrowTransform2 = dynamic_cast<TransformComponent*>(ArcherArrow->GetComponent(ComponentType::Transform));
                             TextureComponent* ArrowTexture2 = dynamic_cast<TextureComponent*>(ArcherArrow->GetComponent(ComponentType::Texture));
-                            ArrowTexture2->textureKey = { 42, 0 };
+                            ArrowTexture2->textureKey = { 55, 0 };
                             CollisionComponent* ArrowCollision2 = dynamic_cast<CollisionComponent*>(ArcherArrow->GetComponent(ComponentType::Collision));
                             ArrowCollision2->layer = Layer::Arrow;
                             ArrowCollision2->layerTarget = Layer::Tower;

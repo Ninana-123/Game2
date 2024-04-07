@@ -849,12 +849,12 @@ namespace Engine
 												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
 												if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
 												{
-													std::cout << "goes into first feed" << std::endl;
+													//std::cout << "goes into first feed" << std::endl;
 													PlayerTowerCollision(entity1->GetID(), entity2->GetID());
 												}
 												if (tower1Destroyed && !tower2Destroyed)
 												{
-													std::cout << "goes into second feed" << std::endl;
+													//std::cout << "goes into second feed" << std::endl;
 													while (!CollisionQueue.empty())
 													{
 														CollisionQueue.pop();
@@ -867,7 +867,7 @@ namespace Engine
 												}
 												if (tower2Destroyed && !tower1Destroyed)
 												{
-													std::cout << "goes into third feed" << std::endl;
+													//std::cout << "goes into third feed" << std::endl;
 													while (!CollisionQueue.empty())
 													{
 														CollisionQueue.pop();
@@ -880,7 +880,7 @@ namespace Engine
 												}
 												if (tower1Destroyed && tower2Destroyed)
 												{
-													std::cout << "goes into fourth feed" << std::endl;
+													//std::cout << "goes into fourth feed" << std::endl;
 													while (!CollisionQueue.empty())
 													{
 														CollisionQueue.pop();

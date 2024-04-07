@@ -293,7 +293,13 @@ namespace Engine {
             { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainmenu_screen.PNG" },
             { {TextureClass::defeatScreen,      0}, "Resource/Texture/mainmenu_screen.PNG" },
             { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" },
-            { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" }
+            { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" },
+
+            { {TextureClass::archerArrow,    0}, "Resource/Texture/archer_arrow.png" },
+            { {TextureClass::infantryVFX,      2}, "Resource/Texture/infantry_vfx.png" },
+            { {TextureClass::tankVFX,       2}, "Resource/Texture/tank_vfx.png" },
+            { {TextureClass::archerVFX,       2}, "Resource/Texture/archer_vfx.png" },
+            { {TextureClass::towerVFX,       0}, "Resource/Texture/tower_attack.png" }
 
         };
     };
