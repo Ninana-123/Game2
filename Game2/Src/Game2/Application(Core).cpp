@@ -82,8 +82,6 @@ namespace Engine
     GraphicsSystem* graphicsSystem;
     CollisionSystem* collisionSystem;
     std::shared_ptr<EntityManager> EM;
-    std::shared_ptr<EntityManager> EM;
-
     PrefabManager PM;
     EntityID cloneEntity;
     Entity* targetEntity;
@@ -308,70 +306,69 @@ namespace Engine
             if (keyPressedEvent.GetKeyCode() == KEY_F11) {
                 ToggleFullscreen();
             }
-        }        
-    }
-
-            // skip cut scene to go level 1
-            //if (keyPressedEvent.GetKeyCode() == KEY_N) {
-            //    loader->LoadScene(GameSceneFilePath);
-            //}
-        }
-
-        if (isMainMenuLoaded) {
-            if (e.GetEventType() == EventType::MouseButtonPressed)
-            {   
-               
-
-                MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
-                if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
-                {
-                    // Check if the mouse click is within the quadrilateral
-                    mousePressedEvent.SetX(InputHandler.GetMouseX());
-                    mousePressedEvent.SetY(InputHandler.GetMouseY());
-                    float mouseX = mousePressedEvent.GetX();
-                    float mouseY = mousePressedEvent.GetY();
-
-                    if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
-                    {
-              
-                        fp = GameSceneFilePath;
-                        int entityCount = static_cast<int>(EM->GetEntities()->size());
-
-                        for (int i = entityCount - 1; i >= 0; --i) {
-                            EM->DestroyEntity(i); 
-                        }
-
-
-
-                        // Reset any other relevant data structures or counters if needed
-                        EM->nextEntityID = 0; 
-                        PM.nextPrefabID = 0; 
-
-                        // Now load the scene
-                        loader->LoadScene(fp);
-                        //sceneManager.TransitionToScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
-                        //sceneManager.UpdateScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
-
-                        if (EM->GetEntities()->size() >= 2) {
-                            m_ImGuiWrapper->selectedEntityIndex = 1;
-                        }
-                        else if (EM->GetEntities()->size() == 1) {
-                            m_ImGuiWrapper->selectedEntityIndex = 0;
-                        }
-                        else
-                            m_ImGuiWrapper->selectedEntityIndex = -1;
-                        if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
-                            m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
-                        }
-                        mainMenuCheck = false;
-                        isMainMenuLoaded = false;
-                        audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
-                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
-                        audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
-                    }
+            /*
+                    // skip cut scene to go level 1
+                    //if (keyPressedEvent.GetKeyCode() == KEY_N) {
+                    //    loader->LoadScene(GameSceneFilePath);
+                    //}
                 }
-            
-            } 
+
+                if (isMainMenuLoaded) {
+                    if (e.GetEventType() == EventType::MouseButtonPressed)
+                    {
+
+
+                        MouseButtonPressedEvent& mousePressedEvent = dynamic_cast<MouseButtonPressedEvent&>(e);
+                        if (mousePressedEvent.GetMouseButton() == LEFT_MOUSE_BUTTON)
+                        {
+                            // Check if the mouse click is within the quadrilateral
+                            mousePressedEvent.SetX(InputHandler.GetMouseX());
+                            mousePressedEvent.SetY(InputHandler.GetMouseY());
+                            float mouseX = mousePressedEvent.GetX();
+                            float mouseY = mousePressedEvent.GetY();
+
+                            if (IsPointInQuadrilateral(mouseX, mouseY, 603, 305, 719, 308, 725, 367, 597, 353))
+                            {
+
+                                fp = GameSceneFilePath;
+                                int entityCount = static_cast<int>(EM->GetEntities()->size());
+
+                                for (int i = entityCount - 1; i >= 0; --i) {
+                                    EM->DestroyEntity(i);
+                                }
+
+
+
+                                // Reset any other relevant data structures or counters if needed
+                                EM->nextEntityID = 0;
+                                PM.nextPrefabID = 0;
+
+                                // Now load the scene
+                                loader->LoadScene(fp);
+                                //sceneManager.TransitionToScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+                                //sceneManager.UpdateScene(std::make_shared<CutSceneLevel>(EM, &PM, assetManager));
+
+                                if (EM->GetEntities()->size() >= 2) {
+                                    m_ImGuiWrapper->selectedEntityIndex = 1;
+                                }
+                                else if (EM->GetEntities()->size() == 1) {
+                                    m_ImGuiWrapper->selectedEntityIndex = 0;
+                                }
+                                else
+                                    m_ImGuiWrapper->selectedEntityIndex = -1;
+                                if (EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex) != nullptr) {
+                                    m_ImGuiWrapper->SetTargetEntity(EM->GetEntity(m_ImGuiWrapper->selectedEntityIndex));
+                                }
+                                mainMenuCheck = false;
+                                isMainMenuLoaded = false;
+                                audioEngine.stopSound(*(assetManager->getAudio(AudioKey("mainmenu_BGM"))));
+                                audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_BGM"))));
+                                audioEngine.playSound(*(assetManager->getAudio(AudioKey("sound_Ambience"))));
+                            }
+                        }
+
+                    }
+                    */
         }
     }
 
