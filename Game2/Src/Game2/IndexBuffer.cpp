@@ -66,7 +66,7 @@ void IndexBuffer::Bind() const
     else
     {
         // Window is minimized, do not bind the buffer
-        std::cout << "Window is minimized, skipping index buffer binding." << std::endl;
+        //std::cout << "Window is minimized, skipping index buffer binding." << std::endl;
     }
 }
 
@@ -80,7 +80,7 @@ void IndexBuffer::Unbind() const
     else
     {
         // Window is minimized, do not unbind the buffer
-        std::cout << "Window is minimized, skipping index buffer unbinding." << std::endl;
+       // std::cout << "Window is minimized, skipping index buffer unbinding." << std::endl;
     }
 }
 

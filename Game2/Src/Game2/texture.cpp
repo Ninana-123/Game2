@@ -73,7 +73,7 @@ void Texture::Bind(unsigned int slot) const
     else
     {
         // Window is minimized, do not perform texture binding
-        std::cout << "Window is minimized, skipping texture binding." << std::endl;
+        //std::cout << "Window is minimized, skipping texture binding." << std::endl;
     }
 }
 
@@ -85,7 +85,7 @@ void Texture::Unbind() const
     }
     else
     {
-        std::cout << "Window is minimized, skipping texture binding." << std::endl;
+        //std::cout << "Window is minimized, skipping texture binding." << std::endl;
     }
 }
 

@@ -50,12 +50,21 @@ GLuint EditorFBO::GetTexID() const {
 
 // Creates and configures the OpenGL framebuffer object (FBO)
 void EditorFBO::SetupFBO() {
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
+
         glGenFramebuffers(1, &fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    }
+    else
+    {
+
+    }
 }
 
 // Creates and configures the OpenGL texture attached to the FBO
 void EditorFBO::SetupTexture() {
+    if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
+
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -70,6 +79,11 @@ void EditorFBO::SetupTexture() {
             std::cerr << "ERROR::EDITORFBO:: Framebuffer is not complete!" << std::endl;
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+    else
+    {
+
+    }
 }
 
 // Resizes the FBO and its attached texture to the new dimensions

@@ -219,6 +219,10 @@ namespace Engine
               font.Initialize("Resource/Fonts/arial.ttf");*/
               //font.MakeDisplayList(ft, face);
         }
+        else
+        {
+
+        }
     }
 
     void GraphicsSystem::InitializeShader()
@@ -361,7 +365,7 @@ namespace Engine
         }
         else
         {
-            Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
+           // Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
@@ -428,7 +432,6 @@ namespace Engine
                     //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                     shader.SetUniform1f("u_FrameWidth", frameWidth);
                     shader.SetUniform1f("u_FrameHeight", frameHeight);
-                    shader.SetUniform1i("u_CurrentFrame", currentFrame);
                 }
                 else if ((texture->textureKey.subIndex == 2) && entity->HasComponent(ComponentType::Sprite))
                 {
@@ -463,7 +466,6 @@ namespace Engine
                     //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                     shader.SetUniform1f("u_FrameWidth", frameWidth);
                     shader.SetUniform1f("u_FrameHeight", frameHeight);
-                    shader.SetUniform1i("u_CurrentFrame", currentFrame);
                 }
                 else if ((texture->textureKey.subIndex == 3) && entity->HasComponent(ComponentType::Sprite))
                 {
@@ -496,7 +498,6 @@ namespace Engine
                     shader.SetUniform1f("texCoordX", texCoordX);
                     shader.SetUniform1f("u_FrameWidth", frameWidth);
                     shader.SetUniform1f("u_FrameHeight", frameHeight);
-                    shader.SetUniform1i("u_CurrentFrame", currentFrame);
                 }
 
                 else if ((texture->textureKey.subIndex == 4) && entity->HasComponent(ComponentType::Sprite))
@@ -532,7 +533,6 @@ namespace Engine
                     //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                     shader.SetUniform1f("u_FrameWidth", frameWidth);
                     shader.SetUniform1f("u_FrameHeight", frameHeight);
-                    shader.SetUniform1i("u_CurrentFrame", currentFrame);
                 }
 
                 else if ((texture->textureKey.subIndex == 5) && entity->HasComponent(ComponentType::Sprite))
@@ -568,7 +568,6 @@ namespace Engine
                     //shader.SetUniform1f("u_FrameCount", horizontalFrames);
                     shader.SetUniform1f("u_FrameWidth", frameWidth);
                     shader.SetUniform1f("u_FrameHeight", frameHeight);
-                    shader.SetUniform1i("u_CurrentFrame", currentFrame);
                 }
                 else //render as static
                 {
@@ -602,7 +601,7 @@ namespace Engine
         }
         else
         {
-            Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
+            //Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
@@ -636,36 +635,7 @@ namespace Engine
         }
         else
         {
-            Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
-        }
-    }
-
-    void GraphicsSystem::DrawColoredSquare(const glm::mat4& mvpMatrix)
-    {
-        try {
-        // Bind the shader and set uniforms
-        shader.Bind();
-        shader.SetUniform4f("u_Color", 1.0f, 1.0f, 0.0f, 1.0f);
-
-        if (useEditorCamera) 
-        {
-            shader.SetUniformMat4f("u_MVP", m_EditorCamera.GetViewProjectionMatrix());
-        }
-        else 
-        {
-            shader.SetUniformMat4f("u_MVP", m_Camera.GetViewProjectionMatrix());
-        }
-
-        va.Bind();
-        ib.Bind();
-        // Render the square
-        renderer.Draw(va, ib, shader);
-        shader.Unbind();
-        }
-        catch (const std::exception& e) {
-
-            Logger::GetInstance().Log(LogLevel::Error, "Draw colored square error: " + std::string(e.what()));
-
+            //Logger::GetInstance().Log(LogLevel::Info, "Window is minimized, skipping rendering.");
         }
     }
 
@@ -724,10 +694,7 @@ namespace Engine
                                 
                             }
                         }
-                        else
-                        {
-                            DrawColoredSquare(modelA);
-                        }
+                       
                     }
 
                     transform->position.x = transA.x;
@@ -829,6 +796,7 @@ namespace Engine
         m_Camera.UpdatePosition(InputController, CameraSpeed);
         if (renderImGuiGUI == true)
         editorFBO.Unbind();
+        shader.Unbind();
     }
 
     void GraphicsSystem::UpdateTexture(int main, int sub, const std::string& newPath)

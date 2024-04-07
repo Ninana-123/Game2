@@ -55,6 +55,6 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     else
     {
         // Window is minimized, do not perform rendering operations
-        std::cout << "Window is minimized, skipping rendering." << std::endl;
+       // std::cout << "Window is minimized, skipping rendering." << std::endl;
     }
 }

@@ -60,12 +60,10 @@ namespace Engine {
 		{
 			std::string temp;
 			inputStream >> temp >> r >> g >> b >> a;
-
 		}
 
 	private:
 		glm::vec4 m_Color{}; //colour for texture
-		
 	};
 }
 #endif ENGINE_RENDERCOMPONENT_H
