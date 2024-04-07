@@ -94,6 +94,7 @@ namespace Engine {
          */
         static bool IsMouseClicked(const MouseCode button);
 
+
         /*!
          * \brief Gets the current mouse position.
          *

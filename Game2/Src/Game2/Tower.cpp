@@ -24,25 +24,28 @@ namespace Engine
 	}
 	void Tower::Update()
 	{
+		
 		if (targets.empty())
 		{
-			return;
+			//return;
 		}
 
 		if (counter <= 0.f)
 		{
-			Entity* target = targets.front();
-			Shoot(target);
+			//Entity* target = targets.front();
+			//Shoot(target);
+			std::cout << "Shot test by Entity: " << static_cast<int>(entity->GetID()) << std::endl;
 			counter = 1.f / firerate;
 		}
 		
 		counter -= fixedDeltaTime;
-
+		
 	}
 
 	void Tower::Shoot(Entity* target)
 	{
 		UNREFERENCED_PARAMETER(target);
+		
 		//call Arrow script
 		//Arrow* arrow = new Arrow(target);
 	}

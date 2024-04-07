@@ -1247,7 +1247,7 @@ namespace Engine {
 						
 						ImGui::Spacing();
 						// Dropdown list for adding components					
-						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite" ,"Pathfinding"}; //add texture when working
+						const char* componentTypes[] = { "", "Transform", "Collision", "Physics", "Texture", "Sprite" ,"Pathfinding", "Stats", "Script"}; //add texture when working
 						static int selectedComponentType = 0; // Index of the selected component 
 						ImGui::Spacing();
 						ImGui::Separator();
@@ -1464,6 +1464,55 @@ namespace Engine {
 
 									stats->health = hp;
 									stats->range = range;
+
+									break;
+								}
+
+								case ComponentType::Script:
+								{
+									ScriptComponent* script = dynamic_cast<ScriptComponent*>(pair.second);
+
+									// Convert currentScriptType to string
+									std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
+
+									// Get array of script type names
+									const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+									const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
+
+									// Find index of currentScriptType
+									int currentIndex = -1;
+									for (int i = 0; i < numScriptTypes; ++i) 
+									{
+										if (currentScriptTypeName == scriptTypeNames[i]) 
+										{
+											currentIndex = i;
+											break;
+										}
+									}
+
+									// Display EntityID
+									std::string entityIDText = (script->entity == EMPTY_ID) ? "Not Linked" : std::to_string(static_cast<int>(script->entity));
+									ImGui::Text("Entity ID: %s", entityIDText.c_str());
+
+									// Display drop-down menu
+									if (ImGui::BeginCombo("Script Type", currentScriptTypeName.c_str())) 
+									{
+										for (int i = 0; i < numScriptTypes; ++i) 
+										{
+											bool isSelected = (currentIndex == i);
+											if (ImGui::Selectable(scriptTypeNames[i], isSelected)) 
+											{
+												currentIndex = i;
+												// Update currentScriptType
+												script->currentScriptType = (static_cast<ScriptType>(i));
+											}
+											if (isSelected) 
+											{
+												//ImGui::SetItemDefaultFocus(); // Set initial focus when opening the combo
+											}
+										}
+										ImGui::EndCombo();
+									}
 
 									break;
 								}
@@ -2134,6 +2183,55 @@ namespace Engine {
 
 								ImGui::EndCombo();
 							}
+							break;
+						}
+
+						case ComponentType::Script:
+						{
+							ScriptComponent* script = dynamic_cast<ScriptComponent*>(pair.second);
+
+							// Convert currentScriptType to string
+							std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
+
+							// Get array of script type names
+							const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+							const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
+
+							// Find index of currentScriptType
+							int currentIndex = -1;
+							for (int i = 0; i < numScriptTypes; ++i)
+							{
+								if (currentScriptTypeName == scriptTypeNames[i])
+								{
+									currentIndex = i;
+									break;
+								}
+							}
+
+							// Display EntityID
+							std::string entityIDText = (script->entity == EMPTY_ID) ? "Not Linked" : std::to_string(static_cast<int>(script->entity));
+							ImGui::Text("Entity ID: %s", entityIDText.c_str());
+
+							// Display drop-down menu
+							if (ImGui::BeginCombo("Script Type", currentScriptTypeName.c_str()))
+							{
+								for (int i = 0; i < numScriptTypes; ++i)
+								{
+									bool isSelected = (currentIndex == i);
+									if (ImGui::Selectable(scriptTypeNames[i], isSelected))
+									{
+										currentIndex = i;
+										// Update currentScriptType based on selection
+										script->SetScriptType(static_cast<ScriptType>(i));
+									}
+									if (isSelected)
+									{
+										//ImGui::SetItemDefaultFocus(); // Set initial focus when opening the combo
+									}
+								}
+								ImGui::EndCombo();
+							}
+
 							break;
 						}
 

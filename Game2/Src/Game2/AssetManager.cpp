@@ -133,12 +133,12 @@ namespace Engine {
     }
 
     // Function to load an audio file with the specified key
-    std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key) {
+    std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key, bool loop) {
         // Assuming audioFilePaths is a member that holds paths to audio files
         auto it = audioFilePaths.find(key);
         if (it != audioFilePaths.end()) {
             // Create a SoundInfo with all the necessary parameters
-            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, true, 1.0f, 0.0f);       
+            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, loop, 1.0f, 0.0f);       
             // Store the loaded SoundInfo in the audios map
             audios[key] = soundInfo;
             return soundInfo;

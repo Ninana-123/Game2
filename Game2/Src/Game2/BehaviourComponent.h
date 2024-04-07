@@ -37,8 +37,7 @@ namespace Engine
 		inline unsigned int& GetBehaviourIndex() noexcept {
 			return m_behaviourIndex;
 		}
-
-
+		
 		/*!*****************************************************************
 
 		\brief

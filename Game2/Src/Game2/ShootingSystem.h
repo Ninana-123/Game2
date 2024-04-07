@@ -57,7 +57,7 @@ namespace Engine
 
         void Initialize();
 
-        void Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities);
+        void Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities, AssetManager& assetManaager, AudioEngine& audioEngine);
         std::vector<std::pair<EntityID, EntityID>> CollisionVector;
 
         //void ShootArrow(const VECTORMATH::Vec2& archerPosition, const VECTORMATH::Vec2& targetPosition);

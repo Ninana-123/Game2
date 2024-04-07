@@ -102,7 +102,8 @@ namespace Engine {
                     {
                         // Cast the component to ScriptComponent
                         ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(component);
-                        if (scriptComponent) {
+                        if (scriptComponent) 
+                        {
                             // Call SetScriptType to register the script with the ScriptFactory
                             scriptComponent->InitializeScript();
                             //std::cout << "Script successfully created, Entity: " << static_cast<int>(entity) << std::endl;

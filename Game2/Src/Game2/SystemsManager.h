@@ -17,8 +17,10 @@
 #include "PhysicsSystem.h"
 #include "CollisionSystem.h"
 #include "PathfindingSystem.h"
+#include "ScriptSystem.h"
 #include "AssetManager.h"
 #include "EntityManager.h"
+
 
 namespace Engine
 {
