@@ -804,28 +804,35 @@ namespace Engine
 														std::cout << "unit is dead" << std::endl;
 														statsComponent1->playerDead = true;
 
-														//if (statsComponent1->playerDead) 
-														//{
+														if (statsComponent1->playerDead) 
+														{
 															// Check to see which unit actually died
 															if (textureComponent->textureKey.mainIndex == 1)
 															{
-																//infantryDead = true;
+																infantryDead = true;
 																statsComponent1->infantryDead = true;
 																infantryDead = statsComponent1->infantryDead;
+																textureComponent->textureKey = { 1, 3 };
+																behaviourComponent1->SetBehaviourState(c_state::Death);
+
 															}
 															if (textureComponent->textureKey.mainIndex == 2)
 															{
-																//tankDead = true;
+																tankDead = true;
 																statsComponent1->tankDead = true;
 																tankDead = statsComponent1->tankDead;
+																//textureComponent->textureKey = { 2, 3 };
+																behaviourComponent1->SetBehaviourState(c_state::Death);
 															}
 															if (textureComponent->textureKey.mainIndex == 3)
 															{
-																//archerDead = true;
+																archerDead = true;
 																statsComponent1->archerDead = true;
 																archerDead = statsComponent1->archerDead;
+																//textureComponent->textureKey = { 3, 3 };
+																behaviourComponent1->SetBehaviourState(c_state::Death);
 															}
-														//}
+														}
 													}
 												}
 											}
@@ -860,7 +867,7 @@ namespace Engine
 														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
 														{
-															//textureComponent2->textureKey = { 4, 3 };
+															textureComponent2->textureKey = { 4, 4 };
 														}
 													}
 													if (entity2->GetID() == 8)
@@ -874,7 +881,7 @@ namespace Engine
 														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower1Destroyed == true)
 														{
-															//textureComponent2->textureKey = { 4, 3 };
+															textureComponent2->textureKey = { 4, 4 };
 															
 															
 														}

@@ -230,6 +230,7 @@ namespace Engine {
             { {TextureClass::Infantry,          0}, "Resource/Texture/Warrior.png" },
             { {TextureClass::Infantry,          1}, "Resource/Texture/WarriorWalking.png" },
             { {TextureClass::Infantry,          2}, "Resource/Texture/WarriorAttack.png" },
+            { {TextureClass::Infantry,          3}, "Resource/Texture/WarriorDeath.png"},
             { {TextureClass::Tank,              0}, "Resource/Texture/Tank.png" },
             { {TextureClass::Tank,              1}, "Resource/Texture/TankWalking.png" },
             { {TextureClass::Tank,              2}, "Resource/Texture/TankAttack.png" },

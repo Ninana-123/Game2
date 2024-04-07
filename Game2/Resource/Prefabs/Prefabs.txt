@@ -36,7 +36,7 @@ goalX: 0
 goalY: 0
 initialized: 0
 Stats
-Health: 50
+Health: 45
 Range: 0
 Logic
 BehaviourIndex: 0

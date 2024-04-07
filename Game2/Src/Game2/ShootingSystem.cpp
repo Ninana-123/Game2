@@ -163,17 +163,27 @@ namespace Engine
                         {
                             //EntityID arrowID = entityManager->CreateEntity();
                             //std::cout << "This is the arrow's ID: " << arrowID << std::endl;
-                            Prefab* arrowPrefab = prefabManager->GetPrefab(10);
-                            EntityID arrowID = entityManager->CreateEntityFromPrefab(*arrowPrefab);
-                            collisionComponent1->arrowSpawned = true;
+                            
+                           
+                            
 
                             //TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(arrow.entity->GetComponent(ComponentType::Transform));
                             if (!collisionComponent1->PlayerTowerVector.empty())
                             {
-
-                                Entity* Tower = entityManager.get()->GetEntity(collisionComponent1->PlayerTowerVector.front().first); // Could be second?? didnt check
                                 Entity* Player = entityManager.get()->GetEntity(collisionComponent1->PlayerTowerVector.front().second); // Could be second?? didnt check
+                                StatsComponent* statComponent = dynamic_cast<StatsComponent*>(Player->GetComponent(ComponentType::Stats));
+                                
+                                if (statComponent->playerDead)
+                                {
+                                    return;
+                                }
+
+                                collisionComponent1->arrowSpawned = true;
+                                Entity* Tower = entityManager.get()->GetEntity(collisionComponent1->PlayerTowerVector.front().first); // Could be second?? didnt check
+                                Prefab* arrowPrefab = prefabManager->GetPrefab(10);
+                                EntityID arrowID = entityManager->CreateEntityFromPrefab(*arrowPrefab);
                                 Entity* Arrow = entityManager.get()->GetEntity(arrowID); // Could be second?? didnt check
+
                                 Arrow->AddNewComponent(ComponentType::Transform);
                                 Arrow->AddNewComponent(ComponentType::Physics);
                                 Arrow->AddNewComponent(ComponentType::Collision);
