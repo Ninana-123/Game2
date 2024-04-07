@@ -24,19 +24,27 @@ namespace Engine
 		float c_Height = 0.0f;
 		float arrowSpawnInterval = 2.0;
 		float arrowSpawnTimer = arrowSpawnInterval;
+		float archerArrowSpawnInterval = 2.0;
+		float archerArrowSpawnTimer = archerArrowSpawnInterval;
 		bool isColliding = false;
 		bool mColliding = false;
 		bool disableCollision = false;
 		bool isArrow = false;
 		bool towerShooting = false;
+		bool archerShooting = false;
 		bool arrowSpawned = false;
+		bool archerArrowSpawned = false;
+		bool spawnedByArcher = false;
 		CollisionSystem::AABB aabb;
 		CollisionSystem::Circle circle;
 		Layer layer = Layer::World;
+		Layer layerTarget = Layer::World;
 		Entity* target = nullptr;
 		VECTORMATH::Vector2D collisionVel = VECTORMATH::Vector2D(0.f, 0.f);
 		std::queue<std::pair<EntityID, EntityID>> PlayerTowerQueue;
 		std::vector<std::pair<EntityID, EntityID>> PlayerTowerVector;
+		std::queue<std::pair<EntityID, EntityID>> ArcherTowerQueue;
+		std::vector<std::pair<EntityID, EntityID>> ArcherTowerVector;
 
 
 		/*!*****************************************************************
@@ -67,6 +75,8 @@ namespace Engine
 			cloneComponent->c_Height = c_Height;
 			cloneComponent->arrowSpawnInterval = arrowSpawnInterval;
 			cloneComponent->arrowSpawnTimer = arrowSpawnTimer;
+			cloneComponent->archerArrowSpawnInterval = archerArrowSpawnInterval;
+			cloneComponent->archerArrowSpawnTimer = archerArrowSpawnTimer;
 			cloneComponent->isColliding = isColliding;
 			cloneComponent->aabb.min.x = aabb.min.x;
 			cloneComponent->aabb.max.x = aabb.max.x;
@@ -74,9 +84,12 @@ namespace Engine
 			cloneComponent->aabb.max.y = aabb.max.y;
 			cloneComponent->circle.radius = circle.radius;
 			cloneComponent->layer      = layer;
+			cloneComponent->layerTarget = layerTarget;
 			cloneComponent->collisionVel = collisionVel;
 			cloneComponent->PlayerTowerQueue = PlayerTowerQueue;
 			cloneComponent->PlayerTowerVector = PlayerTowerVector;
+			cloneComponent->ArcherTowerQueue = ArcherTowerQueue;
+			cloneComponent->ArcherTowerVector = ArcherTowerVector;
 
 			return cloneComponent;
 		}

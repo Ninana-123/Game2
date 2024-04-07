@@ -21,6 +21,7 @@ Technology is prohibited.
 #include "Vector2d.h"
 #include "EngineTypes.h"
 
+
 // Global Variable to check for button Collision
 extern bool buttonCollision;
 extern int lastCollidingEntity;
@@ -44,6 +45,7 @@ extern bool unitArrowCollision;
 extern bool infantrySpawned;
 extern bool tankSpawned;
 extern bool archerSpawned;
+extern bool arrowSpawnedByArcher;
 
 namespace Engine
 {
@@ -116,7 +118,7 @@ namespace Engine
 		bool CollisionIntersection_RectRect(const AABB& aabb1, const VECTORMATH::Vec2& vel1,
 			const AABB& aabb2, const VECTORMATH::Vec2& vel2);
 
-
+		virtual std::string returnSystem() override;
 		/*!*****************************************************************
 
 		 \brief
@@ -175,8 +177,10 @@ namespace Engine
 		/**************************************************************************/
 		bool CollisionIntersection_CircleRect(const Circle& circle, const AABB& rect);
 		void PlayerTowerCollision(EntityID lhs, EntityID rhs);
+		void ArcherTowerCollision(EntityID lhs, EntityID rhs);
 		//void PlayerArrowCollision(EntityID lhs, EntityID rhs);
 		std::queue<std::pair<EntityID, EntityID>> CollisionQueue; // Should be playerTowerqueue
+		std::queue<std::pair<EntityID, EntityID>> ArcherCollisionQueue; // Should be playerTowerqueue
 		//std::queue<std::pair<EntityID, EntityID>> PlayerArrowQueue; // Player Arrow Queue
 
 		/**************************************************************************/

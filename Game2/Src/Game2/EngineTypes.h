@@ -18,7 +18,7 @@ const int MAX_SUBINDEX = 6;
 
 // Component IDs and Types
 typedef unsigned int ComponentID;
-enum class ComponentType { Collision, Transform, Texture, Physics, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
+enum class ComponentType { Collision, Transform, Texture, Physics, Render, Sprite, Pathfinding, Logic, Stats, Shooting, Script, Unknown };
 
 //Script type
 enum class ScriptType { Empty, infantry, tower, archer };
@@ -69,6 +69,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     mainMenuCredits,
     Logo,
     victoryScreen,
+
     catHPEmpty,
     catHP1,
     catHP2,
@@ -79,6 +80,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     catHP7,
     catHP8,
     catHP9,
+
     towerHPEmpty,
     towerHP1,
     towerHP2,
@@ -90,6 +92,7 @@ enum TextureClass //!< Enumeration for different texture classes.
     towerHP8,
     towerHP9,
     Arrow,
+
     cutScene1,
     cutScene2,
     cutScene3,
@@ -103,6 +106,12 @@ enum TextureClass //!< Enumeration for different texture classes.
     pauseScreen,
     defeatScreen,
     startingPoint,
+
+    archerArrow,
+    infantryVFX,
+    tankVFX,
+    archerVFX,
+    towerVFX,
 
     TextureClassCount
 };

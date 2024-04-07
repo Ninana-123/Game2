@@ -25,6 +25,7 @@ Technology is prohibited.
 #include "inGameGUI.h"
 #include "GraphicsSystem.h"
 #include "AudioEngine.h"
+#include "AssetManager.h"
 
 double l_dt = 0.0;  // Time difference between frames (delta time)
 bool buttonCollision = false;
@@ -50,8 +51,14 @@ bool unitArrowCollision = false;
 bool infantrySpawned = false;
 bool tankSpawned = false;
 bool archerSpawned = false;
+bool arrowSpawnedByArcher = false;
+bool accessedTower1 = false;
+bool accessedTower2 = false;
+bool arrowAccessedCastle = false;
 float towerHealth = 0.0f;
 std::vector<Engine::Stats> towers;
+
+
 
 // Define a map for towerCollidingEntityHealth and corresponding texture keys
 std::map<int, int> towerHealthToTextureKey = 
@@ -92,7 +99,6 @@ std::map<int, int> towerHealthToTextureKey =
 
 namespace Engine
 {
-
 	Input inputManager;
 
 	void CollisionSystem::Update(std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities)
@@ -264,6 +270,11 @@ namespace Engine
 		}
 
 		return true;
+	}
+
+	std::string CollisionSystem::returnSystem()
+	{
+		return "collisionSystem";
 	}
 
 	bool CollisionSystem::CollisionIntersection_PointRect(const VECTORMATH::Vec2& point, const AABB& aabb)
@@ -503,6 +514,11 @@ namespace Engine
 		CollisionQueue.emplace(std::make_pair(lhs, rhs));
 	}
 
+	void CollisionSystem::ArcherTowerCollision(EntityID lhs, EntityID rhs)
+	{
+		ArcherCollisionQueue.emplace(std::make_pair(lhs, rhs));
+	}
+
 	//void CollisionSystem::PlayerArrowCollision(EntityID lhs, EntityID rhs)
 	//{
 	//	PlayerArrowQueue.emplace(std::make_pair(lhs, rhs));
@@ -733,7 +749,7 @@ namespace Engine
 											isColliding = true;
 
 											// Collision from arrow to unit
-											if (collisionComponent2->layer == Layer::Arrow && collisionComponent1->layer == Layer::World)
+											if (collisionComponent2->layer == Layer::Arrow && collisionComponent2->layerTarget == Layer::World && collisionComponent1->layer == Layer::World)
 											{
 												// std::cout << "outside behavior" << std::endl;
 												if (behaviourComponent1) 
@@ -741,13 +757,20 @@ namespace Engine
 													//std::cout << "inside behavior" << std::endl;
 													unitArrowCollision = true;
 													lemaoArrowID = entity2->GetID();
-													statsComponent1->health -= 5; // Will crash the other if its not infantry as the rest do not have stats component
+													statsComponent1->health -= 5;
 													std::cout << "unit's health is: " << statsComponent1->health << std::endl;
-													if (statsComponent1->health == 0) 
+													if (statsComponent1->health <= 0) 
 													{
-														std::cout << "infantry is fucking dead" << std::endl;
+														std::cout << "unit is dead" << std::endl;
+														statsComponent1->playerDead = true;
 													}
 												}
+											}
+
+											if (collisionComponent2->layer == Layer::Arrow && collisionComponent2->layerTarget == Layer::Tower && collisionComponent1->layer == Layer::Tower)
+											{
+												unitArrowCollision = true;
+												lemaoArrowID = entity2->GetID();
 											}
 
 											//Collision Between Non Tower and Towers only -bc Tower can never AABB collide with another Tower
@@ -765,10 +788,11 @@ namespace Engine
 													if (entity2->GetID() == 7)
 													{
 														//tower2CollidingEntityHealth = statsComponent2->health;
-														if (tower2CollidingEntityHealth == 0)
+														if (tower2CollidingEntityHealth <= 0)
 														{
 															tower2Destroyed = true;
 															isColliding = false;
+														
 														}
 														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
@@ -779,7 +803,7 @@ namespace Engine
 													if (entity2->GetID() == 8)
 													{
 														//tower1CollidingEntityHealth = statsComponent2->health;
-														if (tower1CollidingEntityHealth == 0)
+														if (tower1CollidingEntityHealth <= 0)
 														{
 															tower1Destroyed = true;
 															isColliding = false;
@@ -788,13 +812,15 @@ namespace Engine
 															&& tower1Destroyed == true)
 														{
 															textureComponent2->textureKey = { 4, 4 };
+															
+															
 														}
 														// std::cout << "Tower 2 health: " << tower2CollidingEntityHealth << std::endl;
 													}
 													if (entity2->GetID() == 9)
 													{
 														//tower1CollidingEntityHealth = statsComponent2->health;
-														if (castleCollidingEntityHealth == 0)
+														if (castleCollidingEntityHealth <= 0)
 														{
 															castleDestroyed = true;
 															isGameOver = true;
@@ -826,8 +852,52 @@ namespace Engine
 											{
 												isShooting = true;
 												PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+												if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
+												{
+													//std::cout << "goes into first feed" << std::endl;
+													PlayerTowerCollision(entity1->GetID(), entity2->GetID());
+												}
+												if (tower1Destroyed && !tower2Destroyed)
+												{
+													//std::cout << "goes into second feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(7, entity2->GetID());
+												}
+												if (tower2Destroyed && !tower1Destroyed)
+												{
+													//std::cout << "goes into third feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(8, entity2->GetID());
+												}
+												if (tower1Destroyed && tower2Destroyed)
+												{
+													//std::cout << "goes into fourth feed" << std::endl;
+													while (!CollisionQueue.empty())
+													{
+														CollisionQueue.pop();
+													}
+													while (!collisionComponent2->PlayerTowerVector.empty())
+													{
+														collisionComponent2->PlayerTowerVector.clear();
+													}
+													PlayerTowerCollision(9, entity2->GetID());
+												}
 												collisionComponent1->PlayerTowerQueue = CollisionQueue;
-
+												
 												while (!collisionComponent1->PlayerTowerQueue.empty())
 												{
 												    collisionComponent1->PlayerTowerVector.push_back(collisionComponent1->PlayerTowerQueue.front());
@@ -835,6 +905,79 @@ namespace Engine
 												}
 
 												collisionComponent1->towerShooting = true;
+
+
+												if (textureComponent2->textureKey.mainIndex == 3) 
+												{
+													// Reset the vector once one tower dies so that the arrow shoots correctly
+													if (!tower1Destroyed && !tower2Destroyed && !castleDestroyed)
+													{
+														//std::cout << "goes into first feed" << std::endl;
+														ArcherTowerCollision(entity1->GetID(), entity2->GetID());
+													}
+													if (tower1Destroyed && !accessedTower2)
+													{
+														//std::cout << "goes into second feed" << std::endl;
+														while (!ArcherCollisionQueue.empty()) 
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(7, entity2->GetID());
+														accessedTower2 = true;
+													}
+													if (tower2Destroyed && !accessedTower1)
+													{
+														//std::cout << "goes into third feed" << std::endl;
+														while (!ArcherCollisionQueue.empty())
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(8, entity2->GetID());
+														accessedTower1 = true;
+													}
+													if (tower1Destroyed && tower2Destroyed && !arrowAccessedCastle)
+													{
+														//std::cout << "goes into fourth feed" << std::endl;
+														while (!ArcherCollisionQueue.empty())
+														{
+															ArcherCollisionQueue.pop();
+														}
+														while (!collisionComponent2->ArcherTowerVector.empty())
+														{
+															collisionComponent2->ArcherTowerVector.clear();
+														}
+														ArcherTowerCollision(9, entity2->GetID());
+														arrowAccessedCastle = true;
+													}
+													collisionComponent2->ArcherTowerQueue = ArcherCollisionQueue;
+
+													while (!collisionComponent2->ArcherTowerQueue.empty())
+													{
+														collisionComponent2->ArcherTowerVector.push_back(collisionComponent2->ArcherTowerQueue.front());
+														collisionComponent2->ArcherTowerQueue.pop();
+													}
+
+													// Code for archer to stop/start shooting
+													if (!tower1Destroyed || !tower2Destroyed || !castleDestroyed) 
+													{
+														collisionComponent2->archerShooting = true;
+													}
+													if (tower1Destroyed && tower2Destroyed && castleDestroyed) 
+													{
+														collisionComponent2->archerShooting = false;
+													}
+													collisionComponent2->spawnedByArcher = true;
+													arrowSpawnedByArcher = collisionComponent2->spawnedByArcher;
+
+												}
 												
 											}
 
@@ -980,9 +1123,9 @@ namespace Engine
 						lastCollidingEntity = entity->GetID();
 						lastCollidingEntityTexture = textureCheck->textureKey.mainIndex;
 						isSpawned = true;
-						// std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
-						// std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
-						// std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
+						 std::cout << "lastCollidingEntityTexture: " << lastCollidingEntityTexture << std::endl;
+						 std::cout << "This is CollisionSystem's buttonCollision: " << buttonCollision << std::endl;
+						 std::cout << "Mouse collided with Entity " << entity->GetID() << std::endl;
 					}
 
 					// Slotting logic for ingameGUI temporarily until logic system gets put in place

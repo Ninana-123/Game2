@@ -1,34 +1,47 @@
-/******************************************************************************/
-/*!
-\file		SceneManager.h
-\author		Kwok Jun Lin Wayne, k.junlinwayne, 2200751
-\par		k.junlinwayne@digipen.edu
-\date		25/01/2024
-\brief		Contains the declarations of the Scene Manager.
-
-Copyright (C) 2024 DigiPen Institute of Technology.
-Reproduction or disclosure of this file or its contents
-without the prior written consent of DigiPen Institute of
-Technology is prohibited.
- */
- /******************************************************************************/
+/**************************************************************************//**
+ * \file SceneManager.h
+ * \author Kwok Jun Lin Wayne, k.junlinwayne, 2200751
+ * \par k.junlinwayne@digipen.edu
+ * \date 25/01/2024
+ * \brief Contains the declarations of the Scene Manager.
+ *
+ * Copyright (C) 2024 DigiPen Institute of Technology.
+ * Reproduction or disclosure of this file or its contents
+ * without the prior written consent of DigiPen Institute of
+ * Technology is prohibited.
+ *****************************************************************************/
 
 #ifndef ENGINE_SCENE_MANAGER_H
 #define ENGINE_SCENE_MANAGER_H
+
 #include "Scene.h"
 
 namespace Engine {
-	class SceneManager {
-	public:
-		/*!
-		\brief Transitions to a new scene.
-		\param scene Pointer to the scene to transition to.
-		*/
-		void TransitionToScene(std::shared_ptr<Engine::Scene> scene);
+    /**
+     * \class SceneManager
+     * \brief Manages scene transitions and updates.
+     *
+     * This class manages scene transitions and updates. It provides functions
+     * to transition to a new scene and update the current scene.
+     */
+    class SceneManager {
+    public:
+        /**
+         * \brief Transitions to a new scene.
+         * \param scene Pointer to the scene to transition to.
+         */
+        void TransitionToScene(std::shared_ptr<Engine::Scene> scene);
 
-	private:
-		std::shared_ptr<Engine::Scene> currentScene;
-	};
+        /**
+         * \brief Updates the current scene.
+         * \param scene Pointer to the scene to update.
+         */
+        void UpdateScene(std::shared_ptr<Engine::Scene> scene);
+
+    private:
+        std::shared_ptr<Engine::Scene> currentScene; ///< Pointer to the current scene.
+        float dt = 0; ///< Delta time for the scene update.
+    };
 
 }
-#endif	ENGINE_SCENE_MANAGER_H
+#endif // ENGINE_SCENE_MANAGER_H

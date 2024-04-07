@@ -23,6 +23,7 @@ Technology is prohibited.
 
 bool entityCreated = false;
 bool outOfBounds = false;
+VECTORMATH::Vec2 Vel = { 0, 0 };
 EntityID hahaArrowID = 0;
 
 namespace Engine
@@ -36,7 +37,8 @@ namespace Engine
     {
     }
 
-    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities) 
+    void ShootingSystem::Update(float deltaTime, bool shootingCheck, std::unordered_map<EntityID, std::unique_ptr<Entity>>* entities, AssetManager& assetManager,
+        AudioEngine& audioEngine) 
     {
         while (!collisionSystem->CollisionQueue.empty())
         {
@@ -44,101 +46,10 @@ namespace Engine
             collisionSystem->CollisionQueue.pop();
         }
 
-        //for (auto it1 = entities->begin(); it1 != entities->end(); ++it1)
-        //{
-        //    Entity* entity = it1->second.get();
-
-        //    CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
-        //    if (collisionComponent1)
-        //    {
-        //        while (!collisionSystem->CollisionQueue.empty())
-        //        {
-        //            CollisionVector.push_back(collisionComponent1->PlayerTowerQueue.front());
-        //            collisionComponent1->PlayerTowerQueue.pop();
-        //        }
-        //    }
-        //}
-
-        //while (!collisionSystem->PlayerArrowQueue.empty())
-        //{
-        //    PlayerArrowVector.push_back(collisionSystem->PlayerArrowQueue.front());
-        //    collisionSystem->PlayerArrowQueue.pop();
-        //}
-        
-        //if (!PlayerArrowVector.empty())
-        //{
-        //    Entity* Player = entityManager.get()->GetEntity(PlayerArrowVector.front().second);
-        //    //Entity* Arrow = entityManager.get()->GetEntity(PlayerArrowVector.front().first); // Could be second?? didnt check
-        //    Player->AddNewComponent(ComponentType::Stats);
-        //    StatsComponent* PlayerStats = dynamic_cast<StatsComponent*>(Player->GetComponent(ComponentType::Stats));
-        //    PlayerStats->health -= 1;
-        //    // entityManager.get()->DestroyEntity(Arrow->GetID());
-        //    PlayerArrowVector.erase(PlayerArrowVector.begin());
-        //}
-
-        //if (shootingCheck && !entityCreated)
-        //{
-        //    //EntityID arrowID = entityManager->CreateEntity();
-        //    //std::cout << "This is the arrow's ID: " << arrowID << std::endl;
-        //    Prefab* arrowPrefab = prefabManager->GetPrefab(10);
-        //    EntityID arrowID = entityManager->CreateEntityFromPrefab(*arrowPrefab);
-        //    entityCreated = true;
-        //    Arrow arrow{};
-        //    arrow.active = true;
-        //    arrow.entity = arrowPrefab;
-        //    
-        //    arrows.push_back(arrow);
-
-        //    //TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(arrow.entity->GetComponent(ComponentType::Transform));
-        //    if (!CollisionVector.empty())
-        //    {
-        //        // CollisionComponent collisionComponent1 = dynamic_cast<CollisionComponent*>(Tower->GetComponent(ComponentType::Collision));
-        //        // Entity* Tower = entityManager.get()->GetEntity(PlayerTowerQueue); // Could be second?? didnt check
-        //        Entity* Tower = entityManager.get()->GetEntity(CollisionVector.front().first); // Could be second?? didnt check
-        //        Entity* Player = entityManager.get()->GetEntity(CollisionVector.front().second); // Could be second?? didnt check
-        //        Entity* Arrow = entityManager.get()->GetEntity(arrowID); // Could be second?? didnt check
-        //        Arrow->AddNewComponent(ComponentType::Transform);
-        //        Arrow->AddNewComponent(ComponentType::Physics);
-        //        Arrow->AddNewComponent(ComponentType::Collision);
-        //        Arrow->AddNewComponent(ComponentType::Shooting);
-        //        TransformComponent* TowerTransform = dynamic_cast<TransformComponent*>(Tower->GetComponent(ComponentType::Transform));
-        //        TransformComponent* PlayerTransform = dynamic_cast<TransformComponent*>(Player->GetComponent(ComponentType::Transform));
-        //        TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(Arrow->GetComponent(ComponentType::Transform));
-        //        TextureComponent* ArrowTexture = dynamic_cast<TextureComponent*>(Arrow->GetComponent(ComponentType::Texture));
-        //        ArrowTexture->textureKey = { 42, 0 };
-        //        CollisionComponent* ArrowCollision = dynamic_cast<CollisionComponent*>(Arrow->GetComponent(ComponentType::Collision));
-        //        ArrowCollision->layer = Layer::Arrow;
-        //        ArrowCollision->c_Height = 0;
-        //        ArrowCollision->c_Width = 0;
-        //        PhysicsComponent* ArrowPhysics = dynamic_cast<PhysicsComponent*>(Arrow->GetComponent(ComponentType::Physics));
-        //        VECTORMATH::Vec2 Vel = PlayerTransform->position - TowerTransform->position;
-        //        ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(Arrow->GetComponent(ComponentType::Shooting));
-        //        ArrowShooting->layer = Layer::Arrow;
-        //        /*VECTORMATH::Vector2DNormalize(Vel, Vel);*/
-        //        ArrowTransform->rot = atan2(Vel.y, Vel.x);
-        //        ArrowPhysics->velocity = Vel;
-        //        ArrowPhysics->mass = 0.001f;
-        //        ArrowTransform->position = TowerTransform->position;
-        //        //CollisionVector.erase(CollisionVector.begin());
-        //        CollisionVector.pop_back();
-        //    }
-        //}
-
-        //if (entityCreated)
-        //{
-        //    spawnTimer -= deltaTime;
-        //    if (spawnTimer < 0)
-        //    {
-        //        entityCreated = false;
-        //        spawnTimer = spawnInterval;
-        //    }
-        //}
-
         int OOBScreenWidth, OOBScreenHeight;
         glfwGetFramebufferSize(glfwGetCurrentContext(), &OOBScreenWidth, &OOBScreenHeight);
         float scaleX = static_cast<float>(OOBScreenWidth) / 1280.f;
         float scaleY = static_cast<float>(OOBScreenHeight) / 720.f;
-
 
         // Loop through every entity
         for (auto it1 = entities->begin(); it1 != entities->end(); ++it1) 
@@ -150,34 +61,102 @@ namespace Engine
             CollisionComponent* collisionComponent1 = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
             StatsComponent* statsComponent = dynamic_cast<StatsComponent*>(entity->GetComponent(ComponentType::Stats));
             TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+            BehaviourComponent* behaviourComponent1 = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
+            ShootingComponent* shootingComponent1 = dynamic_cast<ShootingComponent*>(entity->GetComponent(ComponentType::Shooting));
+            PathfindingComponent* pathfindingComponent1 = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
 
             if (entity->HasComponent(ComponentType::Collision)) 
             {
+                if (collisionComponent1->layer == Layer::World && textureComponent->textureKey.mainIndex == 3) 
+                {
+                    // && !(statsComponent->playerDead)
+                    if (collisionComponent1->archerShooting == true && !(collisionComponent1->archerArrowSpawned) && pathfindingComponent1->stoppedWalking == true)
+                    {
+                        // std::cout << "inside of archer shooting code" << std::endl;
+                        //EntityID arrowID = entityManager->CreateEntity();
+                        //std::cout << "This is the arrow's ID: " << arrowID << std::endl;
+                        Prefab* archerArrowPrefab = prefabManager->GetPrefab(10);
+                        EntityID archerArrowID = entityManager->CreateEntityFromPrefab(*archerArrowPrefab);
+                        collisionComponent1->archerArrowSpawned = true;
+
+                        //TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(arrow.entity->GetComponent(ComponentType::Transform));
+                        if (!collisionComponent1->ArcherTowerVector.empty())
+                        {
+                            Entity* Tower = entityManager.get()->GetEntity(collisionComponent1->ArcherTowerVector.front().first); // Could be second?? didnt check
+                            Entity* Player = entityManager.get()->GetEntity(collisionComponent1->ArcherTowerVector.front().second); // Could be second?? didnt check
+                            Entity* ArcherArrow = entityManager.get()->GetEntity(archerArrowID); // Could be second?? didnt check
+                            ArcherArrow->AddNewComponent(ComponentType::Transform);
+                            ArcherArrow->AddNewComponent(ComponentType::Physics);
+                            ArcherArrow->AddNewComponent(ComponentType::Collision);
+                            ArcherArrow->AddNewComponent(ComponentType::Shooting);
+                            TransformComponent* TowerTransform2 = dynamic_cast<TransformComponent*>(Tower->GetComponent(ComponentType::Transform));
+                            TransformComponent* PlayerTransform2 = dynamic_cast<TransformComponent*>(Player->GetComponent(ComponentType::Transform));
+                            TransformComponent* ArrowTransform2 = dynamic_cast<TransformComponent*>(ArcherArrow->GetComponent(ComponentType::Transform));
+                            TextureComponent* ArrowTexture2 = dynamic_cast<TextureComponent*>(ArcherArrow->GetComponent(ComponentType::Texture));
+                            ArrowTexture2->textureKey = { 55, 0 };
+                            CollisionComponent* ArrowCollision2 = dynamic_cast<CollisionComponent*>(ArcherArrow->GetComponent(ComponentType::Collision));
+                            ArrowCollision2->layer = Layer::Arrow;
+                            ArrowCollision2->layerTarget = Layer::Tower;
+                            ArrowCollision2->c_Height = 0;
+                            ArrowCollision2->c_Width = 0;
+                            PhysicsComponent* ArrowPhysics2 = dynamic_cast<PhysicsComponent*>(ArcherArrow->GetComponent(ComponentType::Physics));
+                            Vel = TowerTransform2->position - PlayerTransform2->position;
+                            ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(ArcherArrow->GetComponent(ComponentType::Shooting));
+                            ArrowShooting->layer = Layer::Arrow;
+                            /*VECTORMATH::Vector2DNormalize(Vel, Vel);*/
+                            ArrowTransform2->rot = atan2(Vel.y, Vel.x);
+                            ArrowPhysics2->velocity = Vel;
+                            ArrowPhysics2->mass = 0.001f;
+                            ArrowTransform2->position = PlayerTransform2->position;
+                            //ArrowTransform2->position = {PlayerTransform2->position.x + 10, PlayerTransform2->position.y};
+                            /*std::cout << "Player's x: " << PlayerTransform2->position.x << std::endl;
+                            std::cout << "Player's y: " << PlayerTransform2->position.y << std::endl;*/
+                            /*std::cout << "Tower's x: " << TowerTransform2->position.x << std::endl;
+                            std::cout << "Tower's y: " << TowerTransform2->position.y << std::endl;*/
+                            //CollisionVector.erase(CollisionVector.begin());
+                            collisionComponent1->ArcherTowerVector.pop_back();
+
+                        }
+                    }
+
+                    if (collisionComponent1->archerArrowSpawned)
+                    {
+                        //std::cout << "it is inside archerArrowedSpawned update to false" << std::endl;
+                        collisionComponent1->arrowSpawnTimer -= deltaTime;
+                        if (collisionComponent1->arrowSpawnTimer < 0)
+                        {
+                            // std::cout << "it is inside archerArrowedSpawned update to false" << std::endl;
+                            collisionComponent1->archerArrowSpawned = false;
+                            collisionComponent1->arrowSpawnTimer = collisionComponent1->arrowSpawnInterval;
+                        }
+                    }
+                }
+
+
+                // Shooting from tower to unit
                 if (collisionComponent1->layer == Layer::Tower)
                 {
                     if (entity->HasComponent(ComponentType::Stats)) 
                     {
-                        if (statsComponent->health == 0)
+                        if (statsComponent->health <= 0 && entity->GetID() == 7)
                         {
                             statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
                         }
+
+                        if (statsComponent->health <= 0 && entity->GetID() == 8)
+                        {
+                            statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
+                        }
+
+                        if (statsComponent->health <= 0 && entity->GetID() == 9)
+                        {
+                            statsComponent->towerDestroyed = true;
+                            collisionComponent1->circle.radius = 0;
+                        }
+
                     }
-
-                    //// Workaround to add components as prefabs are not working
-                    //if (textureComponent) 
-                    //{
-                    //    if (!entity->HasComponent(ComponentType::Stats) && textureComponent->textureKey.mainIndex == 2) 
-                    //    {
-                    //        entity->AddNewComponent(ComponentType::Stats);
-
-                    //    }
-
-                    //    if (!entity->HasComponent(ComponentType::Stats) && textureComponent->textureKey.mainIndex == 3)
-                    //    {
-                    //        entity->AddNewComponent(ComponentType::Stats);
-
-                    //    }
-                    //}
 
                     if (collisionComponent1->towerShooting == true && !(collisionComponent1->arrowSpawned) && !statsComponent->towerDestroyed)
                     {
@@ -186,11 +165,6 @@ namespace Engine
                         Prefab* arrowPrefab = prefabManager->GetPrefab(10);
                         EntityID arrowID = entityManager->CreateEntityFromPrefab(*arrowPrefab);
                         collisionComponent1->arrowSpawned = true;
-                        Arrow arrow{};
-                        arrow.active = true;
-                        arrow.entity = arrowPrefab;
-
-                        arrows.push_back(arrow);
 
                         //TransformComponent* ArrowTransform = dynamic_cast<TransformComponent*>(arrow.entity->GetComponent(ComponentType::Transform));
                         if (!collisionComponent1->PlayerTowerVector.empty())
@@ -210,10 +184,11 @@ namespace Engine
                             ArrowTexture->textureKey = { 42, 0 };
                             CollisionComponent* ArrowCollision = dynamic_cast<CollisionComponent*>(Arrow->GetComponent(ComponentType::Collision));
                             ArrowCollision->layer = Layer::Arrow;
+                            ArrowCollision->layerTarget = Layer::World;
                             ArrowCollision->c_Height = 0;
                             ArrowCollision->c_Width = 0;
                             PhysicsComponent* ArrowPhysics = dynamic_cast<PhysicsComponent*>(Arrow->GetComponent(ComponentType::Physics));
-                            VECTORMATH::Vec2 Vel = PlayerTransform->position - TowerTransform->position;
+                            Vel = PlayerTransform->position - TowerTransform->position;
                             ShootingComponent* ArrowShooting = dynamic_cast<ShootingComponent*>(Arrow->GetComponent(ComponentType::Shooting));
                             ArrowShooting->layer = Layer::Arrow;
                             /*VECTORMATH::Vector2DNormalize(Vel, Vel);*/
@@ -221,8 +196,11 @@ namespace Engine
                             ArrowPhysics->velocity = Vel;
                             ArrowPhysics->mass = 0.001f;
                             ArrowTransform->position = TowerTransform->position;
+                            std::cout << "Tower's x: " << TowerTransform->position.x << std::endl;
+                            std::cout << "Tower's y: " << TowerTransform->position.y << std::endl;
                             //CollisionVector.erase(CollisionVector.begin());
                             collisionComponent1->PlayerTowerVector.pop_back();
+                            audioEngine.playSound(*(assetManager.getAudio(AudioKey("sound_Arrow"))));
                         }
                     }
 
@@ -254,20 +232,31 @@ namespace Engine
                 }
 
             }
+
         }
 
-        if (unitArrowCollision) 
+        if (unitArrowCollision)
         {
-            // std::cout << "check for print" << std::endl;
-            std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
             entityManager->DestroyEntity(lemaoArrowID);
             unitArrowCollision = false;
+
         }
+        //if (unitArrowCollision) 
+        //{
+        //    // std::cout << "check for print" << std::endl;
+        //    // std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
+        //    if (!arrowSpawnedByArcher) 
+        //    {
+        //        std::cout << "Arrow is deleting itself" << std::endl;
+        //        entityManager->DestroyEntity(lemaoArrowID);
+        //        unitArrowCollision = false;
+        //    }
+        //}
 
         if (outOfBounds)
         {
             // std::cout << "check for print" << std::endl;
-            std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
+            // std::cout << "This is the arrow's ID: " << lemaoArrowID << std::endl; // ID increasing in number
             entityManager->DestroyEntity(lemaoArrowID);
             outOfBounds = false;
         }

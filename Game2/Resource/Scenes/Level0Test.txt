@@ -196,7 +196,7 @@ goalY: 0
 initialized: 0
 Stats
 Health: 50
-Range: 50
+Range: 100
 Logic
 BehaviourIndex: 0
 Shooting

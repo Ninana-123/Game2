@@ -133,12 +133,12 @@ namespace Engine {
     }
 
     // Function to load an audio file with the specified key
-    std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key) {
+    std::shared_ptr<SoundInfo> AssetManager::loadAudio(const AudioKey& key, bool loop) {
         // Assuming audioFilePaths is a member that holds paths to audio files
         auto it = audioFilePaths.find(key);
         if (it != audioFilePaths.end()) {
             // Create a SoundInfo with all the necessary parameters
-            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, true, 1.0f, 0.0f);       
+            auto soundInfo = std::make_shared<SoundInfo>(it->second, key.filename, false, loop, 1.0f, 0.0f);       
             // Store the loaded SoundInfo in the audios map
             audios[key] = soundInfo;
             return soundInfo;
@@ -197,31 +197,4 @@ namespace Engine {
         audioFilePaths[key] = path;
         std::cout << path<< std::endl;
     }
-    
-    //void AssetManager::LoadTextureFromJson(const nlohmann::json& jsonData) {
-    //    int mainIndex = jsonData["mainIndex"];
-    //    int subIndex = jsonData["subIndex"];
-    //    std::string filePath = jsonData["filePath"];
-
-    //    // Update or load the texture based on the information from JSON
-    //    UpdateTexture(mainIndex, filePath, subIndex);
-    //}
-
-    //void AssetManager::SaveTexturePathsToJson(const std::string& filePath) const {
-    //    nlohmann::json jsonTexturePaths;
-
-    //    // Iterate through textures and add entries to the JSON object
-    //    for (const auto& entry : textures) {
-    //        nlohmann::json jsonEntry;
-    //        jsonEntry["mainIndex"] = static_cast<int>(entry.first.mainIndex);
-    //        jsonEntry["subIndex"] = entry.first.subIndex;
-    //        jsonEntry["filePath"] = entry.second->GetFilePath();
-
-    //        jsonTexturePaths.push_back(jsonEntry);
-    //    }
-
-    //    // Write the JSON object to a file
-    //    std::ofstream file(filePath);
-    //    file << jsonTexturePaths.dump(4);
-    //}
 }

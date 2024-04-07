@@ -34,6 +34,7 @@ namespace Engine
 		bool initialized = false;
 		std::pair<int, int> previousPos1 = { 0, 0 };
 		std::pair<int, int> previousPos2 = { 0, 0 };
+		bool stoppedWalking = false;
 
 		/*!
 		\brief Get the type of the component.

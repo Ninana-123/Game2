@@ -173,7 +173,7 @@ namespace Engine {
         * @param key The key identifying the audio file.
         * @return A shared pointer to the loaded SoundInfo, or nullptr if the file is not found.
         */
-        std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key);
+        std::shared_ptr<SoundInfo> loadAudio(const AudioKey& key, bool loop);
 
         /**
         * @brief Unloads an audio file based on its key.
@@ -290,10 +290,16 @@ namespace Engine {
             { {TextureClass::cutScene7,         0}, "Resource/Texture/cutScene7.PNG" },
             { {TextureClass::cutScene8,         0}, "Resource/Texture/whiteScreen.PNG" },
 
-            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainmenu_screen.PNG" },
+            { {TextureClass::mainMenuScreen,    0}, "Resource/Texture/mainMenuBG.jpg" },
             { {TextureClass::defeatScreen,      0}, "Resource/Texture/mainmenu_screen.PNG" },
             { {TextureClass::pauseScreen,       0}, "Resource/Texture/mainmenu_screen.PNG" },
-            { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" }
+            { {TextureClass::startingPoint,       0}, "Resource/Texture/starting point_idle.PNG" },
+
+            { {TextureClass::archerArrow,    0}, "Resource/Texture/archer_arrow.png" },
+            { {TextureClass::infantryVFX,      2}, "Resource/Texture/infantry_vfx.png" },
+            { {TextureClass::tankVFX,       2}, "Resource/Texture/tank_vfx.png" },
+            { {TextureClass::archerVFX,       2}, "Resource/Texture/archer_vfx.png" },
+            { {TextureClass::towerVFX,       0}, "Resource/Texture/tower_attack.png" }
 
         };
     };
