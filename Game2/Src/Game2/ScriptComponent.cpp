@@ -16,6 +16,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "pch.h"
 #include "ScriptFactory.h"
 #include "ScriptComponent.h"
+#include "Tower.h"
+#include "Archer.h"
 
 namespace Engine
 {
@@ -73,7 +75,31 @@ namespace Engine
 
 	Script* ScriptComponent::GetScript() const
 	{
-		return script;
+		switch (currentScriptType)
+		{
+			case ScriptType::Empty:
+			{
+				return script;
+			}
+			case ScriptType::infantry:
+			{
+				return script;
+			}
+			case ScriptType::tower:
+			{
+				Tower* tower = dynamic_cast<Tower*>(script);
+				return tower;
+			}
+			case ScriptType::archer:
+			{
+				Archer* archer = dynamic_cast<Archer*>(script);
+				return archer;
+			}
+			default:
+			{
+				return script;
+			}
+		}
 	}
 
 	ComponentType ScriptComponent::GetType() const

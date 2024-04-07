@@ -797,7 +797,7 @@ namespace Engine
 														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower2Destroyed == true)
 														{
-															textureComponent2->textureKey = { 4, 4 };
+															//textureComponent2->textureKey = { 4, 3 };
 														}
 													}
 													if (entity2->GetID() == 8)
@@ -811,7 +811,7 @@ namespace Engine
 														if ((textureComponent2->textureKey.mainIndex == 4 && textureComponent2->textureKey.subIndex == 0)
 															&& tower1Destroyed == true)
 														{
-															textureComponent2->textureKey = { 4, 4 };
+															//textureComponent2->textureKey = { 4, 3 };
 															
 															
 														}
@@ -1177,8 +1177,13 @@ namespace Engine
 								archerSpawned = true;
 							}
 
+							
 							ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
-							scriptComponent->run = true;
+							if (scriptComponent)
+							{
+								scriptComponent->run = true;
+							}
+							
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 
 						}

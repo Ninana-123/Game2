@@ -23,13 +23,16 @@ namespace Engine
 	class Arrow
 	{
 	public:
-		Arrow(Entity* _target, VECTORMATH::Vec2 startingPosition);
+		Arrow(Entity* _target, float damage,VECTORMATH::Vec2 startingPosition);
 		~Arrow();
 		void Update();
 		bool Hit();
+		void Damage();
 	private:
+		float damage = 0.f;
 		Entity* arrow = nullptr;
 		Entity* target = nullptr;
+		Entity* parent = nullptr;
 		std::shared_ptr<EntityManager> EM = nullptr;
 		PrefabManager* PM = nullptr;
 		bool hit = false;

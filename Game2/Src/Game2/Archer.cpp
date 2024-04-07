@@ -24,11 +24,13 @@ namespace Engine
 		PM = EM->QueryPM();
 
 		entityTransform = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+		
 
 	}
 	void Archer::Update()
 	{
 		entityScript = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
+		entityTexture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 
 		if (entityScript->run)
 		{
@@ -53,12 +55,17 @@ namespace Engine
 
 			if (alive)
 			{
+				//Walking
+				entityTexture->textureKey = { 3, 1 };
+
 				//Retrieve target
 				if (Target())
 				{
+					
 					//Shoot Arrow
 					if (counter <= 0.f)
 					{
+
 						Shoot(target);
 
 						counter = 1.f / firerate;
@@ -70,13 +77,14 @@ namespace Engine
 				{
 					return;
 				}
-			}
 
-			if (hp <= 0.f)
-			{
-				alive = false;
-				IsDead();
-			}
+				if (hp <= 0.f)
+				{
+					alive = false;
+					IsDead();
+				}
+			}	
+
 		}
 
 	}
@@ -89,8 +97,9 @@ namespace Engine
 			std::cerr << "Target entity is null." << std::endl;
 			return;
 		}
-
+		
 		TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(entity->GetComponent(ComponentType::Transform));
+
 		if (!transformComponent)
 		{
 			std::cerr << "Parent has no TransformComponent." << std::endl;
@@ -99,7 +108,7 @@ namespace Engine
 
 		VECTORMATH::Vec2 startingPosition = transformComponent->position;
 
-		Arrow* arrow = new Arrow(target_, startingPosition);
+		Arrow* arrow = new Arrow(target_, damage, startingPosition);
 		arrows.push_back(arrow);
 		count++;
 		std::cout << "Fired Arrow " << count << std::endl;
@@ -157,6 +166,11 @@ namespace Engine
 	{
 		entityScript = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
 		entityScript->alive = false;
+
+		TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		textureComponent->textureKey = { 3 , 3 };
+
+		std::cout << "Archer died" << std::endl;
 	}
 
 }

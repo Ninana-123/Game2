@@ -31,8 +31,10 @@ namespace Engine
 		bool Target();
 		void IsDead();
 		
-	private:
 		float hp = 50.f;
+		float damage = 15.f;
+	private:
+		
 		float range = 200.f;
 		bool alive = true;
 		int count = 0;

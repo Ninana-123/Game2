@@ -31,8 +31,10 @@ namespace Engine
 		bool Target();
 		void IsDead();
 
-	private:
 		float hp = 30.f;
+		float damage = 5.f;
+	private:
+		
 		float range = 200.f;
 		bool alive = true;
 		int count = 0;
@@ -44,6 +46,7 @@ namespace Engine
 
 		TransformComponent* entityTransform = nullptr;
 		ScriptComponent* entityScript = nullptr;
+		TextureComponent* entityTexture = nullptr;
 
 		std::vector<Arrow*> arrows;
 		std::vector<Entity*> targets;

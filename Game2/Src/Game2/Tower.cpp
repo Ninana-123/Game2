@@ -32,6 +32,7 @@ namespace Engine
 	void Tower::Update()
 	{
 		entityScript = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
+		
 		//Update Existing Arrows first
 		for (auto it = arrows.begin(); it != arrows.end();)
 		{
@@ -53,9 +54,11 @@ namespace Engine
 
 		if (alive)
 		{
+			
 			//Retrieve target
 			if (Target())
 			{
+
 				//Shoot Arrow
 				if (counter <= 0.f)
 				{
@@ -97,7 +100,7 @@ namespace Engine
 
 		VECTORMATH::Vec2 startingPosition = transformComponent->position;
 
-		Arrow* arrow = new Arrow(target_, startingPosition);
+		Arrow* arrow = new Arrow(target_, damage, startingPosition);
 		arrows.push_back(arrow);
 		count++;
 		std::cout << "Fired Arrow " << count << std::endl;
@@ -154,6 +157,9 @@ namespace Engine
 	{
 		entityScript = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
 		entityScript->alive = false;
+
+		TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
+		textureComponent->textureKey = { 4 , 4 };
 	}
 }
 

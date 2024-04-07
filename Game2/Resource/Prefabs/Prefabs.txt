@@ -47,10 +47,6 @@ Position: 0 -300
 ScaleX: 1
 ScaleY: 1
 Rotation: 0
-Script
-ID: 0
-type: 0
-Running: 0
 Collision
 c_Width: 45
 c_Height: 45

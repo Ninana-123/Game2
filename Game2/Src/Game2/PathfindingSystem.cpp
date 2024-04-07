@@ -402,8 +402,10 @@ namespace Engine
                 TextureComponent* textureComponent = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
                 BehaviourComponent* behaviourComponent = dynamic_cast<BehaviourComponent*>(entity->GetComponent(ComponentType::Logic));
                 StatsComponent* statsComponent = dynamic_cast<StatsComponent*>(entity->GetComponent(ComponentType::Stats));
+                ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
 
-                if (entity->HasComponent(ComponentType::Pathfinding))
+
+                if (entity->HasComponent(ComponentType::Pathfinding)) //&& scriptComponent->alive
                 {
 
                     if (collisionComponent->layer == Layer::World)
@@ -473,7 +475,7 @@ namespace Engine
                             // towerPositions.erase(towerPositions.begin() + 1);
                         }
 
-                        if (!(pathfindingComponent->initialized))
+                        if (!(pathfindingComponent->initialized) )
                         {
 
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
@@ -547,7 +549,7 @@ namespace Engine
                                 if ((textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 0)
                                     || textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 2)
                                 {
-                                    textureComponent->textureKey = { 3, 1 };
+                                    //textureComponent->textureKey = { 3, 1 };
                                 }
                                 prevTextures.push_back(pathfindingEntityTexture);
                                 prevTexture = pathfindingEntityTexture;
@@ -661,7 +663,7 @@ namespace Engine
                             if (prevTexture != 7 && prevTexture != 9 && textureComponent->textureKey.mainIndex == 3 && textureComponent->textureKey.subIndex == 1)
                             {
                                 // std::cout << "archer here" << std::endl;
-                                textureComponent->textureKey = { 3, 2 };
+                                //textureComponent->textureKey = { 3, 2 };
                             }
 
                             // Tank

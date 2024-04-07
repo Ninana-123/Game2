@@ -83,8 +83,10 @@ namespace Engine
             Logger::GetInstance().Log(LogLevel::Debug, "GLEW successfully initialized");
     }
 
-    void GraphicsSystem::Initialize() {
-        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) {
+    void GraphicsSystem::Initialize() 
+    {
+        if (!glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED)) 
+        {
 
             Window = glfwGetCurrentContext();
             glfwGetWindowSize(Window, &screenWidth, &screenHeight);
@@ -481,7 +483,7 @@ namespace Engine
                     float horizontalFrames = 5.0f; // Number of horizontal frames
                     float verticalFrames = 1.0f; // Number of vertical frames
                     //float Length = 1536.0f; // length of sprite sheet
-                    Anim_Mode playMode = Anim_Mode::LOOP;
+                    Anim_Mode playMode = Anim_Mode::ONE_TIME;
 
                     // Create a static animation object if not created already
                     static Animation animation(frameRate, horizontalFrames, verticalFrames, playMode);

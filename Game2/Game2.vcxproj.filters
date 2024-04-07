@@ -145,9 +145,6 @@
     <ClCompile Include="Src\Game2\inGameGUI.cpp">
       <Filter>Systems\inGameGUI</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game2\CutScene.cpp">
-      <Filter>Base\SceneManager</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game2\Infantry.cpp">
       <Filter>Scripts\Units\Infantry</Filter>
     </ClCompile>
@@ -166,6 +163,9 @@
     <ClCompile Include="Src\Game2\Archer.cpp">
       <Filter>Scripts\Units\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game2\CutSceneLevel.cpp" />
+    <ClCompile Include="Src\Game2\ScriptSystem.cpp" />
+    <ClCompile Include="Src\Game2\VFX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game2\Application.h">
@@ -357,7 +357,6 @@
     <ClInclude Include="Src\Game2\inGameGUI.h">
       <Filter>Systems\inGameGUI</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\json.hpp" />
     <ClInclude Include="Src\Game2\StatsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -394,9 +393,6 @@
     <ClInclude Include="Src\Game2\ShootingSystem.h">
       <Filter>Systems\Shooting</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game2\CutScene.h">
-      <Filter>Base\SceneManager</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Game2\ScriptSystem.h">
       <Filter>Systems\Logic</Filter>
     </ClInclude>
@@ -418,6 +414,9 @@
     <ClInclude Include="Src\Game2\Archer.h">
       <Filter>Scripts\Units\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Game2\RenderDataComponent.h" />
+    <ClInclude Include="Src\Game2\VFX.h" />
+    <ClInclude Include="Src\Game2\CutSceneLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -560,6 +559,9 @@
     </Filter>
     <Filter Include="Scripts\Units\Archer">
       <UniqueIdentifier>{41e92b2f-cbf9-4ef9-9c96-a13fdda3a8e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Reactions">
+      <UniqueIdentifier>{d9ed90ec-8d6d-4c2b-a937-2190c5853e80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
