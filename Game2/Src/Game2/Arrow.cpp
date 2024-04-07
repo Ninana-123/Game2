@@ -15,23 +15,68 @@ written consent of DigiPen Institute of Technology is prohibited.
 #include "Arrow.h"
 #include "Application.h"
 
-void Engine::Arrow::Update()
+namespace Engine
 {
-	if (target == NULL)
+	Arrow::Arrow(Entity* _target, VECTORMATH::Vec2 startingPosition) : target(_target), position(startingPosition)
 	{
-		return;
+		//Create Arrow entity
+		EM = g_ScriptFactory->GetScriptSystem()->QueryEM();
+		PM = EM->QueryPM();
+		Prefab* arrowPrefab = PM->GetPrefab("Arrow");
+		EntityID arrowID = EM->CreateEntityFromPrefab(*arrowPrefab);
+		arrow = EM->GetEntity(arrowID);
+
+		TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(arrow->GetComponent(ComponentType::Transform));
+		if (transformComponent)
+		{
+			transformComponent->position = startingPosition;
+		}
+
+		TransformComponent* targetTransformComponent = dynamic_cast<TransformComponent*>(target->GetComponent(ComponentType::Transform));
+		if (targetTransformComponent)
+		{
+			target_position = targetTransformComponent->position;
+		}
+		
 	}
-	TransformComponent* transformComponent = dynamic_cast<TransformComponent*>(target->GetComponent(ComponentType::Transform));
-	target_position = transformComponent->position;
 
-	dir = target_position - position;
-	float thisFrame = speed * fixedDeltaTime;
-
-	if ((std::sqrt(dir.x * dir.x + dir.y * dir.y)) <= thisFrame)
+	Arrow::~Arrow()
 	{
-		//play hit script, effects, sound.
-		return;
+		EM->DestroyEntity(arrow->GetID());
 	}
 
-	position += dir * thisFrame;
+	void Arrow::Update()
+	{
+		if (!target || !arrow)
+		{
+			return;
+		}
+		
+
+		dir = target_position - position;
+	
+		float distanceToMove = speed * static_cast<float>(fixedDeltaTime);
+		//std::cout << "Distance left by arrow: " << std::sqrt(dir.x * dir.x + dir.y * dir.y) << std::endl;
+
+
+		if ((std::sqrt(dir.x * dir.x + dir.y * dir.y)) <= distanceToMove)
+		{
+			std::cout << "Arrow Hit " << std::endl;
+			hit = true;
+			return;
+		}
+
+		position += dir * distanceToMove;
+
+		//Update Arrow Entity position
+		TransformComponent* transformComponent1 = dynamic_cast<TransformComponent*>(arrow->GetComponent(ComponentType::Transform));
+		transformComponent1->rot = atan2(dir.y, dir.x);
+		transformComponent1->position = position;
+	}
+
+	bool Arrow::Hit()
+	{
+		return hit;
+	}
 }
+

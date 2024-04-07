@@ -87,6 +87,11 @@ namespace Engine
 			return entityManager->GetEntity(entity);
 		}
 
+		std::shared_ptr<Engine::EntityManager> QueryEM()
+		{
+			return entityManager;
+		}
+
 		/*!
 		\brief
 		Removes a script object from an entity

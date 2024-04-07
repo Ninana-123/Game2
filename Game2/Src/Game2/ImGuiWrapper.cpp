@@ -1476,7 +1476,7 @@ namespace Engine {
 									std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
 
 									// Get array of script type names
-									const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+									const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower", "Archer"}; // Add more as needed
 									const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
 
 									// Find index of currentScriptType
@@ -2194,7 +2194,7 @@ namespace Engine {
 							std::string currentScriptTypeName = script->ScriptToString(script->currentScriptType);
 
 							// Get array of script type names
-							const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower" }; // Add more as needed
+							const char* scriptTypeNames[] = { "Empty", "Infantry", "Tower", "Archer"}; // Add more as needed
 							const int numScriptTypes = sizeof(scriptTypeNames) / sizeof(scriptTypeNames[0]);
 
 							// Find index of currentScriptType

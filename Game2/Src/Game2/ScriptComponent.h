@@ -35,7 +35,8 @@ namespace Engine
 	class ScriptComponent : public Component
 	{
 	public:
-
+		bool run = false;
+		bool alive = true;
 		Script* script = nullptr;
 		EntityID entity = EMPTY_ID;
 		ScriptType currentScriptType = ScriptType::Empty;

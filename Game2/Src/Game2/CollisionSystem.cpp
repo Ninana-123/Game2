@@ -1034,7 +1034,8 @@ namespace Engine
 								archerSpawned = true;
 							}
 
-
+							ScriptComponent* scriptComponent = dynamic_cast<ScriptComponent*>(entity->GetComponent(ComponentType::Script));
+							scriptComponent->run = true;
 							// std::cout << "Layer after release: " << static_cast<int>(collisionComponent->layer) << std::endl;
 
 						}
@@ -1074,4 +1075,5 @@ namespace Engine
 			}
 		}
 	}
+
 }

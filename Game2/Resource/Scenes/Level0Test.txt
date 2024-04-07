@@ -200,6 +200,9 @@ Range: 50
 Logic
 BehaviourIndex: 0
 Shooting
+Script
+ID: 8
+type: 0
 EndEntity
 Transform
 Position: 345 75

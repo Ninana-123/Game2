@@ -18,18 +18,25 @@ written consent of DigiPen Institute of Technology is prohibited.
 
 namespace Engine
 {
-	class Arrow : public Script
+	extern ScriptFactory* g_ScriptFactory;
+
+	class Arrow
 	{
 	public:
-		Arrow(Entity* _target) : target(_target){};
-		void Update() override;
-
+		Arrow(Entity* _target, VECTORMATH::Vec2 startingPosition);
+		~Arrow();
+		void Update();
+		bool Hit();
 	private:
-		Entity* target;
+		Entity* arrow = nullptr;
+		Entity* target = nullptr;
+		std::shared_ptr<EntityManager> EM = nullptr;
+		PrefabManager* PM = nullptr;
+		bool hit = false;
 		VECTORMATH::Vec2 position;
 		VECTORMATH::Vec2 target_position;
 		VECTORMATH::Vec2 dir;
-
-		float speed = 20.f;
+		
+		float speed = 9.f;
 	};
 }
