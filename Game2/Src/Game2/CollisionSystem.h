@@ -31,6 +31,7 @@ extern int tower1CollidingEntityHealth;
 extern int tower2CollidingEntityHealth;
 extern int castleCollidingEntityHealth;
 extern int victoryID;
+extern int defeatID;
 extern int lemaoArrowID;
 extern int unitID;
 extern bool isStartingPoint;
@@ -46,6 +47,9 @@ extern bool infantrySpawned;
 extern bool tankSpawned;
 extern bool archerSpawned;
 extern bool arrowSpawnedByArcher;
+extern bool infantryDead;
+extern bool tankDead;
+extern bool archerDead;
 
 namespace Engine
 {

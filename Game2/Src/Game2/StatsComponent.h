@@ -32,6 +32,9 @@ namespace Engine
 		bool playerDead = false;
 		bool tankStatsSet = false;
 		bool archerStatsSet = false;
+		bool infantryDead = false;
+		bool tankDead = false;
+		bool archerDead = false;
 
 		/*!*****************************************************************
 

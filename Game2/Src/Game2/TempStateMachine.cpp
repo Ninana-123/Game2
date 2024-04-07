@@ -156,21 +156,25 @@ namespace Engine
 
 			TextureComponent* texture = dynamic_cast<TextureComponent*>(entity->GetComponent(ComponentType::Texture));
 			CollisionComponent* collision = dynamic_cast<CollisionComponent*>(entity->GetComponent(ComponentType::Collision));
+			StatsComponent* stats = dynamic_cast<StatsComponent*>(entity->GetComponent(ComponentType::Stats));
 			texture->SetAnimation(static_cast<int>(c_state::Attack));
 			PathfindingComponent* pathfinding = dynamic_cast<PathfindingComponent*>(entity->GetComponent(ComponentType::Pathfinding));
 			pathfinding->stoppedWalking = true;
 
 			Entity* target = collision->target;
 			
-			// If tank deal more dmg
-			if (texture->textureKey.mainIndex == 2) 
+			if (!stats->playerDead) 
 			{
-				Stats::AttackTarget(10, entity, target);
-			}
-			// If others deal normal dmg
-			else 
-			{
-				Stats::AttackTarget(5, entity, target);
+				// If tank deal more dmg
+				if (texture->textureKey.mainIndex == 2)
+				{
+					Stats::AttackTarget(10, entity, target);
+				}
+				// If others deal normal dmg
+				else
+				{
+					Stats::AttackTarget(5, entity, target);
+				}
 			}
 		}
 	}
