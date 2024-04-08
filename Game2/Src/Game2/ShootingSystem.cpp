@@ -71,7 +71,7 @@ namespace Engine
                     if (collisionComponent1->layer == Layer::World && textureComponent->textureKey.mainIndex == 3)
                     {
                         // && !(statsComponent->playerDead)
-                        if (collisionComponent1->archerShooting == true && !(collisionComponent1->archerArrowSpawned) && pathfindingComponent1->stoppedWalking == true)
+                        if (collisionComponent1->archerShooting == true && !(collisionComponent1->archerArrowSpawned) && pathfindingComponent1->stoppedWalking == true && !statsComponent->archerDead)
                         {
                             // std::cout << "inside of archer shooting code" << std::endl;
                             //EntityID arrowID = entityManager->CreateEntity();
