@@ -475,7 +475,7 @@ namespace Engine
                             // towerPositions.erase(towerPositions.begin() + 1);
                         }
 
-                        if (!(pathfindingComponent->initialized) )
+                        if (!(pathfindingComponent->initialized) && !statsComponent->playerDead)
                         {
 
                             PathfindingSystem pathfinder(displayWidth, displayHeight);
